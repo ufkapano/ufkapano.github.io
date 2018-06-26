@@ -1,0 +1,58 @@
+# This file tells git what files to ignore.
+# Backup files.
+*~
+
+# Some Python files.
+*.py[cod]
+
+# C extensions
+*.so
+
+#===========================================================
+# Auxiliary LaTeX files.
+*.aux
+*.dvi
+*.lof
+# zawiera fit.log z gnuplota
+*.log
+*.lot
+*.out
+*.toc
+label.txt
+
+# These rules might exclude image files for figures etc.
+# *.ps
+# *.eps
+# figures, references
+# *.pdf
+# This is changing very often.
+doc/main.pdf
+doc/main.synctex.gz
+# big files
+*.pickle
+
+# Beamer
+*.nav
+*.snm
+*.vrb
+
+# listings
+*.lol
+
+## Bibliography auxiliary files (bibtex/biblatex/biber):
+*.bbl
+*.bcf
+*.blg
+*-blx.aux
+*-blx.bib
+*.brf
+*.run.xml
+
+# PyCharm
+.idea
+# EOF
+
+# Texmaker
+doc/*.gz
+
+# EOF
