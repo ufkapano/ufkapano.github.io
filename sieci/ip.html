@@ -1,0 +1,272 @@
+<html>
+<head>
+<title>IP</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Adresowanie IP</h1>
+
+<p>Istnieją dwa standardy adresowania:
+<ul>
+<li>IPv4 (32-bitowy adres) - obecnie stosowany
+<li>IPv6 (128-bitowy adres) - wprowadzany.
+</ul>
+
+<p>Adres w IPv4 jest 32-bitową liczbą całkowitą w określonym formacie.
+Prefiks określa adres sieci, sufiks adres węzła w danej sieci.
+Adresy sieci (prefiks IP) przydziela INTERNIC.
+Wyróżniamy następujące klasy adresów:
+<ul>
+<li>klasa A (8+24) - największe sieci
+<li>klasa B (16+16) - średnie sieci
+<li>klasa C (24+8) - małe sieci
+<li>klasa D - adresy rozsyłania grupowego
+<li>klasa E - zarezerwowane.
+</ul>
+
+<p>Postać adresów IP dla poszczególnych klas (X,x=0 lub 1):
+<pre>
+         prefiks                    sufiks
+klasa A: 0XXXXXXX.xxxxxxxx.xxxxxxxx.xxxxxxxx
+klasa B: 10XXXXXX.XXXXXXXX.xxxxxxxx.xxxxxxxx
+klasa C: 110XXXXX.XXXXXXXX.XXXXXXXX.xxxxxxxx
+
+klasa D: 1110XXXX.XXXXXXXX.XXXXXXXX.XXXXXXXX
+klasa E: 1111XXXX.XXXXXXXX.XXXXXXXX.XXXXXXXX
+</pre>
+
+<p>Adresów IP nie podaje się w zapisie binarnym, lecz w zapisie
+oktetowo-dziesiętnym (dzielimy na oktety, a te zapisujemy 
+dziesiętnie, oddzielając liczby dziesiętne kropką).
+
+<p>Stare reguły podziału na klasy:
+<ul>
+<li>klasa A: pierwszy bajt od 0 do 127 (około 17 milionow hostów)
+<li>klasa B: pierwszy bajt od 128 do 191 (około 65 tysięcy hostów)
+<li>klasa C: pierwszy bajt od 192 do 223 (254 hosty)
+</ul>
+
+<p>Pewne przedziały wartości tu nie wystepują, bo są zarezerwowane.
+Adresy, w których pierwszy bajt jest większy niż 223 nie są 
+przypisywane do sprzętowych interfejsów sieciowych.
+
+<p>Sieć klasy A o prefiksie 127 jest zarezerwowana na potrzeby
+diagnostyczne dla pętli zwrotnej (localhost).
+<pre>
+223 to binarnie 11011111, klasa C
+224 to binarnie 11100000, klasa D
+127 to binarnie 01111111, nominalnie klasa A
+128 to binarnie 10000000, klasa B
+</pre>
+
+<p>Inne ograniczenia:
+
+<p>
+<table border="5" cellspacing="1">
+<tr>
+<td>Prefix</td> 
+<td>Sufikx</td>
+<td>Typ adresu</td>
+<td>Przeznaczenie</td>
+</tr>
+
+<tr>
+<td>zera</td> 
+<td>zera</td>
+<td>bieżący komputer</td>
+<td>używany przy rozruch</td>
+</tr>
+
+<tr>
+<td>sieciowy</td> 
+<td>zera</td>
+<td>sieć</td>
+<td>identyfikuje sieć</td>
+</tr>
+
+<tr>
+<td>sieciowy</td> 
+<td>jedynki</td>
+<td>rozgłaszanie ukierunkowane (broadcast)</td>
+<td>rozgłaszanie w określonej sieci logicznej</td>
+</tr>
+
+<tr>
+<td>jedynki</td> 
+<td>jedynki</td>
+<td>rozgłaszanie ograniczone</td>
+<td>rozgłaszanie w sieci lokalnej (fizycznej)</td>
+</tr>
+
+<tr>
+<td>127</td> 
+<td>cokolwiek</td>
+<td>petla zwrotna (loopback)</td>
+<td>testowanie</td>
+</tr>
+
+<tr>
+<td></td> 
+<td></td>
+<td></td>
+<td></td>
+</tr>
+</table>
+
+
+
+<p>Prywatne numery sieci zdefiniowane w RFC 1918 i RFC 1597:
+<ul>
+<li>sieć 10.0.0.0<br>
+10 to binarnie 00001010, klasa A
+<li>sieci od 172.16.0.0 do 172.31.0.0<br>
+172.16 to binarnie 10110100.00010000, klasa B<br>
+172.31 to binarnie 10110100.00011111, klasa B
+<li>sieci od 192.168.0.0 do 192.168.255.0<br>
+192.168.0   to binarnie 11000000.10101000.00000000, klasa C<br>
+192.168.255 to binarnie 11000000.10101000.11111111, klasa C
+</ul>
+
+<h3>NETMASK</h3>
+
+<p>Powyższe reguły podziału adresów na klasy są używane tylko 
+w przypadku, gdy nie używa się <em>netmask</em>. 
+Stare klasy adresów nie zapewniają
+wystarczającej elastyczności przy definiowaniu adresów.
+Rozwiązaniem są <em>adresy IP bez klas</em>.
+
+<p>Adresowanie bez klas traktuje adres IP jako 32 bity, które mogą być
+w dowolny sposób podzielone pomiędzy część sieci i część hosta.
+Podział bitów jest określany przez maskę bitową (netmask).
+Jest to liczba binarna, która na pozycjach
+odpowiadających adresowi podsieci posiada jedynki, a na pozycjach
+identyfikujących komputer (węzeł) zera. 
+Dla typowej sieci klasy C netmaska to 255.255.255.0.
+Dla każdej wydzielonej netmaską sieci trzeba zarezerwowac jej
+adres sieci IP i adres rozgłoszeniowy IP.
+
+<p>PRZYKŁAD (sieć prawdziwa)
+
+<hr><pre>
+IP           149.156.90.6
+netmask      255.255.255.128 
+broadcast    149.156.90.127
+adres sieci  149.156.90.0
+
+Hosty mają końcówkę od 1 do 126 (126 hostów).
+W zapisie binarnym:
+
+10010101.10011100.01011010.00000110  IP, nominalnie klasa B
+11111111.11111111.11111111.10000000  netmask
+10010101.10011100.01011010.01111111  broadcast
+10010101.10011100.01011010.00000000  adres sieci
+
+Zapis adresu z maską: 149.156.90.6/25
+</pre><hr>
+
+<p>PRZYKŁAD (sieć prywatna)
+
+<hr><pre>
+IP          192.168.1.77
+netmask     255.255.255.224
+broadcast   192.168.1.95
+adres sieci 192.168.1.64 (trochę niewygodny)
+
+Hosty mają końcówkę od 65 do 94 (30 hostów).
+W zapisie binarnym:
+
+11000000.10101000.00000001.01001101  IP, nominalnie klasa C
+11111111.11111111.11111111.11100000  netmask
+11000000.10101000.00000001.01011111  broadcast
+11000000.10101000.00000001.01000000  adres sieci
+
+Zapis adresu z maską: 192.168.1.77/27
+</pre><hr>
+
+<p>PRZYKŁAD (różne możliwe maski sieci i liczby komputerów w sieci)
+
+<p>
+<table border="5" cellspacing="1">
+<tr>
+<td>Ostatni oktet NETMASK</td> 
+<td>Postać dziesiętna</td>
+<td>Opis</td>
+</tr>
+
+<tr>
+<td></td> 
+<td></td>
+<td></td>
+</tr>
+
+<tr>
+<td>11111110</td> 
+<td>255.255.255.254</td>
+<td>A.A.A.xxxxxxx0 adres sieci<br>
+    A.A.A.xxxxxxx1 broadcast<br>
+    nie ma miejsca na adres hosta</td>
+</tr>
+
+<tr>
+<td>11111100</td> 
+<td>255.255.255.252</td>
+<td>A.A.A.xxxxxx00 adres sieci<br>
+    A.A.A.xxxxxx01 host<br>
+    A.A.A.xxxxxx10 router<br>
+    A.A.A.xxxxxx11 broadcast</td>
+</tr>
+
+<tr>
+<td>11111000</td> 
+<td>255.255.255.248</td>
+<td>A.A.A.xxxxx000 adres sieci<br>
+    A.A.A.xxxxx001 host1<br>
+    A.A.A.xxxxx010 host2<br>
+    A.A.A.xxxxx011 host3<br>
+    A.A.A.xxxxx100 host4<br>
+    A.A.A.xxxxx101 host5<br>
+    A.A.A.xxxxx110 router (6)<br>
+    A.A.A.xxxxx111 broadcast</td>
+</tr>
+
+<tr>
+<td>11110000</td> 
+<td>255.255.255.240</td>
+<td>A.A.A.xxxx0000 adres sieci<br>
+    A.A.A.xxxx0001 host1<br>
+    A.A.A.xxxx1110 router (14)<br>
+    A.A.A.xxxx1111 broadcast</td>
+</tr>
+
+<tr>
+<td>11100000</td> 
+<td>255.255.255.224</td>
+<td>A.A.A.xxx00000 adres sieci<br>
+    A.A.A.xxx00001 host1<br>
+    A.A.A.xxx11110 router (30)<br>
+    A.A.A.xxx11111 broadcast</td>
+</tr>
+
+<tr>
+<td>11000000</td> 
+<td>255.255.255.192</td>
+<td>A.A.A.xx000000 adres sieci<br>
+    A.A.A.xx000001 host1<br>
+    A.A.A.xx111110 router (62)<br>
+    A.A.A.xx111111 broadcast</td>
+</tr>
+
+<tr>
+<td>10000000</td> 
+<td>255.255.255.128</td>
+<td>A.A.A.x0000000 adres sieci<br>
+    A.A.A.x0000001 host1<br>
+    A.A.A.x1111110 router (126)<br>
+    A.A.A.x1111111 broadcast</td>
+</tr>
+</table>
+
+</body>
+</html>

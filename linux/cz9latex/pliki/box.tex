@@ -1,0 +1,36 @@
+% Rozne rzeczy zwiazane z ramkami i odstepami.
+\documentclass[12pt]{article}
+%
+% Zmiany w domyslnych rozmiarach strony.
+\setlength{\topmargin}{-0.5in}    % 1in - 0.5in
+\setlength{\oddsidemargin}{-0.5in}  % 1in - 0.5in
+\setlength{\evensidemargin}{-0.5in} 
+% To ma znaczenie tylko przy druku dwustronnym
+%
+% Zmiana rozmiaru korpusu strony.
+\setlength{\textheight}{10in}
+\setlength{\textwidth}{6in}
+%
+% Zmiana domyslnego wciecia na poczatku kazdego akapitu.
+% Jednorazowo robi sie to przez polecenie \noindent.
+% Rozpoczecie akapitu to pusta linia lub polecenie \par.
+\setlength{\parindent}{12mm}
+%
+% Zmiana domyslnego pionowego odstepu pomiedzy akapitami.
+\setlength{\parskip}{10mm}
+\begin{document}
+
+Wersje skrocone polecen nie majace parametrow opcjonalnych:
+\fbox{tekst}, \mbox{tekst} (pewna calosc nie dzielona przez LaTeX-a.
+
+Rozne mozliwosci ramek (podobnie dla makebox)
+\begin{itemize}
+\item \framebox[10cm][l]{na lewo}
+\item \framebox[10cm][r]{na prawo}
+\item \framebox[10cm][c]{w srodku}
+\item \framebox[10cm][s]{kilka roznych wyrazow}
+\item \framebox[3\width]{potrojna}
+\end{itemize}
+
+
+\end{document}

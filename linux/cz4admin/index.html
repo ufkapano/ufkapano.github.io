@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Admin</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Administrowanie systemem Linux</h1>
+
+<h3>Elementarne czynności administracyjne</h3>
+
+<ul>
+<li>Zmiana tożsamości: <em>su</em>.
+<li>Rodzaj systemu operacyjnego: <em>dmesg</em>, <em>uname</em>.
+<li>Użytkownicy zalogowani w systemie: 
+<em>who</em> (<em>who I am</em>), <em>uptime</em>, 
+<em>w</em>, <em>finger</em>.
+<li>Zakładanie konta użytkownika: 
+<em>adduser</em> (lepsze od <em>useradd</em>), <em>passwd</em>.
+<li>Badanie systemu plików: <em>cd</em>, <em>ls</em>.
+<li>Procesy systemowe: 
+<em>ps</em>, <em>top</em>, <em>jobs</em>, <em>kill</em>.
+<li>Montowanie systemów plików: <em>mount</em>.
+<li>Zamykanie systemu: <em>shutdown</em>.
+</ul>
+
+<h3>Zagadnienia lokalne</h3>
+
+<ul>
+<li>Proces ładowania początkowego.
+<li>Instalacja Debiana na Toshiba Tecra A7-112 
+(<a href="tecra-txt.html">środowisko tekstowe</a>,
+<a href="tecra-x11.html">środowisko graficzne</a>)
+<li>Boot loadery: lilo, 
+<a href="lp-grub.html">grub</a>.
+<li>Polecenia związane z czasem (date, hwclock, cal).
+<li>Zarządzanie pakietami (rpm, deb).
+<li>Instalacja programu ze źródeł (<a href="make.html">make</a>).
+<li>Drukowanie plików (<a href="lpr.html">lpr</a>, cups).
+<li>Pielęgnacja jądra systemu (lsmod, modprobe, insmod, rmmod, depmode).
+<li><a href="make-2.6.html">Kompilacja jądra 2.6 ze źródeł</a>,
+<a href="lp-kernel.html">artykuł</a>.
+<li>PCMCIA.
+<li>Zarządzanie energią: apmd, acpid.
+<li>Polecenie quota.
+<li>Zarządzanie <em>/etc/init.d/</em>:
+<em>chkconfig</em> (Red Hat),
+<em>rcconf</em> (Debian).
+<li>Sprawdzanie systemu plików (df, mount, du).
+<li>Partycjonowanie dysku: fdisk, GNU parted.
+<li>Polecenie sudo.
+<li>Obsługa sprzętu.
+</ul>
+
+<h3>Usługi sieciowe</h3>
+
+<ul>
+<li><a href="iface.html">Interfejsy komunikacyjne</a>.
+<li><a href="inetd.html">Demon inetd</a>.
+<li>Usługi logowania (telnet, rlogin, ftp).
+<li>Poczta elektroniczna (MTA: sendmail, qmail, exim, postfix;
+<a href="lp-mail.html">klieci poczty</a>).
+<li>WWW (serwery: apache; serwery proxy: squid).
+<li>Telnet (niebezpieczne).
+<li>FTP (serwer: proftpd, wu-ftpd; <a href="lp-ftp.html">klienci ftp</a>).
+<li>SSH.
+<li>IRC.
+<li>Samba.
+<li>Usenet.
+<li>DNS (bind, djbdns).
+<li>NFS.
+<li><a href="ldap.html">LDAP</a>.
+</ul>
+
+</body>
+</html>

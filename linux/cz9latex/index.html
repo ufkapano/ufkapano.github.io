@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>LaTeX</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>LaTeX</h1>
+
+<p>Przykładowe pliki źródłowe systemu LaTeX są w 
+<a href="pliki/">katalogu</a>.
+
+<h3>Przetwarzanie dokumentu</h3>
+
+<ol>
+<li>Plik źródłowy TEX (<em>plik.tex</em>) przygotowujemy
+w dowolnym edytorze.
+
+<li>Przetwarzamy plik TEX do postaci DVI
+<pre>
+$ latex plik.tex
+</pre>
+<p>Powstaje plik DVI (plik.dvi) i jeszcze kilka plików
+pomocniczych (LOG, AUX, TOC, LOF, LOT).
+Plik DVI możemy obejrzeć w środowisku graficznym za pomocą Xdvi.
+
+<li>Przetwarzamy plik DVI do PS (plik postskryptowy)
+<pre>
+$ dvips -o plik.ps plik.dvi
+</pre>
+<p>Plik PS możemy obejrzeć w środowisku graficznym za pomocą
+GSview czy ghostview, lub też wydrukować.
+
+<li>Istnieje szereg programów dodatkowych, które wykonują wiele
+pożytecznych konwersji, np. zamianę PS do PDF
+<pre>
+$ ps2pdf plik.ps
+</pre>
+</ol>
+
+</body>
+</html>

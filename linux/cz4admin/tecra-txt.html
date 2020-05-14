@@ -1,0 +1,247 @@
+<html>
+<head>
+<title>Debian na Toshiba Tecra A7</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Instalacja Debiana 3.1 Sarge na Toshiba Tecra A7-112  
+(środowisko tekstowe)</h1>
+
+<pre>
+* Reboot z CDROMu (instalacja z płyt DVD).
+
+* Help jest pod F1.
+boot: linux26 acpi=off
+Można jeszcze ewentualnie dodać opcje: noapic, nolapic.
+Bez acpi=off instalacja zawieszała się.
+
+* Język: Polish - Polski
+
+* Układ klawiatury: polski (pl)
+
+* Wykrywanie sprzętu
+
+* Konfiguracja sieci - nie wykrył karty.
+Knoppix ma nowsze jądro 2.6.17, które wykrywa sterownik
+e1000: Intel(R) PRO/1000 Gigabit Ethernet
+Pomijam ten etap.
+
+* Nazwa hosta: NAZWA_HOSTA
+
+* Partycjonowanie dysku: ręcznie.
+Device      Id   System                 Rozmiar [wg Windows]
+/dev/hda1    7   HPFS/NTFS              21.0 GB [19.5 GB]
+/dev/hda2   82   Linux swap / Solaris    2.0 GB
+/dev/hda3   83   Linux (ext3)           48.7 GB
+/dev/hda4    f   W95 Ext'd (LBA)        ...
+/dev/hda5    b   W95 FAT32               8.4 GB [7.79 GB]
+Formatowałem swap i ext3.
+
+* Instalowanie systemu bazowego Debiana.
+Zaproponował instalację GRUB, ale wycofałem i wybrałem LILO.
+Mam LILO na /dev/hda3.
+
+* Koniec instalacji. Reboot.
+</pre><hr><pre>
+* Konfiguracja strefy czasowej.
+NIE - zegar sprzętowy nie na GMT
+TAK - strefa czasowa Europe/Warsaw
+
+* Konfiguracja pakietu passwd.
+Hasło roota: OK
+Nazwa użytkownika: Andrzej Kapanowski
+Nazwa dla konta: andrzej
+Hasło dla andrzej: HASŁO_ANDRZEJ
+
+* Czy chcę PPP - NIE (modem i tak nie działa pod Linuksem)
+
+* Konfiguracja apta.
+Metoda dostępu do archiwów apta: cdrom
+[zmienię jak będzie działać karta sieciowa]
+Wkładam po kolei dwie płyty DVD.
+Pobiera listę pakietów...
+
+* Wybór oprogramowania.
+Można ponownie przeglądnąć proces konfiguracji: base-config.
+Wybieram na początek:
+[ ] Środowisko graficzne
+[ ] Serwer WWW
+[ ] Serwer druku [i tak bedzie lpr]
+[ ] Serwer DNS
+[ ] Serwer plików
+[ ] Serwer pocztowy [i tak będzie exim4]
+[ ] Baza danych SQL
+[ ] ręczny wybór pakietów
+
+* Konfiguracja Exim4: 
+tylko dostarczanie lokalnie,
+Odbiorca poczty dla kont root i postmaster: andrzej
+
+* Koniec podstawowej instalacji Debiana
+</pre><hr><pre>
+* Można zalogować się na konto root.
+
+* W dselect zrobiłem uaktualnienie źródeł i mam
+widoczne wszystkie pakiety.
+
+* Wyrzucam pakiety: 
+portmaper, nfs-common, bind9-host, dnsutils, grub,
+mtools, fdutils,      [nie mam stacji dyskietek]
+
+* Dodaję pakiety:
+mc, zip, unzip, bzip2, libglib2.0-0, libglib2.0-data,
+lynx, enscript, libpaper1, libpaper-utils,
+gv, ucf, debconf-utils, 
+bmv (PS viewer tekstowy - NIE), libsvga1 (NIE),
+gs-gpl (PS viewer), gs-common, lib*, 
+gsfonts, gsfonts-x11, defoma, xutils,
+dfontmgr [NIE, sugerowany przez defoma],
+xlibs [dla gv], xlibs-data, 
+xav3dg [dla gv],
+fontconfig, ttf-bitstream-vera, ttf-freefont,
+x-ttcidfont-conf [konfigurator TTF i CID],
+
+* Rozmiar papieru: a4
+
+* Konfiguruję mc.
+
+* Konfiguruję bash (w katalogach domowych).
+Dodaję alias ll [plik .bashrc].
+Ustawiam prompt PS1='\u@\h:\w\$ ' 
+[root miał bez \u; plik .bash_profile lub .profile].
+
+* Konfiguruję adduser [plik /etc/adduser.conf].
+Zmieniam zmienne USERGROUPS, DIR_MODE.
+
+* Konfiguruję deluser [plik /etc/deluser.conf].
+
+* Zmieniam plik /etc/fstab.
+
+* Konfiguruję lynx [plik /etc/lynx.cfg].
+Zrobiłem polonizację.
+
+* Zmieniam plik /etc/hosts wg notatek.
+
+* Konfiguruję LILO [plik /etc/lilo.conf].
+[root]# chmod 600 /etc/lilo.conf
+UWAGA Przy instalacji jądra w paczce trzeba uważać, 
+aby po aktualizacji nie zgubić dostępu do potrzebnego jądra.
+Zmieniają się linki /vmlinuz i /initrd.img oraz
+/vmlinuz.old i /initrd.img.old.
+
+* Instaluję nowy kernel z backports:
+kernel-image-2.6-686-smp_2.6.16-13bpo1_i386.deb 
+[NIE - przejściowy, wymaga linux-image-2.6.16-2-686-smp],
+linux-image-2.6.16-2-686-smp_2.6.16-16bpo1_i386.deb
+[wymaga yaird | initramfs-tools | linux-initramfs-tools,
+chyba trzeba ściągnąć z backports],
+libc6-i686 [dla kernela i686],
+Ściągnąłem yaird i initramfs-tools. 
+Instaluję yaird - potrzebne jeszcze (mam z DVD):
+libhtml-template-perl, libparse-resdescent-perl.
+DZIAŁA!
+
+* Pakiety do kompilacji kernela:
+fakeroot, bin86, 
+libncurses5, libncurses5-dev,
+libncursesw5, libncursesw5-dev,
+libdb3, libdb3-dev, db3-doc (NIE, tylko sugerowane),
+kernel-package,
+docbook-utils (NIE - dużo zależności; sugerowany przez kernel-packge), 
+
+* Dodaję pakiety:
+sudo, rcconf,
+anacron (dobre dla laptopa i nie tylko),
+powermgmt-base [dla anacron],
+a2ps, emacsen-common, psutils,
+mpage (drukuje TXT lub PS),
+
+* Pakiety do locales:
+util-linux [jest od początku], util-linux-locales, 
+language-env, 
+localeconf [są pytania], 
+TAK - chcę aby debconf zarządzał
+Default system locales: pl_PL ISO-8859-2
+Zostawiam wszystkie locales domyślme (LC_COLLATE, LC_CTYPE, 
+LC_MESSAGES, LC_MONETARY, LC_NUMERIC, LC_TIME)
+
+* Wykonuję jako andrzej polecenie set-language-env.
+To samo robię na każdym koncie.
+Na koncie pojawia się wiele nowych plików i nowe wpisy.
+Modyfikuję plik /etc/locale.gen i wykonuję polecenie locale-gen.
+
+* Konfiguruję a2ps [plik /etc/a2ps-site.config].
+Zmieniłem encoding na latin2.
+W katalogu /usr/share/ogonkify/afm/ wykonałem polecenie
+[root]# mkafmmap *afm
+które stworzyło plik font.map
+
+* Konfiguruję enscript [/etc/enscript.cfg DUŻE ZMIANY].
+Musiałem zmienić ustawienia dla zmiennej Media A4.
+Jeszcze trzeba mieć pakiet a2ps, który dostarcza ogonkify.
+
+* Konfiguruję sudo [pakiet sudo; plik /etc/sudoers].
+Plik trzeba edytować poleceniem "visudo" jako root.
+
+* Pakiety do sprawdzania pisowni:
+ispell, dictionaries-common, iamerican, ibritish, ipolish,
+aspell (podobno następca ispell), 
+aspell-bin, libaspell15, aspell-en, aspell-pl, aspell-doc, 
+spell (GNU spell, chyba za proste), spellutils,
+myspell-pl (polski słownik), myspell-en-us,
+(sugerowane przez openoffice.org, thunderbird),
+wpolish (polski słownik), wamerican, [dla /usr/share/dict]
+
+* Konfiguracja sieci.
+Zmieniam plik /etc/modules [dodaje e1000].
+Zmieniam plik /etc/network/interfaces [wg Pentium 75].
+Dodaje plik /etc/networks [nie było].
+Dodaje plik /etc/resolv.conf [nie było].
+Zrobiłem reboot i sieć działa.
+
+* Zmieniam plik /etc/apt/sources.list 
+[wyrzuciłem CDROM, dodałem sekcje contrib i non-free, 
+zamieniłem nazwę "stable" na "sarge"]
+Uruchamiam base-config: Konfiguruj apta
+Metoda dostępu do archiwów apta: http
+Kraj serwera lustrzanego: Polska
+Serwer lustrzany Debiana: ftp.pl.debian.org [pierwszy z listy]
+Serwer posredniczący HTTP: [puste, bo nie mam]
+Pobiera liste pakietów...
+
+* Konfiguracja Exim4 jeszcze raz (exim4-config):
+NIE - nie dzielę konfiguracji na małe pliki.
+Tylko dostarczanie lokalnie.
+Odbiorca poczty dla kont root i postmaster: andrzej
+Nazwa pocztowa systemu: NAZWA_HOSTA.NAZWA_DOMENY (było localhost.localdomain)
+Nasłuchiwanie na pocztę przychodzącą: 127.0.0.1
+Inne systemy dla których poczta jest akceptowana: [puste]
+
+Pakiety związane z eximem: 
+exim4, exim4-base, exim4-config, exim4-daemon-light,
+exim4-doc-info, exim4-doc-html (NIE),
+exim4-daemon-heavy (NIE),
+
+* Konfiguruję demona inetd [plik /etc/inetd.conf].
+Wyrzuciłem tylko "ident" (woody miał więcej do wyrzucenia).
+
+* Konfiguruję PCMCIA [plik /etc/pcmcia/config.opts].
+Dodałem zakaz dla IRQ 3.
+
+* Pakiety do drukowania:
+foomatic-filters, foomatic-db-engine, foomatic-db,
+foomatic-db-gimp-print (na razie NIE),
+netcat (na razie NIE, dla foomatic-db-engine),
+libxml2, xml-core, sgml-base, sgml-base-doc, 
+debhelper, html2text, po-debconf, gettext, intltool-debian, 
+psfontmgr, 
+
+* Konfiguracja x-ttcidfont-conf.
+backend dla TT: freetype         [drugie to xtt]
+
+</pre>
+
+</body>
+</html>

@@ -1,0 +1,87 @@
+<html>
+<head>
+<title>Prawa dostępu</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Prawa dostępu do pliku</h1>
+
+<h3>OPIS</h3>
+
+<p>W Linuksie wyróżniamy trzy rodzaje praw dostępu do pliku:
+
+<ul>
+<li>prawo czytania (r=read) 
+(czytanie zawartości katalogu przez polecenie <em>ls</em>; 
+czytanie zawartości pliku; kopiowanie pliku),
+
+<li>prawo pisania (w=write) 
+(zmiana zawartości pliku;
+tworzenie i usuwanie plików z danego katalogu - o ile
+jest przyznane prawo wykonywania katalogu),
+
+<li>prawo wykonywania (x=execute) 
+(uruchamianie programów lub
+skryptów; dostęp do plików w katalogu).
+</ul>
+
+<p>Powyższe prawa w stosunku do każdego pliku (katalogu) 
+są nadawane niezależnie w trzech kategoriach:
+
+<ul>
+<li>prawa właściciela pliku (user),
+<li>prawa użytkowników należących do określonej grupy (group),
+<li>prawa pozostałych użytkowników (others).
+</ul>
+
+<p>Każdy plik ma swojego właściciela indywidualnego i grupowego.
+Administrator (root) posiada wszystkie prawa dostępu do każdego pliku.
+Aby usunąć plik trzeba mieć prawo pisania do katalogu.
+Użytkownik dysponuje zawsze tylko jednym zestawem uprawnień do pliku.
+Typowy katalog w katalogu domowym użytkownika ma następujące prawa 
+dostępu (polecenie <em>ls -l</em>):
+<pre>
+rwxr-xr-x     (zapis symboliczny)
+111101101     (zapis binarny)
+755           (zapis oktalny)
+</pre>
+
+<p>Są jeszcze trzy dodatkowe bity określające prawa dostępu:
+
+<ul>
+<li><em>setuid</em> - stosowany do plików wykonywalnych (użytkownik 
+uruchamiający dany program dostaje na czas wykonywania programu
+efektywny UID taki jak właściciel programu),
+
+<li><em>setgid</em> - stosowany do plików wykonywalnych (użytkownik 
+uruchamiający dany program dostaje na czas wykonywania programu
+GID taki jak grupa skojarzona z programem),
+
+<li><em>sticky</em> - stosowany do katalogu (usunięcie/zmiana 
+nazwy pliku w tym katalogu może być dokonane tylko przez 
+właściciela pliku, właściciela katalogu bądź root-a; 
+ponadto wszystkie utworzone w tym katalogu pliki
+otrzymaja GID grupy katalogu).
+</ul>
+
+<p>Przedstawianie ustawien dla pliku (polecenie <em>ls -l</em>):
+<pre>
+-rwsrwsrwt   chmod 7777
+---S--S--T   chmod 7000 (duże litery, gdy nie ma a+x)
+</pre>
+
+<h3>ZMIANA PRAW DOSTĘPU DO PLIKU</h3>
+
+<pre>
+$ chmod 777 plik1               (zapis oktalny)
+$ chmod u+rwx,g+rwx,o+r plik1     (zapis symboliczny, nie ma tam spacji)
+$ chmod a+rx plik1               (można od razu wszystkim)
+$ chmod 7000 plik1           (ustawione dodatkowe bity)
+$ chmod u=rwxs,go=rx plik1     (ustawione 4755)
+$ chmod u+rwX *   (ustawia x tylko katalogom i plikom zostawia bez zmian)
+</pre>
+
+</body>
+</html>

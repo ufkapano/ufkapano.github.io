@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>make</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>make</h1>
+
+<h3>OPIS</h3>
+
+<p>Tekst zródłowy programu w języku C dostajemy zwykle w postaci pliku 
+.tar lub .tar.gz, który rozpakowujemy w określonym katalogu.
+Dalej szukamy plików tekstowych INSTALL, README (czy podobnych)
+i czytamy je. 
+Interesuje nas jeszcze plik <em>makefile</em>, <em>Makefile</em>, 
+czy też <em>GNUmakefile</em> (zaleca się, aby dla swoich
+programów tworzyć plik <em>Makefile</em>). 
+Jest to skrypt dla polecenia <em>make</em> automatyzujący proces 
+kompilacji  i instalacji. 
+Występują w nim między innymi wywołania kompilatora. 
+W przypadku istnienia pliku <em>makefile</em> instalacja aplikacji 
+z reguły sprowadza się do wydania kolejno poleceń:
+
+<hr><pre>
+[root]# ./configure
+[root]# make             (kompiluje wg makefile)
+[root]# make install         (instaluje)
+</pre><hr>
+
+<h3>OPCJE MAKE</h3>
+
+<pre>
+make -C DIR
+	(zmiana katalogu bieżącego przed przeczytaniem Makefile;
+	stosowane często przy rekurencyjnych wywołaniach make)
+
+</pre>
+
+<p>Zastosowanie w pliku <em>Makefile</em>
+(trzeba korzystać ze zmiennej MAKE)
+
+<hr><pre>
+podsystem:
+	$(MAKE) -C podkatalog
+</pre><hr>
+
+
+<h3>REGUŁY BUDOWY Makefile</h3>
+
+<pre>
+# Komentarze jak w skryptach shella
+
+Definiowanie sztucznych celów:
+
+.PHONY : clean zip
+
+Definiowanie zmiennej (moga być spacje po obu stronach znaku równości):
+
+ZMIENNA = wartosc
+CC = gcc
+PLIKI = plik1 plik2 plik3
+
+Wywołanie zmiennej:
+
+$(ZMIENNA)
+$(HOME)               (można korzystać ze zmiennych powłoki)
+</pre>
+
+</body>
+</html>

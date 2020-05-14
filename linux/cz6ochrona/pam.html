@@ -1,0 +1,33 @@
+<html>
+<head>
+<title>PAM</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>PAM</h1>
+
+<h3>PAKIETY</h3>
+
+<ul>
+<li>pam (RH 6.1)
+<li>libpam-* (Debian) [libpam-doc]
+</ul>
+
+<h3>OPIS</h3>
+
+<p>Jest to systemowe narzędzie bezpieczeństwa, które pozwala
+adminowi ustalać reguły uwierzytelniania bez rekompilacji
+programów, które to uwierzytelnianie wykonują.
+
+<p>Z tym jest związany program "consolehelper" i "userhelper".
+Do komendy "shutdown" trzeba stworzyć plik /etc/shutdown.allow 
+z lista użytkownikow uprawnionych do zamykania systemu.
+Trzeba też sprawdzić, czy w pliku /etc/inittab przy wywołaniu
+polecenia shutdown przez [Ctrl]+[Alt]+[Del] jest opcja "-a",
+która powoduje przeczytanie pliku /etc/shutdown.allow.
+
+
+</body>
+</html>

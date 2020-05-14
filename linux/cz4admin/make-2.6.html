@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>Kompilacja jądra 2.6 ze źródeł</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Kompilacja jądra 2.6 ze źródeł</h1>
+
+<h3>INFORMACJE</h3>
+
+<ul>
+<li>Chip Special Linux Wiosna 2001 - 
+s. 64 (konfiguracja jądra),
+s. 68 (kompilacja jądra)
+</ul>
+
+<h3>PAKIETY</h3>
+
+<p>gcc, libc6-dev, bin86, 
+ncurses-dev (dla menuconfig),
+tk-dev (dla xconfig),
+fakeroot (jeżeli kompilujemy jako zwykły użytkownik),
+kernel-package,
+
+<p>Dawniej wszystko robiłem jako root. Niektórzy piszą, żeby
+pracować jako zwykły użytkownik i chyba dopiero na etapie
+instalacji kernela wykonać sudo.
+
+<h3>KROK 1</h3>
+
+<p>Bedę kompilował przykładowe jądro 2.6 w Debianie.
+Zwykle mamy już katalog ze źrodłami starego jądra o nazwie
+<em>/usr/src/linux</em>. Jeżeli to jest link symboliczny, to go usuwamy.
+Jeżeli to jest prawdziwy katalog, to nazywamy go zgodnie z wersją
+jądra, np. poleceniem
+<br>
+[root]# mv /usr/src/linux /usr/src/linux-2.6.x
+
+<h3>KROK 2</h3>
+
+<p>Przechodzimy do właściwego katalogu
+<br>
+[root]# cd /usr/src
+
+<h3>KROK 3</h3>
+
+<p>Jeżeli mamy źródła na dysku w katalogu <em>/usr/src</em>, 
+to rozpakowujemy
+<br>
+[root]# tar -xzvf linux-2.6.x.tar.gz
+<br>
+lub
+<pre>
+[root]# bzip2 -d linux-2.6.x.tar.bz2
+[root]# tar -xvf linux-2.6.x.tar
+</pre>
+
+<p>Można zmienić właściciela drzewa plików ze źródłami
+
+<pre>
+[root]# chown -R root:root /usr/src/linux
+[root]# chown -R root:src /usr/src/linux
+</pre>
+
+<h3>KROK 4</h3>
+
+<p>Postępujemy wg pliku README. 
+Piszą, aby nie używać katalogu <em>/usr/src/linux</em> do kompilacji!
+Ja jednak zostawiam tutaj.
+W Documentation/Changes trzeba sprawdzić potrzebne wersje pakietów.
+
+<h3>KROK 5</h3>
+
+<pre>
+[root]# cd /usr/src/linux
+[root]# make mrproper            (generalne porzadki)
+</pre>
+
+<p>To polecenie kasuje plik <em>.config</em>, 
+więc lepiej go gdzieś skopiować.
+
+<h3>KROK 6</h3>
+
+<p>Konfigurujemy jądro za pomocą jednego z narzędzi:
+
+<pre>
+make config                (tekstowy, uciążliwe pytania)
+make menuconfig            (semigraficzny)
+make xconfig               (do X Window)
+make oldconfig    
+(aby korzystał ze starego .config, z poprzedniej wersji kernela)
+</pre>
+
+<p>Wybieram:
+<br>
+[root]# make menuconfig
+
+<p>Warto mieć pod ręka Kernel-HOWTO.
+Warto zapisać ustawienia do pliku 
+(.config lub z naszą nazwą config-2.6.x).
+
+<h3>KROK 6</h3>
+
+<p>Dawniej robiłem:
+<pre>
+[root]# make dep             (obecnie nie trzeba)
+[root]# make clean           (czyszczenie po ostatniej kompilacji)
+[root]# make bzImage          (właściwa kompilacja jądra)
+</pre>
+
+<p>Samo jądro podpowiada "make" lub "make help". Zrobię:
+
+<pre>
+[root]# make clean           (nie skasuje .config)
+[root]# make all          (powstaje bzImage)
+</pre>
+
+<p>Skompilowane jądro jest umieszczane w pliku
+<em>/usr/src/linux/arch/i386/boot/bzImage</em>.
+
+<h3>KROK 7</h3>
+
+<pre>
+[root]# make modules                 (kompilacja modułów jądra)
+[root]# make modules_install            (instalacja modułów)
+</pre>
+
+<h3>KROK 8</h3>
+
+<p>Kopiujemy jądro w odpowiednie miejsce zmieniając nazwę
+
+<pre>
+[root]# cd /usr/src/linux/arch/i386/boot
+[root]# cp bzImage /boot/vmlinuz-2.6.x
+</pre>
+
+<h3>KROK 9</h3>
+
+<p>
+Instalujemy mapę systemową jądra, czyli plik z adresami funkcji
+zdefiniowanych w kernelu.
+<br>
+[root]# cp /usr/src/linux/System.map /boot/System.map-2.6.x
+
+<p>Tworzymy plik <em>initrd.img</em> (to jest chyba krok opcjonalny)
+<br>
+[root]# mkinitrd -o /boot/initrd.img-2.6.x /lib/modules/2.6.x
+
+<h3>KROK 10</h3>
+
+<p>
+Modyfikujemy plik <em>/etc/lilo.conf</em> dodając nową sekcję 
+<em>image</em> i uaktualniamy konfigurację LILO poleceniem
+<br>
+[root]# lilo
+
+<p>Przeładowujemy system
+<br>
+[root]# reboot
+
+</body>
+</html>

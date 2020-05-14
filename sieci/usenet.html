@@ -1,0 +1,188 @@
+<html>
+<head>
+<title></title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Usenet</h1>
+
+<dl>
+<dt>NNTP </dt><dd> Network News Transfer Protocol 
+(protokoły używane w Usenet News)</dd>
+
+<dt>FAQ </dt><dd> Frequently Asked Questions</dd>
+
+<dt>FYI </dt><dd> For Your Information</dd>
+
+<dt>RFC </dt><dd> Request For Comment</dd>
+</dl>
+
+<p>Serwisy poświęcone grupom dyskusyjnym: 
+<em>http://www.niusy.pl/</em>,
+<em>http://www.usenet.pl/doc/news-pl-faq.htpl</em>
+[rozszerzenie pliku HTPL]. 
+
+<p>Grupy dyskusyjne dostępne przez WWW: <em>http://usenet.gazeta.pl/</em>.
+
+<p>Polska Strona Ogonkowa: <em>http://www.agh.edu.pl/ogonki/</em>.
+
+<p>USENET - inaczej: Usenet News, Net News, News, grupy dyskusyjne.
+USENET to jakby tablica ogłoszeń, którą każdy może przeczytać 
+lub powiesić swój artykuł. Role tablic ogłoszeniowych pełnią
+serwery grup dyskusyjnych.
+Jest to największy po poczcie elektronicznej mechanizm wymiany
+informacji w sieci.
+
+<p>Oryginalne oprogramowanie Usenet News zostało napisane w 1979
+dla systemów UNIX przez dwóch studentów Uniwersytetu Duke.
+Za pomocą czytnika wiadomości użytkownik łączy się z serwerem
+grupy dyskusyjnej i może przeglądać znajdujące się tam wiadomości
+oraz pozostawiać własne.
+Poszczególne serwery wymieniają ze sobą wiadomości, dlatego
+wystarczy na ogół połączyć się z lokalnym serwerem News.
+Wiadomości są grupowane tematycznie w grupach dyskusyjnych.
+Nie wszystkie grupy docierają do wszystkich serwerów.
+
+<p>Globalne kategorie w USENET NEWS:
+
+<ul>
+<li>comp - komputery
+<li>misc - tematyka wszechstronna
+<li>news - informacje związane z funkcjonowaniem Usenet
+<li>rec - rekreacja, hobby, sztuka,...
+<li>sci - różne dziedziny nauki
+<li>soc - zagadnienia społeczne
+<li>talk - dyskusje na różne tematy
+<li>alt - grupy nowe lub alternatywne
+</ul>
+
+<p>Istnieją grupy o zasięgu lokalnym (np. miasto, kraj):
+
+<ul>
+<li>pl - Polska (w języku polskim)
+<li>de - Niemcy
+</ul>
+
+<p>Przykłady grup: 
+
+<ul>
+<li>comp.os.linux.setup
+<li>pl.comp.os.linux.debian 
+<li>linux.redhat.rpm
+</ul>
+
+<p>Próbne wiadomości wysyłamy do specjalnych grup, np.:
+
+<ul>
+<li>pl.test
+<li>agh.test
+</ul>
+
+<p>Zanim zapytamy, trzeba przejrzeć FAQ i grupy:
+
+<ul>
+<li>pl.answers
+<li>news.answers
+<li>news.announce.newusers
+</ul>
+
+<p>Wiadomości z grupy są systematycznie usuwane.
+Sa jednak zapamietane w archiwach, np.
+<em>http://www.dejanews.com/</em>.
+
+<p>Istnieją grupy moderowane, w których jeden lub kilku
+moderatorów decyduje o dopuszczeniu artykułu.
+
+<p>Interesujące nas grupy należy subskrybować.
+Przeglądarka grup będzie wtedy pokazywać tylko nowe 
+artykuły z tych grup.
+Można użyć przeglądarki WWW jako czytnika News.
+
+<h3>FORMAT WIADOMOŚCI USENET</h3>
+
+<p>Format artykułów przesyłanych i przechowywanych przez serwery
+grup dyskusyjnych określony jest przez specyfikacje
+RFC850, RFC977 oraz RFC1036.
+Właściwy tekst artykułu poprzedza nagłówek złożony z szeregu
+pól tekstowych (obowiązkowych i dodatkowych). 
+Nagłówek kończy się pustym wierszem, po którym
+następuje treść wiadomości. Cały artykuł również kończy się
+wierszem, który zawiera tylko jedną kropkę.
+
+<h3>PRZYKŁAD NAGŁÓWKA WIADOMOŚCI</h3>
+
+<pre>
+Date: 21 Dec 2000 12:01:21 GMT         #data utworzenia wiadomości
+From: Adam Kowalski &lt;kowalski@chip.pl&gt;           #adres nadawcy
+Message-Id: &lt;ciąg_znaków@serwer_grup_dyskusyjnych&gt;
+Newsgroups: grupa1,grupa2      #gdzie ma być publikowany
+Path: serwer3!serwer2!serwer_źródłowy   
+#serwery uczestniczące w przekazie wiadomości
+Subject: Tytuł_artykułu
+# DALEJ WYBRANE POLA DODATKOWE
+References: message-id_artykułu_odniesienia
+#artykuł z odpowiedziami tworzy tzw. wątek
+Keywords: słowo1, słowo2, słowo3
+Approved: Michał Kamiński &lt;mk@chip.pl&gt;   #email moderatora
+Lines: 243              #liczba wierszy wiadomości
+Summary: abstract_treści
+</pre>
+
+<p>Komunikacja między klientem a serwerem grup dyskusyjnych
+odbywa się na bazie połączenia TCP, standardowo 
+przez port 119 (usługa nntp z pliku <em>/etc/services</em>).
+Bezpieczne połączenia SSL wykorzystują port 563 
+(usługa snews z <em>/etc/services</em>, NNTP over SSL).
+
+<h3>KOFIGURACJA KONTA GRUP DYSKUSYJNYCH</h3>
+
+<p>W Krakowie wybieramy serwer <em>news.cyf-kr.edu.pl</em>
+lub <em>news.agh.edu.pl</em>,
+jeżeli mamy stałe łącze z Internetem. W przypadku połączenia modemowego
+wybieramy serwer <em>news.tpi.pl</em>.
+
+<p>Przy pierwszym połączeniu z serwerem zwykle ściągamy listę
+istniejących grup (z ich opisami lub bez). Następnie wybieramy grupy,
+które nas interesują (subskrybcja). W końcu możemy ściągnąć nagłówki
+wiadomości z subskrybowanych grup (warto ustawić pewne ograniczenie
+na liczbę jednorazowo ściąganych nagłówków, np. 100) 
+i kolejno czytać listy.
+
+<h3>LISTY DYSKUSYJNE</h3>
+
+<p>Listy dyskusyjne to sposób prowadzenia dyskusji w Internecie. 
+Lista dyskusyjna to pewien szczególny adres e-mail, za którym
+kryje się serwer list dyskusyjnych (program obsługujący listę).
+Wymiana informacji odbywa się za pomocą poczty elektronicznej.
+Użytkownik dostaje przez e-mail wiadomości z danej listy 
+dyskusyjnej i może posłać własnego e-maila do innych uczestników 
+dyskusji. 
+Serwery mogą mieć oprogramowanie, które przed rozesłaniem
+pewnej liczby wiadomości, zbiera je w jedną wiadomość (tzw. skrót).
+
+<p>Listy dyskusyjne mogą istnieć równolegle jako grupy dyskusyjne.
+Często mają wtedy w nazwie słowo <em>listserv</em>.
+
+<h3>SUBSKRYPCJA LISTY DYSKUSYJNEJ</h3>
+
+<ol>
+<li>Wybieramy serwer list dyskusyjnych na AGH:
+listserv@uci.agh.edu.pl
+
+<li>Wysyłamy email z tytułem "commands", aby uzyskać listę
+dostępnych poleceń. Jeżeli jednak w tytule podamy coś niezrozumiałego
+dla serwera, to otrzymamy krótki help.
+
+<li>Wysyłamy email z tytułem "lists", aby uzyskać zestaw list dyskusyjnych
+istniejących na serwerze.
+
+<li>Wysyłamy email z tytułem "info nazwa_listy", aby poznać opis listy.
+
+<li>Subskrypcja listy: email z tytułem "subscribe nazwa_listy".
+Koniec subskrypcji: email z tytułem "unsubscribe nazwa_listy".
+</ol>
+
+</body>
+</html>

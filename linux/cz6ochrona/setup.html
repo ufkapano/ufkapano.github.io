@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>setup</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Bezpieczna konfiguracja wstępna hosta (Red Hat)</h1>
+
+<h3>PAKIETY</h3>
+
+<ul>
+<li>setup             (Red Hat)
+</ul>
+
+<h3>OPIS</h3>
+
+<pre>
+/etc/hosts.allow
+/etc/hosts.deny
+/etc/securetty
+(bezpieczne terminale z ktorych moze sie logowac `root' - tty?)
+
+[root]# authconfig            (lub przez "setup")
+
+Narzedzie, ktore pojawia sie czasie instalacji linuksa, ale potem tez
+mozna je uruchomic. Pozwala wybrac opcje dotyczace hasel w systemie. 
+O ile system nie otrzymuje hasel z serwera NIS to w oknie
+"Authentication Configuration" zaznaczamy:
+
+[ ] Enable NIS
+  NIS Domain: _____
+  NIS Server: [*] Request via broadcast or use: _____
+
+[*] Use Shadow Passwords 
+(zaszyfrowane hasla w pliku /etc/shadow, a nie w /etc/passwd)
+
+[*] Enable MD5 Passwords
+(uzywanie algorytmu MD5, czyli hasla moga miec dlugosc do 256 znakow)
+</pre>
+
+
+</body>
+</html>

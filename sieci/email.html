@@ -1,0 +1,254 @@
+<html>
+<head>
+<title>Poczta elektroniczna</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Poczta elektroniczna (email)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>List elektroniczny jest plikiem tekstowym (ASCII) 
+o określonym formacie wysyłanym
+od jednego użytkownika Internetu do drugiego.
+List składa się z nagłówka i treści listu oddzielonych
+pustym wierszem.
+
+<p>Elektroniczna skrzynka pocztowa (konto pocztowe)
+to katalog, do którego ma dostęp tylko jego właściciel.
+Każda elektroniczna skrzynka pocztowa ma co najmniej jeden
+adres poczty elektronicznej postaci
+<em>adresat@komputer</em>,
+gdzie <em>adresat</em> to nazwa użytkownika (lub alias), a
+<em>komputer</em> to nazwa komputera (czasem nazwa dziedziny).
+
+<p>Użytkownik obsługuje swoją skrzynkę pocztową (czyta i pisze listy) 
+za pomocą określonego programu usługowego (programu pocztowego, 
+klienta e-mail). Dalsza transmisja listów obsługiwana jest przez 
+inne oprogramowanie.
+
+<p>Programy obsługi poczty elektronicznej można podzielić na dwie grupy:
+
+<ul>
+<li>programy transportowe (MTA) odpowiedzialne za przesyłanie poczty 
+między komputerami 
+(serwery pocztowe, np. Sendmail, Qmail, Postfix, Zmailer, Exim),
+
+<li>programy klienty poczty elektronicznej służące do wysyłania i
+odbierania poczty przez uzytkowników (tekstowe: mail, pine, mutt;
+graficzne: Outlook Express, Mozilla Thunderbird).
+</ul>
+
+<p>Współcześnie często można korzystać z poczty elektronicznej za pomocą
+zwykłej przeglądarki WWW i protokołu HTTP. Dostęp do skrzynki pocztowej
+realizowany jest na serwerze WWW.
+
+<h3>PROTOKOŁY</h3>
+
+<p>Do transmisji poczty wysyłanej (Outgoing mail)
+wykorzystywany jest protokół SMTP (Simple Mail Transfer Protocol).
+
+<p>Do poczty odbieranej (Incoming mail) 
+wykorzystywane są protokoły POP (Post Office Protokol)
+lub IMAP (Internet Message Access Protocol).
+
+<p>Protokołem transportu poczty TCP/IP jest SMTP.
+Serwer pocztowy oczekuje na pocztę nadchodząca przez port TCP 25.
+Format poczty elektronicznej określa RFC822 i późniejsze dokumenty.
+Protokół SMTP umożliwia wysyłanie i transport poczty elektronicznej przez 
+różnorodne środowiska systemowe.
+
+<p>Cechy protokołu POP:
+
+<ul>
+<li>Zalecany  przy połączeniu modemowym 
+i dostępie do Internetu zawsze z jednego komputera.
+
+<li>Odczytuje i kopiuje wszystkie wiadomości wraz z nagłówkami
+na lokalny komputer od razu po połączeniu z serwerem
+(można ustawić opcję, czy wiadomości na serwerze mają być usuwane).
+
+<li>Można przeglądać pocztę offline.
+
+<li>Długi czas ładowania poczty.
+
+<li>Brak możliwości wstępnej selekcji wg nagłówków.
+
+<li>Brak dostępu do wcześniejszych wiadomości w przypadku połączenia
+z innego komputera.
+</ul>
+
+<p>Cechy protokołu IMAP:
+
+<ul>
+<li>Jest zalecany przy posiadaniu stałego łącza i przy
+dostępie do Internetu z różnych komputerów.
+
+<li>Dostęp do wszystkich wiadomości niezależnie od miejsca połączenia.
+
+<li>Wstępne czytanie nagłówków (szybkie ładowanie).
+
+<li>Czytanie poczty tylko online, trzeba wznawiać połączenie, gdy
+chcemy pobrać nieprzeczytaną jeszcze pocztę.
+</ul>
+
+<h3>ATTACHEMENT (ZAŁĄCZNIK)</h3>
+
+<p>Protokoły pocztowe używane do wymiany poczty elektronicznej
+pozwalają na przesyłanie w treści listów jedynie prostych
+znaków ASCII. Istnieją jednak narzędzia do przesyłania plików
+w postaci binarnej. Realizowane jest to w postaci załączników
+dodawanych do zwykłej wiadomości. Załączniki są zakodowane
+zwykle za pomocą standardu MIME (RFC1521 i RFC1522).
+
+<p>Inny standard to UUENCODE (Unix to Unix Encoding) - 
+metoda konwersji plików z postaci binarnej na tekstową (ASCII). 
+Odkodowanie wykonuje się przez UUDECODE (Unix to Unix Decoding).
+
+<p>Istnieje przyszłościowy standard Unicode, 
+w którym każdemu znakowi przyporządkowano liczbę 16-bitową.
+Pierwszych 256 pozycji odpowiada dotychczasowemu standardowi 
+kodowania - ISO Latin-1 (ISO-8859-1).
+
+<p>Ostatnio pojawiła się możliwość przesyłania poczty HTML.
+Wiadomość HTML jest kilkuczęściowym dokumentem składającym
+się z komponentu tekstowego oraz załączników w formacie MIME.
+Załączniki te skojarzone są z adresami URL, do których
+odwołują się w celu ściągnięcia grafiki, animacji, itp.
+Połączenia takie wykonywane są dopiero w momencie, gdy
+adresat otwiera wiadomość do czytania. Dzięki temu przesyłki
+nie sa zbyt duże.
+Przy wysyłaniu poczty HTML mailer zwykle upewnia się, czy adresat
+będzie w stanie przeczytać taką pocztę (sprawdza w książce 
+adresowej lub pyta o potwierdzenie).
+
+<h3>MIME</h3>
+
+<p>W celu umożliwienia przesyłania pocztą elektroniczną
+dowolnych danych (nie tylko tekstowych) opracowano standard MIME
+kodowania informacji binarnej do postaci tekstowej. 
+Po odebraniu listu można zdekodować jego treść, co pozwala
+odtworzyć wysyłane informacje.
+
+<p>MIME jest standardem pozwalającym przesłać w sieci wszelkie dane
+za pomocą standardowych narzędzi, takich jak poczta, newsy,
+czy WWW. Wykorzystuje się go m.in. do rozwiązania problemu
+kodowania polskich liter.
+
+<p>Za obowiazujący standard kodowania polskich znaków uznano 
+międzynarodową normę ISO-8859-2 (ISO Latin-2). 
+W przeglądarce ustawiamy Encoding: Central European (ISO-8859-2).
+Ta norma jest przyjęta w MIME.
+UWAGA Windows używają swojego wewnętrznego formatu CP1250,
+ale wspierają standard ISO-8859-2.
+
+<p>Początkowo w Internecie nie było możliwości przesyłania
+znaków o kodach większych od 127, dlatego wiele programów ciągle nie 
+próbuje przesyłać takich znaków. Zachodzi więc konieczność
+specjalnego zakodowania znaków z tzw. górnej połówki
+zestawu znaków za pomocą znaków z dolnej części,
+czyli ze standardowego ASCII.
+
+<p>Zasadniczo są dwa sposoby kodowania znaków o kodach większych
+niż 127: Quoted Printable lub base64.
+Standard Quoted Printable pozwala na zakodowanie symboli
+spoza standardowego 127-znakowego zbioru symboli ASCII.
+Znaki o kodzie większym niż 127 zapisuje się jako =XX,
+gdzie XX jest kodem symbolu w rozszerzonej tablicy ASCII.
+Znak równości również musi być zakodowany.
+Standard base64 stosuje się raczej do plików binarnych
+(grafika, dźwięk).
+
+<p>W nagłówku przesyłki pocztowej z MIME znajdują się linie
+związane z MIME:
+
+<hr><pre>
+MIME-Version: 1.0                (wersja standardu)
+Content-type: text/plain; charset=ISO-8859-2
+                (czysty tekst z polskimi znakami)
+Content-transfer-encoding: quoted-printable
+lub
+Content-transfer-encoding: base64
+lub
+Content-transfer-encoding: 8bit
+   (znaki są wysyłane w postaci 8-bitowej bez konwersji)
+</pre><hr>
+
+<p>Opisane powyżej uwagi dotyczą kodowania polskich liter
+w treści listu. Jeżeli musimy umieścić polskie litery
+w samym nagłówku, np. w polu From: lub Subject:,
+to wg MIME używa się formatu:
+
+<hr><pre>
+=?charset?encoding?encoded_text?=
+</pre><hr>
+
+<p>gdzie
+
+<ul>
+<li>charset to np. ISO-8859-2,
+
+<li>encoding to litera Q (quoted-printable) lub B (base64),
+
+<li>encoded_text to tekst zakodowany zgodnie z poprzednimi regulami.
+</ul>
+
+<h3>POLSKA NORMA</h3>
+
+<p>Polska norma dotycząca sposobu kodowania polskich znaków
+nosi oznaczenie: PN-93 T-42118
+i jest zgodna z ISO-8859-2, więc aby być z nią w zgodzie
+należy stosować następujące kodowanie polskich znaków:
+
+<pre>
+Znak/Kod/Quoted Printable/Unicode/
+=/61/=3D/0x003D/
+Ą/161/=A1/0x0104/
+Ć/198/=C6/0x0106/
+Ę/202/=CA/0x0118/
+Ł/163/=A3/0x0141/
+Ń/209/=D1/0x0143/
+Ó/211/=D3/0x00D3/
+Ś/166/=A6/0x015A/
+Ź/172/=AC/0x0179/
+Ż/175/=AF/0x017B/
+ą/177/=B1/0x0105/
+ć/230/=E6/0x0107/
+ę/234/=EA/0x0119/
+ł/179/=B3/0x0142/
+ń/241/=F1/0x0114/
+ó/243/=F3/0x00F3/
+ś/182/=B6/0x015B/
+ź/188/=BC/0x017A/
+ż/191/=BF/0x017C/
+</pre>
+
+<h3>CECHY KLIENTÓW POCZTY ELEKTRONICZNEJ</h3>
+
+<ul>
+<li>Możliwość zaszyfrowania poczty za pomocą klucza wbudowanego
+w mailer. Nadawca musi posiadać Certyfikat Bezpieczenstwa.
+<li>Możliwość dołączenia elektronicznego podpisu do poczty.
+Nadawca musi wcześniej zdobyć taki podpis.
+<li>Lokalna baza adresów (książka adresowa).
+<li>Możliwość stworzenia listy wysyłkowej (mailing list).
+<li>Filtrowanie poczty w celu posortowania lub odrzucenia listów.
+<li>Moduł wykrywający wirusy.
+</ul>
+
+<h3>BEZPIECZEŃSTWO</h3>
+
+<p>OPEN RELAY (otwarty przekaźnik) to sytuacja w której serwer 
+przyjmuje do wysyłki dowolną pocztę. Obecnie każdy MTA ma
+domyślnie zablokowaną funkcję RELAY w związku ze spamem.
+Oznacza to, że przyjmuje pocztę wyłącznie dla samego siebie,
+ewentualnie dla innych wyspecyfikowanych serwerów.
+
+<p>Przy korzystaniu z poczty elektronicznej warto korzystać
+z połączeń szyfrowanych, aby zapobiec przejęciu hasła do swojego konta.
+Można skorzystać z protokołu SSL (Secure Socket Layer).
+
+</body>
+</html>

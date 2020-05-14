@@ -1,0 +1,46 @@
+% Rozne rzeczy zwiazane z trybem math.
+\documentclass[12pt]{article}
+\begin{document}
+
+Tu zmieniam czcionke na rm, trzeba tez dac odstepy
+(jest jednak zalecenie, zeby unikac polecenia {\rm }):
+\begin{displaymath}
+a\in B\ {\rm and}\ b\in B.
+\end{displaymath}
+
+Zamiast displaymath mozna o wiele krocej
+\[ a\in B\ {\rm and}\ b\in B. \]
+
+Tu stosuje polecenie mbox (ten sam efekt i jest lepsze):
+\begin{displaymath}
+a\in B\ \mbox{and}\ b\in B.
+\end{displaymath}
+
+\begin{displaymath}
+{\frac{Licznik}{Mianownik}}
+\end{displaymath}
+
+Uzycie wykrzyknika zapobiega duzemu odstepowi po symbolu calki:
+\begin{displaymath}
+\int {dx} f(x), \int\! {dy} g(y).
+\end{displaymath}
+
+Aby znak mnozenia pojawial sie tylko przy zlamaniu linii wzoru
+trzeba zastosowac backslash: $a \* b$.
+
+W pismie nawias krecony stalej wielkosci uzyskujemy przez
+$\{\, x: x \le 1 \, \}$.
+Ponizej definiowanie przedzialow funkcji:
+\begin{equation}
+f(x) =
+\left{
+\begin{array}{ll}
++\infty   & \mbox{for} \ x<1,  \\
+-\epsilon & \mbox{for} \ 1<x<2,  \\
+0         & \mbox{for} \ 2<x.
+\end{array}
+\right. 
+\end{equation}
+
+
+\end{document}

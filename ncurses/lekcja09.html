@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>Lekcja 9</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+<hr>
+
+<h1>Programowanie z ncurses (9) - różności</h1>
+
+<h3>ZADANIE 9.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>menu2dim</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>menu2dim.c</em> postaci:
+
+<hr><pre>
+/*
+*  menu2dim.c
+*
+*  Program z HOWTO zmodyfikowany.
+*  Przyklad okna z mozliwoscia poruszania kursorem i wprowadzania znakow.
+*/
+
+#include &lt;ncurses.h&gt;
+
+/* Obliczenie rozmiaru okna stosownie do liczby pozycji w menu */
+#define YLICZBA   9
+#define XLICZBA   15
+#define YSIZE   (YLICZBA+2) 
+#define XSIZE   (2*XLICZBA+1)
+
+void print_menu(WINDOW *win, int yrewers, int xrewers);
+
+/* Globalna tablica do przechowywania etykiet */
+char etykiety[YLICZBA][XLICZBA];
+
+int main(void)
+{
+int i, j;
+WINDOW *win;
+int startx, starty;   /* polozenie okna menu */
+int xmax, ymax;   /* rozmiary stdscr */
+int yrewers= 1;    /* zakres od 1 do YLICZBA (nr etykiety w rewersie) */
+int xrewers= 1;    /* zakres od 1 do XLICZBA (nr etykiety w rewersie) */
+int ypozycja= 0;  /* zakres od 0 do YLICZBA (0 gdy nic nie wybrano) */
+int xpozycja= 0;  /* zakres od 0 do XLICZBA (0 gdy nic nie wybrano) */
+int c;
+
+/* Inicjalizacja etykiet. */
+for (i= 0; i &lt; YLICZBA; ++i)
+for (j= 0; j &lt; XLICZBA; ++j)
+	etykiety[i][j]= '.';
+initscr();
+clear();
+noecho();
+cbreak();
+mvprintw(0, 0, "Uzyj kursora do poruszania. Nacisnij ENTER aby skonczyc.");
+refresh();
+
+getmaxyx(stdscr, ymax, xmax);
+startx= (xmax - XSIZE) / 2;
+starty= (ymax - YSIZE) / 2;
+win= newwin(YSIZE, XSIZE, starty, startx);
+keypad(win, TRUE);
+print_menu(win, yrewers, xrewers);
+while (ypozycja == 0 || xpozycja == 0) {
+	c= wgetch(win);    /* troche magiczne obliczenia */
+	if (c == KEY_UP) { 
+		yrewers= (yrewers + YLICZBA -2) % YLICZBA + 1;
+	} else if (c == KEY_DOWN) {
+		yrewers= yrewers % YLICZBA + 1;
+	} else if (c == KEY_LEFT) {
+		xrewers= (xrewers + XLICZBA -2) % XLICZBA + 1;
+	} else if (c == KEY_RIGHT) {
+		xrewers= xrewers % XLICZBA + 1;
+	} else if (c == '\n') {
+		ypozycja= yrewers;
+		xpozycja= xrewers;
+	} else {
+		etykiety[yrewers-1][xrewers-1]= c;
+	}
+	print_menu(win, yrewers, xrewers);
+}	
+mvprintw(ymax-2, 0, "Wybrano pozycje (y,x) = (%d,%d) \n", ypozycja, xpozycja);
+refresh();
+delwin(win);
+endwin();
+return 0;
+}
+
+
+void print_menu(WINDOW *win, int yrewers, int xrewers)
+{
+int x, y, i, j;
+
+box(win, 0, 0);       /* ramka na okno */
+for (i= 0; i &lt; YLICZBA; ++i)
+for (j= 0; j &lt; XLICZBA; ++j) {
+	y= 1+i;
+	x= 1+2*j;
+	if ((yrewers == i+1) &amp;&amp; (xrewers == j+1)) {
+	/* wyswietl te pozycje w rewersie */
+		wattron(win, A_REVERSE); 
+		mvwprintw(win, y, x, "%c", etykiety[i][j]);
+		wattroff(win, A_REVERSE);
+	} else {
+		mvwprintw(win, y, x, "%c", etykiety[i][j]);
+	}
+}
+wrefresh(win);
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+
+<hr>
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+
+</body>
+</html>

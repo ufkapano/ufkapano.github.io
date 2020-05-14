@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Shell</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Shell</h1>
+
+<h3>CHARAKTERYSTYKA SHELLA</h3>
+
+<p>Shell jest pełnym językiem programowania, który zawiera:
+<ul>
+<li> zmienne,
+<li> konstrukcje warunkowe i iteracyjne,
+<li> konfigurowane środowisko użytkownika.
+</ul>
+
+<p>Shell systemu UNIX jest jednym z oryginalnych języków czwartej
+generacji (4GL), który umożliwia szybkie i wydajne budowanie całych
+aplikacji. To co zajmuje jedną linię w programie shella, może zająć
+10 lub więcej linii w C++ albo 100 linii w C.
+
+<p>Shell systemu UNIX jest oryginalnym narzędziem szybkiego makietowania,
+uczącym tak fundamentalnych koncepcji jak modularność, wielokrotna
+używalność i rozwój przez kompozycje, zamiast kodowania.
+
+<p>Shell jest <em>interpreterem</em>, a nie kompilatorem, 
+czyli znaczenie danego polecenia jest określane natychmiast 
+w chwili wprowadzenia tego polecenia do systemu. 
+Dzięki temu można siedzieć przed terminalem i pracować interakcyjnie, 
+otrzymując natychmiastową odpowiedź na każde polecenie.
+
+<p>Polecenia shella mogą porozumiewać się ze sobą za pomocą prostego
+i spójnego sprzęgu, zwanego <em>potokiem</em> (pipe).
+Shell wykorzystuje organizowany przez UNIX system plików, który
+umożliwia grupowanie plików w różnych katalogach różnego poziomu.
+
+<p>Linia polecenia zwykle ma następujące składniki:
+
+<pre>
++-------+---------+-------+----------+
+| Monit | Komenda | Opcja | Argument |
++-------+---------+-------+----------+
+   $        ls       -l       doc
+</pre>
+
+<h3>SHELLE SYSTEMU UNIX</h3>
+
+<pre>
++-------+--------------------------+--------------------------+
+| SHELL | NAZWA                    | AUTOR                    |
++-------+--------------------------+--------------------------+
+| sh    | Bourne Shell             | S. R. Bourne             |
+| ksh   | Korn Shell               | David Korn               |
+| pdksh | Public Domain Korn Shell |                          |
+| csh   | C Shell                  | Bill Joy                 |
+| tcsh  | Tenex C Shell            |                          |
+| bash  | Bourne Again Shell       | Free Software Foundation |
+| ash   |                          |                          |
+| dash  | Debian Almquist Shell    | (zamiennik ash)          |
+| sash  | Stand-alone Shell        |                          |
++-------+--------------------------+--------------------------+
+</pre>
+
+</body>
+</html>

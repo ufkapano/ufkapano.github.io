@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+<hr>
+
+<h1>Programowanie z ncurses (5) - używanie kolorów</h1>
+
+<h3>ZADANIE 5.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>kolor</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>kolor.c</em> postaci:
+
+<hr><pre>
+/*
+*  kolor.c
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;stdlib.h&gt;   /* exit() */
+#include &lt;curses.h&gt;
+
+int main(void) 
+{
+int xmax, ymax;
+
+initscr();
+getmaxyx(stdscr, ymax, xmax);
+
+if (has_colors() == FALSE) {
+	printw("Terminal does not support color\n");
+	refresh();
+	sleep(2);
+	endwin(); /* konczymy curses */
+	exit(1);
+}
+if (start_color() == ERR) {
+	printw("Error: start_color()\n");
+	refresh();
+	sleep(2);
+	endwin(); /* konczymy curses */
+	exit(1);
+}
+/* Standardowe ustawienia par kolorow. */
+/* Wpisalem liczby zgodne z numerami kolorow, jak w Introduction. */
+init_pair(1, COLOR_RED, COLOR_BLACK);
+init_pair(2, COLOR_GREEN, COLOR_BLACK);
+init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+init_pair(4, COLOR_BLUE, COLOR_BLACK);
+init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+init_pair(6, COLOR_CYAN, COLOR_BLACK);
+init_pair(7, COLOR_WHITE, COLOR_BLACK);
+
+box(stdscr,0,0); /* ramka na cale okno */
+
+attron(COLOR_PAIR(1));
+mvprintw(2, 5, "Ramka jest domyslna, a ten napis RED = 1");
+
+attron(COLOR_PAIR(2));
+mvprintw(3, 5, "Napis GREEN = 2");
+
+attron(COLOR_PAIR(3));
+mvprintw(4, 5, "Napis YELLOW = 3");
+
+attron(COLOR_PAIR(4));
+mvprintw(5, 5, "Ten napis bedzie BLUE = 4");
+
+attron(COLOR_PAIR(5));
+mvprintw(6, 5, "Ten napis bedzie MAGENTA = 5");
+
+attron(COLOR_PAIR(6));
+mvprintw(7, 5, "Krotka linia pozioma CYAN = 6");
+mvhline(8,5,ACS_HLINE,xmax/2); /* krotka linia pozioma */
+
+attron(COLOR_PAIR(7));
+mvprintw(9, 5, "Krotka linia pionowa WHITE = 7");
+mvvline(5,2,ACS_VLINE,ymax/4);  /* krotka linia pionowa */
+
+/* Bezposrednie zastosowanie koloru do jednego znaku */
+mvaddch(10, 5, 'X' | COLOR_PAIR(1));
+
+mvprintw(11,5,"Zmienna COLORS = %d",COLORS);
+mvprintw(12,5,"Zmienna COLOR_PAIRS = %d",COLOR_PAIRS);
+
+refresh();
+sleep(2);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+bool has_colors(void);  /* wartość TRUE lub FALSE */
+start_color();
+/* Numery par zgodne z numerami kolorow, jak w Introduction. */
+init_pair(1, COLOR_RED, COLOR_BLACK);
+init_pair(2, COLOR_GREEN, COLOR_BLACK);
+init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+init_pair(4, COLOR_BLUE, COLOR_BLACK);
+init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+init_pair(6, COLOR_CYAN, COLOR_BLACK);
+init_pair(7, COLOR_WHITE, COLOR_BLACK);
+
+attron(COLOR_PAIR(1)); /* zastosowanie - ustawienie koloru */
+attrset(COLOR_PAIR(3));      /* zastosowanie - ustawienie koloru */
+
+chgat(n,at,kolor,NULL);
+	/* Zmiana atrybutu "at" od bieżącego położenia dla n znaków. */
+	/* "kolor" oznacza indeks koloru, 0 to brak koloru. */
+	/* Na końcu zawsze musi być NULL. */
+chgat(-1,A_BLINK,0,NULL); 
+	/* zmiana atrybutu od bieżącego położenia kursora do końca linii */
+
+init_color(COLOR_RED,700,0,0);
+	/* Wzmocnienie koloru czerwonego domyślnego. */
+	/* Parametry 2, 3 i 4 to RGB min = 0, max = 1000. */
+	/* Standardowo czerwony ma 1000(r), 0(g), 0(b). */
+can_change_color();       /* sprawdzenie możliwości terminala */
+
+Dodatkowe informacje:
+man curs_color(3x)
+</pre><hr>
+
+<h3>UŻYWANIE KOLORU</h3>
+
+<p>Funkcja has_colors() sprawdza, czy terminal obsługuje kolor.
+Funkcja start_color() uruchamia podsystem kolorów w <em>ncurses</em>.
+
+<p>Maksymalna liczba kolorów obsługiwana przez terminal przechowywana 
+jest w zmiennej <em>COLORS</em>, a maksymalna liczba par kolorów
+w zmiennej <em>COLOR_PAIRS</em>.
+
+<hr>
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>System plików</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>System plików</h1>
+
+<p>FHS = File Hierarchy Standard
+
+<h3>Opis</h3>
+
+<p>W systemie UNIX dane przechowywane są w hierarchicznym systemie
+plików zawierającym pliki różnych typów.
+Z programistycznego punktu widzenia pliki sa zwykłymi potokami danych
+o nieokreślonej zawartości i bez ścisłej struktury.
+Mówienie o typach plików jest klasyfikowaniem ich według funkcji
+i przeznaczenia, ponieważ format fizyczny plików jest ten sam. 
+
+<p>Powszechnie rozróżnia się co najmniej cztery typy plików:
+<ol>
+<li>Pliki zwykłe
+<li>Katalogi (directory)
+<li>Pliki specjalne (reprezentujące urządzenia) znakowe
+<li>Pliki specjalne (reprezentujące urządzenia) blokowe.
+</ol>
+
+<p>Jako cztery dodatkowe typy plików wymienia się często:
+<ol start="5">
+<li>Gniazda domeny UNIX
+<li>Łącza nazwane FIFO
+<li>Dowiązania (łączniki) sztywne
+<li>Dowiązania (łączniki) symboliczne.
+</ol>
+
+<p>Wśród plików zwykłych możemy wyróżnić cztery duże grupy:
+<ol>
+<li>Pliki tekstowe (ASCII text)
+<li>Pliki wykonywalne binarne (executable) - programy
+<li>Pliki wykonywalne tekstowe (command) - skrypty powłoki
+<li>Pliki z danymi aplikacji (data).
+</ol>
+
+<p>Nazwa pliku może mieć do 255 znaków, ale lepiej nie przekraczać 14.
+UNIX rozróżnia duże i małe litery.
+Czego warto przestrzegać w nazwach plików:
+<ul>
+<li>nie zaczynać od kropki (ukryty),
+<li>nie stosować znaków specjalnych (kłopoty),
+<li>nie zaczynać od minusa (bo to wskazuje na opcje polecenia),
+<li>nie stosować nazwy test (bo to jest polecenie wewnętrzne bash).
+</ul>
+
+<p>W systemie UNIX jest ograniczenie na długość scieżki 
+dostępu 1023 znaki,
+więc warto dawać niezbyt długie nazwy plikom i katalogom.
+Niektóre programy sugerują się rozszerzeniem pliku, choć
+nie jest to cecha systemu. Z tego powodu dobrze jest stosować
+przyjęte zwyczaje co do rozszerzeń plików.
+
+<h3>Budowa logiczna systemu plików</h3>
+
+<p>Dany logiczny system plików jest ciągiem bloków ponumerowanych
+kolejno 0 ... n, przy czym kolejne bloki stanowią:
+<ul>
+<li>blok startowy (nr 0, boot block; zawiera kod potrzebny 
+do uruchomienia systemu operacyjnego)
+<li>blok nadrzędny (nr 1, superblock; zawiera m.in. rozmiar bloków,
+nazwa urządzenia logicznego, nazwa systemu plików)
+<li>bloki struktur inode (inode blocks)
+<li>bloki danych (data blocks; zawierają zwykle pliki, pozycje
+katalogów i bloki pośrednie)
+</ul>
+
+<p>Budowa struktury inode 
+(patrz <a href="inode1.html">rysunek</a>)
+<ul>
+<li>typ pliku i prawa dostępu
+<li>właściciel (UID, GID)
+<li>rozmiar pliku
+<li>data utworzenia pliku
+<li>data ostatniej operacji dostępu do pliku
+<li>data ostatniej modyfikacji pliku
+<li>10 wskaźników bloków danych
+<li>wskaźnik na wskaźnik adresowy pierwszego stopnia
+<li>wskaźnik na wskaźnik adresowy drugiego stopnia
+<li>wskaźnik na wskaźnik adresowy trzeciego stopnia
+</ul>
+
+<h3>PRZYKŁADY</h3>
+
+<p><a href="inode2.html">Przykład szukania pliku
+przez system.</a>
+
+<p>Niech blok dyskowy ma 1 KB, adres będzie 32-bitowy (4 B).
+Wtedy blok pośredni zawiera 256 adresow bloków na dysku<br>
+256 * 4 B = 1024 B = 1 KB
+
+<p>W sumie przy wykorzystaniu adresowania pierwszego stopnia można
+zaadresować 10 + 256 = 266 bloków dyskowych.
+
+<p>Przy wykorzystaniu drugiego stopnia adresowania można zaadresować
+10 + 256 + 256^2 = 65802 bloków dyskowych (około 64 MB).
+
+<p>Przy wykorzystaniu trzeciego stopnia adresowania moźna zaadresować
+65082 + 256^3 = 16843018 bloków dyskowych (około 16 GB).
+
+<p>Przy wprowadzeniu czwartego stopnia adresowania 
+można by obsłużyć pliki o wielkości około 4 TB.
+
+<p>Każdy plik jest reprezentowany przez jedną strukturę inode,
+co oznacza, że w obrębie systemu plików każdy inode ma
+niepowtarzalny numer.
+
+<p>Katalog jest plikiem, który składa się z par zawierających
+(numer inode, nazwa pliku).
+Możliwy jest dostęp do pliku przez wiele nazw, które mogą się
+nawet znajdować w różnych katalogach (łącza sztywne, hard links).
+
+<p>W systemie UNIX dostęp do poszczególnych systemów plików nie 
+odbywa się poprzez identyfikatory urządzeń (takie jak numery
+napędów), co ma miejsce w innych systemach operacyjnych, lecz
+systemy te połączone są w hierarchiczne drzewo katalogów.
+Układ ten tworzony jest przez <em>montowanie</em> (mounting) systemu
+plików - czynność ta dodaje nowy system plików (dowolnego typu)
+do istniejącego drzewa katalogów. Nowy system plików może być
+zamontowany w dowolnym katalogu. Katalog ten nazywany jest wtedy
+miejscem montowania (mounting point) i zastępowany jest katalogiem
+głównym nowego systemu plików wraz z jego podkatalogami i plikami.
+<em>Odmontowanie</em> (unmounting) systemu plików ponownie zwalnia
+strukturę ukrytego katalogu.
+
+<h3>SYSTEM PLIKOW LINUKSA</h3>
+
+<p>Do poruszania się po strukturze katalogów służy polecenie
+<em>cd</em>. Zawartość katalogu przeglądamy poleceniem <em>ls</em>.
+Do sprawdzania typu pliku mamy polecenie <em>file</em>.
+Ścieżkę dostępu do bieżącego katalogu wypisuje polecenie <em>pwd</em>.
+
+<h3>WAŻNIEJSZE KATALOGI</h3>
+
+<pre>
+/bin     (podstawowe programy dla użytkowników)
+/boot     (jądro systemu i pliki potrzebne do prawidłowego 
+          uruchomienia i pracy systemu)
+/dev     (pliki specjalne - urządzenia)
+/etc     (pliki konfiguracyjne programów, skrypty startowe)
+/home     (katalogi domowe użytkowniów i usług - ftp, http, samba)
+/lib     (biblioteki wymagane przez programy z katalogu /bin)
+/lib/modules         (moduły jądra)
+/lost+found  (pliki bądź fragmenty plików, które utraciły dowiązania 
+         do swoich i-węzłów; katalog tworzony automatycznie
+	 przy zakładaniu systemu plików ext2)
+/mnt     (punkt montowania urządzeń)
+/mnt/cdrom
+/mnt/floppy
+/opt     (opcjonalny katalog na programy komercyjne)
+/proc     (wirtualny system plików do administrowania wewnętrznego)
+/pub       (opcjonalny katalog na zasoby udostępniane w sieci)
+/root     (katalog domowy użytkownika root)
+/sbin     (programy dla użytkownika root)
+/tmp     (pliki tymczasowe)
+/usr          (zwykle największy katalog w systemie; aplikacje użytkowe)
+/usr/bin
+/usr/doc
+/usr/lib
+/usr/local     (dodatkowe programy lokalne)
+/usr/src/linux     (kod źrodłowy jądra)
+/var              (pliki z zapisem pracy systemu)
+</pre>
+
+
+</body>
+</html>

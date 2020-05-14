@@ -1,0 +1,68 @@
+From ufkapano@if.uj.edu.pl Sat Sep 13 14:58:37 2003 +0200
+Received: from imail2.gazeta.pl (imail2.gazeta.pl [194.149.231.143])
+	by theta.uoks.uj.edu.pl (8.12.9/8.12.9) with ESMTP id h8DCwZP5006067
+	for <UFKAPANO@IF.UJ.EDU.PL>; Sat, 13 Sep 2003 14:58:35 +0200 (MET DST)
+Received: from gazeta.pl (unverified [194.149.231.60]) 
+	by  (imail2.gazeta.pl) with ESMTP id 7182819 
+	for <UFKAPANO@IF.UJ.EDU.PL>; Sat, 13 Sep 2003 14:56:06 +0200
+Received: from piotrektgubzgi ([213.134.160.227]) by gazeta.pl ; Sat, 13 Sep 2003 14:56:05 +0200
+Message-ID: <001001c3792d$47eb2d70$020014ac@piotrektgubzgi>
+From: "gazeta" <pioinforma@gazeta.pl>
+To: "Kapanowski - studium" <UFKAPANO@IF.UJ.EDU.PL>
+Subject: Studium Informatyki
+Date: Fri, 12 Sep 2003 14:56:26 +0200
+MIME-Version: 1.0
+Content-Type: multipart/alternative;
+	boundary="----=_NextPart_000_000D_01C3793E.0A4E9040"
+X-Priority: 3
+X-MSMail-Priority: Normal
+X-Mailer: Microsoft Outlook Express 6.00.2600.0000
+X-MimeOLE: Produced By Microsoft MimeOLE V6.00.2600.0000
+X-DSMTPFooter: true
+Content-Length: 1337
+Status: RO
+X-Status: 
+X-Keywords:                 
+X-UID: 1
+
+This is a multi-part message in MIME format.
+
+------=_NextPart_000_000D_01C3793E.0A4E9040
+Content-Type: text/plain;
+	charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
+
+Wiz Piotr=20
+e- mail : pioinforma@gazeta.pl
+Jestem Uczestnikiem Studium Technik Informatyk
+Uprzejmie prosz=EA o przesy=B3anie na w/w adres maili dotycz=B1cych =
+zaj=EA=E6 .
+Z g=F3ry Dzi=EAkuj=EA
+
+
+------=_NextPart_000_000D_01C3793E.0A4E9040
+Content-Type: text/html;
+	charset="iso-8859-2"
+Content-Transfer-Encoding: quoted-printable
+
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML><HEAD>
+<META http-equiv=3DContent-Type content=3D"text/html; =
+charset=3Diso-8859-2">
+<META content=3D"MSHTML 6.00.2600.0" name=3DGENERATOR>
+<STYLE></STYLE>
+</HEAD>
+<BODY bgColor=3D#ffffff>
+<DIV><FONT face=3DArial size=3D2>Wiz Piotr </FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>e- mail : <A=20
+href=3D"mailto:pioinforma@gazeta.pl">pioinforma@gazeta.pl</A></FONT></DIV=
+>
+<DIV><FONT face=3DArial size=3D2>Jestem Uczestnikiem Studium Technik=20
+Informatyk</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>Uprzejmie prosz=EA o przesy=B3anie na =
+w/w adres maili=20
+dotycz=B1cych zaj=EA=E6 .</FONT></DIV>
+<DIV><FONT face=3DArial size=3D2>Z g=F3ry Dzi=EAkuj=EA</FONT></DIV>
+<DIV>&nbsp;</DIV></BODY></HTML>
+
+------=_NextPart_000_000D_01C3793E.0A4E9040--

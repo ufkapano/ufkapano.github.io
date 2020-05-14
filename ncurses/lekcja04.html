@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+<hr>
+
+<h1>Programowanie z ncurses (4) - zarządzanie oknami</h1>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>skarbiec</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>skarbiec.c</em> postaci:
+
+<hr><pre>
+/*
+*  skarbiec.c
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;string.h&gt;  /* strcmp() */
+#include &lt;stdlib.h&gt;
+#include &lt;curses.h&gt;
+#define MAXLINE  80
+
+int main(void) 
+{
+int c, i;
+int ymax, xmax;
+char tajne[]= "sezam";  /* haslo do skarbca */
+char napis[MAXLINE];  /* haslo podane przez usera */
+int koniec= FALSE;  /* sterowanie petla do-while */
+WINDOW *win;
+
+initscr(); /* mozna sprawdzic */
+crmode();  /* zmiana trybu pracy */
+getmaxyx(stdscr, ymax, xmax);
+
+if ((win= subwin(stdscr, 3, 60, ymax/3, (xmax-60)/2)) == NULL) {
+	endwin();
+	fprintf(stderr,"Error: subwin()\n");
+	exit(1);
+}
+do {  /* sprawdzanie hasla */
+	box(win, ACS_VLINE, ACS_HLINE); /* ramka na okno */
+	mvwaddstr(win, 1, 1, "Klucz do skarbca: ");
+	wrefresh(win);
+	noecho();
+	i= 0;
+	while ((c= getch()) != '\n' && (i &lt; MAXLINE)) {
+		napis[i]= c;
+		++i;
+		waddch(win, '*');
+		wrefresh(win);
+	}
+	echo();
+	napis[i]= '\0';
+	if (strcmp(napis,tajne) == 0) {
+		koniec= TRUE;
+	} else {
+		wclear(win);
+		mvwprintw(win, 1, 1, "Klucz nieprawidlowy!");
+		box(win, ACS_VLINE, ACS_HLINE); /* ramka na okno */
+		wrefresh(win);
+		sleep(2);
+	}
+	wclear(win);
+} while (koniec == FALSE); /* powtarzaj dopoki to jest prawda */
+
+mvwprintw(win, 1, 1, "Podano dobry klucz: %s\n", napis);
+box(win, ACS_VLINE, ACS_HLINE); /* ramka na okno */
+wrefresh(win);
+sleep(2);
+delwin(win);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 4.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>samolot</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>samolot.c</em> postaci:
+
+<hr><pre>
+/*
+*  samolot.c (subwin)
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;stdlib.h&gt;  /* exit() */
+#include &lt;curses.h&gt;
+#define ROZMIAR   10
+#define KROK      7
+
+int main(void) 
+{
+int i;
+int xmax, ymax;
+WINDOW *win;
+
+initscr(); /* mozna sprawdzic */
+bkgd('.');
+refresh();
+if ((win= subwin(stdscr,ROZMIAR,ROZMIAR,0,0)) == NULL) {
+	endwin();
+	fprintf(stderr,"Error: subwin()\n");
+	exit(1);
+}
+wbkgd(win, ' '); /* trzeba zaslonic kropki z stdscr */
+wprintw(win, "\n SAMOLOT\n");
+box(win,0,0);
+wrefresh(win);
+sleep(1);
+getmaxyx(stdscr,ymax,xmax);
+i= 0;
+while (i &lt; (xmax-ROZMIAR)) {
+	mvwin(win, (ymax-ROZMIAR)/2, i);
+	refresh(); /* odswiezamy tylko stdscr! */
+	sleep(1);
+	i+= KROK;
+}
+delwin(win);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 4.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>samolot2</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>samolot2.c</em> postaci:
+
+<hr><pre>
+/*
+*  samolot2.c (newwin)
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;stdlib.h&gt;  /* exit() */
+#include &lt;curses.h&gt;
+#define ROZMIAR   15
+#define KROK      10
+
+int main(void) 
+{
+int i;
+int xmax, ymax;
+WINDOW *win;
+
+initscr(); /* mozna sprawdzic */
+
+bkgd('.');
+refresh();
+if ((win= newwin(ROZMIAR,ROZMIAR,1,1)) == NULL) {
+	endwin();
+	fprintf(stderr,"Error: newwin()\n");
+	exit(1);
+}
+wbkgd(win, ' ');
+mvwprintw(win,1,1, " SAMOLOT");
+box(win,0,0);
+wrefresh(win);
+sleep(1);
+
+getmaxyx(stdscr,ymax,xmax);
+i= 0;
+while (i &lt; (xmax-ROZMIAR)) {
+	mvwin(win, (ymax-ROZMIAR)/2, i);
+	clear(); /* trzeba wymazac poprzedni obrazek okna */
+	refresh();
+	wrefresh(win); /* bez tego nie narysuje win */
+	sleep(1);
+	i+= KROK;
+}
+delwin(win);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 4.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>samolot3</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>samolot3.c</em> postaci:
+
+<hr><pre>
+/*
+*  samolot3.c (sterowanie kursorami)
+*/
+
+#include &lt;stdlib.h&gt;  /* exit() */
+#include &lt;curses.h&gt;
+#define YSIZE  5    /* wysokosc okna */
+#define XSIZE  9    /* szerokosc okna */
+
+int main(void) 
+{
+int ch;
+int ymax, xmax;
+int ystart, xstart;
+WINDOW *win;
+
+initscr(); /* mozna sprawdzic */
+cbreak();
+keypad(stdscr, TRUE);
+getmaxyx(stdscr,ymax,xmax);
+ystart= (ymax - YSIZE) / 2;
+xstart= (xmax - XSIZE) / 2;
+bkgd('.');
+printw("Press F1 to exit");
+refresh();
+
+if ((win= subwin(stdscr,YSIZE,XSIZE,ystart,xstart)) == NULL) {
+	endwin();  /* najpierw konczymy curses */
+	fprintf(stderr,"Error: subwin()\n");
+	exit(1);
+}
+wbkgd(win, ' '); /* trzeba zaslonic kropki z stdscr */
+wprintw(win, "\n SAMOLOT\n");
+box(win,0,0);
+wrefresh(win);
+while ((ch = getch()) != KEY_F(1)) {	
+	if (ch == KEY_LEFT) {
+		mvwin(win, ystart, --xstart);
+	} else if (ch == KEY_RIGHT) {
+		mvwin(win, ystart, ++xstart);
+	} else if (ch == KEY_UP) {
+		mvwin(win, --ystart, xstart);
+	} else if (ch == KEY_DOWN) {
+		mvwin(win, ++ystart, xstart);
+	}
+	refresh(); /* odswiezamy tylko stdscr! */
+}
+delwin(win);
+endwin();
+return (0);
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Poprawić program, aby podokno nie wychodziło poza krawędzie ekranu.
+
+<h3>ZADANIE 4.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>win_border</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>win_border.c</em> postaci:
+
+<hr><pre>
+/*
+*  win_border.c
+*
+* Program z HOWTO zmodyfikowany.
+*/
+
+#include &lt;ncurses.h&gt;
+
+WINDOW *create_win(int height, int width, int starty, int startx);
+void destroy_win(WINDOW *local_win);
+
+int main(void)
+{
+WINDOW *win;
+int xmax, ymax;
+int startx, starty, width, height;
+int ch;
+
+initscr();
+cbreak();
+keypad(stdscr, TRUE);
+getmaxyx(stdscr, ymax, xmax);
+
+height = 3;
+width = 10;
+starty = (ymax - height) / 2;	/* Obliczmy polozenie okna */
+startx = (xmax - width) / 2;
+printw("Press F1 to exit");
+refresh();
+win = create_win(height, width, starty, startx);
+
+while ((ch = getch()) != KEY_F(1)) {	
+	if (ch == KEY_LEFT) {
+		destroy_win(win);
+		win = create_win(height, width, starty, --startx);
+	} else if (ch == KEY_RIGHT) {
+		destroy_win(win);
+		win = create_win(height, width, starty, ++startx);
+	} else if (ch == KEY_UP) {
+		destroy_win(win);
+		win = create_win(height, width, --starty, startx);
+	} else if (ch == KEY_DOWN) {
+		destroy_win(win);
+		win = create_win(height, width, ++starty, startx);
+	}
+}
+endwin();
+return 0;
+}
+
+
+WINDOW *create_win(int height, int width, int starty, int startx)
+{
+WINDOW *local_win;
+
+local_win = newwin(height, width, starty, startx);
+box(local_win,0,0);
+wrefresh(local_win);
+return local_win;
+}
+
+
+void destroy_win(WINDOW *local_win)
+{	
+/* box(local_win, ' ', ' ');   to nie dziala, bo zostaja narozniki */
+/* tutaj recznie wymazuje ramki i nie trzeba robic refresh() dla stdscr */
+wborder(local_win,' ',' ',' ',' ',' ',' ',' ',' ');
+wrefresh(local_win);
+delwin(local_win);
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Poprawić program, aby podokno nie wychodziło poza krawędzie ekranu.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+// Podokna, y i x wg ekranu
+WINDOW *subwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x);
+// jw, ale y i x wg okna nadrzędnego orig
+WINDOW *derwin(WINDOW *orig, int nlines, int ncols, int begin_y, int begin_x);
+
+// Nowe okna
+WINDOW *newwin(int nlines, int ncols, int begin_y, int begin_x);
+// duplikat istniejącego okna
+WINDOW *dupwin(WINDOW *win);
+
+delwin(win);
+</pre><hr>
+
+<h3>ZARZĄDZANIE OKNAMI</h3>
+
+<p>Okna zdefiniowane przez programistę mogą być dwojakiego rodzaju:
+podokna [subwin(), derwin() - współdzielą pamięć z oknem pierwotnym] 
+lub okna niezależne [newwin(), dupwin()].
+Dokumentacja biblioteki zaleca stosować okna niezależne.
+
+<p>Funkcja newwin() alokuje pamięć dla struktury związanej z nowym
+oknem, inicjalizuje dane związane z oknem, takie jak rozmiar
+i położenie początkowe. Funkcja zwraca wskaźnik do struktury
+WINDOW, który może być przekazany do funkcji typu wprintw() itp.
+Okno jest usuwane przez funkcję delwin(), która zwalnia pamięć
+związaną ze strukturą okna.
+
+
+<hr>
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,502 @@
+<html>
+<head>
+<title>Linux+</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p>Linux+ 2003/5
+
+<h1>
+Nie taki diabeł straszny, czyli obłaskawiamy Vima 
+</h1>
+
+<p>
+Pamiętam mój pierwszy kontakt z systemami uniksowymi na uczelni. 
+To było dawno, a ja chciałem napisać list do znajomego, aby 
+pochwalić się, że w pracowni mam dostęp do Internetu. Wpisałem 
+komendę <em> mail </em> i jego adres (zgodnie z podpowiedzią 
+pojawiającą się w trakcie logowania do systemu), a potem... 
+nie wiedziałem co dalej zrobić. Dobre 10 minut męczyłem się, 
+podobnie jak kilka innych osób w pracowni. Dopiero po chwili 
+przyszedł jakiś uniksowy guru i kazał nam wcisnąć klawisz 
+[<em>ESC</em>], a później wpisać magiczną kombinację <em> :q!. 
+</em> Nie byłem zbyt zadowolony, że jakiś edytor tekstu sprawił mi 
+taki problem... Postanowiłem, że pomimo jego pozornej nieprzyjazności, 
+spróbuję go bliżej poznać. Opłaciło się. <em> Vi, </em> bo to właśnie 
+z nim wszyscy w pracowni mieli taki kłopot, okazał się edytorem 
+o niezwykle dużych możliwościach. Od tego czasu ciągle z niego 
+korzystam. 
+Obecnie jego wzbogacona wersja, zwana <em> Vim </em> (<em>Vi 
+IMproved</em>), przydaje mi się zarówno podczas pisania listów, 
+tworzenia stron WWW (w HTMLu i PHP), jak również do pisania 
+kodu w C,Perlu czy jakimkolwiek innym języku. 
+W tym artykule chcę pokazać czytelnikom, jak można obłaskawić 
+<em> Vima </em> i dostosować go do własnych potrzeb. 
+Mam nadzieję, że polubicie go równie mocno jak ja. I to nie tylko, 
+że jest to jedyny edytor, co do którego można mieć prawie 
+całkowitą pewność, że będzie zainstalowany w systemie linuksowym 
+(uniksowym).
+  
+<h3>
+Pierwsze kroki 
+</h3>
+
+<p>
+<em> Vim </em> jest programem, którego należy uczyć się w czasie 
+używania. Z tego powodu został on wyposażony w znakomity samouczek 
+(ang. <em> tutorial</em>) dostępny po wydaniu polecenia <em> 
+vimtutor. </em> Podręcznik ten został przetłumaczony na wiele 
+języków, w tym również na polski. Jeśli więc mamy szczęście i 
+polska wersja znajduje się na naszym dysku, to możemy uzyskać do 
+niego dostęp poleceniem <em> vimtutor pl. </em> 
+W przeciwnym przypadku możemy go pobrać z jednej z witryn 
+przedstawionych w ramce <em> W Sieci. </em> 
+
+<p>
+Dla początkujących użytkowników <em> Vima </em> problemem mogą być 
+jego tryby pracy - dwa podstawowe to zwykły (<em>Normal</em>) 
+i wstawiania (<em>Insert</em>). W trybie <em> Normal </em> 
+wciskane klawisze powodują wydawanie poleceń (np. przesuwanie 
+kursora, kasowanie słów), natomiast w trybie <em> Insert </em> 
+wpisujemy tekst w miejscu, w którym znajduje się kursor. Vim 
+zaraz po uruchomieniu znajduje się w trybie <em> Normal. </em> 
+Jeśli chcemy przejść do trybu wstawiania, możemy skorzystać 
+z klawisza [<em>i</em>] (<em>insert</em> - wstaw) lub [<em>a</em>] 
+(<em>append</em> - dołącz). Z trybu <em> Insert </em> do zwykłego 
+wracamy przez wciśnięcie klawisza [<em>ESC</em>]. 
+Jeśli mamy wątpliwości, w którym trybie się znajdujemy, możemy 
+po prostu wcisnąć [<em>ESC</em>] dwukrotnie - wtedy zawsze 
+znajdziemy się w trybie <em> Normal. </em> W tym trybie, 
+oprócz poleceń przypisanym poszczególnym klawiszom, możemy też 
+wprowadzać polecenia po znaku dwukropka (<em>:</em>), np. wpisanie 
+<em> :wq </em> spowoduje zapisanie wprowadzonych w tekście 
+zmian do pliku i opuszczenie edytora, zaś polecenie <em> :help 
+</em> wyświetli plik pomocy.
+ 
+<p>
+Nie ukrywam. że <em> Vim </em> jest programem bardzo rozbudowanym, 
+ale jeśli zaczniemy od samouczka, to dość szybko nauczymy się 
+podstawowej obsługi programu, a wtedy spokojnie możemy zacząć 
+poznawać bardziej zaawansowane opcje.
+ 
+<h3>
+Bądź taki jak chcę...
+</h3>
+
+<p>
+<em>Vim </em> jest programem, którego można w dużej mierze 
+dostosowywać do swoich potrzeb i gustów. Jeśli chcemy sprawdzić, 
+jakie pliki konfiguracyjne wykorzystywane są aktualnie przez 
+edytor, możemy w trybie <em> Normal </em> wywołać polecenie <em> 
+:scriptnames. </em> Nasze własne ustawienia możemy dodawać lub 
+zmieniać w pliku <em> ~/.vimrc.</em> Jeśli on jeszcze nie 
+istnieje, możemy skopiować przykładowy plik konfiguracyjny 
+wydając w <em> Vimie </em> polecenie <em> :!cp  -i  
+$VIMRUNTIME/vimrc_example.vim  ~/.vimrc. </em> Po ponownym 
+uruchomieniu edytora zostaną wykonane wszystkie polecenia, 
+które są w nim zawarte, np. podświetlanie składni, formatowanie 
+tekstu, ustawienie odpowiednich opcji dotyczących kodowania znaków, 
+zmapowanie klawiszy i wiele innych poleceń. Rozpatrzymy poniżej 
+kilka ciekawszych i bardziej użytecznych opcji.
+
+<h3>
+Omówienie przykładowego <em> ~/.vimrc </em> 
+</h3>
+
+<p>
+Bardzo ważną opcją jest <em> set nocompatible, </em> która sprawia, 
+że <em> Vim </em> pracuje w ulepszony sposób, ale nie jest całkiem 
+kompatybilny z edytorem <em> Vi. </em> Użycie tej opcji jest 
+zalecane, gdyż daje nam to znacznie większe możliwości. Jeśli jednak 
+ktoś woli pracować w trybie kompatybilności z <em> Vi, </em> 
+powinien użyć  <em> set compatible. </em> 
+
+<p>   
+Opcja <em> set autoindent </em> <em> Vima </em> będzie ustawiała 
+dla nowo utworzonej linii taki sam rozmiar wcięcia, jak dla linii 
+ją poprzedzającej.
+ 
+<p>
+Kolejna opcja (<em>set backup</em>) odpowiada za tworzenie plików 
+kopii zapasowej podczas nadpisywania jakiegoś pliku. Plik kopii 
+będzie miał tę samą nazwę, co plik oryginalny, ale z dodanym 
+znakiem tyldy (~).
+
+<p>
+Jeśli lubimy korzystać z historii poleceń, możemy ustalić jej 
+rozmiar poleceniem <em> set history=50. </em>
+
+<p>
+Bardzo przydaje się również znać aktualną pozycję kursora - dzięki 
+opcji <em> set ruler </em> będzie ona zawsze wyświetlana w prawym 
+dolnym rogu okna <em> Vima. </em>
+ 
+<p>
+Dla wielkich osób ważną możliwością jest podświetlenie składni. 
+Poniższe polecenia sprawią, że jeśli tylko dostępne są kolory, to 
+podświetlenie składni zostanie włączone: 
+
+<pre>
+if &t_Co > 2 || has("gui_running")
+   syntax on
+   set hlsearch
+endif
+</pre>
+
+<p>
+Interesującym poleceniem jest <em> filetype plugin indent on. 
+</em> Włącza ono równocześnie trzy użyteczne mechanizmy. Pierwszy 
+z nich odpowiada za rozpoznawanie typów plików przez <em> Vima. 
+</em> Jest to bardzo ważne w celu prawidłowego podświetlania 
+składni oraz ustawiania wcięć. Drugi mechanizm powoduje, że użyte 
+będą wtyczki typów plików. Zawierają one najbardziej przydatne 
+opcje przeznaczone dla poszczególnych typów plików. Wreszcie, 
+trzeci mechanizm odpowiada za wykorzystanie reguł automatycznego 
+robienia wcięć podczas edycji. Funkcję tę z pewnością docenią 
+programiści korzystający z <em> Vima. </em> 
+
+<p> 
+<em>Vim </em> pozwala na korzystanie w plikach konfiguracyjnych z 
+autokomend, które określają jakie polecenia mają być wykonane w 
+przypadku, gdy nastąpi określone wydarzenie. Przykładowo, 
+polecenie <em> autocmd FileType text setlocal textwidth=78 </em> 
+określa, że jeśli typ pliku zostanie ustalony jako <em> text </em> 
+(czysty plik tekstowy), to długość wierszy w tym pliku (lokalnie) 
+ma zostać ograniczona do 78 znaków. Jeśli w trakcie wprowadzania 
+tekstu linia przekroczy tę wielkość, to ostatni wyraz zostanie 
+przerzucony do następnej linii. 
+
+<h3>
+Inne opcje 
+</h3>
+
+<p>
+Aby zobaczyć jakie opcje są dostępne, a potem ustawić odpowiednie z 
+nich, możemy skorzystać z polecenia <em> :options. </em> 
+W otwartym oknie możemy poruszać się po liście opcji pogrupowanych 
+tematycznie. Wciskając [<em>Enter</em>] możemy wchodzić do 
+poszczególnych grup i zmieniać ustawienia znajdujących się tam 
+pozycji. Oprócz tego dostępne są krótkie opisy opcji. Jeśli wciśniemy 
+na którejś z nich klawisz [<em>Enter</em>], to przejdziemy do 
+obszerniejszego 
+opisu. Kombinacją [<em>Ctrl</em>]+[<em>O</em>] możemy wrócić do 
+poprzedniego miejsca. W przypadku opcji, które wymagają podania 
+wartości liczbowej lub tekstowej, możemy edytować wartość jak 
+zwykły tekst, po czym zatwierdzić ją klawiszem [<em>Enter</em>].
+ 
+<p> 
+Jak można się łatwo przekonać, ilość opcji w <em> Vimie </em> 
+jest ogromna. Wiele z nich zadowoli nas w domyślnych ustawieniach, 
+ale jeśli chcielibyśmy się dowiedzieć czegoś więcej o konkretnej 
+opcji, to możemy poczytać dotyczącą jej pomoc poleceniem <em> :help
+</em> z podaną w apostrofach nazwą, np. <em> 
+:help 'wrap'. </em> Aktualnie ustawienie opcji możemy sprawdzić 
+dodając pytajnik po nazwie opcji, np. <em> :set wrap?, </em> 
+a przywrócić domyślnie ustawienia przez dodanie ampersanda (<em> &
+</em>), np. <em> :set wrap&. </em> 
+
+<p>
+Wspomniana powyżej opcja <em> wrap </em> odpowiada za zawijanie 
+tekstu. <em> Vim </em> domyślnie zawija długie wiersze, więc na 
+ekranie jest widoczny cały tekst. Łamanie tekstu następuje w środku 
+wyrazów, więc wygodniejsze może być wydanie polecenia <em> :set 
+linebreak</em> - z pewnością ułatwi to czytanie. Czasem lepiej
+jest wyłączyć zawijanie wydając polecenie <TT > :set nowrap. </em> 
+Gdy kursor dotrze do niewidocznej części tekstu, tekst zostanie 
+automatycznie przewinęty. Możemy też określić, o ile znaków będzie 
+przewinięty tekst - polecenie <em> : set sidescroll=10. </em> 
+
+<p>
+Inną ciekawą opcją jest <em> whichwrap</em> - możemy określić, 
+które komendy ruchu kursora nie muszą zatrzymywać się na początku 
+i na końcu linii. Przykładowo, możemy wykonać polecenie <em> :set 
+whichwrap=b.s.<.>.[.]. </em> Kolejne flagi odpowiadają za klawisze 
+[<em>Backspace</em>],[<em>Space</em>], ruchu kursora w lewo i prawo 
+(w trybie <em> Normal </em>) oraz ruchu  kursora w lewo i 
+prawo (w trybie <em> Insert</em>). 
+
+<p>
+Często podczas edycji brakuje możliwości podglądu, gdzie znajdują 
+się znaki tabulacji, a gdzie zbędne znaki odstępu (na końcu linii). 
+W przypadku kolorowego terminala możemy pomóc sobie z pomocą 
+dwóch opcji:
+ 
+<pre>
+:set list
+:set listchars=tab:>-,trail:-
+</pre>
+
+<p>
+Każdy znak tabulacji widoczny będzie jako ">--", a zbędne znaki 
+odstępu jako "-".
+
+<p>
+W wielu tekstach (również w programach) wykorzystujemy wcięcia. 
+Wspomniana już opcja <em> autoident </em> pozwalała zachować wcięcie 
+z poprzedniej linii. Dodatkowo możemy zwiększyć wcięcie dwukrotnym 
+wciśnięciem klawisza [>] (oczywiście będąc w trybie <em> Normal
+</em>). Szerokość takiego wcięcia regulujemy opcją <em> shiftwidth. 
+</em> Przykładowo, możemy ustawić ją na cztery spacje (domyślnie 
+jest ustawiona na osiem) poleceniem <em> :set shiftwidth=4. </em> 
+Nie zmienia to jednak rozmiaru wcięcia uzyskiwanego klawiszem 
+[<em>Tab</em>]. To wcięcie regulujemy opcją <em> softtabstop. </em> 
+Jeśli ustawimy je poleceniem <em> :set softtabstop=4, </em> to
+wciśnięcie [<em>Tab</em>] spowoduje dodanie wcięcia o rozmiarze 
+czterech spacji. Jeśli są tam już cztery spacje, to znaki te 
+zostaną zamienione na jeden znak tabulacji. Można tego uniknąć - 
+jeśli chcemy, aby wykorzystywane były wyłącznie znaki spacji, 
+możemy wydać polecenie <em> :set expandtab. </em> 
+Jeśli nam na tym zależy. możemy zmienić opcję <em> tabstop </em> 
+równym 8 na 4, ale ryzykujemy, że otwierając plik stworzony z <em> 
+tabstop </em> równym 8, uzyskamy niezbyt ciekawe rezultaty - 
+wygląd wcięć może nie być poprawny. 
+
+<p>
+Oczywiście wszystkie powyższe opcje możemy umieścić w pliku <em> 
+~/.vimrc, </em> jeśli tak nam wygodniej.
+ 
+<h3>
+Vim dla programisty
+</h3>
+
+<p>
+<em>Vim </em> oferuje wiele udogodnień dla programistów. Wspomniane 
+już podświetlanie składni i automatyczne wcięcia, działające dla wielu 
+języków programowania, to jeszcze nie wszystko. Edytor ten potrafi 
+automatycznie formatować komentarze i stara się poprawnie 
+formatować kod. Zobaczmy, co jeszcze ma nam do zaoferowania.
+ 
+<h3>
+Poruszanie się po programie
+</h3>
+
+<p>
+W C (i wielu innych językach) bloki kodu zamknięte są nawiasami 
+klamrowymi - <em>{</em> i <em>}, Vim </em> zakłada, że nawias 
+otwierający i zamykający znajdują się w tej samej kolumnie, a 
+nawiasy ograniczające główny (zewnętrzny) blok znajdują się w 
+pierwszej kolumnie. Przy  takich założeniach polecenie <em> 
+[[ </em> wydane w trybie <em> Normal </em> przeniesie kursor 
+do nawiasu otwierającego główny blok, w którym akurat znajduje 
+się kursor. Do nawiasu zamykającego zewnętrzny blok przeniesie 
+nas polecenie <em> ]]</em>. Odpowiednio do początku i końca 
+bieżącego bloku przeniosą nas polecenia <em> [{ </em> i <em> 
+]}. </em>
+   
+<p>
+Analogicznie możemy wykorzystać polecenia <em> [( </em> i <em> 
+])</em> do poruszania się pomiędzy nawiasami okrągłymi. Z pomocą 
+w znajdowaniu pasujących nawiasów może rownież przyjść komenda 
+<em> %</em>. Działa ona dla nawiasów <em> (), [] </em> i <em> {}. 
+</em>
+
+<h3>
+Odnajdywanie identyfikatorów
+</h3>
+
+<p>
+Nieraz podczas pisania programu chcemy sprawdzić, jak została 
+zdeklarowana konkretna zmienna. Polecenie <em> [I </em> wywołane 
+z kursorem znajdującym się na nazwie zmiennej znajdzie nam listę 
+pasujących linii - nie tylko w bieżącym pliku, ale również w plikach 
+włączanych. Dzięki temu możemy odnaleźć właściwą deklarację, nawet 
+jeśli jest ona ukryta w którymś z plików nagłówkowych.
+
+<p>
+Jeśli chcemy dokładniej obejrzeć znalezione miejsca, możemy skoczyć 
+do nich korzystając z kombinacji klawiszy [<em>[</em>] i 
+[<em>Tab</em>]. Zostaniemy wtedy przeniesieni do pierwszego 
+odnalezionego identyfikatora. Jeśli chcemy skoczyć do innej 
+pozycji z listy, kombinację tę poprzedzamy numerem, np. [<em>3</em>], 
+[<em>[</em>], [<em>Tab</em>] przeniesie nas do trzeciej pozycji. 
+Kombinacją [<em>Ctrl</em>], [<em>O</em>] wracamy do miejsca, 
+w którym zaczęliśmy wyszukiwanie. Może zdarzyć się, że <em> Vim </em> 
+nie znajdzie pliku włączanego. Dzieje się tak, gdyż <em> Vim </em> 
+szuka plików włączanych tylko w katalogach określonych przez zmienną  
+<em> path. </em> Poleceniem <em> :checkpath </em> możemy sprawdzić, 
+które pliki nie zostały odnalezione, a później dodać ich lokalizację 
+do zmiennej <em> path, </em> np. poleceniem <em> :set path+=/usr/
+local/include. </em> 
+
+<p>
+Vim oferuje nam inne możliwości przeszukiwania. Polecenie <em> 
+[D </em> odnajdzie nam wyłącznie makra zdefiniowane dyrektywą <em> 
+"#define". </em> Z kolei polecenia <em> gD </em> i <em> gd </em> 
+(Goto Definition - idź do definicji) powodują przemieszczenie kursora 
+do pierwszego miejsca, w którym zostało użyte słowo znajdujące się 
+pod kursorem, odpowiednio w bieżącym pliku i w bieżącej funkcji. 
+
+<h3>
+Kompilacja i odpluskiwanie 
+</h3>
+
+<p>
+Podczas programowania z użyciem zwykłego edytora (a nie 
+zintegrowanego środowiska programowania) uciążliwa może okazać się 
+konieczność każdorazowego wychodzenia z edytora lub przełączania się 
+na inną konsolę w celu ponownego skompilowania programu. Edytor 
+<em> Vim </em> i tu przychodzi nam z pomocą. Do dyspozycji mamy 
+polecenie <em> :make [argumenty], </em> które pozwala nam 
+skompilować program bez konieczności wychodzenia z edytora. Co więcej, 
+<em> Vim </em> oferuje nam pomoc w odnajdywaniu i usuwaniu błędów, 
+jeśli takie wystąpiły w trakcie kompilacji. W przypadku, gdy 
+wykonanie <em> :make </em> zwróciło błędy, wciśnięcie klawisza 
+<em> [Enter] </em> przeniesie nas od razu do linii w pliku, w której 
+zgłoszony został pierwszy z błędów. Pomiędzy miejscami wystąpienia 
+błędów możemy poruszać się poleceniami <em> :cnext </em> i <em> 
+:cprevious. </em> Pomocne może się też okazać polecenie <em> :cc, 
+</em> które wyświetla pełny komunikat błędu. Jeśli chcemy ponownie 
+zobaczyć listę błędów, możemy użyć polecenia <em> :clist </em> 
+lub <em> :clist!</em>. Pierwsze z nich wyświetli listę skróconą, 
+ograniczoną do wierszy, w których występują nazwy plików i numery 
+linii, a drugie wyświetli pełną listę - taką samą, jak wyświetliło 
+polecenie <em> :make</em>. 
+
+<h3>
+Poprawianie wcięć
+</h3>
+
+<p>
+Jeśli w plikach konfiguracyjnych użyliśmy polecenia <em> filetype 
+indent on, </em> to <em> Vim </em> będzie starał się automatycznie 
+dobrać odpowiednie rozmiary wcięć, tzn. reagował na wpisywane 
+nawiasy klamrowe zwiększając odpowiednio wcięcie przy otwieraniu 
+nowego bloku i zmniejszając je przy zamykaniu go. Poza zwiększeniem 
+wygody, pozwala to również na wcześniejsze zauważenie błędów typu 
+brakujące nawiasy klamrowe. Jeśli nie używaliśmy wspomnianego 
+polecenia, możemy je dodać lub skorzystać bezpośrednio z polecenia 
+<em> :set cindent shiftwidth=4, </em> które uruchomi w bieżącym 
+pliku automatyczne wykonywanie wcięć zgodnie z zasadami programowania 
+w języku C oraz ustawi szerokość wcięcia na 4 znaki. 
+
+<p>
+Często po wprowadzeniu zmian w pliku (przykładowo po skasowaniu 
+linii lub dodaniu funkcji), konieczne jest poprawienie formatowania. 
+Można to robić ręcznie, jednak <em> Vim </em> potrafi nas w tym 
+zastąpić. Poleceniem <em> == </em> możemy poprawić wcięcia bieżącej 
+linii. Jeśli chcemy poprawić cały bieżący blok, możemy to zrobić 
+komendą <em> =a{</em>. Jeśli jesteśmy zdecydowani sformatować cały 
+plik, to wydajemy polecenie <em> gg=G</em>.
+ 
+<h3>
+Dostęp do "manuali"
+</h3>
+
+<p>
+W Linuksie, jeśli tylko zadbaliśmy o to podczas instalacji, mamy 
+dostęp do stron podręczników dotyczących wielu poleceń systemowych 
+oraz funkcji. Wiele z tych informacji bardzo przydaje się podczas 
+pisania programów czy skryptów powłoki. Najprostszym sposobem 
+uzyskania dostępu do strony <em> man </em> interesującego nas 
+polecenia jest ustawienie na nim kursora i wydanie polecenia 
+<em> K</em>. Jeśli odpowiednia strona podręcznika zostanie 
+znaleziona, <em> Vim </em> wyświetli ją na ekranie. Po zakończeniu 
+czytania możemy wrócić z powrotem do edytowanego pliku. Nie jest to 
+jednak metoda zbyt wygodna. Lepiej będzie, jeśli strona <em> man 
+</em> pojawi się w oknie <em> Vima </em> i będziemy mieli jej 
+podgląd w czasie edycji programu. Aby to osiągnąć, załadujemy 
+najpierw wtyczkę typu pliku <em> man </em> poleceniem:
+ 
+<pre>
+:source $VIMRUNTIME/ftplugin/man.vim
+</pre>
+
+<p>
+Teraz możemy ponownie spróbować odnaleźć stronę man dla polecenia 
+znajdującego się pod kursorem. Robimy to komendą <em> \K</em>. 
+Możemy również znaleźć stronę dla dowolnego innego polecenia z 
+pomocą komendy <em> :Man </em> polecenie.
+ 
+<p>
+Przed nazwą polecenia możemy ponadto podać numer sekcji podręcznika, 
+w której chcemy szukać opisu.
+ 
+<p>
+Po oknie podglądu możemy poruszać się tak samo, jak po pomocy do 
+<em> Vima, </em> czyli z użyciem klawiszy ruchu kursorem oraz 
+kombinacji [<em>Ctrl</em>]+[<em>]</em> i [<em>Ctrl</em>]+
+[<em>O</em>]. aby przenieść się znów do okna z edytowanym plikiem, 
+korzystamy z kombinacji klawiszy [<em>Ctrl</em>+[<em>W</em>], 
+[<em>w</em>]. Gdy okno podglądu nie będzie nam już potrzebne, możemy 
+je zamknąć kombinacją [<em>Ctrl</em>]+[<em>W</em>],[<em>c</em>].
+
+<h3>
+Praca z kilkoma plikami
+</h3>
+
+<p>
+Czasem konieczne jest rozpoczęcie pracy z kilkoma plikami 
+równocześnie. Możemy to robić uruchamiając <em> Vima </em> 
+poleceniem <em> vim jeden.c dwa.c trzy.c. </em> 
+Ekran będzie wyglądał tak, jakbyśmy uruchomili polecenie:
+
+<pre>
+vim jeden.c
+</pre>
+
+ale będziemy mogli przemieszczać się pomiędzy plikami za pomocą 
+poleceń <em> :next </em> i <em> :previous</em>. Istotne jest, że 
+polecenia te zadziałają jedynie, jeśli zapisaliśmy ostatnie zmiany 
+w edytowanym pliku. W innym przypadku zostaniemy poinformowani o 
+błędzie - mamy wtedy do wyboru zapisanie  zmian (<em>:w</em>) i 
+ponowną próbę przejścia do innego pliku, lub skorzystanie z komend 
+łączonych <em> :wnext </em> i <em> :wprevious</em>, które przed 
+przejściem do innego pliku zadbają o zapisanie zmian.
+ 
+<p>
+Jeśli jesteśmy pewni, że zawsze chcemy zapisywać wprowadzone zmiany, 
+możemy <em>Vimowi </em> kazać zapisywać je automatycznie. 
+Wydajemy wtedy polecenie
+
+<pre>
+:set autowrite
+</pre>
+
+<p>
+(wyłączyć tę opcję można przez <em> :set noautowrite</em>). 
+W takim przypadku przy przejściu do innego pliku nie dostaniemy 
+ostrzeżenia o nie zapisanych zmianach.
+ 
+<h3>
+Zakończenie
+</h3>
+
+<p>
+Jak widać, edytor <em> Vim </em> ma ogromne możliwości. Te, które 
+udało mi się przedstawić w niniejszym artykule, to zaledwie 
+wierzchołek góry lodowej. Zainteresowanych odsyłam do "manuala" 
+i dostępnej w <em> Vimie </em> pomocy - dopiero eksperymentując 
+samemu można dostosować <em> Vima </em> do swoich wymagań. 
+czytelników, którzy polubią <em> Vima </em> i zaczną go stosować na 
+co dzień, z pewnością ucieszy możliwość tworzenia własnych zestawów 
+opcji dla konkretnych typów plików (wtyczek), własnych reguł wcięć 
+i podświetlania składni. Definiowanie własnych mapowań klawiszy, 
+możliwość dzielenia ekranu, tworzenia własnych funkcji i wiele 
+innych jest również bardzo użyteczne.
+ 
+<p>
+Liczę, że udało mi się przekonać Was, że <em> Vim </em> nie jest 
+jakimś przerażającym stworem, ale bardzo dobrym i, po bliższym 
+poznaniu, wygodnym narzędziem, które jest pomocne nie tylko przy 
+pisaniu prostych e-maili, ale nawet rozbudowanych projektów 
+programistycznych czy witryn WWW.
+ 
+<h3>
+W sieci:
+</h3>
+
+<p>
+<ul>
+<li>
+Główna strona projektuVim, zawierająca, oprócz źródeł, pakiety 
+językowe, dokumentację oraz różne ciekawe wtyczki 
+- <em> http://WWW.vim.org/ </em> 
+<li>
+Strona Mikołaja Machowskiego, zawierająca jego tłumaczenie 
+Podręcznika Użytkownika Vima oraz aktualne polskie wersje samouczka - 
+<em> http://strony.wp.pl/wp/mikmach/ </em> 
+   
+</body>
+</html>

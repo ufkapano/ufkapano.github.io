@@ -1,0 +1,973 @@
+<html>
+<head>
+<title>Opis systemu PGP dla laika</title>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=ISO-8859-2">
+</head>
+<body>
+<h1>Opis systemu PGP dla laika</h1>
+<h3><a href="http://www.agh.edu.pl/~szymon">Szymon Sokół</a>, 
+sierpień 1995 - listopad 1996</h3>
+<h3>Uzupełnienia: <br>
+<a href="http://www.ict.pwr.wroc.pl/~tsurmacz/">Tomasz R. Surmacz</a><br>
+<a href="http://www.uci.agh.edu.pl/~rzm/">Rafał Z. Maszkowski</a><br>
+<a href="http://melkor.mimuw.edu.pl/~andy/">Andrzej K. Brandt</a><br>
+</h3>
+
+<img src="/img/new_preceeding.gif" alt="NEW! ">Aktualna wersja PGP to
+2.6.3i - luty 1996.<p>
+Dostępna jest <a href="pgp_opis.doc">wersja niniejszego dokumentu w MS Word</a>
+skonwertowana przez Witka Owoca.
+
+<HR>
+ <IMG SRC = "/img/wa.gif" alt="">
+ <A HREF = "http://www.gumbeers.elka.pg.gda.pl/WA/">WA</A>
+ <IMG SRC = "/img/wk.gif" alt="">
+ <A HREF = "http://www.gumbeers.elka.pg.gda.pl/WA/KTI/">KTI</A>
+ <IMG SRC = "/img/temat.gif" alt="">
+ <A HREF = "http://www.gumbeers.elka.pg.gda.pl/WA/KTI/01/dok00-00.htm">spis artykułów</A>
+
+<HR>
+
+<h2>Spis treści</h2>
+<ol>
+<li><a href="#wstep">
+Wstęp</a>
+<li><a href="#jak">
+Jak to działa?</a>
+<li><a href="#skad">
+Skąd to wziąć?</a>
+<li><a href="#uzycie">
+Jak się tego używa?</a>
+<ol>
+<li><a href="#generacja">
+Generowanie klucza</a>
+<li><a href="#rozpowszechnianie">
+Rozpowszechnianie kluczy publicznych</a>
+<li><a href="#uzyskiwanie">
+Uzyskiwanie kluczy publicznych innych osób</a>
+<li><a href="#zarzadzanie">
+Zarządzanie kluczami</a>
+<li><a href="#sygnowanie">
+Sygnowanie i sprawdzanie sygnatur</a>
+<li><a href="#szyfrowanie">
+Szyfrowanie i deszyfrowanie</a>
+<li><a href="#inne">
+Inne możliwości PGP</a>
+</ol>
+<li><a href="#konfiguracja">
+Konfiguracja PGP</a>
+<ol>
+<li><a href="#zbior">
+Zbiór konfiguracyjny</a>
+<li><a href="#pomocnicze">
+Programy pomocnicze</a>
+<li><a href="#vi">
+PGP a vi</a> (autorem tego podrozdziału jest
+<a href="http://www.ict.pwr.wroc.pl/~tsurmacz/">Tomasz R. Surmacz &lt;tsurmacz@asic.ict.pwr.wroc.pl&gt;</a>)
+<li><a href="#elm">
+PGP a ELM</a> (autorem tego podrozdziału jest
+<a href="http://www.uci.agh.edu.pl/~rzm/">Rafał Z. Maszkowski
+&lt;rzm@pdi.lodz.pl&gt;</a>)
+</ol>
+<li><a href="#szczegoly">
+Więcej szczegółów o PGP</a>
+<ol>
+<li><a href="#siec">
+W sieci</a>
+<li><a href="#literatura">
+Literatura</a>
+</ol>
+</ol>
+<p>
+
+<a name="wstep">
+<h2>Wstęp</h2></a>
+<b>PGP</b> (Pretty Good Privacy - Całkiem Niezła Prywatność) jest kryptosystemem
+(tzn. systemem szyfrująco-deszyfrującym) autorstwa
+Phila Zimmermanna <i>&lt;prz@acm.org&gt;</i>
+wykorzystującym ideę klucza publicznego. Podstawowym zastosowaniem PGP jest
+szyfrowanie poczty elektronicznej, transmitowanej przez kanały nie dające
+gwarancji poufności ani integralności poczty. Przez poufność rozumiemy tu
+niemożność podglądania zawartości listów przez osoby trzecie; przez
+integralność - niemożność wprowadzania przez takie osoby modyfikacji do
+treści listu.
+<p>
+PGP pozwala nie tylko szyfrować listy, aby uniemożliwić
+ich podglądanie, ale także sygnować (podpisywać) listy zaszyfrowane lub
+niezaszyfrowane w sposób umożliwiający adresatowi (adresatom) stwierdzenie,
+czy list pochodzi rzeczywiście od nadawcy, oraz czy jego treść nie była po
+podpisaniu modyfikowana przez osoby trzecie. Szczególnie istotny z punktu
+widzenia użytkownika poczty elektronicznej jest fakt, że techniki szyfrowania
+oparte o metodę klucza publicznego <b>nie wymagają</b> wcześniejszego
+przekazania klucza szyfrowania/deszyfrowania kanałem bezpiecznym
+(tzn. gwarantującym poufność). Dzięki temu, używając PGP, mogą ze sobą
+korespondować osoby, dla których poczta elektroniczna (kanał niepoufny) jest
+<b>jedyną</b> formą kontaktu.
+
+<a name="jak">
+<h2>Jak to działa?</h2></a>
+Na czym polega różnica między kryptosystemem "tradycyjnym", a metodą klucza
+publicznego? W największym uproszczeniu: szyfr "tradycyjny" wymagał użycia
+<b>tego samego</b> klucza do szyfrowania i odszyfrowywania. Klucz ten zatem
+musiał być wcześniej uzgodniony przez porozumiewające się strony, i to z użyciem
+kanału bezpiecznego (zapewniającego poufność i integralność) - w przeciwnym
+razie istniałoby ryzyko przechwycenia klucza przez osoby trzecie, co dałoby
+tym osobom możliwość zarówno odczytywania szyfrowanych komunikatów, jak i
+ich podrabiania (fałszowania). W metodzie klucza publicznego, pojedynczy klucz
+zastąpiony jest parą kluczy: jeden z nich służy do zaszyfrowania listu, drugi
+do odszyfrowania. Znajomość klucza szyfrowania <b>nie wystarczy</b> do
+deszyfracji listu, ani do odtworzenia klucza deszyfrowania.
+<hr>
+
+Dla dociekliwych: efekt ten osiągnięty jest przez odpowiednią konstrukcję
+algorytmu szyfrowania/deszyfrowania. Klucz deszyfrowania bazuje na parze
+dużych liczb pierwszych, klucz szyfrowania zaś - na ich iloczynie. Znajomość
+iloczynu 2 liczb pierwszych nie wystarczy do znalezienia tych liczb - a raczej,
+wystarczy, lecz dla odpowiednio dużych liczb (rzędu 10 do potęgi 100) operacja
+taka zajmuje całe lata, nawet na najszybszych dostępnych komputerach.
+<hr>
+
+Co za tym idzie, tylko klucz deszyfrowania musi pozostać sekretem swego
+właściciela (i dlatego nazywany jest "kluczem prywatnym"). Klucz szyfrowania
+może być udostępniony ogółowi - stąd termin "klucz publiczny". Dowolna osoba,
+chcąca wysłać tajną wiadomość do właściciela tego klucza, używa klucza
+publicznego w celu zaszyfrowania treści listu. List ten odszyfrować może tylko
+osoba będąca w posiadaniu klucza prywatnego związanego z tym kluczem publicznym
+- w domyśle: właściciel klucza.
+<p>
+W tym miejscu należy podkreślić, że żaden kryptosystem nie jest silniejszy
+od swego najsłabszego ogniwa, którym z reguły okazuje się użytkownik. Jeżeli
+użytkownik nie dba we właściwy sposób o tajność swego klucza prywatnego, nawet
+PGP nie zapewni mu należytej prywatności. Najbardziej wskazanym sposobem
+przechowywania klucza prywatnego jest dyskietka, noszona przy sobie lub
+trzymana w zamknięciu. W drugiej kolejności, dysk twardy komputera dostępnego
+tylko właścicielowi. Następnie, konto w systemie wielodostępnym takim jak Unix.
+Dysk komputera klasy PC dostępnego dla innych osób niż właściciel klucza
+<b>zdecydowanie</b> nie jest właściwym miejscem przechowywania klucza!
+<p>
+Zastosowany w PGP algorytm szyfrowania kluczem publicznym nosi nazwę
+<b>RSA (Rivest-Shamir-Adleman)</b> - jak łatwo zgadnąć, otrzymał ją od nazwisk
+jego twórców. Algorytm ten jest w USA opatentowany, a ponadto podlega
+restrykcjom eksportowym ITAR (podobnie jak wszelkie algorytmy i programy mające
+związek z kryptografią) i nie może być używany w programach wywożonych z USA.
+Dlatego też istnieją 3 aktualne wersje PGP:
+
+<ol>
+<li>"tylko USA", która wykorzystuje licencjonowany kod firmy
+<a href="http://www.rsa.com/">RSA Data Security, Inc.,</a>
+będącej posiadaczem patentu
+i nie może być eksportowana poza USA, opracowana z udziałem Phila Zimmermanna
+w MIT;
+
+<li>wersja komercyjna, również osiągalna tylko w USA, opracowana przez firmę
+ViaCrypt na podstawie licencji Phila Zimmermanna;
+
+<li>oraz wersja "międzynarodowa", którą opracował Stale Schumacher
+ &lt;staalesc@ifi.uio.no&gt;, a która opiera się na
+implementacji algorytmu RSA napisanej poza USA, niezależnie od firmy RSA.
+Jest to jedyna wersja, jakiej można używać poza USA, nie gwałcąc amerykańskich
+przepisów eksportowych.
+</ol>
+Wszystkie te wersje są wzajemnie zgodne.
+<hr>
+Dla dociekliwych: PGP nie szyfruje całego dokumentu (np. listu) z użyciem
+algorytmu RSA - ponieważ jest on dość powolny, trwałoby to bardzo długo.
+Zamiast tego, PGP szyfruje z użyciem RSA pewną wygenerowaną losowo
+liczbę 128-bitową, która następnie jest używana jako klucz szyfrowania
+właściwego dokumentu (np. listu) "tradycyjnym" algorytmem IDEA.
+Przy deszyfracji, PGP odszyfrowuje klucz IDEA z użyciem prywatnego klucza
+RSA odbiorcy, a następnie kluczem IDEA odszyfrowuje list. W zasadzie zatem
+PGP jest połączeniem "tradycyjnego" kryptosystemu bazującego na kluczu
+przekazanym kanałem bezpiecznym (innym dla każdej wiadomości),
+i kryptosystemu opartego o metodę klucza publicznego, który zapewnia
+ten bezpieczny kanał).
+<hr>
+
+<a name="skad">
+<h2>Skąd to wziąć?</h2></a>
+
+PGP jest dostępne w wersji źródłowej w C (dla Unixa i VMS) oraz w postaci
+binariów dla systemu MS-DOS i Macintosh na wielu serwerach FTP, m.in.
+<dl>
+<dt>w Finlandii:
+<dd><a href="ftp://ftp.funet.fi/pub/crypt/cypherpunks/pgp/pgp262/">
+ftp://ftp.funet.fi/pub/crypt/cypherpunks/pgp/pgp262/</a>.
+<dt>w Szwecji:
+<dd><a href="ftp://ftp.sunet.se/pub/security/tools/crypt/pgp">
+ftp://ftp.sunet.se/pub/security/tools/crypt/pgp</a>
+<dt>w Polsce:
+<dd><a href="ftp://pipeta.chemia.pk.edu.pl/pub/pgp/">
+ftp://pipeta.chemia.pk.edu.pl/pub/pgp/</a> - <b>wersja spolszczona!</b>
+<dd><a href="http://www.agh.edu.pl/pub/security/pgp/">
+http://www.agh.edu.pl/pub/security/pgp/</a>
+<dd><a href="ftp://ftp.agh.edu.pl/pub/security/pgp/">
+ftp://ftp.agh.edu.pl/pub/security/pgp/</a>
+<dd><a href="ftp://ftp.pwr.wroc.pl/pub/security/pgp/">
+ftp://ftp.pwr.wroc.pl/pub/security/pgp/</a>
+</dl>
+Aktualną, w momencie pisania tego tekstu, wersją jest PGP 2.6.3
+<img src="/img/new_trailing.gif" alt="NEW!">.
+Istnieje również wersja komercyjna (dostępna tylko w USA) opracowana przez
+firmę ViaCrypt na podstawie licencji Phila Zimmermanna, aktualną wersją
+jest 2.7.1.
+
+<a name="uzycie">
+<h2>Jak się tego używa?</h2></a>
+
+<a name="generacja">
+<h3>Generowanie klucza</h3></a>
+PGP jest programem stosunkowo łatwym w obsłudze. Pierwszym krokiem po jego
+instalacji jest wygenerowanie swojego klucza prywatnego i publicznego. Służy
+do tego (w Unixie i MS-DOS) komenda:
+<pre>
+    pgp -kg
+</pre>
+Po wydaniu tej komendy, program pyta o długość klucza. Można wybrać jedną
+ze standardowych długości (384, 512, 1024 bity) lub własną, z przedziału
+504-2048 bitów. Następnie pojawia się pytanie o <em>identyfikator</em>
+użytkownika, który powinien jednoznacznie określać właściciela klucza.
+Zazwyczaj identyfikator podajemy w postaci:
+<pre>
+    Imię Nazwisko &lt;email-address&gt;
+</pre>
+np.
+<pre>
+    Szymon Sokol &lt;szymon@uci.agh.edu.pl&gt;
+</pre>
+<p>
+Kolejne pytanie odnosi się do tzw. <em>passphrase</em>, czyli hasła służącego
+do odblokowania klucza. Jest to dodatkowe zabezpieczenie, mające na celu
+utrudnienie posłużenia się skradzionym cudzym kluczem prywatnym. Hasło to
+nie pojawia się na ekranie w czasie wpisywania, i może być znacznie dłuższe
+niż hasło użytkownika systemu Unix (te bowiem są zwykle ograniczone do
+8 znaków). Następnie hasło należy wpisać powtórnie, w celu weryfikacji.
+PGP będzie pytać o to hasło za każdym razem, gdy użytkownik będzie chciał
+odszyfrować list przeznaczony dla niego lub sygnować własny list - w tych
+bowiem sytuacjach następuje odwołanie do klucza prywatnego.
+<p>
+Zarówno hasło jak i identyfikator możesz później zmienić komendą
+<pre>
+    pgp -ke user
+</pre>
+gdzie <code>user</code> jest identyfikatorem Twojego klucza (lub jego częścią).
+<p>
+Następnie program prosi o wpisanie kilkudziesięciu znaków dowolnego tekstu -
+istotny tu jest nie sam tekst, ale odstępy czasowe między naciśnięciami
+klawiszy, które służą jako źródło "naprawdę losowej" liczby, użytej następnie
+do tworzenia klucza. W ten sposób PGP uzyskuje praktyczną niepowtarzalność
+kluczy. Komunikat "Key generation completed" zwiastuje utworzenie kluczy:
+prywatnego i publicznego. Klucz prywatny znajdzie się w pliku
+<code>secring.pgp</code>; klucz publiczny - w <code>pubring.pgp</code>.
+Ten pierwszy należy umieścić w bezpiecznym miejscu;
+ten drugi - jak najszerzej rozpropagować.
+
+<a name="rozpowszechnianie">
+<h3>Rozpowszechnianie kluczy publicznych</h3></a>
+Jeżeli chcesz, aby ludzie pisząc do Ciebie korzystali z PGP,
+musisz zadbać o to, aby Twój klucz publiczny stał się powszechnie znany.
+Oto kilka sposobów na rozpowszechnienie swojego klucza:
+<ul>
+<li>umieścić go w swoim <em>sigblocku</em> (tzn. podpisie umieszczanym pod
+listami czy artykułami USENETowymi);  Nie jest to jednak dobry
+pomysł, gdyż klucz zajmuje zwykle co najmniej 5-6 linii, a "dobra"
+sygnaturka nie powinna mieć więcej niż 4 linie.
+<li>albo w pliku <code>~/.plan</code>, którego zawartość jest wypisywana przez
+komendę <code>finger</code>;  W <em>sigblocku</em> wystarczy wówczas
+umieścić krótką informację, że klucz PGP osiągalny jest po wykonaniu
+"finger TwójLogin@Twój.Komputer"
+<li>albo na swojej stronie WWW;
+<li>można nawet wydrukować go na swej wizytówce, choć to zakrawa na pewną
+ekstrawagancję;
+<li><a name="serwery_pgp">
+można umieścić go w specjalnej bazie danych, tzw. <em>key serwerze</em> -
+obecnie na terenie Polski istnieją dwa, pod adresami:
+<ul>
+<li><b>pgp-public-keys@mimuw.edu.pl</b>
+<li><img src="/img/new_preceeding.gif" alt="NEW! ">
+<b>pgp-public-keys@keys.pl.pgp.net</b>.
+</ul>
+Na świecie serwery takie działają pod następującymi adresami:</a>
+<ul>
+<li>pgp-public-keys@burn.ucsd.edu
+<li>pgp-public-keys@pgp.cc.gatech.edu
+<li>pgp-public-keys@goliat.upc.es
+<li>pgp-public-keys@demon.co.uk
+<li>pgp-public-keys@dsi.unimi.it
+<li>pgp-public-keys@ext221.sra.co.jp
+<li>pgp-public-keys@fbihh.informatik.uni-hamburg.de
+<li>pgp-public-keys@jpunix.com
+<li>pgp-public-keys@kiae.su
+<li>pgp-public-keys@kr.com
+<li>pgp-public-keys@kram.org
+<li>pgp-public-keys@kub.nl
+<li>pgp-public-keys@mimuw.edu.pl
+<li>pgp-public-keys@nexus.hpl.hp.com
+<li>pgp-public-keys@pgp.ai.mit.edu
+<li>pgp-public-keys@pgp.barclays.co.uk
+<li>pgp-public-keys@gondolin.org
+<li>pgp-public-keys@pgp.dhp.com
+<li>pgp-public-keys@pgp.hpl.hp.com
+<li>pgp-public-keys@pgp.iastate.edu
+<li>pgp-public-keys@pgp.kr.com
+<li>pgp-public-keys@pgp.mit.edu
+<li>pgp-public-keys@pgp.ox.ac.uk
+<li>pgp-public-keys@pgp.pipex.net
+<li>pgp-public-keys@srce.hr
+<li>pgp-public-keys@sw.oz.au
+<li>pgp-public-keys@uit.no
+<li>pgp-public-keys@vorpal.com
+<li>pgp-public-keys@nic.surfnet.nl
+</ul>
+Serwery powyższe dostępne są przez e-mail (wyślij list ze słowem
+<code>help</code> w polu <code>Subject:</code> na jeden z w/w adresów,
+aby dowiedzieć się szczegółów).  Natomiast w wyniku zadania konkretnych
+pytań, polegających na wyszukaniu czyjegoś klucza PGP, serwer, po znalezieniu
+klucza (o ile klucz taki istnieje w bazie kluczy serwera), przesyła go
+"opakowując" go w kodowanie ASCII.  List taki należy zapisać do pliku, a
+następnie wykonać <code>pgp nazwa_pliku</code>, a program PGP sam rozpozna,
+co w liście tym się znajduje.  Istnieją również bramki udostępniające te
+serwery przez WWW:
+
+<ul>
+<li><a href="http://www-swiss.ai.mit.edu/~bal/pks-toplev.html">
+http://www-swiss.ai.mit.edu/~bal/pks-toplev.html</a>
+<li><a href="http://www-lsi.upc.es/~alvar/pks/pks-toplev.html">
+http://www-lsi.upc.es/~alvar/pks/pks-toplev.html</a>
+</ul>
+
+<li>i wreszcie, można rozpowszechniać klucze przez znajomych,
+"pocztą pantoflową".
+</ul>
+<p>
+
+<a name="uzyskiwanie">
+<h3>Uzyskiwanie kluczy publicznych innych osób</h3></a>
+
+Sposób uzyskiwania kluczy publicznych innych osób zależy oczywiście
+od sposobu, w jaki one swój klucz rozpowszechniają.  Najczęściej
+można go uzyskać wykonując komendę <code>finger</code>, podając jako
+argument adres e-mail osoby, której klucz chcemy uzyskać.  Jednakże
+adres, z jakiego osoba ta pisuje zazwyczaj listy, nie musi być
+adresem konta w systemie UNIX, a więc finger z podanym adresem może
+w ogóle nie działać.  Wówczas pozostaje sprawdzić stronę WWW tej
+osoby (o ile ją posiada), skorzystać z usług <a href="#serwery_pgp">serwerów
+kluczy PGP</a> lub HTMLowych bramek, albo po prostu napisać do tej osoby
+(lub innych swoich znajomych) list z prośbą o przesłanie klucza.
+<p>
+
+Przy każdym z tych rozwiązań, zwłaszcza przy tym ostatnim, osoba, która
+otrzymuje klucz, powinna zastanowić się: <cite>czy mam pewność, ze klucz ten
+<b>naprawdę</b> należy do osoby, której nazwisko widnieje na kluczu?</cite>
+Przypominam, że identyfikator związany z kluczem jest podawany przez
+użytkownika w chwili tworzenia klucza; nic nie stoi na przeszkodzie abym np.
+ja wygenerował klucz publiczny (i tym samym posiadał odpowiadający mu klucz
+prywatny) o identyfikatorze:
+<pre>
+    Bill Clinton &lt;president@whitehouse.gov&gt;
+</pre>
+Jeśli ktoś da się oszukać i będzie używał fałszywego klucza, pisząc listy do danej
+osoby, skutki mogą być dwojakie:
+<ul>
+<li>osoba ta nie będzie w stanie (nie mając właściwego klucza prywatnego) ich
+przeczytać;
+<li>fałszerz będzie w stanie je przeczytać, jeśli w jakiś sposób listy te
+dostaną się w jego ręce
+</ul>
+Ponadto, fałszerz może sygnować swoje listy posiadanym przez siebie kluczem
+prywatnym, a wszyscy posiadacze fałszywego klucza publicznego z nim związanego
+będą uważać je za prawdziwe.
+<p>
+Z tych powodów istotna jest pewność, że klucz publiczny, który właśnie
+w ten czy inny sposób pozyskaliśmy, należy naprawdę do osoby, do której wydaje
+się należeć. Zapewnieniu tego służą <em>certyfikaty kluczy</em>.
+<p>
+Certyfikowanie czyjegoś klucza to nic innego, jak sygnowanie go swoim własnym -
+ma to na celu potwierdzenie jego autentyczności. Jeśli użytkownik A otrzyma
+klucz publiczny użytkownika B bezpośrednio od niego, to zapewne jest to
+naprawdę klucz użytkownika B. Ale jeśli otrzymuje go od użytkownika C, któremu
+niekoniecznie ufa, i podejrzewa, że w rzeczywistości klucz ten może być
+sfałszowany przez C? Cóż, jeśli klucz ten jest certyfikowany przez pewnego
+innego użytkownika D (któremu A ufa, i którego klucz publiczny już ma),
+i sygnatura się zgadza, to A zyskuje pewność, że klucz przekazany przez C
+jest zgodny z oryginałem. Oczywiście A zakłada w tym momencie, że D w chwili
+certyfikowania tego klucza miał 100% pewności, że klucz ten należy do
+B - albo dlatego, że otrzymał go od B bezpośrednio, albo dlatego, że klucz
+był certyfikowany przez kolejną osobę, do której D miał zaufanie.
+<p>
+Należy z tego wysnuć jeden wniosek: <b>NIGDY</b> nie certyfikuj cudzego klucza,
+jeśli nie masz pewności, że nie jest on fałszywy.
+W przeciwnym razie osoby, które następnie ten klucz od Ciebie otrzymają, będą
+sądzić, że taką pewność miałeś i używać (być może fałszywego) klucza z powodu
+zaufania do Ciebie.
+<p>
+
+Tu przy okazji warto wspomnieć o jeszcze jednej możliwości
+sprawdzenia autentyczności klucza.  W momencie dodawania nowego
+klucza do kółka kluczy publicznych lub w trakcie sygnowania klucza,
+program PGP drukuje coś, co nazwane jest <em>Key fingerprint</em>, czyli
+"odcisk palca".  Jest to kilkanaście liczb przedstawionych w
+postaci heksadecymalnej, a wyglądać może np. tak:<p>
+
+<pre>
+    Key for user ID: Szymon Sokol &lt;szymon@uci.agh.edu.pl&gt;
+    512-bit key, Key ID 61094A7D, created 1993/08/26
+    Key fingerprint =  D4 43 F5 80 AA 9F 8C 3F  CC 53 47 CA C8 88 22 A5
+</pre>
+
+Odcisku tego użyć można do weryfikacji klucza innym kanałem,
+niekoniecznie bezpiecznym z punktu widzenia kryptografii, ale dającym
+nam pewność, że po drugiej stronie jest osoba, której się spodziewamy.
+Jeśli znamy właściciela klucza osobiście, może to być np. sprawdzenie
+"odcisku klucza" przez telefon.  W innych przypadkach pozostaje albo
+osobiste spotkanie z właścicielem klucza, albo zaufanie do sygnatur już się
+w tym kluczu znajdujących.
+<p>
+
+<a name="zarzadzanie">
+<h3>Zarządzanie kluczami</h3></a>
+Kiedy już weszliśmy w posiadanie klucza publicznego innej osoby, aby móc
+z niego korzystać należy dołączyć go do swojego kółka z kluczami
+(<em>keyring</em>). Kółko z kluczami to nic innego, jak plik zawierający
+wiele kluczy w odpowiednim formacie - zazwyczaj będzie to to samo kółko,
+na którym znajduje się klucz publiczny właściciela, tzn.
+<code>pubring.pgp</code>. W celu dodania do kółka klucza, który znajduje się
+w pliku <code>klucz</code>, należy użyć komendy:
+<pre>
+    pgp -ka klucz
+</pre>
+Pojawi się być może pytanie, czy chcesz certyfikować klucz zawarty w tym pliku
+(jeśli jeszcze tego nie zrobiłeś). Jeśli klucz ten już istnieje w Twoim kółku,
+to nie będzie dodany, w przeciwnym razie zostanie dołączony do kółka.
+Ponadto, program może spytać o tzw. <em>parametry zaufania
+(trust parameters)</em>, jakie należy przypisać danemu kluczowi.
+Parametry zaufania klucza określają, czy klucze innych użytkowników mają być
+uznawane za pewne, jeśli są sygnowane tym kluczem (patrz:
+<a href="#sygnowanie">Sygnowanie i sprawdzanie sygnatur</a>).
+<p>
+Sprawdzić zawartość swojego kółka można komendą:
+<pre>
+    pgp -kv
+</pre>
+Ponadto, komendą
+<pre>
+    pgp -kvv
+</pre>
+można sprawdzić, przez kogo są certyfikowane poszczególne klucze w naszym
+kółku, zaś komenda
+<pre>
+    pgp -kvc
+</pre>
+pozwala uzyskać tzw. <em>fingerprints</em> czyli "odciski palców" - swego
+rodzaju sumę kontrolną klucza, którą można np. przedyktować przez telefon w
+celu porównania z <em>fingerprint</em> oryginalnego klucza, jeśli chcemy się
+upewnić, że klucz, który od kogoś otrzymaliśmy np. przez e-mail, nie był
+po drodze (celowo lub przypadkiem) zniekształcony.
+<p>
+Jeżeli chcemy usunąć klucz z kółka (np. wątpimy w jego prawdziwość, albo
+właściciel powiadomił nas, że zmienia klucz na nowy), użyć należy komendy:
+<pre>
+    pgp -kr ident
+</pre>
+gdzie <code>ident</code> jest identyfikatorem związanym z usuwanym kluczem.
+Można (tak w tym wypadku, jak i zawsze, gdy wymagane jest podanie
+identyfikatora klucza) podać tylko część identyfikatora - np. w celu usunięcia
+mojego klucza z kółka wystarczy prawdopodobnie komenda:
+<pre>
+    pgp -kr szymon
+</pre>
+chyba, że inny klucz w kółku również zawiera ten człon w identyfikatorze.
+W takim przypadku operacja zostanie wykonana na pierwszym pasującym kluczu,
+niekoniecznie na tym, o który chodziło.
+<p>
+Komenda
+<pre>
+    pgp -ke user
+</pre>
+gdzie <code>user</code> jest identyfikatorem klucza (lub jego częścią),
+pozwala zmienić hasło i/lub identyfikator związane z Twoim kluczem (jeśli
+podasz identyfikator własnego klucza) albo zmienić parametry zaufania
+jeśli podałeś identyfikator klucza innej osoby.
+<p>
+I wreszcie, aby stworzyć w osobnym pliku kopię jednego klucza z kółka (np.
+w celu wysłania go komuś) należy się posłużyć komendą:
+<pre>
+    pgp -kx ident
+</pre>
+lub
+<pre>
+    pgp -kxa ident
+</pre>
+Różnica między tymi dwiema formami polega na zastosowaniu tzw. <em>ASCII
+armor</em> (dosłownie "pancerz ASCII", ja jednak proponowałbym określenie
+"opakowanie ASCII") w drugim przypadku (tzn. przy użyciu opcji -a). Bez opcji
+-a PGP wyekstrahuje klucz w postaci binarnej; użycie opcji -a powoduje, że
+klucz zostanie potraktowany algorytmem podobnym do <em>BinHex</em> czy
+<em>uuencode</em>, tak że w otrzymanym pliku wszystkie znaki będą należały
+do podstawowego zestawu kodów ASCII (znaki alfanumeryczne i przestankowe).
+Dzięki temu można go wysłać e-mailem albo umieścić na stronie WWW.
+PGP spyta o nazwę pliku, w którym ma umieścić klucz. Oto mój klucz publiczny
+wyekstrahowany z kółka w ten sposób:
+<pre>
+-----BEGIN PGP PUBLIC KEY BLOCK-----
+Version: 2.6
+
+mQBNAix834YAAAECALK1O6N3N3aE6K7FH6XwHVyPdLVccs5K3pXasPPWcVOLMDmi
+SKUqyU3zrtU5OS7L6cILTH3DauLa9jnnbmEJSn0ABRG0JFN6eW1vbiBTb2tvbCA8
+c3p5bW9uQHVjaS5hZ2guZWR1LnBsPg==
+=fgsC
+-----END PGP PUBLIC KEY BLOCK-----
+</pre>
+Możesz go dołączyć do swojego kółka zapisując go do pliku, a następnie
+używając omówionej wcześniej komendy <code>pgp -ka</code>. Ale czy jesteś
+<b>pewien</b>, że ten dokument otrzymałeś w nienaruszonej wersji i mój klucz
+podany powyżej jest prawdziwy? <img src="/img/smiley3.gif" alt=";-) ">
+
+<a name="sygnowanie">
+<h3>Sygnowanie i sprawdzanie sygnatur</h3></a>
+
+Załóżmy teraz, że w pliku o nazwie <code>list</code> znajduje się list, który
+chciałbym sygnować moim podpisem w sposób uniemożliwiający manipulację.
+W tym celu wydaję komendę:
+<pre>
+    pgp -s list
+</pre>
+PGP zapyta o hasło, a następnie umieści list z <em>sygnaturą</em> (podpisem)
+PGP w pliku <code>list.pgp</code>. W przypadku użycia opcji -a:
+<pre>
+    pgp -sa list
+</pre>
+plik wyjściowy nosi nazwę <code>list.asc</code> i podobnie jak w
+przykładzie ekstrahowania klucza z kółka (patrz:
+<a href="#zarzadzanie">Zarządzanie kluczami</a>,
+jest sprowadzony do postaci ASCII.
+Ponieważ większość mailerów nie umożliwia przesyłania plików binarnych,
+zazwyczaj będziemy używać tej opcji (patrz też:
+<a href="#konfiguracja">Konfiguracja PGP</a>).  Sygnowany list nie
+będzie jednak czytelny "od razu", tzn. aby dostać się do jego treści
+konieczne jest użycie programu PGP.  Chyba, że użyjemy dodatkowej
+opcji "+clear", a wówczas treść listu zostaje w postaci oryginalnej,
+a sygnatura zostaje dołączona na końcu.
+<p>
+Przykładowy list, sygnowany za pomocą komendy <code>pgp -sa +clear list</code>
+może wyglądać tak:
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+
+To jest list sygnowany PGP:
+
+Bylo smaszno, a jaszmije smukwijne
+Swidrokretnie na zegwniku wezaly,
+Peliczaple staly smutcholijne
+I zblakinie rykoswistakaly.
+
+    [DZABBERSMOK (Lewis Carroll, tlum. Maciej Slomczynski)]
+
+- --
+                       Szymon Sokol -- Network Manager
+U    U M     M M     M University of Mining and Metallurgy, Computer Center
+U    U MM   MM MM   MM ave. Mickiewicza 30, 30-059 Krakow, POLAND
+U    U M M M M M M M M TEL. +48 (12) 172885, 172894   FAX +48 (12) 338907
+ UUUU  M  M  M M  M  M WWW page: http://galaxy.uci.agh.edu.pl/~szymon/
+
+
+-----BEGIN PGP SIGNATURE-----
+Version: 2.6
+
+iQBVAgUBMB+CUfY5525hCUp9AQGQhwIAlzpOIKjrR6EnmSFYSl3i7CbnYVFQlUPz
+FCxpncHEcNicTeCg8ys8y8hl7NUhbSggNcDFdJRRIV+mxz9QozAWtA==
+=gLDy
+-----END PGP SIGNATURE-----
+</pre>
+Sygnatura dołączona na końcu listu, jest wygenerowana na podstawie
+obliczanej w specjalny sposób sumy kontrolnej listu i mojego klucza
+prywatnego PGP. Każdy, kto dysponuje moim kluczem publicznym, może sprawdzić,
+że:
+<ol>
+<li>list ten został podpisany moim kluczem prywatnym;
+<li>i nie był potem w żaden sposób modyfikowany, tzn. nie zmieniła się,
+podlegająca sumowaniu, część zawarta pomiędzy liniami
+<pre>
+-----BEGIN PGP SIGNED MESSAGE-----
+</pre>i<pre>
+-----BEGIN PGP SIGNATURE-----
+</pre>
+</ol>
+W tym celu należy posłużyć się komendą:
+<pre>
+    pgp nazwapliku
+</pre>
+(przy założeniu, że sygnowany dokument znajduje się w pliku o nazwie
+<code>nazwapliku</code> - nie musi to być ta sama nazwa, jaką nosił oryginalny
+plik utworzony przeze mnie).
+PGP zasygnalizuje poprawność sygnatury komunikatem:
+<pre>
+    Good signature from "Szymon Sokol &lt;szymon@uci.agh.edu.pl&gt;"
+</pre>
+W przypadku, gdyby list był sygnowany innym kluczem prywatnym niż ten,
+stowarzyszony z moim kluczem publicznym, albo gdyby list uległ modyfikacji,
+komunikat brzmi odpowiednio:
+<pre>
+    Bad signature from "Szymon Sokol &lt;szymon@uci.agh.edu.pl&gt;"
+</pre>
+
+<a name="szyfrowanie">
+<h3>Szyfrowanie i deszyfrowanie</h3></a>
+W celu zaszyfrowania listu znajdującego się w pliku <code>list</code>
+użyć należy komendy:
+<pre>
+    pgp -e list adresat1 adresat2 -o szyfr
+</pre>
+gdzie drugi (i ew. dalsze) parametry określają, kto ma być adresatem listu
+(tzn. są to identyfikatory kluczy, które mają być wykorzystane do szyfrowania),
+zaś po opcji -o występuje nazwa pliku wyjściowego.
+<hr>
+Dla dociekliwych: warto zwrócić uwagę na możliwość wyspecyfikowania więcej
+niż jednego adresata - oznacza to, że do listu zaszyfrowanego losowym kluczem
+IDEA klucz ten jest dołączany w kilku egzemplarzach, za każdym razem
+zaszyfrowany kluczem publicznym innego odbiorcy.
+<hr>
+Zaszyfrowany list zostanie umieszczony w pliku <code>szyfr.pgp</code>
+(lub <code>szyfr.asc</code> jeżeli podano dodatkowo opcję -a (patrz:
+<a href="#sygnowanie">Sygnowanie i sprawdzanie sygnatur</a>).
+W razie niepodania opcji -o i nazwy pliku wyjściowego, plik wyjściowy będzie
+miał nazwę taką jak wejściowy, z rozszerzeniem .pgp lub .asc (w tym wypadku,
+<code>list.pgp</code> lub <code>list.asc</code>).
+<p>
+Oto przykładowy list zaszyfrowany komendą
+<pre>
+    pgp -ea list adresat1 adresat2 adresat3
+</pre>
+(tak, ten list ma troje adresatów - sprawdź, może jesteś jednym z nich?
+<img src="/img/smiley3.gif" alt=";-) ">):
+<pre>
+-----BEGIN PGP MESSAGE-----
+Version: 2.6
+
+hEwC5Mig00W5xYkBAfoCNVVN4VarAM2/LaOhb+d6ShJzI7WAj5MgOFNam9Oex1su
+xjBt1fGPz0w6gnYte+ZDMa7bYY2zf13ar/6PK7eDhIwCGyKDllahUg0BBACJBNWh
+2xm1qx5Ri7BvtBGd2WfsYDVN6/3ITnP/+ga3Qc7Fewt0+xg6xEwOBuuYgPzy2c87
+ecvBkrYBEWpmcluTilOGAzgR7KvsNNRl4ivdMuOZkrtEiZgBh0UiAvdAtAy0uyGv
+Bk1C0yH9kky0/CgymxBAN2WG+VkIIDnYkMfGS4RMAu8goAGt1oeNAQH+MdRYO0Ym
+e8KdsVhJdFcGpNfMN89EV+22rZcbaqqfKNbTWwRjAqcELLyPgumDYm3PLLImhKqz
+z4omXe/bs4MLl6YAAAEyXrG1Ki2f4kkl+ynt7ctWgLNkYsDMnPqnA/15DPwcxOmD
+AFnggdXvBXUB3DS5WAZl5ZnWHxodnkdhXhBfpIC09Q3hBLX0qUD+j25yjYwIMSZp
+5/a74PkAiYAfFJkM7zB4blGYy/nrCEtmINIe/M//MyNzfkcOhtn4+PN6pkJXZDT0
+17ggQ6FWUS3IYu783v89I0rB+gDdC7L86Fsd6NZtzvmX33c7otWWpCLHaROJ1F78
+rRsuyacMNYFB8QeYwXHiddu+lVlhRCNUFvpIitnrsiSJw90Y8FZ/zVBjDumL0ZqI
+I7I1Q8OU+LWnsRpZz5j0acdkLwKj7opLIQ4gxpM6nHe96LkW+eqr9UvmkH7Zkb9f
+hsoqVHez+/21paH9zG9webCQXwKftHeQ/FXcQCGVgJQN
+=zZIC
+-----END PGP MESSAGE-----
+</pre>
+Jak widać, nikt poza adresatami tego listu nie będzie w stanie odczytać go.
+Deszyfrowanie listu odbywa się identycznie jak sprawdzanie poprawności
+sygnatury - komenda:
+<pre>
+    pgp szyfr.asc -o list
+</pre>
+zdeszyfruje zaszyfrowany list, znajdujący się w pliku szyfr.asc, a tekst
+odszyfrowany umieści w pliku <code>list</code> (lub w razie niepodania
+nazwy pliku wyjściowego, w pliku o nazwie takiej, jak plik wejściowy).
+Jeżeli plik wyjściowy o danej nazwie istnieje, PGP pyta o zgodę na nadpisanie
+go; w razie niewyrażenia zgody, pyta o nową nazwę pliku.
+<p>
+Istnieje też możliwość równoczesnego sygnowania i szyfrowania listu - należy
+użyć opcji -e i -s razem:
+<pre>
+    pgp -es list adresat1 adresat2 -o szyfr
+</pre>
+(oczywiście opcja -a nadal może być użyta).
+
+<a name="inne">
+<h3>Inne możliwości PGP</h3></a>
+
+PGP może być użyte do tworzenia (i sprawdzania) tzw. <em>detached
+signatures</em>, czyli sygnatur nie będących częścią dokumentu, lecz
+zapisanych w osobnym pliku:
+<pre>
+    pgp -sb plik
+</pre>
+spowoduje utworzenie sygnatury dla pliku <code>plik</code> w pliku
+<code>plik.sig</code>. Aby sprawdzić, że sygnatura odnosi się do danego pliku,
+należy podać wówczas komendę:
+<pre>
+    pgp plik.sig plik
+</pre>
+Mechanizm ten może być stosowany np. przez autorów oprogramowania w celu
+ochrony przed wirusami i koniami trojańskimi lub złośliwą ingerencją:
+wystarczy do programu dołączyć osobny plik z sygnaturą, aby użytkownik
+mógł sprawdzić, czy program nie został poddany modyfikacji.
+<p>
+
+Często spotykaną dziś praktyką jest generowanie specjalnych par kluczy
+służących właśnie wyłącznie weryfikacji kolejnych wersji programów
+rozpowszechnianych przez sieć.  Np. wraz z wersją 1.0.0 programu
+"secure shell" (ssh-1.0.0.tar.gz) otrzymujemy klucz publiczny, którym
+sprawdzić możemy wiarygodność tej wersji programu i wszystkich następnych,
+wszystkie bowiem sygnowane są jednym kluczem, będącym w posiadaniu autora
+lub grupy autorów tego programu.
+<p>
+
+<a name="konfiguracja">
+<h2>Konfiguracja PGP</h2></a>
+
+<a name="zbior">
+<h3>Zbiór konfiguracyjny</h3></a>
+Zbiór konfiguracyjny PGP nosi nazwę <code>config.txt</code>. Może się
+znajdować w dowolnym katalogu - katalog ten powinien być wskazywany przez
+zmienną środowiskową PGPPATH. Np. w systemie MS-DOS możemy ją ustawić komendą:
+<pre>
+    set PGPPATH=C:\PGP
+</pre>
+a w systemie Unix, w zależności od powłoki (<em>shell</em>):
+<pre>
+    PGPPATH=$HOME/pgp ; export PGPPATH
+</pre>
+dla Bourne shell (<code>sh</code>) i pochodnych (<code>bash</code>,
+<code>ksh</code>) lub
+<pre>
+    setenv PGPPATH ~/pgp
+</pre>
+dla C shell (<code>csh</code>) i pochodnych (<code>tcsh</code>).
+
+Zawartość tego pliku składa się z linii postaci:
+<pre>
+    zmienna = wartość
+</pre>
+oraz komentarzy następujących po znaku #. Przykładowo, plik konfiguracyjny
+o treści:
+<pre>
+    ARMOR=ON
+    MYNAME=Szymon
+</pre>
+spowoduje, że:
+<ol>
+<li>PGP będzie się zachowywać, jak gdyby użytkownik zawsze podawał opcję -a -
+tzn. pliki wyjściowe komenda takich jak:
+<pre>
+    pgp -kx user
+</pre>
+czy
+<pre>
+    pgp -es tekst user
+</pre>
+będą tekstowe raczej niż binarne;
+<li>Jeżeli użytkownik nie zażyczy sobie inaczej (za pomocą opcji -u),
+komendy wymagające użycia klucza prywatnego (tzn. deszyfrowanie i sygnowanie)
+będą się odwoływać do klucza prywatnego związanego z identyfikatorem
+<code>Szymon</code> (przydatne, jeśli posiadamy kilka par kluczy, np. o różnej
+długości - klucz krótki, np. 384 bity, do normalnej korespondencji, a długi,
+np. 2048 bitów, do korespondencji ściśle tajnej);
+</ol>
+
+<a name="pomocnicze">
+<h3>Programy pomocnicze</h3></a>
+
+Dla MS-DOS, MS-Windows:
+<pre>
+http://www.ifi.uio.no/pgp/
+ftp://oak.oakland.edu/SimTel/msdos/security/apgp22b.zip
+ftp://oak.oakland.edu/SimTel/win3/security/pgpw40.zip
+http://alpha.netaccess.on.ca/~spowell/crypto/pwf31.zip
+ftp://ftp.netcom.com/pub/dc/dcosenza/pgpw40.zip
+ftp://Sable.ox.ac.uk/pub
+ftp://ftp.firstnet.net/pub/windows/winpgp/pgpw40.zip
+http://www.firstnet.net/~cwgeib/welcom.html
+ftp://ftp.netcom.com/pub/ec/ecarp/pgpwind.zip
+http://www.eskimo.com/~joelm (Private Idaho)
+ftp://ftp.eskimo.com/~joelm
+http://www.xs4all.nl/~paulwag/security.htm
+http://www.LCS.com/winpgp.html
+ftp://mirrors.aol.com/mir01/circa/pub/pc/win3/util/pwf31.zip
+http://netaccess.on.ca/~rbarclay/index.html
+http://netaccess.on.ca/~rbarclay/pgp.html
+ftp://ftp.leo.org/pub/comp/os/os2/crypt/gcppgp10.zip
+ftp://ftp.leo.org/pub/comp/os/os2/crypt/pmpgp.zip
+</pre>
+Dla Macintosha:
+<pre>
+ftp://duke.bwh.harvard.edu:/pub/adam/mcip/MacPGP_icons.sit.hqx
+ftp://duke.bwh.harvard.edu:/pub/adam/mcip/MacPGPkit.hqx
+ftp://duke.bwh.harvard.edu:/pub/adam/mcip/MacPGPkitSources.sit.hqx
+ftp://ftp.netcom.com/pub/dd/ddt/crypto/pgp_tools/MacPGPkit1.6.sit
+ftp://ftp.netcom.com/pub/dd/ddt/crypto/pgp_tools/ChainMail.0.7.sit
+ftp://ftp.netcom.com/pub/dd/ddt/crypto/pgp_tools/Eudora
+</pre>
+
+<a name="vi">
+<h3>PGP a vi</h3></a>
+Program PGP w bardzo prosty sposób można sprząc z najczęściej
+używanym w systemie UNIX edytorem, jakim jest znienawidzony przez
+jednych, a uwielbiany przez innych - vi.  W tym celu, w swoim
+katalogu osobistym należy założyć plik o nazwie <code>.exrc</code>, a w nim
+wpisać:
+<p>
+<pre>
+    " PGP macros:
+    "
+    " Zakoduj:
+    map ^We :,$! /bin/sh -c 'pgp -feast 2&gt;/dev/tty^V|^V|sleep 4'^M^L
+    " Podpisz:
+    map ^Ws :,$! /bin/sh -c 'pgp -fast +clear 2&gt;/dev/tty'^M^L
+    " Rozkoduj:
+    map ^Wd :/^-----BEG/,/^-----END/! /bin/sh -c 'pgp -f 2&gt;/dev/tty^V|^V|sleep 4'^M^L
+    " Rozkoduj tylko na ekran:
+    map ^Wv :,/^-----END/w !pgp -m
+</pre>
+
+W liniach powyżej znajdować się powinny znaki kontrolne, takie jak Ctrl-M,
+Ctrl-V itp., których nie można było umieścić "dosłownie", bo nie byłoby widać,
+co to jest.  Tak więc '^W' oznacza np. właśnie znak Ctrl-W, który w edytorze
+vi uzyskać można wchodząc do trybu 'insert', a następnie naciskając kolejno
+Ctrl-V oraz Ctrl-W.  Podobnie - znak '^M' uzyskamy naciskając kolejno
+Ctrl-V oraz Ctrl-M (lub Ctrl-V i 'Enter', bo Ctrl-M to właśnie znak przejścia
+do nowej linii).  Plik z takimi lub podobnymi definicjami znajduje się
+w standardowej dystrybucji PGP dla UNIXa (np. <code>pgp26ui.zip</code>)
+w podkatalogu <code>contrib</code>.
+<p>
+
+A teraz jak wykorzystać zdefiniowane powyżej mapowanie klawiszy.
+Pierwsza z instrukcji wywołuje kodowanie tekstu od linii z kursorem do końca.
+Wywołujemy ją poprzez sekwencję klawiszy: Ctrl-W, a następnie 'e'.  Jeśli jest
+to zbyt kłopotliwe i wolelibyśmy użyć jednego klawisza funkcyjnego, można
+do .exrc dopisać kolejną linię:
+<pre>
+    map ^[[[D ^We
+</pre>
+Po kolei są to znaki:  ESC, [, [, D, spacja, Ctrl-W, e<br>
+^[[[D to kod klawisza F4 (na niektórych systemach - bo niestety nie wszędzie
+jest taki sam).  A powyższą linię znowu najlepiej uzyskać wchodząc do trybu
+insert, a następnie po kolei: Ctrl-V, F4, spacja, Ctrl-V, Ctrl-W, e
+<p>
+Skomplikowanie to brzmi, ale w rzeczywistości jest to bardzo proste. A gdy
+już to raz zrobimy, kodowanie w edytorze vi będziemy mogli uzyskać naciskając
+jeden klawisz - F4 (albo dowolny inny, który zdefiniujemy do tego celu).
+<p>
+Pozostałe funkcje zdefiniowane na początku - pod klawiszami '^Ws' mamy
+funkcję generowania podpisu do tekstu od kursora do końca, pod '^Wd' - funkcję
+deszyfracji zakodowanego tekstu i umieszczenie go w edytorze, pod '^Wv' -
+rozkodowanie zaszyfrowanego tekstu wyłącznie na ekran.
+<p>
+Podobnie możemy zdefiniować wszystkie inne używane przez nas sposoby
+wykorzystania PGP (np. do zaszyfrowania listu czyimś kluczem publicznym)
+<p>
+
+<a name="elm">
+<h3>PGP a ELM</h3></a>
+
+Istnieją dwa programy (w różnych wersjach zawarte w PGP, w contrib albo
+w osobnym contrib.zip) integrujące standardowego elma z PGP. Nazywają
+się morepgp i mailpgp. Możesz je dostać przez WWW z
+<a href="ftp://ftp.agh.edu.pl/pub/security/morepgp.tar.gz">
+ftp://ftp.agh.edu.pl/pub/security/morepgp.tar.gz</a>.
+Należy je przekopiować do dowolnego katalogu w ścieżce (na ogół
+/usr/local/bin, ale może to być dowolny katalog, także Twój $HOME/bin)
+i dopisać do konfiguracji elma:
+
+<pre>
+D)isplay mail using  : morepgp
+E)ditor (primary)    : mailpgp
+</pre>
+
+Ważne jest sprawdzenie, czy ścieżka do perl-a wpisana w pierwszej linii
+każdego z tych skryptów jest prawidłowa. ścieżkę perl-a w Twoim systemie
+możesz sprawdzić komendą: <code>which perl</code>.
+
+<a name="szczegoly">
+<h2>Więcej szczegółów o PGP</h2></a>
+
+<a name="siec">
+<h3>W sieci</h3></a>
+W sieci Internet dostępne są rozmaite materiały w języku angielskim
+dotyczące PGP.
+Oto niektóre z nich:
+<dl>
+<dt><a href="http://www.pk.edu.pl/sysdocs/pgpdoc/">
+http://www.pk.edu.pl/sysdocs/pgpdoc/</a>
+<dd>Oryginalna dokumentacja do PGP autorstwa Phila Zimmermanna
+<dt><a href="http://draco.centerline.com:8080/~franl/pgp/">
+http://draco.centerline.com:8080/~franl/pgp/</a>
+<dd>PGP -- Pretty Good Privacy Francisa Litterio - chyba najpełniejszy zbiór
+odsyłaczy do innych informacji o PGP; zawiera m.in.:
+<dt><a href="http://draco.centerline.com:8080/~franl/pgp/utilities.html">
+http://draco.centerline.com:8080/~franl/pgp/utilities.html</a>
+<dd>PGP-Related Utilities and Services - listę odsyłaczy do rozmaitych
+programów pomocniczych dla PGP;
+<dt><a href="http://www.ifi.uio.no/pgp/">
+http://www.ifi.uio.no/~staalesc/pgp/</a>
+<dd>The International PGP Home Page
+<a href="http://www.ifi.uio.no/~staalesc/">Stalego Schumachera</a> -
+informacje o wersji międzynarodowej PGP (PGP 2.6.3i, tzn. tej, której należy
+używać m.in. w Polsce)
+<dt><a href="http://www.ifi.uio.no/pgp/doc.shtml">
+http://www.ifi.uio.no/pgp/doc.shtml</a>
+<dd>Pretty Good Privacy (PGP) - opis PGP, również autorstwa
+<a href="http://www.ifi.uio.no/~staalesc/">Stalego Schumachera</a>
+<dt><a href="http://www.ifi.uio.no/pgp/links.shtml">
+http://www.ifi.uio.no/pgp/links.shtml</a>
+<dd>PGP resources on the Web - lista zasobów związanych z PGP i enkrypcją
+(szyfrowaniem) w ogólności;
+<dt><a href="http://www.ifi.uio.no/pgp/unix.shtml">
+http://www.ifi.uio.no/pgp/unix.shtml</a>
+<dd>Installing PGP 2.6.3i on Unix
+<dt><a href="http://www2.hawaii.edu/~phinely/MacPGP-and-AppleScript-FAQ.html">
+http://www2.hawaii.edu/~phinely/MacPGP-and-AppleScript-FAQ.html</a>
+<dd>FAQ - AppleScript and MacPGP Petera Hinely'ego zawiera informacje przydatne dla
+użytkowników Macintosha;
+<dt><a href="ftp://net-dist.mit.edu/pub/PGP/PGP_FAQ">
+ftp://net-dist.mit.edu/pub/PGP/PGP_FAQ</a>
+<dd>Questions and Answers about MIT's Release of PGP 2.6
+<dt><a href="ftp://ftp.csn.net/mpj/getpgp.asc">
+ftp://ftp.csn.net/mpj/getpgp.asc</a>
+<dd>WHERE TO GET THE PRETTY GOOD PRIVACY PROGRAM (PGP) FAQ
+</dl>
+<p>
+
+Ponadto, Paweł Krawczyk przetłumaczył na polski oryginalną dokumentację do PGP
+- jej wersja HTML jest dostępna jako:
+<a href="http://www.ceti.com.pl/~kravietz/pgp/">
+http://www.ceti.com.pl/~kravietz/pgp/</a>
+
+<a name="literatura">
+<h3>Literatura</h3></a>
+
+<pre>
+Protect Your Privacy: A Guide for PGP Users
+by William Stallings
+Prentice Hall PTR
+ISBN 0-13-185596-4
+
+E-Mail Security: How to Keep Your Electronic Mail Private
+by Bruce Schneier
+Wiley Publishing
+
+The Computer Privacy Handbook: A Practical Guide to E-Mail Encryption, Data
+Protection, and PGP Privacy Software
+by Andre Bacard
+Peachpit Press
+ISBN 1-56609-171-3
+
+PGP: Pretty Good Privacy
+by Simson Garfinkel
+O'Reilly & Associates, Inc.
+ISBN 1-56592-098-8
+
+THE OFFICIAL PGP USER'S GUIDE
+by Philip R. Zimmermann
+MIT Press
+ISBN 0-262-74017-6 ZIMPP
+
+PGP SOURCE CODE AND INTERNALS
+by Philip R. Zimmermann
+April 1995
+</pre>
+
+<hr>
+<a href="http://galaxy.uci.agh.edu.pl/~szymon/">
+<address>
+Szymon Sokół &lt;szymon@uci.agh.edu.pl&gt;, 14.08.95
+</address>
+</a>
+<p>
+</body>
+</html>

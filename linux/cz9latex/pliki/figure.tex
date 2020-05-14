@@ -1,0 +1,78 @@
+% Rozne rzeczy zwiazane z rysunkami.
+\documentclass[12pt]{article}
+% Pakiet potrzebny do wlaczania rysunkow w EPS
+\usepackage{graphicx}
+% Mozna zdefiniowac wlasne jednostki dlugosci:
+\newlength{\krok}
+\setlength{\krok}{10pt}
+\begin{document}
+
+% \listoffigures
+
+W srodowisku {\em picture} dozwolone jest tylko polecenie {\em put}.
+
+W srodowisku {\em picture} jednostka dlugosci jest {\em unitlength}
+o domyslnej dlugosci 1pt. Mozna to zmienic poza tym srodowiskiem
+poleceniem {\em setlength}.
+
+\begin{figure}
+\begin{center}
+\begin{picture}(200,100)       % rozmiar w pt
+\put(0,0){\framebox(200,100)[t]{Ramka}}
+\put(10,10){Napis}
+\end{picture}
+\end{center}
+\caption[Opcjonalny krotki opis rysunku.]{
+\label{fig1}
+Tutaj dlugi lub krotki opis rysunku.
+W Phys. Rev. podpis jest pod rysunkiem.}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\setlength{\unitlength}{10pt}  % zmiana domyslnej jednostki dlugosci
+\begin{picture}(20,10)
+\put(0,0){\framebox(20,10)[t]{Ramka}}
+\put(1,1){Napis}
+\end{picture}
+\end{center}
+\caption{
+\label{fig2}
+Rysunek ze zmieniona domyslna jednostka dlugosci na 10pt.
+Wszystkie wymiary i wspolrzedne podzielilem przez 10.}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{picture}(297,210)
+\put(0,0){\framebox(297,210)[t]{FIGURE (unit=pt)}}
+\put(100,10){\dashbox{10}(100,50)[bl]{Box 100x50}}
+\put(160,150){Point(160,150)}
+\put(150,150){\makebox(0,0){o}}
+\put(0,0){\line(2,5){60}}
+\put(60,150){\circle{40}}
+\put(60,150){\vector(3,1){20}}
+\put(150,100){\oval(80,40)}
+\put(200,60){\oval(80,40)[bl]}
+\multiput(10,10)(5,10){8}{\makebox(0,0){x}}
+\end{picture}
+\end{center}
+\caption[Krotki opis do rysunku.]{
+\label{fig3}
+Dlugi podpis pod rysunkiem.}
+\end{figure}
+
+\begin{figure}
+\begin{center}
+\begin{picture}(387,273)       % rozmiar w pt
+%\put(0,0){\framebox(387,273)[t]{}}
+\includegraphics{y_vs_x.eps}
+\end{picture}
+\end{center}
+\caption[Opcjonalny krotki opis rysunku.]{
+\label{fig4}
+Tutaj dlugi lub krotki opis rysunku.}
+\end{figure}
+
+
+\end{document}

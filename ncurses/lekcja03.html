@@ -1,0 +1,188 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+<hr>
+
+<h1>Programowanie z ncurses (3) - procedury wejściowe</h1>
+
+<h3>ZADANIE 3.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>klawisze</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>klawisze.c</em> postaci:
+
+<hr><pre>
+/*
+* klawisze.c
+*
+* Program z HOWTO zmodyfikowany. 
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;curses.h&gt;
+
+int main(void) 
+{
+int ch;
+
+initscr();             /* mozna sprawdzic NULL */
+cbreak();            /* zmiana trybu pracy */
+keypad(stdscr,TRUE);  /* aby dostać F1, F2,...  */
+noecho();
+printw("Litery beda wyswietlone z atrybutem A_BOLD\n");
+ch= getch();
+if (ch == KEY_F(1)) {
+	printw("Nacisnieto klawisz F1");
+} else if (ch == KEY_LEFT) {
+	printw("Nacisnieto klawisz kursora w lewo");
+} else if (ch == KEY_RIGHT) {
+	printw("Nacisnieto klawisz kursora w prawo");
+} else if (ch == KEY_UP) {
+	printw("Nacisnieto klawisz kursora w gore");
+} else if (ch == KEY_DOWN) {
+	printw("Nacisnieto klawisz kursora w dol");
+} else {
+	printw("Nacisnieto klawisz ");
+	attron(A_BOLD);
+	printw("%c",ch);
+	attroff(A_BOLD);
+/* Można to zrobić jedną instrukcją:
+addch(ch | A_BOLD);
+*/
+}
+refresh();
+sleep(2);
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 3.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>wpisy</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>wpisy.c</em> postaci:
+
+<hr><pre>
+/*
+*  wpisy.c
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;curses.h&gt;
+
+#define MAXLINE  20
+
+int main(void) 
+{
+int ch, i;
+char napis[MAXLINE];  /* napis podany przez usera */
+
+initscr();        /* mozna sprawdzic */
+cbreak();       /* zmiana trybu pracy */
+printw("Podaj tajny wpis: ");
+refresh();
+noecho();
+i= 0;
+while ((ch= getch()) != '\n' && (i &lt; MAXLINE)) {
+	napis[i]= ch;
+	++i;
+	addch('*');
+	refresh();
+}
+echo();
+napis[i]= '\0';
+mvprintw(1, 0, "Podano: %s\n", napis);
+refresh();
+sleep(2);
+
+mvprintw(3,0,"Podaj drugi napis (getnstr): ");
+refresh();
+getnstr(napis,MAXLINE);
+mvprintw(4,0,"Napisales (printw): %s",napis);
+mvaddstr(5,0,"Napisales (addstr): ");
+addstr(napis);
+refresh();
+sleep(2);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+echo();
+noecho();
+cbreak();      // ustawienie trybu cbreak
+raw();         // ustawienie trybu raw
+getyx(y,x);   // pobieranie aktualnego położenia kursora
+
+// pobiera jeden znak z klawiatury i zwraca ten znak lub ERR
+int getch(void);        // deklaracja
+int wgetch(WINDOW *win); // deklaracja
+
+// wprowadzanie łańcuchów
+// Czy dodawany jest znak \0 ? Wydaje się, że tak
+// Nie jest pobierany zna nowej linii.
+int getstr(char *str);
+int getnstr(char *str, int n);
+
+int scanw(char *str, ...);
+int wscanw(WINDOW *win, char *str,...);
+int mvscanw(int y, int x, char *str, ...);
+int mvwscanw(WINDOW *win, int y, int x, char *str, ...);
+// zmienna lista argumentów
+vwscanw(WINDOW *win, char *str, ...);
+
+// zinterpretuj wprowadzone klawisze funkcyjne/kursora KEY_*
+keypad(stdscr, TRUE);
+keypad(stdscr, FALSE);  // na koniec programu
+</pre><hr>
+
+<h3>PROCEDURY WEJŚCIOWE</h3>
+
+<p>Podstawowe funkcje wejściowe to getch() 
+[pobieranie znaku, komplementarna do addch()], 
+getstr() [pobieranie stringu]
+i scanw() [formatowane wejście].
+
+<p>Tryby wprowadzania znaków: domyślny, 
+<em>raw</em> [funkcja raw()],
+<em>cbreak</em> [funkcja cbreak()].
+W trybie domyślnym curses przeczyta znaki dopiero po dojściu
+do znaku nowej linii lub EOF. 
+Zwykle używany jest tryb <em>cbreak</em>, kiedy to znaki są
+natychmiast dostępne dla programu.
+
+<p>Wyświetlanie znaków wprowadzanych przez użytkownika sterowane 
+jest przez funkcje echo() i noecho().
+
+<p>getstr() wywołuje sekwencyjnie getch(), 
+dopóki nie natrafi na LF lub CR
+(ale te końcowe znaki nie będą częścią zwróconego łańcucha).
+Trzeba pamiętać o rozmiarze bufora i o ręcznym dopisaniu
+znaku końca łańcucha.
+Bezpieczniej jest używać getnstr().
+Jeżeli podamy za dużo znaków do getnstr(), to będzie
+generowany sygnał dźwiękowy.
+
+<p>scanw() działa podobnie do scanf().
+<em>ncurses</em> przekazuje otrzymane znaki jako wejście do sscanf().
+Jest jeszcze funkcja vwscanw(), która obsługuje zmienną listę
+argumentów.
+
+<hr>
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+
+</body>
+</html>

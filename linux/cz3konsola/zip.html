@@ -1,0 +1,30 @@
+<html>
+<head>
+<title>zip</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>zip i unzip</h1>
+
+<h3>ZIP</h3>
+
+<pre>
+$ zip plik1.zip plik1         (stworzenie archiwum ZIP)
+$ zip plik1 plik1            (też powstanie plik1.zip)
+$ zip pliki *              (powstanie pliki.zip ze wszystkich plików)
+$ zip -r kat1 kat1        (powstanie kat1.zip; spakowany cały katalog)
+$ zip -r kat1.zip kat1      (tak chyba lepiej pisać)
+</pre>
+
+<h3>UNZIP</h3>
+
+<pre>
+$ unzip plik1.zip            (rozpakowanie archiwum)
+$ unzip -l plik1.zip       (lista plików w archiwum)
+$ unzip -tq plik1.zip       (testowanie archiwum)
+</pre>
+
+</body>
+</html>

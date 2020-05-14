@@ -1,0 +1,1003 @@
+<html>
+<head>
+<title>Linux+</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p>Linux+ 2005/2
+
+<h1>
+GRUB - program uruchomieniowy
+</h1>
+
+<p>
+Czym jest program uruchomieniowy (ang. <em>boothloader</em>) 
+i czy jest mi potrzebny do szczęścia? Jest to program umieszczony 
+w początkowych sektorach dysku twardego (np. w <em>MBR - 
+Master Boot Record</em>). <em>BIOS</em>, po uruchomieniu 
+komputera i wykonaniu testów, przekazuje sterowanie właśnie do 
+programu zawartego w <em>MBR</em> dysku wskazanego jako 
+startowy, czyli do naszego programu uruchomieniowego. Jego 
+zadaniem jest załadowanie systemu operacyjnego do pamięci i przekazanie 
+mu kontroli. Obecnie większość popularnych programów 
+uruchomieniowych pozwala na wybór jednego z systemów zainstalowanych 
+na dysku. Najpopularniejsze tego typu programy, dostarczanie wraz 
+z dystrybucjami Linuksa, to <em>LILO</em> i <em>GRUB</em> 
+(<em>Grand Unified Bootloader</em>). W niniejszym 
+artykule postaram się przybliżyć to drugie narzędzie. 
+<h3>
+Przykład użycia
+</h3> 
+<p>
+Jestem tradycjonalistą. Nie ukrywam tego. Z tego powodu 
+przez bardzo długi czas (szczególnie na studiach) 
+uruchamiałem Linuksa z dyskietek. Koledzy z pokoju przez 
+długi czas nie mogli dojść, dlaczego uruchamia mi się inny 
+system niż im. No i po co w ogóle uruchamiać system, 
+na którym nie można pograć w <em>Dooma</em>? 
+Później zacząłem korzystać z <em>LILO</em>. Dzięki 
+temu programowi rozruchowemu nie musiałem już pamiętać, 
+w której kieszeni została dyskietka. Ponadto, mój 
+komputer był już wtedy bezpieczny od zakusów studenckiej 
+braci, więc mogłem sobie pozwolić na odrobinę luksusu. 
+I chociaż w kolejnych dystrybucjach miałem możliwości 
+zmienić na <em>GRUB-a</em>, przez kilka lat uparcie 
+zostawiałem przy <em>LILO</em>. Do zmiany przekonało 
+mnie moje własne lenistwo... Po prostu, gdy po raz kolejny 
+zapomniałem uruchomić polecenie <tt>lilo</tt> po zmianie 
+w pliku konfiguracyjnym i musiałem szukać dyskietki 
+ratunkowej, powiedziałem: dość. Zainstalowałem 
+<em>GRUB-a</em> i od tej pory nie mam już powodów 
+do narzekań. I nawet jak przyjadą krewni, to nie ma siły, 
+aby uruchomić system, którego nie powinni - 
+przynajmniej dopóki nie odgadną hasła. 
+
+
+<h3>
+Instalacja
+</h3>
+
+<p>
+Pakiety z programem <em>GRUB</em> można znaleźć 
+w praktycznie każdej dystrybucji. Co więcej, podczas
+ instalacji dystrybucji możemy wybrać program uruchomieniowy, 
+z którego chcemy korzystać. Jeśli zdecydujemy się na 
+<em>GRUB-a</em>, to system od razu postara się 
+odpowiednio dostosować jego konfigurację. 
+Jeśli jednak nie zdecydowaliśmy się na instalację 
+<em>GRUB-a</em>, musimy to zrobić teraz sami. 
+Przede wszystkim upewnijmy się, że nie jest już zainstalowany. 
+W przypadku <em>Auroksa</em> wykorzystamy do tego 
+polecenie <tt> rpm  -q  grub</tt>. Jeśli pojawi się 
+napis <em> pakiet grub nie jest zainstalowany</em>, 
+to będziemy musieli zmienić ten stan rzeczy. Pakiet z 
+<em>GRUB-em<</em> możemy zainstalować z kilku 
+różnych źródeł. Pierwszym z nich są płyty, z których 
+instalowaliśmy naszą dystrybucję. W przypadku 
+<em>Auroksa</em> pakiet znajduje się na pierwszej 
+płycie, więc po włożeniu jej do napędu możemy wydać polecenie 
+<pre>
+# mount  /mnt/cdrom/
+# rpm -Uvh  /mnt/cdrom/Aurox/RPMS/grub-0.94-5.i386.rpm
+</pre>
+<p>
+Drugim źródłem są repozytoria pakietów. 
+Jeśli korzystamy z jednego z systemów zarządzania 
+pakietami, to możemy użyć odpowiedniego dla niego polecenia, np.:
+<pre>
+# yum install grub
+# apt-get grub install
+# emerge grub
+</pre>
+<p>
+Oczywiście, wydajemy tylko jedno z powyższych poleceń. 
+Analogicznie możemy wykorzystać system zarządzania 
+pakietami do aktualizacji wersji <em>GRUB-a</em> 
+(np. poleceniem <tt>yum update grub</tt>). 
+<p>
+Mamy jeszcze trzecią możliwość. Jeśli zależy nam na 
+najnowszej wersji, możemy ją pobrać ze strony domowej 
+projektu (<em>http://www.gnu.org/software/grub/</em>). 
+Ze względu na rozpoczęcie prac nad <em>GRUB 2</em>, 
+starsza wersja (linia 0.9.x</em>, wciąż jeszcze 
+wykorzystywana w dystrybucjach) została przemianowana 
+na <em>GRUB Legacy</em>. Tutaj mamy dostępne 
+jedynie źródła, których instalacja przebiega zwykłym 
+torem - po pobraniu i rozpakowaniu pliku 
+(<tt>tar  xzvf  grub-0.95.tar.gz</tt>) wchodzimy do 
+utworzonego katalogu i wydajemy polecenie:  <tt>./configure</tt> i 
+<tt>make</tt>. Następnie, po uzyskaniu uprawnień administratora 
+(poleceniem <tt> su  -</tt>), wydajemy 
+ostatnie polecenie:   <tt>make install</tt>.
+Lepszym rozwiązaniem jest jednak skorzystanie z 
+pakietów dostępnych dla naszej dystrybucji.
+<p>
+Teraz musimy skonfigurować naszego 
+<em>GRUB-a</em>, a następnie umieścić go na dysku.
+<h3>
+Podstawowa konfiguracja 
+</h3>
+<p>
+Główny plik konfiguracyjny <em>GRUB-a</em> to 
+<em>/boot/grub/grub.conf</em>. Zazwyczaj istnieją 
+również dwa dowiązania symboliczne do tego pliku: 
+<em>/boot/grub/menu.lst</em> oraz <em>/etc/grub.conf</em> 
+(tak jest w <em>Auroksie</em> - w innych 
+dystrybucjach głównym plikiem konfiguracyjnym może być 
+być jeden z trzech wymienionych). Co prawda, nie jest 
+on konieczny, gdyż możemy korzystać z linii poleceń 
+<em>GRUB-a</em>, ale odpowiednie 
+skonfigurowanie pliku bardzo ułatwi nam pracę.
+Dzięki temu nie będziemy musieli każdorazowo 
+przy uruchamianiu komputera wpisywać 
+szereg poleceń, a w przypadku zainstalowania wielu systemów, 
+będziemy mogli korzystać z wygodnego menu. 
+<h1>
+Dyskietka ratunkowa
+</h1>
+<p>
+Przede wszystkim zadbajmy o to, aby mieć 
+dyskietkę lub płytę ratunkową. Dyskietkę 
+mogliśmy utworzyć podczas instalacji dystrybucji. 
+Jeśli tego nie zrobiliśmy, zazwyczaj możemy 
+skorzystać z pierwszej płyty dystrybucji. 
+Zazwyczaj nie ma potrzeby korzystania 
+z dyskietki ratunkowej, ale podczas zmiany 
+programu rozruchowego mogą pojawić się 
+problemy, które sprawią, że nie uda się nam 
+uruchomić z systemów zainstalowanych na dysku. 
+<h1> 
+Uruchamianie Linuksa
+</h1>
+<p> 
+Najpierw spróbujmy wykorzystać <em>GRUB-a</em> 
+do uruchamiania naszego Linuksa. W tym celu 
+powinniśmy mieć w pliku <em>/boot/grub/grub.conf</em>
+przynajmniej cztery linie: 
+<pre> 
+title Aurox Linux (2.4.22-1) 
+root (hd0,7) 
+kernel /vmlinuz-2.4.22-1 ro root=LABEL=/ 
+initrd /initrd-2.4.22-1.img
+</pre>
+<p>
+Pierwsza z nich, po słowie <em>title</em>, 
+zawiera tekst, który pojawi się w menu. Najlepiej 
+umieścić tu nazwę systemu (dystrybucji) oraz 
+w nawiasie numer wersji jądra. Oczywiście, 
+możemy też podać inne dodatkowe informacje 
+(np. czy jest wykorzystywany <em>FrameBuffer</em>), 
+które pomogą w zidentyfikowaniu pozycji w menu. 
+<p>
+Druga linia wskazuje, na jakiej partycji jest umieszczony 
+katalog <em>/boot/</em>. W naszym przykładzie 
+katalog <em>/boot/</em> umieszczony jest na 
+osobnej partycji, <em>/dev/hda8</em>, natomiast 
+główny katalog systemowy <em>/</em> jest 
+umieszczony na partycji <em>/dev/hda9</em> 
+(oznaczonej etykietą <em>/</em>). Więcej 
+o nazewnictwie partycji stosowanym przez 
+<em>GRUB-a</em> można przeczytać w ramce 
+<em>Nazewnictwo dysków i partycji</em>.
+<p>
+W kolejnej linii określamy, które jądro chcemy 
+załadować. Po słowie <em>kernel</em> podajemy 
+ścieżkę do pliku z jądrem (w naszym przykładzie 
+<em>vmlinuz-2.4.22-1</em>), liczoną w stosunku 
+do partycji określonej linię wcześniej. Ponieważ 
+dla katalogu <em>/boot/</em> w naszym przykładzie 
+mamy osobną partycję, to podajemy ścieżkę 
+<em>/vmlinuz-2.4.22-1.</em> Po nazwie pliku 
+jądra możemy podać parametry jądra. W naszym 
+przypadku określamy partycję z głównym systemie 
+plików <em>(root)</em>. Wyjaśnienie wartości 
+<em>LABEL=/</em> znajduje się w ramce 
+<em>Nazewnictwo dysków i partycji</em>. 
+Należy zwrócić uwagę, że słowo <em>root</em> 
+w tej linii ma inne znaczenie niż w linii wcześniejszej. 
+Tutaj jest to parametr jądra, wskazujący główny 
+system plików, natomiast słowo <em>root</em>, 
+występujące w drugiej linii, to komenda 
+<em>GRUB-a</em>, pozwalająca wskazać urządzenie, 
+względem którego będą opisywane następne ścieżki dostępu.
+<p>
+Ostatnia linia nie jest konieczna, lecz jeśli tylko 
+mamy utworzony plik <em>initrd</em> 
+odpowiedni dla naszego jądra, to powinniśmy z 
+niego skorzystać. Polecenie <tt>initrd</tt> zawarte w 
+tej linii ładuje RAM-dysk. To, czy go wykorzystamy, 
+zależy od konfiguracji naszego jądra. 
+<h3>
+Opcje ogólne
+</h3>
+<p>
+Oprócz powyższych czterech linii, warto 
+od razu dodać kilka innych, które określą 
+zachowanie naszego menu. Są to następujące linie:
+<pre>
+default=0
+timeout=30
+</pre>
+<p>
+Umieszczamy je przed (podkreślam - przed) 
+wymienionymi wcześniej liniami, zaraz na początku 
+pliku <em>/boot/grub/grub.conf</em>. Pierwsza 
+z nich określa, która pozycja menu będzie 
+domyślnie wybrana. Jak wiemy, GRUB liczy od zera, 
+wiec w naszym przykładzie wybraliśmy pierwszą 
+(i na razie jedyną) pozycję w menu. Druga opcja 
+wskazuje, że przez 30 sekund (możemy ustawić
+inną wartość) GRUB będzie czekał na naszą decyzję. 
+Jeśli nie wciśniemy żadnego klawisza, to uruchomi 
+automatycznie pozycję menu wskazaną w opcji <em>default</em>. 
+W przypadku, gdy  użyliśmy opcji <em>timeout</em> 
+bez korzystania z opcji <em>default</em>, uruchomiona zostanie
+pierwsza zdefiniowana pozycja w menu.
+<h3>
+Zapisywanie GRUB-a na dysku
+</h3>
+
+<p>Teraz już możemy zapisać <em>GRUB-a</em> na dysku, 
+(jeśli jeszcze tego nie robiliśmy). 
+Zazwyczaj będziemy chcieli umieścić go na pierwszym dysku. 
+Służy do tego polecenie <tt>grub-install  /dev/hda</tt>. 
+<p>
+Jeśli później zmienimy zawartość pliku konfiguracyjnego 
+<em>/boot/grub/grub.conf.</em>, to nie będziemy 
+musieli ponownie wykonywać tego polecenia. 
+<em>GRUB</em> automatycznie rozpozna 
+zmiany w pliku i podczas kolejnego uruchamiania 
+komputera wyświetli odpowiednie menu. W 
+zasadzie jedyny przypadek, gdy możemy chcieć 
+wydać ponownie to polecenie, to moment 
+aktualizacji <em>GRUB-a</em> do nowszej wersji.
+<p>
+Warto uruchomić ponownie komputer, aby 
+sprawdzić, jak działa nasz <em>GRUB</em>. 
+Powinnyśmy zobaczyć proste menu z jedną pozycją 
+do wyboru. Po jej zatwierdzeniu klawiszem 
+<em>[Enter]</em> (lub odczekaniu 30 sekund) 
+powinien załadować się nasz Linux.
+<h3>
+Uruchamianie różnych systemów
+</h3>
+<p>
+Możliwości <em>GRUB-a</em> najlepiej 
+wykorzystamy, jeśli mamy zainstalowane również 
+inne systemy operacyjne - bardzo wielu użytkowników 
+systemu spod znaku pingwina korzysta z 
+<em>Windows</em> (choćby po to, aby czasem pograć) 
+lub z <em>FreeBSD</em> (np. ze względu na studia czy pracę).
+<h3>
+Inne dystrybucje Linuksa
+</h3>
+<p>
+W przypadku, gdy chcemy z pomocą <em>GRUB-a</em> uruchamiać 
+również inne dystrybucje Linuksa zainstalowane w naszym 
+komputerze, postępujemy tak samo, jak w przypadku 
+opisanym w rozdziale <em>Uruchamianie Linuksa</em>. 
+Wystarczy dopisać kolejna sekcję zaczynającą się od 
+linii <em>title</em> i zawierają odpowiednią opcję. 
+Tego samego sposobu możemy zresztą użyć, gdy 
+chcemy przetestować nowe jądro w naszej 
+dystrybucji. Przypuśćmy, że skomplikujemy samodzielnie
+jądro i nazwaliśmy je <em>vmlinuz-new</em>. 
+Wówczas w pliku <em>/boot/grub/grub.conf</em> 
+możemy na końcu dopisać następujące linie:
+<pre>
+title Aurox Linux (2.4.22-1a)
+root (hd0,7)
+kernel  /vmlinuz-new  ro root=LABEL=/
+initrd  /initrd-2.4.22-1a.img
+</pre>
+<p>
+Jeśli nie wygenerowaliśmy RAM-dysku, to nie 
+dopisujemy ostatniej linii, a zamiast <em>root=LABEL=/</em> 
+musimy podać odpowiednią nazwę partycji (w naszym 
+przykładzie <em>root=/dev/hda9</em>). Jeśli o tym 
+zapomnimy, to nasz system przestanie się ładować na 
+etapie montowania głównego systemu plików.
+<h3>
+Windows, DOS
+</h3>
+<p>
+Najprostszym sposobem na uruchamianie systemu 
+z rodziny <em>Windows</em> jest umieszczenie 
+na końcu pliku <em>/boot/grub/grub.conf</em> następujących linii:
+<pre>
+title DOS lub Windows
+rootnoverify (hd0,0)
+chainloader +1
+</pre>
+<p>
+Polecenie <em>title</em> już znamy. W linii 
+<em>rootnoverify</em> wskazujemy partycję, na której jest 
+umieszczomy system, który chcemy załadować. 
+Polecenie to różni się od polecenia <em>root</em>  
+tym, że wskazana partycja nie jest montowana. 
+Polecenie <em>chainloader</em> przekazuje kontrole 
+do następnego programu rozruchowego. Jak to działa? 
+Jeśli na partycji <em>/dev/hda1</em> mamy 
+zainstalowany tylko pojedyńczy system 
+(np. DOS lub <em>Windows 98</em>), to zostaje 
+on uruchomiony. Jeśli mamy na dysku zainstalowany 
+system <em>Windows 98</em> i <em>Windows XP</em>, 
+to program uruchomieniowy zainstalowany przez <em>Windosw XP</em> 
+potrafi obsłużyć oba te systemy. Wystarczy więc w poleceniu 
+<em>rootnoverify</em> wskazać partycję, na której 
+jest zainstalowany program uruchomieniowy 
+<em>Windows XP</em>. Dzięki temu, po wybraniu 
+w menu <em>GRUB-a</em> pozycja <em>DOS lub Windows</em>, 
+zobaczymy kolejne menu, pozwalające nam wybrać pomiędzy 
+<em>Windows 98</em> a <em>Windows XP</em>.
+<h3>
+FreeBSD
+</h3>
+<p>
+Systemy z rodziny <em>FreeBSD</em> możemy 
+uruchomić w analogiczny sposób, jak <em>Windows</em>
+ i <em>DOS</em>, czyli korzystając z poleceń 
+<em>rootnoverify</em> i <em>chainloader</em>. 
+Możemy też wskazać dokładnie na program 
+<em>/boot/loader</em> z pomocą następujących 
+linii w pliku <em>/boot/grub/grub.conf</em>:
+<pre>
+title FreeBSD
+root (hd1,a)
+kernel /boot/loader
+</pre>
+<p>
+Widać tu użycie innego nazewnictwa. Wynika 
+to stąd, że <em>FreeBSD</em> nazywa swoje 
+partycje literami alfabetu, a w dodatku wprowadza 
+pojęcie <em>slice</em> (tzw. <em>plastra</em> -
+ natywnej partycji <em>FreeBSD</em>). Jeśli 
+więc mamy <em>FreeBSD</em> zainstalowane na 
+pierwszej partycji drugiego dysku, to zapis (<em>hd1,a</em>)
+ powinien być odpowiedni. Wyszuka on pierwszy, 
+<em>slice</em>, na którym znajduje się partycja 
+<em>a</em>. Jeśli chcemy dokładnie sprecyzować, który 
+<em>silce</em> ma być zamontowany, to możemy 
+użyć postaci (<em>hd1,0,a</em>).
+<h3>
+Uruchamianie Memtest86+
+</h3>
+<p>
+Od czasu do czasu warto przetestować pamięć naszego 
+komputera, aby zawczasu wykryć problemy. Dwa 
+najlepsze programy przeznaczone do tego celu to 
+<em>Memtest86</em> i <em>Memtest86+</em>. <em>GRUB</em> 
+może nam pomóc w ich uruchomieniu.
+<p>
+Wystarczy wybrać jeden z wymienionych programów, 
+gdyż obydwa czerpią nawzajem ze swoich kodów 
+źródłowych. Osobiście polecam <em>Memtest86+</em>. 
+Najpierw musimy pobrać odpowiedni plik ze strony 
+domowej programu (<em>http://www.memtest.org/</em>). 
+Odnajdujemy sekcję <em>Download</em> 
+(<em>Pre-built ISOs</em>), w której znajdują się
+ już skomplikowane wersje. Następnie z sekcji odpowiadającej 
+wersji (w chwili pisania artykułu była to wersja 
+<em>1.40</em>) pobieramy plik znajdujący się pod 
+odnośnikiem <em>Download - Pre-Compiled Bootable 
+Binary</em> (<em>.gz</em>). Plik ma zaledwie około 
+40 kB, więc jego pobieranie nie powinno potrwać zbyt 
+długo. Dla pewności możemy sprawdzić, czy plik jest 
+poprawny. W tym celu wchodzimy do katalogu, 
+w którym znajduje się nasz plik i wydajemy plecenie:
+<pre>
+# md5sum memtest86+-1.40.bin.gz
+</pre>
+<p>
+Oczywiście, jeśli pobraliśmy nowszą wersję, to musimy
+ odpowiednio dostosować nazwę pliku. W wyniku 
+powinniśmy otrzymać ciąg znaków (tzw. skrót <em>MD5</em>), 
+który porównujemy z ciągiem znaków umieszczonym 
+obok odnośnika do pliku na stronie domowej programu. 
+Jeśli oba ciągi są takie same, możemy 
+przystąpić do następnych czynności.
+<p>
+Czas na rozpakowanie pliku. Dokonujemy tego
+ poleceniem <tt>gzip  -d memtest86+-1.40.bin</tt>. 
+Następnie uzyskujemy uprawnienia superużytkownika 
+(wydajemy polecenie <tt>su -</tt> i podajemy hasło 
+użytkownika <em>root</em>), po czym kopiujemy plik 
+<em>memtest86+-1.40.bin</em> do katalogu
+ <em>/boot/</em>. Teraz pozostało nam odpowiednio 
+zmodyfikować plik konfiguracyjny <em>GRUB-a</em>. 
+Otwieramy go w naszym ulubionym edytorze 
+(np. <em>Vim</em>) i na końcu dopisujemy dwie linie:
+<pre>
+title MEMTEST
+root (hd0,7)
+kernel  /memtest86+-1.40.bin
+</pre>
+<p>
+Oczywiście, zamiast <em>MEMTEST</em> możemy 
+wstawić inny odpowiadający nam tytuł. Pamiętajmy,
+ że te linie dotyczą wciąż naszego przykładu. Jeśli katalog 
+<em>/boot/</em> mamy na innej partycji, to musimy 
+odpowiednio dostosować wartości poleceń 
+<em>root</em> i <em>kernel</em>.
+<p>
+Po zapisaniu zmian możemy już zrestartować system, 
+a w naszym menu powinno pojawić się nowa opcja - 
+<em>MEMTEST</em>. Jeśli ją wybierzemy, 
+uruchomi się program <em>Memtest86+</em> i od 
+razu rozpocznie testowanie pamięci. Opcje programu 
+są dostępne po wciśnięciu klawisza <em>[c]</em>, 
+natomiast klawiszem <em>[ESC]</em> możemy 
+zrestartować komputer, jeśli nie mamy 
+czasu na przprowadzanie pełnego testu.
+<h3>
+Upiększenie GRUB-a
+</h3>
+<p>
+Jeśli nie podoba nam się domyślny wygląd menu 
+<em>GRUB-a</em>, możemy spróbować je nieco 
+ubarwić. Jedną z możliwości jest ustawienie lub 
+zmiana rysunku wyświetlonego w tle. Ponadto, 
+możemy dopasować kolory czcionek do naszych upodobań.
+<p>
+Większość dystrybucji dostarcza swoje własne tła 
+dla <em>GRUB-a</em>, więc najprawdopodobniej 
+mamy już w pliku konfiguracyjnym odpowiednią 
+opcję. Jest to linia o zawartości podobnej do poniższej:
+<pre>
+splashimage=(hd0,7)/grub/splash.xpm.gz
+</pre>
+<p>
+Linia ta opcji <em>splashimage</em> przypisuje plik 
+<em>splash.xpm.gz</em> znajdujący się w katalogu 
+<em>/grub/</em> na partycji <em>/dav/hda8</em> 
+(a więc w naszym przykładzie plik ten 
+znajduje się w katalogu <em>/boot/grub/</em>).
+<p>
+Jeśli w naszym pliku nie ma takiej linii, to należy ją 
+dodać, odpowiednio dopasowując wartość.
+ Linia ta powinna być umieszczona przed pierwszą 
+linią <em>title</em>. Możemy ją wstawić 
+zaraz poniżej opcji <em>timeout</em>.
+<p>
+Powstaje pytanie, skąd wziąć rysunek. Jak widać,
+w opcji <em>splashimage</em> nie podajemy plików w
+popularnych formatach, takich jak <em>PNG</em> 
+czy <em>JPG</em>. Zamiast tego, mamy tu plik w 
+formacie <em>XPM</em>, skompresowany programem 
+<em>Gzip</em>. To nie jedyne ograniczenie. Nasz 
+obrazek może mieć tylko 14 kolorów i rozdzielczość 
+640x480 pikseli. Nie brzmi to może zbyt zachęcająco, 
+ale zapewniam, że można przygotować interesujące rysunki 
+spełniające te wymagania. Zacznijmy od 
+obejrzenia kilku przykładowych rysunków. 
+<h3>
+Wybieranie tła
+</h3>
+<p>
+Na stronie <em>http://vision.featia.net/liunx/grubsplash/</em>
+możemy znaleźć kilka przykładów rysunków
+mogących posłużyć za tło <em>GRUB-a</em>. Mamy 
+tu do dyspozycji zarówno pliki w formacie <em>GIF</em> 
+(dzięki nim od razu możemy zapoznać się z rysunkiem),
+jak i odpowiadające im pliki w formacie 
+<em>XPM.GZ</em>. Pobieramy je wszystkie na nasz dysk. 
+Rysunki dostarczane z dystrybucją znajdują się w katalogu 
+<em>/boot/grub</em>, lecz jeśli umieścimy tam 
+również nasze, może powstać bałagan. Zamiast 
+tego, utworzymy podkatalog <em>splashes/</em> 
+poleceniem: <tt>mkdir /boot/grub/splashes/</tt> 
+(oczywiście, potrzebujemy do tego uprawnień 
+użytkownika <em>root</em>). Następnie do tego 
+katalogu kopiujemy wszystkie pobrane pliki 
+z końcówką <em>.xpm.gz</em>. 
+<p>
+Wydawałoby się, że powinniśmy teraz 
+zmodyfikować plik <em>/boot/grub/grub.conf</em> i w linii z opcją 
+<em>splashimage</em> podać nową ścieżkę do pliku. Owszem, 
+można to zrobić, wstawiając przykładowo taką linię: 
+<pre> 
+splashimage=(hd0,7)/grub/splashes/seachair.xpm.gz
+</pre>  
+<p>
+Jeśli jednak chcemy sami poeksperymentować 
+i sprawdzić, które tło najbardziej nam odpowiada, 
+to ciągle restartowanie systemu i modyfikowanie 
+jednej linii może być męczące. Na szczęście, 
+można to zrobić inaczej. Gdy już zrestartujemy 
+system i powita nas menu <em>Grub-a</em>, 
+wciskamy klawisz <em>[c]</em>. W ten sposób 
+przejdziemy do linii poleceń <em>Grub-a</em>, 
+która szerzej jest opisana w rozdziale <em>Obsługa</em>. 
+W linii tej najpierw wpisujemy <tt>root (hd0,7)</tt>, 
+a następnie wciskamy <em>[Enter]</em>. 
+Pamiętamy, że polecenie to ustawia partycję wykorzystywaną 
+w następnych poleceniach. Później wpisujemy 
+<tt>splashimage    /grub/splashes/seachair.xpm.gz</tt>  
+i ponownie zatwierdzamy klawiszem <em>[Enter]</em>. 
+I już mamy wyświetlone nasze tło. Klawiszem 
+<em>[Esc]</em> możemy wrócić do menu, aby 
+zobaczyć, jak wygląda. Jeśli będziemy chcieli 
+wypróbować inne tła, znów wciskamy klawisz 
+<em>[c]</em> i postępujemy tak, jak wcześniej 
+(nie musimy ponownie używać polecenia <em>root</em> 
+- wystarczy samo <em>splashimage</em>). 
+No właśnie, ale pewnie zapomnieliśmy już, 
+jak się nazywały poszczególne pliki. Nie martwmy 
+się. Linia poleceń <em>GRUB-a</em> obsługuje 
+uzupełnienie nazw, więc możemy wpisać słowa 
+<tt>splashimage / </tt> (pamiętajmy o znaku /), 
+a następnie wcisnąć klawisz <em>[Tab].</em> 
+Pojawi się nam spis dostępnych nazw katalogów 
+i plików. W ten sposób dopisujemy dalszy ciąg 
+ścieżki (<em>/grub/splashes/</em> lub 
+<em>/boot/grub/splashes/</em> - zależnie od naszej 
+konfiguracji) i znów wciskamy klawisz <em>[Tab]</em> w 
+celu wyświetlenia nazw plików z tłami. 
+<p>
+Gdy już się zdecydujemy na konkretne tło, możemy 
+uruchomić system (wychodzimy klawiszem <em>[Esc]</em> 
+aż do menu i wybieramy pozycję z naszym Linuksem), 
+a następnie dopisać odpowiednią linię 
+do pliku <em>/boot/grub/grub.conf.</em> 
+<h3> 
+Tworzenie własnego tła
+</h3>
+<p> 
+Oprócz gotowych plików z tłami, które można 
+znaleźć w Internecie, każdy pewnie chciałby mieć 
+możliwość stworzenia całkiem własnego. Oczywiście, 
+nic nie stoi na przeszkodzie. Jeśli chcemy po prostu 
+przekonwertować posiadany obrazek do 
+skompresowanego formatu <em>XPM</em>, możemy wydać polecenie: 
+<pre>
+# convert -resize 640x480 -colors 14 picture.jpg picture.xpm 
+# gzip picture.xpm
+</pre>
+<p> 
+Polecenie <em>convert</em> należy do pakietu 
+<em>ImageMagick</em>. Jeśli nie jest on zainstalowany 
+w naszym systemie, możemy go zainstalować z płyt 
+dystrybucji lub z repozytorium (analogicznie, do 
+instalacji pakietu <em>GRUB-a</em>). 
+Opcja <em> -resize 640x480</em> powoduje zmianę 
+rozdzielczości rysunku do wymaganego rozmiaru, 
+a opcja <em>-colors 14</em> redukuje palete 
+kolorów do czternastu. Nazwy <em>picture.jpg</em> i 
+<em>picture.xpm</em> to odpowiednio 
+nazwy pliku wejściowego (z konwertowanym 
+rysunkiem) rysunkiem wyjściowego (z tłem 
+dla <em>GRUB-a</em>). Drugim poleceniem 
+kompresujemy rysunek programem <em>Gzip</em>.  
+<p>
+Powyższa metoda jest szybka, lecz czasem 
+uzyskane rezultaty wołają o pomstę do nieba. 
+Lepszym rozwiązaniem jest uruchomienie programu 
+<em>GIMP</em>, wczytanie pliku, który chcemy 
+konwertować, a następnie zmiana rozmiaru obrazu 
+(<em>Obraz -&gt; Przeskakuj obraz</em>) i liczby 
+kolorów (<em>Obraz -&gt; Tryb -&gt; Indeksowany</em>). 
+Dzięki temu możemy poeksperymentować z różnymi 
+opcjami obrazu. Ponadto, może okazać się, że 
+konieczne będzie ręczne poprawianie całego 
+rysunku, zanim uzyskamy zadowalający efekt. 
+<p>
+Innym wyjściem jest stworzenie pustego rysunku 
+o wymiarach <em>640x480</em> i palecie 14 
+kolorów, a następnie narysowanie na nim tego, 
+co nam się podoba. Nie każdy jednak ma żyłkę artystyczną. 
+<p>
+Wybór metody zależy od nas. Z uzyskanym 
+plikiem postępujemy tak, jak to opisaliśmy 
+w rozdziale <em>Wybieranie tła</em>. 
+<p>
+Niektórzy <em>Czytelnicy</em> mogą 
+zainteresować się, dlaczego kompresujemy tła 
+przed wykorzystaniem ich w <em>GRUB-ie</em>. 
+Można wykorzystać również pliki <em>XPM</em> 
+nieskompresowane programem <em>Gzip</em>. 
+Różnica będzie dla nas w sumie 
+nieodczuwalna, lecz dla zasady lepiej kompresować. 
+Przy obecnych komputerach mniej czasu zajmuje 
+wczytanie z dysku skompresowanego (a więc 
+i mniejszego) pliku, a następnie rozkompresowanie 
+go w pamięci, niż wczytanie z dysku większego 
+pliku, nie poddanego kompresji. 
+<h3> 
+Dobór kolorów
+</h3>
+<p>
+Oprócz ustalenia własnego tła, możemy 
+pokusić się o zmianę kolorów czcionki 
+wykorzystywanej w menu. Służą do tego 
+opcje <em>foreground</em> i <em>background</em> 
+ustawiane w początkowej części pliku <em>/boot/grub/grub.conf</em> 
+(możemy je umieścić nawet przed opcją <em>splashimage</em>). 
+Opcje te przyjmują jako parametry kolory 
+zapisane w szesnastkowym formacie <em>RGB</em> 
+(<em>Red, Greek, Blue</em>). Jeśli 
+będziemy chcieli uzyskać białe litery z czarnym 
+tłem, to użyjemy opcji: 
+<pre>
+foreground ffffff 
+background 000000
+</pre> 
+<p>
+Oczywiście, możemy też używać innych kolorów, 
+jak czerwony (<em>ff0000</em>), zielony  
+(<em>00ff00</em>), niebieski (<em>0000ff</em>) 
+i inne. Jeśli chcemy chcemy w wygodny sposób 
+dopasować kolory do naszego tła i gustu, możemy 
+wykorzystać tę samą metodę, którą stosowaliśmy przy 
+wybieraniu tła. Tym razem, po wejściu do linii poleceń 
+<em>GRUB-a</em>, wydajemy odpowiednie polecenie 
+<tt>foreground ffff00</tt> i <tt>background ff00ff</tt> 
+(oczywiście, eksperymentując z kolorami).
+<p>
+Oprócz tego, istnieje możliwość zmiany koloru 
+podświetlenia i tła menu. Wykorzystywane jest do tego 
+polecenie <em>color</em>, który możemy umieścić 
+w pliku konfiguracyjnym przed poleceniami 
+<em>foreground</em> i <em>background</em>. 
+Listę kolorów dostępnych w tym poleceniu możemy 
+uzyskać korzystając z polecenia <tt>help  color</tt>
+ w linii poleceń <em>GRUB-a</em> (jak również w 
+dokumentacji <em>GRUB-a</em> - <tt>info  grub</tt>). 
+Przykładowe wywołanie tego polecenia (dające całkiem przyjemny kolor) 
+ma postać <tt>color cyan/blue whate/blue</tt>.
+<h3>
+Obsługa
+</h3>
+<p>
+Jeśli zainstalowaliśmy <em>GRUB-a</em> na 
+dysku i stworzyliśmy dla niego plik konfiguracyjny, 
+to podczas uruchamiania komputera 
+powinno nas przywitać menu 
+<em>GRUB-a</em>. Możemy poruszać się 
+po nim z pomocą strzałek kursora, a klawiszem 
+<em>[Enter]</em> wybierać pozycję, którą 
+chcemy uruchomić. Oprócz tego, 
+mamy jednak do dyspozycji kilku innych funkcji. 
+<h3>
+Modyfikacja pozycji menu
+</h3>
+<p>
+Przypuśćmy, że chcemy poeksperymentować 
+z innymi parametrami jądra. Możemy w tym celu 
+utworzyć nowe sekcje <em>title</em> w pliku 
+konfiguracyjnym. Lepszym rozwiązaniem jest modyfikacja 
+parametrów jądra podczas uruchamiania systemu. 
+Jak tego dokonać? Przesuńmy zaznaczenie w menu 
+na pozycję naszej dystrybucji Linuksa. W naszym 
+przykładzie jest to linia <em>Aurox Linux (2.4.22-1)</em>. 
+Zamiast wcisnąć <em>[Enter]</em>, wciskamy 
+klawisz <em>[e]</em>. Zobaczymy wyświetloną 
+zawartość tej sekcji <em>title</em>. Pomiędzy 
+liniami możemy przemieszczać się podobnie jak w menu. 
+Jeśli chcemy zmodyfikować jakąś linię, wciskamy 
+<em>[Enter]</em>. Spróbujmy w linii z poleceniem 
+<em>kernel</em> dopisać opcję jądra <em>vga=791</em>. 
+W naszym przykładzie linia wyglądałaby tak:
+<pre>
+kernel /vmlinuz-2.4.22-1 ro root=LABEL=/ vga=791
+</pre>
+<p>
+Zmiany zatwierdzamy klawiszem <em>[Enter]</em>. 
+Wprowadzona właśnie opcja powoduje, że system, 
+zamiast w standardowym trybie tekstowym, 
+uruchomi się z wykorzystaniem bufora ramki, ustawiając 
+rozdzielczości ekranu na 1024x768 
+pikseli z ponad 16 tysięcy kolorów. 
+<p>
+Jeśli chcielibyśmy dodać nową linię, możemy skorzystać 
+z klawiszy <em>[o]</em> i <em>[O]</em>. 
+Pierwszy z nich powoduje dodanie nowej linii, po 
+aktualnie zaznaczonej linii, a drugi - przed nią. 
+Niepotrzebne linie możemy skasować klawiszem <em>[d]</em>.
+<p>
+Gdy jesteśmy już zadowoleni z wprowadzonych zmian,
+wciskamy klawisz <em>[b]</em>, co powoduje uruchomienie
+edytowanej pozycji wraz z wprowadzonymi zmianami.
+Jeśli wolimy zrezygnować ze zmian, możemy klawiszem
+<em>[Esc]</em> wrócić do głównego menu.
+<h3>
+Linia poleceń
+</h3>
+<p>
+Jeszcze większe możliwości daje nam linia poleceń 
+dostępna w <em>GRUB-ie</em>. Korzystaliśmy 
+z niej już w rozdziale <em>Wybieranie tła</em>, 
+lecz teraz opiszemy ją bardziej szczegółowo. Aby się 
+do niej dostać, w menu <em>GRUB-a</em> 
+wciskamy klawisz <em>[c]</em>. Mamy tu do 
+dyspozycji cały szereg mniej lub bardziej przydatnych 
+poleceń. Ich spis uzyskamy wciskając po prostu 
+klawisz <em>[Tab]</em>. Z pewnością zwrócimy 
+uwagę, że na spisie znajduje się wiele znanych nam już 
+poleceń, z których korzystaliśmy podczas tworzenia 
+menu - <em>chainloader, kernel, initrd, root </em> 
+i inne. Jak więc widać, linię poleceń również możemy 
+wykorzystać do uruchamiania systemów zainstalowanych 
+na naszym komputerze. Zresztą, gdybyśmy nie 
+utworzyli pliku konfiguracyjnego 
+<em>/boot/grub/grub.conf</em>, to przy uruchamianiu komputera 
+moglibyśmy korzystać tylko z linii poleceń <em>GRUB-a</em>. 
+Jeśli w takim przypadku chcielibyśmy uruchomić <em>Memtest86+</em> 
+(zainstalowany zgodnie z wcześniej podanymi wskazówkami), 
+musielibyśmy wydać następujące polecenie:
+<pre>
+root (hd0.7)
+kornel /memtest86+-1.40.bin
+boot
+</pre>
+<p>
+Jedyna różnica pomiędzy zawartością 
+<em>grub.conf</em> i poleceniami przy ręcznym 
+uruchamianiu systemu, to dodatkowe polecenie 
+<tt>boot</tt> powodujące załadowanie wskazanego jądra.
+<p>
+Warto pamiętać, że w czasie wprowadzania poleceń 
+i nazw plików możemy korzystać z autouzupełnianiu - 
+wystarczy wcisnąć klawisz <em>[Tab]</em>, a 
+wyświetlone zostaną możliwości wartości.
+<p>
+Do czego jeszcze może przydać się nam linia polecenia? 
+Z pomocą plecenia <em>cat</em> możemy 
+sprawdzić zawartość dowolnego pliku, 
+np. <tt>cat /etc/fstab</tt>. Wynika z tego, że osoba mająca 
+dostęp do linii poleceń <em>GRUB-a</em> 
+może przeczytać praktycznie dowolny plik (np. 
+<em>/etc/shadow</em> zawierający zakodowane hasła). 
+Tym jednak będziemy się martwić za chwilę, w 
+rozdziale <em>Zabezpieczenia</em>. Niezależnie od 
+zagrożeń, polecenie <em>cat</em> może przydać 
+się nam, jeśli w czasie eksperymentów 
+będziemy chcieli sprawdzić jakieś ustawienia.
+<p>
+Inne przydatne polecenie to <em>find</em>, 
+pozwalające nam sprawdzić, na której partycji 
+znajduje się wskazany plik. Powinniśmy podawać 
+bezwzględną ścieżkę do pliku, np. 
+<tt>find  /boot/grub/stage1</tt> lub <tt>find  /grub/stage1</tt> 
+- polecenie to zwróci nam nazwę partycji, jaką 
+powinniśmy wpisać w linii <em>root</em> 
+w pliku konfiguracyjnym <em>GRUB-a</em>.
+<p>
+Warto zapoznać się z innymi pleceniami. Bardzo 
+przydatna jest pomoc, którą możemy 
+uzyskać wpisując <tt> help nazwa_polecenia</tt>.
+Linię poleceń <em>GRUB-a</em> można 
+również uruchomić z konta użytkownika <em>root</em>
+Wpisując polecenie <tt>grub</tt>. Mamy 
+wówczas podobne możliwości, jak w opisywanej 
+wyżej linii pleceń, lecz oczywiście z niektórych 
+poleceń nie możemy korzystać (dotyczy to 
+przykładowo polecenia <em>splashimage</em>).
+<h3>
+Zabezpieczenia
+</h3>
+<p>
+Menu oferowane przez <em>GRUB-a</em> 
+jest bardzo wygodna, lecz czasem daje zbyt wiele 
+możliwości. Jak przekonaliśmy się w poprzednim 
+rozdziale, użytkownik mający dostęp do <em>GRUB-a</em> 
+może dowolnie zmienić parametry 
+wywołania systemu, a nawet uzyskać dostęp do 
+chronionych plików. Na szczęście, <em>GRUB</em>
+ pozwala na zablokowania takiego dostępu.
+<p>
+Służy do tego hasło broniące dostępu do edycji 
+pozycji w menu, jak również do linii poleceń. Jeśli 
+chcemy, to nawet uruchomienie poszczególnych 
+systemów może wymagać podania hasła.
+<p>
+Jeśli chcemy zabezpieczyć w ten sposób nasz system, 
+to - oczywiście - potrzebujemy do tego uprawnień 
+użytkownika <em>root</em>. Najpierw wygenerujemy 
+nasze hasło. Uruchamiamy linię poleceń 
+<em>GRUB-a</em> - <tt>grub</tt>. Tym razem 
+skorzystamy z polecenia <tt>md5crypt</tt>. Po jego 
+wydaniu zostaniemy zapytani o hasło. Wpisujemy je 
+(niech tylko nie będzie zbyt łatwe do odgadnięcia) i 
+wciskamy <em>[Enter]</em>. W odpowiedzi 
+zobaczymy linię z zakodowanym hasłem.
+<p>
+Teraz edytujemy nasz plik konfiguracyjny (np. 
+<tt>vim  /boot/grub/grub.conf</tt>) i na 
+jego początku umieszczamy linię o treści:
+<pre>
+password --md5 $1$ikVvf0$naEIsTUTM5yM1MYrx3Ms7.
+</pre>
+<p>
+Oczywiście, zamiast podanej tu wartości należy 
+wkleić wynik działania polecenia <em>md5crypt</em>. 
+Wykorzystywanie podanej wyżej wartości 
+nie jest dobrym pomysłom, gdyż jest to zakodowane 
+słowo <em>password</em>. Skoro w pliku przechowujemy 
+hasło, powinniśmy się upewnić, że nie będzie ono łatwe 
+do odczytu. W tym celu ustawimy 
+odpowiednio prawa dostępu do pliku:
+<pre>
+# chmod 600 /boot/grub/grub.conf
+</pre>
+<p>
+Ta zmiana wystarczy, aby przy uruchamianiu komputera 
+w menu <em>GRUB-a</em> były dostępne tylko 
+dwie możliwości - uruchomienie jednego z systemów 
+lub wciśnięciu klawisza <em>[p]</em>. Jeśli po 
+wciśnięciu klawisza <em>[p]</em> podamy prawidłowe 
+hasło (to, które wpisywaliśmy w poleceniu 
+<em>md5crypt</em>), to dopiero wtedy uzyskamy 
+do dostęp do możliwości opisywanych w rozdziale <em>Obsługa</em>.
+<p>
+Nadal użytkownik może uruchomić dowolną pozycję 
+w menu, a to nie zawsze musi nam odpowiadać. 
+Skoro już mamy ustalone hasło, wystarczy teraz w sekcji 
+<em>title</em>, którą chcemy zablokować, umieścić 
+polecenie <tt>lock</tt>. Musi ona być umieszczona 
+od razu pod linią <em>title</em>, gdyż użytkownik może 
+wykonywać wszystkie plecenia aż do napotkania 
+polecenia <tt>lock</tt>. W tym momencie zostaje 
+zapytany o hasło i dopóki nie poda prawidłowego, 
+nie będzie mógł wykonywać dalszych poleceń. Jak 
+więc widać, umieszczanie polecenia <em>lock</em> 
+na końcu sekcji <em>title</em> zazwyczaj 
+mija się z celem - lepiej umieścić je na początku.
+<p>
+Należy zaznaczyć, że zabezpieczenie to nie jest 
+doskonałe. Nie możemy liczyć, że założenie hasła na 
+<em>GRUB-a</em> zabezpieczy nas przed 
+niecnymi zamiarami osób mających bezpośredni 
+dostęp do komputera. Zawsze jednak możemy 
+zwiększyć wygodę korzystania z komputera oraz 
+zabezpieczyć nas przed mniej doświadczonymi użytkownikami.
+<h3>
+Ułatwianie konfiguracji
+</h3>
+<p>
+Jeśli nie chcemy ręcznie zmieniać pliku konfiguracyjnego 
+<em>GRUB-a</em>, możemy skorzystać z jednego 
+z konfiguratorów. Najlepszym rozwiązaniem wydaje 
+się być moduł <em>Webmina</em> dostępny w 
+sekcji <em>Sprzęt -&gt; Inicjator systemu GRUB</em>. 
+Oprócz tego, mamy do dyspozycji działający w 
+trybie tekstowym skrypt <em>Grubconfig</em> oraz 
+przeznaczony dla środowiska graficznego program 
+<em>GrubConf</em>. Pierwszy z nich jest mało 
+intuicyjny, lecz ma kilka ciekawych opcji, a przy tym 
+nie wymaga instalacji - wystarczy rozpakować 
+archiwum i można go uruchomić.
+<p>
+Osoby samodzielne kompilujące jądro prawdopodobnie 
+zainteresują się programem <em>Install Kernel</em>, 
+który nie tylko zwalnia nas od konieczności wykonania 
+szeregu poleceń, ale również automatycznie uaktualnia 
+konfigurację programów uruchomieniowych (oprócz <em>GRUB-a</em>, 
+obsługuje też <em>LILO</em>).
+Jeśli chcemy całkiem uprościć sobie ustawienie tła 
+menu <em>GRUB-a</em>, możemy skorzystać z 
+programu <em>GrubTk</em>. Wystarczy w nim podać
+ tylko nazwę pliku z rysunkiem, a program zajmuje się resztą.
+<p>
+A jeśli chcemy zobaczyć, do czego jeszcze możemy 
+wykorzystać <em>GRUB-a</em>, to zainstalujemy 
+sobie gry <em>GRUB Invaders</em>. Jest ona uruchamiania 
+przez <em>GRUB-a</em> i nie wymaga 
+do działania żadnego systemu operacyjnego.
+<h3>
+Zakończenie
+</h3>
+Wydawałoby się, że program uruchomieniowy to proste 
+narzędzie pozwalające tylko wskazać, który system ma 
+być uruchomiony. Tymczasem, okazuje się, że jest to 
+program, który możemy stosunkowo łatwo dopasować 
+do swoich potrzeb. Z jego pomocą uruchomimy nie tylko 
+system, ale również takie programy, jak <em>Memtest86+</em>. 
+<em>GRUB</em> może stanowić barierę broniącą innym 
+użytkownikom dostępu do naszego 
+systemu, równocześnie nie zmniejszając naszej wygody 
+obsługi. Dodatkowo, może witać nas naszym ulubionym 
+rysunkiem. Watro zapoznać się z jego 
+dokumentacją i poznać inne jego funkcje. 
+<h3>
+RAMKA: Nazewnictwo dysków i partycji
+</h3>
+<p>
+W pliku konfiguracyjnym <em>GRUB-a</em> 
+(<em>/boot/grub/grub.conf</em>) zazwyczaj nie 
+używamy znanych z Linuksa oznaczeń  dysków i 
+partycji, takich jak <em>hda, hdb2</em> i tym podobne. 
+Zamiast tego, widzimy oznaczenia typu <em>(fd0)</em> 
+lub <em>(hd1,2)</em>. Jest to nieco mylące, 
+na początku, lecz możemy się szybko przyzwyczaić.
+<p>
+Opis <em>(fd0)</em> oznacza pierwszy napęd 
+dyskietek (należy pamiętać o nawiasach i braku odstępu 
+pomiędzy znakami). W przypadku dysków twardych 
+nazwa <em>(hd0)</em> odpowiada dyskowi <em>hda</em>, 
+nazwa <em>(hd1)</em> to dysk <em>hdb</em> itd., 
+Jak więc widać, zamiast liter używamy cyfr, zaczynając 
+od zera. Aby wskazać konkretną partycję, dodajemy 
+jej numer (znów licząc od zera) po przecinku. Tak więc 
+dla <em>hda1</em> mamy <em>(hd0,0)</em>, dla 
+<em>hda7 - (hd0,6)</em>, a dla <em>hdc3 - (hd2,2)</em>. 
+Wystarczy w zasadzie pamiętać, że numerujemy 
+od <em>0</em>, a nie od <em>1</em>. Jeśli mamy 
+wątpliwości, możemy przepisanie nazw do dysków 
+sprawdzić w pliku <em>/boot/grub/device.map</em>. 
+Dla komputera posiadającego tylko jeden napęd 
+dyskietek i jeden dysk twardy, plik 
+ten powinien mieć następującą zawartość:
+<pre>
+(fd0)   /dev/fd0
+(hd0)  /dev/hda
+</pre>
+<p>
+W niektórych dystrybucjach (np. w <em>Red Hat</em> 
+i pochodnych - <em>Fedora</em> i <em>Aurox</em>) 
+popularne jest wskazywane partycji za pomocą etykiety. 
+Jeśli w naszym pliku konfiguracyjnym mamy linię postaci: 
+<tt>kernel  /vmlinuz-2.4.22-1  ro  root=LABEL=/</tt>, 
+to zwróćmy uwagę na tekst <em>root=LABEL=/</em>. 
+Zastępuje on zwykły tekst postaci <em>root=/dev/hda1</em> 
+(jeśli nasz katalog <em>/</em> jest umieszczony 
+na partycji <em>hda1</em>). Możemy zastanowić się, 
+co to daje i czemu się tego używa. Zapis taki pozwala 
+nam swobodnie przekładać dysk w ramach naszego 
+komputera, np. w przypadku dokładania nowego napędu 
+lub nagrywarki. Jeśli stosujemy etykiety, nie musimy 
+wówczas poprawić plików konfiguracyjnych (m.in. 
+<em>grub.conf</em> i <em>/etc/fstab</em>).
+<p>
+Powstaje pytanie, jak odczytać i stworzyć etykiety dla partycji. 
+Służy do tego polecenie <tt>e2label /dev/hda1</tt>, gdzie zamiast  
+<tt>/dev/hda1</tt> wstawiamy nazwę partycji <em>ext2</em> 
+lub <em>ext3</em>. Polecenie to spowoduje wyświetlenie 
+etykiety przypisanej do partycji. Jeśli chcemy nadać 
+partycji nową etykietę, to stosujemy zapisy 
+<tt>e2label  /dev/hda1 etykieta</tt>.
+Przy okazji warto zaznaczyć, że z etykiet możemy 
+korzystać tylko wtedy, gdy ładujemy również 
+odpowiadający jądru RAM-dysk. Służy do tego 
+polecenia <tt>initrd/initrd-2.4.22-1.img</tt>, 
+umieszczone pod wspomnianą wcześniej linią pliku konfiguracyjnego.
+<h3>
+RAMKA: W Internecie
+</h3>
+<ul>
+<li>
+Strona domowa GRUB-a:
+<em>http://www.gnu.org/software/grub/</em>
+<li>
+GNU GRUB splashimage howto:
+<em>http://ruslug.rutgers.edu/~mcgrof/grub-images/</em>
+<li>
+Różne tła dla menu GRUB-a:
+<em>http://vision.featia.net/linux/grubsplash/</em>
+<li>
+Strona domowa Memtest86:
+<em>http://www.memtest86.com/</em>
+<li>
+Strona domowa Memtest86+:
+<em>http://www.memtest.org/</em>
+<li>
+Strona domowa skryptu Grubconfig:
+<em>http://www.tux.org/pub/people/kentrobotti/looplinux/index.html</em>
+<li>
+Strona domowa programu GrubConf:
+<em>http://grubconf.sourceforge.net/</em>
+<li>
+Strona domowa programu Install Kernel:
+<em>http://installkernel.tripod.com/ik/index.html</em>
+<li>
+Strona domowa programu GrubTk:
+<em>http://freshmeat.net/projects/grubtk/</em>
+<li>
+Strona domowa gry GRUB Invaders:
+<em>http://www.erikyyy.de/invaders/</em>
+</ul>
+
+
+</body>
+</html>

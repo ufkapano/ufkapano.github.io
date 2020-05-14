@@ -1,0 +1,318 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+<hr>
+
+<h1>Programowanie z ncurses (2) - procedury wyjściowe</h1>
+
+<h3>ZADANIE 2.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>znaki</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>znaki.c</em> postaci:
+
+<hr><pre>
+/*
+*  znaki.c
+*
+*  Prezentacja wyjścia znakowego.
+*/
+
+#include &lt;unistd.h&gt;  /* sleep() */
+#include &lt;curses.h&gt;
+
+int main(void) 
+{
+initscr();
+printw("To sa ramki rysowane znak po znaku\n");
+
+mvaddch(5,10,ACS_ULCORNER); /* gorny lewy rog  */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_TTEE);    /* T w dol */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_URCORNER); /* gorny prawy rog  */
+
+mvaddch(6,10,ACS_VLINE);    /* linia pionowa */
+addch('A' | A_REVERSE);    /* zwykly znak */
+addch(ACS_VLINE);    /* linia pionowa */
+addch('B' | A_BOLD);    /* zwykly znak */
+addch(ACS_VLINE);    /* linia pionowa */
+
+mvaddch(7,10,ACS_LTEE);    /* T w prawo */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_PLUS);    /* duzy + */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_RTEE);    /* T w lewo */
+
+mvaddch(8,10,ACS_VLINE);    /* linia pionowa */
+addch('C' | A_DIM);    /* zwykly znak */
+addch(ACS_VLINE);    /* linia pionowa */
+addch('D' | A_BLINK);    /* zwykly znak */
+addch(ACS_VLINE);    /* linia pionowa */
+
+mvaddch(9,10,ACS_LLCORNER); /* dolny lewy rog  */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_BTEE);    /* T w gore */
+addch(ACS_HLINE);    /* linia pozioma */
+addch(ACS_LRCORNER); /* dolny prawy rog  */
+refresh();
+sleep(2);
+
+/* tu jawnie odnosimy sie do stdscr */
+wattron(stdscr,A_BOLD);
+mvwaddch(stdscr,13,5,'1'); /* */
+waddch(stdscr,'2'); /* */
+waddch(stdscr,'3'); /* */
+waddch(stdscr,'4'); /* */
+waddch(stdscr,'5'); /* */
+wattroff(stdscr,A_BOLD);
+mvwinsch(stdscr,13,7,'a'); /* rozpychanie znakow */
+winsch(stdscr,'b'); /* rozpychanie znakow */
+winsch(stdscr,'c'); /* rozpychanie znakow */
+mvwprintw(stdscr,20,5,"Koniec pracy\n");
+wrefresh(stdscr);
+sleep(2);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Dodać nowe elementy wyświetlane przez program wg własnego uznania.
+
+<h3>ZADANIE 2.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>napisy</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>napisy.c</em> postaci:
+
+<hr><pre>
+/*
+*  napisy.c
+*
+*  Prezentacja wyjścia łańcuchowego.
+*/
+
+#include &lt;unistd.h&gt;   /* sleep() */
+#include &lt;curses.h&gt;
+
+int main(void) 
+{
+int xmax, ymax;
+
+initscr();        /* mozna sprawdzic */
+getmaxyx(stdscr, ymax, xmax);
+/* box(stdscr,ACS_VLINE,ACS_HLINE); ramka na cale okno */
+box(stdscr,0,0); /* ramka na cale okno - prosciej */
+mvaddstr(2, 5, "Korzystam z funkcji typu *str(), linii, ramek...");
+mvaddstr(3, 1, "Ramka rysowana przez box()");
+mvaddstr(4, 1, "Ten napis bedzie caly");
+mvaddnstr(5, 1, "Ten napis bedzie uciety", 13);
+
+/* mvhline(7,5,ACS_HLINE,xmax/2); krotka linia pozioma */
+mvhline(7,5,0,xmax/2); /* krotka linia pozioma - prosciej */
+
+/* mvvline(6,2,ACS_VLINE,ymax/4);  krotka linia pionowa */
+mvvline(6,2,0,ymax/4);  /* krotka linia pionowa - prosciej */
+
+refresh();
+sleep(2);
+erase();
+/* mozna inaczej:
+clear();
+*/
+border(ACS_VLINE | A_BOLD, ACS_VLINE | A_BOLD,
+ACS_HLINE | A_BOLD, ACS_HLINE | A_BOLD,
+ACS_ULCORNER | A_BOLD, ACS_URCORNER | A_BOLD,
+ACS_LLCORNER | A_BOLD, ACS_LRCORNER | A_BOLD);
+/* prostrza wersja bez atrybutow
+border(0,0,0,0,0,0,0,0);
+wersja dla ubogich
+border('|','|','-','-','+','+','+','+');
+*/
+mvprintw(ymax/4,xmax/4,"Ramka rysowana przez border()");
+refresh();
+sleep(2);
+
+endwin();
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Dodać nowe elementy wyświetlane przez program wg własnego uznania.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+int move(int y, int x);  // odnosi sie do stdscr
+int wmove(WINDOW *win, int y, int x); 
+
+int addch(chtype ch);   // deklaracja, podstawowa funkcja
+int waddch(WINDOW *win, chtype ch); // deklaracja
+int mvaddch(int y, int x, chtype ch);  // deklaracja
+int mvwaddch(WINDOW *win, int y, int x, chtype ch); // deklaracja
+addch(ch | A_BOLD | A_UNDERLINE);   // zastosowanie - atrybuty
+addch(ACS_HLINE);               // zastosowanie - semigrafika
+
+// te cztery "rozpychają" znaki istniejące na ekranie
+int insch(chtype ch);
+int winsch(WINDOW *win, chtype ch);
+int mvinsch(int y, int x, chtype ch);
+int mvwinsch(WINDOW *win, int y, int x, chtype ch);
+
+int echochar(chtype ch);   // deklaracja, addchar+refresh
+int wechochar(WINDOW *win, chtype ch); // deklaracja, waddchar+wrefresh
+
+// Wyjście łańcuchowe - łańcuchy pseudoznaków
+int addchstr(const chtype *chstr); 
+int addchnstr(const chtype *chstr, int n); 
+int waddchstr(WINDOW *win, const chtype *chstr); 
+int waddchnstr(WINDOW *win, const chtype *chstr, int n); 
+// jeszcze cztery z mv na poczatku
+int mvaddchstr(int y, int x, const chtype *chstr); 
+int mvaddchnstr(int y, int x, const chtype *chstr, int n); 
+int mvwaddchstr(WINDOW *win, int y, int x, const chtype *chstr); 
+int mvwaddchnstr(WINDOW *win, int y, int x, const chtype *chstr, int n); 
+
+// Wyjście łańcuchowe - łańcuchy zwykłe
+int addstr(const char *str);
+int addnstr(const char *str, int n);
+int waddstr(WINDOW *win, const char *str);
+int waddnstr(WINDOW *win, const char *str, int n);
+// jeszcze cztery z mv na poczatku
+int mvaddstr(int y, int x, const char *str);
+int mvaddnstr(int y, int x, const char *str, int n);
+int mvwaddstr(WINDOW *win, int y, int x, const char *str);
+int mvwaddnstr(WINDOW *win, int y, int x, const char *str, int n);
+
+// Wyjście łańcuchowe - chyba działa jak printf()
+int printw(char *str, ...);
+int wprintw(WINDOW *win, char *str, ...);
+int mvprintw(int y, int x, char *str, ...);
+int mvwprintw(WINDOW *win, int y, int x, char *str, ...);
+
+// ramka wokół okna
+int box(WINDOW *win, chtype verch, chtype horch); // deklaracja
+box(stdscr, ACS_VLINE, ACS_HLINE); // zastosowanie do stdscr
+box(stdscr, 0, 0);            // zastosowanie do stdscr
+
+// left-side, right-side, top-side, bottom-side, top-left,...
+int border(chtype ls, chtype rs, chtype ts, chtype bs, 
+chtype tl, chtype tr, chtype bl, chtype br);
+
+int wborder(WINDOW *win, chtype ls, chtype rs, chtype ts, chtype bs, 
+chtype tl, chtype tr, chtype bl, chtype br);
+
+// linie
+int hline(chtype ch, int n);
+int vline(chtype ch, int n);
+int whline(WINDOW *win, chtype ch, int n);
+int wvline(WINDOW *win, chtype ch, int n);
+// jeszcze cztery z mv na poczatku
+int mvhline(int y, int x, chtype ch, int n);
+int mvvline(int y, int x, chtype ch, int n);
+int mvwhline(WINDOW *win, int y, int x, chtype ch, int n);
+int mvwvline(WINDOW *win, int y, int x, chtype ch, int n);
+
+// Funkcje czyszczące
+int erase(void); // wypisuje puste znaki na całym ekranie
+int werase(WINDOW *win);
+int clear(void);
+int wclear(WINDOW *win);
+int clrtobot(void);  // czyszczenie od kursora do dołu
+int clrtobot(WINDOW *win);
+int clrtoeol(void);  // czyszczenie od kursora do końca linii
+int clrtoeol(WINDOW *win);
+
+// Częściowa lista atrybutów znaków
+A_NORMAL     // tryb normalny
+A_STANDOUT   // użyj najlepszego trybu podświetlania terminala
+A_UNDERLINE  // podkreślenie
+A_REVERSE   // w negatywie
+A_BLINK    // tekst migoczący
+A_DIM       // połowa intensywności
+A_BOLD     // dodatkowa intensywność
+A_INVIS    // znak niewidoczny
+A_CHARTEXT   // tworzy maskę bitową odpowiadającą znakowi
+// Wybrane znaki grafiki konturowej
+ACS_ULCORNER   // górny lewy róg
+ACS_LLCORNER   // dolny lewy róg
+ACS_URCORNER   // górny prawy róg
+ACS_LRCORNER   // dolny prawy róg
+ACS_HLINE       // linia pozioma
+ACS_VLINE      // linia pionowa
+ACS_TTEE    // T w dol
+ACS_BTEE    // T w gore
+ACS_LTEE    // T w prawo
+ACS_RTEE    // T w lewo
+ACS_PLUS    // duzy +
+
+// Sprawdzenie bieżących ustawień tła
+chtype getbkgd(WINDOW *win);
+// Ustawianie właściwości tła
+int bkgd(const chtype ch);
+int wbkgd(WINDOW *win, const chtype ch);
+bkgd('.');  // zastosowanie
+
+int attron(int at);
+int wattron(WINDOW *win, int at);
+attron(A_BOLD); /* zastosowanie */
+attron(A_REVERSE | A_BLINK);
+
+int attroff(int at);
+int wattroff(WINDOW *win, int at);
+
+int attrset(int at);     /* wg Introduction */
+int wattrset(WINDOW *win, int at);
+attrset(A_NORMAL); /* przywrócenie normalnego stanu */
+</pre><hr>
+
+<h3>PROCEDURY WYJŚCIOWE</h3>
+
+<p>Standardowe procedury wyjścia C nie działają z oknami
+<em>ncurses</em>, ponieważ <em>ncurses</em> przechwytuje wyjście na terminal.
+Procedury wyjścia można podzielić na trzy kategorie:
+<ul>
+<li>klasa funkcji addch() - drukowanie pojedyńczych znaków z atrybutami,
+<li>klasa funkcji printw() - drukowanie formatowanego wyjścia
+podobnie do printf(),
+<li>klasa funkcji addstr() - drukowanie stringów.
+</ul>
+
+<p>Funkcje można stosować wymiennie i jest kwestią gustu, które
+zastosujemy.
+
+<p><em>ncurses</em> mają znaki wpisane w formacie <em>chtype</em>
+(unsigned long int), a wysokie bity są używane do przenoszenia
+dodatkowych informacji (atrybuty wideo).
+Normalne znaki w C są typu <em>char</em>.
+W <em>ncurses</em> można korzystać ze znaków grafiki konturowej,
+których oznaczenia rozpoczynają się od ACS_.
+Można również rysować linie poziome i pionowe.
+
+<p>Atrybuty możemy ustawić dla pojedyńczego znaku wewnątrz funkcji
+addch(), np. addch(ch | A_BLINK).
+Można łączyć kilka atrybutów za pomocą symbolu |.
+Możemy również zmienić domyślne ustawienia atrybutów
+dla okna funkcjami typu attrset(), attron(), attroff().
+Funkcje attron() i attroff() włączają i wyłączają podane
+atrybuty. Natomiast attrset() nadpisuje poprzednie ustawienie
+atrybutów przez nowo podane.
+
+<p>Funkcje, których nazwy zawierają <em>chstr</em>,
+działają na łańcuchach pseudoznaków.
+
+<p>Funkcje, których nazwy zawierają <em>str</em>,
+działają na standardowych łańcuchach zakończonych zerem.
+
+<hr>
+<p><a href="index.html">Programowanie z ncurses (index)</a>
+
+</body>
+</html>

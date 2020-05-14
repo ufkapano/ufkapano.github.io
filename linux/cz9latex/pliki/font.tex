@@ -1,0 +1,45 @@
+% Rozne rzeczy zwiazane z czcionkami.
+\documentclass[12pt]{article}
+\usepackage[english,polish]{babel}
+\begin{document}
+
+Jest {\em deklaracja em} i \emph{polecenie emph}
+do wyr"o"rnienia tekstu.
+\begin{em}
+Mo"rna te"r zrobi"c jakby "srodowisko em (begin-end).
+\end{em}
+
+Na definicje stylu czcionki sk"ladaj"a si"e trzy elementy:
+kr"oj (family), seria (series) i odmiana (shape).
+
+\begin{itemize}
+\item Deklaracje kroju:
+{\rmfamily antykwa},
+{\sffamily czcionka bezszeryfowa},
+{\ttfamily czcionka maszyny do pisania}.
+\item Deklaracje serii:
+{\bfseries pismo po"lgrube},
+{\mdseries pismo normalnej grubo"sci}.
+\item Deklaracje odmiany:
+{\itshape kursywa},
+{\scshape kapitaliki},
+{\slshape pismo pochy"le},
+{\upshape pismo proste}.
+\end{itemize}
+
+\begin{itemize}
+\item Polecenia kroju:
+\textrm{antykwa},
+\textsf{czcionka bezszeryfowa},
+\texttt{czcionka maszyny do pisania}.
+\item Polecenia serii:
+\textbf{pismo po"lgrube},
+\textmd{pismo normalnej grubo"sci}.
+\item Polecenia odmiany:
+\textit{kursywa},
+\textsc{kapitaliki},
+\textsl{pismo pochy"le},
+\textup{pismo proste}.
+\end{itemize}
+
+\end{document}

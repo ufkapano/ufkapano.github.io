@@ -1,0 +1,49 @@
+From ufkapano@if.uj.edu.pl Tue May 18 10:00:34 2004 +0200
+Date: Tue, 18 May 2004 10:00:33 +0200 (MET DST)
+From: Andrzej Kapanowski <ufkapano@if.uj.edu.pl>
+Sender: ufkapano@theta
+To: dominikmimmo1@autocom.pl, edi2771@wp.pl, jafa1@wp.pl, k.skawski@interia.pl, 
+    kempos@tlen.pl, krzychuweb@wp.pl, lara555@poczta.fm, pioinforma@gazeta.pl, 
+    sam_bor@poczta.fm, sciema23@interia.pl
+Subject: Linux
+Message-ID: <Pine.SOL.4.21.0405180955460.4302-101000@theta>
+MIME-Version: 1.0
+Content-Type: MULTIPART/MIXED; BOUNDARY="-559023410-851401618-1084867233=:4302"
+Status: RO
+X-Status: 
+X-Keywords:                 
+X-UID: 20
+
+---559023410-851401618-1084867233=:4302
+Content-Type: TEXT/PLAIN; charset=US-ASCII
+
+Przesylam Panstwu materialy dotyczace systemu Linux.
+Prosze sie z nimi zapoznac, powiewaz na egzaminie pisemnym
+w dniu 5 czerwca beda pytania tez z tego materialu.
+Na egzaminie beda 3 pytania, bedzie mozna korzystac z wlasnych
+materialow.
+Apeluje o obecnosc na cwiczeniach, poniewaz sa to nasze
+ostatnie zajecia.
+
+Andrzej Kapanowski
+
+
+---559023410-851401618-1084867233=:4302
+Content-Type: APPLICATION/ZIP; name="linux.zip"
+Content-Transfer-Encoding: BASE64
+Content-ID: <Pine.SOL.4.21.0405181000330.4302@theta>
+Content-Description: 
+Content-Disposition: attachment; filename="linux.zip"
+
+UEsDBAoAAAAAAGWcKy4AAAAAAAAAAAAAAAAJABUAY3oxd3N0ZXAvVVQJAAPe
+YyA++rKpQFV4BAD0AWQAUEsDBBQAAAAIADVDry4nnCvuTAUAAAEMAAAZABUA
+Y3oxd3N0ZXAvZHlzdHJ5YnVjamUuaHRtbFVUCQAD5TLDPm5gTEBVeAQA9AFk
+AJ1W23LbNhB911ds9RJ5alOWL6ntyu7El3HaiRNNlCadPBUkYQoiCDAAGIb8
++h6QlETJzqStHkQC2D273MtZTBcuk1eD6YKzGA8nnORXt5V1pgqLaMmn43Zr
+...
+pIGIPQEAY3oza29uc29sYS9lbG0uaHRtbFVUBQADEkLPPlV4AABQSwECFwMU
+AAAACADwYLguUPWWT9cCAAD4BAAAFAANAAAAAAABAAAApIGaPwEAY3oza29u
+c29sYS9tYWlsLmh0bWxVVAUAA2NEzz5VeAAAUEsBAhcDFAAAAAgAxG24Luzh
+/50oAQAAnwEAABMADQAAAAAAAQAAAKSBuEIBAGN6M2tvbnNvbGEvdGluLmh0
+bWxVVAUAA39bzz5VeAAAUEsFBgAAAABtAG0AGSEAACZEAQAAAA==
+---559023410-851401618-1084867233=:4302--

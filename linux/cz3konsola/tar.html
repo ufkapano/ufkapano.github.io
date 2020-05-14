@@ -1,0 +1,35 @@
+<html>
+<head>
+<title>tar</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>tar</h1>
+
+<h3>GNU TAR</h3>
+
+Istnieje konwencja: rozszerzenie <em>.tar.gz</em> to źrodła, 
+a <em>.tgz</em> to binaria.
+
+<pre>
+$ tar -czf plik1.tgz kat1
+        (tworzenie archiwum z katalogu kat1 z przywołaniem gzip)
+$ tar -xzf plik1.tgz
+          (rozpakowanie do . z przywołaniem gzip)
+$ tar -xzpvf plik1.tar.gz   
+               (-p; rozpakowanie do . z zachowaniem praw dostępu)
+</pre>
+
+<h3>TAR</h3>
+
+<pre>
+$ tar -xf plik1.tar -C /         (-C /; rozpakowanie w /)
+$ tar -tf plik1.tar              (-t; lista plików)
+$ tar -tvf plik1.tar             (-v; więcej informacji)
+$ tar -cf plik1.tar kat1        (stworzenie archiwum z kat1)
+</pre>
+
+</body>
+</html>

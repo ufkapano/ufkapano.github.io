@@ -1,0 +1,220 @@
+<html>
+<head>
+<title>Pakiety</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pakiety, zarządzanie oprogramowaniem</h1>
+
+<h3>INFORMACJE</h3>
+
+<ul>
+<li>Pakiety:
+<em>apt</em> (apt-get, apt-cache),
+<em>apt-utils</em> (dziwne narzędzia),
+<em>apt-howto-pl</em> (guide),
+<em>aptitude</em> (curses-based apt frontend - nie mam),
+<em>apt-file</em> (searching utility - nie mam),
+<em>dpkg</em> (dpkg, dselect),
+<em>dpkg-dev</em> (narzędzia do budowania pakietów),
+<em>dpkg-doc</em> (dokumentacja - nie mam),
+<em>dpkg-www</em> (browser - nie mam),
+<em>apt-dpkg-ref</em> (spis opcji - nie mam),
+<em>deborphan</em> (szuka osierocone pakiety),
+<em></em> (),
+<li>man: apt(8), apt-cache(8), apt-get(8), apt-cdrom(8),
+sources.list(5), apt.conf(5), apt-setup(8), apt_preferences(5),
+dpkg(8), dselect(8), dpkg-deb(1), deb(5), deb-control(5)
+<li>Linux+ Extra! nr 19 (Debian 3.0 Woody).
+<li>dselect Documentation for Beginners (dselect-biginner.pl.txt)
+<li><em>http://www.debian.org/security/</em> - strona
+z informacjami na temat bezpieczeństwa.
+<li><em>http://www.backports.org/</em> - pakiety z nowymi wersjami
+programów przygotowanymi do współpracy ze stabilną
+dystrybucją (zaleca się korzystać tylko w pojedyńczych
+pakietów, a nie z wszystkich łącznie; nie mają wsparcia
+Security Team).
+</ul>
+
+<h3>PROGRAM dpkg</h3>
+
+<p><em>dpkg</em> to menedżer pakietów dla systemu Debian.
+Instaluje i usuwa pakiety.
+Inne programy operujące na systemie pakietów wewnętrznie 
+wykorzystują ten program.
+Bardziej przyjazna dla użytkownika jest nakładka <em>dselect</em>.
+
+<p>W razie potrzeby <em>dpkg</em> korzysta z <em>dpkg-deb</em>
+do tworzenia, rozpakowywania i pobierania informacji. 
+
+<p>Plik konfiguracyjny to <em>/etc/dpkg/dpkg.cfg</em> (opcjonalny).
+
+<pre>
+dpkg-reconfigure pakiet         (rekonfiguracja zainstalowanego pakietu;
+           przydało się po uaktualnieniu firefoksa, ba źle działał)
+
+dpkg -i | --install  pakiet          (instalacja)
+dpkg -r | --remove  pakiet           (usuwanie bez plików konfiguracyjnych)
+dpkg -P | --purge  pakiet            (czyszczenie)
+
+dpkg -l | --list  wzorzec       (szukanie pakietów)
+dpkg -l 'kernel*'
+
+dpkg -s | --status pakiet        (info o pakiecie)
+dpkg -L | --listfiles pakiet       (lista plików w pakiecie)
+dpkg -S | --search wzorzec         (szukanie pliku w pakietach)
+
+dpkg --get-selections [wzorzec]
+	(wyrzucenie na stdout listy wybranych pakietów)
+
+dpkg --set-selections
+	(pobranie ze stdin listy pakietów do wybrania)
+</pre>
+
+<h3>PROGRAM dselect</h3>
+
+<p>Plik konfiguracyjny to <em>/etc/dpkg/dselect.cfg</em> 
+(mam tu tylko komentarze).
+W działaniu interaktywnym mamy menu.
+
+<ul>
+<li>Access (Dostęp)
+<li>Update (Aktualizacja)
+<li>Select (Wybór)
+<li>Install (Instalacja)
+<li>Config (Konfiguracja)
+<li>Remove (Usuwanie)
+<li>Quit (Wyjście)
+</ul>
+
+<pre>
+Opuszczanie okna głównego i okien konfliktów:
+[Enter] - potwierdź, wyjdź, sprawdź zależności
+[Q] - potwierdź, wyjdź, ignoruj zależności
+[X], [Esc] - wyjdź, anuluj wszelkie zmiany
+
+Działania na pojedyńczych pakietach:
+[+], [Ins] - zaznacz pakiet do instalacji
+[-], [Del] - zaznacz pakiet do usunięcia (bez plików konfiguracyjnych)
+[_] - zaznacz pakiet do usunięcia z plikami konfiguracyjnymi
+[=] - pakiet ma pozostać nie zmieniany
+[:], [H] - zaznacz do ponownego przetwarzania
+
+Działania na całym oknie konflików:
+[R] - przywrócenie stanu przed wyborem
+[U] - wybierz sugerowane pakiety
+[D] - wybierz niezbędne pakiety
+
+Przeszukiwanie pakietów:
+[/] - trzeba podać nazwę (lub ciąg znaków)
+[\] - ponowne przeszukanie tego samego ciągu
+</pre>
+
+<h3>PROGRAM aptitude</h3>
+
+<h3>ADVANCED PACKAGING TOOL (APT)</h3>
+
+<p>APT to system zarządzania pakietami <em>deb</em> (i <em>rpm</em>).
+Jest to właściwie nakładka na <em>dpkg</em> 
+(APT wywołuje <em>dpkg</em>).
+
+<p>Pliki konfiguracyjne:
+
+<ul>
+<li><em>/etc/apt/sources.list</em> - podstawowy.
+<li><em>/etc/apt/apt.conf</em> - opcjonalny.
+<li><em>/etc/apt/preferences</em> - opcjonalny.
+</ul>
+
+<h3>PLIK sources.list</h3>
+
+<p>Są tu wpisy w określonym formacie.
+Linie rozpoczynają się od <em>deb</em> (binaria), 
+<em>deb-src</em> (źródła) i <em>#</em> (komentarze).
+W miejscu dystrybucji wpisałem <em>woody</em> zamiast
+<em>stable</em>, aby uniknąć problemów, gdy stabilnym wydaniem
+stanie się <em>sarge</em>.
+
+<pre>
+Ogólny schemat wpisów:
+type uri args
+deb uri distribution [component1] [component2] [...]
+
+type: deb, deb-src
+distribution: stable, unstable, frozen, testing, woody...
+component: main, contrib, non-free, non-us
+
+# Wpisane automatycznie przy instalacji
+deb cdrom:[Debian 3.0 Disk 8]/ gnome2/
+deb cdrom:[Debian 3.0 Disk 8]/ xfree86_42/i386/
+deb cdrom:[Debian 3.0 Disk 8]/kde_3.0.2/ /
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-7 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-6 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-5 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-4 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-3 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-2 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+deb cdrom:[Debian GNU/Linux 3.0 r0 _Woody_ - Official i386 Binary-1 (20020718)]/ unstable contrib main non-US/contrib non-US/main
+
+# Na stronie security.debian.org zamiast "stable" maja "woody"
+deb http://security.debian.org/ woody/updates main contrib non-free
+
+# Dopiski wg "man sources.list"
+# Dystrybucja "stable" (dalem "woody") i sa komponenty
+deb http://http.us.debian.org/debian woody main contrib non-free
+
+# To potwierdzilem na serwerze non-us.debian.org 
+deb http://non-us.debian.org/debian-non-US woody/non-US main contrib non-free
+
+# Przyklad korzystania z "backports" dla wybranego pakietu.
+# Zamiast "woody" mozna wpisac "stable".
+deb http://www.backports.org/debian woody kernel-2.6
+</pre>
+
+<h3>POLECENIE apt-cache</h3>
+
+<p><em>apt-cache</em> to narzędzie zarządzania pakietami APT.
+Wykonuje różnorodne aperacje na buforze (cache) pakietów
+programu APT.
+
+<pre>
+apt-cache add file...
+apt-cache gencaches         (jak "apt-get check")
+apt-cache showpkg pkg...       (info o pakietach)
+apt-cache stats         (statystyki)
+apt-cache show pkg...        (opis jak w dselect)
+apt-cache search regex        (szuka expr w nazwach I OPISACH)
+apt-cache search regex --names-only
+apt-cache depends pkg...
+apt-cache pkgnames       (pakiety zainstalowane w systemie)
+apt-cache pkgnames --generate        (zalecana opcja)
+</pre>
+
+<h3>POLECENIE apt-get</h3>
+
+<pre>
+apt-get install 
+
+Właściwa kolejność poleceń:
+apt-get update
+apt-get upgrade
+</pre>
+
+<h3>POLECENIE apt-file</h3>
+
+<p>U mnie nie działa, więc odinstaluje.
+
+<h3>POLECENIE apt-setup</h3>
+
+<p>Z tym programem chyba spotykamy się przy instalacji.
+Ułatwia dodawanie wpisów do pliku sources.list.
+W razie potrzeby wywoła program apt-cdrom.
+
+<h3>POLECENIE apt-cdrom</h3>
+
+<p>Dodawanie CDROMu do sources.list.
+
+</body>
+</html>

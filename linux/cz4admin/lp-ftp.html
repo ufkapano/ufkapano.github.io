@@ -1,0 +1,506 @@
+<html>
+<head>
+<title>Linux+</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p>Linux+ 2003/3
+
+<h1>
+Ściąganie nie zawsze naganne, czyli klienci FTP
+</h1>
+
+<p>
+Któż z nas, użytkowników komputerów, nie sciągał plików z Internetu? 
+Jedni ściągają nowe dystrybucje linuksa, a inni książki elektroniczne, 
+ciekawe witryny do poczytania <em> off-line, </em> pliki mp3 (tylko 
+te legalne oczywiście) czy interesujące grafiki (na przykład panienki 
+z Tuksem na koszulce). W niniejszym artykule opisuję kilka klientów 
+FTP, jak również programy bardziej wielofunkcyjne, które zwykło się 
+określać mianem zarządców pobierania 
+(ang. <em>download managers</em>). 
+Szczególnie gorąco chciałbym polecić Czytelnikom program 
+Wget - jest on po prostu najlepszy.;)
+
+<h3>
+GFTP
+</h3>
+
+<p>
+Program <em> GFTP </em> to graficzny klient FTP o bardzo przyjaznym 
+interfejsie. Aby nawiązać łączność ze zdalnym serwerem, w 
+odpowiednich polach podajemy nazwę komputera, z którym chcemy się 
+połączyć, port (zwykłe 21) oraz nazwę użytkownika i hasło. Jeżeli 
+nie podamy nazwy użytkownika i hasła, to program spróbuje 
+zalogować nas jako użytkownika anonimowego (ang.<em> amonymous</em>). 
+Wciskając przycisk z rysunkiem dwóch komputerów wydajemy polecenie 
+nawiązania łączności. Jeżeli zakończy się ono sukcesem, w prawej 
+części ekranu pojawi się spis plików na zdalnym serwerze (po lewej 
+stronie znajduje się spis plików znajdujących się na komputerze 
+lokalnym). Do zaznaczania plików i katalogów, które chcemy skopiować, 
+wykorzystujemy prawy przycisk myszki. Jeżeli chcemy zaznaczyć 
+kilka plików, możemy pomóc sobie klawiszami [<em>Shift</em>] 
+(zaznaczanie grupy plików) oraz [<em>Ctrl</em>] dodawanie 
+pojedynczych plików do zaznaczenia). Do przesyłania plików służą 
+strzałki znajdujące się pomiędzy oknami katalogów - wskazują one 
+kierunek kopiowania danych. Jeśli zaznaczyliśmy katalogi, zostaną 
+one przesłane wraz z zawartością.
+
+<p>
+Przydatną funkcją są zakładki - możemy zapamiętywać wybrane katalogi, 
+aby później móc w szybki sposób ponownie znaleźć się w każdym z nich 
+bez konieczności żmudnego przechodzenia przez całe drzewo katalogow. 
+Przebywając w zdalnym katalogu możemy skorzystać z kombinacji [<em>
+Ctrl</em>]+[<em>A</em>], aby dodać go do listy zakładek (jest ona 
+dostępna spod menu <em> Zakładki</em>).
+
+<h3>
+Ncftp
+</h3>
+
+<p>
+W trybie tekstowym mamy do dyspozycji program <em> Ncftp, </em> 
+który jest wywoływany poleceniem <tt> ncftp. </tt> Ze zdalnym serwerem 
+możemy połączyć się komendą <tt> open nazwa.serwera.ftp. </tt> np. 
+<tt> open sunsite.icm.edu.pl. </tt> Inną metodą jest określenie 
+adresu serwera od razu w linii poleceń np. wydając jedno z poleceń:
+
+<pre>
+ncftp ftp://sunsite.icm.edu.pl/pub/linux/Documentation FAO
+ncftp ftp://użytkownik:haslo@jakis.serwer.pl
+ncftp ftp.tpi.pl
+</pre>
+
+<p>
+W przypadku, gdy nie podaliśmy nazwy użytkownika ani hasła program 
+spróbuje zalogować nas jako użytkownika anonimowego. Po połączeniu się 
+z serwerem działają zwykle komendy linuksowe:
+
+<ul>
+<li>
+<tt>ls</tt> - wypisanie zawartości zdalnego katalogu;
+<li>
+<tt>ls -l</tt> - wypisanie zawartości zdalnego katalogu w długiej 
+postaci;
+<li>
+<tt>lls</tt> - wypisanie zawartości lokalnego katalogu;
+<li>
+<tt>pwd</tt> - wypisanie ścieżki do bieżącego katalogu na zdalnym 
+serwerze;
+<li>
+<tt>lpwd</tt> - wypisanie ścieżki do bieżącego katalogu lokalnego;
+<li>
+<tt>cd nazwa_katalogu</tt> - przejście do katalogu <em> nazwa_
+katalogu </em> na lokalnym serwerze;
+<li>
+<tt>lcd nazwa_katalogu</tt> - przejście do katalogu <em> nazwa_
+katalogu </em> na lokalnym serwerze.
+</ul>
+
+<p>
+Oprócz tego mamy do dyspozycji polecenia przesyłania plikow:
+ 
+<ul> 
+<li>
+<tt>get nazwa_pliku</tt> - pobranie pliku <em> nazwa_pliku </em> 
+ze zdalnego serwera;
+<li>
+<tt>put nazwa_pliku</tt> - przesłanie pliku <em> nazwa_pliku </em> 
+na zdalny serwer.
+</ul>
+
+<p>
+W powyższych poleceniach można w <em> nazwa_pliku </em> użyć 
+znaków specjalnych, takich jak gwiazdka (*), która zastępuje 
+dowolny ciąg znaków, czy pytajnik (?), ktory zastępuje 
+pojedynczy dowolny znak. Możemy też dodać opcje <tt> -R, </tt> 
+aby katalogi były przesyłane rekursywnie wraz z całą ich zawartością.
+ 
+<p>
+W tym programie mamy rownież do dyspozycji zakładki, podobne do tych 
+w programie GFTP. Aby dodać zdalny katalog do listy zakładek, 
+wykonujemy polecenie <tt> bookmark, </tt> a następnie określamy nazwę 
+dla nowej zakładki. Po wydaniu komendy <tt> bookmarks </tt> możemy 
+przeglądać zakładki, edytować je, kasować czy uruchamiać. Możemy rownież 
+szybko połączyć się z serwerem, któremu jest przypisana zakładka, 
+wykorzystując polecenie wydawane w linii komend:
+
+<pre>
+ncftp nazwa_zakładki
+</pre>
+
+<p>
+Jak widać, program w linii komend wcale nie musi być mniej wygodny 
+czy mniej funkcjonalny niż program w trybie graficznym.
+
+<h3>
+Wget
+</h3>
+
+<p>
+Program <em> Wget </em> wydaje się być najciekawszym z trzech 
+przedstawionych tu programów, które służą do ściągania plików 
+z serwerów FTP. Jego możliwości nie ograniczają się tylko do 
+pobierania danych z serwerów WWW i FTP. Pozwala on również na 
+pobieranie do końca plików, które wcześniej udało nam się ściągnąć 
+tylko w części (nawet, gdy plik ściągaliśmy innym programem), 
+umożliwia sprawdzanie aktualności spisu odnośników, a nawet tworzenie 
+lokalnych kopii całych witryn WWW.
+ 
+<p>
+Chociaż Wget uruchamiany jest w linii komend, to dla osób 
+preferujących tryb graficzny przygotowane zostały takie nakładki, jak 
+<em> Xget, GNOME Transfer Manager </em> czy <em> KMAGO. </em>
+Osobiście uważam jednak, że warto zapoznać się z podstawowymi 
+funkcjami Wgeta w trybie tekstowym, gdyż w przyszłości może to 
+pozwolić nam na pełne wykorzystanie jego możliwości. Zacznijmy 
+od najprostszego polecenia, czyli od pobrania pojedynczego pliku:
+
+<pre>
+wget http;//www.google.com/
+wget --tries=45 http://fly.srk.fer.hr/jpg/flyweb.jpg
+wget ftp://sunsite.icm.edu.pl/README
+wget ftp://uzytkownik:haslo@jakis.serwer.pl/sciezka.plik
+</pre>
+
+<p>
+W drugim przykładzie opcja <tt> --tries=45 </tt> oznacza, że w 
+przypadku słabego połączenia, program będzie ponawiał próbę pobrania 
+pliku tylko 45 razy. Jeżeli zamiast wartości <em> 45 </em> podamy 
+<em> 0 </em> lub <em> inf, </em> to Wget będzie próbował pobrać plik 
+w nieskończoność (a dokładniej do pobrania pliku lub do zakończenia 
+programu).
+
+<p>
+Czasami może zdarzyć się, że będziemy musieli skorzystać z pasywnego 
+trybu FTP (przykładowo, gdy nasz komputer znajduje się za zaporą 
+sieciową). Jeżeli więc podczas próby ściągania pliku otrzymamy 
+komunikat "Nieprawidłowe PORT", to powinniśmy do wywołania Wgeta 
+dodać opcję <tt> --passive-ftp. </tt>
+ 
+<p>
+Jeżeli chcemy dokończyć pobieranie pliku, którego część znajduje się 
+na naszym dysku, stosujemy polecenie:
+
+<pre>
+wget -c ftp://adres.serwera.ftp/sciezka/nazwa_pliku
+</pre>
+
+<p>
+Z pomocą Wgeta możemy też sprawdzić, czy nasza lista odnośników do 
+stron internetowych jest nadal aktualna:
+
+<pre>
+wget   spider   force html  i bookmarks.html
+</pre>
+
+<p>
+Czasem możemy chcieć stworzyć kopię jakiegoś serwisu dostępnego 
+w Sieci (serwer lustrzany). Z pomocą przyjdzie nam opcja <tt> 
+-m(--mirror):</tt>
+
+<pre>
+wget -m http://www.gnu.org/
+</pre>
+
+<p>
+Powyższa opcja odpowiada równoczesnemu użyciu opcji <tt> -r -N -l 
+inf -nr. </tt> Opcja <tt> -r (--recursive) </tt> odpowiada za 
+pobieranie rekursywne (pobierany jest nie tylko pojedynczy dokument, 
+ale rownież dokumenty, do których prowadzą odnośniki). Włączenie 
+opcji <tt> -N (--timestamping) </tt> sprawi, że pobrane zostaną 
+jedynie pliki nowsze niż znajdujące się na dysku, co bardzo przydaje 
+się przy uaktualnianiu serwera lustrzanego. Z kolei <tt> -l (--level) 
+</tt> określa, do jakiej głębokości pliki będą pobierane rekursywnie - 
+domyślnie jest to wartość 5. Przypisane tej opcji wartości 0 lub <em> 
+inf </em> oznacza nieskończoną rekursję. Ostatnia opcja, <tt> -nr 
+(--dont-remove-listing), </tt> sprawia, że nie są usuwane tymczasowe 
+pliki <em>.listing, </em> które są generowane podczas pobierania 
+plików przez protokół FTP. Zwykle znajduje się w nich spis plików 
+zawartych w poszczególnych katalogach. Ich pozostawienie może 
+przydać się do sprawdzenia, czy pobrany serwer lustrzany jest 
+kompletny.
+ 
+<p> 
+Jeżeli nie chcemy, aby podczas pobierania danych były wyświetlane 
+komunikaty, możemy dodać opcję <tt> -q (--quiet). </tt>
+ 
+<p> 
+Interesująca jest opcja <tt> -U (--user-agent). </tt> Przeglądarki 
+internetowe (w tym również Wget) podczas pobierania danych 
+z serwerów WWW przedstawiają się określonym ciągiem tekstowym. 
+W przypadku Wgeta jest to ciąg "Wget/numer_wersji" (np. "Wget/1.8.2"). 
+Niektóre serwery blokują jednak dostęp do swoich danych wszelkiego 
+typu automatycznym "pobieraczom". Można tę niedogodność ominąć podając 
+ciąg zwracany przez którąś z powszechnie używanych przeglądarek WWW, 
+takich jak Mozilla czy Internet Explorer, np.:<tt> - U "Mozilla/5.0 
+(X11; U; Linux 1686; en-US; rv:1.0.1) Gecko/20021003."</tt>
+ 
+<p> 
+Wget podczas pobierania plików ze zdalnego serwera tworzy katalog 
+o nazwie tego serwera, do którego zapisuje dane. Jeśli nie odpowiada 
+nam takie zachowanie, możemy skorzystać z opcji <tt> -nH (--no-host-
+directories).</tt> Charakterystyczne jest również to, że jeżeli 
+pobieramy plik o takiej samej nazwie jak istniejący już na naszym 
+dysku, a nie mamy włączonej wspomnianej wcześniej opcji <tt> -N,</tt> 
+to wget zapisze ten plik dodając do nazwy kropkę i kolejną liczbę. 
+Oznacza to, że jeżeli pobieramy istniejący już u nas plik <em> index.
+html, </em> to zostanie on zapisany jako <em> index.html.1, </em> 
+a kolejny jako <em> index.html.2itd..</em>Jeżeli wolimy, 
+aby takie pliki nie były pobierane, to możemy dodać opcję <tt>-nc (--
+no-clobber). </tt>
+ 
+<p> 
+Czasami zdarza się, że twórcy stron WWW nie stosują w swoich pracach 
+względnych ścieżek do plików. W takim przypadku poruszanie się po 
+witrynie pobranej na dysk lokalny może sprawić wiele kłopotów - 
+odnośniki będą wskazywać na strony w Sieci, a nie na naszym dysku, 
+a rysunki nie będą się pojawiać, gdyż będą umieszczone w innym 
+miejscu struktury katalogów. Wybawieniem z tego kłopotu jest opcja 
+<tt> -k (--convert-links), </tt> która sprawia, że Wget, po pobraniu 
+wszystkich plików, przerabia odnośniki w ściągniętych stronach tak, 
+aby bez problemu można było przeglądać strony lokalnie. Jeżeli zatem 
+plik, do którego prowadzi odnośnik, został pobrany na dysk lokalny, 
+to ścieżka do niego zostanie odpowiednio ustawiona, a jeżeli nie 
+pobraliśmy danego pliku, to ścieżka zostanie zmieniona tak, aby 
+wskazywała na plik umieszczony na zdalnym serwerze. Co ciekawe, 
+zmieniane są nie tylko odnośniki do innych dokumentów, ale również 
+do plików graficznych (np. tła) oraz plików z arkuszami stylów. 
+W rezultacie po pobraniu strony WWW możemy przenieść ją do dowolnego 
+katalogu bez szkody dla jej czytelności.
+ 
+<p> 
+Użytkownicy Wgeta stają niekiedy przed problemem, jak zmusić go do 
+pobrania plików tylko z określonego katalogu i jego podkatalogów. 
+Wynika to z tego, że często na witrynach WWW znajdują się odnośniki 
+do plików leżących wyżej w hierarchii katalogów (np. "Powrót do 
+głównej"), więc podczas pobierania rekursywnego ściągamy więcej 
+plików niż byśmy chcieli. Aby tego uniknąć, stosujemy opcję <tt> 
+-np(--no-parent), </tt> która gwarantuje, że pobrane zostana jedynie 
+pliki znajdujące się w określonym katalogu i jego podkatalogach.
+ 
+<p> 
+Jeśli zamierzamy pobrać większą ilość plików lub nie chcemy oglądać 
+na konsoli bieżących komunikatów Wgeta, możemy wykorzystać opcję 
+<tt> -b (--backround) </tt> w celu natychmiastowego odesłania tego 
+programu w tło. Komunikaty zostaną wtedy przekierowane do pliku 
+<em> wget-log, </em> który będziemy mogli później spokojnie obejrzeć.
+ 
+<p> 
+Szczerze zachęcam do zapoznania się z dokumentacją Wgeta (<tt>mam 
+wget </tt> i <tt> info wget</tt>) oraz do własnych eksperymentów. 
+Uważam, że ten program jest tego wart. W dokumentacji znajduje się 
+również opis plików startowych <em> /etc/wgetrc </em> i <em> $HOME/.
+wgetrc, </em> w których można umieścić najczęściej wykorzystywane 
+opcje (zwolni nas to z konieczności wpisywania ich każdorazowo w lini 
+komend). A jeśli nawet nie będziemy mieli ochoty na zgłębianie 
+obszernego podręcznika, możemy zainstalować wybrane nakładki 
+i wykorzystywać Wgeta jako pełnowartościowego zarządcy pobierania. 
+
+<h3> 
+Nakładki graficzne na Wgeta 
+</h3>
+
+<p> 
+W sieci można znaleźć wiele różnych nakładek, które mają ułatwić lub 
+uprzejmnić korzystanie z Wgeta. Chociaż sam uważam, że nie ma nic 
+przyjemniejszego niż uruchomienie tego programu z konsoli, to 
+przedstawię tu dwie nakładki, które moim zdaniem mogą zainteresować 
+Czytelników. 
+
+<h3>
+TkWget 
+</h3>
+
+<p> 
+<em>TkWget </em> to prawdziwy rodzynek - gdy go zobaczyłem, od razu 
+przypadł mi do gustu. Jego główna zaletą jest to, że pozwala zapoznać 
+się z wieloma opcjami Wgeta bez konieczności wpisywania ich w lini 
+poleceń - zaznaczamy interesujące nas opcje, a poniżej możemy 
+przeczytać, jak wygląda odpowiednie wywołanie Wgeta.
+ 
+<p>
+Po pobraniu pliku z internetu <em> (http://spazioinwind.libero.it/
+thedarkstar//tkwget-0.3tgz), </em> rozpakowujemy go w wybranym przez 
+nas katalogu (autor sugeruje <em> /usr/local/lib/tkwget/)</em>
+poleceniem <tt> tar xzvf tkwget-0.3.tgz.</tt>Następnie ustawiamy 
+odpowiednie prawa dostępu:
+
+<pre>
+<tt>chmod a+x /usr/local/lib/tkwget</tt> 
+<tt>chmod a+x /usr/local/lib/tkwget/wgetssion</tt> 
+</pre> 
+
+<p>
+Pozostaje nam tylko stworzyć przydatne dowiązanie symboliczne: 
+
+<pre>
+<tt>ln -s /usr/local/lib/tkwget/tkwget /usr/local/bin/tkwget </tt> 
+</pre>
+
+<p>
+W tej chwili możemy już uruchomić program poleceniem <tt> tkwget. 
+</tt> Powita nas prosty, ale funkcjonalny interfejs. 
+W górnej części okna znajduje się miejsce na wpisanie ścieżki URL 
+(można ją także wkleić kombinacją [<em>Ctrl</em>]+[<em>v</em>]). 
+Poniżej możemy wybrać, która z grup opcji nas interesuje. Autor 
+wybrał najczęściej (według niego) używane opcje i zebrał w grupiem 
+<em> Frequently Used Options. </em> Pozostałe opcje rozdzielone są 
+pomiędzy grupy tak samo, jak w podręczniku do Wgeta. W zielonej 
+sekcji okna umieszczone są poszczególne opcje, które należą do 
+aktualnie wybranej grupy. Większość z nich wymaga jedynie 
+zaznaczenia, a w innych trzeba podać wartość tekstową lub liczbową. 
+Znaleźć tu można większośc opcji dostępnych w programie Wget - opis 
+części z nich znajduje się w tym artykule, a pozostałe można znaleźć 
+w podręczniku. 
+W dolnej linii, oznaczonej napisem <em> Command line check, </em> 
+można sprawdzić, jakie parametry będą dodane do wywołania Wgeta przy 
+wybranych opcjach. Gdy jesteśmy już zadowoleni z wybranych ustawień, 
+możemy przyciskiem <em> LAUNCH! </em> uruchomić okno pobierania 
+(wolno uruchomić w ten sposób nawet kilka instancji programu z różnymi 
+opcjami). W oknie uruchomionego programu <em> Wgetsession </em> 
+wyświetlona jest pełna linia wywołania Wgeta. Pobieranie danych możemy 
+rozpocząć wciskając przycisk <em> Go. </em> Napis obok określa, czy 
+program oczekuje na uruchomienie (<em>IDLE</em>), czy też pobiera 
+pliki (<em>ACTIVE</em>). Wszystkie komunikaty Wgeta pojawią się w 
+dolnej części tego okna. Po zakończeniu pobierania możemy opuścić je 
+przyciskiem <em> Exit. </em>
+ 
+<p> 
+TkWget przechowuje historię pobieranych adresów URL. Dostęp do niej 
+można uzyskać poprzez menu <em> File->show history. </em> Później 
+wystarczy dwukrotnie kliknąć myszką na wybranym adresie, aby ukazał 
+się on w linii URL głównego programu. 
+
+<h3>
+GNOME Transfer Manager 
+</h3>
+
+<p> 
+<em>GNOME Transfer Manager </em> (GTM) jest programem, który zyskał 
+sobie spore grono wielbicieli. Trzeba przyznać, że ta nakładka na 
+Wgeta ma dosyć ciekawe możliwości. Dla polskich użytkowników 
+z pewnością bardzo ważny jest fakt, że program posiada interfejs 
+przetłumaczony na nasz ojczysty język. Z tego powodu nie będę skupiał 
+się na dokładnym opisie instalacji (standardowe .<tt>/configure; make; 
+make install </tt> lub instalacja z pakietu <em> rpm</em>) czy 
+interfejsu, a raczej na wymienieniu jego funkcji oraz głównych zalet.
+ 
+<p> 
+Program możemy uruchamiać z apletu dostępnego w menu <em> Aplety->Sieć
+->GTM applet </em> lub poprzez wpisanie <tt> gtm </tt> w oknie 
+terminala. Zarówno na ikonę apletu, jak również na okno programu, 
+możemy przeciągać URL-e z takich programów, jak: Mozilla, Nautilus, 
+gFTP i inne. Klikając prawym przyciskiem myszki na ikonie apletu 
+możemy uzyskać dostęp do opcji i zdecydować, czy kliknięcie na nim 
+lewym przyciskiem myszki ma wywołać okno wprowadzania nowego adresu, 
+czy też otworzyć główne okno programu GTM.
+ 
+<p> 
+Do ciekawostek,  które zostały uwzględnione w tym programie, należy 
+możliwość określania, do jakich katalogów mają być zapisywane pliki 
+spełniające wyznaczone przez nas kryteria, np. pliki graficzne <em> 
+(*.jpg </em> i <em> *.png) </em> możemy zapisywać do katalogu <em> 
+grafiki, </em> a pliki <em> *.php </em> do katalogu <em> strony/php. 
+</em>
+
+<p> 
+Inną ciekawą funkcją jest możliwość łatwego pobierania plików, 
+których nazwy różnią się od siebie tylko numerem, zatem jeżeli 
+będziemy chcieli pobrać pliki o nazwach od <em> http://serwer/
+sciezka/plik003.tgz </em> do <em> http://serwer/sciezka/plik045.tgz, 
+</em> to GTM przyjdzie nam z pomocą. Wybieramy wtedy z menu <em> 
+Narzędzia </em> opcję <em> Pobieranie numeryczne, </em> wprowadzamy 
+odpowiednie dane do pól <em> Część URL-a przed liczbą </em>
+(np. <em> http://serwer/sciezka/plik</em>) i <em> Część URL-a po 
+liczbie</em> 
+(np.<em> .tgz</em>), a następnie podajemy zakres liczb <em> Od </em> 
+(np.<em> 3</em>) i  <em> Do </em> (np.<em> 45</em>) oraz minimalną 
+liczbę cyfr (np. <em>3</em>).
+ 
+<p>
+Dokładniejsze zapoznanie się z opcjami programu umożliwia obszerny 
+podręcznik GTMa, który jest dostępny w menu <em> Pomoc->GTM Manual.
+</em> Niestety jest on tylko po angielsku.
+
+<h3>
+Downloader for X
+</h3>
+
+<p>
+W trybie graficznym ciekawą alternatywą dla graficznych nakładek 
+na Wgeta jest program <em> Downloader for X </em> (zwany w skrócie 
+<em> D4X</em>). Oferuje on możliwości zarządzania pobraniami 
+(kolejkowanie, zmiana kolejności, ustawianie czasu rozpoczęcia 
+pobierania itp.). Oprócz tego dostępne są zaawansowane filtry 
+pozwalające zdefiniować, które pliki muszą zostać pobrane, a które 
+powinny zostać pominięte. Istnieje także możliwość ograniczenia 
+wykorzystywanego przez program pasma do określonych przez nas 
+wielkości (często jest to bardzo przydatne, gdy nie chcemy 
+pobieraniem plików "zapchać" calego łącza).
+
+<p>
+Działa oczywiście przeciąganie adresow URL prosto z przeglądarki WWW, 
+a odtwarzanie dźwięków po zakończeniu pobierania pliku pozwoli nam 
+zająć się czym innym podczas ściągania kolejnej płytki z najnowszą 
+dystrybucją Linuksa.
+
+<p> 
+Generalnie, program ten wart jest polecenia - ma przyjemny wygodny 
+interfejs oraz bardzo duże możliwości. Ponadto, jeżeli 
+komuś ten program bardzo się spodoba, to z pewnością ucieszy go 
+informacja, że można go używać również w konsoli tekstowej (niestety, 
+nie posiada interfejsu tekstowego, a wszystkie opcje trzeba 
+przekazywać w linii poleceń). Podręcznik do tego programu ukryty 
+jest pod mało intuicyjnym wywołaniem <tt> man nt. </tt> 
+
+<h3> 
+Zakończenie 
+</h3>
+
+<p> 
+Opisane powyżej programy to nie wszystkie, które dostępne są pod 
+Linuksem. Jeżeli nie będziemy z nich zadowoleni, zawsze możemy 
+poszukać w rozległych zasobach Internetu takich programów, które 
+spełnią nasze wymagania. Jeżeli na przykład zależy nam na znalezieniu 
+innych nakładek na Wgeta, to wystarczy w serwisie <em> SourceForge.
+net </em> hasło wget, aby znaleźć kilkanaście interesujących programów 
+- każdy z nich ma inną funkcjonalność, zalety oraz wady, więc myślę, że 
+każdy z Czytelników znajdzie coś na swoją miarę.      
+                                                       
+<h3>
+W Sieci
+</h3>
+
+<ul>
+<li>
+GFTP - <em> http://www.gftp.org/ </em>
+<li>
+Ncftp - <em> http://www.ncftp.com/ncftp/ </em>
+<li>
+Wget - <em> http://www.gnu.org/software/wget/wget.html </em>
+<li>
+TkWget - <em> http://spazioinwind.libero.it/thedarkstar/tkwget-0.3.
+tgz </em>
+<li>
+GNOME Transfer Manager - <em> http://gtm.sourceforge.net/ </em>
+<li>
+Downloader for X - <em> http://www.krasu.ru/soft/chuchelo/ </em>
+<li>
+Xget - <em> http://sourceforge.net/projects/xget </em>
+<li>
+KMago - <em> http://kmago.sourceforge.net/ </em>
+<li>
+Gwget - <em> http://sourceforge.net/projects/gwget/ </em>
+<li>
+Paraller URL Fetcher - <em> http://sourceforge.net/projects/puf/ </em>
+<li>
+Easy Sucker - <em> http://sourceforge.net/projects/easysucker/ </em>
+<li>
+Wgetter - <em> http://freshmeat.net/projects/wgetter/ </em>
+</ul>
+
+</body>
+</html>

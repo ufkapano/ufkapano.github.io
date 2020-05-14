@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Konsola</title>
+<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Komunikowanie się z systemem</h1>
+
+<h3>Konsole wirtualne</h3>
+
+<p>W trybie znakowym użytkownik ma do dyspozycji sześć konsoli 
+wirtualnych pomiędzy którymi przełącza się używając kombinacji 
+klawiszy od <strong>[lewy Alt]+[F1]</strong> 
+do <strong>[lewy Alt]+[F6]</strong>.
+
+<p>W środowisku graficznym X11 do konsoli znakowych przełączamy się
+za pomocą kombinacji klawiszy 
+od <strong>[lewy Ctrl]+[lewy Alt]+[F1]</strong> 
+do <strong>[lewy Ctrl]+[lewy Alt]+[F6]</strong>.
+Z dowolnej konsoli znakowej wracamy na konsole graficzną stosując
+kombinacje klawiszy <strong>[lewy Ctrl]+[lewy Alt]+[F7]</strong> 
+lub <strong>[lewy Alt]+[F7]</strong>.
+
+<h3>Identyfikacja użytkownika w systemie</h3>
+
+<p>Aby dostać się do systemu należy podać identyfikator użytkownika
+przyznany raz na zawsze przez Administratora systemu, oraz
+<em>hasło</em>, które użytkownik może dowolnie często zmieniać 
+poleceniem <em>passwd</em>. Hasło jest znane tylko użytkownikowi.
+
+<p>Administrator określa również przynależność użytkownika do
+jakiejś <em>grupy</em> użytkowników, np. <em>teachers</em>,
+<em>students</em> lub po prostu <em>users</em>.
+Użytkownik może należeć do kilku grup pomiędzy którymi może się
+przełączać. W danym momencie użytkownik należy tylko do jednej
+grupy. Jest wyróżniona grupa podstawowa, do której użytkownik
+należy tuż po zalogowaniu się do systemu.
+
+<h3>Monit</h3>
+
+<p>Znak gotowości systemu (monit) zależy od używanego
+shella i rodzaju użytkownika:
+<pre> 
+ #   dla użytkownika root (dla każdej powloki)
+ $   dla zwykłego użytkownika (sh, bash)
+ %   dla zwykłego użytkownika (csh).
+</pre>
+
+<h3>Korzystanie z klawiatury</h3>
+
+<p>Znaki wprowadzane z klawiatury nie są natychmiast 
+interpretowane. System magazynuje je (umieszcza w buforze)
+aż do napotkania znaku końca wiersza (klawisz <em>Return</em>,
+<em>Enter</em> lub <em>CR</em>).
+
+<p>Użyteczne kombinacje klawiszowe:
+<ul>
+<li> edycja wprowadzanej linii
+<pre>
+[Ctrl]+[h] - usunięcie ostatniego znaku
+[Ctrl]+[w] - usunięcie ostatniego słowa
+</pre>
+<li> zarządzanie procesem wykonywania komendy (foreground)
+<pre>
+[Ctrl]+[z] - zatrzymanie procesu biegnącego z możliwościa wznowienia
+[Ctrl]+[c] - przerwanie polecenia, które już się wykonuje
+[Ctrl]+[\] - przerwanie polecenia i zrzucenie `core'
+</pre>
+<li> zarządzanie strumieniami wykonywanej komendy (foreground)
+<pre>
+[Ctrl]+[d] - wygenerowanie znaku końca pliku EOF 
+           (też logout; zakończenie strumienia wejściowego)
+[Ctrl]+[s] - przerwanie wyświetlania na ekranie
+           (zatrzymanie strumienia wyjściowego)
+[Ctrl]+[q] - kontynuowanie wyświetlania na ekranie
+           (odblokowanie strumienia wyjściowego)
+</pre>
+</ul>
+
+<p>Użytkownik kończy pracę z systemem przez wciśnięcie 
+<strong>[Ctrl]+[d]</strong> lub wydanie polecenia <em>logout</em>.
+
+<p>Aby wyłączyć komputer z systemem Linux lub przeładować system
+należy wcześniej wykonać polecenie <em>shutdown</em> 
+z odpowiednimi parametrami. 
+Są też wygodniejsze polecenia <em>halt</em>, <em>poweroff</em>,
+<em>reboot</em>, choć nie są one całkowicie równoważne 
+<em>shutdown</em>.
+
+
+</body>
+</html>

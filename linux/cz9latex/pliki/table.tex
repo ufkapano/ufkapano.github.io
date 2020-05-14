@@ -1,0 +1,43 @@
+% Rozne rzeczy zwiazane z tabelami.
+\documentclass[12pt]{article}
+\begin{document}
+
+% \listoftables
+
+\begin{table}
+\caption[Opcjonalny krotki opis tabeli.]{
+\label{tab1}
+Tutaj dlugi lub krotki opis tabeli.}
+\begin{center}
+\begin{tabular}{lrrr}
+\hline\hline
+Lp. & a & b & c \\
+\hline
+1 & 1a & 1b & 1c \\
+2 & 2a & 2b & 2c \\ % musi byc to zakonczenie wiersza
+\hline\hline
+\end{tabular}
+\end{center}
+\end{table}
+
+Tabela bez srodowiska {\em table}.
+
+\begin{center}
+\newcommand{\temp}[1]{\multicolumn{1}{|r|}{#1}}
+\begin{tabular}{r|c|c|c|}
+\cline{2-4}
+& \shortstack{A\\d\\a\\m}
+% Ponizej dalem dodatkowy odstep pionowy poleceniem \rule.
+& \shortstack{\rule{0mm}{1mm}\\B\\o\\g\\d\\a\\n}
+& \shortstack{C\\e\\z\\a\\r\\y} \\ 
+\hline
+\temp{Adam} & $\times$ & 23 & 19 \\
+\hline
+\temp{Bogdan} & 34 & $\times$ & 0 \\
+\hline
+\temp{Cezary} & 22 & 0 & $\times$ \\
+\hline
+\end{tabular}
+\end{center}
+
+\end{document}
