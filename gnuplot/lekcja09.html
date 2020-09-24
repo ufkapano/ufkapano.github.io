@@ -1,0 +1,121 @@
+<html>
+<head>
+<title>Lekcja 9</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (9) - wykresy parametryczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Na wykresach parametrycznych 2D zmienne x,y uzależniamy
+od parametru t. Dla wykresów 3D zmienne x,y,z uzależniamy od u,v.
+Do włączenia trybu parametrycznego służy polecenie set parametric.
+
+
+
+<h3>WYKRESY 2D</h3>
+
+<hr><pre>
+# Plik fig91.gnu
+set term pdf
+set output "fig91.pdf"
+
+# Tryb rysunków z parametrem.
+# Parametr domyślnie oznaczany jest przez "t".
+set parametric
+
+radius(t) = 1.0
+osx(t) = sin(t)*radius(t)
+osy(t) = cos(t)*radius(t)
+
+set title "Wykresy w trybie parametrycznym"
+
+# Można podać zakresy osobno poza poleceniem plot.
+set trange [0:2*pi]
+set xrange []
+set yrange []
+
+# Dla plot podajemy funkcje dla x i y.
+#plot osx(t), osy(t) title "kolo"
+
+# Zakresy w kolejności: trange, xrange, yrange.
+#plot [0:2*pi] [-2:2] [-2:2] osx(t), osy(t) title "kolo"
+#plot [0:1*pi] osx(t), osy(t) title "polokrag"    # podany trange
+
+# Inna zmienna niż t będąca parametrem.
+#plot [s=0:2*pi] [-2:2] [-2:2] osx(s), osy(s) title "kolo"
+
+# Elipsa i krzywa Lissajous (dwie krzywe na jednym rysunku).
+plot 2*sin(t-3), 2*cos(t+2) title "elipsa",\
+cos(3*t), sin(2*t) title "Lissajous 3:2"
+
+# Powrót do nieparametrycznego ustawienia.
+unset parametric
+
+set output       # zamknięcie pliku 
+</pre><hr>
+
+<h3>WYKRESY 3D</h3>
+
+<p>Terminal wxt umożliwia obracanie wykresu 3D za pomocą myszy.
+
+<hr><pre>
+set parametric                # parametry u,v
+
+# Jest 5 zakresów do ustawienia.
+set urange []
+set vrange []
+set xrange []
+set yrange []
+set zrange []
+
+# Podajemy trzy funkcje od parametrów.
+splot u-v**2, u**2*v, exp(v) title "powierzchnia"
+splot [0:2*pi] [0:5] cos(u),sin(u),v title "komin"
+splot [0:2*pi] [0:5] v*cos(u),v*sin(u),v title "stożek"
+splot [0:pi] [0:2*pi] sin(u)*cos(v), sin(u)*sin(v), cos(u) title "kula"
+
+unset parametric
+</pre><hr><pre>
+# Plik fig92.gnu
+set term pdf
+set output "fig92.pdf"
+
+set parametric
+
+# Parametry t,p zamiast u,v.
+sigma(p,t) = 1.0
+osx(p,t) = sin(t)*cos(p)*sigma(p,t)
+osy(p,t) = sin(t)*sin(p)*sigma(p,t)
+osz(p,t) = cos(t)*sigma(p,t)
+
+set title "Wykresy 3D w trybie parametrycznym"
+
+set key box
+set xlabel "x"
+set ylabel "y"
+set zlabel "z"
+
+set hidden3d                  # usuwa linie "schowane"
+set isosamples 20             # domyślnie 10, punkty gęściej
+
+# W zakresach trzeba użyć nazw parametrów.
+splot [t=0:pi] [p=0:2*pi] osx(p,t),osy(p,t),osz(p,t) title "kula"
+
+unset parametric
+set output
+</pre><hr>
+
+<h3>ZADANIE 9.1</h3>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

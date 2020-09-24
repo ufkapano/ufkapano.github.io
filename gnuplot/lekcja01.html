@@ -1,0 +1,113 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (1) - wprowadzenie</h1>
+
+<h3>OPIS</h3>
+
+<p>Gnuplot jest programem do tworzenia wykresów funkcji i danych.
+Działa na systemach Linux, MS Windows i innych platformach.
+Składnia i działanie pewnych poleceń zależy od wersji programu,
+dlatego opiszemy elementy sprawdzone w gnuplocie 4.4.
+Jeden wiersz to jedno polecenie.
+Długie wiersze łamiemy za pomocą znaku \ (backslash).
+Najważniejsze polecenia gnuplota to plot (wykresy 2D) i splot (wykresy 3D).
+
+<p>Gnuplot jest czasem wykorzystywany przez inne programy
+w końcowym przetwarzaniu danych (plotting engine) w celu otrzymania 
+wykresu (GNU Octave, Maxima, MPSolve).
+Gnuplot nie jest powiązany z projektem GNU, 
+zbieżność nazw jest przypadkowa.
+
+<hr><pre>
+# Składnia:
+# plot {ranges} function {axes} {title} {with style}
+# plot {ranges} datafile {thru} {using} {axes} {title} {with style}
+</pre><hr>
+
+<h3>TRYB INTERAKTYWNY</h3>
+
+<p>Najprostszym sposobem sprawdzenia, czy gnuplot jest zainstalowany 
+w danym systemie, jest próba uruchomienia go w trybie interaktywnym.
+
+<hr><pre>
+$ gnuplot                     # uruchomienie w powłoce
+
+    G N U P L O T
+    Version 4.4 patchlevel 0
+    last modified March 2010
+    ...
+Terminal type set to 'wxt'
+gnuplot&gt; plot sin(x)                 # wykres funkcji 2D
+gnuplot&gt; plot cos(x), x**2           # dwie funkcje
+gnuplot&gt; plot "example.dat"          # wykres danych z pliku
+gnuplot&gt; splot x*x+y*y               # wykres funkcji 3D
+gnuplot&gt; load "fig.gnu"              # wczytanie poleceń z pliku
+gnuplot&gt; print pi, sin(0.1)          # jak kalkulator
+3.14159265358979 0.0998334166468282
+gnuplot&gt; quit                        # lub q, Ctrl+D, exit, zakończenie pracy
+$
+</pre><hr>
+
+<h3>TRYB SKRYPTOWY/WSADOWY</h3>
+
+<p>Polecenia gnuplota zwyczajowo zapisuje się w plikach
+tekstowych z rozszerzeniem .gnu, .gnp, .gp, lub innym.
+Do utworzenia pliku tekstowego wystarczy prosty edytor tekstu
+w terminalu (nano, mcedit) lub w okienku (gedit, kwrite).
+
+<hr><pre>
+# Plik skrypt.gnu
+
+# Ustawienie terminala.
+set term pdf enhanced
+set output "ruch.pdf"         # nazwa pliku rysunku
+
+set title "Ruch jednostajny"
+
+unset key                     # bez legendy
+
+set xlabel "czas [s]"         # etykieta osi x
+set ylabel "droga [m]"        # etykieta osi y
+
+set xrange []                 # domyślny zakres dla x [-10:10]
+set yrange []                 # domyślny zakres dla y
+
+plot 2*x+1
+
+set output                    # zamknięcie pliku rysunku
+</pre><hr><pre>
+$ gnuplot skrypt.gnu          # przetworzenie skryptu
+$
+</pre><hr>
+
+<h3>POMOC</h3>
+
+<hr><pre>
+# Składnia:
+# help {topic}
+gnuplot&gt; help              # ogólny help
+`Gnuplot` is a portable command-line driven graphing utility...
+# Wyjście z trybu pomocy przez "Enter" lub Ctrl+C.
+gnuplot&gt; help plot         # help na dany temat
+`plot` is the primary command for drawing plots ...
+gnuplot&gt;
+</pre><hr>
+
+<h3>ZADANIE 1.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

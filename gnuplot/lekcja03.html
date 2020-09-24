@@ -1,0 +1,146 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (3) - wykresy z danych zewnętrznych</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Plik z danymi powinien być w określonym formacie.
+Kolumny powinny być oddzielone białymi znakami (spacje lub tabulacje).
+Komentarz w pliku z danymi jest oznaczany przez znak #, wtedy
+gnuplot ignoruje pozostałą część wiersza.
+Można zmienić ustawienie znaku komentarza (set datafile commentschars).
+
+<p>Pusty wiersz w pliku z danymi powoduje przerwę w linii łączącej punkty.
+Dwa puste wiersze w pliku z danymi oddziela serie danych.
+
+<hr><pre>
+# Plik file1.dat
+0    0    0
+1    2    3
+2    4    6
+3    6    9
+4    8    12
+5    10    15
+</pre><hr><pre>
+# Zmiana znaku komentarza - # lub % (jak Matlab).
+
+set datafile commentschars "#%"
+</pre><hr><pre>
+# Dane z jednego pliku.
+# Długie linie łamiemy korzystając ze znaku \.
+
+plot "file1.dat" using 1:2 title "data 1a", \
+"file1.dat" using 1:3 title "data 1b"
+</pre><hr><pre>
+# Dane z dwóch plików.
+
+plot "file1.dat" using 1:2 title "data 1", \
+"file2.dat" using 1:3 title "data 2"
+</pre><hr><pre>
+# Przetworzenie danych z pliku.
+# Wykres sin(col.2+col.3) vs pi*col.1.
+
+plot "file1.dat" using (pi*$1):(sin($2+$3))
+</pre><hr><pre>
+# Zapisanie punktów od razu w skrypcie, koniec danych to 'e'.
+plot '-' with points
+0 0
+1 1
+2 4
+3 9
+e
+</pre><hr>
+
+<h3>UWZGLĘDNIANIE BŁĘDÓW</h3>
+
+<hr><pre>
+# Plik pomiar.dat
+# x; y; xdelta; ydelta;
+0    0    0.1    0.2
+1    2    0.1    0.2
+2    4    0.1    0.2
+3    6    0.1    0.2
+4    8    0.1    0.2
+5    10    0.1    0.2
+</pre><hr><pre>
+# Wykres tylko X i Y. Należy podać 2 kolumny.
+
+plot "pomiar.dat"
+</pre><hr><pre>
+# Rysyjemy tylko błędy Y. Należy podać 3 kolumny.
+# Gnuplot spodziewa się  (x, y, ydelta).
+
+plot "pomiar.dat" using 1:2:4 with yerrorbars
+
+# Można sztucznie dostarczyć dane.
+# plot "pomiar.dat" using 1:2:(sqrt($2)) with yerrorbars
+</pre><hr><pre>
+# Rysyjemy tylko błędy X. Należy podać 3 kolumny.
+# Gnuplot spodziewa się  (x, y, xdelta).
+
+plot "pomiar.dat" using 1:2:3 with xerrorbars
+</pre><hr><pre>
+# Rysyjemy błędy X i Y. Należy podać 4 kolumny.
+# Gnuplot spodziewa się  (x, y, xdelta, ydelta).
+
+plot "pomiar.dat" using 1:2:3:4 with xyerrorbars
+</pre><hr>
+
+<h3>KILKA SERII DANYCH W JEDNYM PLIKU</h3>
+
+<hr><pre>
+# Plik serie.dat
+# Serie danych oddzielone dwoma pustymi wierszami.
+# RAZY2
+0    0
+1    2
+2    4
+3    6
+4    8
+5    10
+
+
+# RAZY3
+0    0
+1    3
+2    6
+3    9
+4    12
+5    15
+</pre><hr><pre>
+# Składnia:
+# plot "file.dat" index {m{:n{:p}}   # od m do n co p
+# plot "file.dat" index "name"
+# gdzie "name" jest w komentarzu przed zestawem danych.
+# Gnuplot zaleca konwecje, np. "[Name]", "== Name ==".
+# Zestawy danych nie muszą być rysowane po kolei.
+</pre><hr><pre>
+# Wykres dwóch serii danych.
+# Indeksy liczbowe.
+
+plot "serie.dat" index 0 using 1:2 title "seria 1",\
+"serie.dat" index 1 using 1:2 title "seria 2"
+</pre><hr><pre>
+# Wykres dwóch serii danych.
+# Indeksy napisowe.
+
+plot "serie.dat" index "RAZY2" using 1:2 title "seria 1",\
+"serie.dat" index "RAZY3" using 1:2 title "seria 2"
+</pre><hr>
+
+<h3>ZADANIE 3.1</h3>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Lekcja 6</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (6) - konfiguracja wykresów 3D</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Wiele poleceń znanych z wykresów 2D ma zastosowanie w przypadku
+wykresów 3D.
+
+<hr><pre>
+# Składnia:
+# splot {ranges} function {title} {with style}
+# splot {ranges} datafile {datafile-modifiers} {title} {with style}
+</pre><hr>
+
+<h3>USTAWIENIA</h3>
+
+<hr><pre>
+# Plik fig61.gnu
+set term pdf
+set output "fig61.pdf"
+
+# Etykiety osi.
+set xlabel 'x'
+set ylabel 'y'
+set zlabel 'z'
+
+# Zakresy.
+set xrange []
+set yrange []
+set zrange []
+#set autoscale        # powrót do domyślnych ustawień zakresów
+
+# Wykresy funkcji.
+splot x*x+y*y*3
+#splot exp(-x*x-y*y)
+#splot [-2:2] [-2:2] [0:1] exp(-x*x-y*y) title "gauss"
+#splot [-2:2] [-2:2] [-1:1] cos(x*y)
+
+set output
+</pre><hr><pre>
+# Korzystanie z pliku z danymi, 3 kolumny x,y,z.
+
+splot "results.dat"
+splot "results.dat" using 1:2:3
+</pre><hr><pre>
+# Dane w pliku mogą być zorganizowane jak macierz:
+# z00 z01 z02 z03 ...  (surface mesh)
+# z10 z11 z12 z13 ...
+# z20 z21 z22 z23 ...
+# z30 z31 z32 z33 ...
+# Współrzędne x i y to będą indeksy macierzy (numeracja od zera).
+# Stosujemy słowo kluczowe matrix.
+# Pusty wiersz kończy macierz i rozpoczyna nowy surface mesh.
+
+splot "results.dat" matrix
+</pre><hr>
+
+<h3>CONTOUR</h3>
+
+<p>Umożliwia rysowanie konturów rysowanych powierzchni.
+Wymagane są grid data (help grid_data).
+
+<hr><pre>
+# Składnia:
+# set contour {base | surface | both}
+# unset contour
+# show contour
+</pre><hr><pre>
+# Plik fig62.gnu
+set term pdf
+set output "fig62.pdf"
+
+set xrange [-pi/2:pi/2]
+set yrange [-pi/2:pi/2]
+
+#set style function linespoints
+set contour
+
+# Gęstość isolinii, domyślnie 10,10.
+set isosamples 10,10
+
+# The sampling rate of functions, or for interpolating data.
+set samples 10,10
+set hidden3d                  # usuwa linie "schowane"
+
+splot cos(x)*cos(y)
+
+set output
+</pre><hr>
+
+<h3>VIEW</h3>
+
+<hr><pre>
+# Ustawianie kąta widzenia powierzchni.
+# Składnia:
+# set view rot_x, rot_z, scale, scale_z
+# rot_x - obrót wokól osi x w zakresie [0:180]
+# rot_z - obrót wokół NOWEJ osi z w zakresie [0:360]
+# scale - skalowanie całego rysunku
+$ scale_z - skalowanie tylko osi z
+# set view map                # składnia do konturów
+# set view {no}equal {xy|xyz} # wymusza równe jednostki na osiach
+# show view                   # sprawdzenie ustawień
+
+set view 60,30,1,1            # domyślne
+set view 45,45                # widok z boku
+set view 0,0                  # widok z gory z osi +Z, X na dole 
+set view 90,0                 # widok z boku z osi +X
+set view 0,90                 # widok z gory z osi +Z, Y na dole
+set view 90,90                # widok z gory z osi +Y
+</pre><hr>
+
+
+<h3>ZADANIE 6.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

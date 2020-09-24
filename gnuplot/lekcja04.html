@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (4) - fitowanie</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Polecenie fit umożliwia dopasowanie zdefiniowanej przez nas
+funkcji do zbioru danych pomiarowych.
+Dopasowanie opiera się na implementacji algorytmu najmniejszych
+kwadratów Marquardt-Levenberg.
+Fitowana funkcja musi zwracać wartości rzeczywiste.
+Można fitować funkcję dwóch zmiennych z=f(x,y).
+Zmienna zależna to domyślnie z, a kolejne możliwe zmienne
+niezależne to x, y, t, u, v.
+
+<p>Aby wspomóc algorytm dopasowujący należy podać parametry 
+początkowe, z których algorytm wystartuje w procenie optymalizacji.
+Domyślna wartość startowa każdego parametru to 1.
+Jeżeli chcemy określić dokładność optymalizacji, 
+to można to zrobić poprzez ustawienie parametru 
+FIT_LIMIT (zmiana wyliczanej wartości pomiędzy dwoma iteracjami)
+lub FIT_MAXITER (maksymalna liczba iteracji).
+
+<p>Podanie zakresów pozwala ograniczyć zakres danych, które
+będą brane pod uwagę przy dopasowaniu.
+Standardowo są brane pod uwagę dwie kolumny danych [using 1:2:(1)].
+Jeżeli podamy trzy kolumny (using 1:2:3), to trzecia kolumna
+interpretowana jest jako odchylenie standardowe s,
+które użyte jest jako waga punktu 1/s**2.
+
+<p>Wartości parametrów fitowanych powinny być zbliżone
+co do rzędu wielkości, aby fitowanie szybciej zbieżne
+(np. zamiast par można wstawic par*1e8).
+
+<hr><pre>
+gnuplot&gt; help fit
+</pre><hr><pre>
+# Składnia:
+# fit {ranges} expression datafile {datafile-modifiers}
+# via parameterfile | var1{,var2,...}
+
+# ranges - [{dummy_variable=}{min}{:max}]
+# expression - zwykle funkcja wcześniej zdefiniowana przez użytkownika
+# datafile - nazwa pliku z danymi, do których dopasowywana jest funkcja
+# datafile-modifiers - można użyć using, jak w plot
+# via - precyzuje które parametry mają być fitowane
+# parameterfile - plik z definicjami parametrów postaci
+# var1 = value1
+# var2 = value2
+# Każdy parametr ma być podany w osobnej linii.
+
+f(x) = a*x**2 + b*x + c
+FIT_LIMIT = 1e-6              # default 1e-5
+# set fit nolog               # suppresses output to log file (gnuplot 5.0.1)
+
+fit f(x) "measured.dat" via a,b,c                 # wczyta tylko x,y
+fit f(x) "measured.dat" using 1:2:(1) via a,b,c   # podajemy wagę 1
+fit f(x) "measured.dat" using 1:2:3 via a,b,c     # są podane wagi punktów
+fit f(x) "measured.dat" via "start.par"           # parametry podane w pliku
+</pre><hr><pre>
+Można fitować najwyżej pięć parametrów.
+Dozwolone formaty i domyślne nazwy zmiennych:
+z
+x:z
+x:z:s
+x:y:z:s
+x:y:t:z:s
+x:y:t:u:z:s
+x:y:t:u:v:z:s
+Domyślne nazwy zmiennych można zmieniać w zakresach, ale nie można
+zmieniać nazwy zmiennej z.
+Opcja using powinna mieć tyle pozycji, ile niezależnych zmiennych plus dwa;
+trzeba wyspecyfikować wszystkie pozycje.
+</pre><hr><pre>
+# Format danych x:z:s, odchylenie s=1.
+fit a*tanh(x/b) "measured.dat" using 1:2:(1) via a,b
+
+# Format danych x:y:z:s, odchylenie s=1.
+g(x,y) = a*x**2 + b*y**2 + c*x*y
+fit g(x,y) "surface.dat" using 1:2:3:(1) via a,b,c
+
+# Powierzchnia z=a*x+b*y+c, odchylenie s=1.
+fit a*x+b*y+c "surface.dat" using 1:2:3:(1) via a,b,c
+
+# Funkcja z=a*x+b*y, odchylenie s=1.
+fit a*x+b*y "surface.dat" using 1:2:3:(1) via a,b
+
+# Funkcja z=a*x+b*y+c*t, odchylenie s=1.
+# Format danych x:y:t:z:s, odchylenie 1.
+fit a*x+b*y+c*t "foo.dat" using 1:2:3:4:(1) via a,b,c
+
+# Maksymalna liczba parametrów do fitowania.
+# Format danych x:y:t:u:v:z:s, odchylenie s=1.
+h(x,y,t,u,v) = a*x + b*y + c*t + d*u + e*v
+fit h(x,y,t,u,v) "foo.dat" using 1:2:3:4:5:6:(1) via a,b,c,d,e
+</pre><hr>
+
+<h3>DOPASOWANIE PŁASZCZYZNY</h3>
+
+<p>Przy fitowaniu w trybie skryptowym gnuplot zapisuje
+dziennik operacji w pliku fit.log w trybie append.
+
+<hr><pre>
+# Plik surface.dat
+# x, y, z
+0    0    1.1
+0.9    0    0
+0    1    0
+0.3    0.3    0.3
+</pre><hr><pre>
+# Plik surface.gnu
+# Dopasowanie płaszczyzny do danych.
+
+set term pdf
+set output "surface.pdf"
+
+set fit logfile "surface.log"           # zmieniam nazwę logfile
+
+f(x,y) = a*x+b*y+c
+
+fit f(x,y) "surface.dat" using 1:2:3:(1) via a,b,c
+
+set key title "z = a x + b y + c"
+set title "Dopasowanie plaszczyzny do danych"
+set xlabel "x"
+set ylabel "y"
+set zlabel "z"
+set xrange [0:1]
+set yrange [0:1]
+set zrange []
+
+# Najpierw dane z pliku, potem funkcja.
+# Zakres dopasuje się do danych z pliku.
+splot "surface.dat" title "eksperyment", f(x,y) title "teoria"
+
+set output          # zamknięcie pliku 
+</pre><hr>
+
+<h3>ERRORVARIABLES</h3>
+
+<hr><pre>
+# Plik line.dat
+0.    0.0
+1.    1.1
+2.    1.9
+3.    3.0
+4.    2.9
+5.    5.1
+6.    5.9
+7.    7.0
+8.    8.0
+</pre><hr><pre>
+# Plik line.gnu
+set term pdf
+set output "line.pdf"
+
+f(x) = a*x+b
+
+# Ustawiam, że dla każdej zmiennej chcę znać niepewność.
+# Niepewności będą zapisane do specjalnych zmiennych (*_err).
+# Dla a to a_err, dla b to b_err.
+
+set fit errorvariables
+
+# Ustawiam parametry startowe procedury fitowania.
+a = 2
+b = 2
+
+fit f(x) "line.dat" using 1:2 via a,b
+
+# Przesuwamy legendę.
+set key bottom title "f(x) = a x + b"
+
+# Na tle rysunku wypiszemy dopasowane współczynniki.
+# Ta skladnia czasem generuje błędy.
+#set label 1 "a = %f",a," +/- %f",a_err at 3,9
+#set label 2 "b = %f",b," +/- %f",b_err at 3,8
+# sprintf() ma formatowanie jak w języku C.
+set label sprintf("a = %f  +/- %f", a, a_err) at 3,9
+set label sprintf("b = %f  +/- %f", b, b_err) at 3,8
+
+set title "Dopasowanie prostej do danych"
+set xlabel "x"
+set ylabel "y"
+set xrange [0:10]
+set yrange [0:10]
+
+# Najpierw dane z pliku, potem funkcja.
+plot "line.dat" using 1:2 title "eksperyment", f(x) title "dopasowanie"
+#plot "line.dat" using 1:2 title "data", f(x) title "fit"
+
+set output          # zamknięcie pliku
+</pre><hr>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

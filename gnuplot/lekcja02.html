@@ -1,0 +1,209 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (2) - wykresy funkcji</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Gnuplot dostarcza pewien zestaw funkcji wbudowanych, a także
+pozwala tworzyć własne funkcje.
+Generalnie dopuszczone są wyrażenia matematyczne znane np. z języków C,
+FORTRAN, czy Pascal.
+Operator ** oznacza potęgowanie, jak w Fortranie czy Pythonie.
+
+<p>Gnuplot rozróżnia wartości całkowite (2, -3)
+od zmiennoprzecinkowych (3.14, 2e-4), przy czym zapis liczb jest
+taki jak w językach programowania.
+Należy pamiętać o specyfice działań na liczbach całkowitych
+(np. 1/2 wynosi 0, a 1.0/2.0 wynosi 0.5).
+
+<hr><pre>
+gnuplot&gt; show variables
+
+    User and default variables:
+    pi = 3.14159265358979
+    NaN = NaN
+    GNUTERM = "wxt"
+
+gnuplot&gt; show functions
+
+    User-Defined Functions:
+
+# Zapisanie zmiennych, funkcji i ustawień.
+# Wczytanie: load "work.gnu"
+
+gnuplot&gt; save "work.gnu"             # zapis wszystkiego
+gnuplot&gt; save functions "functions.gnu"
+gnuplot&gt; save variables "variables.gnu"
+gnuplot&gt; save terminal "myterm.gnu"
+gnuplot&gt; save set "settings.gnu"
+</pre><hr>
+
+<h3>ZMIENNE</h3>
+
+<p>Nazwy domyślnych zmiennych niezależnych to x, y, z, natomiast
+w trybie parametrycznym stosuje się t, u, v.
+
+<h3>FUNKCJE WBUDOWANE</h3>
+
+<pre>
++------------+------------------------------------------+
+| Funkcja    | Zwraca                                   |
++------------+------------------------------------------+
+| abs(x)     | absolute value of x, |x|                 |
+| acos(x)    | arc-cosine  of x                         |
+| asin(x)    | arc-sine    of x                         |
+| atan(x)    | arc-tangent of x                         |
+| cos(x)     | cosine      of x,  x is in radians.      |
+| cosh(x)    | hyperbolic cosine of x, x is in radians  |
+| erf(x)     | error function of x                      |
+| exp(x)     | exponential function of x, base e        |
+| inverf(x)  | inverse error function of x              |
+| invnorm(x) | inverse normal distribution of x         |
+| log(x)     | log of x, base e                         |
+| log10(x)   | log of x, base 10                        |
+| norm(x)    | normal Gaussian distribution function    |
+| sgn(x)     | 1 if x &gt; 0, -1 if x &lt; 0, 0 if x=0        |
+| sin(x)     | sine of x, x is in radians               |
+| sinh(x)    | hyperbolic sine of x, x is in radians    |
+| sqrt(x)    | the square root of x                     |
+| tan(x)     | tangent of x, x is in radians            |
+| tanh(x)    | hyperbolic tangent of x, x is in radians |
++------------+------------------------------------------+
+| int(x)     | część całkowita x                        |
+| ceil(x)    | najmniejszy int, ale nie mniejszy niż x  |
+| floor(x)   | największy int, ale nie większy niż x    |
+| rand(x)    | pseudo-random number generator           |
+| atan2(y,x) | kąt wyrażony stosunkiem y/x              |
++------------+------------------------------------------+
+bessel(x), gamma(x), ibeta(x), igamma(x), lgamma(x),
+real(z), imag(z)
+</pre>
+
+<h3>TWORZENIE WŁASNYCH FUNKCJI</h3>
+
+<hr><pre>
+# Możemy określić funkcję wprost w poleceniu plot.
+
+plot 2*x+1
+plot (x+1)**2
+</pre><hr><pre>
+# Wykorzystanie operatora trójargumentowego.
+# Przy funkcji nieciągłej pozwala zachować ciągłość wykresu.
+
+ramp(x) = (x &gt; 0) ? x : 0    # pochylnia
+
+# plot, zakres x, zakres y, funkcja, opcje
+plot [-2:2] [-0.5:2] ramp(x)
+plot [-2:2] [-0.5:2] ramp(x) title "pochylnia"
+</pre><hr><pre>
+# Funkcja dwóch zmiennych.
+
+min(x, y) = (x &lt; y) ? x : y
+</pre><hr><pre>
+# Wielomian jednej zmiennej.
+
+poly(x) = x**6 -4*x**4 -x**2 +4
+
+plot [-4:4] [-10:10] poly(x) notitle
+</pre><hr><pre>
+# Funkcja określona przedzialami - jest ciągła.
+
+f1(x) = (x &lt; -1) ? -1 : x
+f2(x) = (x &lt; 1) ? f1(x) : 1
+
+plot [-2:2] f2(x)             # tylko zakres x
+</pre><hr><pre>
+# Funkcja z parametrem.
+# Parametr musi być określony zanim wykona się plot.
+# Wartość parametru można zmieniać w instrukcji plot.
+
+f(x) = sin(a*x)
+a = 1
+
+plot f(x)
+plot a=0.1, f(x), a=0.2, f(x), a=0.3, f(x)
+</pre><hr>
+
+<h3>POLAR</h3>
+
+<p>Wykresy 2D można rysować także w biegunowym układzie współrzędnych
+(set polar). Zmienna niezależna t jest wtedy wyrażona w radianach,
+a zmienna zależna to promień.
+
+<hr><pre>
+# Plik fig21.gnu
+set term pdf
+set output "fig21.pdf"
+
+# Przejście do współrzędnych biegunowych.
+set polar
+
+set title "Wspołrzędne biegunowe"
+
+set grid polar                # ustawienie siatki biegunowej
+set size square               # osie proporcjonalne
+# set angles degrees          # ustawienie jednostek w stopniach [0:360]
+# set angles radians          # domyślnie są radiany [0:2*pi]
+
+f1(t) = 1.0+0.1*t             # t to kąt biegunowy, f1(t) to promień
+f2(t) = sin(t)*t
+
+set trange [0:4*pi]           # można zmienić zakres zmiennej t
+set rrange []                 # zakres na promień
+set xrange []                 # zakres rysunku w kierunku x
+set yrange []                 # zakres rysunku w kierunku y
+
+#plot f1(t)
+# Zakresy: trange, xrange, yrange.
+#plot [0:4*pi] f1(t) title "spirala"    # podany tylko trange
+plot [0:2*pi] f2(t) title "petle"
+
+# Powrót do współrzędnych kartezjańskich.
+unset polar
+
+set output       # zamknięcie pliku 
+</pre><hr>
+
+<h3>ARROW</h3>
+
+<hr><pre>
+# set arrow {&lt;tag&gt;}     # identyfikator strzałki (liczba całkowita)
+# {from &lt;position&gt;} {to|rto &lt;position&gt;}
+# { {arrowstyle | as &lt;arrow_style&gt;}
+# | { {nohead | head | backhead | heads}
+# {size &lt;length&gt;,&lt;angle&gt;{,&lt;backangle&gt;}} # wielkość head
+# {filled | empty | nofilled}  # wypełnienie head
+# {front | back}  # na pierwszym planie, czy w tle
+# { {linestyle | ls &lt;line_style&gt;}
+# | {linetype | lt &lt;line_type&gt;}
+# {linewidth | lw &lt;line_width&gt;} } } }
+
+set arrow 1 from 0,1 to 6,5 ls 5                  # czyli opcja "head"
+set arrow 2 from 0,2 to 6,10 nohead lt 1 lw 2     # odcinek
+set arrow 3 from 0,1 to 7,10 heads                # strzałki na obu końcach
+set arrow 3 from 0,1 to 7,10 heads filled         # strzałki wypełnione
+
+unset arrow 1            # wyłączenie strzałki nr 1
+unset arrow              # wyłączenie wszystkich strzałek
+</pre><hr>
+
+
+
+<h3>ZADANIE 2.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

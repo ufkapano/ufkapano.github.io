@@ -1,0 +1,299 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (5) - konfiguracja wykresów 2D</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Parametry rysunku określamy za pomocą polecenia set.
+Powrót do domyślnych ustawień osiąga się za pomocą polecenia reset.
+
+<hr><pre>
+gnuplot&gt; show all          # wszystkie parametry
+gnuplot&gt; show title        # wartość parametru title
+gnuplot&gt; set title "Wykres f(x)"
+gnuplot&gt; unset title       # wyłączenie tytułu
+gnuplot&gt; set notitle       # jw, dawna składnia
+gnuplot&gt; 
+</pre><hr>
+
+<h3>RANGES</h3>
+
+<p>Domyślny zakres x to [-10:10], y jest skalowany do danych.
+Zakresy można ustawiać w poleceniu plot lub osobno
+(set xrange, set yrange).
+
+<hr><pre>
+plot [-5:5] sin(x)            # zakres y domyślny
+plot [] [-2:2] sin(x)         # zakres x domyślny
+</pre><hr>
+
+<h3>AXES</h3>
+
+<p>Są dostępne cztery zestawy osi do wykorzystania:
+x1y1 (default), x2y2, x1y2, x2y1.
+
+<h3>GRID, BORDER, TICS</h3>
+
+<hr><pre>
+gnuplot&gt; help grid
+gnuplot&gt; show grid
+gnuplot&gt; help border
+gnuplot&gt; show border
+gnuplot&gt; help tics
+gnuplot&gt; show tics
+</pre><hr><pre>
+set grid                      # włączenie siatki pomocniczej
+unset grid
+</pre><hr><pre>
+set border                    # domyślnie jest ramka
+unset border                  # wyłącza ramkę
+</pre><hr><pre>
+set tics out                  # domyślnie jest "in"
+set xtics 0,.5,10             # od 0 do 10 co .5
+set xtics ('a' 1, 'b' 3, 'c' 8)         # ręczne ustawienia
+set xtics auto                # ustawienia domyślne
+unset xtics                   # wiadomo, podobnie ytics, x2tics, y2tics
+</pre><hr>
+
+<h3>TITLE</h3>
+
+<p>Parametr title występuje w kilku różnych kontekstach,
+może odnosić się do różnych części rysunku.
+
+<hr><pre>
+gnuplot&gt; help title
+gnuplot&gt; show title
+</pre><hr><pre>
+set title "Funkcja sinus"     # tytuł rysunku
+
+set key title "Legenda"       # tytuł do legendy
+
+plot sin(x) title "sinus"     # oznaczenie w legendzie
+</pre><hr>
+
+<h3>KEY</h3>
+
+<p>Pojedyńcze wpisy w legendzie mogą być wyłączone w poleceniu
+plot przez notitle lub title "".
+
+<hr><pre>
+gnuplot&gt; help key
+gnuplot&gt; show key
+</pre><hr><pre>
+unset key                     # bez legendy
+
+# set key {on|off} {default}
+# {inside | outside}
+# {lmargin | rmargin | tmargin | bmargin}
+# {above | over | below | under}        # też dozwolone
+# {at &lt;position&gt;}                   # at 1.2,3.4
+# {left | right | center}
+# {top | bottom | center}
+# {vertical | horizontal}     # domyślnie vertical
+# {Left | Right}    # justowanie napisu w legendzie, domyslnie Right
+# {{no}reverse}     # zamiana kolejności napisu i probki linii
+# {{no}invert}      # opis pierwszej linii na końcu legendy
+# {samplen &lt;sample_length&gt;}       # domyślnie 4
+# {spacing &lt;vertical_spacing&gt;}   # domyślnie 1.25
+# {width &lt;width_increment&gt;}
+# {height &lt;height_increment&gt;}
+# {{no}autotitle {columnheader}}  # tylko opisy z title będą widoczne
+# {title "&lt;text&gt;"} {{no}enhanced}
+# {font "&lt;face&gt;,&lt;size&gt;"} {textcolor &lt;colorspec&gt;}
+# {{no}box { {linestyle | ls &lt;line_style&gt;} 
+# | {linetype | lt &lt;line_type&gt;} {linewidth | lw &lt;line_width&gt;}}}
+
+set key at 1,2                # legenda w punkcie (1,2)
+set key outside               # legenda na prawo od rysunku
+set key below                 # legenda pod rysunkiem
+set key box                   # domyślnie jest nobox
+set key box lt 3              # ramka z linetype 3
+set key right bottom
+set key left top
+set key right bottom title "Legenda" box  # tytuł do legendy
+set key default               # powrót do domyślnych ustawień
+</pre><hr>
+
+<h3>ETYKIETY NA OSIACH</h3>
+
+<hr><pre>
+# Przykład.
+set title "Funkcje sin(x) i x^2"
+
+# Etykiety osi.
+set xlabel "x1"
+set x2label "x2"
+set ylabel "y1"
+set y2label "y2"
+
+# Zakresy na osiach.
+set xrange [-3:3]
+set yrange [-2:2]
+set x2range [-1:1]
+set y2range [0:1]
+#set autoscale                # powrót do domyślnych ustawień zakresów
+
+set xtics nomirror
+set ytics nomirror 1   # skok co 1
+set x2tics autofreq   # x2 ma domyslnie nomirror
+#set y2tics .5   # co ile
+set y2tics autofreq  # y2 ma domyslnie nomirror
+
+plot sin(x) axes x1y1, x*x axes x2y2
+</pre><hr>
+
+<h3>ETYKIETY</h3>
+
+<p>Etykiety mają przyporządkowany znacznik (tag), czyli liczbę całkowitą.
+Domyślnie jest ustawiana najniższa niewykorzystana liczba.
+Dzięki znacznikowi możemy dodefiniować parametry etykiety (set label)
+lub usunąć etykietę (unset label).
+Etykiety mogą zostać wczytane z pliku (help labels).
+
+<hr><pre>
+gnuplot&gt; help label
+gnuplot&gt; show label
+</pre><hr><pre>
+# Składnia:
+# set label {&lt;tag&gt;}
+# {"&lt;label text&gt;"}
+# {at &lt;position&gt;}       # at x,y lub at x,y,z
+# {left | center | right}     # domyślnie flush left
+# {norotate | rotate {by &lt;degrees&gt;}}
+# {font "&lt;name&gt;{,&lt;size&gt;}"}
+# {noenhanced}  # wyłączenie trybu enhanced, gdy etykieta ma _ lub ^
+# {front | back}              # przy front dane nie zakryją etykiety
+# {textcolor &lt;colorspec&gt;}
+# {point &lt;pointstyle&gt; {offset x, y} | nopoint}
+# Przy etykiecie może być punkt, pointstyle to zestaw lt, pt, ps.
+# Domyślnie jest nopoint.
+
+set label 1 "Napis 1" at 1,10 center    # domyslnie left
+set label 1 left         # zmiana center na left
+
+set label 2 "Napis 2" at 1,15 right
+set label 2 at 1,17             # będzie w nowym miejscu
+set label 2 rotate by 90
+
+set label 3 "S" at 3,4 center font "Symbol,24"    # symbol Sigma 24pt
+set label 3 "{/Symbol=24 S}" at 3,4 center        # chyba można tak
+
+set label 4 "" at 3,5 point pt 7 ps 0.5   # punkt
+
+unset label 2             # wyłączenie etykiety nr 2
+unset label               # wyłączenie wszystkich etykiet
+</pre><hr>
+
+<h3>STYLE</h3>
+
+<p>Globalne ustawienia można przesłonić ustawieniem w plot
+(np. dla pointsize mnożniki się nie składają).
+
+<hr><pre>
+gnuplot&gt; help style
+gnuplot&gt; show style
+gnuplot&gt; show colornames
+</pre><hr><pre>
+# Globalne ustawienie stylu.
+# Dostępne style: points, lines, linespoints, impulses, dots,
+# steps, fsteps, histeps,
+# boxes (histogram),
+
+set style data points         # domyślne
+set style function lines      # domyślne
+
+# Kolory skojarzone z typami linii.
+# lt 1 (red)
+# lt 2 (green)
+# lt 3 (blue)
+# lt 4 (magenta)
+# lt 5 (cyan)
+# lt 6 (sienna)
+# lt 7 (orange)
+# lt 8 (coral)
+
+# linecolor &lt;colorspec&gt; | lc &lt;colorspec&gt;
+# lc rgbcolor "colorname"     # jedna z nazw wbudowanych (show colornames)
+# lc rgbcolor "#RRGGBB"
+
+# linetype 2 | lt 2           # drugi kolor/typ domyślny prostej
+# linewidth 2 | lw 2          # dwa razy szersza niż domyślna (multiplier)
+# pointtype 3 | pt 3          # trzeci ksztalt domyślny punktu
+# pointsize 0.5 | ps 0.5      # o połowę mniejsze (multiplier)
+
+set linewidth 2               # globalnie
+set pointsize 3               # globalnie
+</pre><hr><pre>
+# Definiowaie stylu wprost w poleceniu plot.
+plot "file1.dat" title "data 1" with lines lt 1 lw 2.0,\
+"file2.dat" title "data 2" with points pt 4 ps 1.5
+</pre><hr><pre>
+# Ustawienie used-defined ls 1 (lc+lt+lw+pt+ps).
+#set style line 1 lc rgb '#0060ad' lt 1 lw 2 pt 8 ps 1.5
+set style line 1 lt 3 lw 2.0 pt 5 ps 1.0
+
+# Ustawienie used-defined ls 2 (lc+lt+lw+pt+ps).
+#set style line 2 lc rgb '#1260ad' lt 2 lw 4 pt 5 ps 1.0 
+set style line 2 lt 1 lw 1.0 pt 4 ps 1.5
+
+# W plot teraz można krótko odwołać się do stylów przez ls.
+plot "file1.dat" title "data 1" with linespoints ls 1,\
+"file2.dat" title "data 2" with points ls 2
+</pre><hr>
+
+<h3>LOGSCALE</h3>
+
+<hr><pre>
+gnuplot&gt; help logscale
+gnuplot&gt; show logscale
+</pre><hr><pre>
+# Składnia:
+# set logscale &lt;axes&gt; &lt;base&gt;
+# Jeżeli nie podamy osi, to dotyczy to wszystkich osi.
+# unset logscale &lt;axes&gt;
+
+# axes - x, x2, y, y2, z, cb
+# base - 10 (default), 2, itp.
+
+set log y 2         # skala log base 2 na osi y
+unset log y
+unset log           # usuwamy logscale ze wszystkich osi
+</pre><hr><pre>
+set logscale xy     # obie osie w skali log
+# prościej:
+#set logscale
+plot [1:10] x*x*x
+</pre><hr>
+
+<h3>SIZE</h3>
+
+<p>Polecenie przydaje się przy trybach polar i multiplot.
+
+<hr><pre>
+# set size {{no}square | ratio r | noratio} {xscale,yscale}
+# square - synonim do "ratio 1"
+# ratio r - podaje się stosunek długości osi y do x
+# xscale,yscale - skala względem canvas
+
+set size square 0.5,0.5       # kwadratowy, pomniejszony
+set size ratio 2              # dwa razy wyższy niż szerszy
+</pre><hr>
+
+<h3>ZADANIE 5.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

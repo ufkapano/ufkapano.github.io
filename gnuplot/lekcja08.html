@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Lekcja 8</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (8) - multiplot</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Gnuplot pozwala na umieszczeniu kilku wykresów w jednej ramce
+(set multiplot), można też do wykresu wstawić mniejszy inset.
+
+<h3>INSET</h3>
+
+<hr><pre>
+# Plik fig81.gnu
+set term pdf enhanced
+set output "fig81.pdf"
+
+set multiplot
+
+set title "Funkcje trygonometryczne"
+set xlabel 'x'
+set ylabel 'y'
+set xrange []
+set yrange [-2:10]
+plot sin(x)
+
+set size 0.4,0.4              # skalowanie względem rozmiaru ramki
+set origin 0.1,0.4            # położenie insetu
+# Lepiej jak inset nie ma title i opisów osi.
+set title ""
+set xlabel ""
+set ylabel ""
+set xrange [-6:6]
+set yrange [-2:4]
+# Można wyczyścić powierzchnię pod inset.
+# clear
+plot cos(x)
+
+unset multiplot
+
+set output                    # zamknięcie pliku 
+</pre><hr>
+
+<h3>KILKA WYKRESÓW W RAMCE</h3>
+
+<hr><pre>
+# Plik fig82.gnu
+set term pdf enhanced
+set output "fig82.pdf"
+
+set multiplot
+
+# Będą dwa wykresy, jeden nad drugim.
+set size 1,0.5                # połowa wysokości ramki
+set origin 0.0,0.5
+plot sin(x)
+
+set size 1,0.5                # można pominąć, bo to powtórzenie
+set origin 0.0,0.0
+plot cos(x)
+
+unset multiplot
+
+set output                    # zamknięcie pliku 
+</pre><hr>
+
+<h3>ZADANIE 8.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>

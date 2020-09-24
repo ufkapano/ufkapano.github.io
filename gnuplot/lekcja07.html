@@ -1,0 +1,145 @@
+<html>
+<head>
+<title>Lekcja 7</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+<hr>
+
+<h1>Korzystanie z programu gnuplot (7) - zapis wyników</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Stworzony wykres możemy zapisać do pliku.
+W tym celu należy zmienić typ wyjścia i podać nazwę pliku wyjściowego.
+
+<hr><pre>
+# Podgląd aktualnych ustawień.
+gnuplot&gt; show terminal               # w skrócie show term
+
+    terminal type is wxt 0
+
+gnuplot&gt; show output
+
+    output is sent to STDOUT
+
+gnuplot&gt; set term                    # dostępne terminale
+
+Available terminal types:
+    canvas  HTML Canvas object
+    ...
+
+gnuplot&gt;
+</pre><hr>
+
+<p>Gnuplot dostarcza dużą liczbę terminali (help term), m.in.
+x11 (ekran), postscript, pdf, png, table (kolumny współrzędnych).
+
+<h3>POSTSCRIPT</h3>
+
+<hr><pre>
+# Plik fig71.gnu
+
+# Składnia:
+# set terminal postscript {&lt;mode&gt;}
+# {enhanced | noenhanced}
+# {color | colour | monochrome}
+# {blacktext | colortext | colourtext}
+# {"&lt;fontname&gt;"} {&lt;fontsize&gt;}
+
+# enhanced - daje możliwość korzystania ze składni LaTeXa
+# mode - landscape, portrait, eps (Encapsulated PostScript), default
+# fontsize is the size of the font in PostScript points (14 default)
+# fontname - Helvetica (default), Times-Roman (brzydkie),
+# Symbol, Symbol-Oblique (symbole matematyczne)
+
+# Ustawienie typu terminala.
+# set term postscript                   # rysunek 10 x 7 cali
+# set term postscript eps               # rysunek 5 x 3.5 cali
+set term postscript eps enhanced 22     # do publikacji
+# set term postscript eps enhanced color
+
+# Ustawienie nazwy pliku rysunku.
+set output "fig71.eps"
+
+plot sin(x)
+
+set output       # zamknięcie pliku 
+</pre><hr>
+
+<h3>POSTSCRIPT ENHANCED</h3>
+
+<p>Jeżeli terminal ma ustawienia postscript enhanced, to można
+korzystać ze specjalnej składni w celu uzyskania pewnych znaków,
+czy efektów specjalnych w stałych napisowych.
+Nawiasy klamrowe ograniczają jakby pewne otoczenie,
+w którym można zagnieżdżać dalsze otoczenia rekurencyjnie.
+
+<pre>
++---------------------+------------------------------------------+
+| Tekst               | Opis                                     |
++---------------------+------------------------------------------+
+| "e^x", "e^{x}"      | indeks górny (jeden znak)                |
+| "10^{-6}"           | w indeksie górnym wiecej niż jeden znak  |
+| "A_{jk}"            | indeks dolny                             |
+| "x@_0^{-3/2}y"      | wyrównanie indeksów, pierwszy krótszy    |
+| "{/Helvetica m}"    | ustawienie typu fontu                    |
+| "{/=12 m}"          | ustawienie rozmiaru fontu domyślnego     |
+| "{/Helvetica=8 m}"  | ustawienie typu i rozmiaru               |
+| "{/Symbol p}=3.14"  | fonty greckie (\pi LaTeXa)               |
+| 'f\{x,y\}'          | znaki specjalne wewnątrz '', (f{x,y})    |
+| "f\\{x,y\\}"        | znaki specjalne wewnątrz ""              |
+| '\^,\_,\@,\&,\\'    | inne znaki specjalne (^,_,@,&amp;,\)         |
++---------------------+------------------------------------------+
+</pre><hr><pre>
+set xtics ('-{/Symbol p}' -pi, '-{/Symbol p}/2' -pi/2,\
+'0' 0, '{/Symbol p}/2' pi/2, '{/Symbol p}' pi)
+
+# Napis LaTeXa \chi_{\alpha \beta}.
+set label 1 '{/Symbol=20 c_{/=15 ab}}' at 1,5 center
+
+# Napis LaTeXa \langle P_2 \rangle.
+#set label 2 '{/Symbol=20 \341} {/=20 P}_{/=15 2} {/Symbol=20 \361}' at 0,5 center
+set label 2 '{/=20 {/Symbol \341} P_{/=15 2} {/Symbol \361}}' at 0,5 center
+
+# Napis LaTeXa \int_0^{\infty} e^x dx.
+set label 3 '{/Symbol=22 \362 @_{/=12 0}^{/=12 \245}} e^x dx' at -3,5
+</pre><hr>
+
+<h3>PDF</h3>
+
+<hr><pre>
+# Plik fig72.gnu
+set term pdf enhanced
+set output "fig72.pdf"
+
+plot sin(x)
+
+set output       # zamknięcie pliku 
+</pre><hr>
+
+<h3>PNG</h3>
+
+<hr><pre>
+# Plik fig73.gnu
+set term png
+set output "fig73.png"
+
+plot cos(x)
+
+set output       # zamknięcie pliku 
+</pre><hr>
+
+
+<h3>ZADANIE 7.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu gnuplot (index)</a>
+
+</body>
+</html>
