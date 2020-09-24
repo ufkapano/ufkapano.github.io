@@ -1,0 +1,351 @@
+<html>
+<head>
+<title>Lekcja 9</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (9) - macierze, wskaźniki do wskaźników</h1>
+
+<h3>ZADANIE 9.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>macierze</em>.
+Utworzyć w nim pliki 
+<em>Makefile</em>,
+<em>main.h</em>,
+<em>main.c</em>,
+<em>wczytaj.c</em>,
+<em>wypisz.c</em>.
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+
+#define max(a,b)         ((a)&lt;(b) ? (b) : (a))
+#define min(a,b)         ((a)&gt;(b) ? (b) : (a))
+
+void wczytaj(int **macierz, int nw, int nk);
+void wypisz(int **macierz, int nw, int nk);
+
+int max_mac(int **macierz, int nw, int nk);
+/* Najwieksza wartosc w macierzy */
+
+int min_mac(int **macierz, int nw, int nk);
+/* Najmniejsza wartosc w macierzy */
+</pre><hr><pre>
+/*
+* main.c
+*
+* Operacje na macierzach.
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+const int NW = 3;
+const int NK = 4;
+int i;
+int a[NW][NK];    /* tu rezerwujemy pamiec na macierz */
+int *b[NW];       /* macierz wskaznikow do wierszy */
+
+/* inicjalizacja wskaznikow */
+for (i = 0; i &lt; NW; ++i)
+    b[i] = a[i];
+wczytaj(b, NW, NK);
+printf("Macierz A (%dx%d)\n", NW, NK);
+wypisz(b, NW, NK);
+return 0;
+}
+</pre><hr><pre>
+/*
+* wczytaj.c
+*/
+
+#include "main.h"
+
+void wczytaj(int **macierz, int nw, int nk) 
+{
+int i, j;
+
+for (i = 0; i &lt; nw; ++i)
+    for (j = 0; j &lt; nk; ++j)
+        macierz[i][j] = i+j;
+return;
+}
+</pre><hr><pre>
+/*
+* wypisz.c
+*/
+
+#include "main.h"
+
+void wypisz(int **macierz, int nw, int nk) 
+{
+int i, j;
+
+for (i = 0; i &lt; nw; ++i) {
+    for (j = 0; j &lt; nk; ++j)
+        printf("%d\t", macierz[i][j]);
+    printf("\n");
+}
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Stworzyć pliki z brakującymi funkcjami.
+
+<h3>ZADANIE 9.2</h3>
+
+<p>W katalogu <em>macierze</em> zmienić program tak, aby
+pytał użytkownika o rozmiary macierzy, a następnie dynamicznie
+rezerwował odpowiednią pamięć.
+Można wykorzystać poniższy kod.
+
+<hr><pre>
+int nw, nk;   /* liczba wierszy i kolumn */
+int i;
+int **b;   /* macierz wskaznikow do wierszy */
+
+b = (int **) malloc(nw * sizeof(int *));
+for (i = 0; i &lt; nw; ++i)
+    b[i] = (int *) malloc(nk * sizeof(int));
+</pre><hr>
+
+<p>Program powinien sprawdzić, czy powiodła się alokacja pamięci.
+Alokację pamięci na macierz oraz zwolnienie pamięci
+warto zapisać w osobnych funkcjach, np.
+
+<hr><pre>
+int ** alloc_mac(int nw, int nk);
+void free_mac(int **a, int nw, int nk);
+</pre><hr>
+
+<h3>ZADANIE 9.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>getlines</em>.
+Utworzyć w nim pliki 
+<em>Makefile</em>,
+<em>main.h</em>,
+<em>main.c</em>,
+<em>getlines.c</em>,
+<em>writelines.c</em>,
+<em>swap.c</em> i
+<em>quicksort.c</em>.
+
+<p>Ilustracja działania funkcji getlines().
+
+<hr><pre>
+Znaki wczytane ze stdin.
++---+---+---+---+---+---+
+| a | a | \n| b | \n|EOF|
++---+---+---+---+---+---+
+
+Znaki wpisane do bufora
++---+---+---+---+---+---+---+
+| a | a | \n| \0| b | \n| \0|
++---+---+---+---+---+---+---+
+</pre><hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+
+#define max(a,b)         ((a)&lt;(b) ? (b) : (a))
+#define min(a,b)         ((a)&gt;(b) ? (b) : (a))
+
+#define DEBUG
+
+int getlines(char *bufor, int limit);
+void writelines(char *lineptr[], int nl);
+void swap(char *v[], int i, int j);
+void quicksort(char *v[], int left, int right);
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+const int BUFSIZE = 80;
+const int MAXLINES = 10;
+char bufor[BUFSIZE];     /* tu sa pamietane wiersze */
+char *lineptr[MAXLINES]; /* tablica wskaznikow do wierszy */
+int nl;                  /* liczba wczytanych wierszy */
+int i, j;
+
+nl = getlines(bufor, BUFSIZE);
+#ifdef DEBUG
+    printf("main: po wczytaniu wierszy nl wynosi %d\n",nl);
+#endif
+if (nl == 0)           /* puste wejscie */
+    return(0);
+if (nl &gt; MAXLINES)
+    printf("main: za duzo wierszy, czesc bedzie odrzucona\n");
+nl = min(nl,MAXLINES);  /* nie mozna przetwarzac za duzo wierszy */
+/* ustawianie wskaznikow */
+lineptr[0] = bufor;
+for (i = 1, j = 0; i &lt; nl; ++j) {
+    if (bufor[j] == '\0') {
+        lineptr[i] = &bufor[j+1];
+        ++i;
+    }
+}
+writelines(lineptr, nl);      /* wiersze przed sortowaniem */
+quicksort(lineptr, 0, nl-1);
+writelines(lineptr, nl);       /* wiersze posortowane */
+printf("\nLiczba przetworzonych wierszy: %d\n", nl);
+return 0;
+}
+</pre><hr><pre>
+/*
+* getlines.c
+*
+* Wczytywanie wierszy do bufora.
+* Funkcja zwraca liczbe wczytanych wierszy.
+* Wczytywanie zostanie przerwane po wypelnieniu bufora.
+*/
+
+#include "main.h"
+
+int getlines(char *bufor, int limit) 
+{
+int nl;   /* liczba wczytanych wierszy */
+int c, i;
+
+for (nl = i = 0; (i &lt; limit-1) &amp;&amp; (c = getchar()) != EOF; ++i) {
+    bufor[i] = c;
+#ifdef DEBUG
+    printf("%d %c %d\n", i, c, nl);
+#endif
+    if (c == '\n') {
+        ++nl;   /* wierszy tyle, ile znakow '\n' */
+        ++i;
+        bufor[i] = '\0';    
+#ifdef DEBUG
+    printf("%d \\0 %d\n", i, nl);
+#endif
+    }
+}
+return nl;
+}
+</pre><hr><pre>
+/*
+* writelines.c
+*
+* Wypisanie wierszy na wyjscie.
+*/
+
+#include "main.h"
+
+void writelines(char *lineptr[], int nl) 
+{ 
+int i;
+
+for (i = 0; i &lt; nl; ++i)
+    printf("%s\n", lineptr[i]);
+return;
+}
+</pre><hr><pre>
+/*
+* quicksort.c
+*/
+
+#include "main.h"
+
+/*
+* Porzadkowanie tekstow v[left]...v[right] rosnaco w porzadku alfabetycznym.
+* Korzystamy z pomocniczej funkcji swap().
+*/
+void quicksort(char *v[], int left, int right) 
+{ 
+int i, last;
+
+if (left &gt;= right)  /* nic nie rob, jesli tablica zawiera */
+    return;     /* mniej niz dwa elementy */
+swap(v, left, (left+right)/2);  /* element podzialu */
+last = left;                  /* przesun do v[0] */
+for (i = left+1; i &lt;= right; ++i)  /* podzial */
+    if (strcmp(v[i], v[left]) &lt; 0) { /* porownanie tekstow */
+        ++last;
+        swap(v, last, i);
+    }
+swap(v, left, last);    /* odtworz element podzialu */
+quicksort(v, left, last-1);
+quicksort(v, last+1, right);
+return;
+}
+</pre><hr><pre>
+/*
+* swap.c
+*
+* Zamiana miejscami wskaznikow v[i] i v[j].
+*/
+
+#include "main.h"
+
+void swap(char *v[], int i, int j) 
+{ 
+char *tmp;
+
+tmp = v[i];
+v[i] = v[j];
+v[j] = tmp;
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Poprawić funkcję <em>getlines()</em>, aby nie obcinała końcowego
+wiersza, który nie jest zakończony znakiem nowego wiersza.
+Zmienić funkcję <em>quicksort()</em>, aby wiersze były sortowane
+nie alfabetycznie, ale pod względem długości.
+
+<p>Przygotować funkcje porównujące, aby można było zastosować
+biblioteczną funkcję <em>qsort()</em>.
+
+<hr><pre>
+int cmp_str_ptr(const void *data1, const void *data2)
+{
+char **s1 = (char **) data1;
+char **s2 = (char **) data2;
+return strcmp(*s1, *s2);
+}
+</pre><hr><pre>
+int cmp_str_len(const void *data1, const void *data2)
+{
+char **s1 = (char **) data1;
+char **s2 = (char **) data2;
+return strlen(*s1) - strlen(*s2);
+}
+</pre><hr>
+
+<p>Odpowiednie wywołania mają postać:
+
+<pre>
+qsort(lineptr, nl, sizeof(char *), cmp_str_ptr);
+qsort(lineptr, nl, sizeof(char *), cmp_str_len);
+</pre>
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

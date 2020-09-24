@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Lekcja 15</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (15) - dodatki</h1>
+
+<!--
+
+<h3>ZADANIE ()</h3>
+
+<hr><pre>
+</pre><hr>
+
+-->
+
+<h3>ZADANIE (Oualline, str. 145; wystarczy znajomość pętli)</h3>
+
+<p>W katalogu <em>kratki</em> stworzyć program do wyświetlania
+prostokąta składającego się pól o wymiarach 1x3 (2x5) znaków.
+Przykładowy prostokąt składający się 2x4 pól ma postać:
+
+<pre>
++---+---+---+---+
+|   |   |   |   |
++---+---+---+---+
+|   |   |   |   | 
++---+---+---+---+
+</pre>
+
+<h3>ZADANIE (Oualline str. 146)</h3>
+
+<p>Napisz program, który zamienia liczby na tekst.
+Na przykład wynikiem konwersji liczby <strong>-234</strong>
+będzie tekst <strong>minus dwa trzy cztery</strong>.
+
+<h3>ZADANIE (zamienić liczbę na napis, dodać przecinek i PLN)</h3>
+
+<p>Napisać funkcję, która zamieni grosze na złotówki 
+
+<pre>
+void grtopln(char s[], long grosze);
+/* Przykladowe wyniki zamiany:
+0,03 PLN   12,43 PLN   -8,07 PLN
+*/
+</pre>
+
+<h3>ZADANIE (poprawne wczytywanie napisów)</h3>
+
+<hr><pre>
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#define MAXLINE  80
+
+int main(void) 
+{
+char imie[MAXLINE/2];           /* imie pracownika */
+char nazwisko[MAXLINE/2];         /* nazwisko pracownika */
+/* Imie i nazwisko (po polaczeniu)*/
+char full[MAXLINE];
+
+printf("Podaj imie: ");
+fgets(imie, sizeof(imie), stdin);
+/* obcina ostatni znak '\n' */
+imie[strlen(imie)-1] = '\0';
+
+printf("Podaj nazwisko: ");
+fgets(nazwisko, sizeof(nazwisko), stdin);
+/* obcina ostatni znak '\n' */
+nazwisko[strlen(nazwisko)-1] = '\0';
+
+strcpy(full, imie);
+strcat(full, " ");
+strcat(full, nazwisko);
+
+printf("Imie i nazwisko brzmi: %s\n", full);
+return 0;
+}
+</pre><hr>
+
+<p>Zastanowić się nad funkcją, która będzie dynamicznie rezerwować
+pamięć na przychodzące znaki, a po wciśnięciu <em>Enter</em>
+przez użytkownika zwróci wskaźnik do obszaru pamięci z napisem.
+Należy poprawnie obsłużyć możliwe błędy alokacji pamięci.
+
+<h3>ZADANIE (przykład menu znakowego)</h3>
+
+<hr><pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+#define TRUE   1
+#define FALSE  0
+#define MAXLINE 80
+
+int main(void) 
+{
+int koniec = FALSE; /* zmienna sterujaca zakonczeniem programu */
+char line[MAXLINE];        /* wczytany wiersz */
+
+/* Menu pokaze sie co najmniej raz */
+do {
+system("clear");
+printf("\n\tMENU PROGRAMU\n\n");
+printf("\ta) Wyjscie z programu\n");
+printf("\tb) Pomoc\n");
+printf("\tc) Uaktualnienie bazy danych\n");
+printf("\td) Zapytania do bazy danych\n\n");
+printf("\tWybierz opcje: ");
+/* Wczytanie litery podanej przez uzytkownika.
+Od razu pobierany jest tez \n i strumien stdin jest czysty */
+fgets(line, sizeof(line), stdin);
+/* Wersja z "if" */
+if (line[0] == 'a') {
+    printf("Wybrano (a), czyli koniec...\n");
+    koniec = TRUE; 
+} else if (line[0] == 'b') {
+    printf("Jeszcze nie ma pomocy...\n");
+} else if (line[0] == 'c') {
+    printf("Nie mozna uaktualnic bazy danych...\n");
+} else if (line[0] == 'd') {
+    printf("Nie mozna tworzyc zapytan do bazy danych...\n");
+} else {
+    printf("Nie ma takiej opcji...\n");
+}
+printf("Nacisnij [ Enter ] aby kontynuowac...");
+fgets(line, sizeof(line), stdin);
+} while (koniec == FALSE); /* powtarzaj dopoki to jest prawda */
+
+return 0;
+}
+</pre><hr>
+
+<p>Zamienić opcje literowe (a-d) na cyfrowe (1-4).
+
+<p>Poprawić program tak, aby nie korzystać ze zmiennej <em>koniec</em>.
+
+<h3>ZADANIE (poprawne wczytywanie liczb)</h3>
+
+<hr><pre>
+#include &lt;stdio.h&gt;
+#define MAXLINE  80
+
+int main(void) 
+{
+int liczba;
+char line[MAXLINE];        /* wczytany wiersz z stdin */
+
+printf("Podaj liczbe int: ");
+fgets(line, sizeof(line), stdin);
+sscanf(line, "%d", &amp;liczba);
+printf("Podales liczbe %d\n", liczba);
+return 0;
+}
+</pre><hr>
+
+<p>Podany sposób powoduje oczyszczenie strumienia wejściowego
+(dla wierszy krótszych od MAXLINE), ale jeżeli użytkownik
+nie podał liczby, to zmienna liczba będzie zawierać śmieci.
+Trzeba pamiętać, że podanie przez użytkownika liczby w formacie
+float lub double zwykle powoduje złą interpretację,
+np. po podaniu "1e2" program wczyta 1, a nie 100.
+Jeżeli chcemy prosić do skutku użytkownika o podanie poprawnej
+liczby, to wygodnie jest stworzyć osobną funkcję.
+
+<hr><pre>
+#define MAXLINE  80
+
+int pobierz_int(void)
+{
+int liczba;
+char line[MAXLINE];        /* wczytany wiersz */
+
+while (1) {
+    /* Pobieramy wiersz do tablicy line[]. */
+    fgets(line, sizeof(line), stdin);
+    if (sscanf(line, "%d", &amp;liczba) == 1)
+        break;
+    printf("To nie jest int.\nPodaj int: ");
+}
+return liczba;
+}
+</pre><hr>
+
+<p>W analogiczny sposób można stworzyć funkcje do pobierania
+liczb float lub double. Oczywiście po pobraniu liczby warto
+jeszcze sprawdzić w programie, czy jest ona sensowna, 
+np. czy wiek osoby jest przedziale [0, 150], itp.
+
+<h3>ZADANIE (liczby przypadkowe)</h3>
+
+<hr><pre>
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;   /* system(), rand(), srand() */
+#include &lt;time.h&gt;    /* time(), clock()   */
+
+#define LICZBA   8
+
+int losuj(int a, int b)
+{ /* zwraca losowana liczbe z przedzialu [a,b-1] typu calkowitego */
+return a + (int) (rand()*(float)(b-a)/(RAND_MAX+1.0));
+}
+
+int main(void) 
+{  /* poprawna deklaracja */
+int i;
+
+system("clear");
+srand(time(NULL));
+printf("Liczby przypadkowe w przedziale [0,1)\n");
+for (i = 0; i &lt; 5; ++i) {
+    system("sleep 1s");
+    printf("%f\n", rand()/(RAND_MAX+1.0));
+}
+printf("Liczby calkowite z przedzialu [%d,%d]\n", 1, LICZBA);
+for (i = 0; i &lt; 10; ++i) {
+    printf("%d ",losuj(1, LICZBA+1));
+}
+printf("\n");
+return 0;
+}
+</pre>
+
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

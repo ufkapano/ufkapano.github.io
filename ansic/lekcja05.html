@@ -1,0 +1,495 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (5) - tablice, stringi</h1>
+
+<h3>ELASTYCZNA TABLICA</h3>
+
+<p>Standard ISO C90 nie zezwala na definiowanie tablic o rozmiarze,
+który jest zmienną, a nie stałą.
+Bardziej elastyczne tablice potrzebne są m.in. gdy:
+(1) tworzymy tablicę o rozmiarze określonym w czasie wykonywania,
+(2) tworzymy tablicę o dużym rozmiarze.
+Za pomocą jawnej alokacji pamięci możemy w języku C ominąć
+ograniczenie stałego rozmiaru tablicy.
+
+<hr><pre>
+#include &lt;stdlib.h&gt;   /* malloc(), calloc() */
+#include &lt;string.h&gt;   /* memset() */
+
+#define MAXLINE  80
+
+int n;  /* dynamiczny rozmiar tablicy jednowymiarowej */
+int *tablica;   /* wskaznik do poczatku tablicy */
+char line[MAXLINE];
+
+/* Wczytanie rozmiaru tablicy.  */
+printf("Podaj rozmiar tablicy: ");
+fgets(line, sizeof(line), stdin);
+sscanf(line, "%d", &amp;n);
+
+/* Alokacja pamięci na tablicę.  */
+
+tablica = (int *) malloc(n * sizeof(int));
+
+/* malloc() NIE inicjalizuje pamięci zerami.
+Można od razu wymusić inicjalizację zerami:
+tablica = (int *)calloc(n, sizeof(int));
+Możemy też ręcznie wstawić zera do danego obszaru
+pamięci (funkcja memset jest bardzo szybka):
+memset(tablica, '\0', n*sizeof(int));
+*/
+if (tablica == NULL) {
+    fprintf(stderr, "Error: brakuje pamieci\n");
+    exit(1);
+}
+/* Zwolnienie pamięci. */
+free(tablica);
+tablica = NULL;   /* dobry zwyczaj */
+</pre><hr>
+
+<h3>WCZYTYWANIE NAPISÓW</h3>
+
+<p>Zastosowanie funkcji scanf() - brak kontroli nad wielkością
+wczytywanego napisu. 
+Funkcja scanf() jako granice napisu przyjmuje białe znaki.
+Problem: czytamy tylko jedno pole/słowo;
+w stdin ZAWSZE zostaje znak nowej linii i następne słowa.
+
+<hr><pre>
+#define MAXLINE 80
+char imie[MAXLINE];
+scanf("%s", line);
+</pre><hr>
+
+<p>Zastosowanie fgets() [kontrola ilości wczytywanych znaków;
+wczytujemy też znak końca linii, jeżeli się zmieści]
+i ręczne usuwanie znaku nowej linii [ale jeżeli znak nowej linii
+nie zmieścił się w tablicy, to usuniemy czarny znak na końcu].
+Problem: w stdin mogą zostać nieprzeczytane znaki, 
+jeżeli się nie zmieszczą w macierzy.
+
+<hr><pre>
+#define MAXLINE 80
+char imie[MAXLINE];
+fgets(imie, sizeof(imie), stdin);
+imie[strlen(imie)-1] = '\0';   /* obcinamy '\n' */
+</pre><hr>
+
+<p>Zastosowanie fgets() [kontrola ilości wczytywanych znaków]
+do wczytywania znaków do tymczasowej macierzy,
+a następnie bezpieczne czytanie jednego słowa za pomocą sscanf()
+Problem: w stdin mogą zostać nieprzeczytane znaki, 
+jeżeli się nie zmieszczą w macierzy.
+
+<hr><pre>
+#define MAXLINE 80
+char line[MAXLINE];  /* tymczasowa macierz */
+char imie[MAXLINE];
+fgets(line, sizeof(line), stdin);
+sscanf(line, "%s", imie);  /* to już jest bezpieczne */
+</pre><hr>
+
+<p>Bardziej elastyczne rozwiązanie to funkcja wczytująca całą linię
+do dynamicznego bufora, który powiększa się w czasie wczytywania
+znaków. Znak końca wiersza '\n' jest również wczytywany,
+a cały napis jest zakończony znakiem '\0'.
+W razie niepowodzenia z alokacją pamięci funkcja zwraca NULL.
+
+<hr><pre>
+#include &lt;stdlib.h&gt;
+char *read_string(void)
+{
+int i, c;
+int size = 2; /* aktualny rozmiar bufora */
+char *p, *q;   /* bufory na dane */
+
+p = (char *) malloc(size * sizeof(char));  /* poczatkowy bufor */
+if (p == NULL) {
+    return NULL;
+}
+i = 0;
+while ((c = fgetc(stdin)) != EOF) {
+        p[i] = c;
+    ++i;
+        if (i == size) {
+        size *= 2;
+                q = realloc(p, size*sizeof(char));
+        if (q == NULL) {
+            free(p);  /* zwalniamy to co juz mamy */
+            return NULL;
+        } else {
+            p = q;
+        }
+    }
+    if (c == '\n') break;   /* dla bezpieczenstwa na koncu po realloc() */
+}
+p[i] = '\0';
+return p;
+}
+/* Korzystanie z funkcji
+char *napis;
+napis = read_string();
+...
+free(napis);   Zwalniamy pamięć
+napis = NULL;   Dobry zwyczaj
+*/
+</pre><hr>
+
+<h3>ZADANIE 5.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>wektory</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>main.c</em> postaci:
+
+<hr><pre>
+/*
+* main.c
+*
+* Program ilustrujacy korzystanie z tablic. 
+*/
+
+#include &lt;stdio.h&gt;
+
+void wczytaj(int v[], int n) 
+{ 
+int i;
+
+for (i = 0; i &lt; n; ++i) {
+    printf("Podaj kolejny element tablicy: ");
+    scanf("%d", &amp;v[i]);
+}
+return;
+}
+
+void wypisz(int v[], int n) 
+{ 
+int i;
+
+for (i = 0; i &lt; n; ++i)
+    printf("v[ %d ]= %d\n", i, v[i]);
+return;
+}
+
+int main(void) 
+{
+const int N = 5;
+int tablica[N];
+
+wczytaj(tablica, N);
+printf("\nPodales nastepujace liczby:\n");
+wypisz(tablica, N);
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. 
+
+<p>Zamiast wczytywać elementy macierzy, wypełnić ją kolejnymi
+liczbami całkowitymi (kolejnymi potęgami dwójki,
+wartościami silni, liczbami Fibonacciego).
+
+<h3>ZADANIE 5.2</h3>
+
+<p>W programie z poprzedniego zadania wszystkie funkcje umieścić
+w osobnych plikach i zmodyfikować plik <em>Makefile</em>.
+
+<p>Poprawić program dopisując następujące funkcje:
+
+<ul>
+<li>do obliczania sumy elementów w tablicy,
+<li>do znajdowania najmniejszej liczby w tablicy,
+<li>do znajdowania najwiekszej liczby w tablicy,
+<li>odwracającą kolejność liczb w tablicy.
+</ul>
+
+<p>Deklaracje funkcji powinny mieć postać:
+
+<hr><pre>
+int suma(int v[], int n);
+int minimum(int v[], int n);
+int maksimum(int v[], int n);
+void odwracanie(int v[], int n);
+</pre><hr>
+
+<p>Rozważyć iteracyjne i rekurencyjne wersje funkcji.
+
+<h3>ZADANIE 5.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>sortowanie</em>.
+Utworzyć w nim pliki 
+<em>bubblesort.c</em> i <em>shellsort.c</em>
+z funkcjami służącymi do sortowania tablic.
+
+<hr><pre>
+/*
+* bubblesort.c
+*
+* Sortowanie tablicy metoda babelkowa (v[] rosnaco).
+*/
+
+#include "main.h"
+
+void bubblesort(int v[], int n) 
+{
+int i, j, tmp;
+
+for (i = 1; i &lt; n; ++i)
+    for (j = 1; j &lt; n; ++j)
+        if (v[j-1] &gt; v[j]) {
+            tmp = v[j-1];
+            v[j-1] = v[j];
+            v[j] = tmp;
+        }
+return;
+}
+</pre><hr><pre>
+/*
+* shellsort.c
+*
+* Porzadkowanie v[] rosnaco.
+* Autor algorytmu: D. L. Shell (1959).
+* W fazie poczatkowej porownuje sie elementy oddalone od siebie,
+* a nie sasiadujace, jak w prostych metodach zamiany.
+* Celem jest wyeliminowanie duzego balaganu, aby w pozniejszych
+* fazach bylo mniej do zrobienia. Odlegosci miedzy porownywanymi
+* elementami zmniejszaja się stopniowo do 1 i od tej chwili
+* mamy metode sasiednich zamian. 
+*/
+
+#include "main.h"
+
+void shellsort(int v[], int n) 
+{
+int gap;       /* odstep pomiedzy porownywanymi elementami */
+int i, j, tmp;
+
+for (gap = n/2; gap &gt; 0; gap /= 2)
+    for (i = gap; i &lt; n; ++i)   /* wzdluz elementow tablicy */
+/* porownywanie pary elementow oddalonych od siebie o "gap" */
+        for (j = i-gap; j &gt;= 0; j -= gap)
+            if (v[j] &gt; v[j+gap]) {
+                tmp = v[j];
+                v[j] = v[j+gap];
+                v[j+gap] = tmp;
+            }
+return;
+}
+</pre><hr>
+
+<p>Stworzyć odpowiednie pliki <em>main.c</em>, <em>main.h</em>
+i <em>Makefile</em>, aby powstał program sortujący tablice
+jedną z dostępnych metod.
+Wczytywanie tablicy i wypisywanie zawartości tablicy
+zapisać jako osobne funkcje.
+
+<p>W programach bardziej zaawansowanych do sortowania można
+wykorzystać biblioteczną funkcję <em>qsort()</em> po zadeklarowaniu
+<pre>
+#include &lt;stdlib.h&gt;
+
+# Sortowanie przez qsort().
+qsort(v, N, sizeof(int), cmp_int);
+</pre>
+
+<p>Potrzebna jest dodatkowa funkcja porównująca liczby całkowite.
+
+<hr><pre>
+/*
+* cmp_int.c
+*/
+
+#include "main.h"
+
+int cmp_int(const void *data1, const void *data2) 
+{
+int *d1 = (int *) data1;
+int *d2 = (int *) data2;
+
+if (*d1 &lt; *d2)
+    return -1;
+else if (*d1 &gt; *d2)
+    return 1;
+else
+    return 0;
+}
+</pre><hr>
+
+<h3>ZADANIE 5.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>getline</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>getline.c</em> postaci:
+
+<hr><pre>
+/*
+* getline.c
+*
+* Program czyta zbior wierszy i wypisuje najdluzszy. K i R str. 53.
+*/
+
+#include &lt;stdio.h&gt;
+
+int getline(char napis[], int limit);
+void copy(char dest[], char source[]);
+
+int main(void) 
+{
+const int MAXLINE = 80;  /* dozwolona dlugosc wiersza */
+int len;                 /* dlugosc biezacego wiersza */
+int best;                /* poprzednia maksymalna dlugosc */
+char line[MAXLINE];      /* biezacy wiersz z wejscia */
+char bestline[MAXLINE];  /* przechowywany maksymalny wiersz */
+
+best = 0;
+while ((len = getline(line, MAXLINE)) &gt; 0)
+    if (len &gt; best) {
+        best = len;
+        copy(bestline, line);
+    }
+if (best &gt; 0)     /* znaleziono wiersz */
+    printf("%s", bestline);
+printf("\n%d\n", best);
+return 0;
+}
+
+/*
+* Wczytuje wiersz do s[], podaje jego dlugosc. 
+* Wczytywanie bedzie przerwane po wypelnieniu tablicy.
+*/
+int getline(char napis[], int limit) 
+{
+int c, i;
+
+for (i = 0; (i &lt; limit-1) &amp;&amp; (c = fgetc(stdin)) != EOF 
+    &amp;&amp; (c != '\n'); ++i)
+    napis[i] = c;
+if (c == '\n') {
+    napis[i] = c;
+    ++i;
+}
+napis[i] = '\0';
+return i;
+}
+
+/* Przepisuje source[] do dest[]. */
+/* dest[] musi byc dostatecznie duze. */
+void copy(char dest[], char source[]) 
+{
+int i;
+
+i = 0;
+while ((dest[i] = source[i]) != '\0')
+    ++i;
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. 
+
+<p>Poprawić funkcję <em>getline()</em> tak, aby program zawsze
+poprawnie wypisywał rozmiar dowolnie długich wierszy i tylko
+tyle tekstu, ile jest możliwe.
+
+<h3>ZADANIE 5.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>komentarz</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>komentarz.c</em> 
+z programem usuwającym wszystkie komentarze z dowolnego
+programu w języku C. Należy pamiętać o właściwym traktowaniu
+stałych znakowych i napisowych.
+Komentarze języka C nie mogą być zagnieżdżone.
+
+<h3>ZADANIE 5.6</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>napisy</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em>, <em>stringlen.c</em> i <em>reverse.c</em> postaci:
+
+<hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+char zdanie[] = "abcdefgh"; /* inicjalizowanie tablicy znakowej */
+
+printf("%s\n", zdanie);
+reverse(zdanie);
+printf("%s\n", zdanie);
+return 0;
+}
+</pre><hr><pre>
+/*
+* stringlen.c
+*
+* Funkcja zwracajaca dlugosc stringu. K i R str. 65.
+*/
+
+#include "main.h"
+
+int stringlen(char s[]) 
+{
+int i = 0;
+
+while (s[i] != '\0')
+    ++i;
+return i;
+}
+</pre><hr><pre>
+/*
+* reverse.c
+*
+* Funkcja odwracajaca napis. K i R str. 93.
+*/
+
+#include "main.h"
+
+void reverse(char s[]) 
+{
+int znak, i, j;
+
+for (i = 0, j = stringlen(s)-1; i &lt; j; ++i, --j) {
+    znak = s[i];
+    s[i] = s[j];
+    s[j] = znak;
+}
+return;
+}
+</pre><hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+
+int stringlen(char s[]);
+
+void reverse(char s[]);
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Poprawić program, aby wypisywał komunikaty informacyjne.
+
+<p>Poprawić program, aby prosił użytkownika o podanie napisu.
+W tym wypadku należy wcześniej ustalić rozmiar tablicy zdanie.
+Zbadać ograniczenia wywołania scanf("%s", zdanie).
+Zbadać, co mówią o wielkości napisu funkcje stringlen()
+i sizeof().
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

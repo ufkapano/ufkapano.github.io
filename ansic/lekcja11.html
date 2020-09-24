@@ -1,0 +1,826 @@
+<html>
+<head>
+<title>Lekcja 11</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (11) - listy powiązane pojedyńczo</h1>
+
+<h3>ZADANIE 11.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>listy1int</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy - listy powiązane pojedyńczo.
+* Elementy listy mogą się powtarzać.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ elementow trzymanych na liscie */
+typedef int Cargo;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+/* definicja struktury */
+struct node {
+    Cargo data;    /* dane elementu */
+    struct node *next; /* wskaznik do nastepnego elementu */
+};
+typedef struct node Node;
+
+int cmp_cargo(Cargo a, Cargo b);
+/* Porownywanie elementow */
+
+bool add_head(Node **head_ptr, Cargo item);
+/* Dodanie elementu na poczatek listy */
+
+bool add_list(Node **head_ptr, Cargo item);
+/* Wstawienie elementu do listy (lista posortowana) */
+
+bool find_list(Node *head, Cargo item);
+/* Szukanie elementu na liscie */
+
+void print_list(Node *head);
+/* Wypisanie zawartosci listy */
+
+int count_list(Node *head);
+/* Zliczenie dlugosci listy */
+
+bool del_head(Node **head_ptr);
+/* Usuniecie elementu z poczatku listy */
+
+bool del_list(Node **head_ptr, Cargo item);
+/* Usuniecie danego elementu listy */
+
+#define is_empty(head)  ((head == NULL) ? TRUE : FALSE)
+/* bool is_empty(Node *head); */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+/* Inicjalizujemy pusta liste, wskaznik head jest lokalny */
+Node *head = NULL;
+add_list(&amp;head, 11);
+add_list(&amp;head, 33);
+add_list(&amp;head, 22);
+print_list(head);
+while (!is_empty(head)) {
+    del_head(&amp;head);
+    printf("Skracam liste...\n");
+}
+return 0;
+}
+</pre><hr><pre>
+/*
+* cmp_cargo.c
+*/
+
+#include "main.h"
+
+int cmp_cargo(Cargo a, Cargo b) 
+{
+if (a &lt; b)
+    return -1;
+else if (a &gt; b)
+    return 1;
+else
+    return 0;
+}
+</pre><hr><pre>
+/*
+* add_head.c
+*/
+
+#include "main.h"
+
+bool add_head(Node **head_ptr, Cargo item) 
+{
+Node *new_item;    /* wskaznik do nowej struktury na liscie */
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;            /* brak pamieci */
+new_item-&gt;data = item;   /* wstawienie liczby do pola struktury */
+new_item-&gt;next = *head_ptr;   /* dawny pierwszy bedzie nastepnym */
+*head_ptr = new_item;   /* wskaznik head teraz ma pokazywac na nowa strukture */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* add_list.c
+*
+* Kod umieszczajacy na liscie nowy element.
+* Lista bedzie od razu posortowana.
+*/
+
+#include "main.h"
+
+bool add_list(Node **head_ptr, Cargo item) 
+{
+Node *before;   /* przed punktem wstawienia */
+Node *after;   /* za punktem wstawienia */
+Node *new_item;    /* wskaznik do nowej struktury na liscie */
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;        /* brak pamieci */
+new_item-&gt;data = item; /* wstawienie liczby do pola struktury */
+before = NULL;
+after = *head_ptr;  /* tu moze byc NULL! */
+while (after != NULL &amp;&amp; cmp_cargo(after-&gt;data, item) &lt; 0) {
+    before = after;  /* przesuwamy widelki */
+    after = after-&gt;next;
+}
+if (before == NULL) { /* jestesmy przed poczatkiem listy */
+    new_item-&gt;next = *head_ptr;
+    *head_ptr = new_item; /* nowy poczatek listy */
+} else { /* jestesmy w glebi listy, moze na koncu */
+    new_item-&gt;next = before-&gt;next;
+    before-&gt;next = new_item;
+}
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* del_head.c
+*
+* Usuwanie elementu z poczatku listy.
+*/
+
+#include "main.h"
+
+bool del_head(Node **head_ptr) 
+{
+/* wskaznik do nowej struktury na liscie */
+Node *del_item; 
+
+if (*head_ptr == NULL)
+    return FALSE;        /* lista jest juz pusta */
+del_item = *head_ptr;       /* zapamietuje dawny poczatek listy */
+*head_ptr = del_item-&gt;next; /* nowy poczatek to nastepny element */
+free(del_item);          /* zwalniam pamiec starego poczatku */
+del_item = NULL;     /* dobry zwyczaj */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* del_list.c
+*/
+
+#include "main.h"
+
+bool del_list(Node **head_ptr, Cargo item) 
+{
+Node *before; /* wskaznik do struktury na liscie */
+Node *current; /* wskaznik do struktury na liscie */
+
+before = NULL;
+current = *head_ptr;
+while (current != NULL &amp;&amp; cmp_cargo(current-&gt;data, item) != 0) {
+    before = current;
+    current = current-&gt;next;
+}
+if (current == NULL) {
+    return FALSE;  /* nie znalazl i nie skasowal */
+} else if (before == NULL) { /* jestesmy na poczatku listy */
+    *head_ptr = current-&gt;next; /* przesuwamy poczatek listy */
+    free(current);    /* zwalniam pamiec */
+    current = NULL;   /* dobry zwyczaj */
+    return TRUE;
+} else { /* jestesmy w srodku listy */
+    before-&gt;next = current-&gt;next;
+    free(current);
+    current = NULL;
+    return TRUE;
+}
+}
+</pre><hr><pre>
+/*
+* find_list.c
+*/
+
+#include "main.h"
+
+bool find_list(Node *head, Cargo item) 
+{
+Node *current; /* aktualnie przeszukiwana struktura */
+
+current = head;          /* zaczynamy szukac od poczatku */
+while ((current != NULL) &amp;&amp; (cmp_cargo(current-&gt;data, item) != 0))
+    current = current-&gt;next;
+return ( (current == NULL) ? FALSE : TRUE );
+}
+</pre><hr><pre>
+/*
+* count_list.c
+*/
+
+#include "main.h"
+
+int count_list(Node *head) 
+{
+Node *current; /* biezaca struktura */
+int counter = 0;       /* licznik */
+
+current = head;
+while (current != NULL) {
+    ++counter;
+    current = current-&gt;next;
+}
+return counter;
+}
+</pre><hr><pre>
+/*
+* print_list.c
+*/
+
+#include "main.h"
+
+void print_list(Node *head) 
+{
+Node *current; /* biezaca struktura */
+
+printf("Dlugosc listy: %d ", count_list(head));
+printf("Zawartosc listy:\n");
+current = head;  /* zaczynamy od poczatku */
+while (current != NULL) {
+    printf("%d\n", current-&gt;data);
+    current = current-&gt;next;
+}
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Dopisać w funkcji <em>main()</em> kod sprawdzający, czy nie wystąpiły błędy.
+Sprawdzić, czy program działa poprawnie po zmianie typu Cargo na float.
+
+<h3>ZADANIE 11.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>listy1char</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy - listy powiązane pojedyńczo.
+* Elementy listy mogą się powtarzać.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+/* typ elementow trzymanych na liscie */
+typedef char * Cargo;
+
+/* definicja struktury */
+struct node {
+    char data[30];    /* dane elementu */
+    struct node *next; /* wskaznik do nastepnego elementu */
+};
+typedef struct node Node;
+
+int cmp_cargo(Cargo a, Cargo b);
+
+bool add_head(Node **head_ptr, Cargo item);
+
+bool add_list(Node **head_ptr, Cargo item);
+/* dla listy sortowanej */
+
+bool find_list(Node *head, Cargo item);
+
+void print_list(Node *head);
+
+int count_list(Node *head);
+
+bool del_head(Node **head_ptr);
+
+bool del_list(Node **head_ptr, Cargo item);
+
+#define is_empty(head)  ((head == NULL) ? TRUE : FALSE)
+/* bool is_empty(Node *head); */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+Cargo name = "dywan";   /* przykladowy napis do sprawdzania */
+/* Inicjalizujemy pusta liste */
+Node *head = NULL;
+
+print_list(head);
+add_list(&amp;head, "jeden");
+add_list(&amp;head, "dwa");
+add_list(&amp;head, "trzy");
+print_list(head);
+if ( find_list(head,name) == FALSE )
+    printf("Nie znaleziono \"%s\" na liscie\n", name);
+else
+    printf("Znaleziono \"%s\" na liscie\n", name);
+while (!is_empty(head)) {
+    del_head(&amp;head);
+    printf("Skracam liste...\n");
+}
+return 0;
+}
+</pre><hr><pre>
+/*
+* cmp_cargo.c
+*/
+
+#include "main.h"
+
+int cmp_cargo(Cargo a, Cargo b) 
+{ /* jezeli a &lt; b to ujemne */
+int tmp;
+/*
+tmp = strlen(a) - strlen(b);
+*/
+tmp = strcmp(a,b);
+if (tmp &lt; 0)
+    return -1;
+else if (tmp &gt; 0)
+    return 1;
+else
+    return 0;
+}
+</pre><hr><pre>
+/*
+* add_head.c
+*
+* Kod umieszczajacy na liscie nowy element.
+* Element bedzie na poczatku listy.
+*/
+
+#include "main.h"
+
+bool add_head(Node **head_ptr, Cargo item) 
+{
+Node *new_item; /* wskaznik do nowej struktury na liscie */
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;       /* brak pamieci */
+strcpy(new_item-&gt;data, item); /* skopiowanie tekstu do pola struktury */
+new_item-&gt;next = *head_ptr; /* dawny pierwszy bedzie nastepnym */
+*head_ptr = new_item; /* wskaznik head teraz ma pokazywac na nowa strukture */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* del_list.c
+*/
+
+#include "main.h"
+
+bool del_list(Node **head_ptr, Cargo item) 
+{
+Node *before;    /* wskaznik do struktury na liscie */
+Node *current;    /* wskaznik do struktury na liscie */
+
+before = NULL;
+current = *head_ptr;
+while (current != NULL &amp;&amp; cmp_cargo(current-&gt;data,item) != 0) {
+    before = current;
+    current = current-&gt;next;
+}
+if (current == NULL) {
+    return FALSE;      /* nie znalazl i nie skasowal */
+} else if (before == NULL) {   /* jestesmy na poczatku listy */
+    *head_ptr = current-&gt;next; /* przesuwamy poczatek listy */
+    free(current);    /* zwalniam pamiec */
+    current = NULL;   /* dobry zwyczaj */
+    return TRUE;
+} else {                /* jestesmy w srodku listy */
+    before-&gt;next = current-&gt;next;
+    free(current);
+    current = NULL;
+    return TRUE;
+}
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<h3>ZADANIE 11.3</h3>
+
+<p>Poprawić program w katalogu <em>listy1char</em> definiując
+bardziej elastyczną strukturę do przechowywania napisów.
+Należy zmodyfikować jedynie funkcje tworzące lub usuwające
+struktury.
+
+<hr><pre>
+/* definicja struktury */
+struct node {
+    Cargo data;        /* dane elementu */
+    struct node *next;   /* wskaznik do nastepnego elementu */
+};
+</pre><hr><pre>
+/*
+* add_head.c
+*
+* Kod umieszczajacy na liscie nowy element.
+* Element bedzie na poczatku listy.
+*/
+
+#include "main.h"
+
+bool add_head(Node **head_ptr, Cargo item) 
+{
+Node *new_item;        /* wskaznik do nowej struktury na liscie */
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;       /* brak pamieci */
+new_item-&gt;data = malloc((unsigned)(strlen(item)+1));
+if (new_item-&gt;data == NULL)
+    free(new_item);     /* trzeba oddac */
+    return FALSE;       /* brak pamieci */
+strcpy(new_item-&gt;data, item);   /* skopiowanie tekstu do pola struktury */
+new_item-&gt;next = *head_ptr;   /* dawny pierwszy bedzie nastepnym */
+*head_ptr = new_item;        /* wskaznik head teraz ma pokazywac na nowa strukture */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* del_head.c
+*
+* Usuwanie elementu z poczatku listy.
+*/
+
+#include "main.h"
+
+bool del_head(Node **head_ptr) 
+{
+/* wskaznik do nowej struktury na liscie */
+Node *del_item; 
+
+if (*head_ptr == NULL)
+    return FALSE;    /* lista jest juz pusta */
+/* zapamietuje dawny poczatek listy */
+del_item = *head_ptr;
+/* nowy poczatek to nastepny element */
+*head_ptr = del_item-&gt;next;
+/* zwalniam pamiec starego poczatku */
+free(del_item-&gt;data);
+del_item-&gt;data = NULL;
+free(del_item);
+del_item = NULL;   /* dobry zwyczaj */
+return TRUE;
+}
+</pre>
+
+<h3>ZADANIE 11.4</h3>
+
+<p>Na bazie listy jednokierunkowej zaimplementować stos.
+W katalogu domowym utworzyć podkatalog <em>stack</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+typedef int Cargo;
+typedef struct node Node;
+
+/* definicja struktury */
+struct node {
+    Cargo data;         /* dane elementu */
+    struct node *next;   /* wskaznik do nastepnego elementu */
+};
+
+bool insert_stack(Node **head_ptr, Cargo item);
+/* Dodanie elementu na poczatek stosu */
+
+Cargo remove_stack(Node **head_ptr);
+/* Usuniecie elementu z poczatku stosu - zwraca cargo */
+
+#define push insert_stack
+#define pop  remove_stack
+
+#define is_empty(head)  ((head == NULL) ? TRUE : FALSE)
+/* bool is_empty(Node *head);    Czy stos jest pusty? */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+/* Inicjalizujemy pusty stos, wskaznik head jest lokalny */
+Node *head=NULL;
+
+insert_stack(&amp;head, 12);
+insert_stack(&amp;head, 34);
+insert_stack(&amp;head, 10);
+while (!is_empty(head)) {
+    printf("Usuwam %d\n", remove_stack(&amp;head));
+}
+return 0;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+Zastanowić się nad sposobem jednoczesnego przechowywania na stosie 
+elementów różnych typów.
+
+<h3>ZADANIE 11.5</h3>
+
+<p>Na bazie listy jednokierunkowej zaimplementować kolejkę
+z priorytetami.
+W katalogu domowym utworzyć podkatalog <em>pqueue</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+typedef int Cargo;
+typedef struct node Node;
+
+/* definicja struktury */
+struct node {
+    Cargo data;         /* dane elementu */
+    struct node *next;   /* wskaznik do nastepnego elementu */
+};
+
+int cmp_cargo(Cargo a, Cargo b);
+/* Porownywanie elementow */
+
+bool insert_pqueue(Node **head_ptr, Cargo item);
+/* Wstawienie elementu do listy (lista posortowana) */
+
+Cargo remove_pqueue(Node **head_ptr);
+/* Usuniecie elementu z poczatku listy - zwraca cargo*/
+
+#define is_empty(head)  ((head == NULL) ? TRUE : FALSE)
+/* bool is_empty(Node *head);  */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+/* Inicjalizujemy pusta kolejke, wskaznik head jest lokalny */
+Node *head= NULL;
+
+if (insert_pqueue(&amp;head, 22) == FALSE)
+    fprintf(stderr,"insert_list: brak pamieci");
+if (insert_pqueue(&amp;head, 33) == FALSE)
+    fprintf(stderr,"insert_list: brak pamieci");
+if (insert_pqueue(&amp;head, 11) == FALSE)
+    fprintf(stderr,"insert_list: brak pamieci");
+while (!is_empty(head)) {
+    printf("Usuwam %d\n",remove_pqueue(&amp;head));
+}
+return 0;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<h3>ZADANIE 11.6</h3>
+
+<p>Na bazie listy jednokierunkowej zaimplementować kolejkę FIFO.
+W katalogu domowym utworzyć podkatalog <em>queue</em>.
+Dla poprawienia wydajności w tablicy slist[2] będziemy
+przechowywać wskaźniki do głowy i ogona,
+a sama tablica będzie przekazywana do różnych funkcji
+zamiast pojedyńczego wskaźnika do głowy.
+Należy odpowiednio zmodyfikować funkcje do zarządzania listą.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+typedef int Cargo;
+typedef struct node Node;
+
+/* definicja struktury */
+struct node {
+    Cargo data;          /* dane elementu */
+    struct node *next;   /* wskaznik do nastepnego elementu */
+};
+
+int cmp_cargo(Cargo a, Cargo b);
+
+bool add_head(Node *slist[], Cargo item);
+/* Dodanie elementu na poczatek listy */
+
+bool add_tail(Node *slist[], Cargo item);
+/* Dodanie elementu na koniec listy */
+#define insert_queue add_tail
+
+bool add_list(Node *slist[], Cargo item);
+/* Wstawienie elementu do listy (lista posortowana) */
+
+bool find_list(Node *slist[], Cargo item);
+/* Szukanie elementu na liscie */
+
+void print_list(Node *slist[]);
+/* Wypisanie zawartosci listy */
+
+int count_list(Node *slist[]);
+/* Zliczenie dlugosci listy */
+
+bool del_head(Node *slist[]);
+/* Usuniecie elementu z poczatku listy */
+
+Cargo get_head(Node *slist[]);
+/* Usuwa head i zwraca zawartosc */
+#define remove_queue get_head
+
+bool del_list(Node *slist[], Cargo item);
+/* Usuniecie danego elementu listy */
+
+#define is_empty(slist)  ((slist[0] == NULL) ? TRUE : FALSE)
+/* bool is_empty(Node *slist[]); */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+/* Inicjalizujemy pusta liste/stos. */
+Node *slist[2] = {NULL, NULL};
+
+if (insert_queue(slist, 11) == FALSE)
+    fprintf(stderr,"insert_queue: brak pamieci");
+if (insert_queue(slist, 55) == FALSE)
+    fprintf(stderr,"insert_queue: brak pamieci");
+if (insert_queue(slist, 33) == FALSE)
+    fprintf(stderr,"insert_queue: brak pamieci");
+while (!is_empty(slist)) {
+    printf("Usuwam %d\n", remove_queue(slist));
+}
+return 0;
+}
+</pre><hr><pre>
+/*
+* add_head.c
+*
+* Kod umieszczajacy na liscie nowy element.
+* Element bedzie na poczatku listy.
+*/
+
+#include "main.h"
+
+bool add_head(Node *slist[], Cargo item) 
+{
+Node *head = slist[0];
+Node *new_item;   /* wskaznik do nowej struktury na liscie */
+
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;
+if (head == NULL)    /* ustawiam tail */
+    slist[1] = new_item;
+new_item-&gt;data = item;   /* wstawienie liczby do pola struktury */
+new_item-&gt;next = head; /* dawny pierwszy bedzie nastepnym */
+slist[0] = new_item; /* wskaznik head teraz ma pokazywac na nowa strukture */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* add_tail.c
+*
+* Kod umieszczajacy na liscie nowy element.
+* Element bedzie na koncu listy.
+*/
+
+#include "main.h"
+
+bool add_tail(Node *slist[], Cargo item) 
+{
+Node *tail = slist[1];
+Node *new_item;   /* wskaznik do nowej struktury na liscie */
+
+/* przydzielenie pamieci nowej strukturze */
+new_item = malloc(sizeof(Node));
+if (new_item == NULL)
+    return FALSE;
+new_item-&gt;data = item;   /* wstawienie liczby do pola struktury */
+new_item-&gt;next = NULL;   /* nowy koniec */
+if (tail == NULL) {   /* lista byla pusta */
+    slist[0] = new_item;    /* ustawiam head */
+} else {
+    tail->next = new_item;
+}
+slist[1] = new_item;   /* wskaznik tail teraz ma pokazywac na nowa strukture */
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* get_head.c
+*
+* Usuwanie elementu z poczatku listy.
+*/
+
+#include "main.h"
+
+Cargo get_head(Node *slist[]) 
+{
+Node *head = slist[0];
+/* wskaznik do nowej struktury na liscie */
+Node *del_item;
+Cargo tmp;
+
+if (head == NULL)
+    return FALSE;        /* lista jest juz pusta */
+del_item = head;       /* zapamietuje dawny poczatek listy */
+tmp = del_item-&gt;data;
+head = del_item-&gt;next;   /* nowy poczatek to nastepny element */
+if (head == NULL)     /* pusta lista po skasowaniu, ustawiam tail */
+    slist[1] = NULL;
+free(del_item);          /* zwalniam pamiec starego poczatku */
+del_item = NULL;     /* dobry zwyczaj */
+slist[0] = head;
+return tmp;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

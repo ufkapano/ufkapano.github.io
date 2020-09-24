@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>Styl</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Styl programowania w C</h1>
+
+<h3>Styl kodowania</h3>
+
+<ul>
+
+<li>Wcięcia klawiszem [Tab] mają szerokość 8 znaków.
+
+<li>Wiersze nie powinny być dłuższe niż 80 znaków.
+
+<li>Właściwie umieszczamy nawiasy {} dla funkcji i instrukcji 
+if-else, for, while, do-while
+- najlepiej wg konwencji K i R.
+Najważniejsza jest jednak konsekwencja stylu.
+
+<li>Zmienne lokalne mają mieć krótkie nazwy (i, j, tmp, x), ale zmienne
+globalne i funkcje muszą być opisowe [count_users()].
+
+<li>Funkcje muszą być krótkie (maksimum dwa ekrany) 
+i robić dobrze jedną rzecz. Liczba zmiennych lokalnych w funkcji
+nie powinna przekraczać 5-10 (optymalnie do 7).
+
+<li>Różne stałe w programie należy zapisać przez parametry
+(<em>#define</em>).
+
+<li>Komentarze - tłumaczymy CO robi program, a nie JAK to robi.
+Komentarz do funkcji ma być na początku, a raczej nie w kilku
+miejscach wewnątrz. Wyjątkiem mogą być sprytne triki.
+
+<li>Funkcja <em>main()</em> powinna mieć jedną z dwóch postaci:
+
+<pre>
+int main(void) {}
+int main(int argc, char *argv[]) {}
+</pre>
+
+<li>Kod wykrywający błędy warto pisać z użyciem stałej <em>DEBUG</em>.
+Poza tym stałe definiowane przez <em>#define</em> piszemy dużymi literami.
+
+<li>Aliasy typów tworzone za pomocą <em>typedef</em>
+nazywamy z dużej litery (wg K i R).
+
+<li>Typ logiczny w języku C możemy zdefiniować następująco:
+
+<pre>
+typedef int bool;
+</pre>
+
+<p>Wykorzystujemy go za każdym razem, gdy chcemy podkreślić nasze
+zainteresowanie wartością logiczną (nie liczbową) danego wyrażenia.
+Logiczne wartości reprezentujące prawdę czy fausz możemy zdefiniować 
+następująco:
+
+<pre>
+#define TRUE  1
+#define FALSE 0
+</pre> 
+
+<p>Jeżeli korzystamy z biblioteki <em>ncurses</em>, to mamy od razu
+do dyspozycji typ <em>bool</em> oraz stałe TRUE i FALSE.
+
+</ul>
+
+<h3>Sposób tworzenia programu</h3>
+
+<ul>
+
+<li>Kolejne działające wersje programu warto umieszczać
+w osobnych katalogach, np. wersja1, wersja2.
+
+<li>Tworzymy plik <em>README</em> z opisem zmian.
+
+<li>Tworzymy plik <em>Makefile</em> wspomagający kompilację.
+
+<li>Warto narysować diagram zależności pomiędzy funkcjami
+i zmiennymi globalnymi w programie. Z jego pomocą możemy łatwiej
+podzielić program na kilka plików.
+
+<li>Przy małych i średniej wielkości programach warto funkcje umieszczać
+w osobnych plikach .c (main.c, funkcja.c), a wszystkie deklaracje
+funkcji, struktur, stałych grupować w jednym pliku nagłówkowym (main.h) 
+włączanym do plików z funkcjami.
+Można też definicje kilku powiązanych ze sobą funkcji umieścić 
+w jednym prywatnym pliku (np. algorytmy.c), a ich deklaracje w osobnym
+publicznym pliku nagłówkowym (np. algorytmy.h).
+W ten sposób można udostępnić funkcje w postaci plików obiektowego
+i nagłówkowego (algorytmy.o, algorytmy.h) i nie ujawniać kodu źródłowego.
+
+<li>Dokumentację programu piszemy w formatach otwartych 
+(TXT, HTML, LaTeX; PS, PDF).
+Warto również w samym programie umieścić pomoc dla użytkownika.
+
+</ul>
+
+<h3>Program zaliczeniowy</h3>
+
+<ul>
+
+<li>Program zaliczeniowy musi dać się skompilować i uruchomić
+na pracowni komputerowej pod kompilatorem <em>gcc</em>.
+Dobrze napisany program nie powinien zgłaszać żadnych ostrzeżeń
+przy kompilacji z opcjami <em>-Wall -ansi</em>.
+
+<li>Program ma korzystać z wielu mechanizmów języka C, takich jak
+przetwarzanie linii komend, obsługa plików, struktury.
+Można również skorzystać z bibioteki <em>ncurses</em>,
+jeżeli chcemy korzystać z elementów semigraficznych.
+Szacunkowa wielkość kodu źródłowego programu to minimum 200 linii
+(instrukcje i komentarze).
+
+<li>Wymagane jest konsultowanie z prowadzącym ćwiczenia kolejnych 
+wersji programu - przesyłanie kodu źródłowego przez email.
+Należy przesyłać program (tylko kod źródłowy!)
+w postaci <strong>jednego</strong>
+archiwum <em>nazwisko.zip</em> lub <em>nazwisko.tar.gz</em>.
+
+<li>Kod źródłowy powinien być czytelny na ekranie terminala 80x25,
+czyli długość wierszy nie powinna przekraczać 80 znaków.
+
+<li>Ze względu na częste problemy z kodowaniem polskich znaków
+proszę nie używać polskich liter w kodzie źródłowym programu.
+
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,231 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (4) - funkcje, rekurencja</h1>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>ipower</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>ipower.c</em> postaci:
+
+<hr><pre>
+/*
+* ipower.c
+*
+* Program z potegowaniem w liczbach calkowitych. 
+*/
+
+#include &lt;stdio.h&gt;
+
+int ipower(int x, int n);      /* x^n */
+
+int main(void) 
+{
+int i;
+
+for (i = 0; i &lt; 10; ++i)
+    printf("%d %d %d\n", i, ipower(2, i), ipower(-3, i));
+return 0;
+}
+
+int ipower(int x, int n) 
+{  /* x^n */
+int p;
+
+/* n jest zmienna lokalna w funkcji ipower() - mozna z niej korzystac */
+for (p = 1; n &gt; 0; --n)
+    p *= x;  
+return p;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. 
+
+<p>Dopisać nową funkcję <em>dpower()</em> i wykorzystać ją
+w <em>main()</em>. Deklaracja nowej funkcji jest następująca:
+
+<pre>
+double dpower(double x, int n);
+</pre>
+
+<h3>ZADANIE 4.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>atrapa</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em> i <em>atrapa.c</em> postaci:
+
+<hr><pre>
+#
+# Makefile (wersja podstawowa)
+#
+
+# Najpierw umieszczamy cel końcowy, potem cele pośrednie.
+atrapa : main.o atrapa.o Makefile
+    gcc -Wall -ansi -pedantic main.o atrapa.o -o atrapa
+
+atrapa.o : atrapa.c main.h Makefile
+    gcc -Wall -ansi -pedantic -c atrapa.c -o atrapa.o
+
+main.o : main.c main.h Makefile
+    gcc -Wall -ansi -pedantic -c main.c -o main.o
+</pre><hr><pre>
+#
+# Makefile (wersja rozbudowana)
+#
+
+# Kompilator
+CC = gcc
+# Bibioteki, np. -lm -lcurses
+LIBS =
+# Flagi kompilatora
+CFLAGS = -Wall -ansi -pedantic
+# Pliki obiektowe
+OBJECTS = main.o atrapa.o
+TARGET = atrapa
+
+# Definicja domyślnej reguły wzorcowej dla plików obiektowych.
+# $&lt; oznacza nazwę pliku pierwszej zależności reguły.
+# $@ oznacza nazwę pliku celu w regule.
+%.o : %.c main.h Makefile
+    $(CC) $(CFLAGS) -c $&lt; -o $@
+
+# Przepis na zbudowanie celu koncowego.
+$(TARGET) : $(OBJECTS) Makefile
+    $(CC) $(CFLAGS) $(LIBS) $(OBJECTS) -o $(TARGET)
+
+# Nie musimy tworzyć zależności dla plików obiektowych.
+
+# Określenie celów sztucznych.
+.PHONY : clean
+
+clean :
+    $(RM) $(TARGET) *.o core
+</pre><hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+
+#define N_DEFINE 123
+
+extern const int N_CONST;  /* deklaracja N_CONST */
+
+void atrapa(void);
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+const int N_CONST = 456;  /* definicja N_CONST */
+
+int main(void) 
+{
+printf("main: %d %d\n", N_DEFINE, N_CONST);
+atrapa();
+return 0;
+}
+</pre><hr><pre>
+/*
+* atrapa.c
+*/
+
+#include "main.h"
+
+void atrapa(void) 
+{
+printf("atrapa: %d %d\n", N_DEFINE, N_CONST);
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 4.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>rsilnia</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>rsilnia.c</em> postaci:
+
+<hr><pre>
+/*
+* rsilnia.c
+*
+* Wersja rekurencyjna funkcji silnia. 
+*/
+
+#include &lt;stdio.h&gt;
+
+double rsilnia(int n);
+
+int main(void) 
+{
+const int N = 15;
+int i;
+
+printf("Kilka kolejnych silni liczb naturalnych\n");
+for (i = 0; i &lt; N; ++i)
+    printf("%d\t%.0f\n", i, rsilnia(i));
+return 0;
+}
+
+double rsilnia(int n) 
+{
+if (n == 0)
+    return 1.0;
+return  rsilnia(n-1) * (double)n ;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Napisać iteracyjną wersję funkcji obliczającej silnię
+w katalogu <em>dsilnia</em>.
+
+<h3>ZADANIE 4.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>rfibonacci</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>rfibonacci.c</em>,
+jeżeli jest dana tylko funkcja:
+
+<hr><pre>
+int rfibonacci(int n) 
+{
+if ( n == 0 || n == 1 )
+    return n;
+else
+    return rfibonacci(n-1) + rfibonacci(n-2) ;
+}
+</pre><hr>
+
+<p>Program ma wypisywać nagłówek i kilkanaście kolejnych
+liczb ciągu Fibonacciego.
+Skompilować i uruchomić program.
+
+<p>Napisać iteracyjną wersję funkcji obliczającej wyrazy
+ciągu Fibonacciego w katalogu <em>ifibonacci</em>.
+
+<h3>ZADANIE 4.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>razem</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>
+oraz po jednym pliku dla każdej z funkcji 
+(ipower, dpower, rsilnia, dsilnia, rfibonacci, ifibonacci)
+wg schematu z zadania 4.2.
+Skompilować i uruchomić program.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

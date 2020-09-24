@@ -1,0 +1,403 @@
+<html>
+<head>
+<title>Lekcja 13</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (13) - drzewa binarne</h1>
+
+<h3>ZADANIE 13.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>drzewa-int</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy - drzewa binarne.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+typedef int Cargo;
+
+/* definicja struktury */
+struct btree {
+    Cargo data;         /* dane elementu */
+    int count;         /* licznik wystapien */
+    struct btree *left;   /* wskaznik do lewego elementu */
+    struct btree *right;   /* wskaznik do prawego elementu */
+};
+
+int cmp_cargo(Cargo a, Cargo b);
+
+bool add_btree(struct btree **top_ptr, Cargo item);
+/* Wstawienie elementu do drzewa */
+
+bool find_btree(struct btree *top, Cargo item);
+/* Szukanie elementu w drzewie */
+
+void print_btree(struct btree *top);
+/* Wypisanie zawartosci drzewa */
+
+void print_indented(struct btree *top, int level);
+/* Ladne rysowanie drzewa */
+
+int count_btree(struct btree *top);
+/* Zliczenie liczby wezlow w drzewie */
+
+bool del_btree(struct btree **top_ptr, Cargo item);
+/* Usuniecie elementu z drzewa */
+
+#define is_empty(top)  ((top == NULL) ? TRUE : FALSE)
+/* bool is_empty(struct btree *top); */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+Cargo number = 22;   /* przykladowa liczba do sprawdzania */
+/* Inicjalizujemy puste drzewo */
+struct btree *root = NULL;
+
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_indented(root, 0);
+
+add_btree(&amp;root, 22);
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_indented(root, 0);
+
+add_btree(&amp;root, 11);
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_indented(root, 0);
+
+add_btree(&amp;root,11);
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_indented(root, 0);
+
+add_btree(&amp;root, 33);
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_indented(root,0);
+
+if (find_btree(root, number) == FALSE)
+    printf("Nie znaleziono %d w drzewie\n", number);
+else
+    printf("Znaleziono %d w drzewie\n", number);
+
+if (del_btree(&amp;root, 33) == FALSE)
+    printf("Nie zmniejszono drzewa\n");
+else
+    printf("Zmniejszono drzewo\n");
+return 0;
+}
+</pre><hr><pre>
+/*
+* add_btree.c
+*
+* Kod umieszczajacy w drzewie nowy element.
+*/
+
+#include "main.h"
+
+bool add_btree(struct btree **top_ptr, Cargo item) 
+{
+if ((*top_ptr) == NULL) { /* pusty wezel */
+    /* przydzielenie pamieci nowej strukturze */
+    (*top_ptr) = malloc(sizeof(struct btree));
+    if ((*top_ptr) == NULL)
+        return FALSE;
+    (*top_ptr)-&gt;left = NULL;
+    (*top_ptr)-&gt;right = NULL;
+    (*top_ptr)-&gt;count = 1;
+    (*top_ptr)-&gt;data = item;   /* wstawienie liczby do pola struktury */
+} else {       /* sprawdzamy, gdzie wstawic element */
+    if (cmp_cargo((*top_ptr)-&gt;data, item) &lt; 0)       /* wieksze na prawo */
+        add_btree(&amp;(*top_ptr)-&gt;right, item);
+    else if (cmp_cargo((*top_ptr)-&gt;data, item) &gt; 0)    /* mniejsze na lewo */
+        add_btree(&amp;(*top_ptr)-&gt;left, item);
+    else                  /* taki element jest w drzewie */
+        (*top_ptr)-&gt;count += 1; 
+}
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* find_btree.c
+*/
+
+#include "main.h"
+
+bool find_btree(struct btree *top, Cargo item) 
+{
+bool status;
+
+if (top == NULL)
+    return FALSE;
+if (cmp_cargo(top-&gt;data, item) == 0)
+    return TRUE;
+status = find_btree(top-&gt;left, item);
+if (status == FALSE)
+    status = find_btree(top-&gt;right, item);
+return status;
+}
+</pre><hr><pre>
+/*
+* print_btree.c
+*/
+
+#include "main.h"
+
+void print_btree(struct btree *top) 
+{
+if (top != NULL) {
+    print_btree(top-&gt;left);
+    printf("%d (%d)\n", top-&gt;data, top-&gt;count);
+    print_btree(top-&gt;right);
+}
+return;
+}
+</pre><hr><pre>
+/*
+* print_indented.c
+*/
+
+#include "main.h"
+
+void print_indented(struct btree *top, int level) 
+{
+int i;
+if (top != NULL) {
+    print_indented(top-&gt;left, level+1);
+    for (i = 0; i &lt; level; ++i)
+        printf("   ");
+    printf("%d (%d)\n", top-&gt;data, top-&gt;count);
+    print_indented(top-&gt;right, level+1);
+}
+return;
+}
+</pre><hr><pre>
+/*
+* count_btree.c
+*/
+
+#include "main.h"
+
+int count_btree(struct btree *top) 
+{
+int counter = 0;
+if (top != NULL) {
+    counter += count_btree(top-&gt;left);
+    ++counter;
+    counter += count_btree(top-&gt;right);
+}
+return counter;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<h3>ZADANIE 13.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>drzewa-char</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;string.h&gt;
+
+/* typ logiczny */
+typedef int bool;
+#define TRUE 1
+#define FALSE 0
+
+typedef char *Cargo;
+
+/* definicja struktury */
+struct btree {
+    Cargo data;    /* dane elementu */
+    int count;    /* licznik wystapien */
+    struct btree *left;   /* wskaznik do lewego elementu */
+    struct btree *right;   /* wskaznik do prawego elementu */
+};
+
+int cmp_cargo(Cargo a, Cargo b);
+
+bool add_btree(struct btree **top_ptr, Cargo item);
+/* Wstawienie elementu do drzewa */
+
+bool find_btree(struct btree *top, Cargo item);
+/* Szukanie elementu w drzewie */
+
+void print_btree(struct btree *top);
+/* Wypisanie zawartosci drzewa */
+
+void print_indented(struct btree *top, int level);
+/* Ladne rysowanie drzewa */
+
+int count_btree(struct btree *top);
+/* Zliczenie liczby ROZNYCH elementow w drzewie */
+
+bool del_btree(struct btree **top_ptr, Cargo item);
+/* Usuniecie elementu z drzewa */
+
+#define is_empty(top)  ((top == NULL) ? TRUE : FALSE)
+/* bool is_empty(struct btree *top); */
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+Cargo napis = "dwa";   /* przykladowy napis do sprawdzania */
+/* Inicjalizujemy puste drzewo */
+struct btree *root = NULL;
+
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_btree(root);
+
+add_btree(&amp;root, "jeden");
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_btree(root);
+
+add_btree(&amp;root, "jeden");
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_btree(root);
+
+add_btree(&amp;root, "dwa");
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_btree(root);
+
+add_btree(&amp;root, "trzy");
+printf("Wielkosc drzewa: %d\n", count_btree(root));
+print_btree(root);
+
+if (find_btree(root, napis) == FALSE)
+    printf("Nie znaleziono %s w drzewie\n", napis);
+else
+    printf("Znaleziono %s w drzewie\n", napis);
+
+if (del_btree(&amp;root, napis) == FALSE)
+    printf("Nie zmniejszono drzewa\n");
+else
+    printf("Zmniejszono drzewo\n");
+print_btree(root);
+
+return 0;
+}
+</pre><hr><pre>
+/*
+* add_btree.c
+*
+* Kod umieszczajacy w drzewie nowy element.
+*/
+
+#include "main.h"
+
+bool add_btree(struct btree **top_ptr, Cargo item) 
+{
+int result;   /* wynik dzialania funkcji strcmp() */
+if ((*top_ptr) == NULL) {        /* pusty wezel */
+    /* przydzielenie pamieci nowej strukturze */
+    (*top_ptr) = malloc(sizeof(struct btree));
+    if ((*top_ptr) == NULL)
+        return FALSE;             /* brak pamieci */
+    (*top_ptr)-&gt;left = NULL;
+    (*top_ptr)-&gt;right = NULL;
+    (*top_ptr)-&gt;count = 1;
+    /* wstawienie  do pola struktury */
+    (*top_ptr)-&gt;data = malloc((unsigned)(strlen(item)+1));
+    if ((*top_ptr)-&gt;data == NULL) {
+        free(*top_ptr);
+        (*top_ptr) = NULL;
+        return FALSE;
+    } else
+        strcpy((*top_ptr)-&gt;data, item);
+} else {            /* sprawdzamy, gdzie wstawic element */
+    result = cmp_cargo((*top_ptr)-&gt;data, item);
+    if (result &lt; 0)          /* wieksze na prawo */
+        add_btree(&amp;(*top_ptr)-&gt;right, item);
+    else if (result &gt; 0)      /* mniejsze na lewo */
+        add_btree(&amp;(*top_ptr)-&gt;left, item);
+    else               /* taki element jest w drzewie */
+        (*top_ptr)-&gt;count += 1;
+}
+return TRUE;
+}
+</pre><hr><pre>
+/*
+* print_btree.c
+*/
+
+#include "main.h"
+
+void print_btree(struct btree *top) 
+{
+if (top != NULL) {
+    print_btree(top-&gt;left);
+    printf("%s (%d)\n", top-&gt;data, top-&gt;count);
+    print_btree(top-&gt;right);
+}
+return;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<h3>ZADANIE 13.3</h3>
+
+<p>Napisać funkcję obliczającą wysokość drzewa binarnego.
+
+<hr><pre>
+int height_btree(struct btree *top);
+</pre><hr>
+
+<h3>ZADANIE 13.4</h3>
+
+<p>Napisać funkcję liczącą liście drzewa binarnego.
+Liście to węzły, które nie mają potomków.
+
+<hr><pre>
+int leafs_btree(struct btree *top);
+</pre><hr>
+
+<h3>ZADANIE 13.5</h3>
+
+<p>Napisać funkcje wypisujące zawartość drzewa w kolejności
+preorder (węzeł, lewe, prawe), 
+inorder (lewe, węzeł, prawe), 
+postorder (lewe, prawe, węzeł), 
+poziomami.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

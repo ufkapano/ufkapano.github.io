@@ -1,0 +1,238 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (2) - make, sterowanie</h1>
+
+<h3>ZADANIE 2.1</h3>
+
+<p>W katalogu <em>hello</em> stworzyć plik <em>Makefile</em>
+postaci (linie z poleceniami systemowymi muszą zaczynać się
+znakiem tabulacji):
+
+<hr><pre>
+#
+# Makefile (wersja podstawowa)
+#
+
+hello : hello.c Makefile
+# Następna linia zaczyna się od tabulacji!
+    gcc -Wall -ansi -pedantic -o hello hello.c
+</pre><hr><pre>
+#
+# Makefile (wersja rozbudowana)
+#
+
+CC = gcc
+CFLAGS = -Wall -ansi -pedantic
+# LIB = -lm -lncurses
+LIB =
+FILE = hello.c
+TARGET = hello
+
+$(TARGET) : $(FILE) Makefile
+# Następna linia zaczyna się od tabulacji!
+    $(CC) $(CFLAGS) $(LIB) -o $(TARGET) $(FILE)
+
+# Określenie celów sztucznych.
+.PHONY : clean 
+
+clean:
+# Następna linia zaczyna się od tabulacji!
+    $(RM) $(TARGET) core
+
+# Na końcu zostawiamy pustą linię (dobry zwyczaj).
+</pre><hr>
+
+<p>Skompilować plik <em>hello.c</em> poleceniem: <em>make</em>
+
+<p>Posprzątać po kompilacji poleceniem: <em>make clean</em>
+
+<h3>ZADANIE 2.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>petla</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>petla.c</em> postaci:
+
+<hr><pre>
+/*
+* petla.c
+*
+* Program ilustrujacy petle. 
+* Wypisywanie kolumny kolejnych liczb.
+*/
+
+#include &lt;stdio.h&gt;
+
+#define START 12   /* ograniczenie dolne - punkt startowy */
+#define STOP  20   /* ograniczenie gorne */
+
+int main(void)      /* poprawna deklaracja */
+{
+int i;
+
+printf("Stosuje petle \"for\"\n");
+for (i = START; i &lt;= STOP; ++i)
+    printf("%d\n", i);
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować plik <em>petla.c</em> poleceniem: <em>make</em>
+
+<p>Poprawić program zamieniając stałe <em>START</em> i <em>STOP</em>
+na zmienne typu <em>const int</em>.
+
+<p>W programie <em>petla.c</em> dopisać fragment wykorzystujący
+pętlę <em>while</em>:
+<hr><pre>
+printf("Stosuje petle \"while\"\n");
+i = START;
+while (i &lt;= STOP) {
+    printf("%d\n", i);
+    ++i;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 2.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>switch</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>switch.c</em> postaci:
+
+<hr><pre>
+/*
+* switch.c
+*
+* Program wykorzystujacy instrukcje "switch". 
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+int a;
+
+printf("\nFIGURY PLASKIE\nPodaj liczbe od 1 do 5: ");
+/* Wczytanie liczby podanej przez uzytkownika */
+scanf("%d", &amp;a);
+/* Wersja ze "switch" */
+switch(a) {
+case 1:
+    printf("Punkt (a = 1)\n");
+    break;  /* to daje wyskok ze "switch" (opcjonalne) */
+case 2:
+    printf("Odcinek (a = 2)\n");
+    break;
+case 3:
+    printf("Trojkat (a = 3)\n");
+    break;
+case 4:
+    printf("Czworokat (a = 4)\n");
+    break;
+default:        /* to jest opcjonalne */
+    printf("Wielokat (a > 4)\n");
+    break;
+}
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Warto zauważyć, że instrukcję <em>switch</em> zawsze można
+zastąpić ciągiem instrukcji warunkowych, np.
+
+<hr><pre>
+/* Wersja z "if", tutaj nawiasy klamrowe sa opcjonalne */
+if (a == 1) {
+    printf("Punkt (a = 1)\n"); 
+} else if (a == 2) {
+    printf("Odcinek (a = 2)\n");
+} else if (a == 3) {
+    printf("Trojkat (a = 3)\n");
+} else if (a == 4) {
+    printf("Czworokat (a = 4)\n");
+} else {
+    printf("Wielokat (a > 4)\n");
+}
+</pre><hr>
+
+<h3>ZADANIE 2.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>menu</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>menu.c</em> postaci:
+
+<hr><pre>
+/*
+* menu.c
+*
+* Program wykorzystujacy instrukcje "do-while" do stworzenia menu. 
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+const int TRUE = 1;
+const int FALSE = 0;
+int koniec = FALSE; /* zmienna sterujaca zakonczeniem programu */
+int wybor;
+
+/* Menu pokaze sie co najmniej raz */
+do {
+printf("\n\tMENU PROGRAMU\n");
+printf("\t1) Wyjscie z programu\n");
+printf("\t2) Pomoc\n");
+printf("\t3) Uaktualnienie bazy danych\n");
+printf("\t4) Zapytania do bazy danych\n");
+printf("\tWybierz opcje: ");
+/* Wczytanie liczby podanej przez uzytkownika */
+scanf("%d", &amp;wybor);
+/* Wybor pozycji z menu */
+if (wybor == 1)
+    koniec = TRUE; 
+else if (wybor == 2)
+    printf("Jeszcze nie ma pomocy...\n");
+else if (wybor == 3)
+    printf("Nie mozna uaktualnic bazy danych...\n");
+else if (wybor == 4)
+    printf("Nie mozna tworzyc zapytan do bazy danych...\n");
+else
+    printf("Nie ma takiej opcji...\n");
+} while (koniec == FALSE);   /* powtarzaj dopoki to jest prawda */
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Poprawić program tak, aby nie korzystać ze zmiennej <em>koniec</em>.
+Można zamienić pętlę <em>do-while</em> na <em>while</em> 
+i przerywać pętlę nieskończoną poleceniem <em>break</em>.
+
+<h3>ZADANIE 2.5</h3>
+
+<p>Napisać program <em>kula</em>, który obliczy objętość kuli o zadanym
+promieniu. Na początku funkcji <em>main()</em> umieścić
+definicję liczby Pi postaci
+<pre>
+const float PI = 3.1415927;   /* stala - liczba Pi */
+</pre>
+
+<h3>ZADANIE 2.6</h3>
+
+<p>Napisać program <em>prostokat</em> wyliczający obwód i pole powierzchni
+prostokąta o zadanych bokach.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

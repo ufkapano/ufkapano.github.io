@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (1) - wprowadzenie</h1>
+
+<h3>ZADANIE 1.1</h3>
+
+<p>Zalogować się do systemu Linux w trybie graficznym i tekstowym. 
+Zmienić przyznane hasło dostępu (<em>yppasswd</em>).
+
+<h3>ZADANIE 1.2</h3>
+
+<p>Zaznajomić się z podstawowymi poleceniami systemu Linux:
+<ul>
+<li>system plików: 
+ls (opcje: -l -a -i  --inode -lct), pwd, cd (cd ..), mkdir, rmdir, 
+<li>operacje na plikach: 
+touch, cat, rm (opcje: -r -f), cp (-R), mv,
+<li>pomoc w systemie: 
+man, info, help, type, file,
+<li>procesy w systemie:
+ps (opcje: x u axl), top,
+<li>inne: passwd, yppasswd, who, whoami, ping, date, exit, mount, xterm.
+</ul>
+
+<h3>ZADANIE 1.3</h3>
+
+<p>Zaznajomić się z edytorami tekstów: 
+pico, nano, emacs, vi, mcedit (mc), kate.
+
+<h3>ZADANIE 1.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>hello</em>.
+Za pomocą edytora <strong>vi</strong> utworzyć w nim
+plik <em>hello.c</em> postaci:
+
+<hr><pre>
+/*
+* hello.c
+*
+* [Tutaj umieszczamy krótki opis programu.]
+* Prosty program do wyświetlania komunikatu. 
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void)          /* poprawna deklaracja */
+{            /* Wypisanie komunikatu */
+printf("Witaj swiecie\n");
+return 0;
+}
+/* Ostatni wiersz w pliku źródłowym ma być pusty. */
+</pre><hr>
+
+<p>Skompilować program poleceniem: <em>gcc hello.c -o hello</em>
+
+<p>Uruchomić program poleceniem: <em>./hello</em>
+
+<p>Skompilować program z użyciem dodatkowych opcji: <br>
+<em>gcc -ansi -Wall -pedantic hello.c -o hello</em>
+
+<h3>ZADANIE 1.5</h3>
+
+<p>Zapoznać się z programami z książki S. Oualline:
+HELLO, 
+HELLO2 (prawidłowe komentarze), 
+SIMPLE, 
+TERM (brak wyprowadzenia wyników), 
+TWICE, 
+Q_ZERO (znaleźć błąd), 
+TWO (znaleźć błąd), 
+DIV (znaleźć błąd), 
+REV (wyświetlanie znaków).
+W każdym katalogu należy wykonać polecenie<br>
+<em>cp makefile.gcc Makefile</em><br>
+Następnie należy spróbować skompilować program poleceniem
+<em>make</em>.
+
+<h3>ZADANIE 1.6</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>liczby</em>.
+Napisać program <em>liczby</em> wypisujący dane różnych typów
+w różnych formatach.
+
+<pre>
+Wybrane specyfikacje dla funkcji printf():
+
+Typ "int": %d %i (dziesiętnie) %o (ósemkowo) %x %X (szesnastkowo)
+Typ "short" lub "unsigned short": %hd %hi %ho %hx %hX
+Typ "long" lub "unsigned long": %ld %li %lo %lx %lX
+Typ "float": %f %4.0f %.2f (z kropką dziesiętną) %e %E (naukowo) %g %G
+Typ "double": %lf %le %lE %lg %lG (lub %f %e %E %g %G)
+Typ "long double": %Lf %Le %LE %Lg %LG 
+
+printf("Typ char: %c (jeden znak) %s (string)", 'a', "wyraz");
+printf("Procent: %% Backslash: \\");
+</pre>
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

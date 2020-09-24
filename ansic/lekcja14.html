@@ -1,0 +1,338 @@
+<html>
+<head>
+<title>Lekcja 14</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (14) - wskaźniki do funkcji</h1>
+
+<h3>ZADANIE 14.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>romberg</em>.
+Utworzyć w nim plik <em>Makefile</em> i pozostałe pliki,
+po jednym dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+
+#define DEBUG
+
+#define abs(x)                  ((x) &gt;= 0 ? (x) : -(x)) 
+#define max(a,b)         ((a) &lt; (b) ? (b) : (a))
+#define min(a,b)         ((a) &lt; (b) ? (a) : (b))
+
+void nrerror(char error_text[]);
+/* dla nrromb(), nrtrap() */
+
+double trapzd(double (*f)(double x), double a, double b, int n);
+/* kon pociagowy dla nrromb(), nrtrap() */
+
+double nrtrap(double (*f)(double x), double a, double b,
+int maxns, double aerr, double rerr);
+
+double nrromb(double (*f)(double x), double a, double b, 
+int maxns, double aerr, double rerr);
+</pre><hr><pre>
+/*
+* main.c
+*
+* Calkowanie w jednym wymiarze.
+*/
+
+#include "main.h"
+
+double fun1(double x) 
+{
+return(sin(x));
+}
+
+int main(void) 
+{
+const double EPS = 1e-6; /* prawie granica dla 32-bitowych maszyn */
+const int LKROKOW = 20;
+double a, b, wynik;
+
+/* Granice calki */
+a = 1.0;
+b = 2.0;
+
+wynik = nrromb(fun1,a,b,LKROKOW,EPS,EPS);
+printf(" METODA ROMBERGA\n");
+printf("int(f(x),x= %f .. %f ) = %f\n", a, b, wynik);
+
+wynik= nrtrap(fun1, a, b, LKROKOW, EPS, EPS);
+printf(" METODA TRAPEZOW\n");
+printf("int(f(x),x= %f .. %f ) = %f\n", a, b, wynik);
+return 0;
+}
+</pre><hr><pre>
+/*
+* nrerror.c
+*
+* Standardowa funkcja obslugi bledu wg Numerical Recipes.
+*/
+
+#include "main.h"
+
+void nrerror(char error_text[]) 
+{
+fprintf(stderr, "Numerical Recipes run-time error...\n");
+fprintf(stderr, "%s\n", error_text);
+fprintf(stderr, "...now exiting to system...\n");
+exit(1);
+}
+</pre><hr><pre>
+/*
+* trapzd.c
+*/
+
+#include "main.h"
+
+double trapzd(double (*f)(double x), double a, double b, int n) 
+{ /*
+* a, b - konce przedzialu calkowania
+* n - bedzie 2^(n-1) przedzialow, n &lt; 31
+*/
+double x, sum, del;
+static double s;   /* pamiec o ostatniej wartosci calki */
+static int it;     /* pamiec o liczbie nowych punktow w nastepnym 
+                      wywolaniu funkcji trapzd() */
+int j;
+
+if (n == 1) {
+    it = 1;
+    /* s = 0.5 * (b-a) * ((*f)(a) + (*f)(b)); */
+    s = 0.5 * (b-a) * (f(a) + f(b));
+} else {
+    del = (b-a)/(double)it;
+    x = a + 0.5 * del;
+    for(sum = 0.0, j = 1; j &lt;= it; ++j, x += del) {
+        /* sum += (*f)(x); */
+        sum += f(x);
+    }
+    it *= 2;
+    s = 0.5 * (s + sum * del);
+}
+return s;
+}
+</pre><hr><pre>
+/*
+* nrtrap.c
+*
+* Calkowanie metoda trapezow.
+*/
+
+#include "main.h"
+
+double nrtrap(double (*f)(double x), double a, double b,
+int maxns, double aerr, double rerr) 
+{
+/*
+* f() - funkcja calkowana
+* a, b - konce przedzialu calkowania
+* maxns - max number of steps, maxns &lt; 31
+* aerr - DESIRED ABSOLUTE ERROR IN THE ANSWER
+* rerr - DESIRED RELATIVE ERROR IN THE ANSWER
+*/
+int j;
+double s, olds;
+
+olds = -1.0e30;           /* cokolwiek byle nie (f(a)+f(b))/2 */
+for (j = 1; j &lt;= maxns; ++j) {
+    s = trapzd(f, a, b, j);
+#ifdef DEBUG
+    printf("nrtrap: petla %d, wynik= %f\n", j, s);
+#endif
+    if (abs(s-olds) &lt;= max(aerr, rerr*abs(olds)))
+        return(s);
+    olds = s;
+}
+nrerror("TOO MANY ITERATIONS IN NRTRAP");
+return olds;     /* na wypadek gdyby nrerror() nie konczyl pracy */
+}
+</pre><hr><pre>
+/*
+* nrromb.c
+*/
+
+#include "main.h"
+
+double nrromb(double (*f)(double x), double a, double b, 
+int maxns, double aerr, double rerr) 
+{ /*
+* f() - funkcja calkowana (1-dim)
+* a, b - konce przedzialu calkowania
+* int maxns - max number of steps
+* double aerr - DESIRED ABSOLUTE ERROR IN THE ANSWER
+* double rerr - DESIRED RELATIVE ERROR IN THE ANSWER
+*/
+int j, k;
+double olds;   /* s to bedzie t[0] */
+double t[32];       /* bo 2^31 to granica int na PC */
+double pot4[32];  /* potegi liczby 4 */
+
+olds = -1.0e30;           /* cokolwiek byle nie (f(a)+f(b))/2 */
+for (j = 0; j &lt; maxns; ++j) {  /* petla po wierszach */
+    t[j] = trapzd(f, a, b, j+1);
+#ifdef DEBUG
+    printf("nrromb: petla nr %d\n", j);
+    printf("T[0,%d]= %f\n", j, t[j]);
+#endif
+    if (j == 0)
+        pot4[j] = 1.0;
+    else 
+        pot4[j]= pot4[j-1]*4.0;
+    for(k= j-1; k &gt;= 0; --k) {  /* budowanie nowego wiersza */
+        t[k]= t[k+1]+(t[k+1]-t[k])/(pot4[j-k]-1.0);
+#ifdef DEBUG
+    printf("T[%d,%d]= %f\n", (j-k), k, t[k]);
+#endif
+    }
+    if (abs(t[0]-olds) &lt;= max(aerr, rerr*abs(olds)))
+        return(t[0]);
+    olds = t[0];
+}
+nrerror("TOO MANY ITERATIONS IN NRROMB");
+return olds;  /* na wypadek gdyby nrerror() nie konczyl pracy */
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje, skompilować i uruchomić program.
+
+<h3>ZADANIE 14.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>bisekcja</em>.
+Utworzyć w nim plik <em>Makefile</em> i <em>bisekcja.c</em>
+postaci:
+
+<hr><pre>
+/*
+* bisekcja.c
+*
+* Program do znajdowania miejsc zerowych funkcji metoda bisekcji.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+#define DEBUG
+#define abs(x)                  ((x) &gt;= 0 ? (x) : -(x))
+
+double fun1(double x);
+void wypisz(double fx, double x);
+
+int main(void) 
+{
+const int LKROKOW = 20;
+const double EPS = 1.0e-5;
+int i;
+double x1, x2, xp, fx1, fx2, fxp, df;
+
+x1 = .1;
+x2 = 5.3;
+fx1 = fun1(x1);
+fx2 = fun1(x2);
+
+#ifdef DEBUG
+    printf("lewy   ");
+    wypisz(fx1, x1);
+    printf("prawy   ");
+    wypisz(fx2, x2);
+#endif
+
+if (fx1*fx2 &gt;= 0) {
+    printf("Powinny byc rozne znaki na koncach przedzialu\n");
+    return 1;
+}
+for (i = 0; i &lt; LKROKOW; ++i) {
+    xp = (x1+x2)*0.5;
+    fxp = fun1(xp);
+    df = (fx2-fx1)/(x2-x1);
+#ifdef DEBUG
+    printf("petla %d   ", i);
+    wypisz(fxp, xp);
+#endif
+    if (abs(fxp) &gt; EPS*abs(df)) { 
+        if (fxp*fx1 &lt; 0) {
+            x2 = xp;
+            fx2 = fxp;
+        } else if (fxp*fx1 == 0) {
+            printf("Rozwiazanie:\n");
+            wypisz(fxp, xp);
+            return 0;
+        } else {
+            x1 = xp;
+            fx1 = fxp;
+        }
+    } else {
+        printf("Rozwiazanie:\n");
+        wypisz(fxp, xp);
+        return 0;
+    }
+}
+printf("Za malo petli\n");
+return 1;
+}
+
+double fun1(double x) 
+{
+return sin(x);
+}
+
+void wypisz(double fx, double x) 
+{
+printf("f(x)= %f   x= %f\n", fx, x);
+return;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Umieścić kod związany z bisekcją w osobnej funkcji.
+Do obsługi błędów wykorzystać funkcję <em>nrerror()</em>.
+Przykładowy plik <em>main.h</em> może mieć postać:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;math.h&gt;
+
+#define DEBUG
+#define abs(x)                  ((x) &gt;= 0 ? (x) : -(x)) 
+
+void nrerror(char error_text[]);
+
+double bisekcja(double (*f)(double x), double a, double b, 
+    int maxns, double epsilon);
+</pre><hr>
+
+<h3>ZADANIE 14.3</h3>
+
+<p>Zmienić interfejs funkcji z poprzednich zadań tak, aby
+był zgodny z funkcjami z
+<a href="http://www.gnu.org/software/gsl/">biblioteki GSL</a>.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

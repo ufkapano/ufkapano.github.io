@@ -1,0 +1,336 @@
+<html>
+<head>
+<title>Lekcja 10</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (10) - obsługa plików, struktury</h1>
+
+<h3>ZADANIE 10.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>znaki2</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>znaki.c</em> postaci:
+
+<hr><pre>
+/*
+* znaki.c
+*
+* Zliczanie znakow z pliku.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(void) 
+{
+FILE *plik1;
+char *nazwa = "p1.txt";   /* plik, ktorego znaki zliczamy */
+int nc = 0;     /* liczba znakow w pliku */
+
+plik1 = fopen(nazwa, "r");
+if (plik1 == NULL) {
+    fprintf(stderr, "znaki: nie mozna otworzyc pliku %s\n", nazwa);
+    exit(1);
+}
+while (fgetc(plik1) != EOF)
+    ++nc;
+printf("Liczba znakow w pliku %s wynosi %d\n", nazwa, nc);
+if (fclose(plik1) != 0) {
+    fprintf(stderr, "znaki: blad przy zamykaniu pliku %s\n", nazwa);
+    exit(1);
+}
+return 0;
+}
+</pre><hr>
+
+<p>Stworzyć plik tekstowy <em>p1.txt</em>, skompilować i uruchomić
+program.
+
+<p>Poprawić program, aby nazwa pliku była podawana jako
+argument programu.
+
+<h3>ZADANIE 10.2</h3>
+
+<p>Poprawić program z katalogu <em>dzialania</em>, aby operacje
+wykonywane przez użytkownika były zapisywane do pliku
+<em>dzialania.log</em> (wstawić argument <em>"a"</em>
+w funkcji <em>fopen()</em>).
+
+<h3>ZADANIE 10.3 (NIEOBOWIĄZKOWE)</h3>
+
+<p>Stworzyć program wczytujący dwie kolumny posortowanych liczb
+z dwóch plików i zapisujący jedną posortowaną kolumnę
+liczb (liczby z obu kolumn) do trzeciego pliku. 
+Program powinien prawidłowo reagować również w przypadku
+pustych plików.
+
+<h3>ZADANIE 10.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>skrzynia</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>skrzynia.c</em> postaci:
+
+<hr><pre>
+/*
+* skrzynia.c
+*
+* Program ze strukturami. 
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+struct skrzynia {
+    char nazwa[30];   /* nazwa czesci */
+    int ilosc;        /* ilosc czesci w skrzyni */
+    int cena;         /* cena jednej czesci w groszach */
+};
+struct skrzynia skrzynia_zabawek = {   /* inicjalizacja */
+    "zabawka",    /* nazwa produktu */
+    4,            /* liczba zabawek w skrzyni */
+    599           /* cena zabawki w groszach */
+};
+int wartosc;
+
+wartosc = skrzynia_zabawek.ilosc*skrzynia_zabawek.cena;
+printf("Ilosc zabawek w skrzyni: %d\n", skrzynia_zabawek.ilosc);
+printf("Cena zabawki w groszach: %d\n", skrzynia_zabawek.cena);
+printf("Wartosc zabawek w skrzyni w groszach: %d\n", wartosc);
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. Dopisać struktury dla innych
+produktów i wypisać o nich raport.
+
+<h3>ZADANIE 10.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>complex</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>complex.c</em> postaci:
+
+<hr><pre>
+/*
+* complex.c
+*
+* Program z liczbami zespolonymi. 
+*/
+
+#include &lt;stdio.h&gt;
+
+struct complex_struct {
+    double re;
+    double im;
+};
+typedef struct complex_struct Complex; /* wygodniejsza nazwa typu */
+/* wg konwencji K i R piszemy z dużej litery */
+
+Complex dodaj(Complex a, Complex b);
+
+int main(void) 
+{
+Complex z1 = { 3.4, 1.2 };
+Complex z2 = { 5.1, 5.5 };
+Complex suma;
+
+suma = dodaj(z1, z2);
+printf("(%f, %f) + (%f, %f) = (%f, %f)\n",
+z1.re, z1.im, z2.re, z2.im, suma.re, suma.im);
+return 0;
+}
+
+Complex dodaj(Complex a, Complex b) 
+{ /* przekazywanie przez wartosc */
+Complex s;
+
+s.re = a.re + b.re;
+s.im = a.im + b.im;
+return s;          /* przekazywanie calej struktury */
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. Dopisać funkcje realizujące
+odejmowanie, mnożenie i dzielenie liczb zespolonych.
+
+<h3>ZADANIE 10.6</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>screen</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.c</em>, 
+<em>main.h</em>, oraz pozostałe dla każdej funkcji:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+
+#define max(a,b)         ((a) &lt; (b) ? (b) : (a))
+#define min(a,b)         ((a) &lt; (b) ? (a) : (b))
+
+struct point { /* struktura pojedynczego punktu */
+    int x;
+    int y;
+};
+
+struct rect {            /* struktura prostokata */
+    struct point pt1;   /* lewy dolny wierzcholek */
+    struct point pt2;   /* prawy gorny wierzcholek */
+};
+
+struct point make_point(int x, int y);
+/* Tworzenie punktu */
+
+struct rect canon_rect(struct rect r);
+/* Sprowadzanie prostokata do postaci "kanonicznej" */
+
+void print_point(struct point pt);
+/* Rysowanie punktu */
+
+void print_rect(struct rect r);
+/* Rysowanie prostokata */
+
+int pt_in_rect(struct point p, struct rect r);
+/* Sprawdzanie, czy punkt nalezy do prostokata */
+</pre><hr><pre>
+/*
+* make_point.c
+*/
+
+#include "main.h"
+
+struct point make_point(int x, int y) 
+{
+struct point tmp;
+
+tmp.x = x;
+tmp.y = y;
+return tmp;   /* przekazanie calej struktury */
+}
+</pre><hr><pre>
+/*
+* canon_rect.c
+*
+* Sprowadzanie prostokata do postaci "kanonicznej" -
+* trzymamy lewy dolny i prawy gorny punkt.
+*/
+
+#include "main.h"
+
+struct rect canon_rect(struct rect r) 
+{ /* przekazanie przez wartosc */
+struct rect tmp;
+
+tmp.pt1.x = min(r.pt1.x, r.pt2.x);
+tmp.pt1.y = min(r.pt1.y, r.pt2.y);
+tmp.pt2.x = max(r.pt1.x, r.pt2.x);
+tmp.pt2.y = max(r.pt1.y, r.pt2.y);
+return tmp;             /* przekazanie calej struktury */
+}
+</pre><hr><pre>
+/*
+* pt_in_rect.c
+*
+* Sprawdzanie, czy punkt nalezy do prostokata.
+* Gorna i prawa krawedz nie nalezy do prostokata.
+*/
+
+#include "main.h"
+
+int pt_in_rect(struct point p, struct rect r) 
+{ /* przekazanie przez wartosc */
+if ( (p.x &gt;= r.pt1.x) &amp;&amp; (p.x &lt; r.pt2.x)
+&amp;&amp; (p.y &gt;= r.pt1.y) &amp;&amp; (p.y &lt; r.pt2.y) )
+    return 1;   /* punkt lezy wewnatrz protokata */
+else
+    return 0;   /* punkt lezy na zewnatrz prostokata */
+}
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+const int XMAX = 80;
+const int YMAX = 20;
+struct rect screen;
+struct point middle, second;
+
+screen.pt1 = make_point(0, 0);
+screen.pt2 = make_point(XMAX, YMAX);
+middle = make_point((screen.pt1.x + screen.pt2.x)/2,
+                    (screen.pt1.y + screen.pt2.y)/2);
+print_rect(screen);
+print_point(middle);
+second = make_point(10, 20);
+print_point(second);
+if (pt_in_rect(second, screen) == 1)
+    printf("Punkt wewnatrz prostokata\n");
+else
+    printf("Punkt na zewnatrz prostokata\n");
+return 0;
+}
+</pre><hr>
+
+<p>Dopisać brakujące funkcje.
+Skompilować i uruchomić program.
+Dopisać nowe funkcje, przykłady podane niżej.
+
+<hr><pre>
+int cmp_point(struct point a, struct point b);   /* por. punktow */
+int cmp_rect(struct rect r1, struct rect r2);   /* porownywanie prostokatow */
+int cmp_area(struct rect r1, struct rect r2);   /* por. powierzchni -1|0|+1 */
+int rect_area(struct rect r);                 /* pole pow. */
+int is_empty(struct rect r);                  /* pole pow. 0 */
+int is_subset(struct rect r1, struct rect r2);   /* zawieranie */
+struct rect intersection(struct rect r1, struct rect r2);   /* przecięcie */
+struct rect cover(struct rect r1, struct rect r2);   /* prostokąt, który oba pokryje */
+</pre><hr>
+
+<h3>ZADANIE 10.7</h3>
+
+<p>W katalogu <em>kwadratowe</em> poprawić program, aby
+wykorzystywał funkcję zwracającą strukturę
+
+<hr><pre>
+struct solution {
+    int kod;          /* kod rodzaju rozwiazania */
+    double p1, p2;    /* dwa pierwiastki */
+};
+
+struct solution kwadratowe(double a, double b, double c);
+/*
+* Funkcja obliczająca pierwiastki równania kwadratowego
+*      a * x * x + b * x + c = 0
+* Wynik zapisywany jest do struktury.
+* Kody zwracane przez funkcję:
+* -1 - równanie sprzeczne
+*  0 - brak rozwiazań rzeczywistych
+*  1 - jeden pojedyńczy pierwiastek
+*  2 - jeden podwójny pierwiastek
+*  3 - dwa różne pierwiastki
+*  4 - nieskończona liczba rozwiązań
+*/
+</pre><hr>
+
+<h3>ZADANIE 10.8</h3>
+
+<p>Zapoznać się z programami z książki S. Oualline:
+COPY, 
+FUN-FILE (znaleźć błąd - problem z \n),
+P_ARRAY (znaleźć błąd - tablice).
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,357 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (3) - typy i operatory</h1>
+
+<h3>ZMIENNE</h3>
+
+<p>Zmienną (czy ogólniej obiekt danych) można opisać w trzech kategoriach:
+
+<ul>
+<li><em>Zasięg (scope; widoczność zmiennej w różnych częściach programu).</em>
+Rodzaje zasięgów: 
+blokowy (zmienna jest widoczna od miejsca jej definicji do końca bloku), 
+prototypowy (dotyczy zmiennych występujących w prototypach funkcji; 
+obejmuje zakres od definicji zmiennej do końca prototypu), 
+plikowy (zmienna jest widoczna od miejsca definicji do końca pliku),
+funkcyjny (dla etykiet goto).
+
+<li><em>Łączność (linkage; liczba różnych miejsc, w których tą samą
+zmienną można zadeklarować).</em>
+Rodzaje łączności:
+zewnętrzna (zwykłe zmienne o zasięgu plikowym;
+zmienne tej klasy mogą być wykorzystywane w każdym pliku źródłowym 
+należącym do programu),
+wewnętrzna (zmienne o zasięgu plikowym ze static;
+zmienne tej klasy mogą być wykorzystywane tylko w tym pliku, 
+w którym zostały zadeklarowane),
+brak łączności (zmienne o zasięgu blokowym i prototypowym;
+zmienne tej klasy mogą być wykorzystywane tylko wewnątrz bloku, 
+w którym zostały zdefiniowane).
+
+<li><em>Czas trwania (storage duration; okres pozostawania w pamięci).</em>
+Rodzaje:
+statyczny (zmienne o zasięgu plikowym; 
+zmienna istnieje przez cały czas działania programu),
+automatyczny (np. zmienne lokalne funkcji; zmienne istnieją tylko wówczas, 
+gdy program wykonuje blok, w którym zmienne zostały zdefiniowane).
+</ul>
+
+<p>Język C dostarcza pięciu modeli (klas) zmiennych:
+<ul>
+<li>zmienne automatyczne 
+[zasięg blokowy, brak łączności, czas trwania automatyczny]
+<li>zmienne rejestrowe
+<li>zmienne statyczne o zasięgu blokowym
+<li>zmienne statyczne o łączności zewnętrznej
+<li>zmienne statyczne o łączności wewnętrznej
+</ul>
+
+<h3>ZADANIE 3.1 (FAHR)</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>fahr</em>.
+Utworzyć w nim plik <em>fahr.c</em> postaci:
+
+<hr><pre>
+/* 
+* fahr.c
+*
+* Program wg K i R z petla "for".
+* Przeliczanie stopni Fahrenheita na stopnie Celsjusza.
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+const int LOWER = 0;     /* dolna granica temperatury */
+const int UPPER = 300;   /* gorna granica temperatury */
+const int STEP = 20;     /* rozmiar kroku */
+int fahr;
+float celsius;
+
+for (fahr = LOWER; fahr &lt;= UPPER; fahr = fahr+STEP) {
+    celsius = (5.0/9.0)*(fahr-32);
+    printf("%3d %6.1f\n", fahr, celsius);
+}
+return 0;
+}
+</pre><hr>
+
+<p>Przygotować plik <em>Makefile</em>, skompilować i uruchomić program.
+
+<p>Zastanowić się, jak można wyeliminować zmienną <em>celsius</em>
+z programu.
+
+<p>Poprawić program, aby wypisywał nagłowek.
+
+<p>Zamienić wyrażenie <em>fahr = fahr + STEP</em> na <em>fahr += STEP</em>.
+
+<p>Zastosować w programie pętlę 
+<em>while</em> zamiast <em>for</em>.
+
+<h3>ZADANIE 3.2</h3>
+
+<p>Napisać program przeliczający cale na centymetry
+(kalorie na dżule, mile na kilometry itp.)
+i wypisujący wynik w postaci nagłówka i dwóch kolumn danych.
+
+<h3>ZADANIE 3.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>sizeof</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>sizeof.c</em> postaci:
+
+<hr><pre>
+/*
+* sizeof.c
+*
+* Program wykorzystujacy operator sizeof(). 
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+printf("Rozmiary typow na tym komputerze w bajtach.\n");
+printf("\ttyp char: \t%d\n", sizeof(char));
+printf("\ttyp short: \t%d\n", sizeof(short));
+printf("\ttyp int: \t%d\n", sizeof(int));
+printf("\ttyp long: \t%d\n", sizeof(long));
+printf("\ttyp float: \t%d\n", sizeof(float));
+printf("\ttyp double: \t%d\n", sizeof(double));
+printf("\ttyp long double: \t%d\n", sizeof(long double));
+printf("\ttyp char *: \t%d\n", sizeof(char *));
+printf("\ttyp int *: \t%d\n", sizeof(int *));
+printf("\ttyp float *: \t%d\n", sizeof(float *));
+printf("\ttyp double *: \t%d\n", sizeof(double *));
+printf("\ttyp void *: \t%d\n", sizeof(void *));
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<h3>ZADANIE 3.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>decyzja</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>decyzja.c</em> postaci:
+
+<hr><pre>
+/*
+* decyzja.c
+*
+* Program wykorzystujacy operator ()?():(). 
+* Wypisywanie tablicy liczb.
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+const int N = 64;
+int i;
+
+for (i = 0; i &lt; N; ++i)
+    printf("%c%d", ((i % 8 == 0) ? '\n' : '\t'), i);
+printf("\n");
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program. Przepisać program tak, aby
+nie korzystać z operatora ( ? : ).
+
+<h3>ZADANIE 3.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>filtr</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>filtr.c</em> postaci:
+
+<hr><pre>
+/* 
+* filtr.c
+*
+* Przepisanie wejscia na wyjscie (K i R, str 37).
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+int c;      /* "int" a nie "char", bo ma przyjac EOF */
+
+c = fgetc(stdin);
+while (c != EOF) {
+    fputc(c, stdout);
+    c = fgetc(stdin);
+}
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Poprawić program wykorzystując bardziej zaawansowaną postać
+pętli <em>while</em>:
+<pre>
+while ((c = fgetc(stdin)) != EOF)
+    fputc(c, stdout);
+</pre>
+
+<h3>ZADANIE 3.6</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>znaki</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>znaki.c</em> postaci:
+
+<hr><pre>
+/* 
+* znaki.c
+*
+* Zliczanie znakow ze stdin - petla "while" (K i R str. 39).
+* Jezeli stdin jest puste, to wyjdzie 0 i to jest dobre.
+* Syntax:  ./znaki &lt; plik1 &gt; plik2
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+long nc;      /* number of characters - LONG INT */
+
+nc = 0;
+while (fgetc(stdin) != EOF)
+    ++nc;
+/* Wypisanie liczby znakow */
+printf("Liczba znakow w pliku: %ld\n", nc);
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Przepisać program zamieniając typ zmiennej <em>nc</em>
+z <em>long</em> na <em>float</em>.
+W funkcji <em>printf()</em> zastosować format <em>%.0f</em>.
+
+<h3>ZADANIE 3.7</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>wiersze</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>wiersze.c</em> postaci:
+
+<hr><pre>
+/* 
+* wiersze.c
+*
+* Zliczanie wierszy ze stdin - petla "while" (K i R str. 41).
+* Syntax:  ./wiersze &lt; plik1 &gt; plik2
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+int c;        /* przechowuje znaki i EOF */
+int nl;       /* number of lines */
+
+nl = 0;
+while ((c = fgetc(stdin)) != EOF)
+    if (c == '\n')
+        ++nl;
+/* Wypisanie liczby wierszy */
+printf("Liczba wierszy w pliku: %d\n", nl);
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+
+<p>Poprawić program, aby poza znakami nowego wiersza zliczał
+znaki odstępu i tabulacji.
+
+<h3>ZADANIE 3.8</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>wyrazy</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>wyrazy.c</em> postaci:
+
+<hr><pre>
+/* 
+* wyrazy.c
+*
+* Zliczanie wierszy, slow i znakow ze stdin - petla "while" (K i R str 41).
+* Syntax:  ./wyrazy &lt; plik1 &gt; plik2
+*/
+
+#include &lt;stdio.h&gt;
+
+int main(void) 
+{
+const int TRUE = 1;
+const int FALSE = 0;
+int c;                /* przechowuje znaki i EOF */
+int nl, nw, nc;       /* number of lines, words, characters */
+int inword;           /* czy wewnatrz slowa */
+
+inword = FALSE;
+nl = nw = nc = 0;
+while ((c = fgetc(stdin)) != EOF) {
+    ++nc;
+    if (c == '\n')
+        ++nl;
+    if (c == ' ' || c == '\n' || c == '\t')
+        inword = FALSE;
+    else if (inword == FALSE) {
+        inword = TRUE; 
+        ++nw;
+    }
+}
+/* Wypisanie liczb */
+printf("Liczba wierszy, slow, znakow: %d, %d, %d. \n", nl, nw, nc); 
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Podobne zadanie w systemie UNIX wykonuje polecenie <em>wc</em>.
+
+<h3>ZADANIE 3.9</h3>
+
+<p>Napisać program <em>spacje.c</em>, który - przepisując wejście
+na wyjście - będzie zastępować jednym znakiem odstępu (spacji)  każdy
+ciąg złożony z jednego lub kilku takich znaków.
+Takie zadanie wykonuje polecenie systemu UNIX: 
+
+<pre>
+tr -s " " &lt; plik1 &gt; plik2
+</pre>
+
+<p>Można rozszerzyć działanie programu tak, aby mieszany ciąg
+spacji i tabulacji ('\t') został zamieniony na jedną spację.
+Podział na wiersze nie powinien zostać naruszony.
+
+<h3>ZADANIE 3.10</h3>
+
+<p>Napisać program <em>osobno.c</em>, który każde słowo wejściowe
+wypisze w osobnym wierszu.
+Takie zadanie wykonuje polecenie systemu UNIX: 
+
+<pre>
+tr -cs "a-zA-Z0-9" "[\n*]" &lt; plik1 &gt; plik2
+</pre>
+
+<p>Przez słowo rozumiemy ciąg "czarnych" znaków.
+W wykrywaniu "białych" znaków (odstępów) może pomóc
+funkcja <em>isspace()</em>, z której możemy korzystać
+po włączeniu pliku <em>ctype.h</em>.
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

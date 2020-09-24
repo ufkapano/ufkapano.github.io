@@ -1,0 +1,264 @@
+<html>
+<head>
+<title>Lekcja 6</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (6) - wskaźniki, funkcje standardowe</h1>
+
+<h3>WSKAŹNIK NULL</h3>
+
+<p>Wskaźnik NULL jest zdefiniowany jako wartość wskaźnika
+nie wskazującego na żadną wartość. Często dla uzyskania
+wskaźnika NULL przypisuje się zmiennej wskaźnikowej wartość zero. 
+Funkcja sizeof() w ANSI C dla NULL daje 4 bajty.
+
+<p>Wiele funkcji zwracających zmienną wskaźnikową w przypadku
+niepowodzenia zwraca wskaźnik NULL.
+Dobrym zwyczajem jest jawne inicjalizowanie zmiennych wskaźnikowych
+wartością NULL oraz podstawianie wartości NULL zmiennym z nieaktualnymi
+adresami [np. po zwolnieniu obszaru pamięci funkcją free()].
+
+<h3>WSKAŹNIKI KONTRA INDEKSY</h3>
+
+<p>Przy założeniu, że obie metody będą zastosowane prawidłowo,
+indeksowanie nigdy nie będzie bardziej efektywne niż wskaźniki,
+a wskaźniki czasami będą bardziej efektywne niż indeksy.
+
+<p>Indeksy są łatwiejsze do zrozumienia przez większość ludzi,
+szczególnie w przypadku tablic wielowymiarowych.
+Wskaźniki są efektywniejsze od indeksowania w sytuacji, gdy
+przesuwają się po tablicy o stały krok. 
+Mnożenie (zmiana indeksu razy liczba bajtów) jest wykonywane
+na etapie kompilacji, a więc w czasie działania programu
+wykonywane jest mniej instrukcji i program jest szybszy.
+
+<hr><pre>
+/* zerowanie tablicy */
+const int N = 10;
+int t[N], i, *iptr;
+
+for(i = 0; i &lt; N; ++i) t[i] = 0;       /* indeksy */
+for(i = 0; i &lt; N; ++i) *(t+i) = 0;       /* wskaźniki, ale sens jw */
+for(iptr = t; iptr &lt; t+N; ++iptr) *iptr = 0; /* wskaźniki */
+</pre><hr>
+
+<h3>ZADANIE 6.1</h3>
+
+<p>Poprawić program <em>getline</em> wykorzystując
+wersję wskaźnikową funkcji <em>copy()</em> postaci
+<hr><pre>
+/*
+* Funkcja przepisuje *source do *dest.
+* *dest musi byc dostatecznie duze.
+* Tablice znakow sa odebrane jako wskazniki.
+*/
+void copy(char *dest, char *source) 
+{
+while ((*dest = *source) != '\0') {
+    ++source;
+    ++dest;
+}
+return;
+}
+</pre><hr>
+
+<h3>ZADANIE 6.2</h3>
+
+<p>Poprawić program <em>wektory</em> wykorzystując
+wskaźnikowe wersje funkcji.
+
+<hr><pre>
+void wczytaj(int *v, int n) 
+{ 
+for ( ; n &gt; 0; ++v, --n) {
+    printf("Podaj kolejny element tablicy: ");
+    scanf("%d", v);
+}
+return;
+}
+</pre><hr><pre>
+void wypisz(int *v, int n) 
+{ 
+int i;
+
+for (i = 0; i &lt; n; ++i, ++v)
+    printf("v[ %d ] = %d\n", i, *v);
+/*    printf("v[ %d ] = %d adres %p\n", i, *v, v);  */
+return;
+}
+</pre><hr><pre>
+int suma(int *v, int n) 
+{ 
+int s;
+
+for (s = 0; n &gt; 0; ++v, --n)   /* v rosnie, n maleje */
+    s += (*v);
+return s;
+}
+</pre><hr><pre>
+int minimum(int *v, int n) 
+{ 
+int min;
+
+min = *v;
+for (--n, ++v; n &gt; 0 ; --n, ++v)   /* v rosnie, n maleje */
+    if (*v &lt; min)
+        min = *v;
+return min;
+}
+</pre><hr>
+
+<h3>ZADANIE 6.3</h3>
+
+<p>Zapoznać się z podstawowymi funkcjami z biblioteki
+standardowej.
+<hr><pre>
+#include &lt;stdio.h&gt;  /* wejscie i wyjscie */
+
+/* Formatowane wyjście */
+int printf(const char *format, ...)
+int sprintf(char *s, const char *format, ...)
+int fprintf(FILE *stream, const char *format, ...)
+
+/* Formatowane wejście */
+int scanf(const char *format, ...)
+int sscanf(char *s, const char *format, ...)
+int fscanf(FILE *stream, const char *format, ...)
+
+/* Wyjście znakowe */
+int fputc(int c, FILE *stream)
+int putchar(int c)     /* fputc(c, stdout) */
+
+/* Wejście znakowe */
+int fgetc(FILE *stream)
+int getchar(void)       /* fgetc(stdin) */
+char *fgets(char *s, int n, FILE *stream)
+int ungetc(int c, FILE *stream)
+</pre><hr><pre>
+#include &lt;ctype.h&gt;  /* klasyfikowanie znaków */
+
+int isalnum(int c)
+int isalpha(int c)
+int iscntrl(int c)   /* znak kontrolny */
+int isdigit(int c)   /* cyfra dziesiętna */
+int isgraph(int c)    /* znak drukowalny bez odstępu */
+int islower(int c)    /* mała litera */
+int isprint(int c)   /* znak drukowalny */
+int ispunct(int c)  /* znak drukowalny bez odstępu, liter i cyfr */
+int isspace(int c)
+int isupper(int c)  /* wielka litera */
+int isxdigit(int c)   /* cyfra szesnastkowa */
+
+int tolower(int c)
+int toupper(int c)
+</pre><hr><pre>
+#include &lt;string.h&gt;  /* operacje na tekstach */
+
+char *strcpy(char *s, const char *t)
+char *strncpy(char *s, const char *t, size_t n)
+char *strcat(char *s, const char *t)
+char *strncat(char *s, const char *t, size_t n)
+int strcmp(const char *s, const char *t)
+int strncmp(const char *s, const char *t, size_t n)
+size_t strlen(const char *s)  /* size_t jest obszerniejsze niż int */
+</pre><hr><pre>
+#include &lt;stdlib.h&gt;  /* funkcje narzędziowe */
+
+double atof(const char *s)
+int atoi(const char *s)
+long atol(const char *s)
+int rand(void)   /* zwraca int z przedziału [0, RAND_MAX] */
+void srand(unsigned int seed)   /* np. srand(time(NULL)); */
+void exit(int status)
+int system(const char *)   /* np. system("clear"); */
+int abs(int n)
+long labs(long n)
+</pre><hr>
+
+<h3>ZADANIE 6.4</h3>
+
+<p>W katalogu <em>napisy</em> poprawić funkcje <em>stringlen()</em>
+i <em>reverse()</em>, aby odbierały wskaźnik.
+Stworzyć plik <em>itoa.c</em>.
+
+<hr><pre>
+int stringlen(char *s) 
+{
+char *p = s;
+
+while (*p != '\0')
+    ++p;
+return (p-s);
+}
+</pre><hr><pre>
+/*
+* itoa.c
+*
+* Zamiana liczby calkowitej na znaki w tablicy.
+*/
+
+#include "main.h"
+
+void itoa(int n, char *s) 
+{
+int i, znak;
+
+if ((znak = n) &lt; 0)     /* zanotuj znak liczby */
+    n = -n;
+i = 0;
+do {           /* generuj cyfry w odwrotnym porzadku */
+    s[i] = n % 10 + '0';  /* wez nastepna cyfre */
+    ++i;
+} while ((n /= 10) &gt; 0);      /* usun ja */
+if (znak &lt; 0) {
+    s[i] = '-';
+    ++i;
+}
+s[i] = '\0';
+reverse(s);          /* odwoc kolejnosc cyfr */
+return;
+}
+</pre><hr>
+
+<p>Poprawić odpowiednio pliki <em>main.c</em>, <em>main.h</em> i
+<em>Makefile</em>. Skompilować i uruchomić program.
+
+<h3>ZADANIE 6.5</h3>
+
+<p>W katalogu <em>napisy</em> stworzyć plik <em>itob.c</em> z funkcją
+<pre>
+void itob(int n, char *s, int b);
+/*
+* Zamiana n na znakową reprezentację liczby w systemie o podstawie b.
+* Wynik zapisywany do tablicy s.
+* Przykład: itob(n, s, 16) - zamiana n na postać szesnastkową.
+*/
+</pre>
+
+<p>Poprawić odpowiednio pliki <em>main.c</em>, <em>main.h</em> i
+<em>Makefile</em>. Skompilować i uruchomić program.
+
+<h3>ZADANIE 6.6</h3>
+
+<p>Zapoznać się z programami z książki S. Oualline:
+ARRAY, STR (strcpy, drukowanie napisu), 
+FULL (strcat), LENGTH (fgets, strlen), FULL1, 
+FULL2 (wprowadzanie napisów),
+DOUBLE (wprowadzanie liczb),
+TRI (znaleźć błąd),
+FIB (Fibonacci),
+TOTAL5W (while), TOTAL5F (for),
+CENT (znaleźć błąd),
+SEVEN (znaleźć błąd).
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

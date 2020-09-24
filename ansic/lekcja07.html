@@ -1,0 +1,374 @@
+<html>
+<head>
+<title>Lekcja 7</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (7) - preprocesor, argumenty i opcje programu</h1>
+
+<h3>PREPROCESOR</h3>
+
+<p>Etapy procesu kompilacji.
+
+<hr><pre>
+Kod źródłowy (file.c)
+|
+| przetwarzanie wstępne (preprocesing)  [preprocesor]
+|
+Kod wstępnie przetworzony (file.cpp)
+|
+| kompilacja (compilation)
+|
+Kod asemblera (file.s)
+|
+| asemblacja (assembly)
+|
+Kod obiektowy (file.o)
+|
+| linkowanie (linking) [program scalający (linker)]
+| dodanie kodu bibliotecznego i kodu startowego
+|
+Plik wykonywalny (file|file.out|file.exe)
+</pre><hr>
+
+<p>Dyrektywy preprocesora.
+
+<hr><pre>
+#define  NAZWA  abc
+#undef  NAZWA
+#define  NAZWA(parametry)   zawartość         /* makro */
+#define  SKLEJAJ(lewy, prawy)  lewy ## prawy
+/* SKLEJAJ(nazwa, 2) utworzy słowo nazwa2 */
+#include &lt;plik.h&gt;
+#include "plik.h"
+
+#if (A==B)   /* wiersz z if */
+...
+#elif (A==C)   /* opcjonalne */
+...
+#else   /* opcjonalne */
+...
+#endif
+/* Inne wiersze z if:
+#ifdef  NAZWA
+#ifndef  NAZWA 
+*/
+
+#line stała "nazwa_pliku"
+#line stała
+#error ciąg_leksemów   /* wypisanie komunikatu diagnostycznego */
+#pragma ciąg_leksemów
+#           /* pusta instrukcja preprocesora */
+
+
+Symbole predefiniowane preprocesora:
+__FILE__  nazwa kompilowanego pliku
+__LINE__  numer kolejny bieżącego wiersza w pliku
+__DATE__  data kompilacji pliku
+__TIME__  czas kompilacji pliku
+__STDC__  sprawdzanie zgodności ze standardem ANSI C
+
+W systemie UNIX można definiować symbole preprocesora w wierszu poleceń 
+podczas wywoływania polecenia inicjującego kompilację.
+Funkcja ta jest użyteczna w połączeniu z kompilacją warunkową.
+-Dnazwa
+-Dnazwa=zawartość
+-Unazwa           (usuwanie symbolu)
+</pre><hr><pre>
+/* Postać pliku nagłówkowego zawierająca zabezpieczenie 
+przed wielokrotnym wstawianiem. */
+#ifndef  PLIK_H
+#define  PLIK_H
+/* właściwa treść pliku plik.h  */
+#endif
+</pre><hr>
+
+<h3>ZADANIE 7.1</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>auto</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>auto.c</em> postaci:
+
+<hr><pre>
+/*
+* auto.c
+*
+* Program wykorzystujacy kompilacje warunkowa. 
+*/
+
+#include &lt;stdio.h&gt;
+/* Dla wygody definiujemy symbole */
+#define AUTO_FIAT   1
+#define AUTO_FORD   2
+#define AUTO_OPEL   3
+#define AUTO_BMW    4
+/* Tutaj definiujemy nasz obecny przypadek */
+#define AUTO_MOJE AUTO_BMW
+
+int main(void) 
+{
+#if (AUTO_MOJE == AUTO_FIAT)
+    printf("Najlepsze auto to Fiat\n");
+#elif (AUTO_MOJE == AUTO_FORD)
+    printf("Najlepsze auto to Ford\n");
+#elif (AUTO_MOJE == AUTO_OPEL)
+    printf("Najlepsze auto to Opel\n");
+#elif (AUTO_MOJE == AUTO_BMW)
+    printf("Najlepsze auto to BMW\n");
+#else
+    printf("To nie powinno sie zdarzyc\n");
+#endif   /* symbol AUTO_MOJE - przydatny komentarz */
+return 0;
+}
+</pre><hr>
+
+<p>Przeprowadzić kompilację etapami oglądając pliki pośrednie:
+<ul>
+<li>preprocesing: <em>gcc -E auto.c -o auto.cpp</em> 
+<li>kompilacja: <em>gcc -x cpp-output -S auto.cpp -o auto.s</em> 
+<li>asemblacja: <em>gcc -c auto.s -o auto.o</em> 
+<li>linkowanie: <em>gcc auto.o -o auto</em> 
+</ul>
+
+<h3>ZADANIE 7.2</h3>
+
+<p>W katalogu <em>makra</em> stworzyć program wykorzystujący
+przykładowe makra parametryzowane.
+Makra są beztypowe, czyli działają na argumentach dowolnego
+typu, dla którego dozwolone są zastosowane operatory.
+
+<pre>
+#define abs(x)           ((x) &gt;= 0 ? (x) : -(x)) 
+#define max(a,b)         ((a) &lt; (b) ? (b) : (a))
+#define min(a,b)         ((a) &lt; (b) ? (a) : (b))
+#define kwadrat(a)        ((a) * (a))
+</pre>
+
+<p>Warto przypomnieć w tym miejscu funkcje standardowe
+
+<pre>
+#include &lt;stdlib.h&gt;
+
+int abs(int n)
+long labs(long n)
+
+#include &lt;math.h&gt;
+
+double fabs(double x)
+</pre>
+
+<h3>ZADANIE 7.3</h3>
+
+<p>Zapoznać się z programami z książki S. Oualline:
+VARS (zmienne stałe i tymczasowe),
+TRI-SUB (funkcja),
+LEN (znaleźć błąd),
+LEN2 (continue);
+użycie preprocesora -
+INIT2A, INIT2B (#define),
+BIG (znaleźć błąd),
+FIRST (znaleźć błąd),
+MAX (znaleźć błąd),
+SIZE (znaleźć błąd),
+DIE (znaleźć błąd),
+SQR (makro, znaleźć błąd),
+SQR-I (makro, znaleźć błąd),
+REC (makro, znaleźć błąd);
+użycie wskaźników -
+THING, CALL,
+ARRAY-P (wyświetlanie wskaźników), 
+PTR2, PTR3, 
+INIT-A (tablice i funkcje).
+
+<h3>ZADANIE 7.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>pelikan</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>pelikan.c</em> postaci:
+
+<hr><pre>
+/*
+* pelikan.c
+*
+* Program korzystajacy z parametrow wywolania. 
+*/
+
+#define DEBUG
+#include &lt;stdio.h&gt;
+
+int main(int argc, char *argv[]) 
+{
+int i;
+
+printf("Wydruk parametrow wywolania:\n");
+for (i = 0; i &lt; argc; ++i)
+    printf("Parametr nr %d to string: %s\n", i, argv[i]);
+if (argv[argc] == NULL)
+    printf("To prawdza ze argv[argc] == NULL\n");
+
+#ifdef DEBUG
+    printf("Pracujemy w trybie DEBUG...\n");
+#endif   /* DEBUG */
+
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować program, a następnie uruchomić poleceniem:
+<em>./pelikan a b c</em>
+
+<p>Sprawdzić zachowanie programu po wykomentowaniu definicji
+symbolu <em>DEBUG</em>.
+
+<h3>ZADANIE 7.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>dzialania</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>dzialania.c</em> postaci:
+
+<hr><pre>
+/*
+* dzialania.c
+*
+* Program wykonujacy proste obliczenia w linii komend. 
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdlib.h&gt;
+
+int main(int argc, char *argv[]) 
+{
+double x, y;
+
+if (argc &lt; 3) {
+    printf("Syntax: ./[ dodaj | pomnoz ] liczba1 liczba2\n");
+} else if (strcmp(argv[0],"./dodaj") == 0) {
+    x = atof(argv[1]);
+    y = atof(argv[2]);
+    printf("%f + %f = %f\n", x, y, x+y);
+} else if (strcmp(argv[0],"./pomnoz") == 0) {
+    x = atof(argv[1]);
+    y = atof(argv[2]);
+    printf("%f * %f = %f\n", x, y, x*y);
+} else {
+    printf("Dzialanie nieokreslone\n");
+}
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować program do pliku <em>dzialania</em>, a następnie utworzyć
+linki symboliczne poleceniami:
+<pre>
+ln -s dzialania dodaj
+ln -s dzialania pomnoz
+</pre>
+
+<p>Uruchomić program na kilka sposobów:
+<pre>
+./dzialania
+./dzialania 3 5
+./dodaj 4 3
+./pomnoz 2 5
+</pre>
+
+<p>Poprawić program, aby obsługiwał dzielenie, procenty, itp.
+
+<h3>ZADANIE 7.6</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>fabryka</em>.
+Utworzyć w nim pliki <em>Makefile</em> i <em>fabryka.c</em> postaci:
+
+<hr><pre>
+/*
+* fabryka.c
+*
+* Program korzystajacy z opcji i argumentow. 
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+#define TRUE 1
+#define FALSE 0
+
+int verbose = FALSE;   /* tryb pelnej informacji */
+char *infile = "data.in"; /* nazwa pliku wejsciowego domyslnego */
+char *outfile = "data.out"; /* nazwa pliku wyjsciowego domyslnego */
+char *program_name; /* nazwa programu */
+
+void przetwarzaj(char *filename) 
+{
+printf("Verbose: %s\nPlik wejsciowy: %s\nPlik wyjsciowy: %s\n",
+    (verbose == TRUE ? "TRUE" : "FALSE"), filename, outfile);
+}
+
+void usage(void) 
+{
+fprintf(stderr, "Syntax: %s [opcje] [lista plikow]\n",program_name);
+fprintf(stderr, "Opcje\n");
+fprintf(stderr, " -h         pomoc (help)\n");
+fprintf(stderr, " -v         tryb pelnej informacji (verbose)\n");
+fprintf(stderr, " -o&lt;nazwa&gt;  nazwa pliku wyjsciowego\n");
+exit(1);
+}
+
+int main(int argc, char *argv[]) 
+{
+/* zapisanie nazwy programu, bo potem bedzie zly dostep */
+program_name = argv[0];
+/* przetwarzanie opcji */
+while ((argc &gt; 1) &amp;&amp; (argv[1][0] == '-')) {
+    if (argv[1][1] == 'v') {      /* -v tryb pelnej informacji */
+        verbose = TRUE;
+    } else if (argv[1][1] == 'o') {
+        outfile = &amp;argv[1][2];
+    } else if (argv[1][1] == 'h') {
+        usage();
+    } else {
+        fprintf(stderr, "Nieprawidlowa opcja %s\n", argv[1]);
+        usage();
+    }
+    ++argv;  /* przesuwa liste argumentow o jeden w gore */
+    --argc;  /* zmniejsza licznik o jeden */
+}
+/* 
+* W tym miejscu opcje sa przetworzone.
+* Rozpoczynamy przetwarzanie podanych plikow lub infile.
+*/
+if (argc == 1) {
+    przetwarzaj(infile);
+} else {
+    while (argc &gt; 1) {
+        przetwarzaj(argv[1]);
+        ++argv;
+        --argc;
+    }
+}
+return 0;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program sprawdzając różne opcje
+i argumenty.
+
+<p>Często programy w systemie Linux mogą pobierać ustawienia
+z wielu źródeł, tj. dana opcja może być ustawiana w wielu
+lokalizacjach. Zwykle ważność opcji maleje w następującej
+kolejności:
+
+<ul>
+<li>opcje wiersza poleceń, 
+<li>opcje pliku konfiguracyjnego lokalnego (użytkownika), 
+<li>opcje pliku konfiguracyjnego globalnego (systemowego),
+<li>opcje wkompilowane (ustawienia domyślne).
+</ul>
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

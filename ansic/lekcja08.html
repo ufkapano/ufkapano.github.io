@@ -1,0 +1,353 @@
+<html>
+<head>
+<title>Lekcja 8</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w C (index)</a>
+<hr>
+
+<h1>Programowanie w C (8) - matematyka</h1>
+
+<h3>OBLICZENIA NUMERYCZNE I SYMBOLICZNE</h3>
+
+<ul>
+<li><a href="http://www.gnu.org/software/">The GNU Project - software</a> 
+(GSL, ATLAS, octave, gcc, nano, make, hello)
+<li><a href="http://www.nr.com/">Numerical Recipes</a> (C, C++, Fortran)
+<li><a href="http://maxima.sourceforge.net/">Maxima, 
+a Computer Algebra System</a> (obliczenia symboliczne)
+<!--
+<li><a href=""></a>
+-->
+</ul>
+
+<h3>LICZBY ZMIENNOPRZECINKOWE</h3>
+
+<p>Liczby rzeczywiste x są zapamiętywane zwykle jako liczby 
+zmiennoprzecinkowe postaci x = M * N^W, gdzie
+M to mantysa, W wykładnik, N podstawa części potęgowej (2, 10 lub 16).
+Zwykle N = 2, 1/2 &lt;= M &lt; 1.
+
+<p>Przykład [Fortuna, Macukow, Wąsowski]. 
+Rozważmy maszynę, w której liczby zmiennoprzecinkowe
+przechowywane są w 8 bitach, M to 5 bitów, W to 3 bity.
+Pierwszy bit M i W przechowuje znak (1 to liczba ujemna).
+Machine accuracy to najmniejsza liczba zmiennoprzecinkowa,
+która dodana do liczby zmiennoprzecinkowej 1.0,
+daje wynik różny od 1.0 [Numerical Recipes].
+Machine accuracy jest związane z roundoff error.
+
+<hr><pre>
+Największa liczba dodatnia
+x = (0)1111 (0)11
+x [10] = (1/2+1/4+1/8+1/16)*2^{1*2+1*1} = (15/16)*8 = 15/2 = 7.5 [10]
+
+Najmniejsza liczba dodatnia
+x = (0)0001 (1)11
+x [10] = (1/16)*2^{-3} = (1/16)*(1/8) = 1/128 = 0.0078125 [10]
+
+Jedynka x = 1.0 [10]    reprezentowane dokładnie
+x = (0)1000 (0)01 = (0)0100 (0)10 = (0)0010 (0)11
+
+Dwie dziesiąte x = 0.2 [10]   reprezentowane w przybliżeniu
+y1 = (0)1100 (1)10 = (0)0011 (0)00 = 3/16 = 0.1875
+|x-y1| = 0.0125
+błąd względny epsilon = 0.0625
+y2 = (0)1101 (1)10 = (13/16)*(1/4) = 13/64 = 0.203125
+|x-y2| = 0.003125
+błąd względny epsilon = 0.015625
+
+Machine accuracy epsilon
+epsilon = (0)0001 (0)01 = 1/8 = 0.125 [10]
+</pre><hr>
+
+<h3>ZADANIE 8.1</h3>
+
+<p>Zapoznać się z podstawowymi funkcjami matematycznymi 
+z biblioteki standardowej. Szczegółowe informacje o danej funkcji
+mozna znaleźć w podręczniku systemowym, np. <em>man floor</em>.
+
+<hr><pre>
+#include &lt;math.h&gt;  /* funkcje matematyczne */
+
+double sin(double x)
+double cos(double x)
+double tan(double x)
+double asin(double x)
+double acos(double x)
+double atan(double x)
+double atan2(double y, double x) /* tan^-1(y/x) */
+double sinh(double x)
+double cosh(double x)
+double tanh(double x)
+double exp(double x)
+double log(double x)           /* ln (x) */
+double log10(double x)
+double pow(double x, double y) /* x^y */
+double sqrt(double x)
+double ceil(double x)          /* ograniczenie z góry */
+double floor(double x)         /* ograniczenie z dołu */
+double fabs(double x)          /* |x| */
+double ldexp(double x, int n)
+double frexp(double x, int *exp)
+double modf(double x, double *ip)
+double fmod(double x, double y)
+</pre><hr>
+
+<h3>ZADANIE 8.2</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>horner</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em> i <em>horner.c</em> postaci:
+
+<hr><pre>
+/*
+* horner.c
+*
+* Wyliczanie wartosci wielomianu stopnia n-1 wg schematu Hornera.
+*/
+
+#include "main.h"
+
+float horner(int n, float wa[], float x) 
+{ /*
+* int n - dlugosc wektora wspolczynnikow
+* float wa[] - wspolczynniki a[k] przy x^k
+* float x - argument wielomianu
+*/
+float p;
+
+for (p = wa[--n]; n > 0; )      /* petla wykona sie (n-1) razy */
+    p = p * x + wa[--n];
+return p;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Ciekawe informacje na temat algorytmu Hornera można znaleźć
+na Wikipedii (wersja polska i angielska).
+
+<h3>ZADANIE 8.3</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>my_exp</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em> i <em>my_exp.c</em> postaci:
+
+<hr><pre>
+/*
+* main.h
+*
+* Plik naglowkowy.
+*/
+
+#include &lt;stdio.h&gt;
+#include &lt;math.h&gt;
+
+#define DEBUG
+
+double my_exp(double x);
+</pre><hr><pre>
+/*
+* main.c
+*/
+
+#include "main.h"
+
+int main(void) 
+{
+double x;
+
+printf("Podaj wartosc x: ");
+scanf("%lf", &amp;x);
+printf("my_exp( %f ) = %f\n", x, my_exp(x));
+printf("   exp( %f ) = %f\n", x, exp(x));
+return 0;
+}
+</pre><hr><pre>
+/*
+* my_exp.c
+*/
+
+#include "main.h"
+
+double my_exp(double x) 
+{
+const double EPS = 1e-3;
+double w = 1.0;        /* pomiedzy iteracjami pamietany jest */
+double s = 1.0;        /* ostatni wyraz i cala suma */
+int i;
+/* exp(x) = 1 + x + x^2/2! + x^3/3! + x^4/4! + ... */
+for (i = 1; fabs(w) &gt; EPS; ++i) {
+    w *= (x/(double)i);
+    s += w;
+#ifdef DEBUG
+    printf("my_exp: petla nr %d\n", i);
+#endif
+}
+return s;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Sprawdzić jak funkcja zachowuje się dla różnych wartości <em>EPS</em>.
+Zmienić warunek końca pętli tak, aby obliczała n pierwszych
+wyrazów szeregu.
+
+<p>Uwzględnić jednocześnie oba warunki zakończenia pętli.
+
+<h3>ZADANIE 8.4</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>my_sin</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em> i <em>my_sin.c</em> postaci:
+
+<hr><pre>
+/*
+* my_sin.c
+*/
+
+#include "main.h"
+
+double my_sin(double x) 
+{
+const int N = 100;
+double w = x;
+double s = x;
+double xx = x * x;
+int i;
+
+for (i = 3; i &lt; N; i += 2) {
+    w *= (-1) * xx/(i*(i-1));
+    s += w;
+#ifdef DEBUG
+    printf("my_exp: petla nr %d; w = %f   s = %f\n", i, w, s);
+#endif
+}
+return s;
+}
+</pre><hr>
+
+<p>Skompilować i uruchomić program.
+Zmienić warunek końca pętli tak, aby petla kończyła działanie
+gdy bieżący wyraz jest bliski zeru.
+
+<p>Uwzględnić jednocześnie oba warunki zakończenia pętli.
+
+<h3>ZADANIE 8.5</h3>
+
+<p>W katalogu domowym utworzyć podkatalog <em>kwadratowe</em>.
+Utworzyć w nim pliki <em>Makefile</em>, <em>main.h</em>,
+<em>main.c</em> i <em>kwadratowe.c</em> z funkcją postaci:
+
+<pre>
+int kwadratowe(double a, double b, double c, double s[]);
+/*
+* Funkcja obliczająca pierwiastki równania kwadratowego
+*      a * x * x + b * x + c = 0
+* Wynik zapisywany jest do tablicy s[2].
+* Kody zwracane przez funkcję:
+* -1 - równanie sprzeczne (s[] pusta) 
+*  0 - brak rozwiazań rzeczywistych (s[] pusta)
+*  1 - jeden pojedyńczy pierwiastek (s[0] zawiera liczbę)
+*  2 - jeden podwójny pierwiastek (s[0] zawiera liczbę)
+*  3 - dwa różne pierwiastki (s[0] i s[1] zawierają liczby)
+*  4 - nieskończona liczba rozwiązań (s[] pusta)
+*/
+</pre>
+
+<h3>ZADANIE 8.6</h3>
+
+<p>W katalogu <em>sortowanie</em> stworzyć nowe pliki postaci:
+
+<hr><pre>
+/*
+* quicksort.c
+*
+* Autor algorytmu: C. A. Hoare (1962).
+* Dla danej tablicy wybiera sie jeden element, a pozostale
+* rozdziela na dwa podzbiory - tych elementow, ktore sa mniejsze
+* od wybranego, i tych, ktore sa od niego wieksze lub sa mu rowne.
+* Nastepnie proces ten powtarza sie rekurencyjnie dla kazdego
+* z podzbiorow. Gdy podzbior ma mniej niz dwa elementy, nie
+* potrzebuje juz byc porzadkowany. Osiagniecie tego stanu
+* konczy rekurencje.
+* W naszym rozwiazaniu elementem podzialu kazdej tablicy na dwie
+* podtablice jest element srodkowy (K i R, str. 124).
+*/
+
+#include "main.h"
+
+/*
+* Porzadkowanie v[left]...v[right] rosnaco.
+* Korzystamy z pomocniczej funkcji swap().
+*/
+void quicksort(int v[], int left, int right) 
+{ 
+int i, last;
+
+if (left &gt;= right)  /* nic nie rob, jesli tablica zawiera */
+    return;     /* mniej niz dwa elementy */
+swap(v, left, (left+right)/2);  /* element podzialu */
+last = left;                  /* przesun do v[0] */
+for (i = left+1; i &lt;= right; ++i)  /* podzial */
+    if (v[i] &lt; v[left]) {
+        ++last;
+        swap(v, last, i);
+    }
+swap(v, left, last);    /* odtworz element podzialu */
+quicksort(v, left, last-1);
+quicksort(v, last+1, right);
+return;
+}
+</pre><hr><pre>
+/*
+* swap.c
+*
+* Zamiana miejscami v[i] i v[j].
+*/
+
+#include "main.h"
+
+void swap(int v[], int i, int j) 
+{ 
+int tmp;
+
+tmp = v[i];
+v[i] = v[j];
+v[j] = tmp;
+return;
+}
+</pre><hr><pre>
+/*
+* cmp_int.c
+*/
+
+#include "main.h"
+
+int cmp_int(const void *data1, const void *data2) 
+{
+return *(int *)data1 - *(int *)data2;
+}
+</pre><hr>
+
+<p>Zmodyfikować pozostałe pliki, aby można było korzystać z sortowania
+tablic metodą quicksort za pomocą funkcji quicksort() i qsort()
+z biblioteki standardowej (stdlib.h). 
+Skompilować i uruchomić program.
+Wywołanie funkcji qsort() ma postać
+
+<pre>
+qsort(v, N, sizeof(int), cmp_int);
+</pre>
+
+<p>Przygotować funkcję cmp_double() i zastosować ją do sortowania tablic
+liczb typu double za pomocą funkcji qsort().
+
+<hr>
+<p><a href="index.html">Programowanie w C (index)</a>
+
+</body>
+</html>

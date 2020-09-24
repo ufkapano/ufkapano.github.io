@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>vi</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Korzystanie z edytora <em>vi</em></h1>
+
+<h3>TRYBY PRACY VI</h3>
+
+<hr><pre>
+[Esc]           +------------------------+
+sygnał          | STAN 1                 |
+dzwiękowy +-----+ Edycja tekstu          |&lt;----+ [a][o][i]
+          |     +------------------------+     |
+          |                                    |
+          |     +------------------------+-----+
+          +----&gt;| STAN 2                 |&lt;----+ [Esc]
+WE ------------&gt;| Polecenia klawiszowe   |     | sygnał dzwiękowy
+          +----&gt;|                        +-----+
+          |     +------------------------+-----+
+          |                                    |
+[Esc]     |     +------------------------+     |
+[Enter]   +-----+ STAN 3                 |&lt;----+ [:][/][?]
+                | Edycja wiersza poleceń |
+                +-----------+------------+
+                            |
+                            +------------------&gt; WY
+                :q!,[Enter]
+                :wq,[Enter]
+</pre><hr>
+
+<h3>WYBRANE POLECENIA W TRYBIE KOMEND</h3>
+
+<pre>
+:q! [Enter] - wyjdź z edytora bez zapisywania zmian
+:w - zapisz
+:w plik1 - zapisz do plik1
+:wq - zapisz zmiany i wyjdź z edytora (to samo co `:x')
+</pre>
+
+<h3>MANEWROWANIE KURSOREM</h3>
+
+<p>Zwykle można używać klawiszy kursora oraz [PgUp] i [PgDn],
+ale w przypadku nietypowych komputerów są zamienniki.
+
+<pre>
+[spacja] - w prawo, [Backspace] - w lewo,
+[l] - w lewo, [h] - w prawo, [j] - w dół, [k] - w górę,
+[Enter] - kursor na początek wiersza i w dół,
+[w] - wyraz w prawo, [b] - wyraz w lewo,
+[Ctrl]+[f] - ekran w dół, [Ctrl]+[b] - ekran w górę,
+liczba[G] - przejście do wiersza numer "liczba", [G] - koniec pliku,
+[Ctrl]+[g] - ujawnienie pozycji kursora (wiersz i kolumna)
+</pre>
+
+<h3>EDYCJA TEKSTU</h3>
+
+<pre>
+i - insert (przejście do trybu wstawiania)
+a - add (wstawianie za kursorem)
+x - usuń znak w pozycji kursora
+dd - usuń wiersz (znika cała linia)
+cc - wymaż wiersz (zostaje pusta linia i tryb wstawiania)
+r - replace (zamiana znaku)
+u - undo (cofnij zmiany ostatniego polecenia)
+o - dodanie nowego pustego wiersza poniżej kursora i tryb wstawiania
+J - połączenie dwóch wierszy w jeden
+</pre>
+
+</body>
+</html>
