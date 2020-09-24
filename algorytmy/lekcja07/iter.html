@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Iteratory</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Iterator jest obiektem reprezentującym strumień danych.
+Kolejne wywołania metody next() zwracają kolejne elementy ze strumienia danych.
+Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania next()
+wyzwalają wyjątek StopIteration.
+
+<p>Kolejna wymagana metoda iteratorów to __iter__(), która zwraca sam
+obiekt iteratora. Po każdym iteratorze można iterować (jest iterable). 
+Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
+od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
+iterator (dla list dostaniemy świeży iterator idący od początku listy).
+Kiedy iterator zostanie wyczerpany, nie można użyć ponownie ani zresetować.
+
+<hr><pre>
+class Reverse:
+    """Iterator odwrotny."""
+
+    def __init__(self, data):
+        self.data = data
+        self.idx = len(data)
+
+    def __iter__(self):   # typowa postać
+        return self
+
+    def next(self):
+        if self.idx == 0:
+            raise StopIteration
+        self.idx = self.idx - 1
+        return self.data[self.idx]
+
+    __next__ = next   # kompatybilność z Pythonem 3
+        # W Pythonie 2 mamy X.next().
+        # W Pythonie 3 i 2.6+ mamy next(X).
+
+# Zastosowanie
+for char in Reverse("spam"):
+    print ( char )   # m, a, p, s
+
+print ( list(Reverse("spam")) )   # ['m', 'a', 'p', 's']
+
+for item in Reverse([1, 2, 3, 4]):
+    print ( item )   # 4, 3, 2, 1
+</pre><hr><pre>
+# https://www.programiz.com/python-programming/iterator
+
+for element in iterable:
+    # do something with element
+
+# Działanie takiej pętli for można opisać następująco.
+
+# create an iterator object from that iterable
+iter_obj = iter(iterable)
+
+# infinite loop
+while True:
+    try:
+        # get the next item
+        element = iter_obj.next()       # Python 2
+        #element = next(iter_obj)       # Python 3
+        # do something with element
+    except StopIteration:
+        # if StopIteration is raised, break from loop
+        break
+</pre><hr>
+
+<p>Wg dokumentacji Pythona, generatory dostarczają wygodnego sposobu
+implementacji protokołu iteracji.
+Każdy generator jest iteratorem, ale nie na odwrót.
+
+
+</body>
+</html>

@@ -1,0 +1,278 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Algorytmika</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p><em>Algorytmika</em> jest dziedziną wiedzy zajmującą się badaniem 
+algorytmów (konstrukcja, własności).
+<em>Algorytm</em> to zbiór reguł postępowania umożliwiających rozwiązanie 
+określonego zadania w skończonej liczbie kroków i w skończonym czasie. 
+W informatyce algorytmy są ściśle związane z przetwarzanymi przez 
+nie strukturami danych (algorytmy + struktury danych = programy).
+
+<p><em>Specyfikacja</em> to ścisła definicja problemu do rozwiązania 
+(zadania do wykonania). Składa się z danych początkowych, 
+warunków jakie mają one spełniać (warunki początkowe) 
+oraz danych wyjściowych i warunków, jakie muszą one spełniać 
+(warunki końcowe). Warunki końcowe określają również związek danych 
+wyjściowych z wejściowymi.
+
+<p>Model algorytmu.
+
+<ul>
+<li>Dane wejściowe - muszą pochodzić z dobrze zdefiniowanego zbioru.
+Czasem istotną częścią algorytmu jest weryfikacja danych.
+<li>Zestaw czynności - musi być precyzyjnie określony.
+<li>Dane wyjściowe (wynikowe) - wynik może by numeryczny (wartości liczbowe) 
+lub nienumeryczny (odpowiedź TAK/NIE, określony stan, itp.).
+</ul>
+
+<p>Sposoby zapisu algorytmu.
+
+<ul>
+<li>Opis słowny 
+<li>Lista kroków 
+<li>Schemat blokowy 
+<li>Drzewo 
+<li>Pseudokod 
+<li>Implementacja w języku wysokiego poziomu
+[to będzie preferowane na wykładzie]
+</ul>
+
+<p>Klasyfikacja algorytmów.
+
+<ul>
+<li>Algorytmy sekwencyjne (kroki algorytmu wykonywane sekwencyjnie) 
+i równolegle (kroki algorytmu wykonywane równolegle).
+
+<li>Algorytmy numeryczne (wykonywanie obliczeń) 
+i nienumeryczne (przetwarzanie danych).
+
+<li>Algorytmy iteracyjne (algorytm wykonuje obliczenia w pętli 
+dla zmieniającej się wartości parametru) i rekurencyjne 
+(algorytm w kolejnych krokach wywołuje sam siebie dla nowych wartości 
+parametrów wykonania).
+</ul>
+
+<p>Techniki rozwiązywania problemów.
+
+<ul>
+<li>Algorytmy siłowe - krokowe przeszukiwanie całej przestrzeni
+możliwych rozwiązań [wyszukiwanie liniowe].
+
+<li>Algorytmy z powrotami (backtracking) - algorytmy rekurencyjne
+przeszukujące całą przestrzeń rozwiązań, ale z inteligentnym
+porzucaniem gałęzi nie rokujących nadziei na sukces
+[droga skoczka szachowego (Wirth)].
+
+<li>Algorytmy <em>dziel i zwyciężaj</em> - algorytmy rekurencyjne
+dzielące problem na rozłączne podproblemy.
+
+<li>Programowanie dynamiczne - algorytmy rekurencyjne wykorzystujące
+pokrywanie się podproblemów [liczby Fibonacciego].
+
+<li>Algorytmy zachłane - w każdym kroku dokonuje najlepiej rokującego 
+w danym momencie wyboru rozwiązania częściowego
+[problem plecakowy ciągły].
+
+<li>Programowanie liniowe - oceniamy rozwiązanie problemu przez pewną 
+funkcję jakości i szukamy jej minimum.
+
+<li>Algorytmy heurystyczne - rozwiązywanie problemu trudnego
+przez rozwiązanie problemu łatwego, którego rozwiązanie daje
+się w prosty sposów przekształcić w rozwiązanie problemu trudnego
+[Swacha: podanie liczby wyrazów w napisie przez obliczenie liczby
+spacji].
+
+<li>Algorytmy probabilistyczne lub randomizowane - wykorzystanie 
+losowania (losowości) w działaniu algorytmu.
+W praktyce oznacza to, że implementacja takiego algorytmu korzysta 
+przy obliczeniach z generatora liczb losowych.
+Wyróżniamy dwa podstawowe rodzaje algorytmów probabilistycznych: 
+<em>algorytmy Las Vegas</em> [zawsze zwraca prawidłową odpowiedź, 
+ale czas jego działania nie jest z góry ustalony], 
+<em>algorytmy Monte Carlo</em> [zawsze kończą się w ustalonym czasie,
+ale mogą z pewnym prawdopodobieństwem zwrócić zły wynik, 
+bądź zwracają wynik tylko z pewną dokładnością;
+przykład ze Swachy: obliczanie liczby pi przez losowanie 
+punktów z kwadratu z wpisanym kołem].
+
+<li>Metody inteligencji obliczeniowej (algorytmy heurystyczne, 
+stosowane do rozwiązywaniem problemów, które nie są efektywnie 
+algorytmizowalne) - 
+obliczenia ewolucyjne (algorytmy genetyczne), 
+obliczenia rozmyte, oraz sieci neuronowe.
+
+<li>Algorytmy kwantowe - algorytmy zaimplementowane na komputerach
+kwantowych, posługujących się qubitami (a nie bitami),
+oraz zjawiskiem splątania kwantowego.
+Dużym problemem komputerów kwantowych jest dekoherencja ich stanów
+[rozkład liczby na czynniki pierwsze w czasie wielomianowym;
+kryptografia kwantowa].
+
+</ul>
+
+<h3>ALGORYTMY LINIOWE</h3>
+
+<p>Algorytm liniowy (sekwencyjny) ma postać listy kroków, które bezwarunkowo 
+mają być wszystkie wykonane zgodnie z kolejnością, w jakiej występują.
+
+<hr><pre>
+SPECYFIKACJA
+Problem: Obliczanie pola trójkąta o danych długościach jego boków.
+
+DANE WEJŚCIOWE
+Trzy liczby a, b i c, będące długościami boków trójkąta.
+
+DANE WYJŚCIOWE
+S - pole trójkąta o bokach długości a, b, c.
+</pre><hr><pre>
+LISTA KROKÓW
+
+K01: Obliczyć połowę długości obwodu trójkąta 
+    p = (a + b + c)/2.
+
+K02: Obliczyć pole trójkąta S według wzoru Herona
+    S = sqrt(p * (p-a) * (p-b) * (p-c)).
+</pre><hr><pre>
+Sprawdzenie warunku, aby trzy liczby były długościami boków trójkąta.
+Oznaczamy: 2 * p = a + b + c.
+a &lt; b + c,  b &lt; a + c,  c &lt; a + b,
+2 * a &lt; 2 * p,  2 * b &lt; 2 * p,  2 * c &lt; 2 * p,
+p - a &gt; 0,  p - b &gt; 0,  p - c &gt; 0.
+Możemy zmodyfikować specyfikację zadania.
+
+SPECYFIKACJA
+Problem: Obliczanie pola trójkąta.
+
+DANE WEJŚCIOWE
+Trzy dowolne liczby a, b i c.
+
+DANE WYJŚCIOWE
+Jeżeli liczby a, b i c są długościami boków pewnego trójkąta, 
+to oblicz pole S tego trójkąta. W przeciwnym razie wyprowadź komunikat, 
+że dane liczby nie są długościami boków żadnego trójkąta.
+</pre><hr>
+
+<h3>ALGORYTMY Z ROZGAŁĘZIENIAMI</h3>
+
+<p>Algorytm z warunkami (rozgałęzieniami) zawiera pewną liczbę 
+kroków warunkowych, które są wykonywane wtedy, 
+gdy spełnione są pewne warunki.
+
+<p>Problem: Analiza rozwiązań równania liniowego postaci 
+a * x + b * y = c.
+
+<p>Problem: Analiza rozwiązań równania kwadratowego postaci 
+a * x * x + b * x + c = 0.
+
+<h3>ALGORYTMY ITERACYJNE</h3>
+
+<p>W algorytmie iteracyjnym pewna liczba kroków jest wielokrotnie 
+powtarzana z liczbą powtórzeń z góry zadaną lub zależną od wyników obliczeń.
+Iteracja to powtarzanie pewnych operacji.
+
+<h3>ALGORYTM HORNERA</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: Obliczanie wartości wielomianu.
+
+WEJŚCIE
+n - stopień wielomianu, 
+a[] - współczynniki wielomianu (n+1 liczb), 
+x - argument wielomianu.
+
+WYJŚCIE
+Wartość wielomianu dla argumentu x.
+</pre><hr><pre>
+w(x) = a[1] * x + a[0]                  # 1 mnożenie, 1 dodawanie
+w(x) = a[2] * x * x + a[1] * x + a[0]   # 3 mnożenia, 2 dodawania
+w(x) = (a[2] * x + a[1]) * x + a[0]     # 2 mnożenia, 2 dodawania
+w(x) = a[3] * x * x * x + a[2] * x * x + a[1] * x + a[0]    # 6 m, 3 d
+w(x) = ((a[3] * x + a[2]) * x + a[1]) * x + a[0]            # 3 m, 3 d
+
+p = a[3]                      # przygotowanie do iteracji
+p = p * x + a[2]              # 3 iteracje
+p = p * x + a[1]
+p = p * x + a[0]
+</pre><hr><pre>
+Algorytm: Schemat Hornera (1819 rok).
+Lista kroków.
+
+K01: Przyjmij współczynnik wielomianu przy najwyższej potędze 
+za początkową wartość, czyli podstaw p = a[n] (p jest zmienną pomocniczą).
+
+K02: n razy oblicz wartość wyrażenia p = p * x + a[i] dla kolejnych 
+współczynników wielomianu, czyli dla i = (n-1), (n-2), ..., 1, 0.
+</pre><hr>
+
+<p>Złożoność: dla wielomianu stopnia n należy wykonać n mnożeń i n dodawań.
+
+<p>Schemat Hornera jest optymalny pod względem liczby wykonywanych 
+działań (1971 Borodin).
+
+<p>Zastosowania: zamiana liczb z systemu binarnego na dziesiętny, 
+szybkie podnoszenie do potęgi.
+
+<h3>LICZBY PIERWSZE</h3>
+
+<p>Liczba naturalna jest pierwsza, jeśli dzieli się tylko przez 1 
+i przez siebie. Liczbę naturalną, która nie jest pierwszą, 
+nazywa się liczbą złożoną.
+
+<p>Rozkładem liczby na czynniki pierwsze (faktoryzacją) nazywamy 
+przedstawienie liczby w postaci iloczynu jej czynników pierwszych 
+z uwzględnieniem ich krotności.
+
+<p>Problem: Podać rozkład liczby n na czynniki pierwsze lub sprawdzić, 
+że jest to liczba pierwsza.
+
+<p>Problem: Znaleźć wszystkie liczby pierwsze w wybranym przedziale liczb 
+lub znaleźć dużą liczbę pierwszą.
+
+<hr><pre>
+SPECYFIKACJA
+Problem: Znaleźć wszystkie liczby pierwsze mniejsze od danej liczby.
+
+WEJŚCIE
+Liczba naturalna n.
+
+WYJŚCIE
+Lista liczb pierwszych mniejszych od n.
+
+Algorytm: Sito Eratostenesa.
+</pre><hr><pre>
+SPECYFIKACJA
+Problem: Rozkład liczby na czynniki pierwsze.
+
+WEJŚCIE
+Liczba naturalna n.
+
+WYJŚCIE
+Przedstawienie liczby n w postaci
+n = p[1] * p[2] * ... * p[k], 
+p[1] &lt;= p[2] &lt;= ... &lt;= p[k],
+gdzie p[i] to liczby pierwsze.
+</pre><hr>
+
+<h3>METODA SIŁOWA</h3>
+
+<p>Algorytm siłowy (brute force algorithm) - tak określa się algorytm,
+który opiera się na sukcesywnym sprawdzeniu wszystkich możliwości
+w poszukiwaniu rozwiązania problemu, zamiast skupiać się na jego
+szczegółowej analizie. Jest to zwykle nieoptymalna, ale najprostsza
+do zaimplementowania i najbardziej skuteczna metoda postępowania
+(tzn. znajdziemy rozwiązanie, jeżeli istnieje, 
+ale często dużym nakładem pracy).
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Lista</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Lista to ADT, który reprezentuje skończoną liczbę uporządkowanych
+elementów (wartości) mogących się powtarzać.
+Jeżeli liczba uporządkowanych elementów może być potencjalnie nieskończona,
+to używa się pojęcia strumienia.
+Lista to podstawowy przykład kontenera do przechowywania elementów.
+Typowe operacje dla ADT List:
+<ul>
+<li>konstruktor tworzący pustą listę,
+<li>testowanie, czy lista nie jest pusta [len(L) == 0, empty()],
+<li>dołączanie elementu do początku listy [L.insert(0, item)],
+<li>dołączanie elementu na koniec listy [L.append(item)],
+<li>dołączanie elementu przed element na pozycji i [L.insert(i, item)],
+<li>dostęp do głowy (head), czyli pierwszego (lewego skrajnego) elementu (L[0]),
+<li>dostęp do ogona (tail), czyli ostatniego (prawego skrajnego) elementu (L[-1]),
+<li>dostęp do elementu o danym indeksie i (numeracja od 0 lub 1, L[i], find(i)),
+<li>pobieranie wycinka listy (L[i:j]),
+<li>sortowanie listy [sort()],
+<li>łączenie dwóch list posortowanych w jedną listę posortowaną [merge()],
+<li>usunięcie elementu o danym indeksie i (del L[i]),
+<li>czyszczenie listy [clear()].
+</ul>
+
+<p>ADT List jest typowo implementowany jako lista powiązana 
+(liniowa lub cykliczna) lub tablica, zwykle o zmiennej długości.
+W Pythonie ADT List jest realizowany przez wbudowany typ list.
+
+</body>
+</html>

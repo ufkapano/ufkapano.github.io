@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyjątki jako klasy</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Zalety wyjątków opartych na klasach.
+
+<ul>
+<li>Można je organizować w kategorie.
+<li>Dołączają informacje o stanie.
+<li>Obsługują dziedziczenie.
+</ul>
+
+
+<hr><pre>
+# Dawne podejście - wyjątek to string.
+MyError = "MyError"
+
+raise MyError, "message"      # wywołanie wyjątku
+</pre><hr><pre>
+# Nowe podejście - wyjątek to klasa wywiedziona z Exception.
+# Do nazwy dajemy suffix "Error", o ile wyjątek to błąd.
+class MyError(Exception):
+    """Warto stworzyć wiersz dokumentujący."""
+    pass
+
+raise MyError("message")                # wywołanie wyjątku
+exception = MyError("a", "b")           # instancja wyjątku
+# W atrybucie args znajduje się krotka argumentów konstruktora domyślnego.
+print ( exception.args )                # ('a', 'b')
+# Domyślnie str() wyświetla zawartość atrybutu args.
+print ( exception )                     # ('a', 'b')
+</pre><hr><pre>
+try:
+    raise MyError()       # instancja
+except MyError:
+#except MyError as exception:
+    print ( "przechwycenie MyError" )
+</pre><hr>
+
+<p>Jeżeli wyjątek został wyzwolony z argumentami, to w instancji
+wyjątku są domyślnie przechowywane jako krotka w atrybucie <em>args</em>.
+Dla wygody klasa Exception definiuje metodę __str__()
+wyświetlającą argumenty, dzięki czemu
+nie musimy bezpośrednio odwoływać się do atrybutu <em>args</em>.
+
+<p>Można zdefiniować własny konstruktor wyjątku (__init__).
+Podobnie można określić własny sposób wyświetlania wyjątku (__str__).
+
+<hr><pre>
+class MyError(Exception):
+
+    def __init__(self, value):      # nasz konstruktor wyjątku
+        self.value = value
+
+    def __str__(self):              # zmiana sposobu wyświetlania wyjątku
+        return repr(self.value)
+
+try:
+    raise MyError(2*2)    # instancja
+except MyError as exception:  # Python 2.6+ i 3.x
+# except MyError, exception:   # Python 2.6-
+# Python 3 interpretuje przecinek jako oznaczający krotkę.
+# Obiekt exception jest to zgłoszona instancja klasy MyError.
+    print ( "mam wyjątek, value {}".format(exception.value) )
+    print ( "mam wyjątek, value {}".format(exception) ) # jw, bo jest __str__
+
+import sys
+
+print ( "Zgłoszono wyjątek {}".format(sys.exc_info()) )
+</pre><hr>
+
+<p>Ostatnio zgłoszony i przechwycony wyjątek jest dostępny ogólnie, 
+jako drugi argument krotki wyników wywołania sys.exc_info(),
+(typ, wartość, ślad), (type, value, traceback).
+Jeżeli żaden wyjątek nie jest obsługiwany, to zwracana krotka ma postać
+(None, None, None).
+
+<h3>INSTRUKCJA RAISE</h3>
+
+<p>Do jawnego wywoływania wyjątków służy instrukcja <em>raise</em>.
+
+<hr><pre>
+# Składnia.
+# Zgłoszenie instancji klasy [najbardziej typowe].
+# raise instancja
+raise IndexError()
+raise IndexError("Nasz komunikat")
+
+# Utworzenie i zgłoszenie instancji klasy.
+# raise klasa
+raise IndexError
+raise               # ponowne zgłoszenie ostatniego wyjątku
+
+# Dla wbudowanych wyjątków mamy równoważne formy.
+raise KeyError
+raise KeyError()
+
+# Utworzenie instancji z wyprzedzeniem.
+exception = IndexError()
+raise exception
+</pre><hr>
+
+<h3>INSTRUKCJA ASSERT</h3>
+
+<p>Instrukcja <em>assert</em> jest składniowym skrótem
+dla często wykorzystywanego w debugowaniu wzorca
+z instrukcją <em>raise</em>.
+Instrukcję <em>assert</em> można usunąć z kodu bajtowego 
+skompilowanego programu, jeżeli w wierszu poleceń Pythona
+użyjemy opcji -O (<em>python -O main.py</em>), 
+tym samym optymalizując program.
+Instrukcję <em>assert</em> najczęściej wykorzystuje się
+do weryfikowania warunków programu w czasie jego tworzenia
+(tzw. sytuacje niemożliwe).
+Nie powinno się używać <em>assert</em> do obsługi błędów użytkownika,
+czy innych błędów pojawiających się w trakcie pracy programu.
+
+<hr><pre>
+# Składnia.
+assert warunek
+assert warunek, komunikat
+# warunek to wyrażenie zwracające bool
+# komunikat to strig
+
+# Równoważny kod.
+if __debug__:
+    if not warunek:
+        raise AssertionError(komunikat)
+</pre><hr><pre>
+&gt;&gt;&gt; x = 1
+&gt;&gt;&gt; assert x == 0
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AssertionError
+&gt;&gt;&gt; assert x == 0, "x have to be zero"
+Traceback (most recent call last):
+  File "<stdin>", line 1, in <module>
+AssertionError: x have to be zero
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>HIERARCHIA KLAS DLA WYJĄTKÓW WBUDOWANYCH</h3>
+
+<p>Kiedy except z instrukcji try wymienia klasę nadrzędną,
+przechwytuje instancje tej klasy, a także instancje wszystkich
+jej klas podrzędnych.
+
+<hr><pre>
+&gt;&gt;&gt; import exceptions          # Python 2.6
+&gt;&gt;&gt; help(exceptions)           # drzewo klas
+</pre><hr><pre>
+BaseException                 # Python 2.5+
+    +-- SystemExit
+    +-- KeyboardInterrupt
+    +-- GeneratorExit
+    +-- Exception   # all other current built-in exceptions
+        +-- StopIteration
+        +-- StandardError
+        |    +-- ArithmeticError
+        |    +-- AssertionError
+        |    +-- AttributeError
+        |    +-- NameError
+        |    +-- SyntaxError
+        |        +-- IndentationError
+        |    +-- TypeError
+        |    +-- ValueError
+        |    +-- ImportError
+        |    +-- MemoryError
+        |    +-- RuntimeError
+        |        +-- NotImplementedError
+        |    +-- EnvironmentError
+        |        +-- IOError
+        |        +-- OSError
+        |    +-- LookupError
+        |        +-- IndexError
+        |        +-- KeyError
+        |    +-- ...
+        +-- Warning
+            +-- DeprecationWarning
+            +-- UserWarning
+            +-- SyntaxWarning
+            +-- RuntimeWarning
+            +-- ...
+</pre><hr>
+
+<p>Wybrane wyjątki.
+
+<ul>
+
+<li><strong>ArithmeticError</strong>.
+Klasa bazowa dla wyjątków związanych z błędami arytmetycznymi.
+
+<li><strong>AssertionError</strong>.
+Powstaje gdy wyrażenie <em>assert</em> napotka False.
+
+<li><strong>IndexError</strong>. 
+Powstaje kiedy indeks sekwencji jest poza dozwolonym zakresem.
+Jeżeli indeks nie jest liczbą całkowitą, to powstaje TypeError.
+
+<li><strong>KeyError</strong>. 
+Powstaje kiedy słownik (ogólnie mapping) nie posiada żądanego klucza.
+
+<li><strong>LookupError</strong>.
+Wspólna klasa bazowa dla IndexError i KeyError.
+
+<li><strong>NameError</strong>.
+Powstaje kiedy lokalna lub globalna nazwa zmiennej nie zostaje znaleziona.
+
+<li><strong>SyntaxError</strong>.
+Powstaje kiedy parser napotka błąd składniowy.
+
+<li><strong>TypeError</strong>.
+Powstaje kiedy operacja lub funkcja jest zastosowana do obiektu
+niewłaściwego typu.
+
+<li><strong>EnvironmentError</strong>.
+Wspólna klasa bazowa dla IOError i OSError.
+
+<li><strong>ValueError</strong>.
+Powstaje kiedy wbudowana operacja lub funkcja otrzymuje argument
+właściwego typu, ale mający niewłaściwą wartość.
+Chodzi o sytuację podobną do tej opisywanej przez IndexError.
+
+</ul>
+
+
+</body>
+</html>

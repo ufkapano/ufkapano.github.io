@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Klasa Group (wersja 1)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W pierwszej wersji grupa będzie zbiorem, w którym
+przechowywane będą instancje klasy Perm.
+Klasa Group będzie dziedziczyć z klasy set.
+
+<p>Implementacja działa tylko dla małych grup permutacji,
+ale prezentuje wiele aspektów programowania w Pythonie.
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+from perms import Perm
+
+class Group(set):
+    """Klasa reprezentująca grupę permutacji."""
+
+    def __init__(self, size):
+        """Tworzenie trywialnej grupy permutacji rzedu 1."""
+        self.size = size        # rozmiar permutacji w grupie
+        self.add(Perm(self.size))
+
+    # __str__ dziedziczone z set
+
+    # __contains__ dziedziczone z set
+
+    order = set.__len__            # rzad grupy
+
+    def insert(self, perm):
+        """Wstawianie permutacji do grupy."""
+        if self.size != perm.size:
+            raise ValueError("different size")
+        if perm in self:
+            return
+        old_order = self.order()
+        self.add(perm)
+        perms_added = set()               # dodawane perms
+        perms_added.add(perm)
+        perms_generated = set()               # nowo powstale perms
+        new_order = self.order()
+        while new_order > old_order:
+            old_order = new_order
+            for perm1 in perms_added:
+                for perm2 in self:
+                    perm3 = perm1 * perm2
+                    if perm3 not in self:
+                        perms_generated.add(perm3)
+            self.update(perms_generated)
+            perms_added = perms_generated
+            perms_generated = set()
+            new_order = self.order()
+
+    def listperms(self):
+        """Zwraca liste permutacji z grupy."""
+        return list(self)
+
+    def iterperms(self):
+        """Iterator po permutacjach z grupy."""
+        return iter(self)
+
+    def is_trivial(self):
+        """Test if the group is trivial."""
+        return len(self) == 1
+
+</pre><hr><pre>
+# Przykład zastosowania: symetrie prostokąta.
+# 0-1
+# | |
+# 3-2
+N = 4
+G = Group(N)
+# Dodajemy dwa obroty.
+R1 = Perm(N, [1, 0, 3, 2])   # oś obrotu pionowa
+R2 = Perm(N, [3, 2, 1, 0])   # oś obrotu pozioma
+G.insert(R1)
+G.insert(R2)
+# Wygeneruje się obrót o 180 stopni, permutacja [2, 3, 0, 1].
+print ( G )                                # dziedziczone po słownikach
+print ( "order {}".format(G.order()) )                # 4, rząd grupy D_2
+print ( "contains {}".format(Perm(N) in G) )          # True
+print ( "contains {}".format(Perm(N, [1, 0, 2, 3]) in G) )   # False
+print ( "listperms {}".format(G.listperms()) )
+for perm in G.iterperms():
+    print ( "{} {}".format(perm, perm.label()) )
+</pre><hr>
+
+</body>
+</html>

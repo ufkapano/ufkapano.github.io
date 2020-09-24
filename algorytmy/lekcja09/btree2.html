@@ -1,0 +1,136 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Klasa BinarySearchTree</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<h3>IMPLEMENTACJA 2</h3>
+
+<p>Badamy obiektową implementację drzewa poszukiwań binarnych 
+z klasą BinarySearchTree.
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł drzewa binarnego."""
+
+    def __init__(self, data=None, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+    def __str__(self):
+        return str(self.data)
+
+    def insert(self, node):
+        if node.data &lt; self.data:   # mniejsze na lewo
+            if self.left:
+                self.left.insert(node)
+            else:
+                self.left = node
+        else:   # większe lub równe na prawo
+            if self.right:
+                self.right.insert(node)
+            else:
+                self.right = node
+
+    def count(self):
+        counter = 1
+        if self.left:
+            counter += self.left.count()
+        if self.right:
+            counter += self.right.count()
+        return counter
+
+    def search(self, data):
+        if self.data == data:
+            return self
+        if data &lt; self.data:
+            if self.left:
+                return self.left.search(data)
+        else:
+            if self.right:
+                return self.right.search(data)
+        return None
+
+    def remove(self, data):  # self na pewno istnieje
+        # Są lepsze sposoby na usuwanie.
+        if data &lt; self.data:
+            if self.left:
+                self.left = self.left.remove(data)
+        elif self.data &lt; data:
+            if self.right:
+                self.right = self.right.remove(data)
+        else:                # self.data == data
+            if self.left is None:   # przeskakuje self
+                return self.right
+            else:     # self.left na pewno niepuste
+                # Szukamy największego w lewym poddrzewie.
+                node = self.left
+                while node.right:   # schodzimy w dół
+                    node = node.right
+                node.right = self.right   # przyczepiamy
+                return self.left
+        return self
+
+
+class BinarySearchTree:
+    """Klasa reprezentująca binarne drzewo poszukiwań."""
+
+    def __init__(self):
+        self.root = None
+
+    def insert(self, node):
+        if self.root:
+            self.root.insert(node)
+        else:
+            self.root = node
+
+    def count(self):
+        if self.root:
+            return self.root.count()
+        else:
+            return 0
+
+    def search(self, data):   # zwraca node lub None
+        if self.root:
+            return self.root.search(data)
+        else:
+            return None
+
+    def remove(self, data):
+        if self.root:
+            self.root = self.root.remove(data)
+</pre><hr>
+
+<h3>IMPLEMENTACJA 3</h3>
+
+<p>Można rozważyć inną implementację drzewa BST, w której klasa Node
+ma tylko metody __init__ i __str__, a cała praca jest przeniesiona
+do metod w klasie BinarySearchTree.
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł drzewa binarnego."""
+
+    def __init__(self, data=None, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+    def __str__(self):
+        return str(self.data)
+
+
+class BinarySearchTree:
+    """Klasa reprezentująca binarne drzewo poszukiwań."""
+    pass
+</pre><hr>
+
+</body>
+</html>

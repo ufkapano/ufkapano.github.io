@@ -1,0 +1,204 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Programowanie dynamiczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>https://en.wikipedia.org/wiki/Dynamic_programming
+
+<p>https://medium.com/@codingfreak/top-50-dynamic-programming-practice-problems-4208fed71aa3
+
+<p>https://stackoverflow.com/questions/1065433/what-is-dynamic-programming
+
+<p>Programowanie dynamiczne jest techniką lub strategią projektowania
+algorytmów, stosowaną przeważnie do rozwiązywania zagadnień 
+optymalizacyjnych. Jest alternatywą dla niektórych zagadnień
+rozwiązywanych za pomocą algorytmów zachłannych.
+Wynalazcą techniki jest amerykański matematyk Richard Bellman.
+
+<p>Programowanie dynamiczne ma na celu wykorzystanie zalet
+podejścia rekurencyjnego (prostota, przejrzystość) i eliminację
+jego wad (zasobożerność). Konstrukcja programu wykorzystującego
+zasadę programowania dynamicznego może być sformułowana
+w trzech punktach.
+
+<ul>
+<li><strong>Koncepcja: </strong>
+Dla danego problemu stwórz rekurencyjny model jego 
+rozwiązania (wraz z jednoznacznym określeniem przypadków elementarnych). 
+
+<li><strong>Inicjalizacja: </strong>
+Wpisz do tablicy wartości numeryczne, 
+odpowiadające przypadkom elementarnym. 
+
+<li><strong>Progresja:</strong>
+Na podstawie wartości numerycznych wpisanych do tablicy, 
+używając formuły rekurencyjnej, oblicz rozwiązanie problemu wyższego 
+rzędu i wpisz je do tablicy; postępuj w ten sposób do osiągnięcia 
+podanej wartości.
+</ul>
+
+<p>Programowanie dynamiczne przypomina metodę dziel i zwyciężaj,
+ponieważ w obu metodach wykorzystujemy rekurencję.
+Jednak w metodzie dziel i zwyciężaj podproblemy są rozłączne
+(np. przy sortowaniu są to różne fragmenty tablicy).
+W programowaniu dynamicznym wykorzystujemy powtarzanie się
+podproblemów na kolejnych etapach rekurencji.
+Liczba istotnie różnych podproblemów jest wielomianowa,
+co wykorzystuje metoda programowania dynamicznego.
+W metodzie siłowej wiele razy rozwiązuje się te same problemy,
+co zwykle prowadzi do ponadwielomianowej złożoności.
+
+<p>Problem można rozwiązać metodą programowania dynamicznego, 
+jeżeli ma dwie kluczowe właściwości.
+
+<ol>
+
+<li><strong>Powtarzające się podproblemy</strong> 
+(ang. overlapping subproblems). Podproblemy te rozwiązujemy tylko raz 
+i zapamiętujemy ich rozwiązanie (ang. memoization).
+
+<li><strong>Optymalna podstruktura</strong> (ang. optimal substructure).
+Problem ma własność optymalnej podstruktury, jeżeli może być
+rozwiązany z użyciem rozwiązań podproblemów.
+Inaczej mówiąc: optymalne rozwiązanie problemu zawiera w sobie
+optymalne rozwiązanie podproblemu.
+
+</ol>
+
+<h3>CIĄG FIBONACCIEGO</h3>
+
+<p>Technika programowania dynamicznego może być zastosowana
+do problemu obliczania wyrazów ciągu Fibonacciego.
+
+<hr><pre>
+# Programowanie dynamiczne wstępujące, wersja z listą.
+def fibonacci(n):
+    F = [0] + n * [1]   # trzymamy wszystkie wartości
+    for i in range(2, n+1):
+        F[i] = F[i-1] + F[i-2]
+    return F[n]
+</pre><hr><pre>
+# Programowanie dynamiczne wstępujące, wersja ze słownikiem.
+def fibonacci(n):
+    F = {0:0, 1:1}   # trzymamy wszystkie wartości
+    for i in range(2, n+1):
+        F[i] = F[i-1] + F[i-2]
+    return F[n]
+</pre><hr>
+
+<p>W technice programowania dynamicznego zstępującego
+wartości obliczne są tylko wtedy, gdy są potrzebne.
+
+<hr><pre>
+# Programowanie dynamiczne zstępujące.
+FIBONACCI = {0:0, 1:1}   # globalny słownik
+
+def fibonacci(n):
+    global FIBONACCI
+    if n not in FIBONACCI:
+        FIBONACCI[n] = fibonacci(n-1) + fibonacci(n-2)
+    return FIBONACCI[n]
+</pre><hr><pre>
+# Programowanie dynamiczne zstępujące.
+# Słownik z wynikami ukryty w instancji klasy.
+# Można wykorzystać wyniki z poprzednich wywołań funkcji.
+class FibonacciClass:
+
+    def __init__(self):
+        self.cache = {0:0, 1:1}
+
+    def __call__(self, n):
+        if n not in self.cache:
+            self.cache[n] = self(n-1) + self(n-2)
+        return self.cache[n]
+
+fibonacci = FibonacciClass()
+print fibonacci(10)
+print fibonacci(20)
+print fibonacci.cache   # podgląd zapamiętanych wyników
+</pre><hr>
+
+<h3>PROBLEM PLECAKOWY</h3>
+
+<p>Problem plecakowy (ang. knapsack problem) należy do problemów
+optymalizacyjnych.
+Wersja decyzyjna problemu plecakowego jest problemem NP-zupełnym
+i jest jednym z 21 NP-zupełnych problemów Karpa.
+Problem polega na znalezieniu takiego podzbioru elementów,
+aby suma wartości była jak największa, a suma wag nie była
+większa od danej pojemności plecaka.
+Nie można wybierać ułamkowch części elementów.
+Metody rozwiązywania problemu plecakowego.
+
+<ul>
+<li>Przegląd zupełny (metoda siłowa) znajduje najlepsze rozwiązanie,
+ale ma złożoność wykładniczą O(2^n).
+
+<li>Problem plecakowy może być rozwiązany przy użyciu programowania 
+dynamicznego, ale rozwiązanie wielomianowe nie jest znane.
+
+<li>Zachłanny algorytm aproksymacyjny sortuje elementy w kolejności 
+malejącej porównując stosunek wartości do wagi elementu.
+Złożoność obliczeniowa algorytmu zależy od sortowania 
+[zwykle O(n log n)].
+</ul>
+
+<p>Wikipedia, Knapsack problem,
+https://en.wikipedia.org/wiki/Knapsack_problem
+
+<h3>PROBLEM CIĘCIA PRĘTA</h3>
+
+<p>Cormen s. 363.
+
+<p>Dynamic Programming — Rod Cutting Problem
+
+<p>http://algorithms.tutorialhorizon.com/dynamic-programming-rod-cutting-problem/
+
+<h3>PROBLEM ŚCIEŻKI O MINIMALNYM KOSZCIE</h3>
+
+<p>Dynamic Programming — Minimum Cost Path Problem
+
+<p>http://algorithms.tutorialhorizon.com/dynamic-programming-minimum-cost-path-problem/
+
+<h3>ALGORYTM KADANE'A</h3>
+
+<p>Problem znajdowania podmacierzy o maksymalnej sumie elementów.
+Oryginalna wersja algorytmu dotyczy macierzy jednowymiarowej,
+ale istnieją uogólnienia na większą liczbę wymiarów.
+
+<p>https://en.wikipedia.org/wiki/Maximum_subarray_problem
+
+<h3>BIOINFORMATYKA</h3>
+
+<p>W bioinformatyce programowanie dynamiczne pojawia się
+w algorytmie Needlemana-Wunscha i innych algorytmach.
+
+<p>https://en.wikipedia.org/wiki/Needleman%E2%80%93Wunsch_algorithm
+
+<h3>TEORIA GRAFÓW</h3>
+
+<p>Algorytm Dijkstry (najkrótsze ścieżki z jednego źródła,
+nieujemne wagi krawędzi). Jeżeli R znajduje się na najkrótszej
+ścieżce od P do Q, to znamy już najkrótsza ścieżkę od R do Q
+(optymalna podstruktura).
+
+<p>Algorytm Bellmana-Forda (najkrótsze ścieżki z jednego źródła,
+możliwe ujemne wagi krawędzi, brak ujemnych cykli).
+
+<p>Algorytm Floyda-Warshalla (najkrótsze ścieżki pomiędzy wszystkimi
+parami wierzchołków, możliwe ujemne wagi krawędzi, brak ujemnych cykli).
+Złożoność obliczeniowa to O(V^3).
+Wykorzystuje się relację rekurencyjną na najkrótsze ścieżki.
+
+<p>Algorytmy wykorzystujące drzewo dekompozycji grafu.
+
+
+</body>
+</html>

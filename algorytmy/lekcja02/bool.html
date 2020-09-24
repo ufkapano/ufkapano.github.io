@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Typ bool</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Typ logiczny <em>bool</em> to dwie stałe: 
+<em>True</em> (dawniej równe 1) i 
+<em>False</em> (dawniej równe 0).
+<em>True</em> i <em>False</em> pojawiły się w Pythonie 2.3.
+Jednak ogólnie w Pythonie jako fausz logiczny traktuje się:
+
+<ul>
+<li>liczbę zero (0, 0.0, 0e0, 0j, itp.),
+<li><em>False</em>,
+<li><em>None</em> (null),
+<li>puste kolekcje (pusta lista, tuple, słownik, itp.),
+<li>puste napisy,
+<li>obiekty posiadające metodę __nonzero__(), 
+jeśli zwraca ona <em>False</em> lub 0.
+</ul>
+
+<p>Wszystko inne jest prawdą logiczną.
+
+<p>Operatory <em>and</em> i <em>or</em> zwracają wartość ostatnio
+obliczonego wyrażenia.
+
+<p>Wartości logiczne zwracane przez operatory porównania, 
+operator zawierania (<em>in</em>) oraz operator negacji
+(<em>not</em>) reprezentowane są przez obiekty
+<em>True</em> i <em>False</em>.
+
+<p>Operatory porównania można łączyć tak jak w zapisie matematycznym.
+Priorytety operatorów od najwyższego: not, and, or.
+<br>
+Przykładowo (A or not B and C)
+<br>
+jest równoważne (A or ((not B) and C)).
+<br>
+Dla pewności można jednak stosować nawiasy.
+
+<p>Wyrażenia logiczne są obliczane od lewej do prawej (tak jak w języku C), 
+czyli jeżeli wiadomo jaki będzie rezultat, to nie są sprawdzane do końca
+wszystkie segmenty wyrażenia, np.
+
+<ul>
+<li><em>(False and Anything)</em> zwraca <em>False</em>,
+<em>Anything</em> nie jest sprawdzane,
+<li><em>(True and Anything)</em> zwraca <em>Anything</em>,
+ale nie przekształca wyniku do typu <em>bool</em>,
+<li><em>(True or Anything)</em> zwraca <em>True</em>,
+<em>Anything</em> nie jest sprawdzane,
+<li><em>(False or Anything)</em> zwraca <em>Anything</em>,
+ale nie przekształca wyniku do typu <em>bool</em>.
+</ul>
+
+<p>Trzeba pamiętać, że wyrażenie <em>Anything</em> może być samo w sobie 
+niepoprawne, np. odwołanie się poza obszar listy.
+
+<p>Operatory porównań:
+a &lt; b, a &lt;= b, a &gt; b, a &gt;= b, 
+a == b, a &lt;&gt; b [zniknie], a != b.
+
+<p>Testy identyczności: a is b, a is not b.
+
+<p>Zawieranie się w sekwencji: a in sequence, a not in sequence.
+
+<p>Sekwencje w Pythonie są porównywane leksykograficznie.
+Dozwolone jest porównywanie obiektów różnych typów,
+ale rezultaty mogą zależeć od wersji języka.
+
+
+</body>
+</html>

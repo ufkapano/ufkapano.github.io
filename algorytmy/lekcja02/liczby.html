@@ -1,0 +1,305 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Liczby</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Python posiada kilka wbudowanych typów liczbowych:
+
+<ul>
+<li>Liczby całkowite typu <em>int</em>,
+<li>Liczby całkowite długie typu <em>long</em>
+[tożsamy z int w Pythonie 3],
+<li>Liczby zmiennoprzecinkowe, rzeczywiste typu <em>float</em>,
+<li>Liczby zespolowe typu <em>complex</em>.
+</ul>
+
+<p>Typy importowane jako moduły:
+
+<ul>
+<li>Liczby dziesiętne o ustalonej precyzji 
+(moduł <em>decimal</em>, klasa <em>Decimal</em>, Python 2.4+).
+<li>Ułamki implementujące obiekt liczby wymiernej, gdzie
+jawnie przechowuje się licznik i mianownik
+(moduł <em>fractions</em>, klasa <em>Fraction</em>, Python 2.6+).
+</ul>
+
+<p>Po przekroczeniu zakresu <em>int</em> Python 2 automatycznie
+przeskakuje do typu <em>long</em>.
+
+<p>Nazwa typu jest wykorzystywana przy konwersji pomiędzy typami.
+Trzeba pamiętać, że w Pythonie stringi nie są automatycznie
+konwertowane do liczb.
+Python automatycznie wykonuje konwersję do typu "szerszego",
+jeżeli w działaniu występują argumenty różnych typów
+[int + float = float, float + complex = complex].
+
+<p>Hierarchię typów liczbowych w ramach Abstract Base Classes (ABCs)
+opisuje PEP 3141.
+
+<h3>WYŚWIETLANIE LICZB</h3>
+
+<hr><pre>
+&gt;&gt;&gt; 2 * 3.14159      # repr(): jako kod
+6.2831799999999998
+&gt;&gt;&gt; str(2 * 3.14159)    # str(): w postaci przyjaznej dla użytkownika
+'6.28318'
+&gt;&gt;&gt; print ( 2 * 3.14159 )     # print korzysta z str()
+6.28318
+&gt;&gt;&gt; 0.1     # problem reprezentacji dwójkowej, Python 2.6-
+0.10000000000000001
+&gt;&gt;&gt; print ( 0.1 )
+0.1
+&gt;&gt;&gt; 0.5     # dokładna postać dwójkowa
+0.5
+&gt;&gt;&gt; 1/0     # wywołujemy wyjątek
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ZeroDivisionError: integer division or modulo by zero
+&gt;&gt;&gt; 
+</pre><hr>
+
+<h3>WBUDOWANE FUNKCJE MATEMATYCZNE</h3>
+
+<ul>
+<li>Potęgowanie <em>pow(x, y [, z])</em>.
+Dla dwóch argumentów równoważne <em>x ** y</em>, 
+dla trzech argumentów równoważne <em>(x ** y) % z</em>.
+
+<li>Wartość bezwzględna <em>abs(x)</em>.
+
+<li>Zaokrąglanie <em>round(x[, y])</em>, y to liczba cyfr po przecinku.
+Funkcja różni się od <em>math.trunc()</em>.
+
+<li>Minimum,
+<em>min(iterable[, key=func])</em> - jeden argument, 
+<em>min(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
+
+<li>Maksimum,
+<em>max(iterable[, key=func])</em> - jeden argument, 
+<em>max(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
+
+<li>Funkcja <em>sum(sequence[, start])</em>,
+zwraca sumę sekwencji liczb, ale nie stringów.
+Parametr start domyślnie wynosi zero,
+dla pustej sekwencji suma wynosi zero.
+</ul>
+
+<p>Funkcje matematyczne działające na liczbach rzeczywistych
+zawarte są w module <em>math</em>, a działające na liczbach
+zespolonych w module <em>cmath</em>.
+Inne moduły matematyczne: 
+<em>random</em>,
+<em>scipy</em>, 
+<em>numpy</em>, 
+itp.
+
+<hr><pre>
+# Zmienne i wyrażenia różnych typów.
+0, 1, -4                      # int
+0L, 1L, -3L, 123456789000     # long
+0., .2, -3.45, 2.43e+23       # float
+0j, 2+.3j, 8.9-7J             # complex
+z = 5+1j                      # typ complex
+z, z.real, z.imag             # część rzeczywista i urojona
+3 ** 2, 1.2 ** 3.5            # potęgowanie, równoważne pow()
+pow(3, 2), pow(1.2, 3.5)      # funkcja pow()
+pow(2, 10, 5)                 $ (2 ** 10) % 5 = 1024 % 5 = 4
+
+# Sprawdzanie typu wyrażeń.
+type("zdanie"), type(23), type(1L), type(1j)
+
+# Konwersja typów niejawna.
+1 + 1.2, 34/60.               # int + float = float
+1.2 + 3J                      # float + complex = complex
+
+# Konwersja typów (jawna).
+# Składnia:
+# int(x[, base]), float(x), complex(real[, imag])
+int("32"), int(2.345), int(-3.456)
+int("111", 2)   # 7; wykorzystanie bazy
+int("20", 16), 0x20  # 32; wykorzystanie bazy
+float("3.14159"), float(234)
+float(1.0+2.j)                # TypeError, nie ma jednoznacznej konwersji
+str(1234)
+long(43)
+complex(5), complex(2,3)                # (5+0J), (2+3J)
+
+# Dzielenie liczb.
+5 / 2, 5 % 2, 5. / 2.
+
+# Zaokrąglanie liczb.
+round(3.14159, 2)             # 3.14
+round(123.456,-1)             # 120.0, ujemna precyzja
+round(1.2), round(1.5), round(1.8)      # 1.0, 2.0, 2.0
+round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
+int(1.2+0.5), int(1.5+0.5), int(1.8+0.5)   # 1.0, 2.0, 2.0
+int(-1.2+0.5), int(-1.5+0.5), int(-1.8+0.5)   # 0, -1.0, -1.0
+
+# Wartość bezwzględna.
+abs(-5), abs(-4.32), abs(1+1j) # 5, 4.32, 1.41421356237
+
+# Liczby całkowite można zapisywać w układzie ósemkowym i szesnastkowym.
+23, 027, 0x17, 0X17     # zapis liczby 23
+hex(23)   # return string '0x17'
+
+# Pozostałość po ułamkach w liczbach całkowitych.
+(4).numerator        # licznik 4
+(4).denominator      # mianownik 1
+
+# Funkcja ord() [string --&gt; kod ASCII].
+# Funkcja chr() [kod ASCII --&gt; string].
+ord("b")   # return 98
+chr(99)   # return "c"
+
+# Metody dla liczb float, liczby to obiekty.
+# Zamiana na krotkę liczb int, odpowiadającą ułamkowi.
+(0.5).as_integer_ratio()      # (1, 2)
+(0.6).as_integer_ratio()      # (5404319552844595L, 9007199254740992L)
+# Powinno być (3, 5), ale są błędy reprezentacji.
+
+(-.25).as_integer_ratio()     # (-1, 4)
+
+(20.0).is_integer()           # True
+(1.5).is_integer()            # False
+</pre><hr>
+
+<h3>DZIELENIE LICZB</h3>
+
+<p>PEP 238 - Changing the Division Operator.
+
+<p>http://python-history.blogspot.com/2009/03/problem-with-integer-division.html
+
+<p>http://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
+
+<p>Dzielenie liczb w Pythonie przeszło zmianę przy przejściu
+z Pythona 2 na Python 3. Aby opisać to zagadnienie, trzeba
+przedstawić trzy pojęcia:
+
+<ul>
+<li>classic division, dzielenie klasyczne [metoda __div__ w Pythonie 2]
+<li>true division, dzielenie prawdziwe [metoda __truediv__ w Pythonie 3]
+<li>floor division, dzielenie bez reszty [metoda __floordiv__ w Pythonie 2 i 3]
+</ul>
+
+<p>Wydaje się, że głównym powodem wprowadzenia zmiany w działaniu
+operatora dzielenia było uniknięcie zaskakiwania osób
+zaczynających naukę programowania, gdzie Python jest
+ich pierwszym językiem programowania.
+Python jest językiem o typach dynamicznych i operator dzielenia
+może działać na dowolnych argumentach przy odpowiednim
+przeciążenu (overload).
+Dzielenie klasyczne powoduje sytuacje, które są trudne 
+do zaakceptowania przez początkujących.
+
+<hr><pre>
+&gt;&gt;&gt; 1 == 1.0
+True
+&gt;&gt;&gt; 2 == 2.0
+True
+&gt;&gt;&gt; 1 / 2 == 1.0 / 2.0   # dzielenie klasyczne
+False
+</pre><hr>
+
+<p>Podsumowanie: domyślne działanie operatorów dzielenia
+w Pythonie w różnych wersjach
+[W. J. Chun, Python's "New" Division: Python 2 Versus Python 3,
+http://www.informit.com/articles/article.aspx?p=1439189
+]:
+
+<pre>
++--------+---------+----------+----------+
+|Operator| 2.1-    | 2.2+     | 3.x      |
++--------+---------+----------+----------+
+|  /     |klasyczne|klasyczne |prawdziwe |
++--------+---------+----------+----------+
+|  //    | n/a     |bez reszty|bez reszty|
++--------+---------+----------+----------+
+</pre>
+
+<p>Opcje wiersza poleceń związane z dzieleniem
+(<em>python -Qopcja</em>).
+
+<pre>
++-----------------------------------------+
+| Opcja | Opis                            |
++-----------------------------------------+
+| old   |Zawsze dzielenie klasyczne       |
++-----------------------------------------+
+| new   |Zawsze dzielenie prawdziwe       |
++-----------------------------------------+
+| warn  |Ostrzega przy int/int (long/long)|
++-------+---------------------------------+
+|warnall|Ostrzega zawsze przy "/"         |
++-------+---------------------------------+
+
+</pre>
+
+<h3>DZIELENIE KLASYCZNE</h3>
+
+<p>Klasyczne dzielenie występuje w Pythonie 2 i innych językach
+programowania, takich jak C/C++ czy Java.
+Przy dzieleniu liczb całkowitych część ułamkowa jest odrzucana
+i zwracana jest liczba całkowita.
+Przy dzieleniu liczb zmiennoprzecinkowych (float), wynik jest
+ułamkiem zmiennoprzecinkowym.
+
+<hr><pre>
+&gt;&gt;&gt; 1 / 2        # dzielenie bez reszty
+0
+&gt;&gt;&gt; -1 / 2        # dzielenie bez reszty
+-1
+&gt;&gt;&gt; 1.0 / 2.0     # dzielenie prawdziwe
+0.5
+&gt;&gt;&gt; -1.0 / 2.0     # dzielenie prawdziwe
+-0.5
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>DZIELENIE PRAWDZIWE</h3>
+
+<p>W wyniku dzielenia prawdziwego zawsze powstaje ułamek
+zmiennoprzecinkowy, niezależnie od typu operandów.
+Jest to domyślna operacja w Pythonie 3.
+Od Pythona 2.2 można korzystać z tego rodzaju dzielenia
+po imporcie <em>division</em> z modułu <em>__future__</em>,
+albo można uruchomić interpreter z opcją <em>-Qnew</em>.
+
+<hr><pre>
+&gt;&gt;&gt; from __future__ import division  # tylko Python 2.2+
+&gt;&gt;&gt; 1 / 2    # zwraca rzeczywisty ułamek
+0.5
+&gt;&gt;&gt; 1.0 / 2.0   # zwraca rzeczywisty ułamek
+0.5
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>DZIELENIE BEZ RESZTY</h3>
+
+<p>Nowy operator dzielenia bez reszty (//) zawsze odrzuca
+cząść ułamkową i zaokrągla wynik do najbliższej liczby
+całkowitej z lewej strony na osi liczbowej.
+Operator istnieje od Pythona 2.2 i nie wymaga importu.
+Typ zwracanego wyniku zależy od typu operandów.
+
+<hr><pre>
+&gt;&gt;&gt; 1 // 2   # operandy int, zwraca int
+0
+&gt;&gt;&gt; 1.0 // 2.0   # operandy float, zwraca float
+0.0
+&gt;&gt;&gt; -1 // 2
+-1
+&gt;&gt;&gt; 7 // 2.5
+2.0
+&gt;&gt;&gt;
+</pre><hr>
+
+
+</body>
+</html>

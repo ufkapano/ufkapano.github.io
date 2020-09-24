@@ -1,0 +1,133 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Macierze</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Działania na macierzach kwadratowych potrzebne są w wielu 
+zastosowaniach (algebra, obroty).
+Zdarza się, że macierze mają dużą liczbę zer (macierze rzadkie).
+Wtedy można zastosować specjalne struktury danych,
+aby przyspieszyć obliczenia i zmniejszyć zapotrzebowanie na pamięć.
+Wg typowej definicji, macierz rzadka ma co najwyżej jeden niezerowy
+element w każdym wierszu i każdej kolumnie.
+Przykładem macierzy rzadkiej jest macierz diagonalna.
+
+<pre>
++----------------+---------+---------+
+| Działanie      | Dense   | Sparse  |
++----------------+---------+---------+
+| dodawanie      | O(n**2) | O(n)    |
+| odejmowanie    | O(n**2) | O(n)    |
+| transponowanie | O(n**2) | O(n)    |
+| mnożenie       | O(n**3) | O(n**2) |
++----------------+---------+---------+
+</pre>
+
+<h3>MACIERZE KWADRATOWE GĘSTE (DENSE)</h3>
+
+<hr><pre>
+n = 3
+# Macierz zerowa to lista list z zerami.
+a = [[0]*n for i in range(n)]
+a[1][2] = 3         # [[0, 0, 0], [0, 0, 3], [0, 0, 0]]
+</pre><hr>
+
+<h3>MACIERZE KWADRATOWE RZADKIE (SPARSE)</h3>
+
+<hr><pre>
+# Macierz zerowa to pusty słownik.
+a = dict()
+a[1, 2] = 3         # {(1, 2): 3}
+</pre><hr>
+
+<h3>DODAWANIE MACIERZY</h3>
+
+<hr><pre>
+# Dodawanie a + b = c.
+# c to macierz zerowa.
+c = [[0]*n for i in range(n)]
+for i in range(n):
+    for j in range(n):
+        c[i][j] = a[i][j] + b[i][j]
+</pre><hr><pre>
+# c to macierz zerowa.
+c = dict()
+for pair in a:
+    c[pair] = c.get(pair, 0) + a[pair]
+# prościej c = dict(a)
+for pair in b:
+    c[pair] = c.get(pair, 0) + b[pair]
+</pre><hr>
+
+<h3>ODEJMOWANIE MACIERZY</h3>
+
+<hr><pre>
+# Dodawanie a - b = c.
+# c to macierz zerowa.
+c = [[0]*n for i in range(n)]
+for i in range(n):
+    for j in range(n):
+        c[i][j] = a[i][j] - b[i][j]
+</pre><hr><pre>
+# c to macierz zerowa.
+c = dict()
+for pair in a:
+    c[pair] = c.get(pair, 0) + a[pair]
+# prościej c = dict(a)
+for pair in b:
+    c[pair] = c.get(pair, 0) - b[pair]
+</pre><hr>
+
+<h3>TRANSPONOWANIE MACIERZY</h3>
+
+<hr><pre>
+# Otrzymujemy a_tr.
+# a_tr to macierz zerowa.
+a_tr = [[0]*n for i in range(n)]
+for i in range(n):
+    for j in range(n):
+        a_tr[j][i] = a[i][j]
+</pre><hr><pre>
+# a_tr to macierz zerowa.
+a_tr = dict()
+for (row, col) in a:
+    a_tr[col, row] = a[row, col]
+</pre><hr>
+
+<h3>MNOŻENIE MACIERZY</h3>
+
+<hr><pre>
+# Mnożenie a * b = c.
+# c to macierz zerowa.
+c = [[0]*n for i in range(n)]
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            c[i][j] = c[i][j] + a[i][k] * b[k][j]
+</pre><hr><pre>
+# Przygotowanie do uogólnienia.
+for i in range(n):
+    for j in range(n):
+        for k in range(n):
+            for s in range(n):
+                if k == s:
+                    c[i][j] = c[i][j] + a[i][k] * b[s][j]
+</pre><hr><pre>
+# c to macierz zerowa.
+c = dict()
+for (row1, col1) in a:
+    for (row2, col2) in b:
+        if col1 == row2:
+            c[row1, col2] = c.get((row1, col2), 0) + a[row1, col1] * b[row2, col2]
+</pre><hr>
+
+
+</body>
+</html>

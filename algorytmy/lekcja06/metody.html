@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Metody</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Chcemy sobie ułatwić tworzenie nowych obiektów i podstawianie
+atrybutów.
+
+<hr><pre>
+class Point:
+    """Klasa dla punktów."""
+    pass
+
+class Rectangle:
+    """Klasa dla prostokątów."""
+    pass
+
+def set_point(point, x, y):
+    """Ustaw punkt."""
+    point.x = x
+    point.y = y
+
+def print_point(point):
+    """Wypisz punkt."""
+    print ( "({}, {})".format(point.x, point.y) )
+
+def same_point(point1, point2):
+    """Porównaj punkty."""
+    return (point1.x == point2.x) and (point1.y == point2.y)
+
+def set_rect(rect, x, y, w, h):
+    """Ustaw prostokąt."""
+    rect.width = w
+    rect.height = h
+    rect.corner = Point()
+    set_point(rect.corner, x, y)
+
+def find_center(rect):
+    """Zwróć środek prostokąta."""
+    x = rect.corner.x + rect.width/2.0
+    y = rect.corner.y + rect.height/2.0
+    center = Point()
+    set_point(center, x, y)
+    return center
+
+def find_area(rect):
+    """Oblicz pole powierzchni prostokąta."""
+    return rect.width * rect.height
+</pre><hr>
+
+<p>Obserwując klasy Point i Rectangle można zauważyć, że nie ma
+oczywistego związku między definicjami klas, a definicjami funkcji.
+Ponadto funkcje działające na instancjach klas mają przynajmniej
+jeden argument będący instancją klasy.
+Te obserwacje są motywacją dla metod. 
+Każda metoda jest związana z klasą i ma być wywołana na instancji klasy. 
+Metody są jak funkcje, z dwoma wyjątkami:
+
+<ul>
+<li>Metody są zdefiniowane wewnątrz klasy, 
+aby podkreślić ich związek z klasami.
+<li>Składnia wywoływania metod różni się od składni zwykłych funkcji.
+</ul>
+
+<p>Nazwa <em>self</em> nie jest słowem kluczowym, ale na mocy
+ugruntowanej konwencji odnosi się do argumentu znajdującemu się
+najbardziej na lewo. 
+Nazwa ta automatycznie odnosi się do przetwarzanej instancji.
+Nazwa <em>other</em> jest zwyczajowo nadawana argumentowi drugiemu
+licząc od lewej, kiedy metoda wykonuje pewne operacje
+związane z dwoma różnymi instancjami, np. dodawanie, porównywanie.
+
+<hr><pre>
+class Point:                            # definicja obiektu klasy
+    """Klasa dla punktów."""            # łańcuch dokumentacyjny
+
+    def set_point(self, x, y):          # definicja metody klasy
+        """Ustaw punkt."""
+        self.x = x            # przypisanie atrybutu do instancji
+        self.y = y
+
+    def print_point(self):
+        """Wypisz punkt."""
+        print ( "({}, {})",format(self.x, self.y) )
+
+    def same_point(self, other):
+        """Porównaj punkty."""
+        return (self.x == other.x) and (self.y == other.y)
+
+pt1 = Point()
+pt1.set_point(3.4, 5.6)       # odpowiada Point.set_point(pt1, 3.4, 5.6)
+pt1.print_point()             # odpowiada Point.print_point(pt1)
+pt2 = Point()
+pt2.set_point(3.4, 5.6)
+pt2.print_point()
+print ( "porównanie {}".format(pt1.same_point(pt2)) )
+print ( "porównanie {}".format(Point.same_point(pt1, pt2)) )   # równoważne
+
+# Metodę można utworzyć poza klasą, a następnie trzeba powiązać
+# ją z klasą (na tym etapie nazwa self jest istotna).
+def show_point(self):         # tworzymy funkcję
+    """Wypisz punkt."""
+    print ( "x = {}".format(self.x) )
+    print ( "y = {}".format(self.y) )
+
+Point.show = show_point       # funkcja staje się metodą klasy
+pt1.show()                    # wywołanie metody
+Point.show(pt1)               # równoważne wywołanie
+</pre><hr>
+
+
+</body>
+</html>

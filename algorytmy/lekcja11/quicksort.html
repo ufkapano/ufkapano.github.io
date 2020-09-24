@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie szybkie (quicksort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Sortowanie szybkie to poprawiony algorytm sortowania bąbelkowego.
+Podstawowa wersja algorytmu została wynaleziona w 1960 roku
+przez Hoare'a i od tego czasu był intensywnie badany.
+Stosowana jest zasada <em>dziel i zwyciężaj</em>.
+Algorytm jest klasy O(N*log(N)) w typowych sytuacjach, oraz
+O(N**2) w najgorszym przypadku.
+Jako element podziału wybiera się element: środkowy,
+pierwszy, ostatni, losowy, medianę, medianę z trzech
+(chodzi o zapobieganie niekorzystnym przypadkom). 
+Element podziału trafia od razu na swoje miejsce.
+Algorytm jest niestabilny.
+
+<hr><pre>
+# Wersja wg Kernighana i Ritchiego.
+
+def quicksort(L, left, right):
+    if left &gt;= right:
+        return
+    swap(L, left, (left + right) // 2)   # element podziału
+    pivot = left                      # przesuń do L[left]
+    for i in range(left + 1, right + 1):   # podział
+        if L[i] &lt; L[left]:
+            pivot += 1
+            swap(L, pivot, i)
+    swap(L, left, pivot)     # odtwórz element podziału
+    quicksort(L, left, pivot - 1)
+    quicksort(L, pivot + 1, right)
+</pre><hr><pre>
+# Wersja wg Cormena.
+
+def quicksort(L, left, right):
+    """Sortowanie szybkie wg Cormena str. 169."""
+    if left &gt;= right:
+        return
+    pivot = partition(L, left, right)
+    # pivot jest na swoim miejscu.
+    quicksort(L, left, pivot - 1)
+    quicksort(L, pivot + 1, right)
+
+def partition(L, left, right):
+    """Zwraca indeks elementu rozdzielającego."""
+    # Element rozdzielający to ostatni z prawej,
+    # dlatego na końcu trzeba go przerzucić do środka.
+    # Będzie on na docelowej pozycji ze względu na sortowanie.
+    x = L[right]   # element rozdzielający
+    i = left
+    for j in range(left, right):
+        if L[j] &lt;= x:
+            swap(L, i, j)
+            i += 1
+    swap(L, i, right)
+    return i
+</pre><hr>
+
+<p>Algorytm można przyspieszyć wywołując dla małych
+ciągów inną metodę sortowania, np. insertsort().
+
+<hr><pre>
+# Typowo m wynosi między 5 a 25.
+if (right - left) &lt;= m:
+    insertsort(L, left, right)
+</pre><hr>
+
+</body>
+</html>

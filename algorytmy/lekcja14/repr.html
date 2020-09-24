@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Reprezentacja grafów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Dla grafów można zdefiniować podstawowe interfejsy ADT,
+czyli abstrakcyjnych typów danych, które będą używane przy 
+analizowaniu algorytmów grafowych.
+Z drugiej strony, do reprezentacji grafu można wykorzystać
+różne struktury danych, takie jak macierz sąsiedztwa,
+lista sąsiedztwa, lista krawędzi.
+
+<pre>
+Graf skierowany
+
+0 --o 1
+o   / o
+|  /  |
+| o   |
+2 --o 3
+</pre>
+
+<ul>
+
+<li><em>Macierz sąsiedztwa (adjacency-matrix)</em>. 
+Graf przedstawiamy jako tablicę kwadratową A,
+gdzie wiersze i kolumny są numerowane wierzchołkami.
+Jeżeli istnieje krawędź (a,b), to A[a,b] wynosi 1 (True).
+W przeciwnym wypadku A[a,b] wynosi 0 (False).
+Reprezentacja ta jest wydajna dla grafów gęstych z dużą liczbą krawędzi.
+Wykorzystanie pamięci jest rzędu O(V*V).
+Do takiej tablicy łatwo można wpisywać wagi dla każdej krawędzi.
+Reprezentacja jest też przydatna w sytuacji, gdy chcemy szybko
+sprawdzić istnienie krawędzi między dwoma wierzchołkami [Cormen].
+
+<pre>
+graph = [
+[0, 1, 0, 0],
+[0, 0, 1, 0],
+[1, 0, 0, 1],
+[0, 1, 0, 0]]   # wagi (lub bity 0/1)
+</pre>
+
+<li><em>Listy sąsiedztwa (adjacency-list)</em>. 
+Każdemu wierzchołkowi a przyporządkowujemy
+listę wierzchołków, do których można dojść z wierzchołka a.
+Reprezentacja ta jest wydajna dla rzadkich grafów z małą liczbą krawędzi.
+Wykorzystanie pamięci jest rzędu O(V+E).
+W przypadku grafów z wagami, na liście sąsiedztwa można przechowywać
+wierzchołek końcowy łącznie z wagą krawędzi, która do niego prowadzi.
+
+<pre>
+graph = [[1], [2], [0, 3], [1]]   # bez wag (styl C++)
+graph = {0: [1], 1: [2], 2: [0, 3], 3: [1]}   # bez wag (styl GvR)
+graph = {0: set([1]), 1: set([2]), 2: set([0, 3]), 3: set([1])}   # bez wag (zbiory)
+graph = {0: {1: 1}, 1: {2: 1}, 2: {0: 1, 3: 1}, 3: {1: 1}} # wagi (dict+dict)
+graph = {0: {1: Edge(0, 1, 1)}, 
+1: {2: Edge(1, 2, 1)}, 
+2: {0: Edge(2, 0, 1), 3: Edge(2, 3, 1)}, 
+3: {1: Edge(3, 1, 1)}} # wagi
+</pre>
+
+<li><em>Lista krawędzi</em>. 
+Zapamiętujemy listę krawędzi grafu.
+Wykorzystanie pamięci jest rzędu O(E).
+W tym podejściu nie zapiszemy pustych wierzchołków.
+
+<pre>
+graph = [(0, 1), (1, 2), (2, 0), (2, 3), (3, 1)]   # bez wag
+graph = [(0, 1, 1), (1, 2, 1), (2, 0, 1), (2, 3, 1), (3, 1, 1)] # wagi
+graph = [Edge(0, 1, 1), Edge(1, 2, 1), Edge(2, 0, 1), Edge(2, 3, 1), Edge(3, 1, 1)] # wagi
+</pre>
+
+<li><em>Macierz incydencji</em>. 
+Graf przedstawiamy jako tablicę prostokątną M,
+gdzie wiersze są numerowane wierzchołkami,
+a kolumny krawędziami.
+W kolumnie odpowiadającej danej krawędzi -1 oznacza
+wierzchołek początkowy, a +1 wierzchołek końcowy.
+Dla grafu nieskierowanego oba końce krawędzi oznacza się przez 1.
+Pętlę można zaznaczyć przez 2 w danym wierzchołku.
+Wykorzystanie pamięci jest rzędu O(V*E).
+
+<pre>
+graph = [
+[-1, 0, 1, 0, 0],
+[ 1,-1, 0, 0, 1],
+[ 0, 1,-1,-1, 0],
+[ 0, 0, 0, 1,-1]]   # bez wag
+# Chyba wygodniej byłoby mieć macierz transponowaną.
+</pre>
+
+</ul>
+
+
+</body>
+</html>

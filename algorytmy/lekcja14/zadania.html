@@ -1,0 +1,134 @@
+<html>
+<head>
+<title>Zadania</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zadania</h1>
+
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: dwa zadania z zestawu
+
+<h3>ZADANIE 14.1</h3>
+
+<p>Dla grafów w Pythonie napisać funkcje zwracające 
+listę wierzchołków, listę krawędzi (listę krotek),
+liczbę wierzchołków i liczbę krawędzi.
+
+<hr><pre>
+def list_nodes(graph): pass
+
+def list_edges(graph): pass
+
+def count_nodes(graph): pass
+
+def count_edges(graph): pass
+</pre><hr>
+
+<h3>ZADANIE 14.2</h3>
+
+<p>Stworzyć funkcje generujące grafy nieskierowane dla sieci 
+typu drabina, sieci kwadratowej, sieci trójkątnej,
+sieci typu plaster miodu.
+Można rozważyć sieci periodyczne.
+Obliczyć zależność liczby wierzchołków, liczby krawędzi
+i innych parametrów grafowych od parametrów funkcji.
+
+<hr><pre>
+def make_ladder(n): pass
+
+def make_grid(n): pass
+
+def make_triangle(n): pass
+</pre><hr>
+
+<h3>ZADANIE 14.3</h3>
+
+<p>Napisać funkcję, która zapisze do pliku pary liczb odpowiadające
+krawędziom grafu (każda para w osobnym wierszu).
+Z tych danych można stworzyć rysunek w programie Gnuplot,
+gdzie punkty będą oznaczać jedynki w macierzy sąsiedztwa.
+
+<hr><pre>
+def save_edges(graph, filename): pass
+</pre><hr>
+
+<h3>ZADANIE 14.4</h3>
+
+<p>Napisać funkcję, która dla danej liczby N stworzy graf
+skierowany reprezentujący połączenia wierzchołków dla sterty
+(wierzchołek 0 będzie korzeniem drzewa binarnego zrównoważonego
+lewostronnie).
+
+<hr><pre>
+def make_heap(n): pass
+</pre><hr>
+
+<h3>ZADANIE 14.5</h3>
+
+<p>Napisać funkcję tworzącą graf pełny z N wierzchołkami.
+Napisać funkcję tworzącą graf cykliczny z N wierzchołkami.
+Napisać funkcję tworzącą drzewo przypadkowe z N wierzchołkami.
+
+<hr><pre>
+def make_complete(n): pass
+
+def make_cyclic(n): pass
+
+def make_tree(n): pass
+</pre><hr>
+
+<h3>ZADANIE 14.6</h3>
+
+<p>Dla grafów nieskierowanych w Pythonie napisać funkcję tworzącą słownik,
+w którym kluczami będą wierzchołki, a wartościami liczby krawędzi
+wychodzących z wierzchołka (stopnie wierzchołków).
+
+<pre>
+</pre>
+
+<h3>ZADANIE 14.7</h3>
+
+<p>Dla grafów nieskierowanych w Pythonie napisać funkcję tworzącą listę
+wierzchołków grafu w kolejności najmniejszego stopnia
+(MDO = minimum degree ordering).
+Procedura jest następująca. 
+(1) Znajdujemy wierzchołek o najmniejszym stopniu i usuwamy go z grafu
+razem z krawędziami incydentnymi. Wstawiamy wierzchołek na koniec listy.
+(2) Czynności powtarzamy dla coraz mniejszego grafu, aż do wyczerpania
+wierzchołków.
+Funkcja powinna działać w czasie liniowym O(V+E).
+Uporządkowanie najmniejszego stopnia wykorzystuje się m.in. w algorytmie
+heurystycznym znajdującym maksymalny zbiór niezależny,
+w algorytmie heurystycznym wyznaczającym dolne ograniczenie
+na szerokość drzewową grafu.
+Wskazówka: wykorzystać sortowanie bukietowe wierzchołków
+ze względu na ich stopień.
+
+<pre>
+def find_min_deg_ordering(graph): pass
+</pre>
+
+<h3>ZADANIE 14.8</h3>
+
+<p>Dla grafów nieskierowanych w Pythonie napisać funkcję tworzącą listę
+wierzchołków grafu w kolejności największego stopnia.
+Procedura jest następująca. 
+(1) Znajdujemy wierzchołek o największym stopniu i usuwamy go z grafu
+razem z krawędziami incydentnymi. Wstawiamy wierzchołek na koniec listy.
+(2) Czynności powtarzamy dla coraz mniejszego grafu, aż do wyczerpania
+wierzchołków.
+Funkcja powinna działać w czasie liniowym O(V+E).
+Odwrotność uporządkowanie największego stopnia wykorzystuje się 
+m.in. w algorytmie heurystycznym do znajdowania maksymalnego zbioru niezależnego.
+Wskazówka: wykorzystać sortowanie bukietowe wierzchołków
+ze względu na ich stopień.
+
+<pre>
+def find_max_deg_ordering(graph): pass
+</pre>
+
+</body>
+</html>

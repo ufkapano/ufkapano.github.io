@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyznaczanie ścieżek</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Napiszmy funkcję wyznaczającą śieżkę pomiędzy dwoma wierzchołkami
+w grafie.
+Argumenty funkcji to graf, wierzchołki początkowy i końcowy.
+Funkcja zwraca listę różnych wierzchołków (bez cykli)
+łącznie z początkowym i końcowym.
+Jeżeli funkcja nie może znaleźć ścieżki, wtedy zwraca None.
+Algorytm wykorzystuje technikę algorytmów z powrotami (backtracking):
+sprawdza każdą możliwość aż znajdzie rozwiązanie.
+
+<hr><pre>
+def find_path(graph, start, end, path=[]):
+    path = path + [start]       # powstaje nowa lista!
+    if start == end:
+        return path
+    for node in graph[start]:
+        if node not in path:
+            newpath = find_path(graph, node, end, path)
+            if newpath:
+                return newpath
+    return None
+</pre><hr>
+
+<p>Stosunkowo łatwo możemy zmienić funkcję tak, aby zwracała
+listę wszystkich ścieżek bez cykli pomiędzy dwoma wierzchołkami.
+
+<hr><pre>
+def find_all_paths(graph, start, end, path=[]):
+    path = path + [start]       # powstaje nowa lista!
+    if start == end:
+        return [path]
+    paths = []
+    for node in graph[start]:
+        if node not in path:
+            newpaths = find_all_paths(graph, node, end, path)
+            for newpath in newpaths:
+                paths.append(newpath)
+    return paths
+</pre><hr>
+
+<p>Inny wariant funkcji daje najkrótszą ścieżkę pomiędzy wierzchołkami
+(najkrótszą w sensie liczby krawędzi należących do ścieżki).
+
+<hr><pre>
+def find_shortest_path(graph, start, end, path=[]):
+    path = path + [start]       # powstaje nowa lista!
+    if start == end:
+        return path
+    shortest = None
+    for node in graph[start]:
+        if node not in path:
+            newpath = find_shortest_path(graph, node, end, path)
+            if newpath:
+                if not shortest or len(newpath) &lt; len(shortest):
+                    shortest = newpath
+    return shortest
+</pre><hr>
+
+<h3>NAJKRÓTSZE ŚCIEŻKI W GRAFACH WAŻONYCH SKIEROWANYCH</h3>
+
+<p>W grafach ważonych długość ścieżki jest rozumiana jako suma wag
+(długości) krawędzi. Cormen dodatkowo przyjmuje, że grafy są skierowane,
+co pozwala na istnienie różnych wag w zależności od kierunku
+przechodzenia od wierzchołka do wierzchołka.
+Rozważa się dwa rodzaje problemów.
+
+<ul>
+<li>1. Najkrótsze ścieżki z jednym źródłem.
+<li>2. Najkrótsze ścieżki między wszystkimi parami wierzchołków.
+</ul>
+
+</body>
+</html>

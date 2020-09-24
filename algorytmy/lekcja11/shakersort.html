@@ -1,0 +1,37 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie przez wstrząsanie (shakersort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W sortowaniu przez wstrząsanie (inaczej: algorytm koktajlowy)
+przechodzimy przez dane na przemian:
+raz z lewa na prawo, raz z prawa na lewo.
+Jest to ulepszony algorytm sortowania bąbelkowego.
+
+<hr><pre>
+# Wersja na podstawie Wróblewskiego.
+def shakersort(L, left, right):
+    k = right
+    while left &lt; right:
+        for j in range(right, left, -1):   # od prawej
+            if L[j-1] &gt; L[j]:
+                swap(L, j-1, j)
+                k = j
+        left = k
+        for j in range(left, right):   # od lewej
+            if L[j] &gt; L[j+1]:
+                swap(L, j, j+1)
+                k = j
+        right = k
+</pre><hr>
+
+
+</body>
+</html>

@@ -1,0 +1,322 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Struktura zbiorów rozłącznych</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Struktura zbiorów rozłącznych jest wykorzystywana
+do rozwiązania problemu połączeniowego.
+
+<h3>PROBLEM POŁĄCZENIOWY</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem połączeniowy.
+
+DANE WEJŚCIOWE
+Dane jest V liczb naturalnych od 0 do V-1 (wierzchołków)
+i E par tych liczb (krawędzi, połączeń).
+Dane są dwie liczby p, q z przedziału od 0 do V-1 włącznie.
+
+DANE WYJŚCIOWE
+Informacja (True/False), czy jest połączenie między p i q,
+a więc czy istnieje ciąg krawędzi prowadzący z p do q.
+</pre><hr>
+
+<p>Problem połączeniowy ma zastosowanie w wielu dziedzinach.
+
+<ul>
+<li>Połączenia między komputerami sieci komputerowej.
+<li>Połączenia w obwodzie elektronicznym.
+<li>Klasy równoważności, np. w teorii grup.
+<li>Łączenie zbiorów.
+<li>Algorytmy teorii grafów (Boruvki, Kruskala).
+</ul>
+
+<p>Dane wejściowe o połączeniach mogą być zapisane w strukturze
+grafu G = (V, E) lub też mogą pochodzić z innego źródła.
+
+<h3>INTERFEJS</h3>
+
+<hr><pre>
+class UnionFind:
+    """Klasa realizująca strukturę zbiorów rozłącznych."""
+
+    def __init__(self): pass  # inicjalizacja
+
+    def create(self, x): pass  # stworzenie zbioru jednoelementowego
+
+    def find(self, x): pass    # reprezentant zbioru zawierającego x
+
+    def union(self, x, y): pass # łączenie zbioru zawierającego x
+                                # ze zbiorem zawierającym y
+</pre><hr><pre>
+# Zastosowanie.
+uf = UnionFind()
+for item in [0, 1, 2, 3, 4, 5]:
+    uf.create(item)
+# Zapisywanie połączeń między elementami
+for (x, y) in [(0, 1), (3, 4), (4, 5)]:
+    uf.union(x, y)
+# Sprawdzanie połączeń.
+print ( uf.find(0) == uf.find(3) )   # False, brak połączenia
+print ( uf.find(3) == uf.find(5) )   # True, jest połączenie
+</pre><hr>
+
+<h3>ALGORYTM SZYBKIEGO WYSZUKIWANIA</h3>
+
+<p>Przygotowujemy tablicę/słownik parent zawierającą V liczb.
+Liczby p i q są połączone, jeżeli parent[p] jest równe parent[q].
+Tablicę inicjalizujemy przez parent[i] = i.
+
+<hr><pre>
+class UnionFind:
+
+    def __init__(self):
+        self.parent = {}
+
+    def create(self, x):
+        # Tworzymy drzewa jednoelementowe.
+        if x not in self.parent:
+            self.parent[x] = x
+
+    def find(self, x):
+        # Szukamy korzenia drzewa.
+        return self.parent[x]
+
+    def union(self, x, y):
+        # Szukamy korzeni drzew.
+        z = self.parent[x]      # zmienna tymczasowa jest konieczna
+        if z == self.parent[y]:   # to samo drzewo
+            return
+        # Łączenie - poprawiamy korzenie.
+        for x in self.parent:
+            if self.parent[x] == z:
+                self.parent[x] = self.parent[y]
+</pre><hr>
+
+<p>Złożoność czasowa. 
+Wyszukiwanie jest klasy O(1) [szybkie wyszukiwanie], 
+bo tylko porównujemy dwa elementy tablicy.
+Scalanie jest O(V*E), bo dla każdej z E operacji scalania musimy
+wykonać V iteracji pętli for (co najmniej jedno porównanie).
+
+<p>Złożoność pamięciowa jest O(V). 
+Trzymamy tylko tablicę z V elementami.
+
+<p>Szybkie wyszukiwanie można przedstawić graficznie za pomocą
+drzewa (czy zbioru drzew) z V węzłami, gdzie korzeń jest 
+reprezentantem danego podzbioru/klasy równoważności
+[Sedgewick s. 12].
+
+<h3>ALGORYTM SZYBKIEGO SCALANIA</h3>
+
+<p>Przygotowujemy tablicę parent zawierającą V liczb.
+Tablica jest taka sama jak poprzednio, ale interpretacja
+jej elementów będzie inna.
+Liczby p i q są połączone, kiedy po przejściu ścieżek
+p, parent[p], parent[parent[p]], ... oraz
+q, parent[q], parent[parent[q]], ... dojdziemy do tej samej liczby r,
+takiej że parent[r] = r.
+
+<hr><pre>
+class UnionFind:
+
+    def __init__(self):
+        self.parent = {}
+
+    def create(self, x):
+        # Tworzymy drzewa jednoelementowe.
+        if x not in self.parent:
+            self.parent[x] = x
+
+    def find(self, x):
+        # Szukamy korzenia drzewa.
+        while x != self.parent[x]:
+            x = self.parent[x]
+        return x
+
+    def union(self, x, y):
+        # Szukamy korzeni drzew.
+        x = self.find(x)
+        y = self.find(y)
+        if x == y:   # to samo drzewo
+            return
+        # Scalanie.
+        self.parent[x] = y
+</pre><hr>
+
+<p>Czas działania algorytmu zależy od natury wprowadzanych danych,
+ale jest on szybszy od algorytmu szybkiego wyszukiwania.
+
+<p>Dla E &gt; V rozwiązanie problemu połączeniowego za pomocą
+algorytmu szybkiego scalania może wymagać wykonania więcej
+niż E*V/2 instrukcji.
+Załóżmy, że pary będą przychodzić w kolejności 1-2, 2-3, 3-4, itd.
+Po V-1 takich par wszystkie wierzchołki będą połączone,
+a utworzone drzewo będzie liniowe.
+Wyszukiwanie połączenia liczby V-1 z inną wymaga przejrzenia
+przynajmniej V-1 łączy.
+
+<h3>ALGORYTM ZRÓWNOWAŻONEGO SZYBKIEGO SCALANIA</h3>
+
+<p>Będziemy zawsze dołączać mniejsze drzewo do większego.
+Musimy przechowywać liczbę węzłów dla każdego drzewa 
+w tablicy <em>size</em>.
+Można pokazać, że algorytm wymaga przejścia najwyżej log(V)
+łączy, aby stwierdzić, czy dowolne dwie z V liczb są połączone.
+
+<p>Zrównoważony algorytm szybkiego scalania wymaga wykonania 
+najwyżej O(E*log(V)) instrukcji [Sedgewick s. 15].
+W praktyce algorytm rozwiązuje rzeczywiste problemy w czasie liniowym.
+
+<hr><pre>
+class UnionFind:
+
+    def __init__(self):
+        self.parent = {}
+        self.size = {}   # liczba węzłów drzewa
+
+    def create(self, x):
+        # Tworzymy drzewa jednoelementowe.
+        if x not in self.parent:
+            self.parent[x] = x
+            self.size[x] = 1
+
+    def find(self, x):
+        # Szukamy korzenia drzewa.
+        while x != self.parent[x]:
+            x = self.parent[x]
+        return x
+
+    def union(self, x, y):
+        # Szukamy korzeni drzew.
+        x = self.find(x)
+        y = self.find(y)
+        if x == y:   # to samo drzewo
+            return
+        # Scalanie.
+        if self.size[x] &lt; self.size[y]:
+            self.parent[x] = y
+            self.size[y] = self.size[y] + self.size[x]
+        else:
+            self.parent[y] = x
+            self.size[x] = self.size[x] + self.size[y]
+</pre><hr>
+
+<h3>KOMPRESJA ŚCIEŻEK PRZEZ POŁOWIENIE</h3>
+
+<p>Szukamy sposobu osiągnięcia gwarancji liniowego działania
+algorytmu. W idealnym przypadku każdy węzeł powinien wskazywać
+na korzeń jego drzewa, ale nie chcemy ponosić kosztu zmian
+dużej liczby łączy (jak w algorytmie szybkiego wyszukiwania).
+
+<p>Możemy każdy sprawdzany węzeł modyfikować tak, aby wskazywał
+wprost na korzeń (kompresja ścieżek).
+Istnieje wiele sposobów zaimplementowania kompresji ścieżek.
+Pokażemy kompresję ścieżek przez połowienie, która jest
+prostsza w realizacji niż pełna kompresja ścieżek
+[Sedgewick s. 17].
+
+<hr><pre>
+class UnionFind:
+
+    def __init__(self):
+        self.parent = {}
+        self.size = {}   # liczba węzłów drzewa
+
+    def create(self, x):
+        # Tworzymy drzewa jednoelementowe.
+        if x not in self.parent:
+            self.parent[x] = x
+            self.size[x] = 1
+
+    def find(self, x):
+        # Szukamy korzenia drzewa.
+        while x != self.parent[x]:
+            self.parent[x] = self.parent[self.parent[x]]   # połowienie
+            x = self.parent[x]
+        return x
+
+    def union(self, x, y):
+        # Szukamy korzeni drzew.
+        x = self.find(x)
+        y = self.find(y)
+        if x == y:   # to samo drzewo
+            return
+        # Scalanie.
+        if self.size[x] &lt; self.size[y]:
+            self.parent[x] = y
+            self.size[y] = self.size[y] + self.size[x]
+        else:
+            self.parent[y] = x
+            self.size[x] = self.size[x] + self.size[y]
+</pre><hr>
+
+
+
+<h3>PEŁNA KOMPRESJA ŚCIEŻEK</h3>
+
+<p>Cormen (s. 580) pokazuje dla lasu zbiorów rozłącznych
+dwie heurystyki dla poprawienia wydajności.
+
+<ul>
+
+<li><em>Łączenie według rangi</em>.
+Dla każdego węzła przechowujemy <em>rangę</em> stanowiącą górne 
+ograniczenie na wysokość węzła. Ranga może się zmienić jedynie
+przy operacji <em>union</em>.
+
+<li><em>Kompresja ścieżek</em>.
+Podczas operacji <em>find</em> zmieniamy tak łącze w każdym
+węźle na ścieżce do reprezentanta, aby wskazywał bezpośrednio
+na korzeń.
+Procedura <em>find</em> jest <strong>dwuprzebiegowa</strong>.
+
+</ul>
+
+<hr><pre>
+class UnionFind:
+
+    def __init__(self):
+        self.parent = {}
+        self.rank = {}
+
+    def create(self, x):
+        # Tworzymy drzewa jednoelementowe.
+        if x not in self.parent:
+            self.parent[x] = x
+            self.rank[x] = 0
+
+    def find(self, x):
+        # Szukamy korzenia drzewa.
+        if x != self.parent[x]:
+            self.parent[x] = self.find(self.parent[x])   # kompresja
+        return self.parent[x]
+
+    def union(self, x, y):
+        # Szukamy korzeni drzew.
+        x = self.find(x)
+        y = self.find(y)
+        if x == y:   # to samo drzewo
+            return
+        # Mniejsze drzewo podłączamy do większego.
+        if self.rank[x] &gt; self.rank[y]:
+            self.parent[y] = x
+        else:
+            self.parent[x] = y
+            if self.rank[x] == self.rank[y]:
+                self.rank[y] = self.rank[y] + 1
+</pre><hr>
+
+
+
+
+</body>
+</html>

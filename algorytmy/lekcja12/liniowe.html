@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie liniowe (sekwencyjne)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: 
+Wyszukiwanie zadanego elementu w nieuporządkowanym ciągu liczb.
+
+DANE WEJŚCIOWE
+Ciąg n liczb umieszczonych w tablicy L. 
+Wyróżniony element y.
+
+DANE WYJŚCIOWE
+Pozycja (indeks) elementu y w ciągu L.
+Jeżeli element y nie znajduje się w tablicy, 
+to należy to zasygnalizować.
+</pre><hr>
+
+<p>Wyszukiwanie liniowe (ang. linear search), 
+zwane również sekwencyjnym (ang. sequential search),
+polega na przeglądaniu kolejnych elementów ciągu L.
+Jeżeli poszukiwany element nie występuje w ciągu L,
+to algorytm może to zasygnalizować zwracając wartość,
+która nie jest prawidłowym indeksem.
+W C/C++ jest to zwykle -1.
+W Pythonie algorytm może zwrócić wartość None.
+
+<p>Często chcemy znaleźć wszystkie wystąpienia elementu w ciągu.
+W takim przypadku algorytm na wejściu powinien otrzymywać dodatkowo 
+pozycję (indeks) elementu, od którego ma rozpocząć wyszukiwanie. 
+Pozycję tę przy kolejnym przeszukiwaniu podajemy zawsze o 1 większą 
+od ostatnio znalezionej. Dzięki temu nowe poszukiwanie rozpocznie się 
+tuż za poprzednio znalezionym elementem.
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def linear_search(L, left, right, y):
+    """Wyszukiwanie liniowe w ciągu."""
+    i = left
+    while i &lt;= right:
+        if y == L[i]:
+            return i
+        i += 1
+    return None
+</pre><hr>
+
+<h3>ZŁOŻONOŚĆ</h3>
+
+<hr><pre>
+Jeżeli element jest w ciągu na miejscu k, to
+
+T(n, k) = Ta + (k-1) * (2*Tc + Ta) + 2*Tc = k * (2*Tc + Ta).
+
+Jeżeli elementu nie ma w ciągu, to
+
+T(n, None) = Ta + n * (2*Tc + Ta) + Tc = Tc * (2*n + 1) + Ta * (n+1).
+
+Ta - czas instrukcji podstawiania
+Tc - czas instrukcji porównania
+p - prawdopodobieństwo, że element jest w ciągu
+p/n - prawdopodobieństwo, że element jest na miejscu k
+(1-p) - prawdopodobieństwo, że elementu nie ma w ciągu
+
+Badamy przypadek średni (typowy).
+
+T(n) = \sum_A P(A)*T(A),
+T(n) = \sum_{k=1,...,n} (p/n) * T(n, k) + (1-p) * T(n, None),
+T(n) = (p/n) * (2*Tc + Ta) * \sum_{k=1,...,n} k + (1-p) * T(n, None),
+T(n) = (p/2) * (n+1) * (2*Tc + Ta) + (1-p) * [Tc * (2*n+1) + Ta * (n+1)].
+
+Jeżeli p=1, to
+
+T(n) = (n+1) * (Tc + Ta/2) = O(n).
+
+Jeżeli p=0 (wariant pesymistyczny), to
+
+T(n) = Tc * (2*n + 1) + Ta * (n+1) = O(n).
+</pre><hr>
+
+<h3>WYSZUKIWANIE LINIOWE Z WARTOWNIKIEM</h3>
+
+<p>Jeżeli do rozważanego ciągu liczb można dołączyć jeszcze jeden 
+element, to można przyspieszyć algorytm wyszukiwania liniowego.
+Do zbioru dodaje się na koniec element równy poszukiwanemu, aby wyeliminować
+jeden test w pętli while sprawdzający koniec zbioru.
+Jeżeli w procesie wyszukiwania dotrzemy do wartownika,
+to znaczy że elementu poszukiwanego nie ma w zbiorze.
+
+<p>Opisana metoda wyszukiwania nosi nazwę wyszukiwania liniowego 
+z wartownikiem (ang. search with sentinel).
+
+<hr><pre>
+def linear_search(L, left, right, y):
+    """Wyszukiwanie liniowe z wartownikiem."""
+    last = L[right]
+    L[right] = y   # ustawiamy wartownika na końcu zakresu
+    i = left
+    while L[i] != y:
+        i += 1
+    L[right] = last   # przywracanie ostatniego elementu
+    if i &lt; right or y == last:
+        return i
+    else:
+        return None
+</pre><hr>
+
+</body>
+</html>

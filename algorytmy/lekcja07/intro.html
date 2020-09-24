@@ -1,0 +1,252 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podstawy wyjątków</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Przy próbie uruchomienia kodu Pythona mogą pojawić się
+co najmniej dwa rodzaje błędów: 
+błędy składniowe (syntax errors)
+oraz wyjątki (exceptions).
+
+<h3>BŁĘDY SKŁADNIOWE</h3>
+
+<p>Błędy składniowe, inaczej błędy parsowania, wywołane są 
+przez nieprawidłową składnię instrukcji.
+W efekcie otrzymujemy komunikat z numerem linii z błędem i jej treścią.
+Mała strzałka pokazuje token <em>przed którym wykryto błąd</em>.
+
+<hr><pre>
+>>> if True print "word"
+  File "&lt;stdin&gt;", line 1
+    if True print "word"      # brak średnika PRZED print
+                ^
+SyntaxError: invalid syntax
+</pre><hr>
+
+<p>Jeżeli instrukcja jest poprawna składniowo, to w dalszym ciągu
+mogą się pojawić błędy przy próbie jej uruchomienia.
+Takie błędy są nazywane wyjątkami i niekoniecznie muszą
+oznaczać katastrofę.
+
+<h3>WYJĄTKI</h3>
+
+<p>Wyjątek jest to zdarzenie, które może modyfikować
+przebieg sterowania w programów.
+W Pythonie wyjątki wywoływane są automatycznie w momencie 
+wystąpienia błędów i mogą być wywoływane oraz przechwytywane
+przez nasz kod.
+Wyjątki pozwalają nam wyskoczyć z dowolnie dużych części
+programu do kodu z programu obsługi wyjątku.
+Jest to spójny sposób reagowania na niezwykłe zdarzenia,
+narzędzie sterowania wysokiego poziomu.
+
+<p>Wyjątki są przetwarzane przez cztery instrukcje:
+
+<ul>
+<li>try/except/else/finally - przechwytywanie wyjątków i działania 
+oczyszczające.
+<li>raise - ręczne wywołanie wyjątku w kodzie.
+<li>assert - warunkowe wywołanie wyjątku w kodzie.
+<li>with/as - implementuje menedżery kontekstu (Python 2.6+ i 3.x).
+</ul>
+
+<p>Najważniejsze powody wykorzystywania wyjątków:
+
+<ul>
+<li>obsługa błędów,
+<li>powiadomienia o zdarzeniach (nie każdy wyjątek to błąd),
+<li>obsługa przypadków specjalnych,
+<li>działania końcowe (try/finally),
+<li>niezwykły przebieg sterowania (pythonowe "goto").
+</ul>
+
+<p>Kiedy pojawi się błąd w czasie wykonywania programu, tworzony
+jest wyjątek (exception). Zwykle wtedy program jest zatrzymywany,
+a Python wypisuje komunikat o błędzie.
+Tak działa domyślny program obsługi wyjątków.
+Standardowo komunikat o błędzie obejmuje zgłoszony wyjątek
+wraz ze śladem stosu, czyli listą wszystkich wierszy oraz
+funkcji aktywnych w momencie, kiedy nastąpił wyjątek.
+
+<hr><pre>
+# Przykłady poleceń powodujących wyjątki.
+# Dzielenie przez zero - ZeroDivisionError.
+print ( 23/0 )
+
+# Odwołanie się do nieistniejącego elementu listy - IndexError.
+alist = []                        # pusta lista
+print ( alist[5] )
+
+# Odwołanie się do nieistniejącego klucza w słowniku - KeyError.
+adict = {}                        # pusty słownik
+print ( adict["key"] )
+
+# Otwarcie do czytania nieistniejącego pliku - IOError.
+afile = open("nie_istnieje.txt", "r")
+</pre><hr>
+
+<h3>PRZECHWYTYWANIE WYJĄTKÓW</h3>
+
+<p>Czasem nie chcemy, aby program zatrzymał się po wystąpieniu wyjątku.
+Wtedy należy opakować wywołanie w instrukcję <em>try/except/else</em>
+w celu samodzielnego przechwycenia wyjątku.
+Jeżeli zależy nam na wykonaniu pewnych działań końcowych,
+niezależnych od wystąpienia wyjątku, to stosujemy
+instrukcję <em>try/finally</em>.
+
+<p>Od Pythona 2.5 mamy jedną instrukcję <em>try/except/finally</em>,
+czyli bloki <em>except</em> i <em>finally</em> mogą wystąpić
+w jednej instukcji <em>try</em>.
+
+<hr><pre>
+L = []
+# L = [1, 2, 3]
+try:
+    print ( L[1] )
+except IndexError:            # przechwycenie wyjątku
+    print ( "mam wyjątek" )   # nasz program obsługi
+else:
+    print ( "nie było wyjątku" )
+print ( "kontynuuję" )
+</pre><hr><pre>
+L = []
+# L = [1, 2, 3]
+try:
+    print ( L[1] )
+finally:                      # działania końcowe
+    print ( "zawsze wykonane" )
+print ( "kontynuuję" )
+</pre><hr>
+
+<p>Jeżeli podczas wykonywania bloku <em>try</em> nie wystapił
+wyjątek, to będzie wykonany blok <em>finally</em>,
+a następnie instrukcje pod instrukcją <em>try</em>.
+Jeżeli podczas wykonywania bloku <em>try</em> wystapił
+wyjątek, to będzie wykonany blok <em>finally</em>,
+ale potem wyjątek będzie przekazany wyżej.
+
+<p>Po otwarciu pliku do czytania również mogą się pojawić różne
+błędy, które przerwą program. Można zastosować konstrukcję
+<em>try/finally</em>, aby na pewno zamknąć otwarty plik.
+
+<hr><pre>
+afile = open("tekstowy.txt")  # najpierw otwieramy plik tekstowy
+try:                          # pracujemy na pliku
+    text = afile.read()   # czytamy cały tekst
+finally:                      # na pewno zamkniemy plik
+    afile.close()
+</pre><hr>
+
+<p>Sprawdzenie poprawności nazwy pliku podanej przez użytkownika
+można wykonać przy pomocy wyjątków.
+
+<hr><pre>
+# Bezpieczna obsługa pliku.
+filename = raw_input("Podaj nazwę pliku: ")
+try:                          # pierwszy blok
+    afile = open(filename, "r")
+except Exception:             # drugi blok (w razie wyjątku)
+    print ( "Nie ma pliku o nazwie {}".format(filename) )
+else:                         # trzeci blok opcjonalny (nie było wyjątku)
+    print ( "Plik został otwarty" )
+</pre><hr>
+
+<p>Można zamknąć taką funkcjonalność wewnątrz funkcji.
+
+<hr><pre>
+# Funkcja zwraca True, jeżeli plik istnieje, lub False, w przeciwnym razie.
+def if_exist(filename):
+    try:
+        afile = open(filename)
+        afile.close()
+        return True
+    except Exception:
+        return False
+</pre><hr>
+
+<p>Ogólny format instrukcji <em>try/except/else/finally</em>
+zawiera wiele opcjonalnych bloków z programami obsługi,
+choć musi pojawić się przynajmniej jeden.
+
+<hr><pre>
+# Składnia.
+try:
+    instrukcje                 # podstawowe działanie instrukcji
+except Exception1:                 # przechwytuje wskazany wyjątek
+    instrukcje
+except (Exception2, Exception3):   # przechwytuje wymienione wyjątki
+    instrukcje
+except Exception4 as Value1:       # przechwytuje wyjątek i jego instancję
+    instrukcje
+except (Exception4, Exception5) as Value2: # przechwytuje wyjątki i instancję
+    instrukcje
+except:                            # przechwytuje wszystkie (pozostałe) wyjątki
+    instrukcje
+else:                              # działania przy braku zgłoszenia wyjątku
+    instrukcje
+finally:                           # działania końcowe
+    instrukcje
+</pre><hr>
+
+<p>Należy ostrożnie korzystać z pustej części <em>except</em>,
+ponieważ może przechwycić nieoczekiwane wyjątki systemowe
+niezwiązane z naszym kodem albo wyjątki przeznaczone 
+dla innych programów obsługi.
+Lepsza jest postać <em>except Exception</em>, która
+ignoruje wyjątki powiązane z systemowymi wyjściami z programu.
+
+<p>Część <em>else</em> jest pomocna przy ustaleniu, czy wyjątek
+nie został zgłoszony, czy wystąpił i został obsłużony.
+
+<h3>ZGŁASZANIE WYJĄTKÓW</h3>
+
+<p>Do ręcznego wywoływania wyjątków służy instrukcja <em>raise</em>.
+
+</pre><hr><pre>
+try:
+    raise IndexError
+except IndexError:            # przechwycenie wyjątku
+    print ( "mam wyjątek" )   # nasz program obsługi
+print ( "kontynuuję" )
+</pre><hr><pre>
+&gt;&gt;&gt; raise IndexError
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+IndexError
+</pre><hr><pre>
+&gt;&gt;&gt; raise IndexError, "message"   # stara składnia
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+IndexError: message
+</pre><hr><pre>
+&gt;&gt;&gt; raise IndexError("message")  # nowa składnia
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+IndexError: message
+</pre><hr>
+
+<p>Do wywołania wyjątku można także wykorzystać wyrażenie <em>assert</em>, 
+które jest wykorzystywana głównie przy debugowaniu kodu.
+Jest to pomoc dla programistów do wyszukiwania błędów w programie,
+sprawdza się występowanie "niemożliwych" sytuacji.
+Nie jest to mechanizm do obsługi błędów czasu wykonania (run-time errors).
+AssertionError nie powinien się nigdy pojawić, jeżeli program
+nie ma błędów.
+
+<hr><pre>
+&gt;&gt;&gt; assert False, "message"
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+AssertionError: message
+</pre><hr>
+
+
+</body>
+</html>

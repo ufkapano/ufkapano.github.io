@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dziedziczenie</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Klasy służą jako fabryki generujące wiele obiektów instancji,
+ale również pozwalają na modyfikacje za pomocą wprowadzania
+nowych komponentów (klas podrzędnych) w miejsce modyfikowania
+istniejących komponentów w miejscu.
+Python pozwala klasom na dziedziczenie po innych klasach,
+umożliwiając tworzenie hierarchii klas specjalizujących
+jakieś zachowanie za pomocą redefiniowania atrybutów.
+
+<p>Klasy nadrzędne są wymieniane w nawiasach w nagłówku
+instrukcji <em>class</em>.
+Instancje klasy podrzędnej dziedziczą atrybuty po wszystkich
+klasach nadrzędnych.
+
+
+
+
+<hr><pre>
+class C1:                     # nowy obiekt klasy
+    pass
+
+class C2:                     # nowy obiekt klasy
+    message = "GvR"           # atrybut klasy C2
+
+class C3(C1, C2):             # dziedziczenie wielokrotne
+
+    def __init__(self, who):
+        """Konstruktor instancji klasy C3."""
+        self.name = who
+
+# C3 to klasa podrzędna.
+# C1 i C2 to klasy nadrzędne.
+
+I1 = C3("Adam")               # instancja klasy C3
+I2 = C3("Bogdan")             # instancja klasy C3
+
+print ( I1.name )             # kolejność przeszukiwania: I1, C3, C1, C2
+# Tu przeszukiwanie zakończy się na I1,
+# ponieważ name jest atrybutem instancji.
+
+print ( I1.message )          # kolejność przeszukiwania: I1, C3, C1, C2
+# Tu przeszukiwanie dotrze aż do klasy C2.
+I1.message = "Python"         # atrybut tylko instancji I1
+print ( I1.message )          # Python, odczyt atrybutu instancji I1
+print ( I2.message )          # GvR, dochodzimy do atrybutu klasy C2
+print ( C2.message )          # GvR, odczytanie wprost atrybutu klasy
+
+print ( C3.__bases__ )        # krotka klas nadrzędnych
+</pre><hr>
+
+<p>Jeżeli obiekt pochodzi z instrukcji class,
+to wyrażenie obiekt.atrybut uruchamia w Pythonie wyszukiwanie.
+Python przeszukuje drzewo połączonych obiektów, szukając
+pierwszego wystąpienia atrybutu.
+Najpierw szuka w obiekcie, a następnie we wszystkich klasach
+powyżej niego, od dołu do góry i od lewej do prawej.
+
+<h3>WYWOŁYWANIE METOD KLAS NADRZĘDNYCH</h3>
+
+<hr><pre>
+class FirstClass:
+    """Przykładowa pierwsza klasa."""
+
+    def __init__(self, x):
+        """Konstruktor instancji klasy FirstClass."""
+        instrukcje
+
+class SecondClass(FirstClass):
+    """Przykładowa druga klasa, dziedziczona z pierwszej."""
+
+    def __init__(self, x, y):
+        """Konstruktor instancji klasy SecondClass."""
+        # Wywołanie kostruktora klasy nadrzędnej.
+        FirstClass.__init__(self, x)
+        instrukcje            # nowe działania inicjalizacyjne
+</pre><hr>
+
+<h3>KLASY W MODUŁACH</h3>
+
+<p>Klasy są atrybutami w modułach.
+Nazwa klasy jest zmienną przechowującą referencję do obiektu klasy.
+
+<hr><pre>
+# Moduł persons.py
+"""Moduł z narzędziami do opisu osób."""     # docstring
+
+class Person:
+    """Klasa reprezentująca osoby."""
+
+    def __init__(self, who):
+        """Konstruktor osoby."""
+        self.name = who
+
+value = 2012
+
+# Kod testujący moduł.
+if __name__ == "__main__":
+    adam = Person("Adam")
+    print ( adam.name )
+</pre><hr><pre>
+# Moduł główny
+
+import persons                          # import modułu
+
+student = persons.Person("Anna")        # tworzenie instancji
+print ( student.name )                  # Anna, atrybut instancji
+print ( persons.value )                 # 2012, potrzebna kwalifikacja
+</pre><hr>
+
+<h3>INTROSPEKCJA W PYTHONIE</h3>
+
+<hr><pre>
+# Poznane narzędzia.
+instancja.__class__           # łącze do klasy
+instancja.__class__.__name__  # nazwa klasy
+instancja.__dict__.keys()     # przestrzeń nazw instancji (tylko atrybuty instancji)
+dir(instancja)                # jw + odziedziczone atrybuty z klas
+
+klasa.__dict__.keys()         # przestrzeń nazw klasy
+klasa.__bases__               # krotka klas nadrzędnych
+</pre><hr>
+
+<h3>SPOWOLNIONE TYPOWANIE</h3>
+
+<p>Przykład z książki: Joel Spolsky, <em>Sztuka pisania oprogramowania.
+Wybór i redakcja Joel Spolsky</em>, Helion.
+
+<hr><pre>
+# Budujemy hierarchię klas.
+class Pet:
+    """Klasa dla ulubieńców."""
+
+    def speak(self):
+        pass  # odkładamy definicję na później
+
+class Cat(Pet):
+    """Klasa dla kotów."""
+
+    def speak(self):
+        print ( "miau!" )
+
+class Dog(Pet):
+    """Klasa dla psów."""
+
+    def speak(self):
+        print ( "hau!" )
+
+# Klasa nie wywiedziona z Pet.
+class Person:
+    """Klasa dla osób."""
+
+    def speak(self):
+        print ( "witam!" )
+
+    def drive(self):
+        print ( "piii!" )
+
+# Zwykła funkcja, a nie metoda.
+def command(pet):
+    pet.speak()
+
+pets = [Cat(), Dog(), Person()]   # konstruktory
+
+# Przykład polimorfizmu Pythona.
+# Funkcja oczekuje określonego interfejsu (metody speak),
+# a nie określonego typu argumentu.
+for pet in pets:
+    command(pet)
+</pre><hr>
+
+<ul>
+<li>Testowanie kodu następuje na etapie wykonania.
+<li>Błąd zostanie zaraportowany w postaci wyjątku.
+<li>Pomyślna kompilacja programu (C/C++) gwarantuje poprawność
+składniową, ale nie dowodzi poprawnego działania programu.
+<li>Bruce Eckel: niezbędne jest rygorystyczne testowanie,
+a nie rygorystyczna kontrola typów.
+<li>Przetestowany program w Pythonie jest tak samo solidny,
+jak jego odpowiednik w C++ czy Javie.
+</ul>
+
+</body>
+</html>

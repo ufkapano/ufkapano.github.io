@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Algorytmy zachłanne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytm zachłanny lub żarłoczny (greedy) 
+w celu wyznaczenia rozwiązania w każdym kroku dokonuje zachłannego, 
+tj. najlepiej rokującego w danym momencie
+wyboru rozwiązania częściowego [Wikipedia]. 
+Inaczej mówiąc, algorytm zachłanny nie patrzy, czy w kolejnych krokach 
+jest sens wykonywać dane działanie, ale dokonuje decyzji lokalnie
+optymalnej, dokonuje on wyboru wydającego się w danej chwili najlepszym,
+kontynuując rozwiązanie podproblemu wynikającego z podjętej decyzji.
+
+<p>Nie istnieje ogólna metoda dowodzenia, czy dla danego problemu
+rozwiązanie zachłanne (zawsze) odnajduje poprawny (i optymalny) wynik.
+Istnieją jednak stosujące się do samego problemu kryteria, pozwalające
+sądzić, iż dla owego problemu istnieje rozwiązanie zachłane:
+
+<ul>
+<li>Własność zachłannego wyboru - za pomocą zachłannych wyborów
+można uzyskać globalnie optymalne rozwiązanie.
+
+<li>Własność optymalnej podstruktury - optymalne rozwiązanie problemu
+zawiera w sobie optymalne rozwiązania podproblemów.
+</ul>
+
+<p>Przykłady algorytmów zachłannych:
+
+<ul>
+
+<li>Algorytm zachłanny rozwiązujący problem plecakowy ciągły.
+W przypadku problemu plecakowego dyskretnego algorytm zachłanny
+daje przybliżone rozwiązanie [inne podejście to programowanie dynamiczne].
+
+<li>Algorytmy znajdujące najdłuższy wspólny podciąg.
+
+<li>Algorytm Kruskala (wyznaczanie minimalnego drzewa rozpinającego
+dla grafu nieskierowanego ważonego spójnego).
+
+<li>Algorytm Prima (wyznaczanie minimalnego drzewa rozpinającego
+dla grafu nieskierowanego ważonego spójnego).
+
+<li>Algorytm szeregowania zadań.
+
+<li>Algorytm najbliższych sąsiadów dla problemu komiwojażera.
+Przechodzimy z bieżącego wierzchołka do jego najbliższego nieodwiedzonego 
+sąsiada. 
+Po odwiedzeniu wszystkich wierzchołków wracamy do wierzchołka startowego.
+Algorytm zwykle znajduje przybliżone rozwiązanie w czasie O(n^2).
+Lepsze rozwiązanie otrzymuje się, gdy powtarzamy procedurę startując
+kolejno z innych wierzchołków [czas O(n^3)].
+
+<li>Algorytm znajdowania największej kliki w grafie przez dołączanie
+do budowanej kliki C kolejnych wierzchołków, które tworzą klikę 
+z wierzchołkami wcześniej zaliczonymi do C.
+Znalezione rozwiązanie jest zwykle przybliżone
+(klika maksymalna, ale nie największa).
+Na jakość znalezionego rozwiązania ma wpływ kolejność przetwarzanych
+wierzchołków. Dobrą strategią jest przetwarzanie wierzchołków
+w kolejności malejących stopni, bo można się spodziewać, że wierzchołki
+z największej kliki będą miały raczej duże stopnie.
+
+</ul>
+
+<p>Wikipedia, Greedy algorithm,
+https://en.wikipedia.org/wiki/Greedy_algorithm
+
+</body>
+</html>

@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Problem ośmiu hetmanów (the queens problem)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>[Wikipedia] Hetman jest figurą szachową, która bije figury 
+znajdujące się w tej samej kolumnie, wierszu lub przekątnej, co on sam. 
+W jaki sposób rozstawić osiem hetmanów na tradycyjnej szachownicy 8x8 tak, 
+aby wzajemnie się nie atakowały? Ile jest możliwych rozstawień?
+
+<p>Problem można wysłowić w języku teorii grafów.
+Wierzchołkami grafu są pola na szachownicy.
+krawędzie grafu łączą pola, z których hetmani atakują się wzajemnie.
+Szukamy zbioru niezależnego wierzchołków grafu o największej
+liczności. Problem jest NP-trudny.
+
+<hr><pre>
+# Problem ośmiu hetmanów.
+# Znajdowanie jednego rozwiązania.
+# Wiersze i kolumny mają zakres od 0 do N-1.
+
+def rysuj():
+    for w in range(N):
+        print ( " ".join(("H" if x[k] == w else ".") for k in range(N)) )
+
+def dopuszczalny(w, k):
+    return a[w] and b[w+k] and c[w-k]
+
+def zapisz(w, k):
+    x[k] = w
+    a[w] = False
+    b[w+k] = False
+    c[w-k] = False
+
+def wymaz(w, k):
+    a[w] = True
+    b[w+k] = True
+    c[w-k] = True
+
+def probuj(k):
+    udany = False
+    w = 0                 # numery od 0 do N-1
+    while (not udany) and (w &lt; N):
+        if dopuszczalny(w, k):
+            zapisz(w, k)
+            if k &lt; (N-1):
+                udany = probuj(k+1)
+                if not udany:
+                    wymaz(w, k)
+            else:
+                udany = True
+        w += 1
+    return udany
+
+N = 8  # bok szachownicy i jednocześnie liczba hetmanów
+
+# x[i] to pozycja hetmana w kolumnie i
+x = N * [None]
+
+# a[j] == True to brak hetmana w wierszu j
+a = N * [True]
+
+# b[k] == True to brak hetmana na przekątnej k [/].
+# Suma wiersz+kolumna od 0 do (2N-2).
+b = (2*N-1) * [True]
+
+# c[k] == True to brak hetmana na przekątnej k [\].
+# Różnica wiersz-kolumna od (-N+1) do (N-1).
+c = (2*N-1) * [True]
+
+if probuj(0):
+    print ( "Mamy rozwiązanie" )
+    rysuj()
+else:
+    print ( "Nie istnieje rozwiązanie" )
+</pre><hr><pre>
+# Problem ośmiu hetmanów.
+# Znajdowanie wszystkich rozwiązań.
+
+def probuj(k):
+    # Sprawdzanie wszystkich kandydatow (wiersze).
+    for w in range(N):
+        if dopuszczalny(w, k):
+            zapisz(w, k)
+            if k &lt; (N-1):
+                probuj(k+1)
+            else:
+                rysuj()
+            wymaz(w, k)
+</pre><hr><pre>
+. . H . Dwa rozwiązania dla planszy 4x4,
+H . . . jedno istotnie różne.
+. . . H
+. H . .
+-------
+. H . .
+. . . H
+H . . .
+. . H .
+</pre><hr><pre>
+H . . . . Dziesięć rozwiązań dla planszy 5x5,
+. . . H . dwa istotnie różne.
+. H . . .
+. . . . H
+. . H . .
+---------
+H . . . .
+. . H . .
+. . . . H
+. H . . .
+. . . H .
+---------
+. . H . .
+H . . . .
+. . . H .
+. H . . .
+. . . . H
+---------
+. . . H .
+H . . . .
+. . H . .
+. . . . H
+. H . . .
+---------
+. H . . .
+. . . H .
+H . . . .
+. . H . .
+. . . . H
+---------
+. . . . H
+. . H . .
+H . . . .
+. . . H .
+. H . . .
+---------
+. H . . .
+. . . . H
+. . H . .
+H . . . .
+. . . H .
+---------
+. . . . H
+. H . . .
+. . . H .
+H . . . .
+. . H . .
+---------
+. . . H .
+. H . . .
+. . . . H
+. . H . .
+H . . . .
+---------
+. . H . .
+. . . . H
+. H . . .
+. . . H .
+H . . . .
+</pre><hr>
+
+
+</body>
+</html>

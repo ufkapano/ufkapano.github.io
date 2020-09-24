@@ -1,0 +1,232 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduły systemowe</h1>
+
+<h3>MODUŁ __builtin__</h3>
+
+<p>Moduł umożliwia sprawdzenie listy obiektów wbudowanych 
+
+<h3>MODUŁ __future__</h3>
+
+<p>Udostępnianie właściwości języka niezgodnych z wcześniejszym
+zachowaniem jest możliwe poprzez import z modułu __future__.
+Ważne, że to nie jest normalny import, to jest zmiana sposobu
+interpretowania kodu przez Pythona.
+Takie wiersze muszą być na samej górze pliku.
+
+<hr><pre>
+# PEP 236 -- Back to the __future__
+from __future__ import feature_name
+from __future__ import nested_scopes    # Python 2.1, PEP 227 (LGB na LEGB)
+from __future__ import division         # Python 2.2
+from __future__ import generators       # Python 2.2
+from __future__ import print_function   # Python 2.6
+from __future__ import braces
+# SyntaxError: not a chance
+# To jest dowcip: nigdy nie będzie wprowadzone oznaczanie bloku
+# instrukcji przez nawiasy jak w C/C++.
+# The Python developers have a well-developed sense of humour!
+</pre><hr><pre>
+# W sesji interaktywnej można sprawdzić zawartość modułu.
+&gt;&gt;&gt; import __future__
+&gt;&gt;&gt; help(__future__)
+&gt;&gt;&gt; __future__.all_feature_names     # Python 2.7.3
+['nested_scopes', 'generators', 'division', 'absolute_import', 
+'with_statement', 'print_function', 'unicode_literals']
+&gt;&gt;&gt; import __hello__   # dowcip
+Hello world...
+&gt;&gt;&gt; import antigravity   # Python 2.7 i 3
+# Dowcip. Otwiera komiks w przeglądarce.
+&gt;&gt;&gt; from __future__ import barry_as_FLUFL   # Python 3.1
+# Dowcip. Nie działa a != b, tylko a &lt;&gt; b.
+&gt;&gt;&gt; 
+</pre><hr>
+
+<h3>MODUŁ os</h3>
+
+<hr><pre>
+import os
+
+os.system("date")                       # wywołanie polecenia powłoki
+var = os.environ.get("SHELL")           # pobranie zawartości zmiennej powłoki
+print ( var )
+print ( os.uname() )                    # krotka z informacją o systemie
+print ( os.name )                       # "posix" lub "nt" lub "mac" lub ...
+
+# os.path is posixpath or ntpath
+print ( os.path.abspath(".") )   # "/home/andrzej"
+print ( os.path.basename("/home/andrzej/Pobrane") )   # 'Pobrane'
+print ( os.path.dirname("/home/andrzej/Pobrane") )   # '/home/andrzej'
+# os.path.exists(path)
+# os.path.walk(top, func, arg)   # directory tree walk with callback function.
+# os.path.isabs(path)   # test whether a path is absolute
+# os.path.isdir(s)   # return true if the pathname refers to an existing directory
+# os.path.isfile(path)   # test whether a path is a regular file
+# os.path.exists(path)   # test whether a path exists
+</pre><hr>
+
+<h3>MODUŁ sys</h3>
+
+<p>W każdy interpreter Pythona wbudowany jest moduł <em>sys</em>.
+
+<hr><pre>
+import sys
+
+# dir(sys)                    # można sprawdzić udostępniane symbole
+print ( "sys.version: {}".format(sys.version) )
+print ( "sys.platform: {}".format(sys.platform) )
+print ( "sys.byteorder: {}".format(sys.byteorder) )
+# sys.exit()                  # domyślnie zwróci 0 - sukces
+# sys.exit(1)                 # zwraca 1 - niepowodzenie
+print ( "długość sys.argv: {} {}".format(len(sys.argv), type(sys.argv)) )
+for i in range(len(sys.argv)):
+    print ( "{} {}".format(i, sys.argv[i]) )
+
+# Znaki zachęty są określone tylko w trybie interaktywnym.
+# print ( "{} {}".format(sys.ps1, sys.ps2) )
+
+print ( "sys.path: {}".format(sys.path) )   
+# ścieżki wyszukiwania modułów (lista stringów)
+path_to_folder = os.path.abspath("/destination/folder")
+sys.path.insert(0, path_to_folder)   # dodanie folderu do ścieżki
+
+print ( "sys.prefix: {}".format(sys.prefix) )         # "/usr"
+print ( "sys.executable: {}".format(sys.executable) ) # "/usr/bin/python"
+print ( "sys.maxint: {}".format(sys.maxint) )         # 2147483647
+
+# Nazwy strumieni: sys.stdin, sys.stdout, sys.stderr
+
+# Sprawdzanie licznika referencji.
+print ( "sys.getrefcount {}".format(sys.getrefcount(1)) )
+print ( "sys.getrefcount {}".format(sys.getrefcount("a")) )
+
+# Bieżąca wartość limitu rekurencji, czyli maksymalna głębokość
+# stosu interpretera Pythona.
+print ( "limit rekurencji {}".format(sys.getrecursionlimit()) ) # 1000
+
+# Zmiana limitu rekurencji Pythona.
+# Największa możliwa wartość zależy od platformy.
+# sys.setrecursionlimit(n)
+</pre><hr>
+
+<p>Zaawansowane możliwości przetwarzania oparte na wierszu
+poleceń (oprócz ręcznego sprawdzania <em>sys.argv</em>),
+można znaleźć w modułach <em>getopt</em> i <em>optparse</em>
+z biblioteki standardowej.
+
+<h3>MODUŁ copy</h3>
+
+<hr><pre>
+import copy
+
+# Są tylko dwie metody.
+x = "dowolny obiekt"
+y = copy.copy(x)              # płytka kopia x
+z = copy.deepcopy(x)          # głęboka kopia x
+
+# Głęboka kopia niesie ze soba dwa problemy.
+# 1. Obiekty rekurencyjne mogą powodować zapętlenie.
+# 2. Głęboka kopia może skopiować aż za dużo elementów.
+# Rozwiązaniem jest słownik "memo" obiektów już skopiowanych
+# i kopiowanie określone przez użytkownika.
+
+# Od Pythona 2.5 kopiowane są funkcje.
+
+# Klasy mogą używać tego samego interfejsu do kontroli kopiowania
+# co w przypadku modułu pickle.
+# W klasach można zdefiniować metody specjalne __copy__ i __deepcopy__,
+# które opisują płytką i głęboką kopię instancji tej klasy.
+
+# http://stackoverflow.com/questions/1500718/
+# what-is-the-right-way-to-override-the-copy-deepcopy-operations-on-an-object-in-p
+
+class MyClass(object):
+    def __init__(self): ...
+    def __copy__(self): ...
+    def __deepcopy__(self, memo): ...
+</pre><hr>
+
+<h3>MODUŁ time</h3>
+
+<hr><pre>
+import time
+
+start = time.clock()
+# instrukcje
+elapsed = time.clock() - start
+</pre><hr>
+
+<h3>MODUŁ collections (Python 2.4+)</h3>
+
+<p>Moduł dostarcza specjalistyczne kontenerowe typy danych.
+
+<ul>
+<li>namedtuple() - (Python 2.6+) factory function for creating tuple subclasses with named fields
+<li>deque - (Python 2.4+) list-like container with fast appends and pops on either end (kolejka dwukierunkowa)
+<li>Counter - (Python 2.7) dict subclass for counting hashable objects
+[domyślnie brakujące klucze mają wartość 0, nie pojawia się KeyError]
+<li>OrderedDict - (Python 2.7) dict subclass that remembers the order 
+entries were added [PEP 372]
+<li>defaultdict - (Python 2.5+) dict subclass that calls a factory function to supply missing values
+</ul>
+
+<p>W Pythonie 2.6 dodano abstrakcyjne klasy bazowe (ABCs, PEP 3119)
+[w nawiasach pokazane dziedziczenie]:
+
+<ul>
+<li>Container, 
+<li>Hashable, 
+<li>Iterable, 
+<li>Iterator (Iterable), 
+<li>Sized, 
+<li>Callable,
+<li>Sequence (Sized, Iterable, Container), 
+<li>MutableSequence (Sequence), 
+<li>Set (Sized, Iterable, Container), 
+<li>MutableSet (Set), 
+<li>Mapping (Sized, Iterable, Container), 
+<li>MutableMapping (Mapping),
+<li>MappingView (Sized), 
+<li>ItemsView (MappingView, Set), 
+<li>KeysView (MappingView, Set), 
+<li>ValuesView (MappingView).
+</ul>
+
+<p>Dzięki ABCs możemy pytać, czy klasy lub instancje posiadają
+pewną funkcjonalność.
+
+<hr><pre>
+import collections
+
+size = None
+if isinstance(my_variable, collections.Sized):   # istnieje __len__
+    size = len(my_variable)
+</pre><hr>
+
+<h3>MODUŁ itertools (Python 2.3+)</h3>
+
+<p>Moduł implementuje zestaw wygodnych iteratorów.
+
+<ul>
+<li>Iteratory nieskończone (count, cycle, repeat).
+<li>Iteratory zatrzymujące się na najkrótszej sekwencji
+(chain, izip, izip_longest, ...).
+<li>Generatory kombinatoryczne (product, permutations, combinations).
+</ul>
+
+<h3>MODUŁ argparse (Python 2.7 i 3.2+)</h3>
+
+<p>Moduły getopt, optparse, argparse [PEP 389] służą do parsowania
+argumentów podanych w wierszu poleceń.
+Moduł getopt przypomina getopt() z biblioteki języka C, przez co
+przydaje się do pisania prototypów, które będą przepisywane do C.
+Do nowych skryptów Pythona zaleca się używanie najnowszego modułu argparse.
+
+</body>
+</html>

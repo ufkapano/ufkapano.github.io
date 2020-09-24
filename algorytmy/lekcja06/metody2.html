@@ -1,0 +1,359 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Metody specjalne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W Pythonie nie ma przeciążania funkcji, bo nazwa funkcji jest
+referencją do obiektu. W C++ mogą być funkcje o tej samej nazwie,
+które różnią się typami argumentów (ale nie zwracanych wartości).
+W Pythonie przeciążanie operatorów robi się za pomocą metod specjalnych.
+
+<hr><pre>
+A Guide to Python's Magic Methods [Python 2]
+
+https://rszalski.github.io/magicmethods/
+</pre><hr>
+
+<h3>PRZECIĄŻANIE OPERATORÓW</h3>
+
+<p>W uproszczeniu przeciążanie operatorów pozwala obiektom
+zapisanym za pomocą klas przechwytywać i odpowiadać na operacje,
+które działają na typach wbudowanych. 
+Są to operacje dodawania, wyświetlania, tworzenia wycinków, itp.
+W ten sposób obiekty własne użytkownika zachowują się jak obiekty
+wbudowane, co powoduje powstanie bardziej spójnych i łatwiejszych
+do zrozumienia interfejsów.
+
+<p>Metody zawierające w nazwie podwójne znaki podkreślenia
+(jak <em>__X__</em>) są specjalnymi punktami zaczepienia.
+Takie metody wywoływane są automatycznie, kiedy instancje
+pojawią się w operacjach wbudowanych.
+Klasy mogą nadpisywać większość operacji wbudowanych.
+Nie istnieją wartości domyślne dla metod przeciążania operatorów
+(i nie są one potrzebne).
+
+<hr><pre>
+# Wybrane metody specjalne.
+__new__  pierwsza metoda wywoływana przy inicjalizacji obiektu,
+    rzadko definiowana jawnie, przekazuje argumenty do __init__;
+    [__new__(cls, arg1, arg2, ...): ...]
+
+__init__  konstruktor
+
+__del__  destruktor, działa gdy licznik referencji zejdzie do zera
+    i zaczyna pracować garbage collection;
+    wyrażenie del x tylko zmniejsza licznik referencji o 1;
+    wyrażenie del x _nie_ przekłada się na x.__del__();
+
+__str__  zamiana na "nieformalny" string, wywoływane przez str(x);
+    metoda działa, jeżeli obiekt jest dostępny bezpośrednio;
+
+__repr__  "oficjalna" reprezentacja obiektu przez string repr(x);
+    powinna wyglądać jak poprawne wyrażenie w Pythonie 
+    do stworzenia obiektu na nowo; 
+    zwraca wartość w sesji interaktywnej;
+    metoda działa również wtedy, gdy obiekt jest zagnieżdżony 
+    w innym obiekcie, np. jest elementem listy;
+
+__unicode__   wywoływane przez unicode(x);
+
+__format__(self, formatstr)   np. "Obiekt {}".format(x)
+
+__hash__   wywoływane przez hash(x), zwraca int
+
+# Operatory dwuargumentowe.
+__add__  dodawanie, x + y
+__sub__  odejmowanie, x - y
+__mul__  mnożenie, x * y
+__mod__  reszta z dzielenia, x % y
+__divmod__  zwraca krotkę (div, mod), divmod(x, y)
+__pow__  potęgowanie, pow(x, y) lub x ** y; powinien być opcjonalny 
+    trzeci argument, jeżeli ma być wspierane pow(x, y, z)]
+
+# Definiowanie operatora dzielenia /.
+__div__  dzielenie klasyczne (x/y)
+__floordiv__  dzielenie całkowite, x // y
+__truediv__ działa w Pythonie 2, jeżeli jest aktywne __future__.division
+
+# Reflected arithmetic operators.
+# Wersje prawe operatorów, które wywoływane są wtedy, gdy obiekt
+# po prawej stronie operatora jest naszą instancją klasy, jednak
+# obiekt z lewej strony nie jest instancją naszej klasy.
+# Wersje prawe operatorów są potrzebne dla operacji przemiennych.
+# W wersjach prawych operatorów PRAWY argument staje się self.
+# Dla działania nieinstancja + instancja mamy
+# def __radd__(self, other): ...
+# w kodzie self będzie instancją, a other nieinstancją.
+# Nieinstancja nie może definiować __add__ lub powinna zwracać
+# wyjątek NotImplemented dla naszego typu.
+
+__radd__  right add
+__rsub__  right sub
+__rmul__  right mul
+__rdiv__  right div
+__rtruediv__  right truediv
+__rfloordiv__  right
+__rmod__  reszta z dzielenia
+__rdivmod__  zwraca tuple
+__rpow__  potęgowanie
+
+# Augmented arithmetic assignments powinny być robione in-place
+# (zmieniać self) i zwracać wynik (niekoniecznie self).
+__iadd__  add (x += y)
+__isub__  sub (x -= y)
+__imul__  mul (x *= y)
+__idiv__  (x /= y)
+__itruediv__  div (x //= y)
+__ifloordiv__ (x %= y)
+__imod__
+</pre><hr><pre>
+# Przykład.
+alist = [2]
+alist += [5]   # zmiana obiektu!
+print ( alist )   # [2, 5]
+# To jest równoważne działaniom:
+result = alist.__iadd__([5])   # potrzebne return self
+alist = result
+
+# Jeżeli klasa nie ma metody __iadd__, operacja A += B zamieniana jest
+# na A = A + B, co działa też dla obiektów niezmiennych (str, tuple).
+
+# Przykład klasy dla obiektów zmiennych.
+class Time:
+    def __iadd__(self, other):
+        self.s += other.s
+        return self   # typowe zachowanie
+</pre><hr><pre>
+# Operatory bitowe.
+__lshift__(self, other)   left bitwise shift, operator &lt;&lt;
+__rshift__(self, other)   right bitwise shift, operator &gt;&gt;
+__and__(self, other)   bitowe and, operator &amp;
+__or__(self, other)   bitowe or, operator |
+__xor__(self, other)   bitowe xor, operator ^
+Są jeszcze prawe (i augmented) wersje operatorów bitowych.
+
+# Operatory jednoargumentowe.
+__pos__  znak plus, +x
+__neg__  znak minus, -x
+__abs__  wartość bezwzględna, abs(x)
+__invert__  zwykle odwrotność lub negacja, ~x
+__complex__  implementacja complex(x)
+__int__  implementacja int(x)
+__long__  implementacja long(x)
+__float__  implementacja float(x)
+
+# Porównywanie.
+__cmp__  porównywanie (Python 2), zwraca -1|0|+1
+__len__  długość kontenera, len(x)
+__nonzero__  test prawdziwości (Python 2), jeżeli obiekt nie jest kontenerem
+__bool__  test prawdziwości (Python 3), bool(x)
+__bool__ = __nonzero__        # kod dla zachowania kompatybilności Pythona 2 i 3
+
+# Tak zwane "rich comparison" methods (Python 2.6+).
+# Jeżeli nie są zdefiniowane, wywoływane jest __cmp__
+__lt__  mniejsze, x &lt; y
+__gt__  większe, y &gt; y
+__eq__  równe, x == y
+__le__  mniejsze lub równe, x &lt;= y
+__ge__  większe lub równe, x &gt;= y
+__ne__  różne, x != y, dawniej też x &lt;&gt; y
+assert (x &lt; y) == (y &gt; x)   # jedno można obliczyć z drugiego
+assert (x &lt;= y) == (y &gt;= x)   # jedno można obliczyć z drugiego
+assert (x == y) == not (x != y)   # nie zawsze tak musi być!
+# PEP 207
+# min() and list.sort() operations only use the &lt; operator (less).
+# max() only use the &gt; operator.
+# 'in' and 'not in' operators and dictionary lookup only use the == operator.
+# The reflexivity rules are assumed by Python.
+# x &gt; y jest równe y &lt; x (interpreter może przestawić).
+
+# Emulowanie typów kontenerowych.
+__len__             # len(x)
+Długość kontenera, testy prawdziwości, jeśli nie ma __bool__.
+Metoda wymaga, aby zwracana wartość była typu int.
+
+__setattr__(self, "attr", value)   # X.attr = value
+Przypisanie atrybutu do instancji.
+
+__delattr__(self, "attr")   # del X.attr
+Usuwanie atrybutu.
+
+__getattr__(self, "attr")   # X.attr
+Funkcja wywoływana przy próbie korzystania z atrybutu,
+który nie istnieje. Można go wtedy uzupełnić, np.
+self.__dict__["attr"] = some_value
+Zwyczajnie przy próbie X.attr Python wykona
+return self.__dict__["attr"]   # kluczem jest string
+
+__getattribute__(self, "attr")   # X.attr
+Przechwytywanie atrybutu, który może istnieć lub nie.
+Może być trudne do zaimplementowania bez popadnięcia w nieskończoną pętlę.
+Należy się odwołać do klasy bazowej, np.
+super(Foo, self).__getattribute__("attr")
+
+__getitem__  indeksowanie, wycinanie (Python 3), iteracje, 
+X[key], X[i:j], pętle for oraz inne iteracje, jeśli nie ma __iter__
+def __getitem__(self, key): pass  # kod dla X[key]
+
+__setitem__  przypisanie indeksu i wycinka, 
+X[key] = value, X[i:j] = sequence
+def __setitem__(self, key, value): pass     # kod dla X[key] = value
+
+__delitem__  usuwanie indeksu i wycinka,
+del X[key], del X[i:j]
+
+__contains__  test przynależności
+item in X (dowolny iterator)
+
+# Wspomaganie kopiowania z modułem copy.
+__copy__(self)  płytka kopia
+Y = copy.copy(X)
+
+__deepcopy__(self, memo)  głęboka kopia (słownik memo)
+Y = copy.deepcopy(X, memo)
+</pre><hr>
+
+<h3>PRZECHWYTYWANIE WYWOŁAŃ</h3>
+
+<p>Przechwytywanie wywołań instancji realizuje metoda <em>__call__</em>.
+Dzięki temu klasy mogą emulować funkcje, ale z dodatkowymi
+możliwościami, jak zachowywanie stanu między wywołaniami.
+
+<hr><pre>
+class Printer:
+    """Klasa reprezentująca obiekt wyświetlający."""
+
+    def __init__(self, counter=0):
+        """Utwórz obiekt."""
+        self.counter = counter  # licznik wywołań funkcji
+
+    def __call__(self, *arguments, **keywords):
+        """Obsługa wywołania."""
+        self.counter += 1
+        print ( "Wywołanie: {} {}".format(arguments, keywords) )
+
+X = Printer()
+X(1, 2)                       # Wywołanie: (1, 2) {}
+X(1, 2, x=3, y=4)             # Wywołanie: (1, 2) {"x":3, "y":4}
+print ( X.counter )           # odczyt licznika wywołań funkcji
+</pre><hr>
+
+<h3>ATRYBUTY KLASY</h3>
+
+<p>Czasem potrzebna jest znajomość liczby istniejących
+instancji danej klasy. Rozwiązaniem jest atrybut klasy,
+który na bieżąco zwiększa wartość o jeden przy tworzeniu instancji, 
+a także zmniejsza wartość o jeden przy niszczeniu instancji.
+Atrybut klasy istnieje w przestrzeni nazw klasy, więc potrzebna
+jest odpowiednia kwalifikacja przy odnoszeniu się do niego.
+
+<hr><pre>
+class Point:
+    """Klasa dla punktów."""
+    counter = 0                     # atrybut klasy
+
+    def __init__(self, x=0, y=0):
+        """Konstuktor punktu."""
+        self.x = x
+        self.y = y
+        Point.counter += 1
+        print ("init: counter = {}".format(Point.counter))
+
+    def __str__(self):
+        """Postać napisowa punktu."""
+        return "({}, {})".format(self.x, self.y)
+
+    def __repr__(self):
+        """Reprezentacja punktu."""
+        return "Point({}, {})".format(self.x, self.y)
+
+    def __add__(self, other):       # pt1 + pt2
+        """Dodawanie punktów jako wektorów."""
+        return Point(self.x + other.x, self.y + other.y)
+
+    def __del__(self):
+        """Destruktor punktu."""
+        Point.counter -= 1
+        print ("del: counter = {}".format(Point.counter))
+
+print "counter =", Point.counter        # na starcie counter=0
+pt1 = Point(3.4, 5.6)                   # counter=1
+pt2 = Point(4.5, 2.1)                   # counter=2
+print ( "metoda __str__ {} {}".format(pt1, pt2) )
+print ( "metoda __add__ {}".format(pt1 + pt2) )   # counter wzrasta do 3 i od razu wraca do 2
+
+# Każda instancja ma łącze do swojej klasy.
+print ( pt1.__class__ )
+print ( pt1.__dict__.keys() )           # przestrzeń nazw instancji
+
+del pt1                                 # counter=1
+del pt2                                 # counter=0
+print ( dir(Point) )                    # przestrzeń nazw klasy
+print ( Point.__dict__.keys() )         # przestrzeń nazw klasy
+</pre><hr>
+
+<p>Każda klasa czy instancja ma atrybut <em>__dict__</em>, 
+który jest słownikiem przestrzeni nazw obiektu 
+(podobnie jak dla modułu).
+Klasy mają również atrybut <em>__bases__</em> będący krotką
+ich klas nadrzędnych.
+
+<h3>RICH COMPARISONS</h3>
+
+<p>W Pythonie 3 nie ma metody __cmp__, tylko stosuje się rich comparisons.
+W Pythonie 2.6+ rich comparisons mają wyższy priorytet,
+niż metoda __cmp__, ale generalnie nie należy łączyć tych
+dwóch metod określających porównywanie obiektów.
+
+<hr><pre>
+Why Python need rich comparison?
+Ładne przykłady z NumPy i the SQLAlchemy project.
+
+http://stackoverflow.com/questions/20989750/why-python-need-rich-comparison
+</pre><hr><pre>
+PEP 207 - Rich Comparisons.
+
+https://www.python.org/dev/peps/pep-0207/
+</pre><hr><pre>
+# https://docs.python.org/2/library/functools.html
+# W Pythonie 2.7 wprowdzono dekorator, który ułatwia tworzenie metod
+# specjalnych dla rich comparisons.
+# Klasa musi zdefiniować metodę __eq__() oraz jedną z metod:
+# __lt__(), __le__(), __gt__(), __ge__().
+# Pozostałe metody zostaną wygenerowane przez dekorator.
+
+from functools import total_ordering
+
+@total_ordering
+class Student:
+    # Mamy atrybuty firstname i lastname.
+    def __eq__(self, other):
+        return ((self.lastname.lower(), self.firstname.lower()) ==
+            (other.lastname.lower(), other.firstname.lower()))
+    def __lt__(self, other):
+        return ((self.lastname.lower(), self.firstname.lower()) &lt;
+            (other.lastname.lower(), other.firstname.lower()))
+</pre><hr>
+
+<h3>KONSTRUKTOR DOMYŚLNY</h3>
+
+<p>Warto się zastanowić, czy w Pythonie potrzebny jest konstruktor
+domyślny, czyli dla klasy C konstruktor wywoływany bez argumentów C().
+W C++ taki konstruktor jest uruchamiany przykładowo przy tworzeniu
+pustej tablicy obiektów i na ogół jest potrzebny. 
+W Pythonie pustą tablicę zwykle wypełniamy obiektami None.
+Wbudowane typy danych zwykle mają taki konstruktor:
+int() i float() zwracają zero, list() i tuple() zwracają puste kolekcje, 
+dict() zwraca pusty słownik.
+Wydaje się więc, że nie ma powodu, aby nie obsługować takiej sytuacji 
+w klasach tworzonych przez użytkownika.
+
+</body>
+</html>

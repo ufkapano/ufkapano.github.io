@@ -1,0 +1,235 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Gra w karty</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Referencja:  Allen B. Downey, Jeffrey Elkner and Chris Meyers,
+<em>How to Think Like a Computer Scientist</em>
+[różne wersje dostępne w sieci].
+
+<p>Gra Old Maid jest przykładem zastosowania dziedziczenia.
+Celem gry jest pozbycie się wszystkich kart z ręki.
+Karty odkładamy w parach, a parę tworzą dwie czarne (Trefl, Pik)
+lub dwie czerwone (Karo, Kier) karty o tym samym numerze.
+Gracze w koło ciągną od siebie karty i odkładają pary aż zostanie
+jeden gracz z jedną kartą bez pary (na początku gry usuwa się
+z talii królową trefl).
+W poniższym programie komputer symuluje grę wszystkich graczy.
+
+<hr><pre>
+# Implementacja w Pythonie 2.7 (__cmp__).
+
+class Card:
+    """Klasa reprezentująca karty do gry."""
+    # Te listy poniżej są widoczne w metodach tej klasy.
+    # Numery i kolory kart są zakodowane (mapowane) w dwóch listach.
+    suit_list = ["trefl", "karo", "kier", "pik"]
+    rank_list = ["puste","As","2","3","4","5","6","7","8","9","10","Walet","Dama","Krol"]
+
+    def __init__(self, suit=0, rank=0):
+        """Konstruktor karty."""
+        self.suit = suit
+        self.rank = rank
+
+    def __str__(self):
+        """Zwróć postać napisową karty."""
+        # siódemka kier ma postać "7 Kier"
+        return "{} {}".format(Card.rank_list[self.rank], Card.suit_list[self.suit])
+
+    def __repr__(self):
+        """Zwróć reprezentację napisową."""
+        # siódemka kier ma postać "Card(2, 7)"
+        return "Card({}, {})".format(self.suit, self.rank)
+
+    def __cmp__(self, other):
+        """Porównaj karty."""
+        # Sprawdzamy kolory kart.
+        if self.suit &gt; other.suit:
+            return 1
+        if self.suit &lt; other.suit:
+            return -1
+        # Kolory te same, sprawdzamy numery.
+        if self.rank &gt; other.rank:
+            return 1
+        if self.rank &lt; other.rank:
+            return -1
+        return 0      # remis
+
+
+class Deck:
+    """Klasa reprezentująca talię."""
+
+    def __init__(self):
+        """Stwórz całą talię kart."""
+        self.cards = []
+        for suit in range(4):
+            for rank in range(1, 14):
+                self.cards.append(Card(suit, rank))
+
+    def __str__(self):
+        """Zwróć postać napisową talii kart."""
+        s = ""
+        for i in range(len(self.cards)):
+            s = s + " " * i + str(self.cards[i]) + "\n"
+        return s
+
+    def shuffle(self):
+        """Tasuj talię."""
+        import random
+        n_cards = len(self.cards)
+        for i in range(n_cards):
+            j = random.randrange(i, n_cards)
+            self.cards[i], self.cards[j] = self.cards[j], self.cards[i]
+
+    def remove_card(self, card):
+        """Unicestwianie karty."""
+        if card in self.cards:
+            self.cards.remove(card)
+            return True
+        else:
+            return False
+
+    def pop_card(self):
+        """Rozdanie (wydanie na zewnatrz) jednej karty."""
+        return self.cards.pop()   # pop() usuwa ostatni element z listy
+
+    def is_empty(self):
+        """Test czy talia jest pusta."""
+        return self.cards == []
+
+    def deal(self, hands, n_cards=999):
+        """Rozdaj karty do rąk."""
+        # Domyślnie rozdaje wszystkie karty do dostępnych rąk.
+        # hands to lista lub tuple rąk.
+        n_hands = len(hands)
+        for i in range(n_cards):
+            if self.is_empty():
+                break
+            card = self.pop_card()    # weź kartę
+            hand = hands[i % n_hands] # do której reki
+            hand.add_card(card)       # dodaj kartę
+
+
+class Hand(Deck):             # DZIEDZICZENIE z klasy Deck
+    """Klasa reprezentująca rękę gracza."""
+    # Ręka to odmiana talii, każda metoda talii działa także dla ręki.
+
+    def __init__(self, name=""):
+        """Konstruktor ręki."""
+        self.cards = []
+        self.name = name        # nazwa ręki, domyślnie pusta
+
+    def __str__(self):
+        """Zwróć postać napisową ręki."""
+        # To nadpisze metodę __str__ odziedziczoną z Deck.
+        s = "Ręka " + self.name
+        if self.is_empty(): 
+            s = s + " jest pusta\n"
+        else:
+            s = s + " zawiera\n"
+        # Korzystamy z przestrzeni nazw Deck.
+        return s + Deck.__str__(self)
+
+    def add_card(self, card):
+        """Dodanie karty do ręki."""
+        self.cards.append(card)
+
+
+class CardGame:
+    """Ogólna klasa dla gier karcianych."""
+    # W tej klasie chcemy mieć wspólne cechy różnych gier.
+
+    def __init__(self):
+        """Konstruktor gry karcianej."""
+        # Mamy tu nie tylko inicjalizację atrybutu, ale konkretne obliczenia.
+        # Ogólnie gra ma dwa atrybuty: deck, hands.
+        self.deck = Deck()
+        self.deck.shuffle()     # tasowanie talii
+        self.hands = []
+
+    def print_hands(self):
+        """Wypisz ręce graczy."""
+        for hand in self.hands:
+            print ( hand )
+
+
+class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
+
+    # Metoda __init__ jest dziedziczona z klasy Hand.
+    def remove_matches(self):
+        count = 0
+        # Kopiujemy karty, bo Python może zgłupieć, gdy pętla jest po liście,
+        # która się zmienia (usuwamy karty).
+        original_cards = self.cards[:]
+        for card in original_cards:
+            match = Card(3 - card.suit, card.rank)
+            if match in self.cards:
+                self.cards.remove(card)
+                self.cards.remove(match)
+                print ( "Ręka {}: {} tworzy parę z {}".format(self.name, card, match) )
+                count = count + 1
+        return count
+
+
+class OldMaidGame(CardGame):         # tworzymy naszą grę
+
+    def play(self, names):
+        # Usuwamy królową trefl.
+        self.deck.remove_card(Card(0, 12))
+        # Tworzymy rekę każdego gracza jako atrybuty gry.
+        for name in names:
+            self.hands.append(OldMaidHand(name))
+        # Rozdajemy karty do rąk.
+        self.deck.deal(self.hands)
+        print ( "---- Rozdano karty" )
+        self.print_hands()
+        # Usuwamy początkowe pary.
+        matches = self.remove_all_matches()
+        print ( "---- Pary usunięte, początek gry" )
+        self.print_hands()
+        # Gramy dopóki nie będzie sparowanych 50 kart.
+        turn = 0
+        n_hands = len(self.hands)
+        while matches &lt; 25:         # 25 par to 50 kart
+            matches = matches + self.play_one_turn(turn)
+            turn = (turn + 1) % n_hands
+        print ( "---- Koniec gry" )
+        self.print_hands()
+
+    def remove_all_matches(self):
+        count = 0
+        for hand in self.hands:
+            count = count + hand.remove_matches()
+        return count
+
+    def play_one_turn(self, i):
+        if self.hands[i].is_empty(): return 0
+        neighbor = self.find_neighbor(i)
+        picked_card = self.hands[neighbor].pop_card()
+        self.hands[i].add_card(picked_card)
+        print ( "Ręka {} pobiera {}".format(self.hands[i].name, picked_card) )
+        count = self.hands[i].remove_matches()
+        self.hands[i].shuffle()
+        return count
+
+    def find_neighbor(self, i):
+        n_hands = len(self.hands)
+        for next in range(1, n_hands):
+            neighbor = (i + next) % n_hands
+            if not self.hands[neighbor].is_empty():
+                return neighbor
+
+game = OldMaidGame()
+game.play(["Adam", "Bogdan", "Cezary"])
+</pre><hr>
+
+
+</body>
+</html>

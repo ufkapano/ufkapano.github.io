@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Grafy z wagami w Pythonie (dict+list)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Graf będzie słownikiem, w którym kluczami
+będą wierzchołki (liczby, napisy, itp.).
+Każdemu kluczowi będzie odpowiadać lista krotek, zawierająca wierzchołki
+połączone krawędzią z danym wierzchołkiem, oraz wagi krawędzi
+prowadzących do danego wierzchołka.
+Pusty graf będzie reprezentowany przez pusty słownik.
+W podanej implementacji graf nieskierowany możemy potraktować
+jak graf skierowany, ale nie na odwrót.
+Dlatego tam, gdzie to jest istotne, będziemy zaznaczać, że
+graf jest nieskierowany.
+
+<p>PRZYKŁAD. Rozważmy graf skierowany o wierzchołkach od A do F i
+krawędziach (A, B, 1), (A, C, 2), (B, C, 3), (B, D, 4), (C, D, 5), 
+(D, C, 6), (E, C, 7).
+Możemy go zapisać jako słownik.
+
+<hr><pre>
+graph = {"A": [("B", 1), ("C", 2)], 
+"B": [("C", 3), ("D", 4)], 
+"C": [("D", 5)], 
+"D": [("C", 6)], 
+"E": [("C", 7)], 
+"F": []}
+</pre><hr>
+
+<h3>POMOCNICZE FUNKCJE</h3>
+
+<p>Określamy funkcje pomagające we właściwej budowie grafu w Pythonie.
+
+<hr><pre>
+graph = {}                    # pusty graf (dowolny)
+directed_graph = {}           # pusty graf skierowany
+undirected_graph = {}         # pusty graf nieskierowany
+</pre><hr>
+
+<p>Dodawanie wierzchołka do grafu bez duplikatów.
+
+<hr><pre>
+def add_node(graph, node):
+    """Wstawia wierzchołek do grafu."""
+    if node not in graph:
+        graph[node] = []
+</pre><hr>
+
+<p>Dodawanie krawędzi do grafu skierowanego bez duplikatów.
+Na początku próbujemy uzupełniać brakujące wierzchołki. 
+Następnie uzupełniamy listę sąsiedztwa.
+Krawędź grafu przedstawiamy jako krotkę trzyelementową.
+
+<hr><pre>
+def add_edge_directed(graph, edge):
+    """Dodaje krawędź do grafu skierowanego."""
+    source, target, weight = edge
+    add_node(graph, source)
+    add_node(graph, target)
+    # Możemy wykluczyć pętle.
+    if source == target:
+        raise ValueError("pętle są zabronione")
+    if (target, weight) not in graph[source]:
+        graph[source].append((target, weight))
+</pre><hr>
+
+<p>Dodawanie krawędzi do grafu nieskierowanego bez duplikatów.
+Krawędź nieskierowana występuje jako dwie krawędzie skierowane.
+
+<hr><pre>
+def add_edge_undirected(graph, edge):
+    """Dodaje krawędź do grafu nieskierowanego."""
+    source, target, weight = edge
+    add_node(graph, source)
+    add_node(graph, target)
+    # Możemy wykluczyć pętle.
+    if source == target:
+        raise ValueError("pętle są zabronione")
+    if (target, weight) not in graph[source]:
+        graph[source].append((target, weight))
+    if (source, weight) not in graph[target]:
+        graph[target].append((source, weight))
+</pre><hr>
+
+<p>Listowanie wierzchołków i krawędzi.
+
+<hr><pre>
+def list_nodes(graph):
+    """Zwraca listę wierzchołków grafu."""
+    return graph.keys()
+
+def list_edges(graph):
+    """Zwraca listę krawędzi (3-krotek) grafu skierowanego ważonego."""
+    L = []
+    for source in graph:
+        for (target, weight) in graph[source]:
+            L.append((source, target, weight))
+    return L
+
+def print_graph(graph):
+    """Wypisuje postać grafu skierowanego ważonego na ekranie."""
+    for source in graph:
+        print source, ":",
+        for (target, weight) in graph[source]:
+            print "{}({})".format(target, weight),
+        print
+</pre><hr>
+
+
+
+</body>
+</html>

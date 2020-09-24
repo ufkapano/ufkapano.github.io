@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie prze zamianę (bubblesort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W sortowaniu bąbelkowym największe liczby wypływają na koniec
+ciągu. Algorytm jest stabilny.
+
+<hr><pre>
+def bubblesort(L, left, right):
+    for i in range(left, right):
+        for j in range(left, right):
+            if L[j] &gt; L[j+1]:
+                swap(L, j+1, j)
+</pre><hr>
+
+<p>Porównania: (n-1)*(n-1).
+
+<p>Przestawienia: (n-1) + ... + 1 = n*(n-1)/2.
+
+<p>Ulepszenia:
+
+<ul>
+<li>Pętla po j może kończyć się wcześniej, ponieważ
+posortowana prawa strona ciągu powiększa się.
+<li>Można przerwać przetwarzanie, jeżeli przy kolejnym
+przejściu pętli nie nastąpiło przestawienie.
+</ul>
+
+<hr><pre>
+# Wersja ulepszona wg Sysły.
+def bubblesort(L, left, right):
+    limit = right
+    while True:
+        k = left-1   # lewy wskaźnik przestawianej pary
+        for i in range(left, limit):
+            if L[i] &gt; L[i+1]:
+                swap(L, i, i+1)
+                k = i
+        if k &gt; left:
+            limit = k
+        else:
+            break
+</pre><hr>
+
+<h3>SORTOWANIE OBIEKTÓW WG RÓŻNYCH KRYTERIÓW</h3>
+
+<p>Podane wyżej funkcje pozwalają sortować listy różnych obiektów,
+które można ze sobą porównywać. Ale czasem chcemy zmienić sposób
+sortowania (np. malejąco) lub sortujemy obiekty, które można
+porównywać na wiele sposobów (np. rekordy w bazie danych).
+W tej sytuacji należy jako parametr funkcji sortujących
+podać funkcję porównującą obiekty.
+Przykład na bazie sortowania bąbelkowego:
+
+<hr><pre>
+def bubblesort(L, left, right, cmpfunc=cmp):
+    for i in range(left, right):
+        for j in range(left, right-i):
+            if cmpfunc(L[j], L[j+1]) &gt; 0:
+                swap(L, j+1, j)
+</pre><hr>
+
+<p>Zastosowanie funkcji.
+
+<hr><pre>
+import random
+
+N = 100
+alist = range(N)
+random.shuffle(alist)
+
+# Zwykłe sortowanie.
+bubblesort(alist, 0, N-1)
+
+# Sortowanie w odwrotnej kolejności.
+bubblesort(alist, 0, N-1, cmpfunc=lambda x, y: -cmp(x, y))
+</pre><hr>
+
+<p>Korzystamy tutaj z wyrażenia lambda i standardowej funkcji
+porównującej cmp(x, y), która zwraca jedną z trzech wartości [-1, 0, 1],
+jeżeli odpowiednio x &lt; y, x równe y, x &gt; y.
+
+<p>W Pythonie 3 nie ma wbudowanej funkcji cmp(x, y), ale można zdefiniować
+jej odpowiednik.
+
+<hr><pre>
+# What’s New In Python 3.0
+# https://docs.python.org/3.0/whatsnew/3.0.html
+cmp = lambda x, y: (x &gt; y) - (x &lt; y)
+</pre><hr>
+
+
+</body>
+</html>

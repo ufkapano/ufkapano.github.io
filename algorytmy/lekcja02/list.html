@@ -1,0 +1,281 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Listy</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy to uporządkowane kolekcje dowolnych obiektów. 
+Są heterogeniczne i mogą być dowolnie zagnieżdżane. 
+Dostęp do obiektów możliwy jest za pomocą offsetu (położenia na liście). 
+
+<p>Listy mogą się rozrastać i kurczyć w miejscu, czyli są 
+zmiennymi (mutable) sekwencjami. 
+Z technicznego punktu widzenia, 
+listy Pythona zawierają zero lub więcej odwołań do innych obiektów.
+Listy obsługują zagnieżdżanie obiektów na dowolną głębokość.
+
+<p>Jeżeli potrzebujemy częstego wyszukiwania elementów na liście,
+to lepiej zastosować słowniki lub zbiory.
+
+<pre>
++----------------------+-----------------------------+
+| Operacja             | Znaczenie                   |
++----------------------+-----------------------------+
+| L = [] ; L = list()  | lista pusta                 |
+| L = [5, 1.2]         | lista dwupozycyjna          |
+| L = list(sequence)   | tworzenie listy z sekwencji |
+| len(L)               | rozmiar (długość)           |
+| L1 + L2              | łączenie                    |
+| L * 3 ; 4 * L        | powtarzanie                 |
+| L[i]                 | indeks                      |
+| L[i:j]               | wycinek (nowa lista)        |
+| L[i] = item          | nowy element na liście      |
+| L1[i:j] = L2         | podstawienie pod wycinek    |
+| L2 = L1[:]           | kopiowanie płytkie          |
+| L2 = list(L1)        | kopiowanie płytkie          |
+| L2 = L1.copy()       | kopiowanie płytkie (Py 3.3+)|
+| for item in L: pass  | iteracja                    |
+| item in L            | zawieranie (linear-time)    |
+| item not in L        |                             |
+| range(i, j, step)    | budowanie listy             |
+| xrange(i, j, step)   | generator (Py 2.x)          |
+| del L[i]             | usuwanie elementu z listy   |
+| del L[i:j]           | usuwanie wycinka            |
+| del L[:]             | czyszczenie listy           |
+| L.clear()            | czyszczenie listy (Py 3.3+) |
+| del L                | usuwanie listy (zmiennej L) |
++----------------------+-----------------------------+
+</pre>
+
+<hr><pre>
+# Składnia: range([start,] stop[, step]).
+# Domyślny krok jest równy jeden (step=1).
+# Końcowy punkt (stop) jest pomijany.
+range(1, 6)                   # [1, 2, 3, 4, 5]
+range(4)                      # [0, 1, 2, 3], domyślny start to 0
+range(1, 9, 2)                # [1, 3, 5, 7], krok co 2
+
+list1 = [10, 20, 30, 40, 50, 60, 70]
+list2 = ["abc", "d", "ef", "g", "hij"]
+list3 = [3, "xyz", [10, 20]]  # listy są heterogeniczne
+
+# Elementy listy można uaktualniać.
+list2[1] = "xyz"              # pojedynczy element
+list2[2:4] = ["2", "3"]       # podmiana wycinka
+print ( list2 )
+
+alist = range(10)
+alist[4:4] = [1, 1, 1]        # wstawianie PRZED elementem o indeksie 4
+alist[2:4] = []               # usuwanie elementów o indeksach 2, 3
+# Bardziej przejrzyste jest korzystanie z del.
+# del alist[2:4]
+# Można też usunąć całą listę.
+# del alist
+</pre><hr>
+
+<h3>CZYSZCZENIE LIST</h3>
+
+<hr><pre>
+&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; del a   # usuwanie referencji do obiektu listy
+&gt;&gt;&gt; b
+[1, 2, 3]
+</pre><hr><pre>
+&gt;&gt;&gt; a = [1, 2, 3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; a = []   # podstawienie nowej referencji
+&gt;&gt;&gt; b
+[1, 2, 3]
+</pre><hr><pre>
+&gt;&gt;&gt; a = [1,2,3]
+&gt;&gt;&gt; b = a
+&gt;&gt;&gt; del a[:]   # czyszczenie in place, podobnie dla a.clear()
+&gt;&gt;&gt; a
+[]
+&gt;&gt;&gt; b
+[]
+</pre><hr>
+
+<h3>KOPIOWANIE LIST</h3>
+
+<p>Przy kopiowaniu list trzeba pamiętać o sposobie działania
+instrukcji podstawiania.
+
+<hr><pre>
+L1 = [12, 13, 14]
+L2 = L1             # kopiowanie referencji do listy
+L1 is L2            # True, id(L1) jest równe id(L2)
+L3 = L1[:]          # kopia przez operator zakresu, powstaje nowa lista
+L4 = list(L1)       # jeszcze prościej
+</pre><hr>
+
+<h3>SORTOWANIE LIST</h3>
+
+<p>Listy mają wbudowaną metodę do sortowania elementów w miejscu.
+
+<hr><pre>
+# help(list.sort)
+# L.sort(cmp=None, key=None, reverse=False)
+# Sortowanie stabilne IN PLACE.
+# Funkcja cmp(x, y) ma zwracać jedną wartość z (-1, 0, 1).
+
+alist = ["auto", "Ala", "bocian", "Barbara"]
+alist.sort()        # sortowanie listy napisów (duże litery najpierw)
+print ( alist )     # ['Ala', 'Barbara', 'auto', 'bocian']
+
+# Potrzebujemy case-insensitive sort.
+# Stary sposób - określamy funkcję porównującą dwa obiekty.
+# Bazujemy na wbudowanej funkcji porównującej cmp().
+alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
+print ( alist )     # ['Ala', 'auto', 'Barbara', 'bocian']
+
+# Nowy sposób (Python 2.4+) - podajemy klucz, czyli jakby sposób 
+# patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
+# Sortowanie jest stabilne.
+alist.sort(key=str.lower)
+
+# Sortowanie pod względem długości napisów.
+alist.sort(key=len)
+print ( alist )     # ['Ala', 'auto', 'bocian', 'Barbara']
+</pre><hr>
+
+<p>Prosty sposób sortowania to wykorzystanie wbudowanej funkcji
+<em>sorted()</em>, która zwraca nową, posortowaną listę.
+Korzysta ona z metody specjalnej __lt__ i może być używana nie tylko
+dla list, ale dla obiektów iterowanych.
+
+<hr><pre>
+# help(sorted)
+# sorted(iterable, cmp=None, key=None, reverse=False)
+# Zwraca nową posortowaną listę.
+
+# Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
+def mysorted(iterable):
+    alist = list(iterable)
+    alist.sort()
+    return alist
+</pre><hr>
+
+<p>Przy sortowaniu krotek przydaje się konstrukcja z modułu operator.
+
+<hr><pre>
+# https://docs.python.org/2/library/operator.html
+
+import operator   # Python 2.4+
+
+# Sortowanie IN PLACE krotek wg wartości pola o indeksie 1.
+alist = [('apple', 3), ('banana', 2), ('pear', 5), ('orange', 1)]
+alist.sort(key=operator.itemgetter(1))
+# [('orange', 1), ('banana', 2), ('apple', 3), ('pear', 5)]
+
+# Można też utworzyć nowa listę.
+blist = sorted(alist, key=operator.itemgetter(1))
+</pre><hr>
+
+<h3>WZORZEC DSU</h3>
+
+<p>Jeżeli w Pythonie musimy posortować dane, to najlepiej
+znaleźć sposób na wykorzystanie wbudowanej w listy Pythona
+metody sort().
+Często stosowanym rozwiązaniem jest implementacja
+wzorca DSU (Decorate, Sort, Undecorate;
+dekoruj-sortuj-usuń dekorację), opisanego w [Receptury].
+Wzorzec opiera się na tym, że w Pythonie sekwencje są porównywane
+leksykograficznie.
+
+
+<hr><pre>
+# Wzorzec DSU na przykładzie sortowania stringów
+# bez uwzględniania wielkości liter.
+def case_insensitive_sort(string_list):
+    alist = [(x.lower(), x) for x in string_list]  # dekoruj
+    alist.sort()                                   # sortuj
+    return [x[1] for x in alist]          # usuń dekorację
+</pre><hr>
+
+<h3>METODY LIST</h3>
+
+<p>W Pythonie często możemy zobaczyć wyrażenia typu
+obiekt.metoda(argumenty).
+Nawiązuje to do programowania obiektowego.
+Metoda jest funkcją, która należy do obiektu i nosi pełną nazwę
+obiekt.metoda(). 
+Obiekt innego typu może posiadać metodę o tej samej nazwie, 
+np. obiekt2.metoda(), ale nie prowadzi to do dwuznaczności.
+Mamy również konstrukcje typu obiekt.atrybut i również różne obiekty
+mogą mieć atrybut o tej samej nazwie, ale o różnych typach.
+
+<hr><pre>
+dir(list)           # spis metod i atrybutów dla list
+
+L = ["a", "a", "a", "b", "b"]
+L.count("a")        # 3, liczba wystąpień
+
+L.append("c")       # dołączenie "c" na koniec listy
+print ( L )         # ['a', 'a', 'a', 'b', 'b', 'c']
+
+L.insert(1, "x")    # dołączenie przed indeksem 1
+print ( L )         # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
+
+L.remove("a")       # usuwanie wskazanego elementu - pierwsze wystąpienie
+print ( L )         # ['x', 'a', 'a', 'b', 'b', 'c']
+
+L.pop()             # "c", usuwanie od końca (błąd dla pustej listy)
+L.pop(2)            # "a", usuwanie elementu nr 2 - zwraca element
+print ( L )         # ['x', 'a', 'b', 'b']
+
+L.reverse()         #  odwracanie listy IN PLACE
+print ( L )         # ['b', 'b', 'a', 'x']
+L.index("a")        # 2, jaki indeks ma "a"
+L.extend("qwerty")  # L.extend(iterable), dołączyć nowe elementy
+print ( L )         # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
+</pre><hr>
+
+<h3>LISTY SKŁADANE</h3>
+
+<p>List comprehensions, czyli listy składane 
+są elementami programowania funkcyjnego, przejętymi z języka Haskell.
+Jest to zwarty sposób na tworzenie list bez odwoływania się
+do map(), filter(), czy wyrażeń lambda.
+Kolejność elementów w nawiasie kwadratowym:
+wyrażenie, pętla for, dalej wielokrotnie (opcjonalnie) pętla for lub if.
+Listy składane często pozwalają uzyskać dużą szybkość przetwarzania,
+jak kod w języku C.
+Należy zachować umiar przy tworzeniu zagnieżdżonych list składanych,
+często bardziej czytelne są zwykłe pętle wielokrotne.
+
+<p>Składnia list składanych przenosi się w dużej mierze
+na generatory, czyli "leniwe" funkcje zwracające pojedyńczą wartość
+na żądanie. 
+Generatory można również tworzyć za pomocą wyrażenia yield.
+Więcej wyjaśnień zostanie podanych przy funkcjach.
+
+<hr><pre>
+[x for x in "qwerty"]                   # ['q', 'w', 'e', 'r', 't', 'y']
+[x * x for x in range(6)]               # [0, 1, 4, 9, 16, 25]
+[3 * x for x in range(6) if x &lt; 4]   # [0, 3, 6, 9]
+[2 ** x for x in range(5)]              # [1, 2, 4, 8, 16]
+[[x, x * x] for x in range(6)]          # lista list
+[(x, x * x * x) for x in range(6)]      # przy krotkach wymagane nawiasy
+[x + y for x in range(3) for y in range(4)]
+[(x, y) for x in range(3) for y in range(4)]
+[chr(x) for x in range(97, 110)]
+"".join([chr(x) for x in range(97, 110)])    # sklejamy listę
+
+sum([x * x for x in range(100)])        # pełne listy
+sum(x * x for x in xrange(100))         # generatory
+sum(len(x) for x in ["a", "bb", "ccc"]) # generator
+max(ord(x) for x in "qwerty")           # największy numer
+max("qwerty", key=ord)                  # znak o największym numerze
+</pre><hr>
+
+
+</body>
+</html>

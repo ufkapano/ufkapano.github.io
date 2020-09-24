@@ -1,0 +1,207 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Python 2 vs Python 3</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Kiedy chcemy mieć kompatybilność Py2 i Py3, to trzeba się zdecydować
+na Pythona 2.7, bo jest dalej wspierany.
+Oto szereg uwag i wskazówek jak tworzyć kod działający niezależnie
+od wersji Pythona.
+
+<hr><pre>
+REFERENCJE
+
+https://sebastianraschka.com/Articles/2014_python_2_3_key_diff.html
+
+https://sealedabstract.com/rants/python-3-is-fine/
+
+https://docs.python.org/2.7/howto/pyporting.html
+https://docs.python.org/3/howto/pyporting.html
+</pre><hr><pre>
+Moduł __future__ pozwala wprowadzać do Py2 elementy z Py3.
+UWAGI
+Wydaje mi się, że nie jest dobrze łączyć w ten sposób dwóch światów
+Py2 i Py3. Można przeoczyć import i być zaskoczonym nowym działaniem.
+</pre><hr><pre>
+Python 2: instrukcja print (ang. print statement). 
+Python 3: funkcja print().
+UWAGI
+print(item1, item2) w Py2 wypisze krotkę.
+Kompatybilna forma to
+print ( "one {} two {}".format(item1, item2) )
+
+Czasem zalecane jest użycie importu (Py2.6+):
+from __future__ import print_function
+</pre><hr><pre>
+Integer division. 
+UWAGI
+Dla liczb całkowitych lepiej używać a // b.
+Jeżeli chcemy mieć wynik float, to lepiej zawsze pisać 3/2.0
+lub float(x)/2 (a nie 3/2 lub x/2).
+Taki zapis nie zmyli usera z Py2.
+
+If you need to support both Python 2 and Python 3 use:
+from __future__ import division
+
+We własnych klasach trzeba pamiętać o metodach:
+__div__  dzielenie klasyczne (x/y)
+__floordiv__  dzielenie całkowite, x // y
+__truediv__ działa w Py2 jeżeli jest aktywne __future__.division
+</pre><hr><pre>
+Py2: jest int i long.
+Py3: jest tylko int.
+Sprawdzanie typów liczbowych można zrobić przez try/except:
+try:
+    integer_types = (int, long)
+except NameError:   # Python 3
+    integer_types = (int,)
+# Zastosowanie: isinstance(variable, integer_types)
+</pre><hr><pre>
+Py2: jest str(), unicode(), bytearray(), nie ma byte().
+Py3: str() dla Unicode, byte() i bytearray() dla bajtów.
+UWAGI
+W bibliotece stosujemy czyste ASCII i str() lub repr() do napisów.
+</pre><hr><pre>
+W Pythonie 2 jest iterator xrange(), a range() tworzy listę.
+W Pythonie 3 nie ma xrange(), a range() jest iteratorem.
+UWAGI
+Listę można tworzyć uniwersalnie przez list(range(n)).
+Z iteratorem jest problem.
+
+Jest moduł six, który w Pythonie 3 podobno posiada xrange(), 
+ale nie ma go w bibliotece standardowej.
+Moje podejscie:
+try:
+    integer_types = (int, long)
+except NameError:   # Python 3
+    integer_types = (int,)
+    xrange = range
+</pre><hr><pre>
+W Pythonie 3 nie ma wbudowanej funkcji cmp().
+Obejście proponowane w oficjalnej dokumentacji Pythona ma postać
+cmp = lambda x, y: (x > y) - (x < y)
+Moje podejscie:
+try:
+    integer_types = (int, long)
+except NameError:   # Python 3
+    integer_types = (int,)
+    cmp = lambda x, y: (x > y) - (x < y)
+</pre><hr><pre>
+The __contains__ method for range objects in Python 3.
+UWAGI
+Przyjmuję, że wyszukiwanie w liście jest wolne O(n) i zwykle korzystam
+ze zbioru lub słownika.
+</pre><hr><pre>
+Raising exceptions. 
+Python 2 dopuszcza starą składnię z przecinkiem:
+raise IOError, "file error"
+UWAGI
+Zawsze stosuję nową składnię z nawiasem (jak konstruktor):
+raise IOError("file error")
+</pre><hr><pre>
+Handling exceptions.
+Python poniżej 2.6 dopuszcza starą składnię z przecinkiem:
+try:
+    let_us_cause_a_NameError
+except NameError, exception:
+    print exception, '--> our error message'
+UWAGI
+Zawsze stosuję nową składnię ze słowem kluczowym as (od Py2.6)
+try:
+    let_us_cause_a_NameError
+except NameError as exception:
+    print( "{} --> our error message".format(exception) )
+</pre><hr><pre>
+The next() function (Python 3) and .next() method (Python 2).
+UWAGI
+W Pythonie 2.6 pojawiła się wbudowana funkcja next(), więc kod może
+być uniwersalny:
+my_generator = (letter for letter in 'abcdefg')
+next(my_generator)
+</pre><hr><pre>
+For-loop variables and the global namespace leak.
+i = 1
+[i for i in range(5)]
+print(i)   # 4 w Py2, 1 w Py3
+UWAGI
+Bezpieczniej używać lepszych nazw zmiennych, np.
+item = 1
+[i for i in range(5)]
+</pre><hr><pre>
+Comparing unorderable types.
+Py2 pozwala porównywać różne typy, np.
+[1,2] > "a"  zwraca False.
+W Py3 wyzwalany jest TypeError, co jest dobrym ostrzeżeniem.
+UWAGI
+Takiego porównania nie powinno się stosować w Py2, więc nie jest to problem.
+</pre><hr><pre>
+Parsing user inputs via input().
+W Py3 input() odpowiada raw_input() z Py2 i zwraca str().
+W Py2 input() było niebezpieczne bo próbowało wykonywać kod.
+UWAGI
+To trzeba osobno opracować w Py2 i Py3.
+Albo można skorzystać z try/except i zawsze używac input():
+try:
+    input = raw_input
+except NameError:   # jesteśmy w Py3
+    pass
+</pre><hr><pre>
+Returning iterable objects instead of lists.
+Zmiany w funkcjach: 
+zip(), map(), filter(), D.keys(), D.values(), D.items(), ...
+W Py3 słowniki nie mają metody D.has_key(k), lepiej zawsze używać
+operatora in (k in D).
+list(map(...)) zawsze zrobi listę.
+UWAGI
+Możliwe obejście problemu jest przez try/except:
+try:
+    values = D.itervalues()
+except AttributeError:   # jesteśmy w Py3
+    values = D.values()
+</pre><hr><pre>
+Banker’s Rounding
+round(15.5)   # 16.0 w Py2, 16 w Py3
+round(16.5)   # 17.0 w Py2, 16 w Py3
+UWAGI
+https://en.wikipedia.org/wiki/Rounding#Round_half_to_even
+https://en.wikipedia.org/wiki/IEEE_floating_point#Roundings_to_nearest
+</pre><hr><pre>
+Moduł Queue z Pythona 2 nazywa się queue w Pythonie 3.
+
+# Use feature detection instead of version detection.
+try:
+    from Queue import Queue   # kolejka
+except ImportError:   # Python 3
+    from queue import Queue
+
+Kolejkę priorytetową minimum na bazie stosu można zbudować za pomocą
+uniwersalnego modułu heapq.
+</pre><hr><pre>
+Py2: exec is a statement.
+Py3: exec is a function.
+</pre><hr><pre>
+Metaklasy
+Py2: jest atrybut __metaclass__ w ciele klasy.
+Py3: jest parametr metaclass przekazywany w definicji klasy.
+</pre><hr><pre>
+Sorting, L.sort() i sorted().
+Py2: są dwa parametry cmp i key.
+Py3: jest tylko key.
+UWAGI
+Trzeba używać parametru key.
+</pre><hr><pre>
+Funkcja wbudowana reduce() z Pythona 2 znajduje się w module functools
+w Pythonie 3, ale w Pythonie 2 też jest w tym module. 
+To sugeruje rozwiązanie uniwersalne:
+from functools import reduce
+</pre><hr>
+
+</body>
+</html>

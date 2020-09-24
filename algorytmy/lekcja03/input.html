@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Standardowe wejście</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Funkcja input() próbuje interpretować wprowadzone dane
+i z tego powodu jest powolna. Lepiej wczytać napis za pomocą 
+funkcji raw_input(), a następnie rzutować na potrzebny typ.
+W razie potrzeby możemy się zabezpieczyć przez try/except.
+
+<p>W Pythonie 3 istnieje tylko funkcja input(), która działa tak
+jak raw_input() w Pythonie 2.
+
+<hr><pre>
+# Składnia.
+# raw_input([prompt]) - zwraca string, Python 2
+
+# input([prompt]) - zwraca wartość, Python 2
+# równoważne eval(raw_input(prompt))
+
+word = raw_input(prompt)
+variable = input(prompt)
+
+# Przy input() wynik może być typu int, float lub inny.
+# Jeżeli chcemy mieć na pewno int, to można zrobić tak:
+# n = int(raw_input("Podaj int: "))
+# Jeżeli wejście nie będzie pasowało do int, to będzie wyjątek.
+
+line = raw_input("Podaj napis: ")
+
+n = input("Podaj liczbe: ")
+print ( type(n) )
+print ( "{} {}".format("Podana liczba:", n) )
+</pre><hr><pre>
+# Korzystanie z modułu sys.
+# Obiekt sys.stdin jest typu file, mode "r".
+
+import sys
+line = sys.stdin.readline()
+</pre><hr><pre>
+# Można skorzystać z try/except i używać tej samej nazwy input()
+# w Pythonie 2 i Pythonie 3.
+try:
+    input = raw_input
+except NameError:   # jesteśmy w Pythonie 3
+    pass
+</pre><hr>
+
+</body>
+</html>

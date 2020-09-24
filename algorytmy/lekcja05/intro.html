@@ -1,0 +1,197 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Korzystanie z modułów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Python pozwala umieszczać pożyteczne definicje obiektów
+oraz instrukcje w osobnym pliku zwanym modułem. 
+Możemy importować definicje z danego mudułu do innych
+modułów lub do modułu głównego, czy trybu interaktywnego.
+Jeżeli nazwa modułu to <em>abc</em>, to nazwa pliku modułu ma 
+postać <em>abc.py</em>. Wewnątrz modułu jego nazwa dostępna
+jest jako wartość zmiennej globalnej <em>__name__</em>.
+
+<p>Import modułu tworzy <em>przestrzeń nazw</em>, 
+a zmienne zdefiniowane na najwyższym poziomie pliku modułu 
+stają się atrybutami zaimportowanego obiektu modułu.
+Inaczej mówiąc, zakres globalny pliku modułu staje się 
+po zaimportowaniu przestrzenią nazw atrybutów obiektu modułu.
+
+<p>Podstawowa rola modułów:
+
+<ul>
+<li>ponowne wykorzystanie kodu (kod zapisany jest w pliku),
+<li>dzielenie przestrzeni nazw systemu (zapobieganie konfliktom nazw),
+<li>implementowanie współdzielonych usług oraz danych
+(moduł jest współdzielony przez inne komponenty systemu).
+</ul>
+
+<h3>ARCHITEKTURA PROGRAMU W PYTHONIE</h3>
+
+<p>Program napisany w Pythonie składa się z pliku najwyższego
+poziomu (moduł główny) wraz z zero lub większą liczbą plików
+modułów dodatkowych.
+
+<p>Instrukcje związane z modułami to <em>import</em> oraz <em>from</em>. 
+Funkcja związana z modułami to <em>reload()</em>.
+Zwyczajowo instrukcje <em>import</em> umieszcza się na początku modułu.
+Zalecane jest umieszczanie każdego importu w osobnej linii.
+
+<p><em>Kod modułu jest wykonywany tylko raz podczas pierwszego importu.</em>
+Python wykonuje instrukcje modułu jedna po drugiej,
+od góry pliku do dołu. 
+Zwykle instrukcje wewnątrz modułu służą do jego inicjalizacji.
+Importowany moduł może z kolei importować inne moduły.
+
+<hr><pre>
+# Zastosowanie instrukcji import.
+import module1                # zaleca się pojedyńcze zapisy
+import module2, module3       # import kilku modułów
+
+print ( module1.name1 )       # kwalifikacja zmiennej z modułu
+module1.name1 = new_value     # zwykle dozwolone, ale ostrożnie!
+print ( module1.name2() )     # kwalifikacja funkcji z modułu
+print ( module1.__doc__ )     # dostęp do łańcucha dokumentacyjnego
+help(module1)                 # NAME, FILE, FUNCTIONS, DATA
+dir(module1)                  # przestrzeń nazw
+module1.__dict__.keys()       # przestrzeń nazw
+</pre><hr><pre>
+# Zastosowanie instrukcji from.
+from module1 import name1, name2        # ładowanie wybranych nazw
+# Równoważne instrukcje są następujące:
+# import module1
+# name1 = module1.name1
+# name2 = module1.name2
+# del module1
+
+from module2 import *                   # ładowanie wszystkich nazw
+
+print ( "{} {}".format(name1, name2()) )   # nie ma kwalifikacji
+</pre><hr><pre>
+import module1 as module2      # import modułu pod inną nazwą
+# Równoważne instrukcje są następujące:
+# import module1
+# module2 = module1
+# del module1
+import numpy as np
+import Tkinter as tk   # Python 2
+import tkinter as tk   # Python 3
+import pygame as pg
+</pre><hr><pre>
+from module3 import name1 as name2     # zmiana nazw atrybutów
+</pre><hr><pre>
+reload(module1)               # ponowne ładowanie modułu
+</pre><hr>
+
+<p>Instrukcja <em>from</em> niszczy podział przestrzeni nazw,
+ponieważ nazwy są importowane bezpośrednio do lokalnej
+tablicy symboli. Sama nazwa modułu, z którego importowane są nazwy,
+nie jest ustawiana.
+Beztroskie korzystanie z instrukcji <em>from</em> grozi
+nadpisaniem istniejących zmiennych z lokalnego zakresu.
+Inne problemy mogą pojawić się przy zastosowaniu <em>reload()</em>.
+Generalnie zalecane jest stosowanie instrukcji <em>import</em>.
+
+<p>Dostęp do przestrzeni nazw modułu odbywa się za pomocą
+atrybutu <em>__dict__</em> lub <em>dir(module)</em>.
+Inaczej mówiąc, funkcja wbudowana <em>dir()</em> pozwala
+dowiedzieć się jakie nazwy są zdefiniowane przez moduł.
+
+<p>Python automatycznie zawiera wielki zbiór modułów narzędzi
+znany pod nazwą <em>biblioteki standardowej</em>.
+Są one zwykle dostępne tam, gdzie można uruchomić Pythona.
+
+<h3>JAK DZIAŁA IMPORTOWANIE</h3>
+
+<p>Przy pierwszym imporcie danego pliku przez program
+wykonywane są trzy osobne kroki.
+
+<ol>
+<li>Odnalezienie pliku modułu 
+(wykorzystanie standardowej ścieżki wyszukiwania modułów).
+<li>Skompilowanie go do kodu bajtowego, jeśli jest to konieczne
+(powstają pliki <em>.pyc</em>).
+<li>Wykonanie kodu modułu w celu utworzenia zdefiniowanych
+przez niego obiektów.
+</ol>
+
+<p>Python przechowuje moduły programu w słowniku <em>sys.modules</em>.
+
+<hr><pre>
+import sys
+
+print ( sys.modules.keys() )  # nazwy importowanych modułów
+print ( sys.path )            # ścieżka wyszukiwania
+</pre><hr>
+
+<h3>ŚCIEŻKA WYSZUKIWANIA MODUŁÓW</h3>
+
+<ol>
+<li>Katalog główny programu.
+<li>Katalogi ze zmiennej środowiskowej <em>PYTHONPATH</em> 
+(jeśli są ustawione).
+<li>Katalogi biblioteki standardowej (zależne od instalacji).
+<li>Zawartość wszystkich plików <em>.pth</em> (jeśli są obecne).
+</ol>
+
+<p>Zestawienie tych czterech komponentów staje się <em>sys.path</em>
+(lista nazw katalogów).
+
+<h3>PRZEŁADOWYWANIE MODUŁÓW</h3>
+
+<p>Do funkcji <em>reload()</em> przekazuje się istniejący obiekt 
+modułu, który wcześniej został zaimportowany.
+Przeładowanie oferuje możliwość modyfikowania działających
+programów bez zatrzymywania ich.
+Dzięki temu można skrócić cykl programowania.
+
+<p>Funkcja <em>reload()</em> wykonuje nowy kod pliku modułu
+w bieżącej przestrzeni nazw modułu. 
+Funkcja modyfikuje obiekt modułu IN PLACE.
+Przeładowanie nie ma wpływu na kod, który wcześniej wykorzystał
+instrukcję <em>from</em> - pozostaną referencje do starych obiektów.
+
+<h3>IMPORTOWANIE MODUŁÓW ZA POMOCĄ ŁAŃCUCHA NAZWY</h3>
+
+<hr><pre>
+# Korzystanie z funkcji exec().
+module_name = "string"
+exec("import " + module_name)
+</pre><hr><pre>
+# Korzystanie z __import__.
+module_name = "string"
+string = __import__(module_name)
+</pre><hr>
+
+<h3>"SKOMPILOWANE" PLIKI PYTHONA</h3>
+
+<p>Załóżmy, że nasz program składa się z modułu głównego
+<em>main.py</em>, który importuje moduł <em>spam</em>
+z pliku <em>spam.py</em>.
+Przy pierwszym uruchomieniu naszego programu kod z pliku <em>spam.py</em>
+jest kompilowany do bytecode i zapisywany do pliku <em>spam.pyc</em>,
+którego zawartość jest niezależna od platformy.
+Przy następnym uruchomieniu naszego programu kod modułu <em>spam</em>
+jest wczytywany bezpośrednio z pliku <em>spam.pyc</em>,
+dzięki czemu program uruchamia się szybciej.
+Jeżeli czas modyfikacji pliku <em>spam.py</em> nie zgadza się
+z czasem zapisanym w pliku <em>spam.pyc</em>,
+to plik <em>spam.pyc</em> jest ignorowany.
+
+<p>Przy normalnej pracy nie ma potrzeby zajmować się plikami <em>.pyc</em>.
+Czasem rozpowszechnia się biblioteki Pythona w postaci plików <em>.pyc</em>,
+aby utrudnić poznanie ich kodu.
+Ponadto czasem można spotkać pliki z rozszerzeniem <em>.pyo</em>
+które oznacza, że interpreter Pythona został uruchomiony
+w trybie optymalizacji z flagą -O.
+
+
+</body>
+</html>

@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Funkcje wbudowane</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+# Sprawdzenie listy obiektów wbudowanych 
+# (wyjątki i inne klasy, funkcje).
+import __builtin__            # Python 2
+dir(__builtin__)
+zip                           # funkcja wbudowana
+zip = "qwerty"                # zmieniamy referencję zip
+__builtin__.zip               # dostęp do oryginalnego zip
+__builtin__.zip = "qwerty"    # HORROR! Python 2
+</pre><hr>
+
+<p>W Pythonie 3 występuje moduł <em>builtins</em>.
+
+<p>Nazwy typów: 
+basestring(), bool(), complex(), dict(), float(),
+frozenset(), int(), list(), long() [Python 2], set(), str(),
+tuple(), unicode().
+
+<p>Funkcje matematyczne i narzędziowe:
+abs(), all(), any(), chr(), divmod(), hex(), 
+len(), map(), max(), min(), next() [2.6+].
+oct(), ord(), pow(), range(), repr(), reversed(), round(),
+sorted(), sum(), unichr(), xrange(), zip().
+
+<p>Programowanie obiektowe:
+classmethod(), delattr(), dir(), getattr(), hasattr(),
+isinstance(), issubclass(), object(), property(),
+setattr(), staticmethod(), super().
+
+<p>Inne funkcje: __import__(), 
+bin() [2.6+], callable(), cmp() [Python 2], compile(), 
+enumerate(), eval(), execfile(), file(), filter(), format() [2.6+],
+globals(), hash(), help(), id(), input(), iter() [2.2+],
+locals(), open(), raw_input(),
+reduce() [Python 2], reload(), slice(), type(), vars().
+
+<h3>FUNKCJE ZWIĄZANE Z LISTAMI</h3>
+
+<p>Wbudowane funkcje przydatne przy pracy na listach:
+
+<ul>
+<li>zip(seq1 [, seq2, ...]) - zwraca jedną listę krotek.
+
+<li>map(function, sequence) - funkcja przetworzy
+po kolei każdy element listy.
+
+<li>filter(function, sequence) - z listy pozostaną
+elementy, dla których funkcja zwróci True.
+
+<li>reduce(function, sequence) - zwraca pojedyńczą
+wartość obliczaną następująco: funkcja dwóch argumentów pobiera
+pierwsze dwa elementy z listy, oblicza wynik; dalej funkcja pobiera
+poprzedni wynik i trzeci element z listy, oblicza wynik, itd.
+W Pythonie 3 funkcja jest umieszczona w moduje functools.
+</ul>
+
+<p>Funkcje map() i filter() można łatwo zastąpić listą składaną.
+
+<hr><pre>
+def cube(x):
+    return x * x * x
+
+print ( map(cube, range(10)) )
+print ( [cube(x) for x in range(10)] )  # lista składana
+
+L = [-2, -1, 0, 1, 2]
+print ( map(abs, L) )                   # [2, 1, 0, 1, 2]
+print ( [abs(x) for x in L] )           # lista składana
+
+L = [[1, 2], [3, 4]]                    # lista list
+print ( map(sum, L) )                   # [3, 7]
+print ( [sum(x) for x in L] )           # lista składana
+
+# Pythonie 3 map() zwraca generator, czyli aby zobaczyć
+# końcową listę trzeba napisać list(map(sum, L)).
+</pre><hr><pre>
+# Liczba argumentów funkcji musi zgadzać się z liczbą
+# dostarczonych list, a listy muszą mieć równą długość.
+def calc(x, y):
+    return 2 * x + y
+
+alist = range(9)
+print ( map(calc, alist, alist) )
+print ( [calc(x, y) for (x, y) in zip(alist, alist)] )   # lista składana
+</pre><hr><pre>
+def check(x):
+    return x % 2 != 0 and x % 3 != 0
+
+print ( filter(check, range(30)) )
+print ( [x for x in range(30) if check(x)] )   # lista składana
+</pre><hr><pre>
+def add(x, y):
+    return x + y
+
+def add2(x, y):   # tu widać zależność od startowej wartości
+    return 2 * x + y
+
+# Składnia:
+# reduce(function, sequence[, initial]) -&gt; value
+# reduce(add, [1, 2, 3, 4, 5]) oblicza ((((1+2)+3)+4)+5).
+# reduce(lambda x, y: x+y, [1, 2, 3, 4, 5]) oblicza ((((1+2)+3)+4)+5).
+
+# Opcjonalna wartość jest umieszczana przed listą argumentów
+# i stanowi domyślną wartość na wypadek pustej listy
+# (a może też listy z jednym elementem?).
+# reduce(f, []) zwraca wyjątek TypeError.
+# reduce(f, [], x0) zwraca x0.
+# reduce(f, [x1]) zwraca x1, czyli nie korzysta z funkcji.
+# reduce(f, [x1], x0) zwraca f(x0, x1).
+# reduce(f, [x1, x2]) zwraca f(x1, x2).
+# reduce(f, [x1, x2], x0) zwraca f(f(x0, x1), x2).
+
+alist = range(11)
+
+result1 = sum(alist)
+result1 = reduce(add, alist, 0)
+result1 = reduce(add, alist)
+
+# Równoważny kod z pętlą (bez wartości początkowej).
+if len(alist) == 0:
+    raise TypeError()
+elif len(alist) == 1:
+    result2 = alist[0]
+else:
+    result2 = add(alist[0], alist[1])
+    for item in alist[2:]:
+        result2 = add(result2, item)
+
+print ( "{} {}".format(result1, result2) )   # porównanie wyników
+</pre><hr><pre>
+def my_sum(sequence):
+    """Slow sum()."""
+    return reduce(lambda x,y: x+y, sequence, 0)
+</pre><hr><pre>
+# import math
+# print ( math.factorial(10) )
+
+def my_factorial(n):
+    """Slow factorial()."""
+    return reduce(lambda x,y: x*y, range(1, n+1), 1)
+</pre><hr><pre>
+def gcd(a, b): 
+    """Compute the greatest common divisor."""
+    while b:
+        a, b = b, a % b
+    return a
+
+def lcm(a, b):
+    """Compute the least common multiple."""
+    return a * b / gcd(a, b)
+
+# Najmniejsza wspólna wielokrotność kilku liczb.
+# Zastosowane w pakiecie SymPy do obliczania rzędu
+# permutacji danej jako iloczym cykli.
+reduce(lcm, sequence, 1)
+</pre><hr>
+
+
+</body>
+</html>

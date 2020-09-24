@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie przez scalanie (mergesort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytm sortowania przez scalanie wymaga dodatkowego
+obszaru pamięci proporcjonalnego do liczby N sortowanych elementów.
+Sortowanie przez scalanie jest stabilne. Metoda dobrze
+nadaje się do sortowania danych dostępnych sekwencyjnie (listy). 
+Czas działania algorytmu nie zależy od sposobu
+uporządkowania danych wejściowych.
+
+<ul>
+
+<li><strong>Dziel (Divide):</strong>
+Podziel N-elementową sekwencję do posortowania na dwie sekwencje
+o długości N/2 każda.
+
+<li><strong>Zwyciężaj (Conquer):</strong>
+Posortuj dwie podsekwencje rekurencyjnie wykorzystując
+<em>mergesort</em>.
+
+<li><strong>Połącz (Combine):</strong>
+Złącz dwie posortowane sekwencje w jedną posortowaną sekwencję,
+która stanowi rozwiązanie.
+
+</ul>
+
+<hr><pre>
+def mergesort(L, left, right):
+    """Sortowanie przez scalanie."""
+    if left &lt; right:
+        middle = (left + right) // 2   # wyznaczanie środka 
+        mergesort(L, left, middle)
+        mergesort(L, middle + 1, right)
+        merge(L, left, middle, right)   # scalanie
+</pre><hr><pre>
+def merge(L, left, middle, right):
+    """Łączenie posortowanych sekwencji."""
+    T = [None] * (right - left + 1)
+    left1 = left
+    right1 = middle
+    left2 = middle + 1
+    right2 = right
+    i = 0
+    while left1 &lt;= right1 and left2 &lt;= right2:
+        if L[left1] &lt;= L[left2]:   # mniejsze lub równe
+            T[i] = L[left1]
+            left1 += 1
+        else:
+            T[i] = L[left2]
+            left2 += 1
+        i += 1
+    # Lewa lub prawa część może mieć elementy.
+    while left1 &lt;= right1:
+        T[i] = L[left1]
+        left1 += 1
+        i += 1
+    while left2 &lt;= right2:
+        T[i] = L[left2]
+        left2 += 1
+        i += 1
+    # Skopiuj z tablicy tymczasowej do oryginalnej.
+    for i in range(right - left +1):
+        L[left + i] = T[i]
+</pre><hr><pre>
+def merge(L, left, middle, right):
+    """Łączenie posortowanych sekwencji z wartownikami."""
+    n1 = middle - left + 1
+    n2 = right - middle
+    A = [None] * (n1 + 1)   # o jeden więcej
+    B = [None] * (n2 + 1)   # o jeden więcej
+    for i in range(n1):
+        A[i] = L[left + i]
+    for i in range(n2):
+        B[i] = L[middle + 1 + i]
+    A[n1] = float("inf")   # wartownik
+    B[n2] = float("inf")   # wartownik
+    i, j = 0, 0
+    for k in range(left, right+1):
+        if A[i] &lt;= B[j]:
+            L[k] = A[i]
+            i += 1
+        else:
+            L[k] = B[j]
+            j += 1
+</pre><hr>
+
+<h3>ZŁOŻONOŚĆ</h3>
+
+<p>Czas sortowania listy o długości N oznaczamy przez T(N),
+przy czym T(1) = c.
+Z definicji algorytmu dostajemy zależność rekurencyjną
+<br>T(N) = 2 * T(N/2) + c * N,
+<br>gdzie c * N to czas scalenia dwóch uporządkowanych ciągów 
+w jeden ciąg N elementowy.
+
+<p> Z twierdzenia wynika, że czas T(N) jest rzędu O(N * log(N)).
+Liczba porównań w algorytmie sortowania przez scalanie jest
+rzędu O(N * log(N)).
+
+<hr><pre>
+|T(N)    c*N                   c*N
+|       /   \                /     \
+|   T(N/2)  T(N/2)      c*N/2       c*N/2
+|                      /    \       /    \
+|                  T(N/4) T(N/4) T(N/4) T(N/4)
+|
+|             c*N  ............................ c*N
+|            /    \
+|       c*N/2       c*N/2  .................... c*N
+|      /    \       /    \
+|  c*N/4  c*N/4  c*N/4  c*N/4  ................ c*N
+|  /  \   /  \   /  \   /  \
+|
+|  | | | | | | | | | | | | | | | |
+|  c c c c c c c c c c c c c c c c  ........... c*N
+|
+| Drzewo będzie miało log(N)+1 poziomów, a suma wyrazów
+| z każdego poziomu wynosi c*N.
+</pre><hr>
+
+<h3>KOMENTARZE</h3>
+
+<p>Naturalne sortowanie przez scalanie potrafi wykorzystać
+naturalnie istniejące podciągi posortowane, przez co można
+zredukować liczbę przebiegów scalania [por. timsort].
+Dane posortowane nie będą wymagały w ogóle scalania.
+
+<p>Algorytm mergesort daje się łatwo zrównoleglić z uwagi
+na zastosowanie techniki dziel i zwyciężaj [CLRS].
+Zrównolegla się nie tylko rekurencyjny podział na listy,
+ale także etap scalania. Wtedy dla N procesorów
+czas sortowania jest O(log(N)).
+
+</body>
+</html>

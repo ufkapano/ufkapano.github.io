@@ -1,0 +1,157 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Grupy abstrakcyjne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Badaniem własności grup zajmuje się teoria grup,
+która jest działem matematyki.
+
+<h3>DEFINICJA GRUPY</h3>
+
+<p>Niech G będzie zbiorem niepustym, a * działaniem w G.
+Parę (G,*) nazywamy grupą, jeżeli spełnione są warunki:
+<br>(i) działanie * jest łączne, czyli 
+dla każdego a, b, c z G mamy (a*b)*c = a*(b*c)
+[można więc oznaczać a*b*c].
+<br>(ii) istnieje element neutralny (jednostkowy) e w G taki, że
+dla każdego a z G mamy e*a = a*e = a.
+<br>(iii) dla każdego a z G istnieje element odwrotny ~a taki, że
+a*(~a) = (~a)*a = e.
+
+<p>Jeżeli działanie * jest przemienne (a*b = b*a),
+to grupę (G,*) nazywamy przemienną (abelową).
+Często działanie w grupie abelowej oznacza się znakiem plus,
+a samą grupę przez (G,+).
+
+<p>Twierdzenie. Niech (G,*) będzie grupą. Wtedy zachodzi:
+<br>(i) dla każdego a z G mamy ~(~a) = a.
+<br>(ii) dla każdego a, b z G mamy ~(a*b) = (~b)*(~a).
+
+<p>Rząd grupy G jest to liczba elementów w grupie.
+Oznaczenie: g lub |G|.
+
+<p>Podgrupa (subgroup) H grupy G jest to para (H,*),
+gdzie H jest podzbiorem G, * to działanie w G,
+a (H,*) jest grupą.
+H jest podgrupą właściwą, jeżeli 1 &lt; |H| &lt; |G|.
+
+<h3>HOMOMORFIZM</h3>
+
+<p>Homomorfizm dwóch grup (group homomorphism)
+[f: G w G'; f(a*b) = f(a)*f(b) dla każdego a, b z G].
+Jądro homomorfizmu [Ker(f) = f^{-1}({e'})].
+Izomorfizm = homomorfizm + bijekcja.
+
+<p><strong>Twierdzenie Cayley'a:</strong>
+Każda grupa G rzędu n jest izomorficzna z pewną podgrupą
+grupy symetrycznej S_n.
+
+<h3>WARSTWY (COSETS)</h3>
+
+<p>Niech G to grupa, a A i B zbiory zawarte w G. Określamy
+<br>AB := {ab: a należy do A, b należy do B},
+<br>~A := {~a: a należy do A}.
+<br>Jeżeli b należy do G, to
+<br>bA := {b}A,
+<br>Ab := A{b}.
+
+<p>Dla niepustego A mamy własności:
+<br>(i) AG = GA = G,
+<br>(ii) ~G = G,
+<br>(iii) eA = Ae = A.
+
+<p>Niech H podgrupa G. Można zdefiniować relację równoważności:
+<br>a~~b wtw a(~b) należy do H.
+<br>Stąd dostaniemy klasy równoważności 
+<br>[a] = [b: b~~a] = [b: b(~a) należy do H] = [b: b należy do Ha] = Ha 
+(warstwa prawostronna; zbiór).
+<br>Podobnie można zdefiniować inną relację równoważności
+<br>a~~b wtw (~a)b należy do H.
+<br>Stąd dostaniemy klasy równoważności [a] = aH (warstwa lewostronna).
+Można rozłożyć G na rozłączne warstwy o równej długości
+G = H + aH + bH + ... + pH (dla grupy G skończonej).
+The cosets of any subgroup H form a partition of G.
+
+<p><strong>Twierdzenie Lagrange'a.</strong>
+Rząd podgrupy H jest podzielnikiem rzędu grupy G.
+
+<h3>PODGRUPA NIEZMIENNICZA, GRUPA ILORAZOWA</h3>
+
+<p>Podgrupa H grupy G jest podgrupą niezmienniczą 
+(dzielnikiem normalnym, normal subgroup), 
+jeżeli aH = Ha dla każdego a należącego do G
+[równość w sensie zbiorów!].
+Jeżeli H jest dzielnikiem normalnym, to dla każdego a z G zachodzi
+aH(~a) = H [tak można sprawdzać].
+
+<p>W zbiorze warstw można wprowadzić działanie [a]*[b] = [ab].
+Wtedy para (G/H,*) to grupa ilorazowa (quotient group or factor group), 
+a jej rząd to |G|/|H|.
+
+<h3>KLASY ELEMENTÓW SPRZĘŻONYCH</h3>
+
+<ul>
+<li>W grupie G określamy relację równoważności 
+(przydaje się przy reprezentacjach):
+<br>a~~b wtw istnieje c z G takie, że cb(~c) = a (a jest sprzężone do b).
+<br>Możemy podzielić grupę G na rozłączne klasy równoważności.
+
+<li>Element komutujący ze wszystkimi elementami grupy G stanowi
+odrębną klasę (np. element jednostkowy e)
+[a = cb(~c) = bc(~c) = be = b, ten sam element].
+
+<li>Wszystkie elementy klasy elementów sprzężonych mają ten sam rząd.
+
+<li>Ilość elementów w klasie elementów sprzężonych jest podzielnikiem
+rzędu grupy G.
+</ul>
+
+
+<h3>STRUKTURY GRUPOWE</h3>
+
+<p>Liczby struktur grupowych danego rzędu.
+Widać, że najczęściej mamy grupy C_n i D_n,
+iloczyny proste grup niższego rzędu,
+ale również pojawiają się nowe struktury grupowe.
+Ile jest grup prostych, to rozstrzyga twierdzenie.
+
+<pre>
++----+------+---------------------------------------------+
+|Rząd|Liczba| Przykłady, [n]=nieabelowa                   |
++----+------+---------------------------------------------+
+|  1 |    1 |C_1                                          |
+|  2 |    1 |C_2                                          |
+|  3 |    1 |C_3=A_3                                      |
+|  4 |    2 |C_4, D_2=C_2xC_2                             |
+|  5 |    1 |C_5                                          |
+|  6 |    2 |C_6=C_3xC_2, D_3[n]                          |
+|  7 |    1 |C_7                                          |
+|  8 |    5 |C_8, D_2xC_2, C_4xC_2, D_4[n], Kwaterniony[n]|
+|  9 |    2 |C_9, C_3xC_3                                 |
+| 10 |    2 |C_10=C_5xC_2, D_5[n]                         |
+| 11 |    1 |C_11                                         |
+| 12 |    5 |C_12, C_6xC_2, D_6[n], A_4[n], G_12[n]       |
++----+------+---------------------------------------------+
+D_2xC_2 = C_2xC_2xC_2
+C_12 = C_4xC_3
+C_6xC_2 = C_3xC_2xC_2
+D_6 = D_3xC_2 nieabelowa
+G_12 grupa nieabelowa opisana w książce Jamesa i Liebecka
+</pre>
+
+<h3>REPREZENTACJE GRUP</h3>
+
+<p>Reprezentacją grupy G nazywamy homomorfizm D z grupy G
+w grupę macierzy kwadratowych 
+[D(a*b) = D(a)*D(b) dla a, b z G].
+Rozmiar reprezentacji D to rozmiar macierzy.
+
+</body>
+</html>

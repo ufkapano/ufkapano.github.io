@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Przekazywanie argumentów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Można definiować funkcje ze zmienną liczbą argumentów.
+Istnieją trzy sposoby, które mogą być ze sobą łączone:
+
+<ul>
+<li>domyślne wartości argumentów,
+<li>dowolna lista argumentów,
+<li>argumenty w postaci słów kluczowych.
+</ul>
+
+<h3>DOMYŚLNE WARTOŚCI ARGUMENTÓW</h3>
+
+<p>Definicja funkcji jest instrukcją. Argument domyślny jest generowany
+w chwili wywołania instrukcji def, a nie wywołania funkcji.
+Dlatego trzeba uważać, jeżeli argument domyślny jest zmienny,
+jak np. lista czy słownik.
+
+<hr><pre>
+def print_word(word, n=1):
+    """Wypisanie n linii ze słowem word."""
+    for i in range(n):
+        print ( "{} {}".format(i, word) )
+
+print_word("bla")
+print_word("bla", 3)
+print_word(n=4, word="bum")   # zastosowanie słów kluczowych
+</pre><hr><pre>
+def tester1(x, L=[]):
+    """Lista L rośnie po każdym wywołaniu funkcji."""
+    L.append(x)
+    print ( "tester1 {}".format(L) )
+
+def tester2(x, L=None):
+    """Lista L domyślnie zawsze pusta."""
+    if L is None:
+        L = []
+    L.append(x)
+    print ( "tester2 {}".format(L) )
+
+tester1(1)
+tester1(2)
+tester1(3)
+tester2(1)
+tester2(2)
+tester2(3)
+</pre><hr>
+
+<h3>DOWOLNA LISTA ARGUMENTÓW</h3>
+
+<hr><pre>
+def print_multiple_items(separator, *arguments):   # arguments to krotka
+    """Sklejenie napisów podanym separatorem."""
+    print ( separator.join(arguments) )
+
+print_multiple_items("_", "ab", "cde", "f")       # ab_cde_f
+</pre><hr><pre>
+def union(*arguments):   # arguments to krotka
+    """Wypisanie listy wspólnych znaków występujących w napisach."""
+    result = []
+    for word in arguments:
+        for char in word:
+            if not char in result:
+                result.append(char)
+    return result
+
+print ( union("abc", "cde", "efg") )   # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
+</pre><hr>
+
+<h3>ARGUMENTY W POSTACI SŁÓW KLUCZOWYCH</h3>
+
+<hr><pre>
+def university(**keywords):   # keywords to słownik
+    """Wypisanie władz uniwersytetu."""
+    for key in sorted(keywords):
+        print ( "{} : {}".format(key, keywords[key]) )
+
+university(rektor="Nowak", kanclerz="Pedracka", prorektor1="Mania")
+# kanclerz : Pedracka
+# prorektor1 : Mania
+# rektor : Nowak
+</pre><hr>
+
+<h3>POSTAĆ OGÓLNA</h3>
+
+<p>W wywołaniu funkcji najpierw muszą zostać podane wszystkie 
+argumenty pozycyjne, po których następują wszystkie argumenty
+ze słowami kluczowymi (<em>name=value</em>),
+a po nich forma <em>*arguments</em>
+i na końcu forma <em>**keywords</em>.
+W nagłówku funkcji kolejność argumentów jest analogiczna.
+
+<hr><pre>
+# Ogólnie funkcja może mieć postać:
+# def f(a1, a2=v2, *a3, **a4): ...
+# Przy wywołaniu f(x1, x2, x3, x4, b1=x5, b2=x6) będą podstawienia:
+# a1=x1, normalny argument pozycyjny
+# a2=x2, argument dopasowany pozycyjnie
+# a3=(x3, x4), tu są nadmiarowe argumenty pozycyjne
+# a4={"b1":x5, "b2":x6}, tu są nadmiarowe argumenty ze słowami kluczowymi
+</pre><hr>
+
+<h3>ROZPAKOWYWANIE LISTY ARGUMENTÓW</h3>
+
+<hr><pre>
+range(3, 6)         # [3, 4, 5], zwykłe wywołanie z osobnymi argumentami
+args = [3, 6]
+range(*args)        # [3, 4, 5], wywołanie z rozpakowaniem argumentów
+# Tutaj args może być dowolnym obiektem iterowalnym z dwoma elementami.
+</pre><hr><pre>
+def describe(name, age=0, position=None):
+    """Wypisanie komunikatu o argumentach."""
+    print ( "{} age {} position {}".format(name, age, position) )
+
+person = {"name": "Bogdan", "age": 30, "position": "teacher"}
+
+describe("Adam", 20, "student")
+# Adam age 20 position student
+
+describe("Bogdan", 30, "teacher")
+
+# Pobieranie danych ze słownika.
+describe(person["name"], person["age"], person["position"])
+
+# Zastosowanie słów kluczowych - kolejność argumentów dowolna.
+describe(name=person["name"], age=person["age"], position=person["position"])
+
+# Rozpakowanie słownika.
+describe(**person)
+# Bogdan age 30 position teacher
+</pre><hr>
+
+<p>W Pythonie 2 istnieje funkcja <em>apply</em> o podobnym
+zastosowaniu, ale została usunięta z Pythona 3.
+
+<h3>SYMULOWANIE PARAMETRÓW WYJŚCIA</h3>
+
+<p>Instrukcja <em>return</em> może zwracać wiele wartości
+pakując je w krotkę lub inny typ kolekcji.
+
+<hr><pre>
+def find_minmax(x, y):
+    """Równoczesne znajdowanie min i max."""
+    min2 = x if x &lt; y else y
+    max2 = y if x &lt; y else x
+    return (min2, max2)
+
+# Zastosowanie - rozpakowanie krotki wynikowej.
+a, b = find_minmax(5, 3)
+</pre><hr>
+
+</body>
+</html>

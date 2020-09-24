@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zbiory dominujące</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p><em>Zbiór dominujący</em> (ang. dominating set) grafu nieskierowanego 
+G=(V,E) jest to podzbiór S zbioru wierzchołków V, taki że 
+każdy wierzchołek z V, który nie należy do S, ma co najmniej
+jednego sąsiada w S.
+Problem znalezienia najmniejszego zbioru dominującego jest trudny.
+
+<hr><pre>
+# Testowanie zbioru dominującego.
+
+import unittest
+
+def find_dominating_set(graph):
+    pass
+
+class TestDominatingSet(unittest.TestCase):
+
+    def setUp(self):
+        self.G = dict()
+        self.edges = []   # wstawiamy 3-krotki, graf ważony
+        # Wstawiamy wierzchołki i krawędzie do G.
+
+    def test_dominating_set(self):
+        dset = find_dominating_set(self.G)
+        neighbors = set(dset)
+        for source in dset:
+            neighbors.update(self.G[source])
+        self.assertEqual(len(neighbors), len(self.G))
+</pre><hr>
+
+
+</body>
+</html>

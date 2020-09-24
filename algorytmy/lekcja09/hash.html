@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tablice mieszające</h1>
+
+<p>https://en.wikipedia.org/wiki/Hash_table
+
+<h3>WPROWADZENIE</h3>
+
+<p>Tablica mieszająca (ang. hash table) używa funkcji mieszającej
+do obliczenia indeksu klucza w tablicy bukietów.
+Jeżeli klucze są liczbami z niedużego zakresu, to można je
+przechowywać w tablicy pod indeksem k.
+Zwykle jednak wykorzystuje się funkcję mieszającą hash(k), 
+która oblicza położenie klucza k w tablicy.
+Dobra funkcja mieszająca powinna (1) działać szybko [niski koszt]
+i (2) jednorodnie rozmieszczać klucze w tablicy.
+Wtedy wstawianie, wyszukiwanie i usuwanie klucza działa w czasie O(1).
+
+<p>W praktyce nie jest łatwo znaleźć doskonałą funkcję mieszającą
+i pojawiają się <em>kolizje</em>, czyli dla kluczy k1 != k2 otrzymujemy
+hash(k1) = hash(k2).
+Kolizje zdarzają się zwykle tym częściej im bardziej zapełniona jest tablica,
+dlatego zwykle tablica jest większa niż spodziewana liczba kluczy.
+Niektóre metody mieszania dobrze działają dla rozmiaru tablicy
+będącym potęgą dwójki, inne dla liczb pierwszych.
+
+<h3>PROBLEM KOLIZJI</h3>
+
+<p>Typowe sposoby radzenia sobie z kolizjami [Drozdek].
+
+<ul>
+<li>Adresowanie otwarte (ang. open adressing).
+<br>Jeżeli klucz koliduje z innym kluczem, wybiera się inną dostępną
+komórkę niż tą wskazywaną przez klucz.
+Najprostszym rozwiązaniem jest <em>próbkowanie liniowe</em>,
+gdzie wybiera się następną wolną komórkę
+[przy końcu tablicy przechodzi się na początek,
+wzór na indeks (hash(key) + i) mod table_size].
+Próbkowanie liniowe ma tendencję do tworzenia zgrupowań zajętych komórek,
+co pogarsza wydajność tablicy mieszającej.
+Przy wyszukiwaniu klucza sprawdza się komórki po kolei aż klucz zostanie
+znaleziony lub będzie jasne, że klucza nie ma w tablicy 
+(napotkanie pustej komórki lub sprawdzenie całej pełnej tablicy).
+
+<li>Metoda łańcuchowa (ang. chaining).
+<br>Każda komórka tablicy jest łączem do listy powiązanej,
+która przechowuje klucze kolidujące. Lista może być nieuporządkowana,
+posortowana, albo samoorganizująca się, w celu poprawienia efektywności.
+Metoda ta wymaga dodatkowej pamięci na wskaźniki w tablicy i na listach.
+
+</ul>
+
+</body>
+</html>

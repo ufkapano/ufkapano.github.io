@@ -1,0 +1,238 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zmienne</h1>
+
+<h3>STRUKTURA PROGRAMU W PYTHONIE</h3>
+
+<ul>
+<li>Programy składają się z modułów.
+<li>Moduły zawierają instrukcje.
+<li>Instrukcje zawierają wyrażenia.
+<li><em>Wyrażenia tworzą i przetwarzają obiekty.</em>
+</ul>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W Pythonie wartości, a nie zmienne, posiadają typ - tak więc Python
+jest językiem z typami dynamicznymi.
+Wszystkie wartości przekazywane są przez referencję.
+
+<p>Każda zmienna posiada nazwę i zawiera referencję do określonego obiektu.
+Zmienna jest uniwersalna, sama nie ma określonego typu,
+może przechowywać referencję do obiektu każdego typu.
+Wszystkie zmienne muszą mieć jawnie przypisane wartości, zanim
+będzie można ich użyć.
+
+<hr><pre>
+&gt;&gt;&gt; X
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+NameError: name 'X' is not defined
+&gt;&gt;&gt; X = 11           # powołujemy do życia zmienną X
+&gt;&gt;&gt; X                # sprawdzamy wartość zmiennej
+11
+&gt;&gt;&gt; del X            # usuwamy zmienną
+&gt;&gt;&gt;
+</pre><hr>
+
+<p>W Pythonie obiekty posiadają dwa standardowe pola:
+
+<ul>
+<li>Desygnator typu; stąd obiekty znają swój typ.
+<li>Licznik referencji; wykorzystywany do zwalniania pamięci
+zajmowanej przez obiekt, jeżeli liczba referencji do obiektu
+spadnie do zera.
+</ul>
+
+<h3>TYPY WBUDOWANE</h3>
+
+<p>The principal built-in types are numerics, sequences, mappings, 
+files, classes, instances and exceptions (z dokumentacji Pythona).
+
+
+<p>Python posiada szeroki zakres podstawowych typów liczbowych:
+liczby całkowite (dowolnych rozmiarów),
+liczby zmiennoprzecinkowe,
+liczby zespolone.
+Są stringi (łańcuchy napisowe).
+Python jest wyposażony w kilka typów kolekcji:
+listy, krotki (tuples), słowniki, zbiory.
+Listy, krotki i napisy są <em>sekwencjami</em> i mają wiele
+wspólnych metod.
+
+<p>Typy danych możemy jeszcze podzielić na mutowalne (zmienne)
+i niemutowalne (niezmienne).
+Niezmienne są przede wszystkim liczby, stringi i krotki.
+
+<p>Warto korzystać z wbudowanych typów danych z wielu powodów:
+
+<ul>
+<li>Są dostępne od ręki, są standardową częścią języka.
+<li>Można na ich bazie budować nowe obiekty (np. stos, kolejka).
+<li>Często są bardziej wydajne od własnych struktur danych.
+</ul>
+
+<p>Przegląd obiektów wbudowanych Pythona:
+
+<pre>
++-------------+--------------+----------------------+
+| Typ obiektu | Kategoria    | Czy podlega zmianom? |
++-------------+--------------+----------------------+
+| Liczby      | Liczbowa     | Nie                  |
+| Łańcuchy    | Sekwencja    | Nie                  |
+| Listy       | Sekwencja    | Tak                  |
+| Słowniki    | Odwzorowanie | Tak                  |
+| Krotki      | Sekwencja    | Nie                  |
+| Pliki       | Rozszerzenie | Nie dotyczy          |
+| Zbiory      | Zbiór        | Tak                  |
+| frozenset   | Zbiór        | Nie                  |
++-------------+--------------+----------------------+
+</pre>
+
+<p>Aby sprawdzić, czy obiekt jest danego typu, czy instancją klasy,
+korzystamy z wbudowanej funkcji <em>isinstance()</em>.
+Generalnie nie powinno się sprawdzać jawnie typu, ponieważ 
+niszczymy wtedy elastyczność kodu. 
+W Pythonie koduje się pod kątem interfejsów obiektów 
+(obsługowanych operacji), a nie typów.
+Mamy tu związek z koncepcją polimorfizmu
+[polimorfizm = znaczenie operacji uzależnione jest
+od typu obiektów, na których się te operację wykonuje.
+jest to przydatna właściwość Pythona.
+Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.].
+
+<hr><pre>
+# Składnia:
+# isinstance(object, class-or-type-or-tuple) -&gt; bool
+
+if isinstance(x, float):
+    print ( "liczba zmiennoprzecinkowa" )
+
+if isinstance(x, (int, long)):   # Python 2 (Python 3 nie ma long)
+    print ( "liczba całkowita" )
+
+# Dawny, odradzany sposób.
+# Funkcja type() zwraca obiekt typu - są różnice między Pythonem 2 i 3.
+if type(x) is type(1) or type(x) is type(1L):   # Python 2 (Python 3 nie ma long)
+    print ( "liczba całkowita" )
+
+if type(x) is int or type(x) is long:   # Python 2 (Python 3 nie ma long)
+    print ( "liczba całkowita" )
+
+# Moduł types zawiera nazwy dla innych typów.
+import types
+dir(types)
+</pre><hr>
+
+<p>Wbudowane stałe Pythona: 
+False, True, None, NotImplemented, Ellipsis.
+
+<h3>HASH</h3>
+
+<p>https://en.wikipedia.org/wiki/Hash_function
+
+<p>https://www.pythonforthelab.com/blog/what-are-hashable-objects/
+
+<p>Obok podziału obiektów na zmienne i niezmienne, istnieje podział
+na obiekty hashowalne (ang. hashable objects) i niehashowalne.
+Hashowanie to zasadniczo obliczanie pewnej liczby na bazie obiektu,
+przy czym ta liczba nie zmienia się przez cały czas życia obiektu.
+Wykorzystuje się je w tablicach hashowalnych, a w Pythonie przy
+słownikach i zbiorach (klucze w słowniku i elementy zbioru
+muszą być obiektami hashowalnymi).
+
+<p>Zauważmy, że wbudowane typy niezmienne (immutable) w Pythonie
+są zawsze hashowalne.
+Hash zależy od danych przechowywanych przez obiekt, a nie od tożsamości
+obiektu, tożsamość jest sprawdzana przez funkcję id().
+Kiedy dwa obiekty mają ten sam hash, wtedy mogą, ale nie muszą być równe,
+bo może wystąpić kolizja. Kolizja jest zjawiskiem typowym, Python wtedy
+porównuje obiekty bezpośrednio (a == b).
+
+<p>Obiekty tworzone przez klasy zdefiniowane przez użytkownika są 
+z definicji hashowalne, przy czym hash jest obliczany na bazie id().
+
+<hr><pre>
+&gt;&gt;&gt; a = "abc"
+&gt;&gt;&gt; hash(a)   # metoda __hash__
+1453079729188098211
+&gt;&gt;&gt; b = (1, 3, 5)
+&gt;&gt;&gt; hash(b)
+2528501712789647984
+&gt;&gt;&gt; c = [1, 2]
+&gt;&gt;&gt; hash(c)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: unhashable type: 'list'
+# Dla liczb int zachodzi hash(i) = i.
+&gt;&gt;&gt; d = 2528501712789647984
+&gt;&gt;&gt; hash(d) == hash(b)   # kolizja
+True
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>SŁOWA ZAREZERWOWANE PYTHONA</h3>
+
+<hr><pre>
+&gt;&gt;&gt; help()     # pomoc w trybie interaktywnym
+help&gt; keywords            # wypisanie słów kluczowych
+...
+help&gt; quit
+&gt;&gt;&gt;
+</pre><hr>
+
+<p>Słowa kluczowe Pythona: and, as (2.6+), assert, break,
+class, continue, def, del, elif, else, except, exec (2.x),
+finally, for, from, global, if, import, in, is, 
+lambda, nonlocal (3.x), 
+not, or, pass, print (2.x), raise,
+return, try, while, with (2.6+), yield (2.3+).
+
+<p>Inne słowa, których lepiej nie używać: 
+False, None, True, NotImplemented, Ellipsis.
+
+<p>Z dokumentacji na temat Ellipsis: 
+Special value used in conjunction with extended slicing syntax. 
+It is used to indicate the presence of the ... syntax in a slice.
+Używane z modułami doctest, numpy.
+The ellipsis is used to slice higher-dimensional data structures (numpy).
+Ellipsis jest używane jako singleton tam, gdzie None jest niejednoznaczne.
+
+
+<hr><pre>
+# http://stackoverflow.com/questions/118370/
+# how-do-you-use-the-ellipsis-slicing-syntax-in-python
+
+# http://stackoverflow.com/questions/17160162/what-is-in-python-2-7
+# What is [...] in Python 2.7?
+
+# http://stackoverflow.com/questions/3993125/what-does-mean-in-numpy-code
+# What does ... mean in numpy code?
+
+&gt;&gt;&gt; p = [1, 2]
+&gt;&gt;&gt; p[1:1] = [p]   # zapętlenie
+&gt;&gt;&gt; p              # Python używa ... do pokazania zapętlenia
+[1, [...], 2]               # (nieskończona rekurencja)
+
+&gt;&gt;&gt; L = [0]
+&gt;&gt;&gt; L[0] = L       # zapętlenie
+&gt;&gt;&gt; L
+[[...]]
+&gt;&gt;&gt; D = {}
+&gt;&gt;&gt; D[...] = 'a'
+&gt;&gt;&gt; D
+{Ellipsis: 'a'}
+</pre><hr>
+
+<p>Słowa zarezerwowane nie mogą być wykorzystane jako nazwy
+zmiennych, nazwy modułów, itp.
+
+
+</body>
+</html>

@@ -1,0 +1,143 @@
+<html>
+<head>
+<title>Zadania</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zadania</h1>
+
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: dwa zadania z zestawu
+
+<h3>ZADANIE 15.1 (PERM)</h3>
+
+<p>Stworzyć plik <em>permutations.py</em> i zapisać w nim funkcje
+do działań na permutacjach liczb od 0 do N-1 (N ustalone globalne).
+Permutacja będzie reprezentowana przez listę,
+np. a dla permutacji przyporządkującej 0 --&gt; a[0],
+1 --&gt; a[1], 2 --&gt; a[2], 3 --&gt; a[3] (tutaj N=4).
+Mnożenie permutacji rozumiemy jak składanie funkcji,
+czyli dla a*b=c mamy c[i]=a[b[i]] dla każdego i.
+Permutacja b jest odwrotna do a, jeśli b[a[i]]=i
+dla każdego i.
+Napisać kod testujący moduł <em>permutations</em>.
+
+<hr><pre>
+def mul_perm(perm1, perm2): pass        # perm1*perm2
+def invert_perm(perm): pass             # permutacja odwrotna
+def is_identity(perm): pass             # bool, czy identyczność
+def find_order(perm): pass              # rząd (krotność) permutacji
+
+jeden = range(N)                        # identyczność
+</pre><hr>
+
+
+<h3>ZADANIE 15.2 (SUDOKU)</h3>
+
+<p>(a) Zbadać grupę symetrii planszy sudoku 4x4.
+Generatory: permutacje wierszy 1-2, 3-4;
+zamiana wierszy (1,2) z (3,4);
+permutacje kolumn 1-2, 3-4;
+zamiana kolumn (1,2) z (3,4);
+obrót planszy o 90 stopni.
+
+<pre>
++-------+-------+
+|  0  1 |  2  3 |
+|  4  5 |  6  7 |
++-------+-------+
+|  8  9 | 10 11 |
+| 12 13 | 14 15 |
++-------+-------+
+</pre>
+
+<p>(b) Zbadać grupę symetrii planszy sudoku 9x9.
+
+<h3>ZADANIE 15.3 (GRUPA CYKLICZNA)</h3>
+
+<p>(a) Grupa cykliczna C_N (rzędu N) może być wygenerowana z jednego
+cyklu (0,1,...,N-1). Sprawdzić to dla kilku różnych N.
+
+<p>(b) Jeżeli N nie jest liczbą pierwszą, to grupę cykliczną można
+otrzymać również z innego generatora lub generatorów.
+Dla C_6 wystarczy generator z S_5 postaci (0,1,2)(3,4);
+korzystamy tutaj z faktu, że C_6 = C_3 x C_2.
+Możemy również wybrać dwa generatory (0,1,2) i (3,4).
+
+<h3>ZADANIE 15.4 (GRUPA DIEDRALNA)</h3>
+
+<p>(a) Grupa diedralna D_N (rzędu 2*N) może być wygenerowana
+z dwóch generatorów. Dla N &gt; 2 jest to grupa symetrii 
+graniastosłupa o podstawie wielokąta foremnego 
+(D_3 dla trójkąta, D_4 dla kwadratu, itd.).
+Wygodnie jest kolejnymi liczbami oznaczyć ściany boczne graniastosłupa.
+Generatory dla D_3 to (0,1,2) i (1,2).
+Pokazać, że D_3 jest izomorficzna z S_3.
+
+<p>(b) Dla D_4 wybieramy generatory (0,1,2,3) i (1,3).
+
+<p>(c) Dla D_5 wybieramy generatory (0,1,2,3,4) i (1,4)(2,3).
+
+<p>(c) Dla D_6 wybieramy generatory (0,1,2,3,4,5) i (1,5)(2,4).
+
+<p>(d) Dla D_2 (rzędu 4) wybieramy generatory korzystając
+z tabelki grupowej i twierdzenia Cayley'a.
+Są to permutacje z grupy S_4 (0,1)(2,3) i (0,2)(1,3).
+
+<pre>
++----+---------+ Tabelka grupowa D_2
+| E  | 0 1 2 3 |
+|C_2x| 1 0 3 2 |
+|C_2y| 2 3 0 1 |
+|C_2z| 3 2 1 0 |
++----+---------+
+</pre>
+
+<p>Dla D_2 można znaleźć inne przedstawienie za pomocą permutacji,
+jeżeli skorzystamy ze związku D_2 = C_2 x C_2.
+Wybieramy dwa generatory (0,1) i (2,3).
+
+<h3>ZADANIE 15.5 (GRUPA SYMETRYCZNA)</h3>
+
+<p>Grupa symetryczna S_N (rzędu N!) dla N &gt; 1 może być wygenerowana 
+z N-1 generatorów postaci (0,1), (1,2), ..., (N-2,N-1).
+Sprawdzić to dla kilku różnych N.
+
+<h3>ZADANIE 15.6 (GRUPA ALTERNUJĄCA)</h3>
+
+<p>Grupa alternująca A_N (rządu N!/2) dla N &gt; 2 może być 
+wygenerowana z N-2 generatorów postaci
+(0,1,2), (1,2,3), ..., (N-3,N-2,N-1).
+Sprawdzić to dla kilku różnych N.
+
+<h3>ZADANIE 15.7 (GRUPA NIEABELOWA RZĘDU 12)</h3>
+
+<p>Mamy dane dwa generatory (0,1,2,3,4,5)(6,7,8,9,10,11)
+i (0,6,3,9)(1,11,4,8)(2,10,5,7).
+Wygenerować wszystkie permutacje nieabelowej grupy rzędu 12.
+Stworzyć tabelkę grupową.
+
+<h3>ZADANIE 15.8 (KWATERNIONY)</h3>
+
+<p>Dana jest tabelka mnożenia elementów grupy kwaternionów.
+Zapisać tabelkę z użyciem liczb od 0 do 7.
+Zbudować grupę permutacji z S_8 reprezentującą grupę kwaternionów,
+korzystając z dwóch generatorów, np. dla "i" oraz "j".
+
+<pre>
++--+--+--+--+--+--+--+--+
+| 1| i| j| k|-1|-i|-j|-k|
+| i|-1| k|-j|-i| 1|-k| j|
+| j|-k|-1| i|-j| k| 1|-i|
+| k| j|-i|-1|-k|-j| i| 1|
+|-1|-i|-j|-k| 1| i| j| k|
+|-i| 1|-k| j| i|-1| k|-j|
+|-j| k| 1|-i| j|-k|-1| i|
+|-k|-j| i| 1| k| j|-i|-1|
++--+--+--+--+--+--+--+--+
+</pre>
+
+</body>
+</html>

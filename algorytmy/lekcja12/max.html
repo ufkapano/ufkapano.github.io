@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie max lub min</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: 
+Wyszukiwanie największego elementu w nieuporządkowanym ciągu liczb.
+
+DANE WEJŚCIOWE
+Ciąg n liczb umieszczonych w tablicy L. 
+
+DANE WYJŚCIOWE
+Pozycja (indeks) elementu największego w ciągu L.
+</pre><hr>
+
+<p>Zadanie znajdowania elementu maksymalnego (minimalnego) jest typowym 
+zadaniem wyszukiwania, które rozwiązujemy przy pomocy algorytmu 
+wyszukiwania liniowego. Za tymczasowy maksymalny (minimalny) element 
+przyjmujemy pierwszy element zbioru. 
+Następnie element tymczasowy porównujemy z kolejnymi elementami. 
+Jeśli któryś z porównywanych elementów jest większy (mniejszy) 
+od elementu tymczasowego, to za nowy tymczasowy element maksymalny 
+(minimalny) przyjmujemy porównywany element zbioru. 
+Gdy cały zbiór zostanie przeglądnięty, w elemencie tymczasowym otrzymamy 
+element maksymalny (minimalny) w zbiorze.
+Algorytm jest optymalny (Ira Pohl, 1972).
+
+<p>Możliwe są dwa podejścia: zwracamy indeks największego elementu
+(dane w tablicy) lub zwracamy sam element największy
+(dane w tablicy lub w pliku).
+Jeżeli dostęp do danych jest sekwencyjny, to lepiej jest
+zwracać sam element największy (a raczej jego kopię).
+
+<p>Zajmiemy się implementacją funkcji zwracającej
+indeks największego elementu na liście
+(w zadanym przedziale indeksów).
+Dla zbioru n liczb musimy wykonać (n-1) porównań.
+Wyszukiwanie elementu najmniejszego jest analogiczne.
+
+<h3>WYSZUKIWANIE MAX LUB MIN W PYTHONIE</h3>
+
+<hr><pre>
+min(arg1, arg2, *args, *[, key=func]) -&gt; value
+min(iterable[, key=func]) -&gt; value          # Python 2
+min(iterable, *[, default=obj, key=func]) -&gt; value   # Python 3.4
+
+max(arg1, arg2, *args, *[, key=func]) -&gt; value
+max(iterable[, key=func]) -&gt; value          # Python 2
+max(iterable, *[, default=obj, key=func]) -&gt; value   # Python 3.4
+</pre><hr>
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def find_max(L, left, right):
+    """Wyszukiwanie indeksu elementu największego."""
+    k = left
+    i = left + 1
+    while i &lt;= right:
+        if L[i] &gt; L[k]:
+            k = i
+        i += 1
+    return k
+</pre><hr><pre>
+def find_min(L, left, right):
+    """Wyszukiwanie indeksu elementu najmniejszego."""
+    k = left
+    i = left + 1
+    while i &lt;= right:
+        if L[i] &lt; L[k]:
+            k = i
+        i += 1
+    return k
+</pre><hr><pre>
+# Pythonowa symulacja wyszukiwania elementu największego w pliku.
+def find_max(afile):
+    best = None
+    for item in afile:
+        if best is None:
+            best = item
+        elif item &gt; best:
+            best = item
+    return best
+</pre><hr>
+
+<h3>SELECTSORT</h3>
+
+<p>Algorytm wyszukiwania liniowego jest wykorzystywany w algorytmie
+sortowania przez wybór.
+W sposób ciągły wybieramy najmniejszy element z coraz mniejszego 
+zbioru danych.
+
+</body>
+</html>

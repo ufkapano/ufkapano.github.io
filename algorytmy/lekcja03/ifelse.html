@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Instrukcja warunkowa</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W Pythonie nie ma instrukcji switch czy case, ponieważ
+można je łatwo zastąpić serią testów if i elif.
+Można również wykorzystać słownik do symulacji wyborów.
+
+<hr><pre>
+# Porównanie C i Pythona.
+if (x &gt; y) {               /* ANSI C */
+    x = 1;
+    y = 2;
+}
+
+if x &gt; y:                  # Python, nawiasy opcjonalne
+    x = 1                 # bez klamerek, średników
+    y = 2                 # obowiązkowe wcięcie kodu (4 spacje)
+</pre><hr><pre>
+# Instrukcje złożone w Pythonie.
+wiersz_nagłówka:              # obowiązkowy dwukropek
+    zagnieżdżony_blok_instrukcji
+
+# Przypadek specjalny - lepiej unikać.
+# Przy prostych wyrażeniach można zrezygnować z wcięcia.
+# Może to być wygodne w trybie interaktywnym.
+if x &gt; y: print x       # print x to wyrażenie
+</pre><hr><pre>
+# Zagnieżdżone bloki.
+Blok0
+Wiersz nagłówka:
+    Blok1
+    Wiersz nagłówka:
+        Blok2
+    Blok1 (kontynuacja)
+Blok0 (kontynuacja)
+</pre><hr>
+
+<p>Koniec wiersza kończy instrukcję.
+
+<p>Koniec wcięcia to koniec bloku.
+
+<p>Konwencja: wcięcia (indentację) tworzymy wykorzystując
+tylko 4 spacje (PEP 8).
+Indentacja wymusza na programistach tworzenie jednolitego,
+regularnego i czytelnego kodu.
+
+<h3>INSTRUKCJA WARUNKOWA IF-ELSE</h3>
+
+<hr><pre>
+# Składnia.
+if test1:
+    instrukcje
+elif test2:                   # opcjonalne, może być więcej sekcji elif
+    instrukcje
+else:                         # opcjonalne (jeden raz), jeśli nic nie pasuje
+    instrukcje
+</pre><hr><pre>
+# Niech n będzie pewną liczbą całkowitą.
+if n &lt; 0:
+    print ( "liczba ujemna!" )
+elif n % 2 == 0:              # sprawdzamy inną możliwość
+    print ( "{} {}".format(n, "liczba parzysta") )
+else:                         # to jest sekcja opcjonalna
+    print ( "{} {}".format(n, "liczba nieparzysta") )
+</pre><hr><pre>
+# Porównanie C i Pythona.
+# W C else należy do ostatniego (najbliższego) if, ale generalnie
+# dla uniknięcia pomyłki w rozumieniu lepiej wstawić nawiasy klamrowe.
+# W Pythonie wcięcia decydują o logice.
+if x:
+    if y:
+        instrukcja1
+else:   # powiązane z if x
+    instrukcja2
+</pre><hr><pre>
+# Zastosowanie słownika (nie korzystać na siłę).
+# W zależności od wyboru użytkownika podstawiamy inne wartości.
+adict = {"a":1, "b":2, "c":3}           # lista możliwości
+choice = "b"
+result = adict[choice]                  # zamiast if-elif
+resutl = adict.get(choice, "Error")     # z zabezpieczeniem
+</pre><hr>
+
+<h3>WYRAŻENIE TRÓJARGUMENTOWE</h3>
+
+<p>Wyrażenie trójargumentowe if-else przypomina operator
+trójargumentowy z języka C.
+
+<hr><pre>
+if X:
+    A = Y
+else:
+    A = Z
+# Można to zapisać prościej (wyrażenie trójargumentowe).
+A = Y if X else Z
+
+a = 25 ; b = 30
+pos_a = (-a) if a &lt; 0 else a
+max_a_b = b if a &lt; b else a
+
+# Zastosowanie do słowników.
+# Ustawienie domyślnej wartości, jeżeli klucza nie ma.
+value = D.get("x", 0)                   # klasycznie
+value = D["x"] if "x" in D else 0       # if-else
+</pre><hr>
+
+
+</body>
+</html>

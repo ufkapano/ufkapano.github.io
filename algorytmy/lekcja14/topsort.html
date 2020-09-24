@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie topologiczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>[Knuth] Sortowanie topologiczne polega na zanurzeniu
+porządku częściowego (~&lt;) w porządku liniowym, 
+tj. na utworzeniu takiego ciągu elementów a[], 
+że jeśli a[j] ~&lt; a[k], to j &lt; k.
+
+<p>Zbiór elementów z porządkiem częściowym może być zapisany
+w grafie skierowanym nie zawierającym cykli
+(DAG, ang. Directed Acyclic Graph).
+Sortowanie topologiczne wierzchołków polega na ich liniowym 
+uporządkowaniu w taki sposób, że jeżeli istnieje krawędź skierowana
+(a,b), to wierzchołek a znajdzie się przed wierzchołkiem b.
+Zwykle wierzchołki grafu acyklicznego można posortować topologicznie
+na jeden lub więcej sposobów 
+(jest gwarancja istnienia co najmniej jednego rozwiązania).
+
+<p>Przykłady porządku częściowego [Knuth].
+
+<ul>
+<li>W matematyce: relacja "mniejsze lub równe" w zbiorze liczb
+naturalnych, relacja zawierania się zbiorów.
+<li>Sieci PERT i zbiór zadań do wykonania.
+<li>Budowanie leksykonu pojęć technicznych, gdzie definicje 
+nie zawierają haseł, które jeszcze nie zostały zdefiniowane.
+<li>Zestaw pakietów oprogramowania w systemach uniksopodobnych,
+które do instalacji wymagają obecności innych pakietów.
+</ul>
+
+<h3>SPECYFIKACJA</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem sortowania topologicznego.
+
+DANE WEJŚCIOWE
+Dany jest zbiór V liczb naturalnych od 0 do V-1 (wierzchołków)
+i E par tych liczb (krawędzi, połączeń)
+opisujących porządek częściowy w zbiorze liczb.
+
+DANE WYJŚCIOWE
+Ciąg liczb od 0 do V-1 posortowany topologicznie.
+</pre><hr>
+
+<p>Podstawowe algorytmy sortowania topologicznego to:
+
+<ul>
+
+<li>Usuwanie wierzchołków "niezależnych".
+
+<li>Zastosowanie DFS.
+
+</ul>
+
+<h3>USUWANIE WIERZCHOŁKÓW "NIEZALEŻNYCH"</h3>
+
+<p>[Tytuł z Wikipedii] 
+Algorytm polega na wybraniu wierzchołka, który nie ma poprzednika.
+Inaczej mówiąc, wybieramy wierzchołek o stopniu wchodzącym 0.
+W grafie acyklicznym musi istnieć co najmniej jeden taki wierzchołek.
+Wierzchołek umieszczamy na pierwszym miejscu ciągu wynikowego,
+usuwamy go ze zbioru wierzchołków i usuwamy krawędzie z niego wychodzące.
+Powtarzamy proces dla zbioru pozostałych wierzchołków.
+Rozwiązaniem jest ciąg kolejno usuwanych wierzchołków.
+
+<h3>IMPLEMENTACJA</h3>
+
+<p>Wersja dla grafów GvR bez otoczki obiektowej.
+
+<hr><pre>
+import Queue
+
+def topsort_queue(graph):
+    # Słownik z liczbą poprzedników wierzchołka 
+    # (stopień wejściowy wierzchołka).
+    in_edges = dict((node, 0) for node in graph)
+    for source in graph:
+        for target in graph[source]:
+            in_edges[target] += 1
+    # Zakończyło się wczytywanie danych.
+    # Tworzymy kolejkę wierzchołków nie mających poprzedników.
+    sorted_nodes = list()
+    queue = Queue.Queue()
+    # Do kolejki idą pierwsze wierzchołki bez poprzedników.
+    for node in graph:
+        if in_edges[node] == 0:
+            queue.put(node)
+    while not queue.empty():
+        source = queue.get()   # weź wierzchołek z kolejki
+        sorted_nodes.append(source)   # wstaw wierzchołek do rozwiązania
+        # Usuwamy wszystkie krawędzie wychodzące z wierzchołka.
+        for target in graph[source]:
+            # Usuwamy poprzednika węzła target.
+            in_edges[target] -= 1
+            # Jeżeli zero, to wstawiamy do kolejki.
+            if in_edges[target] == 0:
+                queue.put(target)
+    return sorted_nodes
+</pre><hr>
+
+<h3>WYKORZYSTANIE DFS</h3>
+
+<p>Algorytm polega na stworzeniu listy wierzchołków grafu
+odwiedzanych podczas wykonywania algorytmu DFS
+w kolejności ich czasu przetworzenia.
+Po odwróceniu kolejności wierzchołków na liście
+dostaniemy wierzchołki posortowane topologicznie.
+Czas działania jest O(V+E), bo tyle trwa DFS.
+
+<hr><pre>
+def topsort_dfs(graph):
+    sorted_nodes = list()
+    for source in graph:
+        if source not in sorted_nodes:
+            traverse_dfs(graph, source,
+                post_action=lambda node: sorted_nodes.append(node))
+    sorted_nodes.reverse()
+    return sorted_nodes
+</pre><hr>
+
+</body>
+</html>

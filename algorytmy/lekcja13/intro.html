@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Algorytmy z powrotami</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytmy z powrotami (ang. backtracking) są algorytmami rekurencyjnymi.
+Szukamy algorytmów poszukujących rozwiązań dla specyficznych 
+problemów metodą prób i błędów. Zwykle stosowanym tu sposobem 
+jest podział rozwiązywanego zadania na podzadania. 
+Dla takich zadań często najbardziej naturalnym opisem jest opis rekurencyjny.
+
+<p>Cały proces rozwiązywania problemu można potraktować jako
+proces poszukiwań w drzewie podzadań.
+Zwykle drzewo podzadań rośnie bardzo szybko (wykładniczo)
+i równie szybko rośnie ilość pracy związana z przeglądaniem 
+drzewa. Najczęściej drzewo można stopniowo obcinać
+stosując reguły heurystyczne, co pozwala zredukować obliczenia.
+Algorytmy z powrotami uzyskały znaczenie prawie wyłącznie
+dzięki maszynom cyfrowym, które mogą cierpliwie i dokładnie
+sprawdzać ogromną liczbę wariantów.
+
+<p>Wirth omawia ogólne zasady podziału zadań, związanych 
+z rozwiązywaniem pewnej klasy problemów, na podzadania
+oraz możliwości stosowania rekurencji.
+Kod może być zorganizowany na kilka sposobów.
+
+<ul>
+<li>Znajdowanie <em>pojedyńczego</em> rozwiązania danego problemu.
+Przykładem jest określenie drogi skoczka szachowego
+i rozmieszczenie ośmiu hetmanów.
+Każde rozwiązanie jest jednakowo dobre, więc kończymy poszukiwania
+po znalezieniu pierwszego rozwiązania.
+<li>Znajdowanie <em>wszystkich</em> rozwiązań danego problemu.
+Przykładem jest układanie pentomino, ale także droga skoczka szachowego
+i osiem hetmanów.
+<li>Znajdowanie <em>optymalnego</em> rozwiązania.
+Należy wygenerować wszystkie możliwe rozwiązania i zachować jedno
+w pewnym sensie optymalne. Musimy mieć daną pewną funkcję f,
+która będzie mierzyć wartość każdego rozwiązania.
+Przykładem jest poszukiwanie największego zbioru niezależnego w grafie,
+a funkcja f będzie zwracać liczność znalezionego zbioru niezależnego.
+Podczas pracy algorytmu przechowujemy najlepsze z dotychczasowych
+rozwiązań, ponadto trzeba rozpocząć od poprawnej wartości początkowej
+(np. zbiór niezależny pusty lub jednoelementowy).
+</ul>
+
+<p>Cechy charakterystyczne algorytmów z powrotami:
+
+<ul>
+<li>Kolejne kroki, które mogłyby doprowadzić do rozwiązania
+końcowego są zapisywane. Jeżeli dochodzimy do ślepej uliczki,
+to odpowiednie zapisy są usuwane.
+
+<li>Liczba potencjalnych kandydatów w każdym kroku jest
+skończona (ale może się zmieniać w kolejnych krokach).
+
+<li>Programy często używają parametru jawnie określającego
+głębokość rekurencji, co pozwala na proste sformułowanie
+warunku zakończenia.
+</ul>
+
+<p>Algorytm z powrotami jest właściwie <em>metaheurystyką</em>
+niż specyficznym algorytmem. Użytkownik musi określić problem
+do rozwiązania, naturę częściowego rozwiązania i jak należy
+częściowe rozwiązanie uzupełniać w celu otrzymania pełnego
+rozwiązania. W przeciwieństwie do wielu innych mataheurystyk,
+mamy tu gwarancję znalezienia wszystkich rozwiązań
+w ograniczonym zakresie czasu.
+
+<p>Wybrane problemy rozwiązywane za pomocą algorytmów z powrotami:
+
+<ul>
+<li>Droga skoczka szachowego.
+<li>Problem ośmiu hetmanów.
+<li>Problem dokładnego pokrycia zbioru (latin square; sudoku).
+<li>Problem trwałego małżeństwa [Wirth] [Mamy dane n kobiet i n mężczyzn.
+Każda kobieta i każdy mężczyzna szereguje partnerów według preferencji.
+Jeżeli n par zostało dobranych tak, że istnieje mężczyzna i kobieta,
+którzy nie stanowią małżeństwa, ale mężczyzna przedkłada tę kobietę 
+nad aktualną żonę, a kobieta przedkłada tego mężczyznę nad aktualnego
+męża, to taki dobór małżeństw jest nietrwały. Jeżeli żadna taka para
+nie istnieje, to dobór małżeństw jest <em>trwały</em>.].
+<li>Problem m-kolorowania grafu (ang. m coloring problem) - problem
+kolorowania wierzchołków grafu nieskierowanego m kolorami.
+<li>Problem optymalnego wyboru [Wirth] (problem znalezienia największego zbioru 
+niezależnego w grafie nieskierowanym; problem plecakowy).
+</ul>
+
+<p>https://en.wikipedia.org/wiki/Backtracking
+
+<p>https://en.wikipedia.org/wiki/Stable_marriage_problem
+(Gale, Shapley, 1962)
+
+
+</body>
+</html>

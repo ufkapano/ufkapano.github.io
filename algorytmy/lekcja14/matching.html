@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Skojarzenia</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p><em>Skojarzenie</em> (ang. matching) w grafie nieskierowanym
+G=(V,E) jest to taki podzbiór krawędzi M, że każdy wierzchołek
+z V jest końcem co najwyżej jednej krawędzi z M.
+Czasem używana jest nazwa zbiór niezależny krawędzi
+(ang. independent edge set).
+Skojarzenie jest maksymalne (ang. maximal matching),
+jeżeli nie jest podzbiorem żadnego innego skojarzenia.
+Skojarzenie jest największe (najliczniejsze) 
+(ang. maximum matching),
+jeżeli w grafie nie istnieje skojarzenie o większej liczbie krawędzi.
+Skojarzenie jest doskonałe (ang. perfect matching),
+kiedy każdy wierzchołek grafu jest końcem pewnej krawędzi
+należącej do tego skojarzenia. Skojarzenie doskonałe może
+istnieć tylko dla grafu o parzystej liczbie wierzchołków.
+Skojarzenie doskonałe jest maksymalne i największe.
+
+<p>W grafach ważonych rozważa się problem skojarzenia
+o najmniejszej wadze.
+
+<p>Istnieje kilka sposobów zaimplementowania skojarzenia.
+Może to być zbiór krawędzi albo słownik, w którym klucze
+to wierzchołki grafu. a wartości to wierzchołki lub None.
+
+<hr><pre>
+# Testowanie skojarzenia.
+# Skojarzenie to słownik mate, który dla krawędzi (source, target)
+# należącej do skojarzenia zawiera
+# mate[source] = target
+# mate[target] = source
+# mate[node] = None, jeżeli node nie jest końcem krawędzi ze skojarzenia.
+
+import unittest
+
+def find_matching(graph):
+    pass
+
+class TestMatching(unittest.TestCase):
+
+    def setUp(self):
+        self.G = dict()
+        self.edges = []   # wstawiamy 3-krotki, graf ważony
+        # Wstawiamy wierzchołki i krawędzie do G.
+
+    def test_matching(self):
+        mate = find_matching(self.G)
+        for source in mate:
+            if mate[source] is not None:
+                target = mate[source]
+                self.assertEqual(mate[target], source)
+</pre><hr>
+
+
+
+</body>
+</html>

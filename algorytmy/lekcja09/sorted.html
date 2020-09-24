@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Listy posortowane</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W pewnych zastosowaniach list możemy wymagać, aby lista była
+stale posortowana. Potrzebujemy funkcji insert(), która
+będzie wstawiała elementy do listy we właściwe miejsce. 
+Największy element będzie znajdował się na początku listy.
+
+<h3>LISTY POWIĄZANE POJEDYŃCZO POSORTOWANE</h3>
+
+<p>Funkcja insert() ma zwracać nowy początek listy.
+
+<hr><pre>
+def insert(node, new_node):
+    before = None         # robię widełki
+    after = node          # może być None
+    while after:
+        if after.data &lt; new_node.data:
+            break
+        before = after
+        after = after.next
+    if before is None:    # przed początkiem listy
+        new_node.next = node
+        return new_node   # nowy head
+    else:                 # jesteśmy w głębi listy, może na końcu
+        new_node.next = after
+        before.next = new_node
+        return node   # stary head
+</pre><hr>
+
+<p>Napiszemy funkcję merge(), która będzie łączyć
+dwie listy posortowane w jedną listę posortowaną.
+Funkcja zwraca początek wspólnej listy.
+
+<hr><pre>
+def merge(node1, node2):
+    # Najpierw trzeba ustalić początek listy.
+    if node1:
+        if node2:
+            if node1.data &gt; node2.data:
+                head = node1
+                node1 = node1.next
+            else:
+                head = node2
+                node2 = node2.next
+        else:
+            return node1
+    else:
+        return node2
+    last = head           # na pewno różny od None
+    # Teraz przetwarzamy obie listy.
+    while node1 is not None and node2 is not None:
+        if node1.data &gt; node2.data:
+            last.next = node1
+            node1 = node1.next
+        else:
+            last.next = node2
+            node2 = node2.next
+        last = last.next
+    # Jedna lista mogła zostać niepusta.
+    if node1:
+        last.next = node1
+    if node2:
+        last.next = node2
+    return head
+</pre><hr>
+
+<h3>LISTY POWIĄZANE PODWÓJNIE POSORTOWANE</h3>
+
+<p>Budujemy listę posortowaną, gdzie największy element będzie
+się znajdował na początku listy.
+
+<hr><pre>
+def insert_sorted(pair, node):
+    if pair[0] is None:   # pusta lista
+        pair[0] = pair[1] = node
+        return
+    # Dalej lista nie jest pusta.
+    after = pair[0]
+    while after:          # szukamy miejsca wstawienia
+        if after.data &lt; node.data:
+            break
+        after = after.next
+    if after is None:     # wstawiamy na koniec listy
+        node.prev = pair[1]
+        pair[1].next = node
+        pair[1] = node
+    elif after is pair[0]:     # wstawiamy na początek listy
+        node.next = pair[0]
+        pair[0].prev = node
+        pair[0] = node
+    else:                 # jesteśmy w srodku listy
+        node.prev = after.prev
+        node.next = after
+        after.prev.next = node
+        after.prev = node
+</pre><hr>
+
+<p>Napiszemy funkcję merge(), która będzie łączyć dwie listy
+posortowane w jedną listę posortowaną.
+Funkcja zwraca nową listę.
+
+<hr><pre>
+def merge(pair1, pair2): pass
+</pre><hr>
+
+
+</body>
+</html>

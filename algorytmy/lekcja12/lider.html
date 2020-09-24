@@ -1,0 +1,89 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie lidera</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: 
+Wyszukiwanie lidera w nieuporządkowanym ciągu liczb.
+
+DANE WEJŚCIOWE
+Ciąg n liczb umieszczonych w tablicy L. 
+
+DANE WYJŚCIOWE
+Pozycja (indeks) lidera w ciągu L.
+Jeżeli w tablicy nie ma lidera, to należy to zasygnalizować.
+</pre><hr>
+
+<p>Lider to element ciągu n elementów, który występuje więcej niż
+n//2 razy w ciągu.
+Dla n=2k lub n=2k+1 lider musi wystąpić co najmniej k+1 razy.
+
+<p>Metoda siłowa rozwiązania problemu ma następujące etapy.
+
+<ul>
+<li>Sortowanie ciągu, które jest rzędu O(n*log n).
+<li>Znajdowanie elementu na pozycji n//2, który jest kandydatem 
+na lidera. Jeżeli istnieje lider, to jest on elementem
+środkowym (medianą).
+<li>Sprawdzenie, czy kandydat jest liderem, które jest rzędu O(n).
+</ul>
+
+<p>Najbardziej pracochłonne jest sortowanie ciągu.
+Lepszy jest inny algorytm, który ma złożoność O(n).
+Składa się on z dwóch etapów [Sysło].
+
+<ul>
+<li>Wykrywanie kandydata na lidera. Badamy krotność kandydata
+na podstawie kolejnych porównań.
+<li>Sprawdzenie, czy kandydat jest rzeczywiście liderem.
+</ul>
+
+<p>Algorytm bazuje na spostrzeżeniu, że jeżeli zbiór X ma lidera,
+to po usunięciu ze zbioru X dwóch różnych elementów
+również będzie zawierał lidera.
+Stwierdzenie odwrotne nie jest prawdziwe.
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def lider(L, left, right):
+    """Wyszukiwanie lidera w ciągu nieuporządkowanym."""
+    if left &gt; right:
+        return None
+    # Etap I - wykrywanie kandydata na lidera.
+    k = left                  # kandydat na lidera (indeks)
+    number = 1                # krotność kandydata
+    for i in range(left+1, right+1):
+        if number == 0:       # nowy kandydat na lidera
+            k = i
+            number = 1
+        else:                 # porównujemy z kandydatem
+            if L[k] == L[i]:
+                number += 1
+            else:
+                number -= 1
+    # Etap II - sprawdzanie kandydata na lidera.
+    if number == 0:           # na liście nie ma lidera
+        return None
+    # Sprawdzamy ile razy kandydat jest na liście.
+    number = 0
+    for i in range(left, right+1):
+        if L[i] == L[k]:
+            number += 1
+    if number &gt; (right-left+1) // 2:
+        return k              # indeks lidera
+    else:
+        return None           # na liście nie ma lidera
+</pre><hr>
+
+</body>
+</html>

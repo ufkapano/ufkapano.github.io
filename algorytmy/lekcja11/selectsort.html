@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie przez wybór (selectsort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Sortowanie przez wybór działa na zasadzie ciągłego wybierania
+najmniejszego elementu z coraz mniejszego zbioru danych.
+Algorytm jest niestabilny [b1,b2,a,c].
+Wada algorytmu: czas jego działania prawie nie zależy od stopnia
+uporządkowania ciągu.
+
+<p>Porównania: (n-1) + (n-2) + ... + 2 + 1 = n*(n-1)/2.
+
+<p>Przestawienia: (n-1) [bardzo mało].
+
+<hr><pre>
+def selectsort(L, left, right):
+    for i in range(left, right):
+        k = i
+        for j in range(i+1, right+1):
+            if L[j] &lt; L[k]:
+                k = j
+        swap(L, i, k)
+</pre><hr>
+
+<h3>WERSJA STABILNA</h3>
+
+<p>Zwiększając liczbę przestawień możemy otrzymać stabilną wersję
+sortowania przez wybór.
+
+<hr><pre>
+def selectsort(L, left, right):
+    for i in range(left, right):
+        k = i
+        for j in range(i+1, right+1):
+            if L[j] &lt; L[k]:
+                k = j
+        item = L[k]
+        while k &gt; i:
+            L[k] = L[k-1]
+            k = k-1
+        L[i] = item
+</pre><hr>
+
+<h3>WERSJA REKURENCYJNA</h3>
+
+<p>Sortowanie przez wybór ma strukturę rekurencyjną:
+ustaw najmniejszy element na pozycji left,
+sortuj L w zakresie od left+1 do right.
+
+<hr><pre>
+def selectsort(L, left, right):
+    if left &lt; right:
+        k = left
+        for j in range(left+1, right+1):
+            if L[j] &lt; L[k]:
+                k = j
+        item = L[k]
+        while k &gt; left:
+            L[k] = L[k-1]
+            k = k-1
+        L[left] = item
+        selectsort(L, left+1, right)
+</pre><hr>
+
+</body>
+</html>

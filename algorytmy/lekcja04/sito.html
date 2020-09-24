@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sito Eratostenesa</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytm szukania wszystkich liczb pierwszych nie większych
+od podanej liczby.
+
+<hr><pre>
+def sito(n):
+    """Sito Eratostenesa - liczby pierwsze nie większe od n."""
+    L = [0] + n * [1]
+    p = 2
+    q = p * p
+    while q &lt;= n:
+        if L[p] == 1:  # liczba pierwsza
+            i = q
+            while i &lt;= n:  # wyrzucam p*p, p*(p+1), p*(p+2),...
+                L[i] = 0
+                i = i + p
+        p = p + 1
+        q = p * p
+    M = []
+    for i in range(1, n+1):
+        if L[i] == 1:
+            M.append(i)
+    return M
+</pre><hr><pre>
+# Wersja bardzie zwarta.
+def sito(n):                  # liczby pierwsze &lt;= n
+    """Sito Eratostenesa - liczby pierwsze nie większe od n."""
+    L = [0] + n * [1]
+    for p in range(2, n):     # wystarczy p do sqrt(n)
+        q = p * p
+        if q &gt; n:
+            break
+        if L[p] == 1:         # liczba pierwsza
+            # wyrzucam p*p, p*(p+1), p*(p+2),...
+            for i in range(q, n+1, p):
+                L[i] = 0
+    return [i for i in range(1, n+1) if L[i]==1]
+</pre><hr>
+
+</body>
+</html>

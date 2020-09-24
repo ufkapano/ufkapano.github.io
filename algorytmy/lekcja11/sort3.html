@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie kilku liczb</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Dla N liczb możemy wykonać N*(N-1)/2 porównań między nimi.
+Jednak nie wszystkie porównania są niezbędne, aby posortować te liczby.
+Dla kilku przypadków sprawdzimy, ile maksymalnie porównań jest niezbędnych,
+a ile otrzymamy z podanego wzoru.
+
+<ul>
+<li>Sortowanie dwóch liczb - niezbędne jedno porównanie
+<li>Sortowanie trzech liczb - niezbędne 3 porównania (3*2/2=3)
+<li>Sortowanie czterech liczb - niezbędne 5 porównań (4*3/2=6)
+<li>Sortowanie pięciu liczb - niezbędne 7 porównań (5*4/2=10)
+</ul>
+
+<hr><pre>
+N - liczba elementów do posortowania
+N! - liczba możliwych permutacji N elementów
+k - liczba bitów (zero lub jeden)
+2**k - liczba możliwych ciągów k-elementowych zer i jedynek
+
+k     2**k     N!     N
+0        1      1     1
+1        2      2     2
+2        4
+3        8      6     3
+4       16
+5       32     24     4
+6       64
+7      128    120     5
+</pre><hr>
+
+<p>Dla większej liczby N nie jest łatwo podać dokładną liczbę porównań.
+Okazuje się, że dla dużego N dobre algorytmy sortowania
+wymagają liczby porównań proporcjonalnej do N*log(N).
+Zajmiemy się analizą sortowania kilku liczb.
+
+<p>Przy analizie wydajności algorytmów sortowania bierzemy pod uwagę
+liczbę instrukcji porównania i podstawienia, a także ilość
+pamięci potrzebnej do wykonania algorytmu.
+
+<hr><pre>
+SPECYFIKACJA
+Problem: Sortowanie kilku liczb.
+
+WEJŚCIE
+Ciąg N liczb.
+
+WYJŚCIE
+Uporządkowany ciąg tych liczb od najmniejszej do największej.
+</pre><hr>
+
+<h3>SORTOWANIE 3 LICZB</h3>
+
+<p>Rozważmy problem posortowania trzech liczb (a, b, c).
+Łatwo możemy stworzyć drzewo algorytmu. 
+
+<p><img src="img/sort3.png" alt="[ sort3 ]">
+
+<p>W programie komputerowym dane są zwykle przechowywane w tablicy
+i zajmują pewną ilość pamięci. Przy sortowaniu dane przemieszczamy,
+ale nie do nowej lokalizacji, lecz w obrębie tablicy, przy wykorzystaniu
+ewentualnie jednego dodatkowego miejsca.
+Częstą operacją jest zamiana danych miejscami, przy wykorzystaniu
+tymczasowej lokalizacji. To zadanie wykonuje funkcja swap
+(trzy instrukcje podstawienia).
+Dane są przechowywane na liście.
+
+<hr><pre>
+def swap(L, left, right):
+    """Zamiana miejscami dwóch elementów na liście."""
+    # L[left], L[right] = L[right], L[left]
+    item = L[left]
+    L[left] = L[right]
+    L[right] = item
+</pre><hr>
+
+<p>Korzystając z drzewa algorytmu możemy napisać funkcję sort3(),
+która posortuję listę trzech liczb.
+Wykonamy maksymalnie trzy porównania i cztery podstawienia.
+Ilość instrukcji podstawienia jest minimalna.
+
+<hr><pre>
+def sort3(L):
+    """Sortowanie listy trzech liczb w miejscu."""
+    if L[0] &lt;= L[1]:     # kolejność L[0], L[1]
+        if L[2] &lt;= L[0]:    # L[2], L[0], L[1]
+            item = L[2]
+            L[2] = L[1]
+            L[1] = L[0]
+            L[0] = item
+        else:
+            if L[1] &lt;= L[2]:
+                pass   # L[0], L[1], L[2]
+            else:
+                swap(L, 1, 2)   # L[0], L[2], L[1]
+    else:                      # kolejność L[1], L[0]
+        if L[2] &lt;= L[1]:
+            swap(L, 0, 2)   # L[2], L[1], L[0]
+        else:
+            if L[2] &lt;= L[0]:   # L[1], L[2], L[0]
+                item = L[0]
+                L[0] = L[1]
+                L[1] = L[2]
+                L[2] = item
+            else:
+                swap(L, 0, 1)   # L[1], L[0], L[2]
+</pre><hr>
+
+<p>Jeżeli zwiększymy liczbę postawień do dziewięciu, to możemy
+zapisać funkcję sort3() w bardziej zwartej postaci.
+Sortowanie jest stabilne.
+
+<hr><pre>
+def sort3(L):
+    """Sortowanie listy trzech liczb w miejscu - tylko swap."""
+    if L[0] &gt; L[1]:
+        swap(L, 0, 1)
+    if L[1] &gt; L[2]:
+        swap(L, 1, 2)
+    if L[0] &gt; L[1]:
+        swap(L, 0, 1)
+</pre><hr>
+
+<h3>SORTOWANIE 4 LICZB</h3>
+
+<p>Na bazie sortowania trzech liczb możemy stworzyć drzewo algorytmu 
+sortowania czterech liczb. Liczba porównań nie będzie przekraczać 5.
+Napiszemy funkcję sortującą listę czterech liczb w miejscu,
+korzystając z sekwencji kilku przestawień dwóch elementów.
+Wykonamy dokładnie 5 porównań oraz najwyżej 15 podstawień
+(liczba podstawień nie jest optymalna).
+Sortowanie nie jest stabilne.
+
+<hr><pre>
+def sort4(L):
+    """Sortowanie listy czterech liczb w miejscu - tylko swap."""
+    if L[0] &gt; L[1]:
+        swap(L, 0, 1)
+    if L[2] &gt; L[3]:
+        swap(L, 2, 3)
+    # Porównanie większych elementów.
+    if L[1] &gt; L[3]:
+        swap(L, 1, 3)
+    # Porównanie mniejszych elementów.
+    if L[0] &gt; L[2]:
+        swap(L, 0, 2)
+    # Mamy min i max, porównujemy środkowe.
+    if L[1] &gt; L[2]:
+        swap(L, 1, 2)
+</pre><hr>
+
+<h3>SORTOWANIE 5 LICZB</h3>
+
+<p>Optymalne sortowanie pięciu liczb nie jest proste,
+a drzewo algorytmu nie jest prostym powiększeniem
+drzewa sortowania czterech liczb.
+Napiszemy funkcję sortującą listę pięciu liczb w miejscu,
+korzystając z sekwencji kilku przestawień dwóch elementów.
+Wykonamy maksymalnie 7 porównań.
+Algorytm sortowania pięciu liczb zaproponował H. B. Demuth
+w swojej pracy doktorskiej z 1956 roku.
+
+<hr><pre>
+def sort5(L):
+    """Sortowanie listy pięciu liczb w miejscu - używamy swap()."""
+    # Krok 1.
+    if L[0] &gt; L[1]:
+        swap(L, 0, 1)
+    if L[3] &gt; L[4]:
+        swap(L, 3, 4)
+    # Krok 2.
+    if L[1] &gt; L[4]:
+        swap(L, 1, 4)
+        swap(L, 0, 3)
+    # Mamy [a, b, e, c, d].
+    # Krok 3, wstawiamy e, które siedzi na L[2].
+    if L[2] &lt; L[1]:
+        if L[2] &lt; L[0]:
+            swap(L, 2, 1)
+            swap(L, 1, 0)   # mamy [e, a, b, c, d]
+        else:
+            swap(L, 1, 2)   # mamy [a, e, b, c, d]
+    else:
+        if L[2] &gt; L[4]:
+            swap(L, 2, 4)   # mamy [a, b, d, c, e], c jest za d!
+    # Krok 4, umieszczamy c, które jest na razie na L[3].
+    if L[3] &lt; L[1]:
+        if L[3] &lt; L[0]:
+            swap(L, 3, 2)
+            swap(L, 2, 1)
+            swap(L, 1, 0)
+        else:
+            swap(L, 3, 2)
+            swap(L, 2, 1)
+    else:
+        if L[3] &lt; L[2]:
+            swap(L, 2, 3)
+</pre><hr>
+
+
+</body>
+</html>

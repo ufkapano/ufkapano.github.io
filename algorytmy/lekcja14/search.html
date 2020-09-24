@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Przeszukiwanie grafów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Wiele własności grafów można poznać, sprawdzając systematycznie
+każdy jego wierzchołek i każdą jego krawędź.
+Rozważymy różne sposoby przeszukiwania grafów.
+
+<h3>PRZESZUKIWANIE W GŁĄB</h3>
+
+<p>Rozważmy następujący problem: 
+chcemy odwiedzić wszystkie wierzchołki grafu po to,
+aby wykonać na każdym jakąś operację.
+Funkcja traverse_dfs() realizuje przechodzenie w głąb przez graf
+(depth-first search, DFS) i ma strukturę rekurencyjną.
+Zaczynamy od dowolnego węzła start, odwiedzamy go,
+a następnie rekurencyjnie odwiedzamy każdy nieodwiedzony
+węzeł dołączony do węzła start.
+Odwiedzimy na pewno wszystkie węzły, jeżeli graf jest
+nieskierowany i spójny.
+
+<p>Zbiór krawędzi, które przejdziemy metodą przechodzenia w głąb,
+tworzy drzewo rozpinające grafu.
+
+<hr><pre>
+def visit(node):     # pewna operacja na wierzchołku
+    print "odwiedzamy", node
+
+def traverse_dfs(graph, start, visit, visited=None):
+    # Przy pierwszym wywołaniu funkcji traverse_dfs
+    # tworzymy pustą listę węzłów odwiedzonych.
+    if visited is None:
+        visited = []
+    # Odwiedzamy wszystkie węzły dołączone do węzła start.
+    visit(start)
+    visited.append(start)
+    for node in graph[start]:
+        if node not in visited:
+            traverse_dfs(graph, node, visit, visited)
+</pre><hr>
+
+<p>Jeżeli graf jest drzewem, rekurencyjne przeszukiwanie grafu
+w głąb zaczynające się od korzenia jest równoważne przechodzeniu
+przez drzewo w porządku preorder.
+
+<p>W reprezentacji list sąsiedztwa czas przeszukiwania grafu
+w głąb jest O(V+E).
+
+<p>Zamiast korzystania z rekurencji możemy określić metodę
+przechodzenia przez graf używającą jawnego stosu,
+podobnie jak przy przechodzeniu przez drzewo binarne metodą preorder.
+
+<hr><pre>
+import Queue   # moduł z biblioteki standardowej Pythona 2
+
+def traverse_stack(graph, start, visit):
+    # Przechodzenie w głąb z jawnym stosem.
+    stack = Queue.LifoQueue()
+    visited = []
+    stack.put(start)
+    while not stack.empty():
+        start = stack.get()
+        if start not in visited:
+            visit(start)
+            visited.append(start)
+            for node in graph[start]:
+                if node not in visited:
+                    stack.put(node)
+</pre><hr>
+
+<p>Podejście ze stosem ma tę wadę, że na stosie może się znaleźć
+kilka elementów odpowiadającym temu samemu węzłowi.
+Dzieje się tak nawet wtedy, gdy przed umieszczeniem węzła na stosie
+sprawdzamy, czy został już odwiedzony.
+Rozwiązaniem jest implementacja stosu, która uniemożliwia umieszczanie
+na stosie dwóch takich samych elementów przez zastosowanie reguły 
+zastępowania starego elementu nowym.
+Wtedy wielkość stosu można ograniczyć do liczby wierzchołków V.
+
+<p>Należy zwrócić uwagę, że kolejność odwiedzania wierzchołków
+w podejściu rekurencyjnym i podejściu ze stosem na ogół jest różna.
+Różnica wynika z kolejności pobierania elementów z listy sąsiedztwa.
+
+<hr><pre>
+# Wersja wyznaczająca drzewo DFS w postaci słownika.
+
+def traverse_dfs(graph, source, parent=None, pre_action=None, post_action=None):
+    if parent is None:
+        parent = {source: None}
+    if pre_action:
+        pre_action(source)
+    for target in graph[source]:
+        if target not in parent:
+            parent[target] = source
+            traverse_dfs(graph, target, parent, pre_action, post_action)
+    if post_action:
+        post_action(source)
+    return parent
+
+# Wyznaczenie kolejności odwiedzanych i przetworzonych wierzchołków.
+preorder = []
+postorder = []
+parent = traverse_dfs(graph, source,
+    pre_action=lambda node: preorder.append(node),
+    post_action=lambda node: postorder.append(node))
+</pre><hr>
+
+<h3>PRZESZUKIWANIE WSZERZ</h3>
+
+<p>Funkcja traverse_bfs() realizuje przechodzenie wszerz
+(breadth-first search, BFS)
+i wykorzystuje kolejkę do przechowywania wierzchołków.
+Algorytm przechodzi przez graf we wszystkich kierunkach.
+Przed przejściem z danego węzła do kolejnego odwiedza wszystkie
+połączone z nim węzły.
+
+<hr><pre>
+import Queue   # moduł z biblioteki standardowej Pythona 2
+
+def traverse_bfs(graph, start, visit):
+    queue = Queue.Queue()
+    visited = []
+    queue.put(start)
+    while not queue.empty():
+        start = queue.get()
+        if start not in visited:
+            visit(start)
+            visited.append(start)
+            for node in graph[start]:
+                if node not in visited:
+                    queue.put(node)
+</pre><hr>
+
+<p>W tym podejściu w kolejce również może się znaleźć
+kilka elementów odpowiadającym temu samemu węzłowi.
+Rozwiązaniem jest stosowanie reguły pomijania nowego
+powtarzającego się elementu.
+Wtedy wielkość kolejki można ograniczyć do liczby wierzchołków V.
+
+<hr><pre>
+# Wersja wyznaczająca drzewo BFS w postaci słownika.
+
+import Queue     # Python 2
+
+def traverse_bfs(graph, source, pre_action=None, post_action=None):
+    parent = {source: None}   # before queue.put
+    queue = Queue.Queue()
+    queue.put(source)
+    if pre_action:   # when queue.put
+        pre_action(source)
+    while not queue.empty():
+        source = queue.get()
+        for target in graph[source]:
+            if target not in parent:
+                parent[target] = source   # before queue.put
+                queue.put(target)
+                if pre_action:   # when queue.put
+                    pre_action(target)
+        if post_action:
+            post_action(source)
+    return parent
+
+# Wyznaczenie kolejności odwiedzanych wierzchołków.
+order = []
+parent = traverse_bfs(graph, source,
+    pre_action=lambda node: order.append(node))
+</pre><hr>
+
+</body>
+</html>

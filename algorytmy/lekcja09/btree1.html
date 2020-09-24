@@ -1,0 +1,369 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Drzewa binarne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Drzewo binarne to drzewo uporządkowane z korzeniem, 
+w którym każdy węzeł ma co najwyżej dwóch potomków, lewego i prawego.
+Drzewa mają strukturę rekurencyjną i dlatego wiele operacji na nich
+można wygodnie zapisać za pomocą funkcji rekurencyjnych.
+
+<p>Drzewo binarne to pojęcie abstrakcyjne, więc przy przejściu 
+do konkretnej realizacji można wybrać jedną z wielu możliwości.
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Najczęściej występująca implementacja drzewa binarnego 
+oparta jest na strukturach/klasach zawierających
+dwa łącza (lewe i prawe).
+Łącze może być puste, jeżeli węzeł nie ma w tym miejscu potomka.
+Najpierw zdefiniujemy klasę Node, która będzie reprezentować węzeł.
+Puste drzewo będzie reprezentowane przez puste łącze do korzenia.
+Aby dostać się do konkretnego węzła, musimy zacząć od wyróżnionego
+węzła, zwanego korzeniem (root), a następnie poruszać się w dół
+łączem lewym lub prawym.
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł drzewa binarnego."""
+
+    def __init__(self, data=None, left=None, right=None):
+        self.data = data
+        self.left = left
+        self.right = right
+
+    def __str__(self):
+        return str(self.data)
+</pre><hr><pre>
+root = None           # puste drzewo
+root = Node("alone")  # drzewo z jednym węzłem
+# Ręczne budowanie większego drzewa.
+root = Node(1)
+root.left = Node(2)
+root.right = Node(3)
+root.left.left = Node(4)
+root.left.right = Node(5)
+root.right.left = Node(6)
+root.right.right = Node(7)
+</pre><hr>
+
+<h3>PRZECHODZENIE PRZEZ DRZEWO</h3>
+
+<hr><pre>
+|       1       |
+|     /   \     |
+|   2       3   |
+|  / \     / \  |
+| 4   5   6   7 |
+</pre><hr>
+
+<p>Najbardziej podstawową operacją związaną z przetwarzaniem drzew
+jest przechodzenie przez drzewo. Operacja polega na tym,
+aby mając łącze do korzenia, odwiedzić systematycznie każdy
+węzeł drzewa.
+Sposoby przechodzenia przez drzewo binarne:
+
+<ul>
+<li>preorder (węzeł, lewe, prawe) [1 2 4 5 3 6 7], odmiana DFS dla grafów
+<li>inorder (lewe, węzeł, prawe) [4 2 5 1 6 3 7], odmiana DFS dla grafów
+<li>postorder (lewe, prawe, węzeł) [4 5 2 6 7 3 1], odmiana DFS dla grafów
+<li>poziomami [1 2 3 4 5 6 7], BFS dla grafów
+</ul>
+
+<p>Pierwsze trzy sposoby przechodzenia przez drzewo można
+łatwo zaimplementować rekurencyjnie.
+Funkcja visit() oznacza operację na węźle, np. wyświetlenie zawartości.
+
+<hr><pre>
+def traverse_preorder(top, visit):
+    if top is None:
+        return
+    visit(top)
+    traverse_preorder(top.left, visit)
+    traverse_preorder(top.right, visit)
+
+def traverse_inorder(top, visit):
+    if top is None:
+        return
+    traverse_inorder(top.left, visit)
+    visit(top)
+    traverse_inorder(top.right, visit)
+
+def traverse_postorder(top, visit):
+    if top is None:
+        return
+    traverse_postorder(top.left, visit)
+    traverse_postorder(top.right, visit)
+    visit(top)
+</pre><hr>
+
+<p>Przechodzenie przez drzewo w kolejności preorder
+możemy zaimplementować nierekurencyjnie za pomocą stosu.
+
+<hr><pre>
+def traverse_stack(top, visit):
+    if top is None:
+        return
+    stack = list()   # stos symulujemy przez listę Pythona
+    stack.append(top)
+    while stack:
+        node = stack.pop()
+        visit(node)
+        if node.right:
+            stack.append(node.right)
+        if node.left:
+            stack.append(node.left)
+</pre><hr>
+
+<p>Nierekurencyjne wersje inorder i postorder są bardziej skomplikowane
+[Drozdek].
+
+<p>Warto zauważyć, że zamieniając stos na kolejkę uzyskamy
+procedurę realizującą przechodzenie przez drzewo poziomami.
+
+<hr><pre>
+from Queue import Queue
+
+def traverse_queue(top, visit):
+    if top is None:
+        return
+    Q = Queue()
+    Q.put(top)
+    while not Q.empty():
+        node = Q.get()
+        visit(node)
+        if node.left:
+            Q.put(node.left)
+        if node.right:
+            Q.put(node.right)
+</pre><hr>
+
+<h3>PARAMETRY DRZEWA</h3>
+
+<p>Rozważymy funkcje, które będą obliczały pewne interesujące 
+parametry drzewa binarnego.
+Szukamy funkcji podającej ilość węzłów w drzewie binarnym.
+Funkcja ma prostą strukturę rekurencyjną, a argumentem jest łącze
+do węzła.
+
+<hr><pre>
+def btree_count(top):
+    if top is None:
+        return 0
+    return btree_count(top.left) + 1 + btree_count(top.right)
+
+def btree_count_iteratively(top):
+    if top is None:
+        return 0
+    counter = 0
+    stack = list()
+    stack.append(top)
+    while stack:
+        node = stack.pop()
+        counter += 1
+        if node.left:
+            stack.append(node.left)
+        if node.right:
+            stack.append(node.right)
+    return counter
+</pre><hr>
+
+<p>Następna funkcja będzie obliczała wysokość drzewa binarnego.
+Tu również pojawia się rekurencja.
+
+<hr><pre>
+def btree_height(top):
+    if top is None:
+        return 0
+    left = btree_height(top.left)
+    right = btree_height(top.right)
+    return 1 + max(left, right)
+</pre><hr>
+
+<p>Bardzo pożyteczną funkcją jest funkcja drukująca lub rysująca drzewo.
+Funkcja rejestruje wysokość drzewa i korzysta z tej informacji 
+do tworzenia wcięć w obrazie reprezentacji drzewa.
+
+<hr><pre>
+def btree_print_indented(top, level=0):
+    if top is None:
+        return
+    btree_print_indented(top.right, level+1)
+    print ( "{}* {}".format('   '*level, top) )
+    btree_print_indented(top.left, level+1)
+</pre><hr>
+
+<p>Łatwo można stworzyć drzewo binarne do którego nowe węzły
+dodawane są w przypadkowy sposób.
+Wyszukiwanie elementów w drzewie wymaga przeglądania całego drzewa.
+
+<hr><pre>
+import random
+
+# Wersja rekurencyjna wstawiania.
+def btree_random_insert(top, node):   # zwraca nowy korzeń
+    if top is None:
+        return node
+    if random.random() &lt; 0.5:
+        top.left = btree_random_insert(top.left, node)
+    else:
+        top.right = btree_random_insert(top.right, node)
+    return top
+
+# Wersja rekurencyjna wyszukiwania.
+def btree_random_search(top, data):   # zwraca węzeł lub None
+    if top is None or top.data == data:
+        return top
+    node = btree_random_search(top.left, data)
+    if node:
+        return node
+    else:
+        return btree_random_search(top.right, data)
+</pre><hr>
+
+<h3>PRZETWARZANIE DRZEW BINARNYCH</h3>
+
+<p>Chcemy stworzyć funkcję, która będzie umieszczała elementy 
+w drzewie binarnym w pewien uporządkowany sposób.
+Możemy zażądać, aby przy przeglądaniu drzewa
+w kolejności inorder elementy były posortowane.
+W ten sposób powstanie <em>drzewo poszukiwań binarnych</em>
+(binary search tree, BST).
+Funkcja będzie miała strukturę rekurencyjną, a argumentami funkcji będą: 
+łącze do węzła i wstawiany element.
+Dodawanie elementu powoduje przebudowę drzewa, dlatego funkcja
+zwraca nową referencję do węzła.
+Przepis na taką funkcję może być następujący:
+
+<ul>
+<li>Jeżeli łącze jest puste, to tworzymy węzeł z elementem.
+<li>Jeżeli łącze nie jest puste, to porównujemy wstawiany
+element z elementem przechowywanym w węźle.
+Elementy mniejsze umieszczamy są w lewym podrzewie, 
+a większe (lub równe) w prawym poddrzewie.
+</ul>
+
+<p>Musimy jeszcze doprecyzować przypadek, w którym wstawiany
+element jest równy elementowi przechowywanemu w węźle (duplikat).
+Mamy m.in. następujące możliwości:
+
+<ul>
+<li>Ignorowanie duplikatów. Wtedy porzucamy elementy powtarzające się.
+Takie zachowanie może być potrzebne, gdy tworzymy posortowaną listę 
+wszystkich różnych wyrazów pojawiających się w danym tekście.
+
+<li>Zliczanie duplikatów. Wtedy każdy węzeł zawiera element
+oraz licznik powtórzeń (klasa Node musi być zmodyfikowana).
+
+<li>Wstawianie duplikatów do drzewa. Wtedy duplikat wstawiamy
+zawsze do lewego lub do prawego poddrzewa.
+To podejście jest potrzebne, kiedy poza kluczami w wężle są dodatkowe
+informacje.
+</ul>
+
+<p>Napiszemy funkcję ignorującą duplikaty.
+
+<hr><pre>
+# Wersja rekurencyjna wstawiania.
+def bst_insert(top, node):   # zwraca nowy korzeń
+    if top is None:
+        return node
+    if node.data &lt; top.data:
+        top.left = bst_insert(top.left, node)
+    elif node.data &gt; top.data:
+        top.right = bst_insert(top.right, node)
+    else:
+        pass          # ignorujemy duplikaty
+    return top            # bez zmian
+</pre><hr>
+
+<p>Potrzebujemy również funkcji sprawdzającej, czy w takim posortowanym
+drzewie znajduje się dany element.
+Zwracany jest cały znaleziony wierzchołek lub None.
+
+<hr><pre>
+# Wersja rekurencyjna wyszukiwania.
+def bst_search(top, data):   # zwraca węzeł lub None
+    if top is None or data == top.data:
+        return top
+    elif data &lt; top.data:
+        return bst_search(top.left, data)
+    else:   # data &gt; top.data
+        return bst_search(top.right, data) 
+
+# Wersja iteracyjna wyszukiwania.
+def bst_search_iteratively(top, data):   # zwraca węzeł lub None
+    while top is not None:
+        if data == top.data:
+            return top
+        elif data &lt; top.data:
+            top = top.left
+        else:   # data &gt; top.data
+            top = top.right
+    return None
+</pre><hr>
+
+<h3>TESTOWANIE DRZEWA BST</h3>
+
+<p>Załóżmy, że mamy dane drzewo binarne i chcemy sprawdzić, czy jest
+ono drzewem BST. Nie wystarczy sprawdzić dla każdego węzła czy zachodzi
+node.left.data &lt; node.data oraz
+node.data &lt; node.right.data.
+Musimy do węzła przekazać informację od rodzica o ograniczeniach
+na wartość przechowywaną w węźle.
+Przyjmujemy, że klucze w drzewie mogą się powtarzać.
+
+<hr><pre>
+def is_bst(top, min_key, max_key):
+    """Test if a binary tree is BST."""
+    if top is None:
+        return True
+    if top.data &lt; min_key or top.data &gt; max_key:
+        return False
+    return (is_bst(top.left, min_key, top.data) and
+            is_bst(top.right, top.data, max_key))
+
+# Wywołanie.
+print ( is_bst(tree, float("-inf"), float("inf")) )
+</pre><hr>
+
+<h3>ROTACJE DRZEWA BST</h3>
+
+<p>Rotacja drzewa (ang. tree rotation) jest operacją na drzewie BST,
+która zmienia jego lokalną strukturę bez zmiany kolejności elementów,
+przy przechodzeniu przez drzewo BST metodą inorder.
+Wyróżnia się dwie symetryczne operacje: rotacja w prawo i rotacja w lewo.
+
+<hr><pre>
+|     X     --[w prawo]-o    Y     |
+|    / \                    / \    |
+|   Y   C   o-[w lewo]--   A   X   |
+|  / \                        / \  |
+| A   B                      B   C |
+</pre><hr><pre>
+def rotate_right(top):
+    if top.left is None:
+        return top       # nie ma rotacji
+    node = top.left
+    top.left = node.right   # poddrzewo B
+    node.right = top
+    return node   # jest wyżej
+</pre><hr><pre>
+def rotate_left(top):
+    if top.right is None:
+        return top           # nie ma rotacji
+    node = top.right
+    top.right = node.left   # B
+    node.left = top
+    return node   # jest wyżej
+</pre><hr>
+
+</body>
+</html>

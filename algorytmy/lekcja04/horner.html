@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Algorytm Hornera</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytm Hornera (Horner scheme) to sposób obliczania wartości 
+wielomianu dla nadej wartości argumentu wykorzystujący minimalną 
+liczbę mnożeń. Jest to również algorytm dzielenia wielomianu W(x) 
+przez dwumian (x-c).
+Schemat ten wiązany jest z nazwiskiem Hornera, był jednak już znany 
+Newtonowi, Ruffiniemu i matematykom chińskim w XII wieku.
+
+
+<p>Dla wielomianu stopnia n należy wykonać n mnożeń
+i n dodawań. Schemat Hornera jest optymalny pod względem liczby
+wykonywanych działań (1971 Borodin).
+
+<hr><pre>
+def horner(L, left, right, x):
+    """Wersja iteracyjna algorytmu Hornera.
+    W(x) = L[left] + L[left+1]*x + L[left+2]*x*x + ... """
+    i = right
+    result = L[i]
+    while i &gt; left:
+        i = i - 1
+        result = result * x + L[i]
+    return result
+</pre><hr>
+
+<p>Kod funkcji możemy zapisać w module <em>horner.py</em>,
+aby skorzystać z niej w innych programach.
+
+<hr><pre>
+import horner
+poly = [1, 2, 3, 4]
+y = 2
+result = horner.horner(poly, 0, len(poly)-1, y)
+</pre><hr>
+
+<p>Ciekawe informacje są na Wikipedii(en).
+Jest też kod w Pythonie, współczynniki muszą być podawane
+kolejno od najwyższego.
+
+<hr><pre>
+def horner2(x, *arguments):
+    ""The Horner Scheme for evaluating a polynomial."""
+    result = 0
+    for coefficient in arguments:
+        result = result * x + coefficient
+    return result
+
+# Wywołanie.
+# a0 + x * (a1 + x * (a2 + x * a3))
+y = 1
+L = [1, 2, 3, 4]
+a0, a1, a2, a3 = L
+print ( horner2(y, a3, a2, a1, a0) )
+print ( horner2(y, *reversed(L)) )   # rozpakowanie listy argumentów
+</pre><hr><pre>
+# Wydaje się, że zgrabniejsza będzie funkcja przyjmująca
+# rosnące współczynniki wielomianu.
+def horner3(x, *arguments):
+    ""The Horner Scheme for evaluating a polynomial."""
+    result = 0
+    for coefficient in reversed(arguments):
+        result = result * x + coefficient
+    return result
+
+y = 1
+L = [1, 2, 3, 4]   # 1+2x+3x^2+4x^3
+a0, a1, a2, a3 = L
+print ( horner3(y, a0, a1, a2, a3) )
+print ( horner3(y, *L) )     # rozpakowanie listy argumentów
+</pre><hr><pre>
+# Zastosowanie reduce().
+def horner4(x, *arguments):
+    ""The Horner Scheme for evaluating a polynomial."""
+    return reduce(lambda a,b: a*x+b, reversed(arguments))
+
+y = 1
+L = [1, 2, 3, 4]   # 1+2x+3x^2+4x^3
+print ( horner4(y, *L) )     # rozpakowanie listy argumentów
+</pre><hr>
+
+</body>
+</html>

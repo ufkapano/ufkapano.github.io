@@ -1,0 +1,217 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Kolejki</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Kolejka to ADT, który pozwala zapisywać dane
+i następnie pobierać je w takiej kolejności, w jakiej je zapisano 
+(ang. <em>first in, first out</em>, FIFO; pierwszy wchodzi, pierwszy wychodzi).
+Interfejs kolejki ma 4 funkcje:
+
+<ul>
+<li>konstruktor __init__() [inicjalizacja pustej kolejki], 
+<li>is_empty() [test czy kolejka jest pusta], 
+<li>put() lub enqueue() [wstawienie elementu], 
+<li>get() lub dequeue() [pobranie elementu].
+</ul>
+
+<p>Jeżeli kolejka ma ograniczenie na liczbę przechowywanych elementów, 
+to stosuje się jeszcze funkcję is_full(). 
+Sytuacje prowadzące do błędu: 
+przepełnienie kolejki, pobieranie elementu z pustej kolejki.
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Implementacja kolejki FIFO za pomocą list Pythona.
+Robimy otoczkę wokół list stosując podejście obiektowe.
+Python sam wykryje próbę pobierania elementu z pustej kolejki.
+
+<hr><pre>
+class Queue:
+
+    def __init__(self):
+        self.items = []
+
+    def __str__(self):             # podglądanie kolejki
+        return str(self.items)
+
+    def is_empty(self):
+        return not self.items
+
+    def is_full(self):             # nigdy nie jest pusta
+        return False
+
+    def put(self, data):
+        self.items.append(data)
+
+    def get(self):
+        return self.items.pop(0)   # mało wydajne!
+</pre><hr>
+
+<p>Po zapisaniu tego kodu do osobnego modułu <em>queue.py</em>
+możemy w dowolnym programie korzystać z kolejek.
+
+<hr><pre>
+import queue
+
+aqueue = queue.Queue()    # inicjalizacja kolejki
+for item in ["a", 2, 3.5]:
+    aqueue.put(item)
+# Pobieranie elementów z kolejki w kolejności: "a", 2, 3.5
+while not aqueue.is_empty():
+    print aqueue.get()
+</pre><hr>
+
+<h3>IMPLEMENTACJA 2</h3>
+
+<p>Implementacja kolejki FIFO za pomocą listy jednokierunkowej.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+
+class Queue:
+
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return not self.head
+
+    def put(self, data):        # linear-time
+        node = Node(data)   # next jest domyślnie None
+        if self.is_empty():
+            self.head = node
+        else:    # dajemy na koniec listy
+            last = self.head
+            while last.next:
+                last = last.next
+            last.next = node
+
+    def get(self):                  # constat-time
+        data = self.head.data
+        self.head = self.head.next
+        return data
+</pre><hr>
+
+<p>Metoda put() nie jest optymalna, ponieważ jest klasy O(N).
+Wymaga przejścia przez wszystkie węzły, aby dotrzeć do ostatniego
+węzła. Rozwiązaniem tego problemu jest dodatkowy atrybut tail
+w klasie Queue, w którym zapisana będzie referencja do ostatniego
+elementu.
+
+<h3>IMPLEMENTACJA 3</h3>
+
+<p>Implementacja kolejki FIFO za pomocą listy jednokierunkowej.
+Dodajemy wskaźnik do ogona, aby poprawić wydajność listy.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+
+class Queue:
+
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def is_empty(self):
+        return not self.head
+
+    def put(self, data):            # constat-time
+        node = Node(data)   # next jest domyslnie None
+        if self.is_empty():
+            self.head = self.tail = node
+        else:                   # dajemy na koniec listy
+            self.tail.next = node
+            self.tail = node
+
+    def get(self):                  # constat-time
+        data = self.head.data
+        self.head = self.head.next
+        if self.is_empty():       # zabezpieczenie
+            self.tail = None
+        return data
+</pre><hr><pre>
+# Wykorzystanie klasy SingleList do bydowy kolejki.
+import slist
+
+class Queue(slist.SingleList):
+    put = slist.SingleList.insert_tail
+    get = slist.SingleList.remove_head
+</pre><hr>
+
+<h3>IMPLEMENTACJA 4</h3>
+
+<p>Implementacja kolejki FIFO za pomocą listy dwukierunkowej.
+
+<hr><pre>
+import dlist
+
+class Queue(dlist.DoubleList):
+    put = dlist.DoubleList.insert_head
+    get = dlist.DoubleList.remove_tail
+</pre><hr><pre>
+import dlist
+
+class Queue(dlist.DoubleList):
+    put = dlist.DoubleList.insert_tail
+    get = dlist.DoubleList.remove_head
+</pre><hr>
+
+<h3>IMPLEMENTACJA 5</h3>
+
+<p>Implementacja kolejki FIFO za pomocą tablic.
+Przy inicjalizacji kolejki trzeba podać maksymalną liczbę
+przechowywanych w kolejce elementów (size).
+Wykorzystywana w implementacji tablica będzie o jeden większa,
+aby przy pełnej tablicy head i tail były różne.
+
+<hr><pre>
+class Queue:
+
+    def __init__(self, size=5):
+        self.n = size + 1         # faktyczny rozmiar tablicy
+        self.items = self.n * [None] 
+        self.head = 0           # pierwszy do pobrania 
+        self.tail = 0           # pierwsze wolne
+
+    def is_empty(self):
+        return self.head == self.tail
+
+    def is_full(self):
+        return (self.head + self.n-1) % self.n == self.tail
+
+    def put(self, data):
+        self.items[self.tail] = data
+        self.tail = (self.tail + 1) % self.n
+
+    def get(self):
+        data = self.items[self.head]
+        self.items[self.head] = None      # usuwam referencję
+        self.head = (self.head + 1) % self.n
+        return data
+</pre><hr>
+
+
+</body>
+</html>

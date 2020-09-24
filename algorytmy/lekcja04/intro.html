@@ -1,0 +1,131 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podstawy funkcji</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Funkcja jest narzędziem grupującym zbiór instrukcji
+w taki sposób, aby mogły one być wykonane w programie
+więcej niż jeden raz.
+Funkcje służą do maksymalizowania możliwości ponownego
+wykorzystania kodu i minimalizowania powtarzalności kodu.
+
+<pre>
+Instrukcje i wyrażenia związane z funkcjami
++-------------+----------------------------+
+| Instrukcja  | Przykłady                  |
++-------------+----------------------------+
+| Wywołania   | my_func(12, word="abc")    |
+| def, return | def func(x, y=1):          |
+|             |     return x + y           |
+| global      | def changer():             |
+|             |     global x; x = "nowy"   |
+| nonlocal    | def changer(): # Python 3  |
+|             |     nonlocal x; x = "nowy" |
+| yield       | generatory                 |
+| lambda      | funkcje anonimowe          |
++-------------+----------------------------+
+</pre>
+
+<p>Definicja funkcji tworzy obiekt funkcji.
+Istnieją dwie odmiany obiektów funkcji: funkcje wbudowane
+i funkcje zdefiniowane przez użytkownika.
+Obie odmiany obsługują wywoływanie funkcji, ale ich
+implementacja jest różna.
+
+<hr><pre>
+# Składnia funkcji.
+def nazwa_funkcji(lista_argumentów_funkcji):
+    docstring                       # opcjonalnie
+    instrukcje
+    return obiekt_wynikowy          # opcjonalne
+</pre><hr><pre>
+# Zalecane formy docstring.
+# Postać jednowierszowa.
+"""Jeden wiersz zakończony kropką."""
+
+# Postać wielowierszowa.
+# Tutaj mogą się pojawić wiersze dla modułu doctest.
+"""Pierwszy wiersz podsumowania.
+
+Od trzeciego wiersza może być dłuższy opis.
+"""
+</pre><hr><pre>
+def func(): ...               # utworzenie obiektu funkcji
+func()                        # wywołanie funkcji
+other_name = func             # przypisanie obiektu funkcji
+other_name()                  # ponowne wywołanie funkcji func
+func.atrr = value             # dołączenie atrybutu do obiektu funkcji
+dir(func)                     # lista atrybutów obiektu funkcji
+print ( func.__name__ )       # wypisze nazwę funkcji
+print ( func.__doc__ )        # wypisze docstring
+</pre><hr>
+
+<p>Instrukcja <em>def</em> jest kodem  wykonywalnym.
+Tworzy ona obiekt funkcji i przypisuje go do nazwy.
+Nazwa funkcji powinna być zapisana w stylu <em>joined_lower</em>.
+Funkcje mogą zwracać obiekt wynikowy <em>value</em> 
+z powrotem do wywołującego przez <em>return value</em>.
+Funkcje mogą też zwracać <em>None</em> przez samo <em>return</em>
+lub kiedy w kodzie funkcji nie pojawia się <em>return</em>.
+
+<p>Argumenty funkcji są do niej wprowadzane przez wartość, tj.
+przekazywana jest referencja do obiektu.
+Argumenty funkcji mogą mieć określoną wartość domyślną.
+Wartość domyślna jest obliczana tylko raz, dlatego
+trzeba być ostrożnym z domyślnymi argumentami, które są
+zmienne, jak listy i słowniki.
+Funkcje mogą być wywoływane z argumentami postaci
+<em>keyword=value</em>.
+Są jeszcze inne możliwości, np. zmienna lista argumentów,
+rozpakowywanie argumentów z listy, wyrażenia lambda.
+
+<p>Własne atrybuty funkcji mogą być sposobem implementacji
+odpowiednika mechanizmu "statycznych zmiennych lokalnych"
+dostępnych w innych językach programowania.
+
+<h3>POLIMORFIZM</h3>
+
+<p>W Pythonie nie ma deklaracji typu argumentów, dlatego
+cechą funkcji jest <em>polimorfizm</em>:
+Zachowanie funkcji zależy od tego, co do niej przekażemy.
+
+<hr><pre>
+def times(x, y):
+    """Zwraca iloczyn argumentów."""
+    return x * y
+
+times(2, 3)                   # 6
+times(2, 3.14)                # 6.28
+times("Bum!", 3)              # "Bum!Bum!Bum!"
+</pre><hr>
+
+<h3>ZMIENNE LOKALNE</h3>
+
+<p>Podstawienia do zmiennych wewnątrz funkcji tworzą zmienne lokalne.
+Odniesienie do zmiennej najpierw oznacza odniesienie do zmiennej
+lokalnej; jeżeli nie istnieje, to szukana jest zmienna globalna;
+jeżeli też nie istnieje, to szukane są zmienne wbudowane.
+Można od razu zadeklarować zmienną globalną przez instrukcję
+<em>global</em>.
+
+<p>Wszystkie zmienne lokalne pojawiają się w momencie
+wywołania funkcji i znikają, kiedy funkcja przestaje działać.
+
+<hr><pre>
+def my_len(sequence):              # sequence jest lokalne
+    """Obliczanie długości sekwencji."""
+    length = 0                     # length jest lokalne
+    for item in sequence:          # item jest lokalne
+        length += 1
+    return length
+</pre><hr>
+
+</body>
+</html>

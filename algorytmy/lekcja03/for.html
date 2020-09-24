@@ -1,0 +1,223 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pętla for</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Pętla for jest uniwersalnym iteratorem po sekwencjach.
+Jeżeli chcemy wykonać pętlę po ciągu liczb całkowitych, 
+to pomocna jest funkcja <em>range()</em> lub wersja
+z generatorem <em>xrange()</em>.
+Można stosować <em>break</em> (natychmiastowe wyjście z pętli)
+i <em>continue</em> (kontynuacja pętli) jak w języku C.
+
+<p>Niebezpiecznie jest modyfikować sekwencję (np. listę)
+po której biegnie pętla for. 
+Należy raczej zrobić kopię listy do iteracji.
+Bezpieczną operacją jest wydłużenie listy przez L.append(item)
+lub L.extend(sequence).
+
+<hr><pre>
+# Składnia.
+for item in sequence:
+    instrukcje      # tu zwykle używamy item
+    if test1:
+        break       # wyjście z pętli, opcjonalne
+    if test2:
+        continue    # przejście na górę pętli, opcjonalne
+else:               # opcjonalne
+    instrukcje      # jeżeli nie było break, działa nawet przy pustej sekwencji
+</pre><hr><pre>
+word = "praca"
+for char in word:             # pętla po stringu
+    print char,               # przecinek daje wydruk w jednym wierszu, Python 2
+    print(char, end=" ")      # wydruk w jednym wierszu, Python 3
+print ("")                    # na koniec przechodzimy do nowej linii
+</pre><hr><pre>
+# Pętla po liście liczb z funkcji range().
+for i in range(6):            # lista liczb od 0 do 5
+    print ( i )
+# Indeks pętli żyje poza nią.
+print ( i )                   # wynik to 5
+</pre><hr><pre>
+# Pętla po liście składającej się z elementów różnych typów.
+for item in [4, "s", [2, 3], 3.14159]:
+    print ( item )
+
+# Pętla po krotce różnych elementów.
+for item in (6, "abc", 1.2):
+    print ( item )
+
+# Pętla po liście składającej się z krotek.
+# Następuje pozycyjne przypisanie zmiennych.
+for (a, b) in [(2, "i"), (3.14, "f"), ("a", "s")]:
+    print ( "{} {} {} {}".format("pierwszy, a, "drugi", b) )
+</pre><hr><pre>
+# Wydłużanie listy w trakcie działania pętli for.
+# Zachować ostrożność!
+# Można wpaść w pętlę nieskończoną.
+L = range(5)
+for i in L:
+    print ( i )
+    if (i % 2) == 1:            # jeżeli i jest nieparzyste
+        L.append(2 * i)         # dodaję tylko parzyste
+        #L.extend([2 * i, 4 * i])
+# Wynik: 0 1 2 3 4 2 6
+
+# Bezpieczniejszy wariant z kopią listy.
+for item in L[:]:
+    process(item)
+for item in list(L):
+    process(item)
+</pre><hr><pre>
+# Pętla for w konteście słowników.
+D = {"a": 1, "b": 2, "c": 3}
+for key in D:                 # pętla po kluczach
+    print ( "{} {}".format(key, D[key]) )
+for (key, value) in D.items():
+    print ( "{} {}".format(key, value) )
+</pre><hr>
+
+<h3>GENEROWANIE WARTOŚCI PRZESUNIĘCIA I ELEMENTÓW</h3>
+
+<hr><pre>
+owoce = ["jabłko", "gruszka", "śliwka"]
+
+# Pętla for po liście stringów.
+for owoc in owoce:
+    print ( "Bardzo lubię " + owoc + "!" )
+
+# Pętla po liście stringów z wykorzystaniem indeksów.
+# Tak można robić, gdy potrzebujemy wykorzystać numer elementu.
+for i in range(len(owoce)):
+    print ( "{} {}".format(i, owoce[i]) )
+
+# Obecnie wygodniej jest zastosować iterator enumerate().
+for (i, item) in enumerate(owoce):
+    print ( "{} {}".format(i, item) )
+
+[c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
+[2**i for i in range(5)]                # [1, 2, 4, 8, 16]
+</pre><hr>
+
+<h3>ZAGNIEŻDŻONE PĘTLE FOR</h3>
+
+<hr><pre>
+# Wyszukiwanie wspólnych elementów dwóch sekwencji.
+seq1 = "mielonka"
+seq2 = "biedronka"
+alist = []
+for item in seq1:
+    if item in seq2:   # mało wydajne
+        alist.append(item)
+print ( alist )               # ["i","e","o","n","k","a"]
+# Inny sposób polega na zastosowaniu zbiorów.
+</pre><hr>
+
+<h3>LISTY SKŁADANE</h3>
+
+<hr><pre>
+# Oczyszczanie linii z białych znaków po prawej stronie.
+# lines to lista stringów.
+lines = [line.rstrip() for line in lines]
+
+lines = [line.rstrip() for line in open("words.txt")]
+lines = [line.upper() for line in open("words.txt")]
+lines = [line.replace("\t", ";") for line in open("words.txt")]
+</pre><hr>
+
+<h3>PRZECHODZENIE RÓWNOLEGŁE - ZIP</h3>
+
+<hr><pre>
+# Składnia.
+zip(seq1 [, seq2 [...]]) zwraca [(seq1[0], seq2[0] ...), (...)]
+</pre><hr><pre>
+L = [1, 2, 3, 4]
+M = [5, 6, 7, 8]
+for (x, y) in zip(L, M):
+    print ( "{} {} {}".format(x, y, x+y) )
+for (x, y) in zip("abcdef", "qwerty"):
+    print ( "{} {} {}".format(x, y, x+y) )
+</pre><hr>
+
+<h3>PRZECHODZENIE RÓWNOLEGŁE - MAP</h3>
+
+<hr><pre>
+# Składnia.
+map(function, sequence[, sequence, ...]) zwraca list
+# W Pythonie 3 map() zwraca generator.
+</pre><hr><pre>
+# Funkcję map można łatwo zastąpić listą składaną.
+L = [-2, -1, 0, 1, 2]
+map(abs, L)                   # [2, 1, 0, 1, 2]
+[abs(x) for x in L]
+
+map(ord, "qwerty")            # [113, 119, 101, 114, 116, 121]
+[ord(x) for x in "qwerty"]
+
+L = [1, 2, 3, 4]
+M = [1, 1, 2, 2]
+map(pow, L, M)                # [1, 2, 9, 16]
+[pow(x, y) for (x, y) in zip(L, M)]
+
+words = ["jeden", "dwa", "trzy"]
+map(str.upper, words)         # ['JEDEN', 'DWA', 'TRZY']
+[word.upper() for word in words]
+</pre><hr>
+
+<h3>TWORZENIE SŁOWNIKÓW ZA POMOCĄ FUNKCJI ZIP</h3>
+
+<hr><pre>
+keys = ["jeden", "dwa", "trzy"]
+values = ["I", "II", "III"]
+D = dict(zip(keys, values))
+# To samo za pomocą pętli for.
+D = {}              # lub D = dict()
+for (k, v) in zip(keys, values):
+    D[k] = v
+</pre><hr><pre>
+D = dict(zip(range(6), "qwerty"))
+</pre><hr>
+
+<h3>INNE KONTEKSTY ITERACYJNE</h3>
+
+<p>Funkcje wbudowane: sorted(), sum(), min(), max(), any(), all(),
+list(), tuple(), set(), str.join(), zip().
+
+<p>Nowe obiekty iterowane w Pythonie 3:
+dict.keys(), dict.values(), dict.items(),
+range(), map(), zip(), filter().
+
+<hr><pre>
+# Zastosowanie funkcji all() i any().
+
+L = [1, 2, 4, 5]
+#L = [2, 4, 6]
+
+# Sprawdzamy, czy wszystkie liczby są parzyste.
+
+# Zastosowanie klauzuli else w pętli for.
+for x in L:
+    if x % 2 != 0:
+        break
+else:
+    print ( "Wszystkie parzyste" )
+
+# Zastosowanie all().
+if all(x % 2 == 0 for x in L):
+    print ( "Wszystkie parzyste" )
+
+# Sprawdzamy, czy choć jedna liczba jest parzysta.
+
+if any(x % 2 == 0 for x in L):
+    print ( "Jest liczba parzysta na liście" )
+</pre><hr>
+
+</body>
+</html>

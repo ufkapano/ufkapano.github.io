@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Krotki</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Krotki (tuples) to uporządkowane kolekcje dowolnych obiektów. 
+Są heterogeniczne i mogą być dowolnie zagnieżdżane. 
+Dostęp do obiektów możliwy jest za pomocą offsetu. 
+
+<p>Krotki są niezmiennymi sekwencjami, jak łańcuchy. 
+Nie można ich modyfikować w miejscu i mają ustalony rozmiar. 
+Podobnie jak listy, krotki najlepiej traktować jako 
+tablice odwołań obiektowych.
+
+<p>Krotki są stosowane zamiast list tam, gdzie zależy nam
+na niezmienności.
+
+<pre>
++----------------------+-------------------------------------------+
+| Operacja             | Znaczenie                                 |
++----------------------+-------------------------------------------+
+| T = () ; T = tuple() | krotka pusta                              |
+| T = (0,)             | krotka jednopozycyjna (nawiasy zalecane)  |                  |
+| T = (1, 3, 5, 7)     | krotka czteropozycyjna (nawiasy zbędne)   |
+| T = tuple(sequence)  | tworzenie krotki z sekwencji              |
+| T[i]                 | indeks                                    |
+| T[i:j]               | wycinek (nowa krotka)                     |
+| len(T)               | rozmiar (długość)                         |
+| T1 + T2              | łączenie                                  |
+| T * 3, 4 * T         | powtarzanie                               |
+| for item in T: pass  | iteracja                                  |
+| item in T            | zawieranie (bool)                         |
+| item not in T        |                                           |
+| del T                | usuwanie krotki                           |
+| (x, y) = (2, 4)      | x = 2 ; y = 4   # podstawianie            |
++----------------------+-------------------------------------------+
+</pre>
+
+<hr><pre>
+# Krotka jednoelementowa.
+T = ('a',)                    # bez przecinka będzie string
+# Można też T = tuple('a'), bo string jest sekwencją.
+# Dla liczb można przekonwertować listę T = tuple([2]).
+
+T = ('a','b','c')
+T[1]
+len(T)
+
+# Można tworzyć zmodyfikowaną (nową) krotkę.
+T = ('A',) + T[1:]
+
+L = [1, 2, 3, 4]
+front, L = L[0], L[1:]        # odcięcie początku
+# Konwersja listy do krotki.
+T = tuple(L)
+
+# Krotki mogą występować w nietypowym podstawieniu.
+(x, y) = (12, 34)             # podstawiamy za x i y
+a, b = b, a                   # zamiana w Pythonie
+dane = (43, 54)
+(x2, y2) = dane
+(NIEDZIELA, PONIEDZIALEK, WTOREK, SRODA, CZWARTEK, PIATEK, SOBOTA) = range(7)
+</pre><hr>
+
+<h3>METODY KROTEK</h3>
+
+<hr><pre>
+dir(tuple)     # spis metod
+T = (1, 2, 3, 5, 7)
+T.index(5)     # 3, jaki indeks ma 5
+T.count(5)     # 1, 5 pojawia się raz
+</pre><hr><pre>
+&gt;&gt;&gt; T = (5, 7)
+&gt;&gt;&gt; T[1] = 9
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: 'tuple' object does not support item assignment
+&gt;&gt;&gt; T.append(9)
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+AttributeError: 'tuple' object has no attribute 'append'
+&gt;&gt;&gt; 
+</pre><hr>
+
+
+</body>
+</html>

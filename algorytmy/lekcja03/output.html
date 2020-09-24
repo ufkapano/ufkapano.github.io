@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Standardowe wyjście</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Podstawowe polecenie do wyprowadzania wyników to <em>print</em>.
+Jest to przyjazny programiście interfejs do standardowego
+strumienia wyjścia (<em>stdout</em>). 
+Polecenie przekształca obiekt
+na jego reprezentację tekstową, dodaje formatowanie
+i przesyła do standardowego wyjścia.
+
+<p>Kolejne elementy po słowie print oddzielamy przecinkami.
+Przecinek na końcu wiersza z print zapobiega wyświetleniu "\n",
+czyli przejściu do nowej linii.
+
+<p>W Pythonie 3 <em>print()</em> jest funkcją wbudowaną.
+
+<hr><pre>
+# Konstrukcja podobna do C z procentem i krotką.
+# Składnia:
+# %[(nazwa)][opcje][szerokość][.precyzja]kod_typu
+print "int %d float %f str %s" % (5, 3.14159, "napis")
+
+# Format z %s jest uniwersalny - korzysta z funkcji str().
+print ( "int %s float %s str %s" % (5, 3.14159, "napis") )
+
+print ( "%-10s|%10s" % ("napis1", "napis2") )
+print ( "pi = %8.2f" % 3.14159 )          # po procencie jest krotka
+print ( "pi = %8.2f" % (3.14159,) )       # bardziej precyzyjnie
+print ( "a %10.1f b %3d" % (1.23456, 2) ) # dwie lub więcej pozycji
+</pre><hr><pre>
+# Wyprowadzanie danych do pliku:
+afile = open("data.txt", "w")
+afile.write((%s %s\n) % (item1, item2))   # typowy sposób
+print &gt;&gt; afile, item1, item2        # niezbyt ładne
+afile.close()
+</pre><hr><pre>
+# Korzystanie z modułu sys.
+# Obiekt sys.stdout jest typu file, mode "w".
+
+import sys
+print X
+sys.stdout.write(str(X) + "\n")  # jw, równoważne
+sys.stdout.write("%s\n" % X)     # jw, ale będzie problem dla X tuple
+print ( "{} {}".format("alpha", "beta") )
+sys.stdout.write("%s %s\n" % ("alpha", "beta"))  # jw
+</pre><hr><pre>
+# Można na chwilę zmienić stdout:
+import sys
+tmp = sys.stdout
+sys.stdout = open("log.txt", "a")
+print ( "napis" )          # idzie do pliku
+sys.stdout.close()
+sys.stdout = tmp
+</pre><hr><pre>
+# Korzystanie ze słownika przy formatowaniu stringu.
+phones = {"Adam": 1234, "Bogdan": 3456, "Czarek": 5678}
+print ( "Telefony: Adam: %(Adam)s, Bogdan: %(Bogdan)s." % phones )
+
+# Można wykorzystać funkcję systemową zwracającą słownik.
+name = "elektron"
+mass = 0.511034    # MeV
+print ( "%(name)s, masa %(mass)s MeV" % locals() )
+</pre><hr><pre>
+# Zapis wywołań print działający w Pytonie 2 i 3.
+print("napis")               # jeden obiekt
+print("%s %s %s" % (item1, item2, item3))
+</pre><hr><pre>
+# Emulacja funkcji print() z Pythona 3 w Pythonie 2.
+import sys
+
+def print3(*arguments, **keywords):
+    sep = keywords.get("sep", " ")
+    end = keywords.get("end", "\n")
+    file = keywords.get("file", sys.stdout)
+    output = sep.join(str(arg) for arg in arguments)
+    file.write(output + end)
+
+# Zastosowanie.
+print3(1, 2, 3)              # zwykłe wywołanie
+print3(1, 2, 3, sep="")      # wstrzymanie separatora
+print3(1, 2, 3, sep="...")   # zmiana separatora
+print3(4, 5, 6, end="")      # wstrzymanie nowego wiersza
+print3(7, 9, 9, file=sys.stderr)       # przekierowanie strumienia
+</pre><hr><pre>
+# PEP 236 - Back to the __future__
+# W Pythonie 2.6 można włączyć obsługę funkcji print()
+# z Pythona 3 za pomocą instrukcji import.
+# Ta instrukcja nie powoduje błędu w Pythonie 3.
+
+from __future__ import print_function
+</pre><hr>
+
+<h3>METODA FORMAT</h3>
+
+<hr><pre>
+# Składnia (Python 2.6+, 3.x):
+# S.format(*arguments, **keywords)
+
+# Argumenty pozycyjne.
+print ( "{0} albo {1}".format("prawda", "fałsz") ) # prawda albo fałsz
+print ( "{} albo {}".format("prawda", "fałsz") ) # prawda albo fałsz (Python 2.7)
+print ( "{1} albo {0}".format("prawda", "fałsz") ) # fałsz albo prawda
+# Formatowanie {position:format_spec}.
+# {position:10} typ str, szerokość minimum 10 znaków;
+# {position:4d} typ int, szerokość minimum 4 znaki;
+# {position:.3f} typ float, 3 cyfry po przecinku;
+# {position:8.1f} typ float, 1 cyfra po przecinku, całość 8 znaków;
+for x in range(1,11):
+    print ( "{0:2d} {1:3d}".format(x, x*x) )
+
+# Argumenty w postaci słów kluczowych.
+print ( "{person} jest {description}".format(
+    person="Adam", description="okropny") )
+# Formatowanie {key:format_spec}.
+# {key:d} key wskazuje na typ int;
+
+# Argumenty pozycyjne i słowa kluczowe można używać łącznie.
+print ( "Kali liczyć: {0}, {1}, {2}, {last}.".format(
+    "jeden", "dwa", "trzy", last="mnóstwo") )
+# Kali liczyć: jeden, dwa, trzy, mnóstwo.
+
+# Formatowania {position!conversion:format_spec} oraz
+# {key!conversion:format_spec}.
+# {0!s} wymusza formatowanie obiektu przez str().
+# {0!r} wymusza formatowanie obiektu przez repr().
+# Podobnie {key!s}, {key!r}.
+import math
+print ( "PI wynosi {0} {0!s} {0!r}".format(math.pi) )
+# 'PI wynosi 3.14159265359 3.14159265359 3.1415926535897931'
+
+# Zastosowanie słownika ze słowami kluczowymi.
+table = {"Adam":1234, "Bogdan":5678}
+print ( "Adam {Adam:d}; Bogdan {Bogdan:d}".format(**table) )
+# Adam 1234; Bogdan 5678
+</pre><hr>
+
+<h3>F-STRINGS</h3>
+
+<hr><pre>
+# W Pythonie 3.6 pojawiły się f-strings (PEP 498).
+# F-strings są szybsze od metody z % i format().
+name = "Adam"
+age = 18
+print ( f"Hello, {name}. You are {age}." )
+print ( f'{2 * 37}' )   # "74"
+print ( f"{{18}}" )   # wynik to "{18}"
+print ( f"""{function_name(argument)} is funny.""" )
+print ( f'''{instance.method()} is fast.''' ) 
+print ( f"{variable!r}" )  # używa repr(), a nie str()
+message = (
+    f"First part {variable1}. "
+    f"Second part {variable2}. "
+    f"Third part {variable3}."
+)   # multiline f-strings (rezultat to jeden wiersz!)
+</pre><hr>
+
+</body>
+</html>

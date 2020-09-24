@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Listy cykliczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy cykliczne powiązane pojedyńczo mają łącze ostatniego elementu
+skierowane na pierwszy element.
+Wydaje się, że ta lista nie powinna pozostawać pusta.
+
+<h3>PROBLEM JOSEPHUSA</h3>
+
+<p>[Sedgewick s. 85] 
+Załóżmy, że N osób postanowiło wybrać spośród siebie przywódcę
+w następujący sposób: wszyscy stają w kole, a następnie za pomocą
+m-sylabowej wyliczanki eliminują za każdym razem m-tą osobę z koła. 
+Problem polega na tym, by wyznaczyć z góry, która osoba pozostanie
+jako jedyna w kole.
+
+<p>Implementacja korzysta z listy cyklicznej i argumentów wiersza
+poleceń. W problemie Josephusa lista umożliwia szybkie usuwanie
+elementów z sekwencji. W sicie Eratostenesa wydajność algorytmu
+zależy od użycia tablic, ponieważ tablice zapewniają szybkie
+odnajdywanie elementów o znanym numerze.
+
+<hr><pre>
+import sys
+
+class Node:
+    """Klasa reprezentująca węzeł listy jednokierunkowej."""
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)   # bardzo ogolnie
+
+N = int(sys.argv[1])
+m = int(sys.argv[2])
+
+# Pierwszy węzeł na liście.
+head = Node(1)
+head.next = head                        # lista cykliczna
+
+# Wstawiamy następne liczby za head.
+node = head
+for i in range(2, N+1):
+    node.next = Node(i, head)
+    node = node.next
+
+# Wyrzucamy co m-ty element.
+while node != node.next:
+    for i in range(m-1):
+        node = node.next
+    node.next = node.next.next      # wyrzucam node.next
+print ( "zostaje {}".format(node) )
+</pre><hr>
+
+<p>Podczas budowania listy program używa dwa razy więcej przypisań
+niż potrzeba, ponieważ po  wstawieniu każdego węzła zapewnia
+utrzymanie listy cyklicznej.
+Można zmodyfikować program tak, aby budował listę cykliczną
+bez dodatkowej pracy.
+
+</body>
+</html>

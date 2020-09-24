@@ -1,0 +1,77 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podstawy ADT</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Abstrakcyjny typ danych (ang. <em>abstract data type</em>, ADT)
+jest typem danych, który jest dostępny 
+tylko za pośrednictwem odpowiedniego interfejsu. 
+Program korzystający z abstrakcyjnego typu danych nazywamy klientem, 
+a program określający typ danych - implementacją. 
+Dzięki abstrakcyjnym typom danych możemy oddzielić wykonywane 
+przez programy pojęciowe przekształcenia danych od wszelkich 
+konkretnych reprezentacji struktur danych i implementacji algorytmów. 
+Przy analizie wydajności programów musimy być świadomi kosztów operacji 
+podstawowych.
+
+<p>Dla zbiorów obiektów abstrakcyjnych zwykle potrzebujemy 
+następujących operacji:
+
+<ul>
+<li>inicjalizacja zbioru obiektów (konstruktor)
+<li>umieszczenie nowego obiektu w zbiorze (insert)
+<li>usuwanie obiektu ze zbioru (remove)
+<li>niszczenie zbioru obiektów (destruktor, zwolnienie zasobów)
+<li>kopiowanie zbioru obiektów (konstruktor kopiujący)
+</ul>
+
+<p>Najważniejsze abstrakcyjne typy danych:
+
+<ul>
+<li>lista (list)
+<li>stos (LIFO, stack)
+<li>kolejka (FIFO, queue)
+<li>double-ended queue (dequeue, deque)
+<li>kolejka z priorytetami (priority queue)
+<li>sterta/kopiec (heap)
+<li>graf (graph)
+<li>struktura zbiorów rozłącznych (disjoint-set data structure)
+<li>zbiór (set)
+<li>tablica asocjacyjna (associative array)
+</ul>
+
+<h3>ZALETY UŻYWANIA ADT</h3>
+
+<ul>
+<li>Enkapsulacja. Użytkownik nie musi znać szczegółów implementacji.
+<li>Lokalizacja zmian. Nie trzeba zmieniać kodu użytkownika
+po zmianie implementacji ADT.
+<li>Elastyczność. Różne implementacje danego ADT o tych samych właściwościach
+mogą być używane zamiennie. Daje to możliwość poprawienia ogólnej wydajności
+w szczególnych sytuacjach.
+</ul>
+
+<h3>WIKIPEDIA</h3>
+
+<ul>
+<li>https://en.wikipedia.org/wiki/Abstract_data_type
+<li>https://en.wikipedia.org/wiki/List_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Collection_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Double-ended_queue
+<li>https://en.wikipedia.org/wiki/Priority_queue
+<li>https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Set_(abstract_data_type)
+<li>https://en.wikipedia.org/wiki/Associative_array
+</ul>
+
+</body>
+</html>

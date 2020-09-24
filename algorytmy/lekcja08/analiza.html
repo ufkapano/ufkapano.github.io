@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Analiza algorytmów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Analiza algorytmów jest dziedziną informatyki zajmującą się
+badaniem algorytmów.
+
+<p>Kryteria analizy algorytmów.
+
+<ul>
+<li>Poprawność - daje dobry wynik dla każdej możliwej konfiguracji 
+danych wejściowych [debugging, dowody formalne].
+<li>Złożoność obliczeniowa czasowa i pamięciowa.
+<li>Optymalność - interesuje nas algorytm najlepszy pod względem 
+złożoności obliczeniowej.
+<li>Efektywność - użyteczność w praktycznych sytuacjach.
+</ul>
+
+<p>Złożoność algorytmu (ang. <em>complexity</em>).
+
+<ul>
+<li>Rozmiar zadania (złożoność pamięciowa) - 
+rozmiar danych wejściowych, roboczych, wyjściowych.
+<li>Czas działania algorytmu (złożoność czasowa) - 
+liczba kroków przekładająca się 
+na czas pracy maszyny realizującej algorytm.
+</ul>
+
+<p>Przy badaniu złożoności czasowej często wystarcza zbadanie tzw.
+<em>operacji dominujących</em>, a nie dokładnie wszystkich operacji.
+Najbardziej czasochłonne operacje to zwykle instrukcja porównania (if) 
+i instrukcja przypisania. Oznaczamy:
+Tc - czas wykonania jednej instrukcji porównania (compare),
+Ta - czas wykonania jednej instrukcji przypisania (assign).
+Złożoność obliczeniową charakteryzujemy przy pomocy tzw. notacji O.
+
+<p>Przy badaniu złożoności czasem spotykamy sytuację, że
+złożoność zależy od konfiguracji danych początkowych.
+Wtedy można przeprowadzić m.in. trzy analizy,
+dla przypadku najgorszego, średniego i najkorzystniejszego.
+Korzysta się przy tym zwykle z analizy statystycznej.
+
+<p>W badaniach algorymów czasem wykonuje się analizę empiryczną.
+Musimy wtedy dysponować poprawną i pełną implementacją algorytmu.
+Ponadto musimy wybrać zestaw danych wejściowych.
+Na ogół mamy trzy możliwości: użyć danych rzeczywistych,
+losowych lub złośliwych (przypadek pesymistyczny).
+
+<h3>ZAPIS Z DUŻYM "O"</h3>
+
+<p>Zapis z dużym "O" podaje <strong> asymptotyczne ograniczenie 
+górne</strong> funkcji.
+
+<p>O(g(n)) = {f(n): istnieją dodatnie stałe c i n_0, takie że
+0 &lt;= f(n) &lt;= c g(n) dla wszystkich n &gt;= n_0}.
+
+<p>Podstawowe klasy złożoności algorytmów (od najniższej do najwyższej).
+
+<ul>
+<li>stała O(1),
+<li>logarytmiczna O(log N),
+<li>liniowa O(N),
+<li>liniowo-logarytmiczna O(N log N),
+<li>kwadratowa O(N ** 2),
+<li>sześcienna O(N ** 3),
+<li>wykładnicza O(a ** N).
+</ul>
+
+<h3>FUNKCJA SILNIA</h3>
+
+<p>Zbadamy złożoność czasową algorytmu rekurencyjnego
+obliczającego funkcję silnia.
+Zakładamy, że najbardziej czasochłonną operacją
+jest instrukcja porównania <em>if</em>.
+
+<hr><pre>
+def silnia(n):                # wg Wróblewskiego
+    """Funkcja silnia w wersji rekurencyjnej."""
+    if n == 0:
+        return 1
+    else:
+        return n * silnia(n-1)
+</pre><hr><pre>
+T(0) = Tc,
+T(n) = Tc + T(n-1)   dla n &gt;= 1
+
+T(n) = Tc + Tc + T(n-2) = 2*Tc + T(n-2),
+T(n) = n*Tc + T(0) = (n+1)*Tc.          # złożoność praktyczna
+Złożoność klasy O(N).                   # złożoność teoretyczna
+</pre><hr><pre>
+def silnia(n):
+    """Funkcja silnia w wersji iteracyjnej."""
+    result = 1                      # Ta
+    while n > 1:                    # Tc
+        result = result * n     # Ta
+        n = n - 1               # Ta
+    return result
+</pre><hr><pre>
+T(1) = Ta + Tc,
+T(n) = Ta + Tc + (n-1)*(Tc + 2*Ta),
+T(n) = Ta*(2*n - 1) + Tc*(n) dla n &gt; 1.
+Złożoność klasy O(N).
+</pre><hr>
+
+<h3>ZŁOŻONOŚĆ</h3>
+
+<p>Czasem opisuje się złożoność biorąc pod uwagę liczbę bitów danych B
+dostarczonych na wejście.
+
+<p>Przykład: Sprawdzić, czy liczba całkowita N jest liczbą pierwszą.
+Metoda sprawdzenia polega na dzieleniu liczby N kolejno przez 
+liczby 2, 3, 4, ..., [sqrt(N)].
+
+<p>Pierwsza analiza złożoności: Mierzymy złożoność jako liczbę dzieleń
+liczba przez liczbę, co daje O(sqrt(N)) jednostek pracy.
+
+<p>Druga analiza złożoności: Do przedstawienia liczby N potrzebujemy
+B bitów, N = 2 ** B. W tej sytuacji złożoność wyrażona przez liczbę
+bitów wynosi O(sqrt(2 ** B)) = O(2 ** (B/2)).
+Złożoność jest wykładnicza, czyli algorytm jest powolny.
+
+<h3>PROBLEMY ŁATWE I TRUDNE</h3>
+
+<p>Problemy łatwe mają znane metody szybkiego ich rozwiązywania
+(w czasie wielomianowym).
+
+<p>Problem jest trudny, jeżeli udowodnimy, że nie istnieje
+szybka metoda jego rozwiązania, każdej instacji problemu. 
+Nie wystarczy wskazać jakiś
+szczególny powolny algorytm do jego rozwiązywania
+[H. S. Wilf, Algorithms and Complexity, Internet Edition 1994,
+https://www.math.upenn.edu/~wilf/].
+
+<p>Warto pamiętać, że trudne problemy mogą mieć łatwe instancje,
+czyli szczególne przypadki, w których łatwo można znaleźć
+rozwiązanie [np. kolorowanie wierzchołków grafu cyklicznego].
+
+
+</body>
+</html>

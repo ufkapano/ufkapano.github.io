@@ -1,0 +1,258 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Kolejki priorytetowe</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Kolejka priorytetowa to ADT zawierający elementy z kluczami 
+(priorytetami), która pozwala na przeprowadzenie następujących operacji:
+
+<ul>
+<li>inicjalizacja pustej kolejki (__init__),
+<li>umieszczenie w kolejce nowego elementu (insert), 
+<li>usunięcie z kolejki elementu o największej wartości klucza (remove), 
+<li>sprawdzenie, czy kolejka jest pusta (is_empty),
+<li>zmiana priorytetu arbitralnie wskazanego elementu,
+<li>usunięcie arbitralnie wskazanego elementu,
+<li>połączenie dwóch kolejek priorytetowych w jedną.
+</ul>
+
+<p>Kolejka priorytetowa jest uogólnieniem stosu i kolejki, 
+ponieważ używając odpowiednich przypisań priorytetów, 
+struktury te jesteśmy w stanie zrealizować za pomocą kolejek priorytetowych. 
+Zastosowania kolejek priorytetowych: planowanie zadań w systemach 
+komputerowych, sortowanie rekordów, kompresja plików, itp.
+
+<p>Z definicji kolejki priorytetowej wynika, że dane (klucze) 
+musimy umieć porównywać ze sobą.
+Ponadto chcemy mieć dane tak ułożone, aby szybko można było
+pobrać element o najwyższym priorytecie.
+Możemy sobie wyobrazić co najmniej trzy podejścia do implementacji
+kolejki priorytetowej.
+
+<ul>
+<li>Możemy utrzymywać dane jako listę posortowaną względem priorytetów.
+Wtedy element o największym priorytecie jest pierwszy lub ostatni,
+w zależności od sposobu sortowania. 
+Operacja wstawiania elementu będzie kosztowna.
+[zmiana priorytetu elementu pociąga konieczność ponownego
+sortowania; można też tak: wyjąć wskazany element, zmienić mu
+priorytet i wstawić ponownie do kolejki]
+
+<li>Możemy dodawać elementy do kolejki bez sortowania,
+a dopiero przy usuwaniu elementu z kolejki wybierać największego.
+Operacja usuwania elementu będzie kosztowna.
+[tu bez problemu zmieniamy priorytety w kolejce]
+
+<li>Możemy w kolejce utrzymywać częściowe uporządkowanie na stercie.
+Wtedy operacje wstawiania i usuwania elementu będą wiązały się
+z pewną pracą.
+[zmiana priorytetu wymaga przebudowy stery]
+</ul>
+
+<p>Na nasze potrzeby zakładamy, że interfejs kolejki priorytetowej
+będzie miał cztery funkcje:
+__init__(), is_empty(), insert(), remove().
+Warto zauważyć, że jeżeli chcemy tylko sprawdzić największy element 
+w kolejce, to możemy kolejno zastosować metody remove() i insert().
+Sprawdzimy różne sposoby implementacji kolejki priorytetowej.
+Dla prostoty będziemy elementy porównywać bezpośrednio, choć można
+zmodyfikować kod tak, aby funkcja porównująca była parametrem
+określanym w chwili tworzenia kolejki.
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Badamy implementację kolejki z priorytetami za pomoca list Pythona.
+Element o największym priorytecie wyszukujemy w chwili, gdy
+chcemy go usunąć z kolejki.
+Łatwo można zmieniać priorytety elementów w kolejce.
+
+<hr><pre>
+class PriorityQueue:
+
+    def __init__(self):
+        self.items = []
+
+    def __str__(self):   # podglądamy kolejkę
+        return str(self.items)
+
+    def is_empty(self):
+        return not self.items
+
+    def insert(self, item):
+        self.items.append(item)
+
+    def remove(self):
+        maxi = 0
+        for i in range(1, len(self.items)):
+            if self.items[i] &gt; self.items[maxi]:
+                maxi = i
+        return self.items.pop(maxi)   # mało wydajne
+</pre><hr>
+
+<p>Po zapisaniu tego kodu do osobnego modułu <em>pqueue.py</em>
+możemy w dowolnym programie korzystać z kolejek priorytetowych.
+
+<hr><pre>
+import pqueue
+
+pq = pqueue.PriorityQueue()
+for item in [5, 3, 8]:
+    pq.insert(item)
+# Usuwanie elmentów z kolejki w kolejności: 8, 5, 3.
+while not pq.is_empty():
+    print pq.remove()
+</pre><hr>
+
+<h3>IMPLEMENTACJA 2</h3>
+
+<p>Implementacja kolejki z priorytetami za pomocą listy jednokierunkowej.
+Lista jest stale uporządkowana, a największy element znajduje się 
+na początku listy.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+
+class PriorityQueue:
+
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return not self.head
+
+    def insert(self, data):
+        node = Node(data)
+        # Największy element chcemy mieć na początku listy.
+        # Robimy widełki do wstawienia nowego elementu.
+        before = None
+        after = self.head   # może być None
+        while after:
+            if after.data &lt; node.data: break
+            before = after
+            after = after.next
+        if before is None: # przed początkiem listy
+            node.next = self.head
+            self.head = node
+        else:  # jesteśmy w głębi listy, może na końcu
+            node.next = before.next
+            before.next = node
+
+    def remove(self):   # constant-time, bo usuwamy początek
+        data = self.head.data
+        self.head = self.head.next
+        return data
+</pre><hr>
+
+<h3>IMPLEMENTACJA 3</h3>
+
+<p>Implementacja kolejki z priorytetami za pomocą listy jednokierunkowej.
+Nowe elementy dodajemy na początek listy, a szukamy elementu 
+największego przy usuwaniu go z kolejki.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)   # bardzo ogólnie
+
+class PriorityQueue:
+
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return not self.head
+
+    def insert(self, data):   # constant-time, O(1)
+        self.head = Node(data, next=self.head)
+
+    def remove(self):  # nie ma zabezpieczenia
+        # Etap 1 - wyszukanie węzła. Wydajność O(N).
+        before = None
+        best = self.head
+        node = self.head   # następnego za tym będziemy sprawdzać
+        while node.next:
+            if node.next.data &gt; best.data:
+                before = node
+                best = node.next
+            node = node.next
+        # Etap 2 - odłączanie węzła.
+        if before is None:   # best to head
+            self.head = self.head.next
+        else:   # poprawiamy linki
+            before.next = best.next
+        return best.data
+</pre><hr>
+
+<h3>IMPLEMENTACJA 4</h3>
+
+<p>Implementacja kolejki z priorytetami za pomocą tablicy.
+Tablica nie jest uporządkowana. Znajdujemy indeks największego
+elementu, zamieniamy go z ostatnim i skracamy tablicę jak dla stosu.
+
+<hr><pre>
+class PriorityQueue:
+
+    def __init__(self, size=10):
+        self.items = size * [None]
+        self.n = 0   # pierwszy wolny indeks
+        self.size = size
+
+    def is_empty(self):
+        return self.n == 0
+
+    def is_full(self):
+        return self.size == self.n
+
+    def insert(self, data):
+        # brak zabezpieczenia
+        self.items[self.n] = data
+        self.n += 1
+
+    def remove(self):
+        # brak zabezpieczenia
+        # Etap 1 - wyszukiwanie elementu.
+        maxi = 0
+        for i in range(self.n):
+            if self.items[i] &gt; self.items[maxi]:
+                maxi = i
+        # Etap 2 - usuwanie elementu.
+        self.n -= 1
+        data = self.items[maxi]
+        self.items[maxi] = self.items[self.n]
+        self.items[self.n] = None   # usuwamy referencję
+        return data
+</pre><hr>
+
+<h3>IMPLEMENTACJA 5</h3>
+
+<p>Implementacja kolejki z priorytetami za pomocą sterty.
+Metody klasy Heap będą dziedziczone przez klasę PriorityQueue.
+
+<hr><pre>
+import heap
+
+class PriorityQueue(heap.Heap): pass
+</pre><hr>
+
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie binarne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem:
+Wyszukiwanie zadanego elementu w rosnącym ciągu liczb.
+
+DANE WEJŚCIOWE
+Uporządkowany rosnąco ciąg n liczb umieszczonych w tablicy L. 
+Wyróżniony element y.
+
+DANE WYJŚCIOWE
+Pozycja (indeks) elementu y w ciągu L.
+Jeżeli element y nie znajduje się w tablicy, 
+to należy to zasygnalizować.
+</pre><hr>
+
+<p>Zbadamy problem wyszukiwania danego elementu y na liście 
+uporządkowanej rosnąco L w zadanym przedziale indeksów od left do right. 
+Rozwiązaniem jest algorytm wyszukiwania binarnego (ang. binary search),
+inaczej wyszukiwania przez połowienie.
+
+<p>Podamy rekurencyjny opis algorytmu.
+Najpierw sprawdzamy, czy przedział indeksów nie jest pusty.
+Następnie porównujemy y z elementem środkowym L[k],
+gdzie k = (left+right) // 2.
+Jeżeli y jest równe L[k], to zwracamy indeks k.
+Jeżeli y jest mniejsze od L[k], to stosujemy algorytm do
+przedziału indeksów od left do (k-1).
+Jeżeli y jest większe od L[k], to stosujemy algorytm do
+przedziału indeksów od (k+1) do right.
+Po znalezieniu elementu funkcja zwraca jego indeks.
+W przypadku niepowodzenia funkcja zwraca wartość, która nie jest
+prawidłowym indeksem tablicy.
+W języku C/C++ jest to zwykle -1, w Pythonie wartość None.
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def binary_search(L, left, right, y):
+    """Wyszukiwanie binarne w wersji iteracyjnej."""
+    while left &lt;= right:
+        k = (left+right) // 2
+        if y == L[k]:
+            return k
+        if y &gt; L[k]:
+            left = k+1
+        else:
+            right = k-1
+    return None
+</pre><hr>
+
+<h3>ZŁOŻONOŚĆ</h3>
+
+<hr><pre>
+Niech n = 2^k, 
+T(1) = Tx, 
+T(n) = Tx + T(n//2). 
+T(2^k) = Tx + T(2^{k-1}) = k*Tx + T(1) = (k+1)*Tx.
+
+Liczba porównań jest rzędu O(log(n)).
+</pre><hr>
+
+<h3>BISEKCJA W PYTHONIE</h3>
+
+<hr><pre>
+import bisect
+# L to posortowania lista elementów.
+
+bisect.bisect_left(L, x, lo=0, hi=len(L))
+# Zwraca indeks i, gdzie spełnione są warunki
+# all(val &lt; x for val in L[lo:i])
+# all(val &gt;= x for val in L[i:hi])
+
+bisect.bisect_right(L, x, lo=0, hi=len(L))
+bisect.bisect(L, x, lo=0, hi=len(L))
+# Zwraca indeks i, gdzie spełnione są warunki
+# all(val &lt;= x for val in L[lo:i])
+# all(val &gt; x for val in L[i:hi])
+
+bisect.insort_left(L, x, lo=0, hi=len(L))
+# L.insert(bisect.bisect_left(L, x, lo, hi), x)
+
+bisect.insort_right(L, x, lo=0, hi=len(L))
+bisect.insort(L, x, lo=0, hi=len(L))
+# L.insert(bisect.bisect_right(L, x, lo, hi), x)
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,236 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Słowniki</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Słownik (dictionary) to nieuporządkowany zbiór par (klucz: wartość),
+przy czym klucze muszą być różne.
+Słowniki nie są sekwencjami, ale odwzorowaniami (mapping).
+Wartości (obiekty) są przechowywane po kluczu,
+a nie po ich pozycji względnej.
+
+<p>Klucz musi być niezmienny (immutable), zwykle są to liczby lub stringi.
+Kluczami mogą być krotki (tuple), jeśli zawierają tylko liczby, napisy
+i krotki.
+
+<p>Próba pobrania nieistniejącego klucza jest błędem (KeyError).
+
+<p>Słowniki są zmienne, mogą być modyfikowane w miejscu,
+mogą rosnąć lub kurczyć się na życzenie.
+Słowniki obsługują zagnieżdżanie obiektów na dowolną głębokość.
+
+<pre>
++----------------------+---------------------------+
+| Operacja             | Znaczenie                 |
++----------------------+---------------------------+
+| D = {} ; D = dict()  | pusty słownik             |
+| D = {1: "a", 5: "e"} | słownik (dwa klucze)      |
+| len(D)               | liczebność                |
+| D[key] = value       | dodanie pozycji           |
+| D[key]               | dostęp do wartości        |
+| D = dict(T)          | tworzenie z krotki (pary) |
+| D2 = dict(D1)        | kopiowanie słownika       |
+| D2 = D1.copy()       | stary sposób kopiowania   |
+| key in D             | zawieranie (bool)         |
+| key not in D         |                           |
+| D.has_key(key)       | dawny sposób (2.x)        |
+| for key in D: pass   | iteracja po kluczach      |
+| del D[key]           | usuwanie klucza           |
+| D.clear()            | czyszczenie słownika      |
+| del D                | usuwanie słownika         |
++----------------------+---------------------------+
+</pre>
+
+<hr><pre>
+D = {}                    # pusty słownik - inicjalizacja
+D['one'] = 'jeden'        # dodawanie kluczy
+D['two'] = 'dwa'
+D['three'] = 'trzy'
+
+# Metody słownika bez parametrów.
+D.keys()            # [k1, k2, k3]
+D.values()          # [v1, v2, v3]
+D.items()           # [(k1, v1), (k2, v2), (k3, v3)]
+
+# Metody słownika z parametrami.
+D.has_key('one')    # obecnie zalecane: 'one' in D
+
+# Kopiowanie słownika (shallow copy).
+D_alias = D                   # tylko kopiowanie adresu
+D_copy1 = D.copy()            # metoda słowników do kopiowania
+D_copy2 = dict(D)             # najprostszy sposób
+id(D), id(D_alias), id(D_cp), id(D_cp2)
+
+# Usuwanie elementu ze słownika.
+del D['two']
+
+# Konwersja listy krotek do dict.
+D = dict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
+
+# Ciekawa pętla po parach - items().
+for (char, n) in D.items():
+    print ( "klucz: {} wartość: {}".format(char, n) )
+</pre><hr>
+
+<p>Sortowanie kluczy dla słowników.
+
+<hr><pre>
+chars = {}                    # inicjalizacja pustego słownika
+# chars.get(char) zwraca chars[char] lub None.
+# chars.get(char, 0) zwraca chars[char] lub 0.
+for char in "abrakadabra":
+    chars[char] = chars.get(char, 0) + 1
+print ( chars )
+
+# Sortowanie par (klucz, wartość).
+items = chars.items()        # dostaję listę krotek
+items.sort()
+
+# Sortowanie samych kluczy.
+keys = chars.keys()
+keys.sort()
+[chars[key] for key in keys]     # lista wartości
+
+# Python 2.5 zawiera wbudowaną funkcję sorted(), która dla obiektu
+# iterowalnego zwraca posortowaną listę.
+for key in sorted(chars):
+    print ( "{} {}".format(key, chars[key]) )
+</pre><hr>
+
+<p>Wybrane metody dla słowników.
+
+<hr><pre>
+# Przykładowe inicjalizacje słownika.
+D = {k1:v1, k2:v2}                 # klasyczna
+D = dict([(k1, v1), (k2, v2)])     # z listy krotek
+D = dict(zip([k1, k2], [v1, v2]))  # z dwóch list
+D = dict(name1=v1, name2=v2)       # {'name1':v1, 'name2':v2}
+
+if D != {}:         # porównywanie z pustym słownikiem
+    print ( "słownik nie jest pusty" )
+if D:               # pusty słownik oznacza False
+    print ( "słownik nie jest pusty" )   # jw
+
+D.clear()                     # wyczyszczenie słownika
+E = D.copy()                  # kopia słownika
+E = dict(D)                   # jw, ale wygodniej
+D.has_key(key)                # zwraca True/False
+key in D                      # jw, zalecane
+
+D.items()                     # zwraca listę krotek (key, value)
+D.keys()                      # zwraca listę kluczy
+D.values()                    # zwraca listę wartości
+
+D.get(key, value)             # zwraca D[key] lub value
+D.setdefault(key, value)      # jw i jeszcze ustawia D[key] = value
+D.pop(key)                    # zwraca D[key] i usuwa ze słownika
+D.pop(key, value)             # zwraca D[key] lub value, gdy key nie ma w słowniku
+D.popitem()                   # zwraca 2-tuple (key, value) [chyba losowo] 
+                              # lub Error, gdy słownik jest pusty
+D = dict.fromkeys(S[, value])    # S to sekwencja, value to domyślnie None
+D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
+D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
+D.update(E)                   # czyli for key in E: D[key] = E[key]
+</pre><hr>
+
+<p>Problem sklejania dwóch słowników.
+
+<hr><pre>
+# http://stackoverflow.com/questions/38987/how-can-i-merge-two-python-dictionaries-in-a-single-expression?rq=1
+# Dane są slowniki A i B. Utworzyć C jako sumę słowników.
+C = A.copy()
+C.update(B)
+
+# Można utworzyć specjalną funkcję (zalecane rozwiązanie).
+def merge_dict(a, b):
+    c = a.copy()
+    c.update(b)
+    return c
+# Użycie: C = merge_dict(A, B)
+
+# Uogólnienie działa w Pythonie 2 i 3.
+def merge_dicts(*dict_args):
+    '''
+    Given any number of dicts, shallow copy and merge into a new dict,
+    precedence goes to key value pairs in latter dicts.
+    '''
+    result = dict()
+    for dictionary in dict_args:
+        result.update(dictionary)
+    return result
+</pre><hr>
+
+<h3>SŁOWNIKI SYSTEMOWE</h3>
+
+<p>locals() zwraca słownik zawierający current scope's local variables,
+czyli lokalnie dostępne nazwy.
+
+<p>vars() jest równoważne locals().
+
+<p>vars([object]) jest równoważne object.__dict__, czyli dostajemy
+słownik będący przestrzenią nazw obiektu, zawierającą np. 
+atrybuty obiektu.
+
+<h3>DZIEDZICZENIE ZE SŁOWNIKÓW</h3>
+
+<p>Od Pythona 2.5 w klasie dziedziczonej z dict można zdefiniować
+metodę __missing__(). Wtedy przy wywołaniu D[key], jeżeli klucz
+nie istnieje, to wywoływana jest metoda __missing__(key).
+Można określić pożądane zachowanie, 
+np. inne niż stała domyślna wartość.
+Daje to większą elastyczność niż metody get() czy setdefault().
+
+<h3>PYTHON 3</h3>
+
+<p>Metody słowników zwracają iteratory, a nie gotowe listy.
+Jeżeli chcemy zobaczyć gotową listę trzeba użyć konwersji.
+
+<hr><pre>
+list(D.items())               # zwraca listę krotek (key, value)
+list(D.keys())                # zwraca listę kluczy
+list(D.values())              # zwraca listę wartości
+</pre><hr>
+
+<p>Obiekty zwracane przez metody słowników są dynamiczne, to są widoki (views).
+Można po nich iterować, można sprawdzać należenie do obiektu (membership test).
+
+<hr><pre>
+&gt;&gt;&gt; D = { "first" : 1, "second" : 2 }
+&gt;&gt;&gt; ks = D.keys()
+&gt;&gt;&gt; ks
+dict_keys(['second', 'first'])
+&gt;&gt;&gt; D["third"] = 3
+&gt;&gt;&gt; ks
+dict_keys(['second', 'third', 'first'])   # widać zmianę
+&gt;&gt;&gt; 'second' in ks   # membership test
+True
+</pre><hr>
+
+<p>Nie ma metody D.has_key(key), stosuje się konstrukcję key in D.
+
+<p>Występuje konstrukcja słowników składanych (dict comprehension).
+Wydaje się, że można to łatwo zastąpić przez konstrukcję
+z listą par (key, value),
+
+<hr><pre>
+keys = [k1, k2, k3]
+values = [v1, v2, v3]
+D = dict(zip(keys, values))                  # Python 2 i 3
+D = {k: v for (k, v) in zip(keys, values)}   # Python 3 i 2.7
+
+D = {x: x ** 2 for x in [1, 2, 3, 4]}        # Python 3 i 2.7
+D = dict((x, x**2) for x in [1, 2, 3, 4])    # generator w Pythonie 2
+
+D = {x: x*3 for x in "qwerty"}          # Python 3 i 2.7
+D = dict((x, x*3) for x in "qwerty")    # generator w Pythonie 2
+</pre><hr>
+
+</body>
+</html>

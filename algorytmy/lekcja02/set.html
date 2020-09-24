@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zbiory</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Zbiory są dostępne bez importu od Pythona 2.4.
+Są dwa rodzaje wbudowanych zbiorów: set (mutable)
+i frozenset (immutable, hashable).
+Konstrukcja zbiorów bazuje na doświadczeniach z modułem sets.
+Elementy zbioru muszą być hashowalne, tak jak klucze słowników.
+Jeżeli chcemy utworzyć zbiór zbiorów, to wewnętrzne zbiory
+muszą być klasy frozenset.
+
+<pre>
++---------------------------+------------+------------------------+
+| Operacja                  | Równoważne | Wynik                  |
++---------------------------+------------+------------------------+
+|S = set() ; S = frozenset()|            |zbiór pusty             |
+|S = set(iterable)          |            |tworzenie zbioru        |
+|S = frozenset(iterable)    |            |zbiór niezmienny        |
+|len(S)                     |            |liczebność              |
+|for item in S: pass        |            |iteracja                |
+|item in S                  |            |należenie do zbioru     |
+|item not in S              |            |nienależenie do zbioru  |
+|S1.issubset(S2)            |S1 &lt;= S2    |czy S1 jest zawarty w S2|
+|S1.issuperset(S2)          |S1 &gt;= S2    |czy S1 zawiera S2       |
+|S1.union(S2)               |S1 | S2     |suma zbiorów            |
+|S1.union(S2, S3)           |S1 | S2 | S3|suma zbiorów            | Python 2.6+
+|S1.intersection(S2)        |S1 &amp; S2     |iloczyn zbiorów         |
+|S1.intersection(S2, S3)    |S1 &amp; S2 &amp; S3|iloczyn zbiorów         | Python 2.6+
+|S1.difference(S2)          |S1 - S2     |różnica zbiorów         |
+|S1.difference(S2, S3)      |S1 - S2 - S3|różnica zbiorów         | Python 2.6+
+|S1.symmetric_difference(S2)|S1 ^ S2     |(S1-S2)|(S2-S1)         |
+|S1.isdisjoint(S2)          |            |czy puste przecięcie    | Python 2.6+
+|S2 = S1.copy()             |            |shallow copy of S1      |
+|S2 = set(S1)               |            |shallow copy of S1      |
++---------------------------+------------+------------------------+
+</pre>
+
+<p>Operacje dostępne tylko dla mutable sets, ponieważ zbiory
+mogą zmienić swój skład.
+
+<pre>
++----------------------------------+-------------+
+| Operacja                         | Równoważne  |
++----------------------------------+-------------+
+|S1.update(S2)                     |S1 |= S2     |
+|S1.update(S2, S3)                 |S1 |= S2 | S3| Python 2.6+
+|S1.intersection_update(S2)        |S1 &amp;= S2     |
+|S1.intersection_update(S2, S3)    |S1 &amp;= S2 &amp; S3| Python 2.6+
+|S1.difference_update(S2)          |S1 -= S2     |
+|S1.difference_update(S2, S3)      |S1 -= S2 | S3| Python 2.6+
+|S1.symmetric_difference_update(S2)|S1 ^= S2     |
+|S.add(item)                       |             |
+|S.remove(item) [item musi należeć]|             |
+|S.discard(item)                   |             |
+|S.pop() [zbiór niepusty]          |             |
+|S.clear() [zostanie pusty]        |             |
++----------------------------------+-------------+
+</pre>
+
+<p>Porównywanie dwóch zbiorów ma sens, gdy jeden zawiera się w drugim.
+W przeciwnym razie wyjdzie False.
+Zbiory nie implementują metody __cmp__().
+
+<hr><pre>
+# Konstrukcja: set([iterable])
+# Budowanie zbioru z sekwencji.
+X = set("alfa")
+Y = set(["b", "e", "t", "a"])
+print X, Y
+print "iloczyn", X &amp; Y
+print "suma", X | Y
+print "różnica", X - Y
+</pre><hr><pre>
+# Konstrukcja: frozenset([iterable])
+X = frozenset()       # zbiór pusty
+X = frozenset([])     # zbiór pusty
+X = frozenset(["b", "e", "t", "a"])
+X = frozenset("beta")     # jw
+# Przy mieszanych set instances wynik jest typu pierwszego.
+X = frozenset("ab") | set("bc")   # wynik to frozenset
+X = set("bc") | frozenset("ab")   # wynik to set
+# Sprawdzanie: isinstance(x, (set, frozenset))
+set('abc') == frozenset('abc')   # wynik to True
+</pre><hr>
+
+<p>Zbiory można wykorzystać do odfiltrowania duplikatów z listy.
+
+<hr><pre>
+&gt;&gt;&gt; L = [1, 2, 2, 2, 3, 3]
+&gt;&gt;&gt; set(L)
+set([1, 2, 3])
+&gt;&gt;&gt; L = list(set(L))     # [1, 2, 3]
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>SET COMPREHENSION</h3>
+
+<p>Analogicznie do list i słowników od Pythona 2.7 występują zbiory składane.
+
+<hr><pre>
+# UWAGA {} oznacza pusty słownik, a set() to pusty zbiór.
+>>> {1, 3, 1, 4, 5}   # równoważne set([1, 3, 1, 4, 5])
+set([1, 3, 4, 5])
+>>> {s for s in [1, 2, 1, 0]}   # set comprehension
+set([0, 1, 2])
+>>> {s**2 for s in range(10)}
+set([0, 1, 4, 9, 16, 25, 36, 49, 64, 81])
+>>> {s for s in [1, 2, 3] if s % 2}
+set([1, 3])
+>>> {(i, j) for j in range(2) for i in range(3, 5)}
+set([(3, 0), (3, 1), (4, 0), (4, 1)])
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,147 @@
+<html>
+<head>
+<title>Zadania</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zadania</h1>
+
+
+<h3>ZADANIE 1.1 (STRONA DOMOWA PYTHONA)</h3>
+
+<p>Zapoznać się z zawartością strony domowej języka 
+<a href="http://www.python.org/">Python</a>.
+Odnaleźć dokumentację kolejnych wydań Pythona,
+pakiety instalacyjne Pythona dla Linuksa i Windows.
+
+<p>Odnaleźć 
+<a href="http://www.python.org/dev/peps/">Python Enhancement Proposals (PEPs)</a>.
+
+<p>Przeczytać tekst opisujący różnicę między
+<a href="http://wiki.python.org/moin/Python2orPython3/">Pythonem 2 i 3</a>.
+
+<p>Przeczytać esej 
+<a href="http://www.python.org/about/success/esr/">Why Python?</a>
+(Eric S. Raymond).
+
+
+<h3>ZADANIE 1.2 (PYTHON I DEBIAN)</h3>
+
+<p>Na stronie linuksa 
+<a href="http://www.debian.org/">Debian</a>
+znaleźć listę pakietów związanych z językiem Python.
+
+<p>Pakiety Debiana | Zobacz pakiety w dystrybucji stabilnej | Python.
+Pakiet <em>python</em> jest zależny od domyślnej wersji Pythona 
+w Debianie (squeeze ma 2.6, wheezy ma 2.7).
+
+
+<h3>ZADANIE 1.3 (KALKULATOR)</h3>
+
+<p>Wykorzystać interpreter Pythona jako podręczny kalkulator.
+Zwrócić uwagę na zmianę postaci znaku zachęty przy poleceniach
+wielowierszowych.
+
+<hr><pre>
+$ python                      # uruchamiamy pythona interaktywnie
+&gt;&gt;&gt; 23 + 34                    # komentarz jest ignorowany
+57
+&gt;&gt;&gt; _ + 12                     # znak _ (podkreślenie) to ostatni wynik
+69                            # (należy tą zmienną traktować jako read-only)
+&gt;&gt;&gt; a = 2 ; b = 5              # średnik separuje dwa polecenia
+# Znak równości (=) przypisuje wartość do zmiennej.
+# Wynik podstawienia nie jest wypisywany.
+&gt;&gt;&gt; a * b
+10
+&gt;&gt;&gt; 1 + 2 + \                  # w razie potrzeby można linię złamać
+... 4 - 3                     # i kontynuować w następnej (użyty backslash)
+4
+&gt;&gt;&gt; (10 + 12 +                # otwarty nawias "(" lub "[" lub "{" pozwala
+... 13)                     # również kontynuować w następnej linii
+35
+&gt;&gt;&gt; [Ctrl]+[d]                 # lub quit() koniec pracy z pythonem interaktywnie
+$
+</pre><hr>
+
+<p>Korzystanie ze znaku backslash (\) do łamania linii jest odradzane, 
+ponieważ łatwo go przeoczyć czytając kod, 
+co może spowodować jego złe rozumienie.
+
+<p>Zwyczajowo każde polecenie umieszczamy w osobnym wierszu.
+
+<p>W sesji interaktywnej nie ma potrzeby stosowania wyrażenia
+<em>print</em>, ponieważ wyniki wyrażeń są automatycznie
+wyświetlane przez interpreter.
+
+<p>Należy zwracać uwagę na zmianę znaku zachęty w instrukcjach 
+złożonych. W interfejsie IDLE kolejne wiersze instrukcji
+złożonych są automatycznie wcinane.
+
+<p>Instrukcje złożone w sesji interaktywnej kończy się
+pustym wierszem.
+
+<h3>ZADANIE 1.4 (MATEMATYKA)</h3>
+
+<p>Zapoznać się z funkcjami matematycznymi Pythona.
+
+<hr><pre>
+$ python                      # uruchamiamy pythona
+&gt;&gt;&gt; import math      # wczytanie modułu matematycznego
+&gt;&gt;&gt; help(math)       # wyjście z pomocy przez [q]
+&gt;&gt;&gt; help(math.sin)
+&gt;&gt;&gt; math.pi
+3.1415926535897931
+&gt;&gt;&gt; math.sqrt(2) / 2.0 
+0.70710678118654757
+&gt;&gt;&gt; [Ctrl]+[d]       # lub quit()
+$
+</pre><hr>
+
+<p>Sprawdzić różne systemy pomocy.
+
+<h3>ZADANIE 1.5 (SKRYPTY)</h3>
+
+<p>W katalogu <em>python</em> utworzyć plik <em>hello.py</em> postaci:
+
+<hr><pre>
+#!/usr/bin/python
+# -*- coding: iso-8859-2 -*-
+#
+# hello.py
+#
+# Pierwszy program w Pythonie.
+# W pierwszej linii mamy ścieżkę dostępu do interpretera.
+# W drugiej linii informacja o kodowaniu znaków w pliku.
+# Dzięki temu można w pliku stosować polskie znaki w napisach.
+# Po znaku '#' mamy komentarz do końca linii.
+
+print ( "Hello, world!" )   # działa dla Pythona 2 i 3
+</pre><hr><pre>
+# Ustawienie kodowania UTF-8.
+# -*- coding: utf-8 -*-   # styl edytora Emacs
+# coding: utf-8         # to wystarczy
+# coding=utf-8          # to wystarczy
+</pre><hr>
+
+<p>Pierwsze dwa znaki skryptu (#!) nazywane są często
+<em>hash bang</em>.
+
+<p>Uruchomić skrypt kilkoma sposobami.
+
+<hr><pre>
+$ python hello.py
+Hello, world!
+$ chmod a+x hello.py          # nadanie prawa do wykonywania
+$ ./hello.py
+Hello, world!
+</pre><hr>
+
+<p>Sprawdzić pracę różnych edytorów tekstu z podświetlaniem składni:
+mcedit (związany z Midnight Commander), nano, gedit (GNOME), kate (KDE).
+
+<p>Sprawdzić możliwości dużych IDE: PyCharm, Eclipse.
+
+</body>
+</html>

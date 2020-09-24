@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie w Pythonie</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Opis sortowania w Pythonie można znaleźć w Sorting HOWTO
+w dokumentacji Pythona.
+
+<p>Python posiada wbudowaną funkcję <em>sorted()</em>,
+która z obiektu iterowalnego tworzy nową listę posortowaną.
+
+<p>Listy mają wbudowaną metodę do stabilnego sortowania elementów
+IN PLACE. Stosowany algorytm nosi nazwę <em>timsort</em>,
+a stworzył go Tim Peters w roku 2002 [Wikipedia].
+Jest to algorytm hybrydowy, bazujący na merge sort
+i insertion sort. Jest też nazywany algorytmem adaptacyjnym.
+Algorytm <em>timsort</em> jest standardowym algorytmem sortowania
+w Pythonie od wersji 2.3. Stosowany jest także do sortowania macierzy
+w Java SE 7 i na platformie Android.
+
+<hr><pre>
+# Jeżeli L to lista, to mamy wywołanie postaci
+# L.sort(cmp=None, key=None, reverse=False)
+
+L.sort()            # sortowanie listy napisów (duże litery najpierw)
+
+# Potrzebujemy case-insensitive sort.
+# Stary sposób - określamy funkcję porównującą dwa obiekty.
+
+L.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
+
+# Nowy sposób (Python 2.4) - podajemy klucz, czyli jakby sposób 
+# patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
+# Sortowanie jest stabilne.
+
+L.sort(key=str.lower)
+
+# Sortowanie pod względem długości napisów.
+
+L.sort(key=len)
+</pre><hr>
+
+<p>W bardziej złożonych sytuacjach można korzystać ze schematu
+DSU (Decorate, Sort, Undecorate) [Receptury].
+
+<h3>ŁĄCZENIE SEKWENCJI POSORTOWANYCH</h3>
+
+<p>Istnieje ładne rozwiązanie w Recepturach (19.14, s. 737).
+Metoda sort() potrafi skorzystać z faktu, że podsekwencje są
+posortowane. Z drugiej strony, ta metoda działa ogólnie nawet
+dla nieposortowanych podsekwencji.
+
+<hr><pre>
+# Sortowanie przy założeniu, że sekwencje mieszczą się w pamięci.
+def smallmerge(*subsequences):
+    result = []
+    for seq in subsequences:
+        result.extend(seq)
+    result.sort()
+    return result
+</pre><hr>
+
+<p>Jeżeli sekwencje są duże (nie mieszczą się w pamięci),
+to proponowane rozwiązanie korzysta z generatorów i sterty.
+
+<h3>SORTOWANIE OBIEKTÓW WG ATRYBUTÓW</h3>
+
+<hr><pre>
+from operator import attrgetter
+
+class Person:
+
+    def __init__(self, name, money=0):
+        self.name = name
+        self.money = money
+
+    def __repr__(self):
+        return "Person({0!r}, {1})".format(self.name, self.money)
+
+persons = []
+persons.append(Person("Adam", 50))
+persons.append(Person("Edek", 10))
+persons.append(Person("Lolek", 20))
+persons.append(Person("Bolek", 10))
+
+# Sortowanie wg nazwiska.
+persons.sort(key=lambda x: getattr(x, "name"))
+persons.sort(key=attrgetter("name"))
+# [Person('Adam', 50), Person('Bolek', 10), Person('Edek', 10), Person('Lolek', 20)]
+
+# Sortowanie wg zarobków.
+persons.sort(key=lambda x: getattr(x, "money"))
+persons.sort(key=attrgetter("money"))
+# [Person('Edek', 10), Person('Bolek', 10), Person('Lolek', 20), Person('Adam', 50)]
+
+# Sortowanie wg zarobków, potem nazwiska.
+persons.sort(key=lambda x: (getattr(x, "money"), getattr(x, "name")))
+persons.sort(key=attrgetter("money", "name"))
+# Zwraca krotkę (person.money, person.name).
+# [Person('Bolek', 10), Person('Edek', 10), Person('Lolek', 20), Person('Adam', 50)]
+</pre><hr>
+
+</body>
+</html>

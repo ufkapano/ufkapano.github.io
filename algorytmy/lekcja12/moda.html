@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie mody</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moda (dominanta) to element ciągu występujący w nim najczęściej.
+Jeżeli elementy w ciągu nie powtarzają się, to ciąg nie ma mody.
+
+<p>Można spotkać inną definicję, wg której w każdym przypadku istnieje
+moda, choć może nie być wyznaczona jednoznacznie, kilka elementów
+można przyjąć jako modę. Przykładowo dla ciągu różnych elementów
+każdy z nich może być modą.
+
+<h3>WYSZUKIWANIE MODY W ZBIORZE POSORTOWANYM ROSNĄCO</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: 
+Wyszukiwanie mody w rosnącym ciągu liczb.
+
+DANE WEJŚCIOWE
+Rosnący ciąg n liczb umieszczonych w tablicy L. 
+
+DANE WYJŚCIOWE
+Pozycja (indeks) mody w ciągu L.
+Jeżeli w tablicy nie ma mody, to należy to zasygnalizować.
+</pre><hr>
+
+<p>Rozważymy algorytm wyszukiwania mody na liście uporządkowanej
+rosnąco lub malejąco (równe elementy są obok siebie).
+Funkcja zwraca indeks elementu lub None, jeżeli ciąg nie ma mody.
+Złożoność czasowa algorytmu jest liniowa O(n).
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def moda(L, left, right):
+    """Wyszukiwanie mody w ciągu rosnącym lub malejącym."""
+    if left+1 &gt; right:
+        return None
+    i1 = None             # najlepszy kandydat (indeks)
+    number1 = 0           # jego liczebność
+    i2 = left             # bieżący element (indeks)
+    number2 = 1           # jego liczebność
+    while i2 &lt; right:
+        i2 += 1
+        if L[i2] == L[i2-1]:    # jeżeli się powtórzył
+            number2 += 1
+            # na bieżąco uaktualniamy najlepszego kandydata
+            if number2 &gt; number1:  # jest lepszy kandydat
+                number1 = number2
+                i1 = i2
+        else:                   # nowy bieżący element
+            number2 = 1
+    return i1
+</pre><hr>
+
+<h3>WYSZUKIWANIE MODY W ZBIORZE NIEUPORZĄDKOWANYM</h3>
+
+<p>Metoda bezpośrednia (naiwna) wyszukiwania mody polega na
+przeglądaniu kolejnych elementów zbioru i tworzenia dla nich
+licznika wystąpień. Złożoność jest rzędu O(n^2).
+
+<p>Inna metoda polega na posortowaniu zbioru wybranym algorytmem
+zaawansowanym o złożoności O(n*log(n)), a następnie
+wyszukaniu mody w tym zbiorze uporządkowanym ze złożonością O(n).
+
+<p>Wreszcie można stworzyć licznik wystąpień za pomocą słownika
+(tablicy hashowalnej), co daje złożoność O(n).
+
+</body>
+</html>

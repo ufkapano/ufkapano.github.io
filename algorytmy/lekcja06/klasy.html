@@ -1,0 +1,191 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tworzenie klas</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W matematyce punkt na płaszczyźnie można zapisać za pomocą
+pary dwóch współrzędnych <em>(x, y)</em>.
+W Pythonie naturalnym sposobem reprezentacji będzie para liczb
+typu <em>float</em>. Chcemy taką parę traktować jako jeden 
+złożony obiekt. Przykładowym rozwiązaniem jest lista lub krotka,
+ale zwykle lepsze jest zdefiniowanie nowego typu, inaczej <em>klasy</em>.
+Składnia (dwukropek i wcięcia) jest taka jak dla innych wyrażeń złożonych
+w Pythonie. Nazewnictwo klas powinno być typu StudlyCups.
+
+<p>Instrukcja wykonywalna <em>class</em> tworzy obiekt klasy 
+i przypisuje go do nazwy. Zakres instrukcji <em>class</em>
+staje się przestrzenią nazw atrybutów obiektu klasy.
+Atrybuty klasy udostępniają stan obiektu i jego zachowanie.
+
+<p>Wywołanie obiektu klasy tworzy za każdym razem nowy
+obiekt instancji klasy.
+Każdy obiekt instancji dziedziczy atrybuty klasy oraz otrzymuje
+własną przestrzeń nazw.
+Przypisania do atrybutów <em>self</em> w metodach tworzą
+atrybuty instancji (a nie klasy).
+
+
+<hr><pre>
+# Składnia.
+class NazwaKlasy:
+    class_docstring       # opcjonalnie
+    instrukcje
+
+class NazwaKlasy(lista_klas_nadrzędnych):
+    class_docstring       # opcjonalnie
+    instrukcje
+</pre><hr><pre>
+class Point:                  # instrukcja tworząca obiekt klasy
+    """Klasa odpowiadająca punktom na płaszczyźnie."""
+    pass                  # wymagana jakaś instrukcja
+
+point = Point()               # tworzenie obiektu instancji klasy
+# Uwaga: nawiasy pokazują, że jest to wywołanie klasy.
+
+# Do punktu (instancji) przypisujemy atrybuty korzystając z notacji z kropką.
+point.x = 3.4
+point.y = 5.6
+x = 7.8
+
+# Zmienne x i point.x to dwie różne wartości.
+# Instancja point jest osobną przestrzenią nazw.
+print ( "{} {}".format(x, point.x) )     # 7.8 3.4
+print ( point )                  # heksadecymalne info
+
+# Obiekt może być parametrem funkcji w zwykły sposób.
+# Nazwa point wewnątrz funkcji jest lokalna i nie koliduje
+# z globalną zmienną point.
+
+def print_point(point):
+    """Wypisz punkt."""
+    print ("({}, {})".format(point.x, point.y))
+
+# Wywołujemy funkcję dla punktu. Do funkcji przekazujemy wartość
+# zmiennej point, czyli referencję do obiektu.
+
+print_point(point)            # (3.4, 5.6)
+</pre><hr>
+
+<h3>PORÓWNYWANIE OBIEKTÓW</h3>
+
+<p>Są sytuacje, w których trzeba dobrze rozumieć co to znaczy, że
+dwa obiekty są "te same" czy "takie same".
+
+<hr><pre>
+point1 = Point()              # pierwszy punkt
+point1.x = 3
+point1.y = 4
+
+point2 = Point()              # drugi punkt
+point2.x = 3
+point2.y = 4
+
+print ( point1 == point2 )    # False, to nie są te same obiekty, inne id
+point3 = point1               # kopiujemy referencję
+print ( point1 == point3 )    # True,  to jest porównywanie referencji
+
+# Taki typ równości nazywa się shallow equality (płytka, powierzchowna równość).
+# Aby porównać zawartość obiektów (deep equality, głęboka równość),
+# możemy napisać funkcję.
+
+def same_point(point1, point2):
+    """Porównaj punkty."""
+    return (point1.x == point2.x) and (point1.y == point2.y)
+
+print ( same_point(point1, point2) )    # True, te same wartości x i y
+print ( same_point(point1, point3) )    # True, oczywiste
+</pre><hr>
+
+<h3>KOMPOZYCJA</h3>
+
+<p>Chcemy stworzyć klasę do reprezentowania prostokąta.
+Zakładamy dla prostoty, że boki prostokąta są równoległe do osi X i Y.
+Będziemy określać lewy dolny róg prostokąta, szerokość (width)
+i wysokość (height).
+
+<hr><pre>
+class Point:
+    """Klasa dla punktów."""
+    pass
+
+class Rectangle:
+    """Klasa dla prostokątów."""
+    pass
+
+box = Rectangle()
+box.width = 100.0
+box.height = 200.0
+box.corner = Point()          # obiekt Point jest zagnieżdżony w obiekcie Rectangle
+box.corner.x = 0.0            # określamy atrybuty punktu
+box.corner.y = 0.0
+
+# Nowe instancje klas mogą powstawać wewnątrz funkcji.
+
+def find_center(rect):        # zwraca instancję punktu
+    """Znajdź środek prostokąta.."""
+    point = Point()
+    point.x = rect.corner.x + rect.width / 2.0
+    point.y = rect.corner.y + rect.height / 2.0
+    return point          # referencja do nowego obiektu
+
+center = find_center(box)
+print_point(center)           # (50.0, 100.0)
+
+# Możemy zmieniać stan obiektu przez podstawienia jego atrybutów.
+# Zapiszemy to wewnątrz funkcji, która pozwala na powiększanie prostokąta.
+
+def grow_rect(rect, dw, dh):            # funkcja zmienia oryginał
+    """Powiększ prostokąt."""
+    rect.width = rect.width + dw
+    rect.height = rect.height + dh
+</pre><hr>
+
+<h3>KOPIOWANIE OBIEKTÓW</h3>
+
+<p>Często potrzebna jest nam operacja kopiowania obiektu, która
+czasem powiązana jest z tworzeniem aliasu.
+Istnieje moduł <em>copy</em>, który potrafi kopiować każdy obiekt.
+
+<hr><pre>
+import copy
+
+point1 = Point()
+point1.x = 3
+point1.y = 4
+point2 = copy.copy(point1)
+print ( point1 == point2 )             # False, inne referencje
+print ( same_point(point1, point2) )   # True, te same wartości x i y
+</pre><hr>
+
+<p>Dla obiektów prostych jak Point, które nie mają zagnieżdzonych innych
+obiektów, zwykłe <em>copy.copy()</em> jest wystarczające (shallow copy).
+Ale dla obiektu Rectangle, który zawiera referencję do Point,
+<em>copy.copy()</em> nie robi tego, czego oczekujemy.
+Jeżeli stworzymy prostokąt <em>rect1</em>, a następnie za pomocą
+<em>copy.copy()</em> zrobimy kopię <em>rect2</em>, to okaże się, że
+<em>rect1</em> i <em>rect2</em> zawierają referencję do tego samego punktu
+(<em>rect1.corner</em> jest identyczny z <em>rect2.corner</em>).
+Rozwiązaniem jest głęboka kopia (deep copy). Wykorzystamy ją do
+przepisania funkcji <em>grow_rect()</em> tak, aby zwracała nowy obiekt 
+klasy Rectangle, który jest w tym samym położeniu, ale ma nowe wymiary.
+
+<hr><pre>
+def grow_rect2(rect, dw, dh):          # zwraca nowy obiekt
+    """Zwróć powiększony prostokąt."""
+    import copy
+    rect2 = copy.deepcopy(rect)
+    rect2.width = rect2.width + dw
+    rect2.height = rect2.height + dh
+    return rect2
+</pre><hr>
+
+
+</body>
+</html>

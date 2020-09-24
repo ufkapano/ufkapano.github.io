@@ -1,0 +1,246 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wyszukiwanie mediany</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Mediana zbioru jest środkowym elementem tego zbioru
+po jego uporządkowaniu. 
+Jeżeli zbiór zawiera nieparzystą liczbę n elementów, 
+to ma jeden element środkowy na pozycji i=(n+1)//2
+i jest on medianą tego zbioru.
+Jeżeli zbiór zawiera parzystę liczbę n elementów,
+to zbiór ma dwie mediany na pozycjach
+i=n//2 (mediana dolna) oraz i=n//2+1 (mediana górna).
+W praktyce za medianę przyjmuje się na ogół medianę dolną.
+
+<p>Prosta metoda znajdowania mediany polega na posortowaniu
+zbioru i wybraniu elementu środkowego.
+Lepszy algorytm jest opisany w [BK1982].
+
+<p>Nie wiadomo dokładnie, ile porównań jest potrzebnych do znalezienia
+mediany. 
+W pracy [BFPRT1973] podano dolne ograniczenie równe 3n//2-2 porównań.
+Bent i John [BJ1985] podali dolną granicę 2n porównań.
+Górną granicę 3n podali Schonhage, Paterson i Pippenger [SPP1976].
+
+<p>Wybrane algorytmy znajdowania mediany.
+
+<ul>
+
+<li>Algorytm Hoare'a, pomysł podobny jak w quicksort.
+Złożoność pesymistyczna O(n^2), średnia złożoność O(n).
+Inna nazwa algorytmu to quickselect.
+
+<li>Algorytm magicznych piątek (Blum, Floyd, Pratt, Rivest, Tarjan, 1973).
+Złożoność pesymistyczna O(n).
+Inna nazwa algorytmu to mediana median (ang. median of medians).
+
+<li>Algorytm selekcji Floyda-Rivesta (1975), złożoność pesymistyczna O(n),
+liczba porównań n + min(k, n-k) + O(n^(1/2)), co dla mediany daje
+O(3n/2) porównań.
+
+</ul>
+
+<h3>MEDIANA KROCZĄCA</h3>
+
+<p>Dla pewnego strumienia danych liczbowych możemy chcieć na bieżąco
+raportować element środkowy z ostatnich n elementów ze strumienia.
+Jest to mediana krocząca, którą chcemy obliczać w czasie O(log n),
+gdzie n jest szerokością okna danych.
+Zalecaną strukturą danych w tym przypadku jest indeksowana
+lista z przeskokami.
+
+<p>https://en.wikipedia.org/wiki/Skip_list
+
+<h3>ALGORYTM HOARE'A</h3>
+
+<p>Algorytm jest oparty na tym samym pomyśle, co algorytm sortowania
+quicksort. Wersja wg Cormena.
+
+<hr><pre>
+def swap(L, left, right):
+    """Zamiana miejscami elementów."""
+    tmp = L[left]
+    L[left] = L[right]
+    L[right] = tmp
+
+def partition(L, left, right):
+    """Zwraca indeks elementu rozdzielającego."""
+    # Element rozdzielający to ostatni z prawej,
+    # dlatego na końcu trzeba go przerzucić do środka.
+    # Będzie on na docelowej pozycji ze względu na sortowanie.
+    x = L[right]   # element rozdzielający
+    i = left
+    for j in range(left, right):
+        if L[j] &lt;= x:
+            swap(L, i, j)
+            i += 1
+    swap(L, i, right)
+    return i
+
+def quicksort(L, left, right):
+    """Sortowanie szybkie wg Cormena str. 169."""
+    if left >= right:
+        return
+    pivot = partition(L, left, right)
+    # pivot jest na swoim miejscu
+    quicksort(L, left, pivot - 1)
+    quicksort(L, pivot + 1, right)
+
+def select(L, left, right, k):
+    """Selekcja na bazie Cormena."""
+    if (right-left+1) &lt; k:
+        raise ValueError("k is too large")
+    if left == right and k == 1:
+        return L[left]
+    pivot = partition(L, left, right)
+    # pivot jest na swoim miejscu
+    k2 = pivot - left + 1
+    if k == k2:
+        return L[pivot]
+    elif k &lt; k2:
+        return select(L, left, pivot - 1, k)
+    else:
+        return select(L, pivot + 1, right, k - k2)
+</pre><hr>
+
+<p>Algorytm selekcji Hoare'a ma pesymistyczną złożoność O(n^2),
+tak jak quicksort. Ale średnia liczba porównań nie przekracza 4n,
+co daje średnią złożoność O(n).
+Zauważmy, że w algorytmie selekcji tylko jedno zadanie jest wykonywane
+rekurencyjnie, a w quicksort są to dwa zadania.
+
+<h3>ALGORYTM MAGICZNYCH PIĄTEK</h3>
+
+<p>Algorytm stosuje technikę <em>dziel i zwyciężaj</em>.
+Kluczowy jest dobry wybór punktu podziału, przy którym stała część
+elementów będzie poniżej i powyżej niego.
+Takim dobrym punktem podziału jest mediana zbioru.
+
+<hr><pre>
+def select_five(L, left, right, k):
+    # 1. Jeżeli jest mało elementów, to sortuj.
+    # p powinno być co najmniej 5, aby ustawiło się i &gt; 0.
+    p = 5   # może być kilkadziesiąt
+    if (right-left+1) &lt; p:
+        insertsort(L, left, right)
+        return left+k-1   # zwracam indeks
+    # 2. Podziel listę na 5-elementowe podzbiory, najwyżej jeden 4-elementowy.
+    # 3. Posortuj podzbiory.
+    left2 = left
+    right2 = left + 4
+    i = left   # pierwszy wolny
+    while right2 &lt;= right:
+        insertsort(L, left2, right2)
+        # Przerzucamy mediany na początek tablicy.
+        swap(L, i, left2+2)
+        i += 1
+        left2 += 5
+        right2 += 5
+    # Tu można posortować zbiory mniej niż 5-elementowe.
+    if right2 == right+1 or right2 == right+2:
+        insertsort(L, left2, right)
+        swap(L, i, left2+1)
+        i += 1
+    # 5. Wyznaczamy medianę median rekurencyjnie.
+    median_idx = select_five(L, left, i-1, (i-left+1) // 2)
+    # 6. Dalej jak Hoare, mediana będzie punktem podziału.
+    swap(L, median_idx, right)   # element podzialu na prawo
+    pivot = partition(L, left, right)
+    k2 = pivot - left + 1
+    if k == k2:
+        return pivot   # zwracam indeks
+    elif k &lt; k2:
+        return select_five(L, left, pivot-1, k)
+    else:
+        return select_five(L, pivot+1, right, k-k2)
+</pre><hr>
+
+<p>Niech T(n) oznacza złożoność czasową algorytmu.
+Wykonanie algorytmu składa się z trzech etapów.
+(1) Znajdowanie median piątek w czasie O(n).
+(2) Znajdowanie rekurencyjne mediany median w czasie T(n/5).
+(3) Wykonania rekurencyjnego w czasie T(3n/4). 
+To ostatnie oszacowanie wynika z faktu, że przynajmniej 1/4 elementów 
+jest nie większa od mediany median M (lewa górna ćwiartka),
+a więc 3/4 elementów jest większa lub równa M. 
+Podobnie przynajmniej 1/4 elementów jest nie mniejsza od M 
+(prawa dolna ćwiartka), czyli 3/4 elementów jest mniejsza lub równa M.
+Wygodnie jest to pokazać na rysunku.
+
+<hr><pre>
+. elementy mniejsze lub równe M (mediana median)
+. [nie mniej niż n/4]]
+. ( )  ( )  ( )  ( )  ( )| ( )  ( )  ( )  ( )
+. |/\  |/\  |/\  |/\  |/\| |/\  |/\  |/\  |/\
+. ( )  ( )  ( )  ( )  ( )| ( )  ( )  ( )  ( )
+. |/\  |/\  |/\  |/\  |/\| |/\  |/\  |/\  |/\
+.                    +---|--------------------
+. ( )&lt;=( )&lt;=( )&lt;=( )&lt;=(M)&lt;=( )&lt;=( )&lt;=( )&lt;=( )
+. -------------------|---+
+. |/\  |/\  |/\  |/\ ||/\  |/\  |/\  |/\  |/\
+. ( )  ( )  ( )  ( ) |( )  ( )  ( )  ( )  ( )
+. |/\  |/\  |/\  |/\ ||/\  |/\  |/\  |/\  |/\ elementy większe lub równe M
+. ( )  ( )  ( )  ( ) |( )  ( )  ( )  ( )  ( ) [nie mniej niż n/4]
+</pre><hr>
+
+<p>Całkowite oszacowanie ma postać T(n) &lt;= O(n) + T(n/5) + T(3n/4),
+co daje rozwiązanie postaci T(n) = O(n).
+Kluczowa jest nierówność 1/5 + 3/4 = 19/20 &lt; 1.
+
+<p>Zamiast podziału na zbiory 5-elementowe mozna zrobić podziały
+na zbiory 7-elementowe, co nie zmieni idei algorytmu.
+Istotne jest uzyskanie oszacowania
+T(n) &lt;= O(n) + T(an) + T(bn), gdzie a+b &lt; 1, co daje
+całkowity czas T(n) = O(n/(1-a-b)).
+Na koniec zauważmy, że w typowych przypadkach szybszy jest
+quickselect ze względu na prostszy kod.
+
+<h3>REFERENCJE</h3>
+
+<ul>
+
+<li>[BK1982] L. Banachowski, A. Kreczmar,
+<em>Elementy analizy algorytmów</em>,
+Wydawnictwa Naukowo-Techniczne, Warszawa 1982.
+
+<li>[BJ1985] W. Bent, J. W. John, 
+<em>Finding the median requires 2n comparisons.</em>
+In: <em>Proceedings of the 17th Annual ACM Symposium on Theory 
+of Computing</em>, pp. 213-216 (1985).
+
+<li>[SPP1976] A. Schonhage, M. Paterson, N. Pippenger,
+<em>Finding the median. </em>
+Journal of Computer and System Sciences 13, 184-199 (1976).
+[Abstract: An algorithm is described which determines the median 
+of n elements using in the worst case a number of comparisons 
+asymptotic to 3n.]
+
+<li>[BFPRT1973] M. Blum, R. W. Floyd, V. R. Pratt, R. L. Rivest, R. E. Tarjan,
+<em>Time bounds for selection. </em>
+Journal of Computer and System Sciences 7, 448-461 (1973).
+
+<li>Wikipedia, Median of medians,
+https://en.wikipedia.org/wiki/Median_of_medians
+
+<li>Wikipedia, Quickselect,
+https://en.wikipedia.org/wiki/Quickselect
+
+<li>Wikipedia, Floyd-Rivest algorithm,
+https://en.wikipedia.org/wiki/Floyd-Rivest_algorithm
+
+<li>David Eppstein, ICS 161: Design and Analysis of Algorithms
+Lecture notes for January 30, 1996,
+http://www.ics.uci.edu/~eppstein/161/960130.html
+
+</ul>
+
+</body>
+</html>

@@ -1,0 +1,282 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduły programistyczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Podstawowym sposobem umieszczania kodu samosprawdzającego
+moduł Pythona jest wykorzystanie zmiennej <em>__name__</em>.
+Bardziej zaawansowane narzędzia testujące oferują moduły
+<em>doctest</em> i <em>unittest</em> z biblioteki standardowej.
+Moduł <em>unittest2</em> to backport nowych możliwości z Pythona 2.7
+do Pythona 2.4-2.6.
+Moduły <em>nose</em> i <em>pytest</em> to third-party unittest frameworks 
+with a lighter-weight syntax for writing tests.
+
+<h3>MODUŁ doctest</h3>
+
+<hr><pre>
+import doctest
+
+def average(values):
+    """Oblicza średnią arytmetyczną listy liczb.
+    &gt;&gt;&gt; print ( average([20, 30, 70]) )
+    40.0
+    """
+    return sum(values, 0.0) / len(values)
+
+doctest.testmod()   # automatyczne sprawdzanie wbudowanych testów
+</pre><hr>
+
+<h3>MODUŁ unittest</h3>
+
+<p>Moduł wspiera automatyzację testów, grupowanie testów w kolekcje,
+niezależność testów od reporting framework.
+Moduł dostarcza klasy, które ułatwiają te zadania.
+Ważne pojęcia:
+
+<ul>
+<li>test fixture - reprezentuje przygotowania potrzebne do przeprowadzenia
+testów, różne akcje czyszczące.
+<li>test case - najmniejsza jednostka testowania, 
+sprawdza konkretny wynik dla danego wejścia.
+<li>test suite - kolekcja test cases lub test suites.
+<li>test runner - zarządza testami i prezentuje wyniki użytkownikowi.
+</ul>
+
+<p>Testy tworzymy w klasach wywiedzionych z unittest.TestCase.
+Jednostką testowania (test case) jest metoda bez parametrów,
+o nazwie rozpoczynającej się od "test", 
+która ma sprawdzać jedną konkretną rzecz dotyczącą kodu.
+Test ma być przeprowadzony automatycznie, ma być niezależny
+od innych testów, a wynik ma być automatycznie zinterpretowany.
+
+<p>Testy mogą być grupowane w zestawach (test suits),
+typowy zestaw tworzą metody z jednej klasy wywiedzionej z unittest.TestCase.
+
+
+<p>Poniżej mamy przykład prostego modułu zawierającego funkcję
+average() do obliczania średniej arytmetycznej listy liczb.
+Kod testujący funkcję został umieszczony w tym samym module.
+Kod testujący zostanie wykonany, jeżeli moduł zostanie uruchomiony
+jako moduł główny.
+
+<p>W praktyce kod testujący moduł zwykle umieszcza się w osobnym pliku.
+Testy dla modułu <em>spam.py</em> umieszcza się w pliku <em>test_spam.py</em>.
+Często testy (pliki <em>test_*.py</em>) umieszcza się w osobnym
+katalogu tests.
+
+<hr><pre>
+import unittest
+
+def average(values):
+    """Oblicza średnią arytmetyczną listy liczb."""
+    return sum(values, 0.0) / len(values)
+
+# testcase tworzymy przez dziedziczenie z unittest.TestCase.
+# Kolejne testy to metody w klasie o nazwach zaczynających się
+# od "test" (to jest konwencja dla test runnera).
+# W każdej metodzie kluczowe jest zastosowanie funkcji:
+
+# assertEqual(first, second, msg=None)
+# - sprawdzanie wyniku,
+# msg to komunikat do wypisania przy wystąpieniu błędu;
+
+# assertAlmostEqual(first, second, places=7, msg=None)
+# - sprawdzanie wyniku typu float z domyślną dokładnością 7 cyfr;
+
+# assertNotEqual(first, second, msg=None)
+# - sprawdzanie wyniku;
+
+# assertNotAlmostEqual(first, second, places=7, msg=None)
+# - sprawdzanie wyniku;
+
+# assertTrue(expr, msg=None)
+# - sprawdzanie wartości logicznej;
+
+# assertFalse(expr, msg=None)
+# - sprawdzanie wartości logicznej;
+
+# assertRaises(exception, callable, ...)
+# - sprawdzenie wystąpienia spodziewanego wyjątku;
+
+# assertRaises(exception, func, *args, **keywords) 
+# - sprawdzenie wyjątku func(*args, **keywords)
+
+class TestStatisticalFunctions(unittest.TestCase):
+
+    # Można określić czynności przygotowawcze.
+    def setUp(self): pass
+
+    # Dla poprawnych danych wejściowych nie ma prawa pojawić się wyjątek.
+    def test_average_good(self):
+        # Nie wstawiamy docstringu.
+        self.assertEqual(average([20, 30, 70]), 40.0)
+        self.assertEqual(round(average([1, 5, 7]), 1), 4.3)
+
+    # Nieprawidłowe dane powinny generować konkretny wyjątek.
+    def test_average_bad(self):
+        # Nie wstawiamy docstringu.
+        self.assertRaises(ZeroDivisionError, average, [])
+        self.assertRaises(TypeError, average, 20, 30, 70)
+
+    # Końcowe czynności czyszczące.
+    def tearDown(self): pass
+
+# Załóżmy, że mamy w danym module zdefiniowane inne funkcje.
+# Przygotowujemy nową klasę do testowania tych funkcji.
+
+class TestOtherFunctions(unittest.TestCase):
+
+    def test_other(self):
+        pass
+
+# Prosty sposób uruchomienia wszystkich testów z obu klas
+# TestStatisticalFunctions i TestOtherFunctions.
+
+if __name__ == '__main__':
+    unittest.main()     # włącza wszystkie testy
+    #unittest.main(verbosity=2)    # Python 2.7, więcej informacji
+</pre><hr><pre>
+# Zakładamy, że istnieje tylko klasa TestStatisticalFunctions.
+# Uruchomienie testów, przy którym dostajemy więcej informacji.
+# Mamy możliwość wyboru testów.
+
+if __name__ == '__main__':
+    suite = unittest.TestLoader().loadTestsFromTestCase(TestStatisticalFunctions)
+    unittest.TextTestRunner(verbosity=2).run(suite)
+</pre><hr><pre>
+# Przy wielu klasach z testami możemy wybierać, z których klas
+# mają pochodzić testy.
+
+if __name__ == '__main__':
+    suite1 = unittest.TestLoader().loadTestsFromTestCase(TestStatisticalFunctions)
+    suite2 = unittest.TestLoader().loadTestsFromTestCase(TestOtherFunctions)
+    #suite = unittest.TestSuite([suite1, suite2])  # wszystkie testy
+    suite = unittest.TestSuite([suite2])           # wybrany zestaw testów
+    unittest.TextTestRunner(verbosity=2).run(suite)
+</pre><hr><pre>
+# Możemy ręcznie wstawiać nazwy testów do zestawu.
+
+if __name__ == '__main__':
+    suite = unittest.TestSuite()    # pusty zestaw testów
+    suite.addTest(TestStatisticalFunctions("test_average_good"))
+    unittest.TextTestRunner(verbosity=2).run(suite)
+</pre><hr><pre>
+# Przykład z książki Turnquista.
+# Zakładamy, że istnieje tylko klasa TestStatisticalFunctions.
+# Nazwy testów podajemy w wierszu poleceń:
+# python skrypt.py test_name1 test_name2 ...
+
+if __name__ == '__main__':
+    import sys
+    suite = unittest.TestSuite()
+    if len(sys.argv) == 1:
+        suite = unittest.TestLoader().loadTestsFromTestCase(
+            TestStatisticalFunctions)
+    else:
+        for test_name in sys.argv[1:]:
+            suite.addTest(TestStatisticalFunctions(test_name))
+    unittest.TextTestRunner(verbosity=2).run(suite)
+</pre><hr>
+
+<p>Przykład tworzenia testów dla funkcji konwertujących liczby
+zapisane w systemie rzymskim można znaleźć w książce
+Marka Pilgrima <em>Dive Into Python</em>, 
+dostępną za darmo pod adresem
+<em>http://www.diveintopython.net/</em>.
+
+<h3>MODUŁ timeit</h3>
+
+<p>Moduł służy do testowania czasu wykonania małych kawałków kodu.
+Do testowania większych bloków kodu: profile, pstats.
+
+<p>Głównym elementem modułu jest klasa Timer(stmt="pass", setup="pass").
+<br>Metoda repeat(self, repeat=3, number=1000000) - 
+wywołanie timeit() kilka razy (zwraca listę wyników).
+<br>Metoda timeit(self, number=1000000) - 
+najpierw następuje pojedyncze wykonanie poleceń z setup, 
+a potem number wykonań stmt.
+
+
+<hr><pre>
+import timeit
+# help(timeit)
+
+# Często przydaje się średnik do rozdzielania poleceń.
+t1 = timeit.Timer(stmt="t=a ; a=b ; b=t", setup="a=1 ; b=2")
+t2 = timeit.Timer(stmt="(a,b) = (b,a)", setup="a=1 ; b=2")
+print ( t1.timeit() )         # domyślnie milion wykonań
+print ( t2.timeit() )
+print ( t2.repeat(5) )        # zwraca listę 5 wyników
+print ( min(t2.repeat(10)) )  # to jest zwykle miarodajne, a nie średnia
+</pre><hr><pre>
+import timeit
+
+# Można budować polecenia wielowierszowe.
+s = """\
+pierwszy wiersz
+drugi wiersz
+"""
+t = timeit.Timer(stmt=s)
+print ( t.timeit() )
+</pre><hr><pre>
+import random
+import timeit
+
+def mysort(L, left, right):
+    L[left: right+1] = sorted(L[left: right+1])
+
+lista = range(1000)
+random.shuffle(lista)
+
+t1 = timeit.Timer(stmt="mysort(lista, 0, len(lista)-1)", 
+                  setup="from __main__ import mysort, lista")
+
+print ( t1.timeit(1) )        # pojedyncze wykonanie
+</pre><hr><pre>
+# Od Pythona 2.6 można przekazywać obiekty callable bez argumentów.
+
+import random
+import timeit
+
+def mysort(L, left, right):
+    L[left: right+1] = sorted(L[left: right+1])
+
+lista = range(1000)
+random.shuffle(lista)
+
+t1 = timeit.Timer(lambda: mysort(lista, 0, len(lista)-1))
+
+print ( t1.timeit(1) )        # pojedyncze wykonanie
+</pre><hr>
+
+<h3>MODUŁ enum</h3>
+
+<p>Typ Enum został dodany do Pythona 3.4
+(PEP 0435 -- Adding an Enum type to the Python standard library).
+
+<hr><pre>
+from enum import Enum
+# from enum import IntEnum   # można porównywać z int
+
+class Color(Enum):
+    red = 1
+    green = 2
+    blue = 3
+
+for c in Color:
+    print(c)
+# Color.red
+# Color.green
+# Color.blue
+</pre><hr>
+
+</body>
+</html>

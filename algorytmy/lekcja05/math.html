@@ -1,0 +1,237 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduły matematyczne</h1>
+
+<h3>MODUŁ math</h3>
+
+<p>Moduł jest otoczką dla biblioteki <em>math</em> z języka C.
+
+<hr><pre>
+import math
+
+# Wybrane funkcje matematyczne, zwykle zwracają float.
+# dir(math) - lista obiektów.
+# help(math) - opisy obiektów.
+
+# Zaokrąglanie.
+# math.ceil(x) - the smallest integer value greater than or equal to x.
+# math.floor(x) - the largest integer value less than or equal to x.
+# math.trunc(x) - int bliżej zera (Python 2.6+).
+# Python 2: ceil() and floor() return float
+# Python 3: ceil() and floor() return int
+
+# Potęgi i logarytmy.
+# math.exp(x) - inaczej e ** x
+# math.log(x) - logarytm naturalny ln(x).
+# math.log(x, base) - inaczej math.log(x)/math.log(base) (Python 2.3+)
+# math.log1p(x) - oznacza math.log(1 + x),
+# lepsze dla małych x (Python 2.6+)
+# math.log10(x) - dokładniajsze niż math.log(x, 10).
+# math.pow(x, y) - oznacza x ** y
+# math.sqrt(x) - pierwiastek kwadratowy.
+
+# Funkcje trygonometryczne.
+# math.sin(x), math.cos(x), math.tan(x),
+# math.asin(x), math.acos(x), math.atan(x),
+# math.sinh(x), math.cosh(x), math.tanh(x),
+# math.asinh(x), math.acosh(x), math.atanh(x), (Python 2.6)
+
+# math.hypot(x, y) - oznacza math.sqrt(x*x + y*y), norma euklidesowa.
+# math.fabs(x) - wartość bezwzględna float.
+# math.radians(x) - zamiana stopni na radiany.
+# math.degrees(x) - zamiana radiany na stopnie.
+
+print ( math.pi )             # 3.141592... stała matematyczna
+print ( math.e )              # 2.718281...  stała matematyczna
+print ( math.hypot(3, 4) )    # 5.0 float
+
+# Nowe funkcje z Pythona 2.6.
+# math.factorial(x) - silnia.
+# math.fsum(iterable) - suma float bez (dużej) utraty precyzji.
+# Nieskończoności: float("inf"), float("-inf"), math.inf [Python 3.5+]
+# A floating-point "not a number" (NaN) value:
+# float("nan"), math.nan [Python 3.5+]
+# math.isinf(x) - Check if the float x is positive or negative infinity.
+# math.isnan(x) - Check if the float x is a NaN (not a number).
+
+math.factorial(16)            # 20922789888000L
+
+sum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
+# 0.99999999999999989   gubimy precyzję
+
+math.fsum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
+# 1.0   jest dokładniej
+
+# Nowe funkcje z Pythona 2.7.
+# math.erf(x) - the error function.
+# math.erfc(x) - the complementary error function.
+# math.expm1(x) - dokładniejsze niż math.exp(x)-1.
+# math.gamma(x) - the Gamma function.
+# math.lgamma(x) - the natural log of the Gamma function.
+</pre><hr>
+
+<h3>MODUŁ random</h3>
+
+<hr><pre>
+import random
+
+# Liczba przypadkowa z przedziału [0, 1).
+print ( random.random() )
+
+# Liczba przypadkowa całkowita z przedziału [start, stop].
+# Oba końce są włączone, co jest nietypowe dla Pythona.
+# random.randint(start, stop)
+print ( random.randint(1, 6) )
+
+# Liczba przypadkowa całkowita z przedziału [start, stop).
+# random.randrange(start, stop=None, step=1)
+print ( random.randrange(1, 7) )
+
+# Wybór przypadkowego elementu z niepustej sekwencji.
+# random.choice(sequence)
+# To samo co
+# sequence[int(random.random() * len(sequence))]
+print ( random.choice(["jeden", "dwa", "trzy"]) )
+
+# Wymieszanie danej listy IN PLACE w czasie O(n) (Fisher-Yates shuffle).
+# L = range(100)
+# random.shuffle(L)
+# To shuffle an immutable sequence and return a new shuffled list,
+# use random.sample(L, k=len(L)) instead.
+
+# Chooses k unique random elements from a population sequence.
+# Zwraca nową listę, population zostaje bez zmiany.
+# population może zawierać powtórzenia, które mogą pojawić się
+# w wynikowej liście. Elementy nie muszą być hashable.
+# population może być generatorem, będzie to wydajne.
+# random.sample(population, k)
+print ( random.sample(xrange(1000), 100) )
+</pre><hr>
+
+<h3>MODUŁ decimal</h3>
+
+<hr><pre>
+import decimal
+
+x = decimal.Decimal("0.1")
+y = decimal.Decimal("0.3")
+z = 3*x-y                     # Decimal('0.0')
+print ( z )                   # 0.0
+print ( 3 * 0.1 - 0.3 )       # 5.5511151231257827e-17
+
+# Ustawienie precyzji przydatne w aplikacjach finansowych.
+print ( 1999 + 1.33 )                   # 2000.3299999999999
+decimal.getcontext().prec = 2
+pay = decimal.Decimal(str(1999 + 1.33)) # Decimal('2000.33')
+print ( pay )                           # 2000.33
+</pre><hr>
+
+<h3>MODUŁ fractions</h3>
+
+<hr><pre>
+from fractions import Fraction
+
+u1 = Fraction(2, 3)           # Fraction(2, 3)
+print ( u1 )                  # 2/3
+print ( u1.numerator )        # 2, licznik
+print ( u1.denominator )      # 3, mianownik
+u2 = Fraction(2, 8)           # Fraction(1, 4)
+
+# Konwersja z float do Fraction.
+u2 = Fraction("0.25")         # Fraction(1, 4)
+print ( u2 )                  # 1/4
+u3 = u1 / u2                  # Fraction(4, 3)
+u4 = Fraction("1.5")          # Fraction(3, 2)
+u4 = Fraction.from_float(1.5) # Fraction(3, 2)
+# Stosowanie metody float.as_integer_ratio() może prowadzić
+# do pewnej utraty precyzji.
+T = (2.5).as_integer_ratio()            # (5, 2), krotka liczb int
+u5 = Fraction(*T)             # rozpakowanie krotki
+
+# Konwersja z Fraction do float.
+f1 = float(u5)                # 2.5, zwykły sposób
+
+# Python 2.7
+# Konwersja ze stringu.
+Fraction("314")               # Fraction(314, 1)
+Fraction("2/3")               # Fraction(2, 3)
+Fraction("3.1415")            # Fraction(6283, 2000)
+
+# Zapis z "e" jest dozwolony dla stringów z float.
+Fraction("1.2e-2")            # Fraction(3, 250)
+
+from fractions import gcd
+# gcd(a, b) - calculate the Greatest Common Divisor of a and b.
+# Od Pythona 3.5 gcd() znajduje się w module math.
+# gcd() i lcm() znajdują się też w pakiecie numpy().
+
+# Można robić konwersje z Decimal.
+from decimal import Decimal
+Fraction(Decimal('1.1'))      # Fraction(11, 10)
+
+# Ułamek z ułamka.
+Fraction(Fraction(1, 7), 5)   # Fraction(1, 35)
+Fraction(Fraction(1, 7), Fraction(2, 3))  # Fraction(3, 14)
+</pre><hr>
+
+<h3>MODUŁ cmath</h3>
+
+<hr><pre>
+import cmath
+
+# Dostęp do funkcji matematycznych działających na liczbach zespolonych.
+# help(cmath)
+</pre><hr>
+
+<h3>MODUŁ scipy</h3>
+
+<hr><pre>
+import scipy
+
+# SciPy --- A scientific computing package for Python
+# help(scipy)
+</pre><hr>
+
+<h3>MODUŁ numpy</h3>
+
+<hr><pre>
+import numpy
+#import numpy as np     # typowy import w aplikacjach
+
+# 1. An array object of arbitrary homogeneous items.
+# 2. Fast mathematical operations over arrays.
+# 3. Linear Algebra, Fourier Transforms, Random Number Generation.
+# help(numpy)
+
+# PEP 465 - A dedicated infix operator for matrix multiplication
+# Nowy operator mnożenia macierzowego @ od Pythona 3.8
+# arr * arr   # elementwise multiplication
+# arr @ arr   # matrix multiplication
+</pre><hr>
+
+<h3>MODUŁ secrets</h3>
+
+<p>Moduł random nie jest przeznaczony do zastosowań związanych
+z bezpieczeństwem lub kryptografią. Do takich zastosowań
+w Pythonie 3.6 pojawił się moduł secrets (PEP 506).
+PyPI zawiera ponadto moduł cryptography, który wspiera
+Pythona 2.6+, 3.4+ (instalacja przez pip).
+
+<hr><pre>
+# Python 3.6+
+import secrets
+foo = ['a', 'b', 'c', 'd', 'e']
+print(secrets.choice(foo))
+# To print a random index:
+print(secrets.randbelow(len(foo)))
+</pre><hr>
+
+
+</body>
+</html>

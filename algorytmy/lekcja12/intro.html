@@ -1,0 +1,102 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podstawy wyszukiwania</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Wyszukanie konkretnego fragmentu informacji w wielkich zbiorach
+uprzednio zapamiętanych danych jest operacją podstawową,
+nazywaną <em>wyszukiwaniem</em>, będącą nieodłączną częścią
+wielu prac komputerowych [Sedgewick].
+Dane są podzielone na elementy (rekordy), z których każdy zawiera
+klucz wykorzystywany przy wyszukiwaniu.
+
+<p>Zbiór danych może być w pewnych przypadkach nieuporządkowany,
+a w innych przypadkach całkowicie uporządkowany (posortowany).
+Często wykorzystuje się częściowe uporządkowanie zbioru
+w pewnych strukturach danych (drzewa binarne, kopce),
+aby przyspieszyć operację wyszukiwania.
+Ważnym czynnikiem występującym w zastosowaniach jest zmienność
+zawartości zbioru z danymi (elementy są dodawane lub usuwane ze zbioru).
+Dlatego interesują nas dynamiczne struktury danych, zmieniające się
+w czasie pracy. Chcemy, aby operacje na zbiorze danych wykonywały
+się możliwie szybko.
+Wybór optymalnej struktury danych zależy od spodziewanego wzorca
+działań na zbiorze (czy występują częste modyfikacje zbioru, 
+czy często powtarzają się zapytania z takimi samymi kluczami, itp.).
+
+<p>Tablica asocjacyjna (słownik) jest to ADT przechowujący
+pary (klucz, wartość) i umożliwiający trzy podstawowe działania:
+wstawienie nowej pary, wyszukanie wartości związanej z podanym kluczem,
+usunięcie pary związanej z danym kluczem.
+
+<p>Inny rodzaj wyszukiwania opisują statystyki pozycyjne.
+
+<h3>STATYSTYKI POZYCYJNE</h3>
+
+<p>W zbiorze n-elementowym i-ty najmniejszy element nazywamy
+i-tą <em>statystyką pozycyjną</em> [Cormen str. 210].
+Minimum zbioru jest jego pierwszą statystyką pozycyjną (i=1).
+Maksimum zbioru jest jego n-tą statystyką pozycyjną.
+
+<h3>DRZEWA BINARNE</h3>
+
+<p>Wiele algorytmów wyszukiwania opiera się 
+na drzewie poszukiwań binarnych, które chcemy utrzymywać
+w stanie zrównoważenia.
+
+<ul>
+<li>Randomizowane drzewa poszukiwań binarnych.
+<li>Rozchylane drzewa poszukiwań binarnych (operacja splay).
+<li>Drzewa poszukiwań 2-3-4.
+<li>Drzewa czerwono-czarne.
+<li>Drzewa AVL.
+</ul>
+
+<h3>SELEKCJA</h3>
+
+<p>Problem selekcji (wyboru) to problem wyznaczania k-tej co do 
+wielkości wśród n liczb.
+
+<hr><pre>
+SPECYFIKACJA
+Problem wyboru.
+
+DANE WEJŚCIOWE
+Zbiór A (parami różnych) n liczb oraz liczba k taka, że
+1 &lt;= k &lt;= n.
+
+DANE WYJŚCIOWE
+Element zbioru A większy od dokładnie k-1 innych elementów zbioru A.
+</pre><hr>
+
+<p>Dla niektórych wartości k (1 lub n) problem jest bardzo prosty 
+i wymaga jedynie wyznaczenia minimalnej lub maksymalnej wartości w A, 
+co możemy zrobić w czasie O(n).
+Bardziej skomplikowanym problemem jest znajdowanie mediany (k=n//2).
+Szybkie znajdowanie mediany pozwoliłoby np. poprawić algorytm
+sortowania quicksort tak, aby nawet w pesymistycznym przypadku
+działał w czasie O(n*log(n)).
+
+<p>Wybrane algorytmy wyszukiwania.
+
+<ul>
+<li>Wyszukiwanie liniowe.
+<li>Wyszukiwanie binarne.
+<li>Wyszukiwanie max lub min.
+<li>Jednoczesne wyszukiwanie max i min.
+<li>Wyszukiwanie mediany.
+<li>Wyszukiwanie mody.
+<li>Wyszukiwanie lidera.
+<li>Sortowanie przez kopcowanie zatrzymane po wybraniu
+k-tego elementu.
+</ul>
+
+</body>
+</html>

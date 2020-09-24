@@ -1,0 +1,99 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Python w Linuksie</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W Linuksie Python jest zwykle standardowo instalowany
+przy instalacji systemu operacyjnego (pakiet <em>python</em>).
+Jednak warto sprawdzić, czy nie należy doinstalować
+dodatkowych pakietów rozszerzających funkcjonalność języka.
+
+<p>W Linuksie Debian (wydanie Squezze) interpreter znajduje się w pliku
+<em>/usr/bin/python</em>.
+
+<p>Interpreter Pythona pracuje podobnie do powłoki systemu Unix.
+Zwykle umieszczamy jedno polecenie w wierszu,
+a znak końca wiersza powoduje rozpoczęcie przetwarzania polecenia.
+Komentarze w Pythonie rozpoczynają się od znaku hash (#)
+i rozciągają się do końca wiersza.
+Sesję interaktywną kończymy przez wywołanie funkcji
+<em>quit()</em> lub przez kombinację klawiszy [Ctrl]+[d]
+(wygenerowanie z klawiatury znaku końca pliku).
+
+<hr><pre>
+$ python                      # uruchomienie interpretera z powłoki
+Python 2.6.6 ...              # i wejście do trybu interaktywnego
+&gt;&gt;&gt; print 1 + 2
+3
+&gt;&gt;&gt; 1/0
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ZeroDivisionError: integer division or modulo by zero
+# Pojawienie się błędu powoduje wywołanie wyjątku,
+# komunikat o błędzie i powrót do znaku zachęty.
+&gt;&gt;&gt; [Ctrl]+[d]
+# Wygenerowanie znaku EOF, koniec pracy z interpreterem.
+# Można użyć funkcji quit(), tylko w trybie interaktywnym.
+$                             # wracamy do powłoki
+</pre><hr><pre>
+$ python -c "print 1 + 2"     # polecenia umieszczamy w cudzysłowiu
+3                             # wynik 
+$                             # wracamy do powłoki
+</pre><hr><pre>
+$ python skrypt.py            # wywołanie skryptu z powłoki
+3
+$ python -i skrypt.py         # przetworzenie skryptu i przejście
+3                             # do trybu interaktywnego
+&gt;&gt;&gt;
+</pre><hr><pre>
+$ python &lt; skrypt.py       # dołączenie skryptu na stdin,
+3                             # tu nie działają raw_input(), input()
+$ python &lt; skrypt.py &gt; wyniki.txt      # przekierowanie wejścia i wyjścia
+$
+</pre><hr>
+
+<p>Do pracy interaktywnej można przygotować polecenia startowe
+Pythona w osobnym pliku (np. w <em>.pythonrc.py</em>)
+i umieścić ścieżkę do niego w zmiennej powłoki <em>PYTHONSTARTUP</em>. 
+Plik jest przetwarzany tylko przy pracy interaktywnej.
+
+<p>Dodanie katalogu z modułami Pythona do zmiennej PYTHONPATH.
+
+<hr><pre>
+# W Debianie wstawiamy dopisek do pliku ~/.bashrc (na początku).
+# Jeżeli łańcuch nie jest zerowy, to dopisuję.
+
+if [ -n "${PYTHONPATH}" ] ; then
+    export PYTHONPATH="${PYTHONPATH}:$HOME/my_python_modules"
+else
+    export PYTHONPATH="$HOME/my_python_modules"
+fi
+</pre><hr>
+
+<h3>IDLE</h3>
+
+<p>Program IDLE (An Integrated DeveLopment Environment for Python) 
+jest zawarty w pakiecie Debiana <em>idle</em>,
+który zwykle trzeba dodatkowo zainstalować.
+IDLE bazuje na Tkinter, interfejsie do Tk (widget set).
+IDLE jest wieloplatformowe,
+działa na wszystkich platformach, na których jest zainstalowane Tk.
+
+<p>Dostęp do programu w Linuksie Debian Squezze:
+Programy | Programowanie | IDLE.
+
+<p>Zaawansowane możliwości IDLE: 
+kolorowanie składni Pythona,
+debuger (w menu <em>Debug</em>), 
+przeglądarka obiektów (w menu <em>File</em>).
+
+
+</body>
+</html>

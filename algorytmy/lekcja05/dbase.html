@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduły bazodanowe</h1>
+
+<h3>MODUŁ pickle</h3>
+
+<p>W Pythonie 3, przy korzystaniu z modułu pickle,
+trzeba otwierać i zamykać pliki w trybie binarnym
+(do zapisu "wb", do odczytu "rb").
+
+<hr><pre>
+import pickle
+
+adict = {"a": "jeden", "b": "dwa"}
+
+# Serializacja słownika do stringu.
+word = pickle.dumps(adict)
+
+# Odtworzenie słownika ze stringu.
+bdict = pickle.loads(word)
+</pre><hr><pre>
+import pickle
+
+adict = {"a": "jeden", "b": "dwa"}
+
+# Zapisanie słownika w pliku.
+afile = open("data.pickle", "w")
+pickle.dump(adict, afile)
+afile.close()
+
+# Odtworzenie słownika z pliku.
+bfile = open("data.pickle", "r")
+bdict = pickle.load(bfile)
+bfile.close()
+</pre><hr><pre>
+import pickle
+
+alist = [1, "a", 2, "b"]
+adict = {"a": "jeden", "b": "dwa"}
+
+# Zapisanie kilku elementów w pliku (w krotce).
+afile = open("data.pickle", "w")
+pickle.dump((alist, adict), afile)
+afile.close()
+
+# Odtworzenie elementów z pliku.
+bfile = open("data.pickle", "r")
+(blist, bdict) = pickle.load(bfile)
+bfile.close()
+</pre><hr><pre>
+import pickle
+
+adict = {"a": "jeden", "b": "dwa"}
+alist = [1, "a", 2, "b"]
+
+# Zapisanie danych w pliku.
+afile = open("data.pickle", "w")
+pickle.dump(adict, afile)
+pickle.dump(alist, afile)
+afile.close()
+
+# Odtworzenie danych z pliku (kolejność!).
+bfile = open("data.pickle", "r")
+bdict = pickle.load(bfile)
+blist = pickle.load(bfile)
+bfile.close()
+</pre><hr>
+
+<p>Jeżeli zrobimy peklowanie np. słownika z instancjami klasy X,
+to przed przywróceniem słownika trzeba sprawdzić, czy istnieje
+definicja klasy X.
+
+<h3>MODUŁ anydbm</h3>
+
+<p>Moduł implementuje system plików dostępu wg klucza, służący
+do przechowywania łańcuchów znaków.
+
+<hr><pre>
+import anydbm
+
+# anydbm - Generic interface to all dbm clones.
+
+d = anydbm.open(file, 'w')
+d[key] = data
+# store data at key (may override data at existing key)
+
+data = d[key]
+# retrieve data at key (raise KeyError if no such key)
+
+del d[key]
+# delete data stored at key (raises KeyError if no such key)
+
+flag = key in d   # true if the key exists
+
+alist = d.keys() # return a list of all existing keys (slow!)
+</pre><hr>
+
+<h3>MODUŁ dumbdbm</h3>
+
+<p>Moduł <em>dumbdbm</em> dostarcza bazę danych, która jest 
+implementacją pliku o organizacji indeksowo-sekwencyjnej.
+Dla bazy danych spam istnieje plik indeksujący spam.dir (tekstowy),
+plik z danymi spam.dat (binarny), oraz czasem kopia pliku
+indeksującego spam.bak (tekstowy).
+Bazę obsługuje się tak jak zwykły słownik.
+W tej bazie danych klucze i wartości muszą być stringami.
+W razie potrzeby pewne obiekty możemy serializować
+za pomocą modułu pickle.
+
+<hr><pre>
+import dumbdbm
+import pickle
+
+db = dumbdbm.open("data.dumbdbm")
+
+db["a"] = "Adam"
+db["b"] = "Bogdan"
+db["c"] = pickle.dumps([1, 3, 5])
+
+print ( db )
+print ( db["b"] )
+print ( pickle.loads(db["c"]) )
+
+db.close()      # zamknięcie bazy danych
+</pre><hr>
+
+<h3>MODUŁ shelve</h3>
+
+<p>Dzięki modułowi shelve mamy dostęp do danych analogiczny
+do słownika, ale możemy zachowywać obiekty dowolnego typu,
+nie tylko stringi.
+Moduł shelve implementuje interfejs BSD baz danych.
+
+<hr><pre>
+import shelve
+
+adict = {"a": "jeden", "b": "dwa"}
+alist = [1,"a",2,"b"]
+
+db = shelve.open("data.shelve")
+
+db["adict"] = adict
+db["alist"] = alist
+
+print ( db )             # jak słownik
+print db["alist"]
+
+# alist.append(3)        # to nie zmienia db["alist"]
+# db["alist"] = alist    # trzeba na nowo zapisać alist w bazie
+
+blist = db["alist"]      # odzyskujemy KOPIĘ danych
+
+print ( len(db) )        # liczba elementów w bazie
+print ( "alist" in db )  # należenie do bazy
+
+# Inne metody: keys(), values(), items(), ...
+# Usuwanie danych: del db["alist"]
+# Czyszczenie bazy: db.clear()
+
+# Zamknięcie bazy.
+db.close()
+</pre><hr>
+
+<h3>MODUŁ json</h3>
+
+<p>JSON (JavaScript Object Notation) to lekki format wymiany danych 
+komputerowych, bazujący na podzbiorze języka JavaScript.
+Typ MIME dla formatu JSON to application/json. 
+Format został opisany w dokumencie RFC 4627 i nowszym RFC 7159.
+Moduł json pojawił się w Pythonie 2.6.
+Format JSON może być użyty do serializacji (encoding) i rekonstukcji
+(decoding) danych.
+Format JSON, w przeciwieństwie do pickle i marshal, nie pozwala 
+na serializację więcej niż jednego obiektu do pliku, bo wtedy
+plik JSON będzie niepoprawny.
+
+<hr><pre>
+import json     # Python 2.6+
+
+# Serializacja obiektu obj do pliku tekstowego outfile (opened for writing).
+# obj to najczęściej zagnieżdżona lista lub słownik.
+with open(file_name, mode='w') as outfile:
+    json.dump(obj, outfile)
+    #json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+# Serializacja podstawowych obiektów Pythona (zapis do stringu).
+# Tak możemy sprawdzić stringową reprezentację obiektu w formacie JSON.
+word = json.dumps(obj)
+
+# Compact encoding. Nie wstawia spacji.
+# Opcja separators=(item_separator, key_separator).
+# Domyślne ustawienie to separators=(', ',': ').
+word = json.dumps(obj, separators=(',',':'))
+
+# Pretty printing.
+word = json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
+
+# Deserializacja danych z infile (opened for reading) do obiektu Pythona.
+with open(file_name) as infile:
+    obj = json.load(infile)
+
+# Decoding from JSON string.
+obj = json.loads(word)
+</pre><hr>
+
+
+</body>
+</html>

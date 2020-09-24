@@ -1,0 +1,51 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Drzewa trie</h1>
+
+<p>https://en.wikipedia.org/wiki/Trie 
+
+<h3>WPROWADZENIE</h3>
+
+<p>Drzewo trie (ang. prefix tree) jest to drzewo poszukiwań przechowujące 
+w węzłach fragmenty kluczy (drzewa BST przechowją w wązłach całe klucze). 
+Węzeł przechowujący ostatni fragment klucza przechowuje
+również wartość związaną z danym kluczem lub tylko znacznik końca klucza.
+
+<p>Modyfikacją drzew trie są drzewa Patricia (ang. compact prefix tree), 
+w których węzły mające tylko jednego syna są usuwane, 
+a drzewo odpowiednio modyfikowane.
+
+<hr><pre>
+| Wstawione pary (key, value) do drzewa trie:
+| ("kot",1),("koc",2),("los",3),("loty",4)
+|           *
+|        /    \
+|       k      l
+|      /        \
+|     o          o
+|    / \        / \
+| t(1) c(2)  s(3)  t
+|                 /
+|               y(4)
+</pre><hr><pre>
+| Wstawione pary (key, value) do drzewa Patricia:
+| ("kot",1),("koc",2),("los",3),("loty",4),("dach",5)
+|           *
+|       /      \    \
+|     ko        lo   dach(5)
+|    / \        / \
+| t(1) c(2)  s(3)  t
+|                 /
+|               y(4)
+</pre><hr>
+
+
+
+</body>
+</html>

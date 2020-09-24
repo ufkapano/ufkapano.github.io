@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Stosy</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Stos to ADT, który pozwala zapisywać dane
+i następnie pobierać je w kolejności odwrotnej do zapisu 
+(ang. <em>last in, first out</em>, LIFO; ostatni wchodzi, pierwszy wychodzi).
+Interfejs stosu składa się z 4 funkcji:
+
+<ul>
+<li>konstruktor __init__() [inicjalizacja pustego stosu], 
+<li>push() [wstawienie elementu], 
+<li>pop() [pobranie elementu], 
+<li>is_empty() [test czy stos jest pusty].
+</ul>
+
+<p>Jeżeli stos ma ograniczenie na liczbę przechowywanych elementów,
+to stosuje się jeszcze funkcję is_full() [test czy stos jest pełny].
+Czasem stosuje się jeszcze operację peek() lub top(), która daje dostęp
+do elementu na szczycie stosu, ale bez usuwania go ze stosu.
+Sytuacje prowadzące do błędu: 
+przepełnienie stosu, pobieranie elementu z pustego stosu.
+Wydaje się, że nie jest ustalony jednolity sposób obsługi błędów.
+W Pythonie możemy zastosować mechanizm wyjątków lub zaimplementować
+inne rozsądne zachowanie (powiększenie stosu).
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Najpierw możemy wykorzystać standardowe listy Pythona
+do utworzenia stosu. Zastosujemy otoczkę obiektową wokół list.
+Python sam wykryje próbę pobierania danych z pustego stosu.
+
+<hr><pre>
+class Stack:
+
+    def __init__(self):
+        self.items = []
+
+    def __str__(self):                  # podglądamy stos
+        return str(self.items)
+
+    def is_empty(self):
+        return not self.items
+
+    def is_full(self):                  # nigdy nie jest pełny
+        return False
+
+    def push(self, item):
+        self.items.append(item)         # dodajemy na koniec
+
+    def pop(self):                      # zwraca element
+        return self.items.pop()         # zabieram od końca
+</pre><hr>
+
+<p>Po zapisaniu kodu do osobnego modułu <em>stack.py</em>
+możemy w dowolnym programie korzystać z tego abstrakcyjnego typu danych.
+Python pozwala umieszczać na stosie elementy różnych typów
+bez dodatkowych zabiegów.
+
+<hr><pre>
+import stack
+
+astack = stack.Stack()
+for item in ["a", 2, 3.5]:
+    astack.push(item)
+# Zdejmowanie elementów ze stosu w kolejności 3.5, 2, "a".
+while not astack.is_empty():
+    print astack.pop()
+</pre><hr>
+
+<h3>IMPLEMENTACJA 2</h3>
+
+<p>Implementacja stosu na bazie listy jednokierunkowej.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+
+class Stack:
+
+    def __init__(self):
+        self.head = None
+
+    def is_empty(self):
+        return not self.head
+
+    def is_full(self):
+        return False
+
+    def push(self, data):
+        self.head = Node(data, next=self.head)
+
+    def pop(self):
+        if self.is_empty():
+            raise Exception("stack is empty")
+        data = self.head.data
+        self.head = self.head.next
+        return data
+</pre><hr><pre>
+# Możemy skorzystać z przygotowanych wcześniej klas.
+import slist
+
+class Stack(slist.SingleList):
+
+    # __init__ i is_empty są dziedziczone
+
+    push = slist.SingleList.insert_head
+
+    pop = slist.SingleList.remove_head
+</pre><hr>
+
+<p>W implementacji z listą jednokierunkową operacje push() i pop()
+są klasy O(1) - czas pracy nie zależy od rozmiaru stosu.
+Pamięć zajmowana przez stos jest proporcjonalna do liczby
+przechowywanych elementów i nie ma ograniczenia na liczbę elementów.
+
+<h3>IMPLEMENTACJA 3</h3>
+
+<p>Implementacja tablicowa stosu jest stosowana w językach programowania,
+które oferują tablice elementów jednego typu.
+Przy inicjalizacji stosu trzeba podać jego rozmiar, 
+czyli maksymalną liczbę elementów, które ma przechowywać.
+Nowe elementy umieszczamy na coraz dalszych pozycjach w tablicy
+i zapamiętujemy liczbę elementów na stosie (jest to również
+indeks miejsca, do którego wstawimy następny element).
+Przy zdejmowaniu elementu ze stosu pomniejszamy numer indeksu,
+a na zwolnione miejsce wstawiamy bezpieczną wartość
+(w Pythonie jest nią <em>None</em>, a w C/C++ zero lub NULL).
+W języku Python możemy łatwo zasymulować taką konstrukcję.
+
+<hr><pre>
+class Stack:
+
+    def __init__(self, size=10):
+        self.items = size * [None]      # utworzenie tablicy
+        self.n = 0                      # liczba elementów na stosie
+        self.size = size
+
+    def is_empty(self):
+        return self.n == 0
+
+    def is_full(self):
+        return self.size == self.n
+
+    def push(self, data):
+        self.items[self.n] = data
+        self.n += 1
+
+    def pop(self):
+        self.n -= 1
+        data = self.items[self.n]
+        self.items[self.n] = None    # usuwam referencję
+        return data
+</pre><hr>
+
+<p>W implementacji tablicowej operacje push() i pop()
+są klasy O(1) - czas pracy nie zależy od rozmiaru stosu.
+Pamięć zajmowana przez stos jest stała i zależy od maksymalnej
+liczby elementów, które możemy trzymać na stosie.
+
+
+</body>
+</html>

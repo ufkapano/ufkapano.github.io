@@ -1,0 +1,60 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Kostka Rubika</h1>
+
+<h3>WPROWADZENIE</h3>
+
+
+<h3>RZĄD GRUPY KOSTKI RUBIKA</h3>
+
+<p>Kostka Rubika 2x2x2 - 3674160 (3.7e6), 
+3 zwykłe generatory.
+
+<p>Kostka Rubika 3x3x3 - 43252003274489856000 (4.3e19), 
+6 zwykłych generatorów.
+
+<p>Kostka Rubika 4x4x4 - 
+707195371192426622240452051915172831683411968000000000 (7.1e53),
+9 zwykłych generatorów.
+
+<h3>KOSTKA RUBIKA 2x2x2</h3>
+
+<pre><hr>
++-----+ Siatka kostki, nieruchomy róg oznaczony przez X.
+| 1  2|
+| X  3|
++-----+-----+-----+-----+
+| X  4| 7  8|11 12|15  X|
+| 5  6| 9 10|13 14|16 17|
++-----+-----+-----+-----+
+|18 19|
+|20  0|
++-----+
+Generatory zwykłe grupy.
+N = 21
+# Y1 = (2,13,19,4)(3,11,0,6)(7,8,10,9)
+# Z1 = (5,9,13,16)(6,10,14,17)(18,19,0,20)
+# X1 = (1,16,0,8)(2,15,20,10)(11,12,14,13)
+Y1 = Perm(self.N, [6, 1, 13, 11, 2, 5, 3, 8, 10, 7, 9, 0, 12, 19, 14, 15, 16, 17, 18, 4, 20])
+Z1 = Perm(self.N, [20, 1, 2, 3, 4, 9, 10, 7, 8, 13, 14, 11, 12, 16, 17, 15, 5, 6, 19, 0, 18])
+X1 = Perm(self.N, [8, 16, 15, 3, 4, 5, 6, 7, 1, 9, 2, 12, 14, 11, 13, 20, 0, 17, 18, 19, 10])
+
+|T(11)| = 2, |Sigma(11)| = 6,
+|T(13)| = 1, |Sigma(13)| = 9,
+|T(15)| = 1, |Sigma(15)| = 12,
+|T(18)| = 1, |Sigma(18)| = 15,
+|T(19)| = 1, |Sigma(19)| = 18,
+|T(20)| = 1, |Sigma(20)| = 21.
+Jest 7 silnych generatorów (3 zwykłe generatory grupy).
+|G| = 6*9*12*15*18*21 = 3674160.
+</pre><hr>
+
+
+</body>
+</html>

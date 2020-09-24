@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Listy powiązane podwójnie</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy powiązane podwójne mają elementy powiązane dwoma łączami:
+do elementu następnego (next) i do elementu poprzedniego (prev).
+W łatwy sposób możemy poruszać się po liście do przodu i wstecz.
+Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego,
+podczas gdy przy listach połączonych pojedynczo potrzebne było też
+łącze do węzła poprzedzającego.
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Rozpoczniemy od implementacji klasy Node reprezentującej węzły.
+Obok pola danych (data) musimy przechowywać łącza prev i next.
+Dostęp do listy zapewnia para łączy do pierwszego i ostatniego
+węzła pair = [head, tail].
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł listy dwukierunkowej."""
+
+    def __init__(self, data=None, next=None, prev=None):
+        self.data = data
+        self.next = next
+        self.prev = prev
+
+    def __str__(self):
+        return str(self.data)
+</pre><hr><pre>
+# Ręczne budowanie listy.
+pair = [None, None]
+# [], pusta lista
+
+pair[0] = pair[1] = Node("first")
+# ["first"], jeden element na liście
+
+node = Node("second")  # nowy tail
+node.prev = pair[0]
+pair[0].next = node   # łącze w head trzeba uaktualnić
+pair[1] = node
+# ["first", "second"], są dwa elementy
+
+node = Node("middle") # head i tail bez zmian
+node.prev = pair[0]
+node.next = pair[1]
+pair[0].next = node   # łącze w head trzeba uaktualnić
+pair[1].prev = node   # łącze w tail trzeba uaktualnić
+# ["first", "middle", "second"], są trzy elementy
+</pre><hr>
+
+<h3>PRZECHODZENIE PRZEZ LISTĘ DWUKIERUNKOWĄ</h3>
+
+<p>Stworzymy funkcje potrzebne do zarządzania tak określoną listą.
+Funkcja traverse_forward() pozwala przejść przez listę od początku
+do końca i wykonać operację visit() na każdym węźle.
+Funkcja traverse_backward() przechodzi przez listę od końca
+do początku.
+
+<hr><pre>
+def traverse_forward(pair, visit):
+    node = pair[0]   # head
+    while node:
+        visit(node)
+        node = node.next
+</pre><hr><pre>
+def traverse_backward(pair, visit):
+    node = pair[1]   # tail
+    while node:
+        visit(node)
+        node = node.prev
+</pre><hr><pre>
+# Przykład przechodzenia od początku do końca listy.
+def print_dlist(pair):
+    node = pair[0]   # head
+    print ( "Double list elements:" )
+    while node:
+        print ( node )
+        node = node.next
+</pre><hr><pre>
+def count_dlist(pair):        # algorytm klasy O(N)
+    node = pair[0]
+    length = 0
+    while node:
+        length += 1
+        node = node.next
+    return length
+</pre><hr><pre>
+def is_empty(pair):
+    return pair[0] is None
+</pre><hr><pre>
+def insert_head(pair, node):
+    if pair[0]:
+        node.next = pair[0]
+        pair[0].prev = node
+        pair[0] = node
+    else:   # lista była pusta
+        pair[0] = pair[1] = node
+</pre><hr><pre>
+def insert_tail(pair, node):
+    if pair[1]:
+        node.prev = pair[1]
+        pair[1].next = node
+        pair[1] = node
+    else:   # lista była pusta
+        pair[0] = pair[1] = node
+</pre><hr><pre>
+def remove_head(pair):        # zwraca node
+    if pair[0] is None:
+        raise Exception("pusta lista")
+    elif pair[0] is pair[1]:   # jeden element na liście
+        node = pair[0]
+        pair[0] = pair[1] = None
+        return node
+    else:
+        node = pair[0]
+        pair[0] = pair[0].next
+        pair[0].prev = None   # czyszczenie łącza
+        return node
+</pre><hr><pre>
+def remove_tail(pair):        # zwraca node
+    if pair[0] is None:
+        raise Exception("pusta lista")
+    elif pair[0] is pair[1]:  # jeden na liście
+        node = pair[0]
+        pair[0] = pair[1] = None
+        return node
+    else:
+        node = pair[1]
+        pair[1] = pair[1].prev
+        pair[1].next = None
+        return node
+</pre><hr>
+
+<p>Możemy napisać funkcję, która sortuje listę metodą insertsort.
+
+<hr><pre>
+def insertsort(pair):     # sortowanie przez wstawianie
+    head1 = pair[0]       # początek listy pierwotnej
+    head2 = None          # początek listy posortowanej
+    tail2 = None          # koniec listy posortowanej
+    while head1:
+        node = head1  # odczepiam węzeł
+        head1 = head1.next
+        node.next = node.prev = None  # poprawiam łącza
+        if head2 is None:
+            head2 = tail2 = node
+            continue
+        after = head2
+        while after:  # szukamy miejsca wstawienia
+            if after.data &lt; node.data:
+                break
+            after = after.next
+        # Sprawdzamy, gdzie jesteśmy.
+        if after is None:       # wstawiamy na koniec listy
+            node.prev = tail2
+            tail2.next = node
+            tail2 = node
+        elif after is head2:    # wstawiamy na początek listy
+            node.next = head2
+            head2.prev = node
+            head2 = node
+        else:                   # jesteśmy w środku listy
+            node.prev = after.prev
+            node.next = after
+            after.prev.next = node
+            after.prev = node
+    pair[0] = head2
+    pair[1] = tail2
+</pre><hr>
+
+
+</body>
+</html>

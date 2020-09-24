@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sterowanie</h1>
+
+<h3>STRUKTURA PROGRAMU W PYTHONIE</h3>
+
+<ul>
+<li>Programy składają się z modułów.
+<li>Moduły zawierają instrukcje.
+<li><em>Instrukcje zawierają wyrażenia.</em>
+<li>Wyrażenia tworzą i przetwarzają obiekty.
+</ul>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Python jest językiem proceduralnym, opartym na instrukcjach.
+Zwykły sposób przetwarzania instrukcji jest sekwencyjny.
+Ale możemy to zmienić poprzez wprowadzenie warunkowego
+wykonania kodu (instrukcja warunkowa), albo poprzez 
+wielokrotne wykonywanie jednej instrukcji (pętle).
+
+<p>Przy instrukcjach blokowych ważne jest stosowanie prawidłowej
+konwencji zapisu, która nie będzie wprowadzała w błąd czytelnika.
+
+<h3>INSTRUKCJE PRZYPISANIA</h3>
+
+<p>Instrukcje przypisania tworzą referencje do obiektów.
+
+<p>Zmienne tworzone są przy pierwszym przypisaniu.
+
+<p>Przed odniesieniem się do zmiennych trzeba je najpierw przypisać.
+
+<hr><pre>
+word = "qwerty"               # forma podstawowa
+x, y = 23, 45                 # przypisanie krotki (pozycyjne)
+[x, y] = ["ab", "cd"]         # przypisanie listy (pozycyjne)
+x, y, z = "abc"               # przypisanie sekwencji
+[x, y, z] = (1, 2, 3)         # przypisanie sekwencji
+x = y = z = 0                 # przypisanie z wieloma celami
+# x = (y = (z = 0))           # SyntaxError, to nie działa jak w C/C++!
+x += 5                        # przypisane rozszerzone (x = x + 5)
+L += 5                        # odpowiada L.append(5), IN PLACE
+L += sequence                 # odpowiada L.extend(sequence), IN PLACE
+</pre><hr><pre>
+L = [1, 2, 3, 4]
+front, L = L[0], L[1:]        # odcięcie początku
+
+# Python 3, rozszerzona składnia rozpakowania.
+# M to sekwencja (string, lista, krotka).
+# Gdy zabraknie elementów, to L może być pustą listą!
+front, *L = M          # M[0], M[1:]
+first, *L, last = M    # M[0], M[1:-1], M[-1]
+</pre><hr>
+
+<h3>INSTRUKCJE WYRAŻEŃ</h3>
+
+<p>Wyrażenia można użyć jako instrukcji, ale ma to sens
+jedynie wtedy, gdy efekt uboczny działania wyrażenia
+będzie przydatny.
+
+<p>Instrukcje nie mogą być używane jako wyrażenia.
+
+<hr><pre>
+some_function()               # wywołanie funkcji
+some_object.method()          # wywołanie metody
+a_variable                    # zmienna w trybie interaktywnym
+print word                    # wyrażenie w Pythonie 2
+print(word)                   # funkcja w Pythonie 3
+yield x ** 2                  # zwracanie wyniku częściowego (generator)
+lambda x: x ** 2              # funkcja anonimowa
+</pre><hr>
+
+<h3>WYRAŻENIE PUSTE (PASS)</h3>
+
+<p>Wyrażenie <em>pass</em> nie robi nic.
+Jest wykorzystywane tam, gdzie syntaktycznie powinno być
+jakieś wyrażenie.
+Czasem przy tworzeniu programu tymczasowo można wstawić
+<em>pass</em> w miejsce brakującego kodu,
+który będzie napisany później.
+
+<hr><pre>
+while True:
+    pass        # czekamy na przerwanie z klawiatury
+</pre><hr><pre>
+def dummy_function():
+    pass        # kod do uzupełnienia w przyszłości
+</pre><hr><pre>
+class EmptyClass:
+    pass       # kod do uzupełnienia w przyszłości
+</pre><hr><pre>
+# https://stackoverflow.com/questions/13886168/how-to-use-the-pass-statement
+# Ignorowanie pewnych typów wyjątków.
+try:
+    self.version = "Expat %d.%d.%d" % expat.version_info
+except AttributeError:
+    pass       # unknown
+
+# Definiowanie wyjątków bez nowego zachowania.
+# Nazwa wyjątku niesie informację o zdarzeniu.
+class CompileError(Exception):
+    pass
+</pre><hr>
+
+<h3>INSTRUKCJA DEL</h3>
+
+<p>Podstawowe zastosowanie instrukcji <em>del</em>
+to usuwanie zmiennej (dokładniej: usunięcie referencji do obiektu). 
+Po usunięciu zmiennej próba odczytania zmiennej prowadzi do błędu 
+(aż nastąpi nowe przypisanie wartości do tej zmiennej).
+
+<p>Drugim częstym zastosowaniem instrukcji <em>del</em>
+jest usuwanie elementu o danym indeksie z listy 
+lub usuwanie wycinka z listy.
+
+</body>
+</html>

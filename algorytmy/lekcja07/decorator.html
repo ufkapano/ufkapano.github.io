@@ -1,0 +1,279 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dekoratory</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Dekoratory funkcji udostępniają możliwość określania specjalnych
+trybów operacji dla funkcji, opakowując je w dodatkową warstwę 
+logiki zaimplementowanej jako kolejna funkcja.
+Istnieje sporo funkcji wbudowanych, które można użyć w charakterze
+dekoratora. Można także stworzyć własny dekorator.
+Składnia dekoratorów pojawiła się w Pythonie 2.4 (PEP 318).
+
+<p>Od Pythona 2.6 dekoratory mają możliwość współpracy z klasami (PEP 3129).
+Wtedy uruchamiane są na końcu instrukcji class, wiążąc wynik
+swojego wykonania z nazwą klasy.
+
+<hr><pre>
+# Składnia dekoratorów funkcji/metod ma postać ...
+
+@decorator2
+@decorator1
+def func(arg1, arg2, ...):
+    pass
+
+# ... co jest równoważne ...
+
+def func(arg1, arg2, ...):
+    pass
+
+func = decorator2(decorator1(func))
+</pre><hr><pre>
+# Składnia dekoratora z argumentami ...
+
+@decorator_maker(argA, argB, ...)
+def func(arg1, arg2, ...):
+    pass
+
+# ... co jest równoważne ...
+
+func = decorator_maker(argA, argB, ...)(func)
+</pre><hr>
+
+<h3>DEKORATORY FUNKCJI I METOD</h3>
+
+<hr><pre>
+# Poradnik do dekoratorów można znaleźć na blogu "The Code Ship",
+# http://thecodeship.com/patterns/guide-to-python-function-decorators/
+</pre><hr><pre>
+# Dekorator jako funkcja z zagnieżdżoną funkcją.
+
+def mytracer(func):
+    def wrapper(*arguments, **keywords):
+        print ( "mytracer working ..." )   # dodatkowy komunikat
+        return func(*arguments, **keywords)   # func zaszyte w wrapper
+    return wrapper
+
+@mytracer
+def spam(a, b, c):
+    print ( "{} {} {}".format(a, b, c) )
+    return a + b + c
+
+print ( spam(1, 2, 3) )
+print ( spam("a", "b", "c") )
+print ( spam(c=1, b=2, a=3) )
+</pre><hr><pre>
+# Tworzymy własny dekorator funkcji będący klasą (jeden ze sposobów).
+# Ten sposób nie zadziała dla metod w klasach.
+
+class Tracer:
+
+    def __init__(self, func):
+        self.calls = 0
+        self.func = func
+
+    def __call__(self, *arguments, **keywords):
+        self.calls += 1
+        print ( "call {} to {}".format(self.calls, self.func.__name__) )
+        return self.func(*arguments, **keywords)
+
+# Do funkcji spam() dodajemy warstwę logiki.
+# spam = Tracer(spam)
+@Tracer
+def spam(a, b, c):
+    print ( "{} {} {}".format(a, b, c) )
+    return a + b + c
+
+print ( spam(1, 2, 3) )         # call 1 to spam
+print ( spam("a", "b", "c") )   # call 2 to spam
+print ( spam(c=1, b=2, a=3) )   # call 3 to spam
+</pre><hr><pre>
+# https://www.geeksforgeeks.org/class-as-decorator-in-python/
+import time
+
+class Tracer1:
+
+    def __init__(self, func):   # tu lapiemy funkcje do przetworzenia
+        self.func = func
+
+    def __call__(self, *arguments, **keywords):
+        start_time = time.time()
+        reply = self.func(*arguments, **keywords)
+        end_time = time.time()
+        print ( "Execution took {} seconds".format(end_time - start_time) )
+        return reply
+</pre><hr><pre>
+# Tutaj instancja klasy będzie dekoratorem.
+# Jest możliwość przekazywania parametrów do dekoratora.
+
+from functools import wraps
+# Decorator factory to apply update_wrapper() to a wrapper function.
+
+class Tracer2:
+
+    def __init__(self):   # tu mogą być parametry dekoratora
+        self.calls = 0
+
+    def __call__(self, func):   # tu łapiemy funkcję do przetworzenia
+        @wraps(func)
+        def func_wrapper(*arguments, **keywords):
+            self.calls += 1
+            print ( "call {} to {}".format(self.calls, func.__name__) )
+            return func(*arguments, **keywords)
+        return func_wrapper
+
+# Do funkcji spam2() dodajemy warstwę logiki.
+# spam2 = Tracer()(spam2)
+@Tracer2()
+def spam2(a, b, c):
+    print ( "{} {} {}".format(a, b, c) )
+    return a + b + c
+
+print ( spam2(1, 2, 3) )         # call 1 to spam2
+print ( spam2("a", "b", "c") )   # call 2 to spam2
+print ( spam2(c=1, b=2, a=3) )   # call 3 to spam2
+</pre><hr>
+
+<h3>PROPERTY</h3>
+
+<hr><pre>
+# A typical use is to define a managed attribute x.
+# Chyba chodzi o to, ze zamiast domyślnego przypinania
+# atrybutu do obiektu, można dodać jakąś akcję ukrytą.
+# I tu chodzi o atrybut o konkretnej nazwie.
+
+class C1(object):
+    """Klasa C1."""
+
+    def __init__(self):
+        self._x = None
+
+    def getx(self):   # getting an attribute value
+        return self._x
+
+    def setx(self, value):   # setting an attribute value
+        self._x = value
+
+    def delx(self):   # deleting an attribute value
+        del self._x
+
+    x = property(getx, setx, delx, "I'm the 'x' property.")
+
+c = C1()
+#print dir(c)
+c.x = 10            # setx
+print ( c.__doc__ )
+print ( c.x )       # getx
+del c.x             # delx
+
+# W Pythonie 2.6 można użyć getter, setter, deleter.
+# Trzeba użyć tej samej nazwy (tu x i _x).
+# Tu jest użycie property jako dekoratora.
+
+class C2(object):
+    """Klasa C2."""
+
+    def __init__(self):
+        self._x = None
+        self.threshold = 10
+
+    @property
+    def x(self):   # getting an attribute value
+        """I'm the 'x' property."""
+        return self._x
+
+    @x.setter
+    def x(self, value):   # setting an attribute value
+        if value &lt; self.threshold:
+            raise ValueError("x can't be lesser than {}".format(self.threshold))
+        else:
+            self._x = value
+
+    @x.deleter
+    def x(self):   # deleting an attribute value
+        del self._x
+
+
+c = C2()
+print ( dir(c) )
+c.x = 20
+#c.x = 5   # ValueError: x can't be lesser than 10
+print ( c.x )
+del c.x
+</pre><hr>
+
+<h3>DEKORATORY KLAS</h3>
+
+<hr><pre>
+# Składnia dekoratorów klas ma następującą postać.
+
+@decorator2
+@decorator1
+class C(object):
+    pass
+
+# ... co jest równoważne ...
+
+class C(object):
+    pass
+
+C = decorator2(decorator1(C))
+</pre><hr><pre>
+# Dekorator klasy.
+def class_decorator(cls): pass
+
+@class_decorator              # zastosowanie
+class C(object):
+    pass
+
+# lub inaczej
+
+class C(object):
+    pass
+
+C = class_decorator(C)
+</pre><hr><pre>
+# https://stackoverflow.com/questions/392160/what-are-some-concrete-use-cases-for-metaclasses
+# Zastosowanie dekoratora klasy do rejestracji klas.
+
+models = {}
+
+def model(cls):
+    models[cls.__name__] = cls
+    return cls
+
+@model
+class A(object):
+    pass
+
+class B(A):
+    pass
+# Klasa B nie będzie rejestrowana, chyba że jawnie użyjemy znowu @model.
+# Lepsze rozwiązanie wykorzystuje metaklasy.
+
+models = {}
+
+class ModelMetaclass(type):
+    def __new__(meta, name, bases, clsdict):
+        models[name] = cls = type.__new__(meta, name, bases, clsdict)
+        return cls
+
+class Model(object):
+    __metaclass__ = ModelMetaclass   # Python 2
+
+class A(Model):
+    pass
+
+class B(A):   # teraz klasa B będzie zarejestrowana w models
+    pass
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Obiekt None</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Python posiada specjalny obiekt/wartość <em>None</em>,
+która oznacza obiekt pusty (null object).
+Często w Pythonie zmiennej nadajemy wartość <em>None</em>,
+aby zaznaczyć, że jest ona dostępna, ale chwilowo
+traktujemy ją jako nieokreśloną.
+
+<hr><pre>
+answer = None
+# Tutaj może być jakiś kod nadający wartość zmiennej answer.
+if answer is None:
+    quit = True
+elif answer == "quit":
+    quit = True
+else:
+    quit = False
+</pre><hr>
+
+<p>Obiekt <em>None</em> ma tylko jedną instancję, dlatego test
+<br>
+<em>if answer is None</em> (obiekty tożsame; ZALECANE) 
+<br>
+jest równoważny testowi
+<br>
+<em>if answer == None</em> (równe wartości).
+<br>
+Zwykle w testach chodzi nam o porównanie wartości obiektów (==).
+
+
+</body>
+</html>

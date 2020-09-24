@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Sortowanie przez wstawianie (insertsort)</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Sortowanie przez wstawianie polega na wstawianiu nowych
+elementów we właściwe miejsce już uporządkowanego zbioru.
+Algorytm jest stabilny.
+W czasie pracy algorytmu lewa strona tablicy zawiera rosnącą część
+posortowaną, a prawa strona tablicy zawiera malejącą część nieposortowaną,
+z której pobieramy kolejne elementy.
+
+<hr><pre>
+# Wersja nieadaptacyjna z dwiema pętlami for.
+
+def insertsort(L, left, right):
+    for i in range(left+1, right+1):
+        for j in range(i, left, -1):   # od prawej do lewej (bez left)
+            if L[j-1] &gt; L[j]:
+                swap(L, j-1, j)   # zamiana sąsiadów
+</pre><hr><pre>
+# Wersja nieadaptacyjna z pętlami for i while.
+
+def insertsort(L, left, right):
+    for i in range(left+1, right+1):
+        j = i
+        while j &gt; left:
+            if L[j-1] &gt; L[j]:
+                swap(L, j-1, j)
+            j = j-1
+</pre><hr>
+
+<p>Porównania: 1 + 2 + ... + (n-1) = n*(n-1)/2.
+
+<p>Przestawienia: 1 + 2 + ... + (n-1) = n*(n-1)/2.
+
+<h3>ULEPSZENIA</h3>
+
+<p>Można dokonać wielu ulepszeń:
+
+<ul>
+<li>Można przestać porównywać elementy, gdy natrafimy na
+liczbę mniejszą od sprawdzanej, ponieważ z lewej strony
+liczby są już posortowane.
+<li>Zamiast warunku j &gt; left (w drugiej pętli) 
+można znaleźć najmniejszy element i
+ustawić go na początku tablicy (wartownik).
+<li>Można poprawić przestawianie sąsiednich elementów
+[przesuwanie zamiast kolejnych swap()].
+</ul>
+
+<hr><pre>
+# Wersja z wartownikiem wg Sedgewicka.
+# Ta wersja jest adaptacyjna.
+
+def insertsort(L, left, right):
+    for i in range(right, left, -1):   # ustawiam wartownika
+        if L[i-1] &gt; L[i]: 
+            swap(L, i-1, i)
+    for i in range(left+2, right+1):
+        j = i
+        item = L[i]
+        while item &lt; L[j-1]:   # robimy miejsce na item
+            L[j] = L[j-1]
+            j = j-1
+        L[j] = item
+</pre><hr><pre>
+# https://pl.wikibooks.org/wiki/Kody_%C5%BAr%C3%B3d%C5%82owe/Sortowanie_przez_wstawianie
+# Poprawiony kod pythonowy. Nie ma swap() i wartownika.
+
+def insertsort(L, left, right):
+    for i in range(left+1, right+1):   # L[left] jest posortowany
+        item = L[i]
+        j = i
+        while j &gt; left and L[j-1] &gt; item:
+            L[j] = L[j-1]   # robimy miejsce na item
+            j = j-1
+        L[j] = item
+</pre><hr>
+
+<h3>WERSJA REKURENCYJNA</h3>
+
+<p>Sortowanie przez wstawianie używa podejścia inkrementacyjnego:
+sortuj L w zakresie od left do j-1, 
+potem wstaw L[j] we właściwe miejsce, aby otrzymać L posortowane
+w zakresie od left do j.
+
+<hr><pre>
+# Wersja rekurencyjna.
+
+def insertsort(L, left, right):
+    if left &lt; right:
+        insertsort(L, left, right-1)
+        item = L[right]
+        j = right
+        # Tu widać, że wartownik upraszcza warunek pętli.
+        while j &gt; left and item &lt; L[j-1]:   # robimy miejsce na item
+            L[j] = L[j-1]
+            j = j-1
+        L[j] = item
+</pre><hr>
+
+</body>
+</html>

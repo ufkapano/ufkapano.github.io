@@ -1,0 +1,261 @@
+<html>
+<head>
+<title>Zadania</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zadania</h1>
+
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: 2.10-2.19
+
+<p>Prosty sposób na automatyczne sprawdzenie kodu:
+<br>assert result == expected_result
+
+<h3>ZADANIE 2.1 (KEYWORDS)</h3>
+
+<p>Wygenerować listę słów kluczowych Pythona.
+Sprawdzić, czy można utworzyć zmienne o takich nazwach.
+
+<p>Sprawdzić listę obiektów wbudowanych.
+W czasie normalnej pracy nie ma potrzeby importowania
+modułu __builtin__, ponieważ obiekty wbudowane są dostępne.
+
+<hr><pre>
+&gt;&gt;&gt; import __builtin__
+&gt;&gt;&gt; dir(__builtin__)
+</pre><hr>
+
+<h3>ZADANIE 2.2 (BOOL)</h3>
+
+<p>W trybie interaktywnym zbadać podane wyrażenia
+i wyjaśnić rezultaty.
+
+<hr><pre>
+5 == 5, 4 &gt; 5              # porównania
+type(True), type(False)       # bool, bool
+type(1), type(0)              # int, int
+x = 5
+x == 5 and 3                  # 3
+x == 4 and 3                  # False
+3 and x == 5                  # True
+3 and x == 4                  # False
+1 &lt; x &lt; 9               # łączenie operatorów porównania
+isinstance(True, int)         # True
+isinstance(True, bool)        # True
+</pre><hr>
+
+<h3>ZADANIE 2.3 (LICZBY)</h3>
+
+<p>W trybie interaktywnym zbadać:
+
+<ul>
+<li>zapis liczb różnych typów,
+<li>sposoby wyświetlania liczb - str(), repr(),
+<li>konwersję typów (jawną i niejawną),
+<li>wbudowane funkcje matematyczne,
+<li>różne rodzaje dzielenia w Pythonie (x / y, x // y, x % y),
+<li>różne sposoby zaokrąglania liczb
+[round(x), int(x + 0.5), math.trunc()],
+<li>sprawdzić efekt dzielenia przez zero (ZeroDivisionError).
+</ul>
+
+
+<h3>ZADANIE 2.4 (STR)</h3>
+
+<p>W trybie interaktywnym zbadać podane wyrażenia.
+
+<hr><pre>
+# Funkcja len().
+len("napis")                  # 5
+len(str(2 ** 10000))            # konwersja liczby do napisu
+
+"abc", 'abc'                  # identyczne
+S = "ab"   'cd'               # niejawna konkatenacja do "abcd"
+"ab'cd", 'ab"cd'              # zastosowanie
+S = "a\tb\nc\"d"              # znaki specjalne
+print ( "{} {}".format(len(S), S) )   # 7
+
+S = """jeden
+dwa
+trzy"""     # napis wielowierszowy, podobnie z '''
+print ( S )
+
+# Sprawdzić indeksowanie i wycinki.
+S = "abrakadabra"
+S[2], S[-3], S[3:5], S[3:], S[:4]
+
+# Sprawdzić konkatenację (łączenie) i powtórzenie napisów.
+L = ["a", "b", "c"]
+L[0] + L[1] + L[2]            # ręczne dodawanie
+L[0] + "=" + L[1] + "=" + L[2]
+"".join(L)                    # zalecane
+"=".join(L)                   # zalecane
+# S.join([S1,S2,S3]) daje S1+S+S2+S+S3
+
+# Sprawdzić niezmienność napisów.
+</pre><hr>
+
+<p>Zbadać metody dla napisów, lista metod dir(str).
+Zwrócić uwagę na metody: find(), replace(),
+strip(), lower(), upper(), zfill().
+
+<h3>ZADANIE 2.5 (LIST)</h3>
+
+<p>W trybie interaktywnym zbadać podane wyrażenia.
+
+<hr><pre>
+L = [3, "xyz", [10, 20]]
+len(L)
+L[1], L[1][0], L[2], L[2][1]
+M = L
+L[1] = 5     # zmienia się też M!
+
+# Indeksowanie 
+
+# Wycinki.
+
+# Konkatenacja i powtórzenie.
+
+# Podstawianie pod element lub wycinek.
+
+# Generowanie list funkcją range().
+
+# Kopiowanie list.
+
+# Sortowanie list.
+
+# Listy składane.
+</pre><hr>
+
+<p>Spróbować wyświetlić element poza końcem listy (IndexError).
+Spróbować przypisać element pod indeksem poza końcem listy.
+
+<p>Zbadać różnicę między podstawianiem L2 = L1, a kopiowaniem
+list L2 = list(L1). Wykorzystać funkcję id().
+
+<p>Zbadać metody dla list, lista metod dir(list).
+
+<h3>ZADANIE 2.6 (TUPLE)</h3>
+
+<p>W trybie interaktywnym zbadać operacje na krotkach.
+
+<p>Zbadać metody dla krotek, lista metod dir(tuple).
+
+<h3>ZADANIE 2.7 (DICT)</h3>
+
+<p>W trybie interaktywnym zbadać operacje na słownikach,
+lista metod dir(dict).
+
+<p>Sprawdzić możliwość pobrania nieistniejącego klucza (KeyError).
+
+<h3>ZADANIE 2.8 (ZBIORY)</h3>
+
+<p>W trybie interaktywnym zbadać operacje na zbiorach.
+
+<p>Zbadać metody dla zbiorów, listy metod dir(set)
+oraz dir(frozenset).
+
+<p>Wykorzystać zbiór do usunięcia duplikatów z listy.
+
+<h3>ZADANIE 2.9 (FILE)</h3>
+
+<p>Napisać funkcję wykonującą kopiowanie pliku, która pomija linie
+rozpoczynające się od znaku # (linie z komentarzami). 
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.10</h3>
+
+<p>Mamy dany napis wielowierszowy <em>line</em>.
+Podać sposób obliczenia liczby wyrazów w napisie.
+Przez wyraz rozumiemy ciąg "czarnych" znaków, oddzielony
+od innych wyrazów białymi znakami (spacja, tabulacja, newline).
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.11</h3>
+
+<p>Podać sposób wyświetlania napisu <em>word</em> tak,
+aby jego znaki były rozdzielone znakiem podkreślenia.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.12</h3>
+
+<p>Zbudować napis stworzony z pierwszych
+znaków wyrazów z wiersza <em>line</em>.
+Zbudować napis stworzony z ostatnich
+znaków wyrazów z wiersza <em>line</em>.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.13</h3>
+
+<p>Znaleźć łączną długość wyrazów w napisie <em>line</em>.
+Wskazówka: można skorzystać z funkcji <em>sum()</em>.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.14</h3>
+
+<p>Znaleźć: (a) najdłuższy wyraz, (b) długość najdłuższego
+wyrazu w napisie <em>line</em>.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.15</h3>
+
+<p>Na liście L znajdują się liczby całkowite dodatnie.
+Stworzyć napis będący ciągiem cyfr kolejnych liczb
+z listy L.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.16</h3>
+
+<p>W tekście znajdującym się w zmiennej <em>line</em>
+zamienić ciąg znaków "GvR" na "Guido van Rossum".
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.17</h3>
+
+<p>Posortować wyrazy z napisu <em>line</em>
+raz alfabetycznie, a raz pod względem długości.
+Wskazówka: funkcja wbudowana <em>sorted()</em>.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.18</h3>
+
+<p>Znaleźć liczbę cyfr zero w dużej liczbie całkowitej.
+Wskazówka: zamienić liczbę na napis.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 2.19</h3>
+
+<p>Na liście L mamy liczby jedno-, dwu- i trzycyfrowe
+dodatnie.  Chcemy zbudować napis z trzycyfrowych bloków,
+gdzie liczby jedno- i dwucyfrowe będą miały blok
+dopełniony zerami, np.  007, 024. 
+Wskazówka: <em>str.zfill()</em>.
+
+<pre>
+</pre>
+
+</body>
+</html>

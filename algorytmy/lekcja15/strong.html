@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Silne generatory</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>P(k) to zbiór permutacji, w których liczby na pozycjach
+większych od k są na swoich miejscach,
+czyli permutują się liczby od 0 do k.
+W tym podejściu permutacje różnej długości rozszerzamy
+do odpowiedniej wspólnej długości.
+
+<p>Sigma(k) to zbiór permutacji s_kj (s[k] = j),
+0 &lt;= j &lt;= k.
+Z definicji s_kk = ().
+Wybór permutacji s_kj dla danej grupy nie jest jednoznaczny.
+
+<p>Gamma(k) to zbiór permutacji, które dają się zapisać
+w postaci s_kj*...*s_00.
+
+<p>T(k) to zbiór generatorów dla Gamma(k).
+
+<p>Układ transwersalny dla Gamma(n) to suma zbiorów Sigma(k)
+dla k od 0 do n.
+
+<p>Silne generatory dla Gamma(n) to suma zbiorów T(k)
+dla k od 0 do n.
+
+<p>Rząd grupy obliczamy mnożąc liczebności zbiorów Sigma(k)
+uzyskanych dla danej grupy.
+
+<h3>PRZYNALEŻNOŚĆ DO GRUPY</h3>
+
+<p>Niech t należy do P(k), oraz t[k] = j.
+Czy t należy do Gamma(k)?
+Tak, jeżeli (~s_kj * t) należy do Gamma(k-1).
+
+<hr><pre>
+Przykład.
+Dana jest permutacja t = (0,1,2,4)(3,5), która należy do P(5).
+t = [1, 2, 4, 5, 0, 3] w zapisie macierzowym (5 na 3).
+Jak wygenerować zbiory T(k) i Sigma(k)?
+
+Podstawiamy s_53 = t.
+T(5) = {t} silny generator.
+
+Obliczamy t*t = (0,2)(1,4), t*t należy do P(4).
+t*t = [2, 4, 0, 3, 1, 5] w zapisie macierzowym (5 na 5, 4 na 1).
+Podstawiamy s_41 = t*t.
+T(4) = {t*t} silny generator.
+
+Obliczamy t*t*t = (0,2)(1,4)*(0,1,2,4)(3,5) = (0,4,2,1)(3,5).
+t*t*t = [4, 0, 1, 5, 2, 3] w zapisie macierzowym (5 na 3).
+s_53 już jest ustawione.
+Sprawdzamy, czy t*t*t jest już uwzględnione w zbiorach Sigma(k).
+(~s_53)*t*t*t = (0,2)(1,4) = t*t = s_41, czyli
+t*t*t = s_53*s_41, potrafimy wyrazić t*t*t przez s_kj.
+t*t*t*t = (), nie ma nowych permutacji.
+
+Rozwiązanie:
+T(5) = {t}
+T(4) = {t*t}
+Sigma(5) = {s_50=None, s_51=None, s_52=None, s_53=t,    s_54=None, s_55=()} liczebność 2
+Sigma(4) = {s_40=None, s_41=t*t,  s_42=None, s_43=None, s_44=()} liczebność 2
+Sigma(3) = {s_30=None, s_31=None, s_32=None, s_33=()} liczebność 1
+Sigma(2) = {s_20=None, s_21=None, s_22=()} liczebność 1
+Sigma(1) = {s_10=None, s_11=()} liczebność 1
+Sigma(0) = {s_00=()} liczebność 1
+Rząd grupy wynosi 2*2 = 4, grupa cykliczna C_4.
+</pre><hr><pre>
+Przykład.
+Dane są permutacje p = (0,1,2) z P(2) i t = (1,2,3) z P(3).
+Wygenerować zbiory T(k) i Sigma(k).
+
+Rozwiązanie.
+p = (0,1,2), p*p = (0,2,1), p*p*p = ().
+t = (1,2,3), t*t = (1,3,2), t*t*t = ().
+p*p*t = (0,2,1)*(1,2,3) = (0,2,3).
+T(3) = {t}
+T(2) = {p}
+Sigma(3) = {s_30=p*p*t, s_31=t,   s_32=t*t, s_33=()} liczebność 4
+Sigma(2) = {s_20=p,     s_21=p*p, s_22=()} liczebność 3
+Sigma(1) = {s_10=None,  s_11=()} liczebność 1
+Sigma(0) = {s_00=()} liczebność 1
+Rząd grupy 4*3 = 12, grupa alternująca A_4.
+</pre><hr>
+
+<p>Rząd grupy symetrycznej S_N wynosi N!
+Przy użyciu zbiorów Sigma(k) należy pamiętać tylko
+N*(N+1)/2 permutacji s_kj [oraz N-1 silnych generatorów z T(k)], 
+które odzwierciedlają strukturę grupy.
+
+</body>
+</html>

@@ -1,0 +1,276 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Generatory</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Wyrażenia yield (yield expressions) pojawiły się w Pythonie 2.5
+do definiowania funkcji generatora (generator function)
+zamiast zwykłej funkcji. Wyrażenia yield mogą się pojawić jedynie
+w ciele definicji funkcji.
+
+<p>Z generatorów korzystamy zwykle wtedy, gdy nie potrzebujemy
+pamiętać pełnej listy, a lista jest tylko pewnym krokiem
+pośrednim w obliczeniach.
+Generatory to "leniwe funkcje": obliczają wartości tylko wtedy,
+gdy są żądane.
+Generatory są iteratorami, bo obsługują metodę next()
+[więcej o iteratorach powiemy po omówieniu klas i wyjatków (lekcja 7)].
+Inne metody generatorów to close(), send(), throw() [PEP 342].
+
+<p>Każde wyrażenie yield tymczasowo zatrzymuje przetwarzanie,
+zapamiętuje stan funkcji. Po wznowieniu generatora (ponownym wywołaniu)
+przetwarzanie jest kontunuowane od miejsca zatrzymania.
+
+<p>Generatory są iteratorami, ale można po nich przejść tylko raz.
+Wartości generatora nie są przechowywane w pamięci, tylko
+są wytwarzane w locie (on the fly).
+
+<hr><pre>
+# Przykładowa lista składana.
+x = [i*i for i in range(100)]           # lista w całości
+
+# xrange() jest generatorem, więc dobrze tu pasuje.
+x = (i*i for i in xrange(100))          # generator object
+
+# W praktyce xrange() nie jest szybsze niż range().
+# Przydaje się przy bardzo długich listach, gdy brakuje pamięci.
+
+# Tworzenie list w różnych wersjach Pythona.
+L = range(8)                  # Python 2
+L = list(xrange(8))           # Python 2
+L = list(range(8))            # Python 3, range() to generator
+L = list(range(8))            # UNIWERSALNE
+
+def my_generator(stop):
+    """Generator zastępujący xrange(stop)."""
+    value = 0
+    while value &lt; stop:
+        yield value           # yield zamiast return
+        value = value + 1
+
+# Sposób 1 korzystania z generatora.
+# Mamy ukryty w tle protokół iteracji.
+for i in my_generator(10):
+    print ( i )
+# Po zakończeniu pętli tracimy dostęp do generatora,
+# ale i tak jest on już zakończony.
+
+# Sposób 2 korzystania z generatora.
+# Jawne korzystanie z protokołu iteracji.
+x = my_generator(3)
+print ( x.next() )           # 0
+print ( x.next() )           # 1
+print ( x.next() )           # 2
+print ( x.next() )           # StopIteration
+# W następnych wywołaniach też otrzymamy wyjątek StopIteration.
+</pre><hr><pre>
+def fibonacci():
+    """Nieskończony generator liczb Fibonacciego."""
+    minus1, minus0 = 0, 1
+    yield minus1
+    yield minus0
+    while True:
+        minus1, minus0 = minus0, minus1 + minus0
+        yield minus0
+
+
+for i in fibonacci():
+    print ( i )
+    if i &gt; 100:
+        break
+# 0 1 1 2 3 5 8 13 21 34 55 89 144
+
+# Generator jest nieskończony, więc należało samemu
+# przerwać pętlę przez break. Ten generator mógłby dalej
+# produkować liczby Fibonacciego, gdyby mieć do niego dostęp.
+
+fib = fibonacci()   # fib to generator object
+for i in fib:
+    print ( i )
+    if i &gt; 100:
+        break
+print ( fib.next() )     # 233
+print ( fib.next() )     # 377
+</pre><hr><pre>
+# Przy generatorach jest problem, jeżeli chcemy wykonać podwójną
+# iterację po obiekcie generatora.
+x = (i*i for i in xrange(10))        # generator object
+for i in x:
+    for j in x:
+        print ( "{} {}".format(i, j) )
+# WYNIK
+# 0 1
+# 0 4
+# 0 9
+# 0 16
+# 0 25
+# 0 36
+# 0 49
+# 0 64
+# 0 81
+# Druga pętla for wyczerpała generator x.
+
+# Próbujemy z dwoma generatorami
+x = (i*i for i in xrange(10))        # generator object
+y = (i*i for i in xrange(10))        # generator object
+for i in x:
+    for j in y:
+        print ( "{} {}".format(i, j) )
+# WYNIK
+0 0
+0 1
+0 4
+0 9
+0 16
+0 25
+0 36
+0 49
+0 64
+0 81
+# Generator y wyczerpał się po jednym przebiegu (x=0).
+
+# xrange to jest osobna klasa, więc zwraca nowe instancje.
+# Rozwiązaniem są dwa niezależne generatory, które powstają w pętli.
+for i in (i*i for i in xrange(10)):
+    for j in (i*i for i in xrange(10)):
+        print ( "{} {}".format(i, j) )
+# WYNIK
+0 0
+0 1
+0 4
+0 9
+0 16
+0 25
+0 36
+0 49
+0 64
+0 81
+1 0
+1 1
+1 4
+1 9
+1 16
+1 25
+1 36
+1 49
+1 64
+1 81
+4 0
+4 1
+4 4
+4 9
+4 16
+4 25
+4 36
+4 49
+4 64
+4 81
+9 0
+9 1
+9 4
+9 9
+9 16
+9 25
+9 36
+9 49
+9 64
+9 81
+16 0
+16 1
+16 4
+16 9
+16 16
+16 25
+16 36
+16 49
+16 64
+16 81
+25 0
+25 1
+25 4
+25 9
+25 16
+25 25
+25 36
+25 49
+25 64
+25 81
+36 0
+36 1
+36 4
+36 9
+36 16
+36 25
+36 36
+36 49
+36 64
+36 81
+49 0
+49 1
+49 4
+49 9
+49 16
+49 25
+49 36
+49 49
+49 64
+49 81
+64 0
+64 1
+64 4
+64 9
+64 16
+64 25
+64 36
+64 49
+64 64
+64 81
+81 0
+81 1
+81 4
+81 9
+81 16
+81 25
+81 36
+81 49
+81 64
+81 81
+</pre><hr>
+
+<p>Listy składane są  żarłoczne (greedy), obliczają wynik od razu, jako listę.
+Generatory są leniwe (lazy), obliczają jedną wartość na raz, kiedy
+jest potrzebna. Warto zapamiętać regułę:
+
+<ul>
+<li>Korzystamy z list składanych, kiedy obliczona lista
+jest wymaganym wynikiem końcowym.
+<li>Korzystamy z generatorów, jeżeli obliczana lista jest
+tylko pośrednim etapem obliczeń.
+</ul>
+
+<hr><pre>
+W Pythonie 3.3 pojawiło się wyrażenie (generator delegation):
+
+yield from sequence
+
+Zwykle odpowiada to w Pythonie 2 wyrażeniu:
+
+for item in sequence:
+    yield item
+
+PEP 380 wprowadza pewien protokół generatorów w dodatkowymi możliwościami.
+
+PEP 342 (Python 2.5) opisuje "Coroutines via Enhanced Generators".
+
+http://code.activestate.com/recipes/576727-pure-python-implementation-of-pep-380-yield-from/
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,255 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Listy powiązane pojedynczo</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy powiązane składają się z szeregu elementów (węzłów) 
+powiązanych ze sobą łączami.
+Python udostępnia listy jako swój typ wbudowany, a inne języki
+pozwalają samemu stworzyć ich odpowiednik.
+Węzły list powiązanych pojedynczo przechowują pewną wartość oraz
+zawierają referencję do następnego węzła na liście. 
+Jedynym sposobem dostania się do konkretnego węzła jest przejście
+przez listę od jej samego początku.
+Ostatni węzeł oznacza się zgodnie z jedną przedstawionych poniżej
+konwencji:
+
+<ul>
+<li>za pomocą pustego łącza, które nie wskazuje żadnego węzła,
+<li>za pomocą węzła-atrapy,
+<li>za pomocą węzła wskazującego pierwszy element listy (lista cykliczna).
+</ul>
+
+<h3>IMPLEMENTACJA 1</h3>
+
+<p>Pierwszy etap ręcznej implementacji list w Pythonie to stworzenie
+klasy reprezentującej węzeł listy.
+Dostęp do listy zapewnia łącze do jej pierwszego węzła (head).
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł listy jednokierunkowej."""
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)   # bardzo ogólnie
+</pre><hr><pre>
+head = None
+# pusta lista
+
+head = Node("front")
+# lista jednoelementowa
+
+# Ręczne budowanie dłuższej listy.
+head = None                   # [], pusta lista
+head = Node(3, head)          # [3]
+head = Node(2, head)          # [2, 3]
+head = Node(4, head)          # [4, 2, 3]
+</pre><hr>
+
+<h3>PRZECHODZENIE PRZEZ LISTĘ JEDNOKIERUNKOWĄ</h3>
+
+<p>Posługiwanie się danymi zorganizowanymi w listy nazywa się
+przetwarzaniem list.
+Rozważmy funkcję <em>traverse()</em>, która pozwala przejść przez 
+listę i wykonać operację <em>visit()</em> na każdym węźle.
+
+<hr><pre>
+def traverse(node, visit):
+    """Iteracyjne przejście przez listę jednokierunkową."""
+    while node:
+        visit(node)
+        node = node.next
+</pre><hr><pre>
+def traverse(node, visit):
+    """Rekurencyjne przejście przez listę jednokierunkową."""
+    if node:
+        visit(node)
+        traverse(node.next, visit)
+</pre><hr>
+
+<p>Powyższy schemat powtarza się w wielu funkcjach przetwarzających
+listy. Rozważmy przykładowo wypisanie zawartości całej listy.
+
+<hr><pre>
+def print_list(node):
+    """Iteracyjne wypisanie listy jednokierunkowej."""
+    while node:
+        print ( node )
+        node = node.next
+</pre><hr><pre>
+def print_forward(node):
+    """Rekurencyjne wypisanie listy jednokierunkowej."""
+    if node:
+        print ( node )
+        print_forward(node.next)
+</pre><hr><pre>
+def print_backward(node):
+    """Rekurencyjne wypisanie listy wstecz."""
+    if node:
+        print_backward(node.next)
+        print ( node )
+</pre><hr><pre>
+def count_list(node):
+    """Obliczanie liczby węzłów na liście w czasie O(N)."""
+    length = 0
+    while node:
+        length += 1
+        node = node.next
+    return length
+</pre><hr><pre>
+def find_list(node, data):
+    """Wyszukiwanie elementu na liście w czasie O(N)."""
+    while node:
+        if node.data == data:
+            return node   # zwracamy węzeł z danymi
+        node = node.next
+    return None
+</pre><hr><pre>
+def is_empty(node):
+    """Sprawdzanie, czy lista jest pusta."""
+    return node is None
+</pre><hr>
+
+<h3>PRZETWARZANIE LIST</h3>
+
+<p>Zbadamy operacje, które przebudowują listę, dlatego jako wynik
+muszą zwracać referencję do ewentualnie zmienionego początku listy.
+Napiszemy funkcje insert_head() i insert_tail(),
+które dodają element odpowiednio na początek i na koniec listy,
+a zwracają nowy początek listy.
+
+<hr><pre>
+def insert_head(node, new_node):   # algorytm klasy O(1)
+    """Wstawienie nowego węzła na początek listy."""
+    new_node.next = node
+    return new_node
+
+# Zastosowanie.
+# head = insert_head(head, Node(33))
+</pre><hr><pre>
+def insert_tail(node, new_node):   # algorytm klasy O(N)
+    """Wstawienie nowego węzła na koniec listy."""
+    head = node
+    last = None
+    while node:
+        last = node
+        node = node.next
+    if last is None:      # lista była pusta
+        return new_node
+    else:                 # last jest ostatni
+        last.next = new_ode
+        return head   # head się nie zmienił
+
+# Zastosowanie.
+# head = insert_tail(head, Node(55))
+</pre><hr>
+
+<p>Napiszemy funkcję reverse_list(), która odwraca kolejność
+elementów na liście, a zwraca nowy początek listy.
+Realizacja tego zadania wymaga trzech zmiennych przechowujących
+referencje do węzłów (before, after, node).
+Łącze before wskazuje na fragment listy już zmodyfikowany,
+a łącze after wskazuje na fragment, który jeszcze nie został
+zmodyfikowany. Dzięki łączu node nie zgubimy połączenia
+z resztą listy przy zmienianiu łącza after.next.
+
+<hr><pre>
+def reverse_list(node):   # zwraca nowy head
+    """Odwrócenie kolejności elementów na liście."""
+    before = None
+    after = node
+    while after:
+        node = after.next
+        after.next = before
+        before = after
+        after = node
+    return before
+
+# Zastosowanie.
+# head = reverse_list(head)
+</pre><hr>
+
+<p>Następna funkcja wykonuje sortowanie węzłów listy metodą
+sortowania przez wstawianie. Elementy będą ustawione
+od największego do najmniejszego. Algorytm nie jest zbyt wydajny,
+ponieważ jest klasy O(N**2), ale ma walory dydaktyczne.
+Charakterystyczne jest przesuwanie widełek (before, after)
+wzdłuż listy, aby znaleźć miejsce do wstawienia węzła pomiędzy
+nimi. 
+
+<hr><pre>
+def insertsort(node):
+    """Sortowanie listy przez wstawianie."""
+    head1 = node          # początek listy pierwotnej
+    head2 = None          # początek listy posortowanej
+    while head1:
+        node = head1            # odczepiam węzeł
+        head1 = head1.next
+        node.next = None        # czyszczę łącze
+        before = None           # robię widełki w nowej liście
+        after = head2
+        while after:
+            if after.data &lt; node.data:
+                break
+            before = after
+            after = after.next
+        # sprawdzamy, gdzie jesteśmy
+        if before is None:      # przed początkiem listy
+            head2 = node
+        else:         # jesteśmy w głębi listy, może na końcu
+            before.next = node
+        node.next = after
+    return head2
+
+# Zastosowanie.
+# head = insertsort(head)
+</pre><hr>
+
+<h3>WYKRYWANIE CYKLI</h3>
+
+<p>https://en.wikipedia.org/wiki/Cycle_detection#Tortoise_and_hare
+
+<p>https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
+
+<p>Ciekawym problemem jest wykrywanie cykli na liście powiązanej.
+Chodzi o sytuację, kiedy ostatni węzeł listy zamiast łącza None
+posiada łącze do pewnego węzła ze środka listy.
+Problem rozwiązuje algorytm Floyda (1967), nazywany także algorytmem
+żółwia i zająca (ang. Floyd’s Cycle-Finding Algorithm,
+The Tortoise and the Hare Algorithm).
+
+<p>Algorytm utrzymuje dwa łącza, żółwia i zająca, przy czym
+łącze żółwia przesuwa się o jedną pozycję, a łącze zająca o dwie pozycje.
+Jeżeli na liście jest cykl, to łącza żółwia i zająca spotkają się
+w pewnym momencie wewnątrz cyklu. To wystarczy, aby wykryć cykl.
+W celu znalezienia pierwszego elementu należącego do cyklu
+i wyznaczenia długości cyklu, należy wykonać dodatkowe czynności.
+Złożoność czasowa O(n), pamięciowa O(1).
+
+<hr><pre>
+def floyd_detect_cycle(node):
+    """Algorytm Floyda wykrywania cyklu."""
+    tortoise = node
+    hare = node
+    while tortoise and hare and hare.next:
+        tortoise = tortoise.next
+        hare = hare.next.next
+        if tortoise == hare:
+            print ( "cycle detected" )
+            return True
+    return False
+</pre><hr>
+
+</body>
+</html>

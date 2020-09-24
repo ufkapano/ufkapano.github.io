@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Klasa SingleList</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Istnieją pewne subtelne problemy przy implementacji list
+z wykorzystaniem tylko klasy Node.
+Przy przejściu z funkcji do metod jest problem z pustą listą.
+Nie można wywoływać metod, gdy węzeł jest równy None.
+Rozwiązaniem jest inna implementacja.
+
+<p>Innym problemem są operacje, które są klasy O(N), co powoduje,
+że dla długich list będą powolne. Są to np. znajdowanie liczby 
+elementów na liście i wstawianie elementu na koniec listy.
+W podejściu obiektowym możemy rozwiązać te problemy wprowadzając
+dodatkowe atrybuty, tzn. możemy na bieżąco uaktualniać licznik
+elementów, oraz możemy przechowywać łącze do końca listy.
+
+<h3>IMPLEMENTACJA 2</h3>
+
+<p>Obok klasy Node wprowadzamy klasę SingleList, 
+w której przechowujemy elementy informacyjne poprawiające 
+wydajność operacji na listach.
+
+<hr><pre>
+class Node:
+    """Klasa reprezentująca węzeł listy jednokierunkowej."""
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)   # bardzo ogólnie
+</pre><hr><pre>
+class SingleList:
+    """Klasa reprezentująca całą listę jednokierunkową."""
+
+    def __init__(self):
+        self.length = 0         # nie trzeba obliczać za każdym razem
+        self.head = None
+        self.tail = None
+
+    def is_empty(self):
+        return self.length == 0
+
+    def count(self):      # tworzymy interfejs do odczytu
+        return self.length
+
+    def insert_head(self, node):
+        if self.length == 0:
+            self.head = self.tail = node
+        else:                   # dajemy na koniec listy
+            node.next = self.head
+            self.head = node
+        self.length += 1
+
+    def insert_tail(self, node):   # klasy O(N)
+        if self.length == 0:
+            self.head = self.tail = node
+        else:                   # dajemy na koniec listy
+            self.tail.next = node
+            self.tail = node
+        self.length += 1
+
+    def remove_head(self):          # klasy O(1)
+        if self.length == 0:
+            raise ValueError("pusta lista")
+        node = self.head
+        if self.head == self.tail:   # self.length == 1
+            self.head = self.tail = None
+        else:
+            self.head = self.head.next
+        node.next = None   # czyszczenie łącza
+        self.length -= 1
+        return node   # zwracamy usuwany node
+</pre><hr><pre>
+# Zastosowanie.
+alist = SingleList()
+alist.insert_head(Node(11))         # [11]
+alist.insert_head(Node(22))         # [22, 11]
+alist.insert_tail(Node(33))         # [22, 11, 33]
+print ( "length {}".format(alist.length) ) # odczyt atrybutu
+print ( "length {}".format(alist.count()) ) # wykorzystujemy interfejs
+while not alist.is_empty():   # kolejność 22, 11, 33
+    print ( "remove head {}".format(alist.remove_head()) )
+</pre><hr>
+
+
+</body>
+</html>

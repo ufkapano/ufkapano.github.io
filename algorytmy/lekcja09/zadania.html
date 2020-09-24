@@ -1,0 +1,167 @@
+<html>
+<head>
+<title>Zadania</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zadania</h1>
+
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie z listami (9.1 - 9.5)
+i jedno zadanie z drzewami (9.6 - 9.7)
+
+<h3>ZADANIE 9.1 (SINGLELIST)</h3>
+
+<p>Do klasy SingleList dodać nowe metody.
+
+<hr><pre>
+class SingleList:
+# ... inne metody ...
+
+    def remove_tail(self): pass   # klasy O(N)
+    # Zwraca cały węzeł, skraca listę.
+    # Dla pustej listy rzuca wyjątek ValueError.
+
+    def merge(self, other): pass   # klasy O(1)
+    # Węzły z listy other są przepinane do listy self na jej koniec.
+    # Po zakończeniu operacji lista other ma być pusta.
+
+    def clear(self): pass     # czyszczenie listy
+</pre><hr>
+
+<h3>ZADANIE 9.2 (SINGLELIST)</h3>
+
+<p>Do klasy SingleList dodać nowe metody.
+
+<hr><pre>
+class SingleList:
+# ... inne metody ...
+
+    def search(self, data): pass   # klasy O(N)
+    # Zwraca łącze do węzła o podanym kluczu lub None.
+
+    def find_min(self): pass   # klasy O(N)
+    # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
+
+    def find_max(self): pass   # klasy O(N)
+    # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
+
+    def reverse(self): pass   # klasy O(N)
+    # Odwracanie kolejności węzłów na liście.
+</pre><hr>
+
+<h3>ZADANIE 9.3 (DOUBLELIST)</h3>
+
+<p>Do klasy DoubleList dopisać nowe metody.
+
+<pre>
+class DoubleList:
+
+    def find_max(self): pass
+    # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
+
+    def find_min(self): pass
+    # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
+
+    def remove(self, node): pass
+    # Usuwa wskazany węzeł z listy.
+
+    def clear(self): pass     # czyszczenie listy
+</pre>
+
+<h3>ZADANIE 9.4 (SORTEDLIST)</h3>
+
+<p>Na bazie list powiązanych pojedynczo lub podwójnie
+stworzyć klasę SortedList, która przechowuje listę stale
+posortowaną. Największy element jest na początku listy (head).
+
+<hr><pre>
+class SortedList:
+
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def is_empty(self):
+        return self.head is None
+
+    def insert(self, node): pass
+    # L = SortedList() ; L.insert(Node(3))
+
+    def remove(self): pass
+    # Zwraca node z elementem największym, czyli head.
+    # Długość listy zmniejsza sie o jeden węzeł.
+
+    def merge(self, other): pass
+    # Scalanie dwóch list posortowanych.
+    # Po tej operacji lista other ma być pusta.
+
+    def clear(self): pass     # czyszczenie listy
+</pre><hr>
+
+<h3>ZADANIE 9.5 (CYCLICLIST)</h3>
+
+<p>Na bazie list powiązanych pojedynczo lub podwójnie
+stworzyć klasę CyclicList, która przechowuje listę cykliczną.
+Atrybut head może wskazywać na dowolny węzeł listy cyklicznej, natomiast
+przez tail rozumiemy węzeł bezpośrednio poprzedzający head.
+
+<hr><pre>
+class CyclicList:
+
+    def __init__(self):
+        self.head = None     # łącze do dowolnego węzła listy
+
+    def is_empty(self):
+        return self.head is None
+
+    def insert_head(self, node): pass
+
+    def insert_tail(self, node): pass
+
+    def search(self, data):   # zwraca node lub None
+
+    def remove(self, node): pass
+
+    def merge(self, other): pass   # scalanie dwóch list cyklicznych w czasie O(1)
+
+    def clear(self): pass     # czyszczenie listy
+</pre><hr>
+
+<h3>ZADANIE 9.6 (BINARYTREE)</h3>
+
+<p>Mamy drzewo binarne bez klasy BinarySearchTree.
+Napisać funkcję count_leafs(top), która liczy liście drzewa binarnego.
+Liście to węzły, które nie mają potomków.
+Można podać rozwiązanie rekurencyjne lub rozwiązanie iteracyjne,
+które jawnie korzysta ze stosu.
+
+<p>Załóżmy, że drzewo binarne przechowuje liczby.
+Napisać funkcję calc_total(top), która podaje sumę liczb
+przechowywanych w drzewie.
+
+<hr><pre>
+def count_leafs(top): pass
+
+def count_total(top): pass
+</pre><hr>
+
+<h3>ZADANIE 9.7 (BINARYSEARCHTREE)</h3>
+
+<p>Dla drzewa BST napisać funkcje znajdujące największy i najmniejszy
+element przechowywany w drzewie.
+Mamy łącze do korzenia, nie ma klasy BinarySearchTree.
+Drzewo BST nie jest modyfikowane, a zwracana jest znaleziona wartość (węzeł).
+W przypadku pustego drzewa należy wyzwolić wyjątek ValueError lub zwrócić None.
+
+<hr><pre>
+def bst_max(top): pass
+
+def bst_min(top): pass
+</pre><hr>
+
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Proste metody sortowania</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Dobrą miarą efektywności algorytmu sortowania jest liczba koniecznych
+porównań kluczy i liczba koniecznych przesunięć (przestawień) obiektów. 
+Metody proste wymagają  rzędu N**2 porównań, a metody zaawansowane 
+rzędu N*log(N).
+Metody proste sortowania w miejscu:
+
+<ul>
+<li>sortowanie przez wybór (selekcję),
+<li>sortowanie przez wstawianie (umieszczanie),
+<li>sortowanie przez zamianę (bąbelkowe).
+</ul>
+
+<p>Metody proste sortowania wybiera się w następujących sytuacjach:
+
+<ul>
+<li>jeżeli program sortowania musi być uruchomiony
+niewielką liczbę razy,
+<li>jeżeli liczba elementów przeznaczonych do sortowania
+nie jest duża (powiedzmy, mniej niż tysiąc),
+<li>jeżeli mamy do czynienia ze specyficznymi zbiorami danych
+(dane prawie posortowane, zbiory z dużą liczbą duplikatów).
+</ul>
+
+
+<h3>IMPLEMENTACJA</h3>
+
+<p>Przedstawione implementacje algorytmów sortowania
+będą maiały postać funkcji typu <em>anysort(L, left, right)</em>,
+gdzie sortowane będą elemeny na liście L na pozycjach
+od <em>left</em> do <em>right</em> włącznie.
+Wykorzystywana jest pomocnicza funkcja <em>swap(L, left, right)</em>,
+która zamienia miejscami elementy na pozycjach <em>left</em> i <em>right</em>.
+
+<hr><pre>
+def swap(L, left, right):
+    """Zamiana miejscami dwóch elementów."""
+    # L[left], L[right] = L[right], L[left]
+    item = L[left]
+    L[left] = L[right]
+    L[right] = item
+</pre><hr><pre>
+# Sedgewick korzysta z jeszcze jednej funkcji pomocniczej.
+
+def compswap(L, left, right):
+    """Zamiana miejscami dwóch elementów, jeżeli warunek jest spełniony."""
+    if L[left] &gt; L[right]:
+        # L[left], L[right] = L[right], L[left]
+        item = L[left]
+        L[left] = L[right]
+        L[right] = item
+</pre><hr><pre>
+def anysort(L, left, right):
+    """Sortowanie listy L w miejscu od left do right włącznie."""
+    pass
+</pre><hr>
+
+
+
+</body>
+</html>

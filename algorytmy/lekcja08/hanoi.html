@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Rekurencja</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Obiekt zwany jest rekurencyjnym, jeżeli częściowo składa się 
+z siebie samego lub jego definicja odwołuje się do jego samego.
+
+<p>Algorytmy rekurencyjne są szczególnie odpowiednie wtedy, 
+gdy rozważany problem lub przetwarzanie dane są zdefiniowane 
+w sposób rekurencyjny. Zastosowanie rekurencji: liczby naturalne, 
+struktury drzewiaste, definicja silni, krzywe Hilberta, 
+krzywe Sierpińskiego, algorytmy z powrotami (droga skoczka szachowego, 
+problem ośmiu hetmanów), itp.
+
+<p>Zawsze trzeba rozważyć problem stopu (zakończenia) aby mieć pewność, 
+że procedura rekurencyjna zakończy obliczenia.
+
+<p>W praktycznych zastosowaniach nie wystarczy pokazać, że głębokość 
+rekurencji jest skończona, ale również, że jest względnie mała. 
+Każde rekurencyjne uaktywnienie funkcji wymaga pewnego obszaru pamięci 
+do przechowywania zmiennych lokalnych i aktualnego stanu obliczeń.
+Wniosek: należy unikać rekurencji, jeśli istnieje oczywiste 
+rozwiązanie iteracyjne.
+
+
+<h3>LICZBY FIBONACCIEGO</h3>
+
+<hr><pre>
+PROBLEM
+Wyznaczyć n-ty wyraz ciągu Fibonacciego.
+
+F(0) = 0,
+F(1) = 1,
+F(n) = F(n-1) + F(n-2).
+Pierwsze wyrazy ciągu: 0, 1, 1, 2, 3, 5, 8,...
+
+Wzór na n-ty wyraz ciągu Fibonacciego [sqrt(5) = 2.236...]:
+
+F(n) = {[(1 + sqrt(5)) / 2] ** n - [(1 - sqrt(5)) / 2] ** n} / sqrt(5).
+
+Wzór można wykorzystać do szybkiego obliczania dużych liczb Fibonacciego.
+</pre><hr><pre>
+Algorytm rekurencyjny
+
+WEJŚCIE
+n - numer liczby ciągu Fibonacciego do wyliczenia (n naturalne)
+
+WYJŚCIE
+n-ta liczba ciągu Fibonacciego
+</pre><hr><pre>
+Lista kroków funkcji F(n)
+
+K01: Jeśli n &lt;= 1, to zwróć n i zakończ.   # obliczenie F(0) i F(1)
+
+K02: Zwróć F(n-2) + F(n-1) i zakończ.   # dwa wywołania rekurencyjne
+</pre><hr><pre>
+Analiza złożoności.
+Tc to czas wykonania instrukcji if.
+T(0) = Tc,
+T(1) = Tc,
+T(n) = Tc + T(n-1) + T(n-2) dla n &gt;= 2,
+T(2) = 3 * Tc,
+T(3) = Tc + 3 * Tc + Tc = 5 * Tc,
+T(4) = Tc + 5 * Tc + 3 * Tc = 9 * Tc.
+</pre><hr>
+
+<p>Zastosowanie: opis rozrastania się stada królików, 
+liczba rozwiązań układanki z klocków,..
+
+<h3>WIEŻE HANOI</h3>
+
+<p><img src="img/hanoi.jpeg" alt="[ hanoi ]" width="677" height="298">
+
+<p>Układanka została wynaleziona przez francuskiego matematyka
+Edouarda Lucasa, który zaproponował zagadkę dla 8 krążków.
+Do sprzedawanego zestawu była dołączona (prawdopodobnie wymyślona 
+przez Lucasa) tybetańska legenda, według której mnisi w świątyni 
+Brahmy rozwiązują tę łamigłówkę dla 64 złotych krążków. 
+Legenda mówi, że gdy mnisi zakończą zadanie, nastąpi koniec świata.
+Celem układanki jest przeniesienie wieży z krążków o różnych
+średnicach z jednego palika na drugi, mając do pomocy trzeci
+palik. Na starcie na pierwszym paliku mamy stos krążków
+ułożonych rosnąco, od najmniejszego na górze.
+Reguły układanki są następujące.
+
+<ul>
+<li>Wolno przenosić po jednym krążku na raz.
+<li>Jeden ruch polega na podniesieniu górnego krążka z jednego
+palika i nałożeniu go na inny palik, który może zawierać
+inne krążki.
+<li>Nie wolno położyć większego krążka na mniejszy.
+</ul>
+
+<p>Wieże Hanoi są przykładem zadania, którego złożoność obliczeniowa
+rożnie szybko wraz ze wzrostem parametru wejściowego
+(liczby krążków). 
+Problem można rozwiązać za pomocą algorytmu rekurencyjnego.
+Najmniejsza liczba wymaganych ruchów wynosi
+L(n) = 2 ** n - 1, gdzie n jest liczbą krążków.
+
+<p>Zastosowania Wież Hanoi.
+
+<ul>
+<li>W psychologi są używane w badaniach nad rozwiązywaniem problemów,
+jako test na kojarzenie. Jest też test neuropsychologiczny
+do diagnozowania dysfunkcji płatów czołowych mózgu.
+
+<li>Istnieje <em>backup rotation scheme</em> do wykonywania kopii zapasowych
+danych komputerowych, kiedy jest do dyspozycji wiele taśm, 
+czy innych nośników.
+
+<li>W edukacji jest to przykład algorytmu rekurencujnego.
+
+<li>W matematyce istnieją różne uogólnienia problemu, np.
+większa liczba palików, szukanie optymalnej procedury przejścia
+między dwoma różnymi stanami układanki, itp.
+Gra może być przedstawiona jako graf nieskierowany, który
+ma kształt trójkąta Sierpińskiego (fraktal).
+</ul>
+
+<p>Implementacja algorytmu w języku Python.
+Krążki są reprezentowane przez liczby, a palikami są listy Pythona.
+
+<hr><pre>
+def hanoi(n, A, B, C):
+    """Wieże Hanoi w Pythonie."""
+    if n == 1:
+        C.append(A.pop())
+        print ( "{} {} {}".format(A, B, C) )
+    else:
+        hanoi(n-1, A, C, B)   # hanoi() samo drukuje
+        C.append(A.pop())
+        print ( "{} {} {}".format(A, B, C) )
+        hanoi(n-1, B, A, C)
+
+number = 3   # rozwiązanie dla trzech krążków
+a = ["a"]
+b = ["b"]
+c = ["c"]
+for i in range(number):
+    a.append(number-i)
+print a, b, c
+hanoi(number, a, b, c)
+</pre><hr><pre>
+# Inna wersja rozwiązania.
+def hanoi(n, A, B, C):
+    """Wieże Hanoi w Pythonie."""
+    if n &gt; 0:
+        hanoi(n-1, A, C, B)
+        C.append(A.pop())
+        print ( "{} {} {}".format(A, B, C) )
+        hanoi(n-1, B, A, C)
+</pre><hr><pre>
+# Przykładowy wynik działania programu dla n=3.
+['a', 3, 2, 1] ['b'] ['c']
+['a', 3, 2] ['b'] ['c', 1]
+['a', 3] ['c', 1] ['b', 2]
+['c'] ['a', 3] ['b', 2, 1]
+['a'] ['b', 2, 1] ['c', 3]
+['b', 2] ['c', 3] ['a', 1]
+['b'] ['a', 1] ['c', 3, 2]
+['a'] ['b'] ['c', 3, 2, 1]
+</pre><hr><pre>
+Problem: ile należy wykonać ruchów pojedyńczymi krążkami, 
+by rozwiązać łamigłówkę?
+H(1) = 1,
+H(n) = 2 * H(n-1) + 1 dla n &gt; 1,
+H(n) = 2 * [2 * H(n-2) + 1] + 1 = 2 * 2 * H(n-2) + 2 + 1,
+H(n) = 2 * 2 * [2 * H(n-3) + 1] + 2 + 1 = 2 * 2 * 2 * H(n-3) + 2 * 2 + 2 + 1,
+H(n) = 2 ** (n-1) * H(1) + 2 ** (n-2) + ... + 2 ** 2 + 2 + 1,
+H(n) = 2 ** n - 1 dla n > 0.
+Złożoność klasy O(2 ** n).
+</pre><hr>
+
+
+</body>
+</html>

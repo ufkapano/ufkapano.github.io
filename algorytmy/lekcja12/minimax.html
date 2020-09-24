@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Jednoczesne wyszukiwanie max i min</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+SPECYFIKACJA
+Problem: 
+Jednoczesne wyszukiwanie elementu największego i najmniejszego
+w nieuporządkowanym ciągu liczb.
+
+DANE WEJŚCIOWE
+Ciąg n liczb umieszczonych w tablicy L. 
+
+DANE WYJŚCIOWE
+Para indeksów dla elementu najmniejszego i elementu największego w ciągu L.
+</pre><hr>
+
+<p>Chcemy jednocześnie odnaleźć elementy najmniejszy i największy
+w podanym zbiorze n elementowym.
+Metoda siłowa polega na znalezieniu najpierw elementu najmniejszego,
+a następnie największego. Tak działa pierwsza wersja funkcji minimax,
+która zwraca parę indeksów - dla elementu minimalnego i maksymalnego.
+Liczba wykonywanych porównań wynosi 2n-2.
+
+<hr><pre>
+def minimax(L, left, right):
+    """Wyszukiwanie elementu najmniejszego i największego.
+    Zastosowanie metody siłowej."""
+    mini = find_min(L, left, right)
+    maxi = find_max(L, left, right)
+    return (mini, maxi)             # zwraca krotkę indeksów
+</pre><hr>
+
+<p>Lepszym podejściem jest algorytm <em>minimax</em>.
+Postępujemy wg zasady <em>dziel i zwyciężaj</em>
+(divide and conquer).
+
+<ul>
+<li>Dzielimy badany zbiór na dwa podzbiory A i B w następujący sposób.
+Z badanego zbioru pobieramy elementy parami, a następnie
+mniejszy z pary wstawiamy do zbioru A, a większy do zbioru B.
+Jeżeli n jest nieparzyste, to ostatni element dołączamy
+do obu zbiorów A i B. 
+<li>Znajdujemy element najmniejszy w zbiorze A.
+<li>Znajdujemy element największy w zbiorze B.
+</ul>
+
+<h3>ZŁOŻONOŚĆ</h3>
+
+<hr><pre>
+Dla n = 2k liczba porównań wynosi
+P = k+2(k-1) = 3k-2 = (3n-4)//2.
+
+Dla n = 2k+1 liczba porównań wynosi
+P = k+2k = 3k = (3n-3)//2.
+
+Złożoność algorytmu jest rzędu 3n//2.
+</pre><hr>
+
+<h3>IMPLEMENTACJA</h3>
+
+<hr><pre>
+def minimax(L, left, right):
+    """Wyszukiwanie elementu najmniejszego i największego.
+    Zastosowanie metody dziel i zwyciężaj."""
+    if left == right:     # tylko jeden element w zbiorze
+        return (left, left)
+    # co najmniej 2 elementy
+    if L[left] &gt; L[left+1]:
+        maxi = left
+        mini = left+1
+    else:
+        maxi = left+1
+        mini = left
+    k = left+2            # już może nie istnieć!
+    while k &lt; right:   # pobieramy pary
+        if L[k] &gt; L[k+1]:
+            if L[k] &gt; L[maxi]:
+                maxi = k
+            if L[k+1] &lt; L[mini]:
+                mini = k+1
+        else:
+            if L[k+1] &gt; L[maxi]:
+                maxi = k+1
+            if L[k] &lt; L[mini]:
+                mini = k
+        k = k+2
+    if k == right:        # nieparzysta liczba elementów
+        if L[k] &gt; L[maxi]:
+            maxi = k
+        if L[k] &lt; L[mini]:
+            mini = k
+    return (mini, maxi)
+</pre><hr>
+
+
+
+</body>
+</html>

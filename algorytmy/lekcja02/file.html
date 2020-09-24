@@ -1,0 +1,159 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pliki</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Python jest dobrze przygotowany do bezpośredniej obsługi zarządzania
+plikami i ich przetwarzania. Zawiera kilka wbudowanych funkcji
+oraz dodatkowych modułów, które pomagają w zarządzaniu plikami.
+
+<p>Obiekty plików są w Pythonie głównym interfejsem do plików
+zewnętrznych znajdujących się na komputerze.
+
+<p>Tworzymy obiekt pliku (file object) za pomocą funkcji
+<em>open()</em>.
+Po użyciu pliku powinno się go zamknąć za pomocą wbudowanej metody
+<em>close()</em>, aby zwolnić zasoby systemowe powiązane z otwartym plikiem.
+Otwarte pliki są automatycznie zamykane na zakończenie przetwarzania skryptu.
+Po zamknięciu pliku nie można go już przetwarzać.
+
+<p>W Pythonie rozróżnia się pomiędzy plikami tekstowymi,
+a plikami binarnymi.
+Pliki tekstowe są podzielone na wiersze. 
+Każdy wiersz kończy się znakiem końca wiersza (zwykle "\n", newline).
+Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
+przez aplikacje znające ich strukturę.
+
+<hr><pre>
+afile = open(file_name, mode)
+# file_name (string): nazwa pliku;
+# mode (string):
+# "r" (czytanie),
+# "w" (pisanie; kasowanie poprzedniej zawartości; utworzy plik, gdy nie istniał),
+# "a" (dopisywanie; poprzednia zawartość pozostaje), 
+# "r+" (czytanie i pisanie; poprzednia zawartość pozostaje),
+# "w+" (czytanie i pisanie; kasowanie poprzedniej zawartości),
+# "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),
+# "b" (dodatek do poprzednich, tryb binarny, Windows, Macintosh),
+# "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy).
+dir(afile)     # spis metod
+afile.close()
+</pre><hr>
+
+<p>Odczytywanie danych z pliku (mode "r").
+
+<hr><pre>
+S = infile.read()      # przeczytanie całego pliku
+S = infile.read(5)      # przeczytanie 5 znaków
+# Przy pustym pliku S będzie równe "".
+# Pusta linia to napis równy "\n".
+
+S = infile.readline()
+# Czyta jedną linię razem z \n.
+
+L = infile.readlines()
+# Czyta wszystkie linie i przechowuje je jako listę stringów z \n na końcu.
+
+L = infile.readlines(50)
+# Czyta 50 bajtów lub więcej, aby była pełna linia!
+# To jest przydatne przy czytaniu dużych plików, aby nie wczytywać
+# całości do pamięci.
+# Taką listę stringów można zapisać do pliku przez outfile.writelines(L).
+</pre><hr>
+
+<p>Zapisywanie danych do otwartego pliku (mode "w").
+
+<hr><pre>
+liczba = 52   # różne typy danych
+x = 1.2345
+napis = "abc"
+
+outfile.write("jeden\n")            # metoda zwraca None
+outfile.write(str(liczba) + "\n")     # tu trzeba dodawać '\n'
+outfile.write(str(x) + "\n")
+outfile.write(napis + "\n")
+
+outfile.write("%d\n" % liczba)      # zapis z procentem
+outfile.write("%f\n" % x)
+outfile.write("%s\n" % napis)
+
+# Tego sposobu lepiej unikać, chyba trudniej przerobić na funkcję.
+print &gt;&gt; outfile, liczba   # drukuje tak jak na ekran, jest '\n'
+print &gt;&gt; outfile, x
+print &gt;&gt; outfile, napis
+
+print &gt;&gt; outfile, "%s\t%s\t%s" % ("a1","a2","a3")
+outfile.write("%s\t%s\t%s\n" % ("a1","a2","a3"))        # tutaj trzeba dać '\n'
+outfile.write("%s\n" % "\t".join(["a1","a2","a3"]))   # sklejam przed wypisaniem
+
+outfile.flush()
+# Flush the internal I/O buffer.
+# Dopiero po flush() lub close() mamy pewność, że dane są zapisane na dysku,
+# a nie czekają w buforze na zapisanie.
+</pre><hr>
+
+<p>Różne operacje na pliku (mode "r+").
+
+<hr><pre>
+afile.write("0123456789abcdefgh")
+
+# afile.seek(offset[, whence])
+# offset - ku końcowi (dodatni) lub początkowi (ujemny, tylko Python 2)
+# whence=0 (domyślnie), offset &gt; 0, bo od początku pliku
+# whence=1, offset różny, bo liczymy od bieżącego położenia w pliku
+# whence=2, offset &lt; 0, bo od końca pliku
+
+afile.seek(5)                 # idź do 6-tego bajtu
+N = afile.tell()              # aktualna pozycja w pliku (int lub long)
+S = afile.read(1)             # czytaj 1 bajt
+afile.seek(-3,2)              # idź do 3-go bajtu od końca, tylko Python 2
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<p>Mamy napisać funkcję wykonującą kopiowanie pliku.
+
+<hr><pre>
+def copy_file(infile_name, outfile_name):
+    infile = open(infile_name, "r")
+    outfile = open(outfile_name, "w")
+    while True:
+        text = infile.read(50)      # ograniczenie
+        if text == "":
+            break           # przerywa pętlę na końcu pliku
+        outfile.write(text)
+    infile.close()
+    outfile.close()
+</pre><hr>
+
+<p>Powyższa funkcja działa dla wszystkich rodzajów plików.
+Dla plików tekstowych można uprościć kod
+przez zastosowanie iteracji po pliku.
+
+<hr><pre>
+def copy_file(infile_name, outfile_name):
+    """Kopiowanie plików."""
+    infile = open(infile_name, "r")
+    outfile = open(outfile_name, "w")
+    for line in infile:
+        outfile.write(line)
+    infile.close()
+    outfile.close()
+</pre><hr><pre>
+def print_file(file_name):
+    """Wypisywanie zawartości pliku na stdout."""
+    afile = open(file_name, "r")
+    for line in afile:
+        print line,   # line zawiera \n, Python 2
+    afile.close()
+</pre><hr>
+
+</body>
+</html>

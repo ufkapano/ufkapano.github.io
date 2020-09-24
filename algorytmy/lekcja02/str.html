@@ -1,0 +1,322 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Łańcuchy znaków</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Łańcuch (string) to uporządkowany ciąg znaków używany do przechowywania
+informacji tekstowej. 
+Łańcuchy zaliczane są do niezmiennych sekwencji, czyli nie można 
+ich zmieniać w obszarze przechowywania ich w pamięci. 
+Dostęp do znaków możliwy jest za pomocą offsetu (przesunięcia). 
+Dozwolone są ujemne offsety (odliczanie od końca). 
+
+<p>W Pythonie nie ma osobnego typu znakowego jak w języku C. 
+Znakami są po prostu stringi o długości jeden.
+
+<p>Moduły pomocnicze: string, regex, re, itp.
+
+<p>Stałe łańcuchowe mogą być zapisywane z użyciem apostrofów lub
+znaków cudzysłowu. Dzięki temu możemy wstawiać znak cudzysłowu/apostrofu
+wewnątrz łańcucha bez specjalnych zabiegów.
+Wielowierszowe bloki wygodnie jest zapisywać
+wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
+
+<h3>OPERACJE NA ŁAŃCUCHACH</h3>
+
+<pre>
++----------------------+--------------------------+
+| Operacja             | Znaczenie                |
++----------------------+--------------------------+
+| "", '', str()        | puste napisy             |
+| S = "abc"            | tworzenie napisu         |
+| S = str(obiekt)      | tworzenie napisu         |
+| len(S)               | długość - liczba pozycji |
+| S1 + S2              | łączenie                 |
+| 3 * S, S * 4         | powtarzanie              |
+| S[i]                 | indeksowanie             |
+| S[i:j]               | wycinanie                |
+| S2 = S1[:]           | kopiowanie               |
+| S2 = str(S1)         | kopiowanie               |
+| for char in S: pass  | iteracja                 |
+| S1 in S2             | zawieranie (bool)        |
+| S1 not in S2         |                          |
+| "%s dom" % "stary"   | formatowanie łańcucha    |
+| "%s %s" % ("a", "b") |                          |
+| S.join(iterable)     | sklejanie z napisem      |
+| S.format(...)        | 2.6+, 3.x                |
+| del S                | usuwanie napisu          |
++----------------------+--------------------------+
+</pre><hr><pre>
+# Zwykłe stringi.
+"pierwszy", 'drugi', "trzeci'x", 'czwarty"y'
+"raz"  'dwa'                  # napisy obok siebie będą sklejone
+
+# Raw strings - napisy ze znakami specjalnymi.
+r"raw string\n\t\a"
+
+# Unicode strings.
+u"unicode"
+
+# Raw Unicode strings.
+ur"raw unicode"
+
+# Potrójne znaki do wielowierszowych bloków.
+# Można stosować """ lub '''.
+"""
+Syntax: nazwa [OPCJE]
+    -h    pomoc
+    -v    wersja
+"""
+
+# Korzystanie z odwrotnego ukośnika (backslash).
+# Generujemy znaki specjalne lub pozbawiamy jakiś znak
+# jego specjalnego znaczenia.
+"jeden\"dwa", 'trzy\'cztery'  # " lub ' w środku nie kończy stringu
+"pole1\tpole2\tpole3"         # \t to tabulacja, odstep poziomy
+"pierwszy wiersz\ndrugi wiersz"         
+# \n to newline, znak przejścia do nowego wiersza
+"tak pokazujemy ukośnik \\"       # \\ to jeden ukośnik (backslash)
+</pre><hr><pre>
+# W skrypcie można wykorzystać potrójne znaki do tymczasowego
+# blokowania (wykomentowania) kodu.
+X = 1
+"""
+import os                     # zablokowany kod
+print ( os.getcwd() )
+"""
+Y = 2
+</pre><hr>
+
+<h3>INDEKSOWANIE</h3>
+
+<p>Dla łańcucha S dozwolone są indeksy od 0 do len(S)-1. 
+Indeks ujemny S[-n] rozumiany jest jako S[len(S)-n].
+S[i] jest napisem o długości jeden.
+
+<h3>WYCINANIE</h3>
+
+<p>S[j:k] wycina elementy od S[j] do S[k-1] włącznie, tworząc nowy napis.
+S[:k] oznacza S[0:k].
+S[j:] oznacza S[j:len(S)].
+S[:] daje cały napis.
+S[:j] + S[j:] daje cały napis.
+
+<hr><pre>
+# Napisy można porównywać (&lt;, &gt;, ==), nawet trójkami.
+napis1 = "abc"
+napis2 = "bcd"
+napis1 &lt; napis2
+"a" &gt; "Z"
+
+# owoc = "banan"
+# Nie wolno podstawić tak jak w C, napisy są niezmienne.
+# owoc[0] = "s"       ERROR!
+# Trzeba utworzyć nowy string np. poleceniem
+# nowy_owoc = "s" + owoc[1:]
+
+a = "abc"
+b = "abc"
+c = a
+d = a[:]
+# to samo miejsce w pamięci
+id(a), id(b), id(c), id(d)
+# też dla copy.copy() jest to samo miejsce w pamięci
+# UWAGA Te efekty zachodzą dla krótkich napisów, bo Python
+# krótkie napisy trzyma w pamięci do późniejszego wykorzystania.
+</pre><hr><pre>
+# Napisy są niezmienne (immutable).
+&gt;&gt;&gt; a = "abc"
+&gt;&gt;&gt; a[1] = "s"
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+TypeError: 'str' object does not support item assignment
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>KONKATENACJA I POWTÓRZENIE NAPISÓW</h3>
+
+<hr><pre>
+&gt;&gt;&gt; S = "abc"
+&gt;&gt;&gt; S + "xyz"        # konkatenacja
+'abcxyz'
+&gt;&gt;&gt; S                # S pozostaje bez zmian
+'abc'
+&gt;&gt;&gt; 3 * S
+'abcabcabc'
+&gt;&gt;&gt; S * 4
+'abcabcabcabc'
+&gt;&gt;&gt; S[::-1]          # wycinanie od końca
+'cba'
+&gt;&gt;&gt;
+</pre><hr>
+
+<p>Znak plus (+) czy gwiazdka (*) oznacza co innego dla liczb, 
+a co innego dla napisów.
+Jest to przykład <em>polimorfizmu</em> w Pythonie.
+
+<h3>BUDOWANIE NAPISÓW</h3>
+
+<hr><pre>
+colors = ["red", "blue", "green", "yellow"]
+
+# Pierwszy sposób dopuszczalny tylko dla kilku składników.
+result = ""
+for item in colors:
+    result = result + item
+
+# Prawidłowy sposób. Składnia.
+# S.join(iterable), S to separator przy sklejaniu
+result = "".join(colors)
+</pre><hr>
+
+<h3>METODY STRINGÓW</h3>
+
+<p>Metody dla stringów nie mogą zmienić oryginału, więc zwykle
+zwracają nowy łańcuch.
+
+<hr><pre>
+dir(str)                 # lista metod stringów
+print ( ord("a") )       # 97, kod ASCII znaku
+print ( chr(98) )        # "b", znak dla danego kodu ASCII
+
+word = "".join(["a","b","c","d","e","f"])    # sklejanie listy znaków
+print ( word )           # "abcdef"
+word.find("cd")     # 2, odnalezienie przesunięcia podłańcucha
+word.replace("bc", "xyz")     # zastąpienie wystąpień podłańcucha
+
+# Justowanie tekstu.
+word = "hej"
+word.ljust(6)                 # "hej   "
+word.rjust(6)                 # "   hej"
+word.center(6)                # " hej  "
+
+# Usuwanie białych znaków (whitespace).
+word = " abc  "
+word.lstrip()                 # "abc  "
+word.rstrip()                 # " abc"
+word.strip()                  # "abc"
+
+word = "...abc.."
+word.strip(".")               # "abc"
+
+word = "rAz dWa tRzY"
+word.lower()                  # "raz dwa trzy"
+word.upper()                  # "RAZ DWA TRZY"
+word.capitalize()             # "Raz dwa trzy"
+word.title()                  # "Raz Dwa Trzy"
+word.swapcase()               # "RaZ DwA TrZy"
+word.startswith("abc")        # sprawdzam prefix
+word.endswith("abc")          # sprawdzam suffix
+
+# Lista wyrazów bez białych znaków.
+line = "a\tb c\nd"
+line.split()                  # ['a', 'b', 'c', 'd']
+line.split("\t")              # ["a", "b c\nd"]
+line.splitlines()             # ['a\tb c', 'd']
+
+"111".zfill(8)                # "00000111"
+
+# Badanie typów znaków.
+S.isalnum()
+S.isalpha()
+S.isdigit()
+S.islower()
+S.isupper()
+S.isspace()
+</pre><hr>
+
+<p>Jeżeli chcemy sprawdzić, czy obiekt jest łańcuchem, 
+korzystamy z funkcji <em>isinstance(obiekt, basestring)</em>, 
+gdzie <em>basestring</em> to klasa bazowa dla
+str i unicode (Python 2.3).
+
+<p>Łańcuchy znaków obsługują zaawansowane operacje formatowania
+ze znakiem procenta (%) lub metodą <em>format</em>
+[więcej informacji przy opisie standardowego wyjścia].
+
+<h3>MEMORYVIEW</h3>
+
+<p>W Pythonie 2.7 pojawia się <em>memoryview(object)</em>,
+przy czym obiekt musi wspierać buffer protocole.
+Buffer protocole dostarcza sposobu na dostęp do wewnętrznych danych obiektu.
+W zwykłym kodzie pythonowym używa się buffer protocole
+za pomocą <em>memoryview()</em>.
+Obiekty wbudowane wspierające buffer protocole to 
+<em>str</em> i <em>bytearray</em> (ale nie <em>unicode</em>).
+<em>memoryview()</em> ma dwie metody tobytes() i tolist(),
+oraz kilka atrybutów tylko do odczytu.
+
+<p>Za pomocą <em>memoryview()</em> można używać i modyfikować
+duże ilości danych bez ich kopiowania. Dzięki temu dany program używa
+mniej pamięci i działa szybciej.
+
+<hr><pre>
+&gt;&gt;&gt; v = memoryview('abcefg')   # widok obiektu str
+&gt;&gt;&gt; v[1]   # zwraca str
+'b'
+&gt;&gt;&gt; v[-1]
+'g'
+&gt;&gt;&gt; v[1:4]   # wycinek zwraca subview
+&lt;memory at 0x77ab28&gt;
+&gt;&gt;&gt; v[1:4].tobytes()   # zwraca bytestring, czyli str
+'bce'
+&gt;&gt;&gt; v.readonly   # czy pamięć jest readonly
+True
+&gt;&gt;&gt; v.tolist()   # zwraca listę int
+[97, 98, 99, 101, 102, 103]
+</pre><hr><pre>
+&gt;&gt;&gt; data = bytearray('abcefg')
+&gt;&gt;&gt; v = memoryview(data)
+&gt;&gt;&gt; v.readonly   # czy pamięć jest readonly
+False
+&gt;&gt;&gt; v[0] = 'z'   # mutable
+&gt;&gt;&gt; data
+bytearray(b'zbcefg')
+&gt;&gt;&gt; v[2] = 'spam'
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+ValueError: cannot modify size of memoryview object
+</pre><hr><pre>
+https://stackoverflow.com/questions/6736771/buffers-and-memoryview-objects-explained-for-the-non-c-programmer
+
+Buffers and Memoryview Objects explained for the non-C programmer
+</pre><hr><pre>
+https://eli.thegreenplace.net/2011/11/28/less-copies-in-python-with-the-buffer-protocol-and-memoryviews
+
+Less copies in Python with the buffer protocol and memoryviews
+</pre><hr><pre>
+https://julien.danjou.info/high-performance-in-python-with-zero-copy-and-the-buffer-protocol/
+
+High-Performance in Python with Zero-Copy and the Buffer Protocol (by Julien Danjou)
+</pre><hr>
+
+<h3>PYTHON 3</h3>
+
+<p>W Pythonie 3 zamiast typów <em>str</em> i <em>unicode</em> 
+występują typy <em>bytes</em> i <em>str</em>, 
+które mają odmienne własności.
+W Pythonie 3 znika <em>basestring</em> (PEP 3137).
+
+<p><em>bytes(object)</em> zwraca niezmienną (immutable) tablicę bajtów.
+[W Pythonie 2.7 jest to alias do str().]
+
+<p><em>bytearray(object)</em> zwraca zmienną (mutable) tablicę bajtów.
+[Istnieje w Pythonie 2.7.]
+
+<p><em>str(object)</em> zwraca niezmienny string mogący zawierać znaki unikodu.
+[W Pythonie 2 odpowiada mu unicode().]
+
+<p><em>memoryview(object)</em> tworzy widok obiektu. 
+Obiekt musi wspierać protokół buforowania (buffer protocol), czyli dawać
+dostęp do bufora obiektu bez robienia kopii. 
+Było wiele zmian w kolejnych wersjach Pythona 3.
+
+</body>
+</html>

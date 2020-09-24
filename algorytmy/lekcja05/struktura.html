@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tworzenie modułów</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>W najprostszym przypadku moduły zawierają kod
+napisany w języku Python. 
+Moduły mogą też odpowiadać rozszerzeniom napisanym w innych 
+językach zewnętrznych, takich jak C, Java czy C#.
+
+<p>Rozszerzenia zewnętrzne do Pythona zazwyczaj wykorzystują 
+narzędzia z pakietu <em>distutils</em> z biblioteki standardowej
+do automatycznej instalacji. Zwykle tworzy się skrypt
+<em>setup.py</em> wykonywany w celu instalacji rozszerzeń.
+
+<p>Każdy moduł ma wbudowany atrybut <em>__name__</em>, który
+Python automatycznie ustawia w następujący sposób:
+
+<ul>
+<li>Jeśli plik jest wykonywany jako plik programu najwyższego
+poziomu, atrybut <em>__name__</em> ustawiany jest po uruchomieniu
+na łańcuch znaków <em>"__main__"</em>.
+
+<li>Jeśli plik jest importowany, atrybut <em>__name__</em>
+jest ustawiany na nazwę modułu w formie znanej przez klienta.
+</ul>
+
+<p>W rezultacie zmienna <em>__name__</em> modułu służy jako
+opcja trybu użycia, pozwalając na wykorzystanie kodu zarówno
+w postaci biblioteki i jak i skryptu najwyższego poziomu.
+
+<h3>STRUKTURA MODUŁU</h3>
+
+<hr><pre>
+#!/usr/bin/python
+
+module_docstring              # opcjonalnie
+
+# imports
+import sys
+
+# constants
+
+# exception classes
+
+# interface functions
+
+# classes
+
+# internal functions and classes
+
+def tester():                 # funkcja testująca moduł
+    instructions
+
+if __name__ == "__main__":
+    status = tester()
+    sys.exit(status)
+</pre><hr>
+
+<h3>UKRYWANIE DANYCH W MODUŁACH</h3>
+
+<p>Jeżeli wykonujemy import modułu za pomocą instrukcji <em>from *</em>,
+to istnieją dwa sposoby, aby zapobiec skopiowaniu wszystkich
+zmiennych z modułu do modułu głównego i zanieczyszczenia przestrzeni
+nazw.
+
+<ul>
+<li>Możemy nazwy wybranych zmiennych rozpoczynać od jednego znaku
+podkreślenia (na przykład <em>_X</em>).
+Te zmienne nie są "prywatne", można je zobaczyć i modyfikować
+korzystając z innych form importowania, takich jak instrukcja
+<em>import</em>.
+
+<li>Możemy zmienne wybrane do eksportu umieścić na liście
+łańcuchów nazw zmiennych, którą  przypiszemy do zmiennej
+<em>__all__</em> na najwyższym poziomie modułu.
+</ul>
+
+<hr><pre>
+__all__ = ["MyError", "encode", "decode"] # eksportuje tylko te zmienne
+</pre><hr>
+
+<p>Python najpierw szuka w module listy <em>__all__</em>,
+a jeżeli jej nie znajdzie, to kopiowane są wszystkie zmienne
+niezawierające znaku pojedyńczego podkreślenia.
+Należy podkreślić, że te dwa podane sposoby (konwencje) mają 
+znaczenie jedynie dla instrukcji <em>from *</em> i nie mają 
+nic wspólnego z deklarowaniem zmiennej jako prywatnej.
+
+
+
+
+</body>
+</html>
