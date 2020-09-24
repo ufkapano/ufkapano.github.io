@@ -1,0 +1,222 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (2) - sortowanie</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: 
+Implementacja dwóch algorytmów sortowania w C++, w tym co najmniej 
+jednego zaawansowanego.
+Proszę przesłać archiwum ZIP katalogu z programem, 
+który zawiera Makefile i pliki źródłowe.
+
+<h3>WPROWADZENIE</h3>
+
+<p>Sortowanie wewnętrzne (tablice) i zewnętrzne (pliki).
+<br>Sortowanie stabilne i niestabilne.
+<br>Sortowanie adaptacyjne i nieadaptacyjne.
+
+<p>Sortowanie bazujące na porównaniach kluczy.
+<br>Algorytmy proste z czasem O(n^2).
+<br>Sortowanie przez wybór (selectsort).
+<br>Sortowanie przez wstawianie (insertsort), pamięć O(1).
+<br>Sortowanie przez zamianę (bubblesort), stabilne.
+<br>Sortowanie przez wstrząsanie (shakersort).
+
+<p>Algorytmy zaawansowane z czasem O(n*log(n)).
+<br>Sortowanie Shella (shellsort), niestabilne.
+<br>Sortowanie szybkie (quicksort), pesymistycznie O(n^2), niestabilne.
+<br>Sortowanie przez scalanie (mergesort), stabilne.
+<br>Sortowanie przez kopcowanie, sortowanie stogowe (heapsort), niestabilne.
+
+<p>Sortowanie bez porównywania kluczy. 
+<br>Sortowanie przez zliczanie (countsort), czas O(n+k).
+<br>Sortowanie bukietowe (bucketsort), czas O(n), pamięć O(k).
+<br>Sortowanie pozycyjne (radixsort) - czas O(d*(n+k)), pamięć O(n+k),
+k liczba różnych cyfr, d liczba cyfr w kluczach.
+
+<h3>SORTOWANIE W PYTHONIE</h3>
+
+<hr><pre>
+# L to lista elementów, które można porównywać.
+# Liczby są sortowane normalnie.
+# Napisy są sortowane leksykograficznie.
+L.sort()   # sortowanie stabilne algorytmem timsort
+L.sort(key=len)   # sortowanie napisów pod względem długości
+L.sort(cmp=cmpfunc)   # Python 2, przekazanie funkcji porównującej
+</pre><hr>
+
+<h3>SORTOWANIE W C/C++</h3>
+
+<hr><pre>
+#include &lt;cstdlib&gt;   // qsort()
+
+void qsort( void *ptr, size_t count, size_t size,
+    int (*comp)(const void *, const void *) );
+// Sortowanie tablicy ptr w porządku niemalejącym.
+// Funkcja porównująca zwraca -1/0/+1.
+// count - liczba elementów tablicy
+// size - rozmiar jednego elementu w bajtach
+
+int cmp_int(const void *a, const void *b) {
+    int arg1 = *(const int *)a;
+    int arg2 = *(const int *)b;
+    if (arg1 &lt; arg2) return -1;
+    else if (arg1 &gt; arg2) return 1;
+    else return 0;
+}
+
+int v[] = { 9,4,7,3,6,8,2,1,5,0 };
+
+qsort(v, sizeof(v) / sizeof(*v), sizeof(*v), cmp_int);
+</pre><hr><pre>
+// https://en.cppreference.com/w/cpp/algorithm/sort
+
+#include &lt;algorithm&gt;   // std::sort(), std::stable_sort()
+#include &lt;vector&gt;
+#include &lt;array&gt;
+
+template&lt; class RandomIt &gt;
+void sort( RandomIt first, RandomIt last );
+// Sorts the elements in the range [first, last) in ascending order. 
+// The order of equal elements is not guaranteed to be preserved. 
+// Elements are compared using operator&lt;.
+
+template&lt; class RandomIt, class Compare &gt;
+void sort( RandomIt first, RandomIt last, Compare comp );
+// bool cmp(const Type1 &amp; a, const Type2 &amp; b);
+// Funkcja zwraca true jeżeli a jest mniejsze od b.
+
+// Complexity
+// O(N*log(N)), where N = std::distance(first, last) comparisons on average. (until C++11)
+// O(N*log(N)), where N = std::distance(first, last) comparisons. (since C++11)
+
+// Dla std::stable_sort() analogicznie.
+// The order of equivalent elements is guaranteed to be preserved.
+// Complexity
+// O(N*log(N)^2), where N = std::distance(first, last) applications of cmp.
+// If additional memory is available, then the complexity is O(N*log(N)). 
+// Notes
+// This function attempts to allocate a temporary buffer equal in size
+// to the sequence to be sorted.
+// If the allocation fails, the less efficient algorithm is chosen. 
+
+std::vector&lt;int&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
+std::array&lt;int, 10&gt; v = { { 9,4,7,3,6,8,2,1,5,0 } };
+int v[] = { 9,4,7,3,6,8,2,1,5,0 }; // zwykła tablica
+
+std::sort(v.begin(), v.end()); // vector, array
+std::sort(std::begin(v), std::end(v)); // zwykła tablica
+std::sort(v, v + (sizeof(v) / sizeof(*v))); // zwykła tablica
+</pre><hr><pre>
+// Szablon przykładowej funkcji sortującej.
+template&lt;typename T&gt;
+void anysort(T *ptr, int left, int right);
+// Elements are compared using
+bool operator&lt;(const T &amp; lhs, const T &amp; rhs);
+</pre><hr><pre>
+// Szablon przykładowej funkcji sortującej.
+template&lt;typename Iterator&gt;
+void anysort(Iterator first, Iterator last);
+
+template&lt;typename Iterator, typename Compare&gt;
+void anysort(Iterator first, Iterator last, Compare comp);
+</pre><hr><pre>
+// Sprawdzenie poprawności sortowania liczb całkowitych.
+#include &lt;cassert&gt;
+
+for(std::size_t i = 0; i &lt; v.size(); i++)
+    assert( v[i] == (int)i );   // vector, array
+
+for(std::size_t i = 0; i &lt; sizeof(v) / sizeof(*v); i++)
+    assert( v[i] == (int)i );   // zwykła tablica
+</pre><hr>
+
+<h3>MAKEFILE</h3>
+
+<p>Przykładowy plik <em>Makefile</em> wspomagający kompilację
+i sposób korzystania z narzędzia <em>make</em>.
+
+<hr><pre>
+$ ls                # zawartość katalogu z projektem
+atrapa.cpp  atrapa.h  main.cpp  main.h  Makefile
+
+# Zależności między plikami:
+# atrapa.cpp zawiera #include "atrapa.h"
+# main.h zawiera #include "atrapa.h"
+# main.cpp zawiera #include "main.h"
+
+$ make              # kompilacja
+g++ -Wall -std=c++11 -c main.cpp -o main.o
+g++ -Wall -std=c++11 -c atrapa.cpp -o atrapa.o
+g++ -Wall -std=c++11  main.o atrapa.o -o main.out
+$ make clean        # czyszczenie po kompilacji
+rm -f main.out *.o core
+</pre><hr><pre>
+# Makefile
+# Kompilator g++.
+CC = g++
+# Mozliwe dodatkowe zmienne
+# LIBS = -ll -lm
+LIBS =
+CFLAGS = -Wall -std=c++11
+# Pliki obiektowe.
+OBJECTS = main.o atrapa.o
+# Pliki naglowkowe.
+HFILES = $(patsubst %.o,%.h,$(OBJECTS))
+# Koncowy plik wykonywalny.
+TARGET = main.out
+
+# Definicja domyslnej reguly wzorcowej.
+# $&lt; oznacza nazwe pliku pierwszej zaleznosci reguly.
+# $@ oznacza nazwe pliku celu w regule.
+# Wszystkie pliki obiektowe zaleza od wszystkich plikow naglowkowych.
+%.o : %.cpp $(HFILES) Makefile
+	$(CC) $(CFLAGS) -c $&lt; -o $@
+
+$(TARGET) : $(OBJECTS)
+	$(CC) $(CFLAGS) $(LIBS) $(OBJECTS) -o $(TARGET)
+
+# Okreslenie celow sztucznych.
+.PHONY : clean
+
+clean :
+	$(RM) $(TARGET) *.o core
+</pre><hr>
+
+<h3>ZADANIE 2.1 (selectsort)</h3>
+
+<p>Zaimplementować algorytm sortowania przez wybór.
+
+<h3>ZADANIE 2.2 (insertsort)</h3>
+
+<p>Zaimplementować algorytm sortowania przez wstawianie.
+
+<h3>ZADANIE 2.3 (bubblesort)</h3>
+
+<p>Zaimplementować algorytm sortowania bąbelkowego.
+
+<h3>ZADANIE 2.4 (quicksort)</h3>
+
+<p>Zaimplementować algorytm sortowania szybkiego.
+
+<h3>ZADANIE 2.5 (mergesort)</h3>
+
+<p>Zaimplementować algorytm sortowania przez scalanie.
+
+<h3>ZADANIE 2.6 (heapsort)</h3>
+
+<p>Zaimplementować algorytm sortowania przez kopcowanie.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

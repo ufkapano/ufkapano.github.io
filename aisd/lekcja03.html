@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (3) - ADT LIST (implementacja tablicowa)</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie.
+
+<h3>WPROWADZENIE</h3>
+
+<p>ADT LIST reprezentuje skończoną liczbę uporządkowanych elementów,
+które mogą się powtarzać. Jeżeli liczba uporządkowanych elementów może być 
+potencjalnie nieskończona, to używa się pojęcia strumienia. 
+Lista to podstawowy przykład kontenera do przechowywania elementów. 
+Typowe operacje dla ADT LIST są następujące:
+
+<ul>
+<li>konstruktor tworzący pustą listę,
+<li>testowanie, czy lista nie jest pusta [empty()],
+<li>odczyt liczby elementów na liście [size()],
+<li>dołączanie elementu na początek listy [push_front(item)],
+<li>dołączanie elementu na koniec listy [push_back(item)],
+<li>dostęp do głowy (head), czyli pierwszego (lewego skrajnego) elementu [front()],
+<li>dostęp do ogona (tail), czyli ostatniego (prawego skrajnego) elementu [back()],
+<li>usunięcie elementu pierwszego [pop_front()],
+<li>usunięcie elementu ostatniego [pop_back()],
+<li>czyszczenie listy [clear()],
+<li>dostęp do elementu o danym indeksie i,
+<li>dołączanie elementu przed element na pozycji i [insert()],
+<li>usunięcie elementu o danym indeksie i [erase()],
+<li>pobieranie wycinka listy,
+<li>sortowanie listy [sort()],
+<li>łączenie dwóch <em>posortowanych</em> list w jedną [merge()].
+</ul>
+
+<p>ADT LIST jest typowo implementowany jako lista powiązana 
+(liniowa lub cykliczna) lub tablica, zwykle o zmiennej długości.
+
+<hr><pre>
+// Kontenery w STL realizujące w pewnym stopniu ADT LIST.
+
+// https://en.cppreference.com/w/cpp/container/vector
+
+// https://en.cppreference.com/w/cpp/container/forward_list
+
+// https://en.cppreference.com/w/cpp/container/list
+
+// https://en.cppreference.com/w/cpp/container/deque
+</pre><hr><pre>
+// Przy kopiowaniu szeregu elementów tablicy przydają się funkcje z STL.
+
+// https://en.cppreference.com/w/cpp/algorithm/copy
+// To jest dobre przy kopiowaniu w lewo przy nakładaniu się zakresów.
+
+It2 copy( It1 first, It1 last, It2 d_first );
+
+// https://en.cppreference.com/w/cpp/algorithm/copy_backward
+// To jest dobre przy kopiowaniu w prawo przy nakładaniu się zakresów.
+
+It2 copy_backward( It1 first, It1 last, It2 d_last );
+</pre><hr>
+
+<h3>ZADANIE 3.1</h3>
+
+<p>Przygotować implementację realizującą ADT LIST na bazie
+tablicy o stałym rozmiarze, ustalanym w czasie tworzenia listy.
+Będzie to klasa ArrayList umieszczona w pliku 
+<a href="arraylist.h">arraylist.h</a>.
+Uzupełnić plik arraylist.h, stworzyć funkcję main() i testy
+sprawdzające działanie interfejsu list.
+
+<h3>ZADANIE 3.2</h3>
+
+<p>Przygotować implementację realizującą ADT LIST na bazie
+tablicy o zmieniającym się rozmiarze.
+Będzie to klasa ArrayList umieszczona w pliku arraylist.h.
+Początkowy rozmiar tablicy (min_size) może wynosić 2 lub 4.
+Po zapełnieniu tablicy rozmiar może się powiększać o stałą wartość
+lub może się podwajać (wybrać jedną możliwość).
+Po usunięciu pewnej liczby elementów tablica może się zmniejszać,
+aż do osiągnięcia początkowego rozmiaru minimalnego.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

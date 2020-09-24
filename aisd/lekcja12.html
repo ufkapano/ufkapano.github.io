@@ -1,0 +1,318 @@
+<html>
+<head>
+<title>Lekcja 12</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (12) - ADT MAP (mieszanie)</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+
+<p>https://en.wikipedia.org/wiki/Associative_array
+
+<p>https://en.wikipedia.org/wiki/Hash_table
+
+<p>https://en.wikipedia.org/wiki/Hash_function
+
+<p>https://en.wikipedia.org/wiki/Open_addressing
+
+<p>https://en.wikipedia.org/wiki/Lazy_deletion
+
+<p>https://www.geeksforgeeks.org/hashing-data-structure/
+
+<h3>WPROWADZENIE</h3>
+
+<p>ADT MAP to inaczej tablica asocjacyjna (ang. associative array), 
+tablica skojarzeniowa, mapa, słownik.
+Przechowuje on pary (klucz, wartość) i umożliwia dostęp do wartości 
+za pomocą klucza. Jest to mapowanie klucza na wartość.
+ADT MAP jest realizowany jako drzewa poszukiwań (BST, AVL, trie)
+lub tablice mieszające.
+Kluczami są najczęściej stringi, liczby, krotki, itp.
+Jeżeli szukany klucz nie istnieje, to w zależności od implementacji
+albo rzucany jest wyjątek, albo do mapy dodawana jest para
+złożona z szukanego klucza i pewnej domyślnej wartości
+(np. zero dla wartości będących liczbami).
+
+<p>Typowe operacje dla ADT MAP są następujące:
+
+<ul>
+<li>konstruktor tworzący pustą mapę,
+<li>testowanie, czy mapa nie jest pusta [empty()],
+<li>odczyt liczby par w mapie [size()],
+<li>dodanie nowej pary do mapy [insert(pair)],
+<li>dodanie nowej wartości do istniejącego klucza (modyfikacja pary),
+<li>usunięcie pary z mapy,
+<li>testowanie, czy mapa zawiera klucz key [find(key)],
+<li>dostęp do wartości połączonej z danym kluczem,
+<li>iterowanie po wszystkich kluczach/wartościach/parach,
+zwykle kolejność zwracanych elementów zależy od implementacji,
+<li>czyszczenie mapy [clear()].
+</ul>
+
+
+
+<hr><pre>
+// https://en.cppreference.com/w/cpp/utility/pair/make_pair
+
+#include &lt;utility&gt;   // make_pair()
+
+auto p1 = std::make_pair(2, 3.4)   // dedukcja typów
+std::pair&lt;int,float&gt; p2 = {6, 2.5};
+// Dostęp do składowych przez p2.first i p2.second.
+
+// Uogólniony operator operator&lt;&lt; do wyświetlania par.
+namespace std {
+template&lt;typename F, typename S&gt;
+ostream& operator&lt;&lt;(ostream& os, const std::pair&lt;F,S&gt; p) {
+    return os &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second;
+}
+}
+</pre><hr><pre>
+// https://en.cppreference.com/w/cpp/container/map
+
+#include &lt;map&gt;
+
+std::map&lt;int, float&gt; m;   // mapa
+assert( m.empty() );
+m.insert( std::make_pair(1, 1.1) ); // zwraca std::pair&lt;iterator,bool&gt;
+m[2];   // wstawienie pary (2, 0.0)
+assert( m[2] == 0 );
+m[3] = 3.3;
+m.emplace( std::make_pair(4, 4.4) ); // insert a new element in-place
+m.insert( {5, 5.5} );
+assert( m.size() == 5 );
+assert( m.count(3) == 1 );   // dozwolone 0 lub 1 dla map
+assert( m.count(7) == 0 );   // dozwolone 0 lub 1 dla map
+
+for (auto it = m.begin(); it != m.end(); ++it) {
+    std::cout &lt;&lt; it->first &lt;&lt; " " &lt;&lt; it->second &lt;&lt; std::endl;
+}
+for (auto p : m) { // pętla zakresowa
+    std::cout &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second &lt;&lt; std::endl;
+}
+auto it = m.find(3);   // szukam klucza 3
+assert( it != m.end() );   // wiem ze jest ten klucz
+assert( m.find(8) != m.end() );   // brak klucza
+
+m.erase(it); // remove at position
+m.erase(5); // remove key
+
+m.clear();   // czyszczenie
+</pre><hr>
+
+<h3>MIESZANIE</h3>
+
+<p>Jeżeli klucze są liczbami z niedużego zakresu, to można łącze
+do pary (k,w) przechowywać w tablicy pod indeksem k.
+Zwykle jednak wykorzystuje się funkcję mieszającą hash(key), 
+która oblicza położenie w tablicy.
+Dobra funkcja mieszająca powinna (1) działać szybko [niski koszt]
+i (2) jednorodnie rozmieszczać klucze w tablicy.
+Wtedy wstawianie, wyszukiwanie i usuwanie klucza działa w czasie O(1).
+
+<p>W praktyce nie jest łatwo znaleźć doskonałą funkcję mieszającą
+i pojawiają się <em>kolizje</em>, czyli dla kluczy k1 != k2 otrzymujemy
+hash(k1) = hash(k2).
+Kolizje zdarzają się zwykle tym częściej im bardziej zapełniona jest tablica,
+dlatego zwykle tablica jest większa niż spodziewana liczba kluczy.
+Niektóre metody mieszania dobrze działają dla rozmiaru tablicy
+będącym potęgą dwójki, inne dla liczb pierwszych.
+
+<h3>FUNKCJE MIESZAJĄCE</h3>
+
+<p>Pomysły na funkcje mieszające.
+
+<ul>
+<li>Jeżeli klucz to int, to można wybrać hash(key) = key mod table_size
+[metoda dzielenia].
+Tutaj zaleca się, aby table_size był liczbą pierwszą.
+
+<li>Jeżeli klucz to string, to można dodać do siebie wartości
+wszystkich liter i podzielić przez table_size.
+Problem: hash("ab") = hash("ba").
+
+<li>Jeżeli klucz to ciąg cyfr, to można go podzielić na ciągi
+dwucyfrowe lub trzycyfrowe i zsumować te liczby (mod table_size).
+Przykładowo numer ubezpieczenia SNN 123-45-6797 można podzielić 
+(12,34,56,78,9) lub (123,456,789) [Drozdek]. 
+Można ponadto co drugą część zapisać w odwrotnej kolejności 
+(123,654,789) [metoda składania].
+
+<li>Jeżeli klucz to string, to można podstringi przetworzyć używając
+różnicy symetrycznej. Ilość znaków w podstringu może odpowiadać
+ilości bajtów liczby całkowitej, np.
+<br>hash("abcd") = ("ab" xor "cd") mod table_size.
+
+<li>W niektórych przypadkach wystarczy przetwarzać tylko części klucza
+[metoda wycinania]. Przykładowo przetwarzając polskie numery telefonów nie
+musimy zajmować się przedrostkiem +48.
+
+<li>Jeżeli klucz to string, to można użyć funkcji [metoda Cichelliego]
+<br>hash(key) = (len(key) + first_letter(key) + last_letter(key)) mod table_size,
+<br>gdzie poszczególne funkcje zwracają wartości liczbowe.
+
+</ul>
+
+<h3>PROBLEM KOLIZJI</h3>
+
+<p>Typowe sposoby radzenia sobie z kolizjami 
+(ang. collision resolution) [Drozdek].
+
+<ul>
+
+<li>Metoda łańcuchowa (ang. chaining).
+<br>Każda komórka tablicy jest łączem do listy powiązanej,
+która przechowuje klucze kolidujące. Lista może być nieuporządkowana,
+posortowana, albo samoorganizująca się, w celu poprawienia efektywności.
+Metoda ta wymaga dodatkowej pamięci na wskaźniki w tablicy i na listach.
+
+<li>Adresowanie otwarte (ang. open addressing).
+<br>Jeżeli klucz koliduje z innym kluczem, wybiera się inną dostępną
+komórkę niż tą wskazywaną przez klucz.
+Najprostszym rozwiązaniem jest <em>próbkowanie liniowe</em>,
+gdzie wybiera się następną wolną komórkę
+[przy końcu tablicy przechodzi się na początek,
+wzór na indeks (hash(key) + i) mod table_size].
+Próbkowanie liniowe ma tendencję do tworzenia zgrupowań zajętych komórek,
+co pogarsza wydajność tablicy mieszającej.
+Przy wyszukiwaniu klucza sprawdza się komórki po kolei aż klucz zostanie
+znaleziony lub będzie jasne, że klucza nie ma w tablicy 
+(napotkanie pustej komórki lub sprawdzenie całej pełnej tablicy).
+Jeżeli tablica zbliża się do całkowitego zapełnienia, to zwykle
+alokuje się nową większą tablicę (np. dwa razy większą)
+i kopiuje się dane do nowej tablicy na nowo obliczając położenia.
+Usuwanie kluczy w metodzie adresowania otwartego jest trudne,
+zwykle zaznacza się klucze jako usunięte, a faktyczne usuwanie 
+przeprowadza się okresowo.
+
+</ul>
+
+<h3>ZADANIE 12.1</h3>
+
+<p>Przygotować implementację realizującą ADT MAP na bazie tablicy
+mieszającej z wykorzystaniem metody łańcuchowej.
+
+<hr><pre>
+// Szablon dla prostej mapy wykorzystującej metodę łańcuchową.
+// Pomysł zaczerpnięty ze strony
+// https://www.geeksforgeeks.org/c-program-hashing-chaining/
+template &lt;typename F, typename S&gt;
+class HashTable {
+    int BUCKET;    // liczba bukietów
+    std::list&lt; std::pair&lt;F,S&gt; &gt; *table;
+public:
+    HashTable(int b);
+    ~HashTable() { clear(); delete [] table; }
+    bool empty() const; // czy wszystkie listy puste
+    int size() const; // liczba par na wszystkich listach
+    void insert(std::pair&lt;F,S&gt; p); // m[p.first]=p.second
+    S&amp; operator[](const F&amp; key); // m[key]=value lub m[key] z domyślną wartością
+    S* find(const F& key); // zwraca &amp;value lub nullptr
+    void remove(const F& key);
+    int hash(const F& key) { return (int(key) % BUCKET); } // działa dla int, float
+    void display() const;
+    void clear(); // czyścimy wszystkie listy
+};
+
+template&lt;typename F, typename S&gt;
+HashTable&lt;F,S&gt;::HashTable(int b) {
+    BUCKET = b;
+    table = new std::list&lt; std::pair&lt;F,S&gt; &gt;[BUCKET];
+    assert( table != nullptr );
+}
+
+template&lt;typename F, typename S&gt;
+void HashTable&lt;F,S&gt;::display() const {
+    for (int i = 0; i &lt; BUCKET; i++) {
+        std::cout &lt;&lt; i;
+        for (const auto &amp;p : table[i])
+            std::cout &lt;&lt; " --&gt; " &lt;&lt; p;
+        std::cout &lt;&lt; std::endl;
+    }
+}
+
+template&lt;typename F, typename S&gt;
+S& HashTable&lt;F,S&gt;::operator[](const F&amp; key) {
+    int index = hash(key);
+    // find the key
+    for (auto it = table[index].begin();
+        it != table[index].end(); it++) {
+        if (it->first == key) {
+            return it->second;
+        }
+    }
+    table[index].push_back(std::make_pair(key, S()));
+    return (table[index].back()).second;
+}
+</pre><hr>
+
+<h3>ZADANIE 12.2</h3>
+
+<p>Przygotować implementację realizującą ADT MAP na bazie tablicy
+mieszającej z wykorzystaniem adresowania otwartego
+i próbkowania linowego.
+
+<hr><pre>
+Wstawiane klucze: A5, A2, A3, B5, A9, B2, B9, C2
+|0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |
+|--|--|A2|A3|--|A5|--|--|--|--|
+|--|--|A2|A3|B2|A5|B5|--|--|A9|
+|B9|--|A2|A3|B2|A5|B5|C2|--|A9| problem przy usuwaniu A3
+</pre><hr><pre>
+// Szablon dla prostej mapy wykorzystującej adresowanie otwarte.
+template &lt;typename F, typename S&gt;
+class HashTable {
+    int BUCKET;    // liczba bukietów
+    std::pair&lt;F,S&gt; **table; // tablica wskaznikow do par
+public:
+    HashTable(int b);
+    ~HashTable() { clear(); delete [] table; }
+    bool empty() const;
+    int size() const;
+    void insert(std::pair&lt;F,S&gt; p);
+    S& operator[](const F& key);
+    S* find(const F& key);
+    void remove(const F& key); // TRUDNE
+    int hash(const F& key) { return (int(key) % BUCKET); } // dziala dla int, float
+    void display() const;
+    void clear();
+};
+
+template &lt;typename F, typename S&gt;
+HashTable&lt;F,S&gt;::HashTable(int b) {
+    BUCKET = b;
+    table = new std::pair&lt;F,S&gt;* [BUCKET];
+    assert( table != nullptr );
+    for (int i = 0; i &lt; BUCKET; i++)
+        table[i] = nullptr;
+}
+</pre><hr>
+
+<h3>ZADANIE 12.3</h3>
+
+<p>Poprawić metodę adresowania otwartego przez zastosowanie innych
+metod próbkowania.
+
+<ul>
+<li>Próbkowanie kwadratowe (ang. quadratic probing).
+<br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
+sprawdzamy komórkę (hash(key)+i*i) mod table_size.
+
+<li>Podwójne mieszanie (ang. double hashing).
+<br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
+sprawdzamy komórkę (hash(key)+i*hash2(key)) mod table_size,
+gdzie hash2(key) jest drugą funkcją mieszającą.
+
+</ul>
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (4) - ADT LIST (lista pojedynczo powiązana)</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie. 
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy powiązane składają się z szeregu elementów (węzłów) powiązanych 
+ze sobą łączami.
+Węzły list powiązanych pojedynczo przechowują pewną wartość oraz
+zawierają łącze do następnego węzła na liście. 
+Jedynym sposobem dostania się do konkretnego węzła jest przejście
+przez listę od jej samego początku.
+Ostatni węzeł oznacza się zgodnie z jedną przedstawionych poniżej
+konwencji:
+
+<ul>
+<li>za pomocą pustego łącza, które nie wskazuje żadnego węzła,
+<li>za pomocą węzła-atrapy,
+<li>za pomocą węzła wskazującego pierwszy element listy (lista cykliczna).
+</ul>
+
+<p>Listy powiązane są wykorzystywane do implementacji ADT LIST, dlatego
+przypomnimy typowe operacje dla tego ADT.
+
+<ul>
+<li>konstruktor tworzący pustą listę,
+<li>testowanie, czy lista nie jest pusta [empty()],
+<li>odczyt liczby elementów na liście [size()],
+<li>dołączanie elementu na początek listy [push_front(item)],
+<li>dołączanie elementu na koniec listy [push_back(item)],
+<li>dostęp do pierwszego (lewego skrajnego) elementu [front()],
+<li>dostęp do ostatniego (prawego skrajnego) elementu [back()],
+<li>usunięcie elementu pierwszego [pop_front()],
+<li>usunięcie elementu ostatniego [pop_back()],
+<li>czyszczenie listy [clear()],
+</ul>
+
+<hr><pre>
+// Szablon dla pojedynczego węzła listy.
+template &lt;typename T&gt;
+struct SingleNode {
+    T value;
+    SingleNode *next;
+    SingleNode() : value(T()), next(nullptr) {} // konstruktor domyślny
+    SingleNode(const T& item, SingleNode *ptr=nullptr) : value(item), next(ptr) {} // konstruktor
+    ~SingleNode() {} // destruktor
+};
+</pre><hr><pre>
+// Szablon dla listy powiązanej pojedynczo.
+template &lt;typename T&gt;
+class SingleList {
+    SingleNode&lt;T&gt; *head, *tail;
+public:
+    SingleList() : head(nullptr), tail(nullptr) {} // konstruktor
+    ~SingleList(); // destruktor, tu trzeba wyczyścić węzły
+    bool empty() const { return head == nullptr; }
+    int size() const; // O(n) bo trzeba policzyć
+    void push_front(const T& item); // O(1)
+    void push_back(const T& item); // O(1)
+    T& front() const { return head->value; } // zwraca początek, nie usuwa
+    T& back() const { return tail->value; } // zwraca koniec, nie usuwa
+    void pop_front(); // usuwa początek O(1)
+    void pop_back(); // usuwa koniec O(n)
+    void clear(); // czyszczenie listy z elementów O(n)
+    void display(); // O(n)
+    void reverse(); // O(n)
+};
+</pre><hr>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>Przygotować implementację realizującą ADT LIST na bazie listy powiązanej
+pojedynczo. Będzie to klasa SingleList umieszczona w pliku
+<a href="singlelist.h">singlelist.h</a>.
+Uzupełnić plik singlelist.h, stworzyć funkcję main() i testy
+sprawdzające działanie interfejsu list.
+
+<h3>ZADANIE 4.2</h3>
+
+<p>Zmienić klasę SingleList przez wprowadzenie atrybutu length typu int,
+który przechowuje aktualną długość listy powiązanej.
+Dzięki temu metoda size() może działać w czasie O(1), a nie O(n).
+
+<h3>ZADANIE 4.3</h3>
+
+<p>Listę powiązaną pojedynczo opisaliśmy używając pojęcia węzła, który
+zawiera wartość i łącze do następnego węzła.
+Łącze jest pojęciem abstrakcyjnym, które w języku C++ realizuje się
+zwykle jako wskaźnik, jednak można zaimplementować łącza jako indeksy tablicy.
+Zaimplementować listę powiązaną pojedynczo z wykorzystaniem indeksów tablicy.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

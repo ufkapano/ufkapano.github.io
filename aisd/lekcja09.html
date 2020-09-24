@@ -1,0 +1,265 @@
+<html>
+<head>
+<title>Lekcja 9</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (9) - ADT TREE</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: dwa zadania
+
+<h3>WPROWADZENIE</h3>
+
+<p>Definicja rekurencyjna drzewa.
+
+<ul>
+<li>Pusta struktura jest drzewem.
+<li>Jeżeli t_1, ..., t_k są rozłącznymi drzewami, to drzewem jest także
+struktura, w której korzeń r posiada jako swoje dzieci korzenie
+drzew t_1, ..., t_k, przy czym dodawana jest krawędź od korzenia r
+do dziecka tylko jeżeli dziecko jest niepuste.
+</ul>
+
+<p>W teorii grafów definiuje się drzewo jako graf nieskierowany acykliczny,
+a korzeń to pewien wyróżniony wierzchołek.
+Wierzchołki bez dzieci to liście.
+W każdym drzewie istnieje dokładnie jedna ścieżka pomiędzy każdą parą wierzchołków.
+Zwykle rozważamy drzewa uporządkowane, gdzie kolejność dzieci jest ustalona.
+Poziom węzła to długość ścieżki do korzenia plus jeden.
+Poziom korzenia wynosi jeden.
+Wysokość niepustego drzewa to największy poziom węzła w drzewie.
+Wysokość pustego drzewa to z definicji zero.
+
+<p>Drzewa o stopniu rozgałęzienia m można zaimplementować tak, że każdy
+węzeł ma m łączy dla dzieci, niektóre mogą być puste.
+Inne bardziej oszczędne podejście to implementacja na lewo syn, na prawo brat
+(ang. left child, right sibling, LCRS), która zasadniczo jest drzewem binarnym.
+
+<p>W drzewie binarnym (uporządkowanym) każdy wierzchołek ma co najwyżej 
+dwoje dzieci (lewe i prawe).
+Drzewo binarne zbalansowane to drzewo binarne, w którym dla każdego
+węzła wysokości lewego i prawego poddrzewa różnią się co najwyżej o jeden.
+
+<hr><pre>
+// Szablon dla węzła drzewa binarnego i drzewa BST.
+template &lt;typename T&gt;
+struct BSTNode {
+// the default access mode and default inheritance mode are public
+    T value;
+    BSTNode *left, *right;
+    //BSTNode *parent;   // używane w pewnych zastosowaniach
+    // kostruktor domyślny
+    BSTNode() : value(T()), left(nullptr), right(nullptr) {}
+    BSTNode(const T& item, BSTNode *le=nullptr, BSTNode *ri=nullptr) :
+        value(item), left(le), right(ri) {} // konstruktor
+    ~BSTNode() {} // destruktor
+};
+</pre><hr><pre>
+// Szablon dla przypadkowego drzewa binarnego.
+template &lt;typename T&gt;
+class RandomBinaryTree {
+    BSTNode&lt;T&gt; *root;
+public:
+    RandomBinaryTree() : root(nullptr) {} // konstruktor domyslny
+    ~RandomBinaryTree() { clear(); } // trzeba wyczyscic
+    bool empty() const { return root == nullptr; }
+    T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
+    void insert(const T& item) { root = insert(root, item); }
+    //void remove(const T& item); // na razie nie usuwamy elementów
+    // Szukając element dostajemy wskaźnik do elementu lub nullptr.
+    T* search(const T& item) const {
+        auto ptr = search(root, item);
+        return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
+    }
+    void preorder() { preorder(root); }
+    void inorder() { inorder(root); }
+    void postorder() { postorder(root); }
+    void iter_preorder();
+    void iter_inorder(); // trudne
+    void iter_postorder(); // trudne
+    void bfs(); // przejscie poziomami (wszerz)
+    void clear() { clear(root); root = nullptr; }
+    void display() { display(root, 0); }
+
+    // Metody bezpośrednio odwołujące się do node.
+    // Mogą działać na poddrzewie.
+    void clear(BSTNode&lt;T&gt; *node);
+    BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
+    BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const;
+    void preorder(BSTNode&lt;T&gt; *node);
+    void inorder(BSTNode&lt;T&gt; *node);
+    void postorder(BSTNode&lt;T&gt; *node);
+    void display(BSTNode&lt;T&gt; *node, int level);
+    virtual void visit(BSTNode&lt;T&gt; *node) {
+        assert(node != nullptr);
+        std::cout &lt;&lt; "visiting " &lt;&lt; node->value &lt;&lt; std::endl;
+    }
+};
+</pre><hr><pre>
+// Wyświetlanie obróconego (counterclockwise) drzewa binarnego.
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T&gt; *node, int level) {
+    if (node == nullptr) return;
+    display(node->right, level + 1);
+    std::cout &lt;&lt; std::string(3 * level, ' ') &lt;&lt; node->value &lt;&lt; std::endl;
+    display(node->left, level + 1);
+}
+</pre><hr><pre>
+#include &lt;cstdlib&gt;   // std::rand(), RAND_MAX, std::srand()
+
+template &lt;typename T&gt;
+BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
+    if (node == nullptr) {
+        return new BSTNode&lt;T&gt;(item);
+    }
+    if (std::rand() % 2) { // można lepiej
+        node->left = insert(node->left, item);
+    } else {
+        node->right = insert(node->right, item);
+    }
+    return node; // zwraca nowy korzen
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, const T& item) const {
+    if (node == nullptr || node->value == item) {
+        return node;
+    }
+    T* ptr;
+    ptr = search(node->left, item);
+    if (ptr == nullptr) {
+        ptr = search(node->right, item);
+    }
+    return ptr;
+}
+</pre><hr>
+
+<h3>PRZECHODZENIE PO DRZEWIE WSZERZ (BFS)</h3>
+
+<p>Przechodzenie wszerz polega na odwiedzeniu korzenia, potem
+na przechodzeniu poziomami. Poziomy są przechodzone w kolejności
+od najbliższych do najdalszych, a w ramach poziomu węzły są
+odwiedzane od lewej do prawej.
+W implementacji wykorzystuje się kolejkę.
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::bfs() {
+    if (root == nullptr) return;
+    std::queue&lt;BSTNode&lt;T&gt;*&gt; Q; // wskazniki do wezlow
+    BSTNode *node = root;
+    Q.push(node);
+    while (!Q.empty()) {
+        node = Q.front(); // podgladamy
+        Q.pop();        // usuwamy z kolejki
+        visit(node);
+        if (node->left != nullptr)
+            Q.push(node->left);
+        if (node->right != nullptr)
+            Q.push(node->right);
+    }
+}
+</pre><hr>
+
+<h3>PRZECHODZENIE PO DRZEWIE W GŁĄB</h3>
+
+<p>Podczas przechodzenia w głąb przechodzimy możliwie daleko 
+w lewo (lub w prawo), następnie wracamy do najbliższego rozwidlenia
+i przechodzimy jeden krok w prawo (lub w lewo).
+Czynności powtarzamy, aż odwiedzimy wszystkie węzły.
+Moment odwiedzania węzła może być wybrany na kilka sposobów,
+stąd pochodzą trzy podstawowe odmiany przechodzenia:
+
+<ul>
+<li>przechodzenie z wyprzedzeniem (ang. preorder),
+<li>przechodzenie bezpośrednie (ang. inorder),
+<li>przechodzenie z opóźnieniem (ang. postorder).
+</ul>
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::inorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    inorder(node->left);
+    visit(node);
+    inorder(node->right);
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::preorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    visit(node);
+    preorder(node->left);
+    preorder(node->right);
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::postorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    postorder(node->left);
+    postorder(node->right);
+    visit(node);
+}
+</pre><hr>
+
+<p>Przechodzenie przez drzewo w kolejności preorder możemy 
+zaimplementować nierekurencyjnie za pomocą stosu. 
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::iter_preorder() {
+    if (root == nullptr) return;
+    std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskazniki do wezlow
+    BSTNode&lt;T&gt; *node = root;
+    S.push(node);
+    while (!S.empty()) {
+        node = S.top(); // podgladamy
+        S.pop();        // usuwamy ze stosu
+        visit(node);
+        if (node->right != nullptr) // najpierw prawe poddrzewo!
+            S.push(node->right);
+        if (node->left != nullptr)
+            S.push(node->left);
+    }
+}
+</pre><hr>
+
+<p>Nierekurencyjne wersje inorder() i postorder() są bardziej skomplikowane
+[Drozdek].
+
+<h3>ZADANIE 9.1</h3>
+
+<p>Napisać funkcję count_leafs(), która zlicza liście drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+
+<h3>ZADANIE 9.2</h3>
+
+<p>Załóżmy, że drzewo binarne przechowuje liczby. 
+Napisać funkcję calc_total(), która podaje sumę liczb przechowywanych w drzewie. 
+Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+
+<h3>ZADANIE 9.3</h3>
+
+<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
+najmniejszą i największą w drzewie binarnym.
+Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+
+<h3>ZADANIE 9.4</h3>
+
+<p>Napisać funkcję calc_height() obliczającą wysokość drzewa binarnego.
+
+<h3>ZADANIE 9.5</h3>
+
+<p>Napisać funkcję calc_nodes() znajdującą liczbę węzłów drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

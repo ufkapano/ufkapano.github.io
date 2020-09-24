@@ -1,0 +1,83 @@
+<html>
+<head>
+<title>Lekcja 15</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (15) - algorytmy grafowe</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+
+<h3>WPROWADZENIE</h3>
+
+<p>ADT GRAPH implementuje pojęcie grafu z teorii grafów.
+Graf G=(V,E) składa się ze skończonego zbioru wierzchołków V i skończonego
+zbioru krawędzi E łączących pary wierzchołków.
+Grafy (krawędzie) mogą być skierowane lub nieskierowane.
+Wierzchołki i krawędzie mogą mieć zdefiniowane dodatkowe atrybuty
+(waga, kolor, etykieta, itp.).
+Oznaczenia n=|V|, m=|E|.
+
+<p>Typowe operacje dla ADT GRAPH są następujące: 
+
+<ul>
+<li>konstruktor tworzący pusty graf skierowany lub nieskierowany.
+<li>odczyt liczby wierzchołków,
+<li>odczyt liczby krawędzi,
+<li>dodanie wierzchołka,
+<li>usunięcie wierzchołka,
+<li>testowanie, czy graf zawiera wierzchołek,
+<li>dodanie krawędzi,
+<li>usunięcie krawędzi,
+<li>testowanie, czy graf zawiera krawędź,
+<li>iterowanie po wszystkich wierzchołkach grafu,
+<li>iterowanie po wszystkich krawędziach grafu,
+<li>iterowanie po wszystkich sąsiadach danego grafu
+(lub po krawędziach wychodzących),
+<li>czyszczenie grafu.
+</ul>
+
+<p>Typowe reprezentacje grafu.
+
+<ul>
+<li>Lista sąsiedztwa (ang. adjacency list). Pamięć O(n+m).
+<li>Macierz sąsiedztwa (ang. adjacency matrix). Pamięć O(n^2).
+Tutaj zwykle wierzchołki są liczbami całkowitymi numerującymi
+wiersze/kolumny macierzy. Zwykle przyjmuje się, że wierzchołki grafu
+są utworzone i nie będą usuwane.
+<li>Macierz incydencji (ang. incidence matrix). Pamięć O(n m).
+<li>Lista krawędzi. Pamięć O(m).
+</ul>
+
+<h3>ZADANIE 15.1</h3>
+
+<p>https://www.boost.org/doc/libs/1_72_0/libs/graph/doc/index.html
+
+<p>Zapoznać się z The Boost Graph Library (BGL).
+Stworzyć przypadkowy graf nieskierowany ważony spójny.
+Znaleźć minimalne drzewo rozpinające grafu za pomocą 
+algorytmu Prima lub Kruskala.
+
+<h3>ZADANIE 15.2</h3>
+
+<p>http://graphblas.org/
+
+<p>Zapoznać się z projektem GraphBLAS, który definiuje API 
+dla algorytmów grafowych.
+
+<h3>ZADANIE 15.3</h3>
+
+<p>https://github.com/ufkapano/graphs-dict
+
+<p>Zapoznać się z pakietem <em>graphtheory</em> w języku Python.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

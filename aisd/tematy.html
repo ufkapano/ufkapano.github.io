@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>AiSD</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Propozycje tematów projektów zaliczeniowych</h1>
+
+<ul>
+
+<li>Implementacja wielomianów na bazie list powiązanych pojedynczo.
+Działania na wielomianach: dodawanie, odejmowanie, mnożenie,
+obliczanie wartości wielomianu (algorytm Hornera)
+[klasy Term, Poly].
+
+<li>Obliczanie wielomianu szachowego
+[https://en.wikipedia.org/wiki/Rook_polynomial].
+
+<li>Listy z przeskokami i obliczanie mediany kroczącej (ang. running median)
+[https://en.wikipedia.org/wiki/Skip_list].
+
+<li>Drzewa AVL.
+
+<li>Drzewa czerwono-czarne (red-black trees).
+
+<li>Drzewa splay.
+
+<li>Drzewa ukorzenione o dowolnym stopniu rozgałęzień.
+Cormen str. 245, reprezentacja 
+<em>na lewo syn, na prawo brat</em>.
+
+<li>Drzewo przedziałowe, czyli drzewo binarne do przechowywania
+danych o przedziałach liczbowych. Cormen str. 351.
+
+<li>Kopiec trójkowy.
+
+<hr><pre>
+int heap_parent(int n) { return (n-1) / 3; }
+int heap_left(int n) { return (3 * n + 1); }
+int heap_middle(int n) { return (3 * n + 2); }
+int heap_right(int n) { return (3 * n + 3); }
+</pre><hr>
+
+<li>Implementacja grafów oparta na macierzy sąsiedztwa.
+Wierzchołki są liczbami int od 0 do n-1.
+Zaimplementować BFS i DFS.
+
+<li>Implementacja grafów oparta na liście sąsiedztwa.
+Wierzchołki są liczbami int od 0 do n-1.
+Zaimplementować BFS i DFS.
+
+<li>Implementacja grafów oparta na liście krawędzi.
+Zaimplementować BFS i DFS.
+
+<li>Implementacja grafów oparta na macierzy incydencji.
+Zaimplementować BFS i DFS.
+
+<li>Algorytm kolorowania wierzchołków grafu.
+
+<li>Algorytm kolorowania krawędzi grafu.
+
+<li>Algorytm znajdowania największego zbioru niezależnego w grafie.
+
+<li>Algorytm znajdowania najmniejszego zbioru dominującego w grafie.
+
+<li>Znajdowanie cyklu Eulera (każda krawędź przebyta dokładnie raz).
+
+<li>Znajdowanie cyklu Hamiltona (każdy wierzchołek odwiedzony dokładnie raz).
+
+<li>Algorytm Boruvki - minimalne drzewo rozpinające 
+dla grafu nieskierowanego ważonego spójnego.
+
+<li>Algorytm Kruskala - minimalne drzewo rozpinające 
+dla grafu nieskierowanego ważonego spójnego.
+
+<li>Algorytm Prima - minimalne drzewo rozpinające 
+dla grafu nieskierowanego ważonego spójnego.
+
+<li>Algorytm Bellmana-Forda - znajdowanie ścieżki o najmniejszej wadze 
+pomiędzy dwoma wierzchołkami w grafie ważonym.
+
+<li>Algorytm Dijkstry - znajdowania najkrótszej ścieżki z pojedyńczego 
+źródła w grafie nieskierowanym o nieujemnych wagach krawędzi.
+
+<li>Algorytm Floyda-Warshalla - znajdowanie najkrótszych ścieżek 
+pomiędzy wszystkimi parami wierzchołków w grafie ważonym.
+
+<li>Algorytm A* - algorytm heurystyczny znajdowania najkrótszej ścieżki 
+w grafie ważonym.
+
+<li>Problem komiwojażera (ang. Traveling Salesman Problem, TSP), np.
+algorytm najbliższych sąsiadów (z powtórzeniami lub bez), 
+algorytm sortowania krawędzi,
+algorytm genetyczny, symulowane wyżarzanie.
+
+<li>Wyznaczanie otoczki wypukłej, np. Graham, Jarvis, quickhull
+[https://en.wikipedia.org/wiki/Convex_hull].
+
+<li>Implementacja drzewa czwórkowego
+[https://en.wikipedia.org/wiki/Quadtree].
+
+<li>Triangulacja Delaunaya (trudne)
+[https://en.wikipedia.org/wiki/Delaunay_triangulation].
+
+<li>Program do obsługi biblioteki.
+
+<li>Program do rezerwacji biletów lotniczych.
+
+<li>Baza danych książek, płyt, filmów, itp.
+
+<li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim.
+
+</ul>
+
+</body>
+</html>

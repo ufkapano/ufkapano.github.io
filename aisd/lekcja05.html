@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (5) - ADT LIST (lista podwójnie powiązana)</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie.
+
+<h3>WPROWADZENIE</h3>
+
+<p>Listy powiązane podwójne mają elementy powiązane dwoma łączami: 
+do elementu następnego (next) i do elementu poprzedniego (prev). 
+W łatwy sposób możemy poruszać się po liście do przodu i wstecz. 
+Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego, 
+podczas gdy przy listach połączonych pojedynczo potrzebne było też łącze 
+do węzła poprzedzającego. 
+
+<hr><pre>
+// Szablon dla pojedynczego węzła listy.
+template &lt;typename T&gt;
+struct DoubleNode {
+    T value;
+    DoubleNode *next, *prev;
+    // konstruktor domyślny
+    DoubleNode() : value(T()), next(nullptr), prev(nullptr) {}
+    DoubleNode(const T& item, DoubleNode *nptr=nullptr, DoubleNode *pptr=nullptr)
+        : value(item), next(nptr), prev(pptr) {} // konstruktor
+    ~DoubleNode() {} // destruktor
+};
+</pre><hr><pre>
+// Szablon dla listy powiązanej podwójnie.
+template &lt;typename T&gt;
+class DoubleList {
+    DoubleNode&lt;T&gt; *head, *tail;
+public:
+    DoubleList() : head(nullptr), tail(nullptr) {}
+    ~DoubleList(); // tu trzeba wyczyścić węzły
+    bool empty() const { return head == nullptr; }
+    int size() const; // O(n) bo trzeba policzyć
+    void push_front(const T& item); // O(1)
+    void push_back(const T& item); // O(1)
+    T& front() const { return head->value; } // zwraca początek, nie usuwa
+    T& back() const { return tail->value; } // zwraca koniec, nie usuwa
+    void pop_front(); // usuwa początek O(1)
+    void pop_back(); // usuwa koniec O(n)
+    void clear(); // czyszczenie listy z elementów O(n)
+    void display(); // O(n)
+    void display_reversed(); // O(n)
+};
+</pre><hr>
+
+<h3>ZADANIE 5.1</h3>
+
+<p>Przygotować implementację realizującą ADT LIST na bazie listy powiązanej
+podwójnie. Będzie to klasa DoubleList umieszczona w pliku
+<a href="doublelist.h">doublelist.h</a>.
+Uzupełnić plik doublelist.h, stworzyć funkcję main() i testy
+sprawdzające działanie interfejsu list.
+
+<h3>ZADANIE 5.2</h3>
+
+<p>Zmienić klasę DoubleList przez wprowadzenie wartownika, czyli
+sztucznego węzła łączącego głowę i ogon listy powiązanej podwójnie.
+W ten sposób powstaje lista cykliczna, co upraszcza wstawianie
+i usuwanie węzłów.
+W klasie DoubleList wystarczy przechowywać tylko łącze do wartownika.
+
+<hr><pre>
+// Szablon dla listy powiązanej podwójnie z wartownikiem.
+template &lt;typename T&gt;
+class DoubleList {
+    DoubleNode&lt;T&gt; *nil;
+public:
+    DoubleList(); // trzeba alokować wartownika
+    ~DoubleList(); // tu trzeba wyczyścić węzły i wartownika
+    bool empty() const { return nil->next == nil; }
+    T& front() const { return nil->next->value; } // zwraca początek, nie usuwa
+    T& back() const { return nil->prev->value; } // zwraca koniec, nie usuwa
+};
+</pre><hr><pre>
+template &lt;typename T&gt;
+DoubleList&lt;T&gt;::DoubleList() {
+    nil = new DoubleNode&lt;T&gt;(); // wartownik
+    nil->next = nil;
+    nil->prev = nil;
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void DoubleList&lt;T&gt;::push_front(const T& item) {
+    DoubleNode&lt;T&gt; *node = new DoubleNode&lt;T&gt;(item, nil->next, nil);
+    nil->next->prev = node;
+    nil->next = node;
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void DoubleList&lt;T&gt;::pop_front() {
+    assert(!empty());
+    DoubleNode&lt;T&gt; *node = nil->next; // zapamiętujemy
+    node->next->prev = node->prev; // ogólny schemat usuwania
+    node->prev->next = node->next;
+    // Przywracanie usuniętego węzła [Knuth]:
+    // node->next->prev = node;
+    // node->prev->next = node;
+    delete node;
+}
+</pre><hr>
+
+<h3>ZADANIE 5.3</h3>
+
+<p>Zmienić klasę DoubleList przez wprowadzenie atrybutu length typu int, 
+który przechowuje aktualną długość listy powiązanej. 
+Dzięki temu metoda size() może działać w czasie O(1), a nie O(n). 
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>
