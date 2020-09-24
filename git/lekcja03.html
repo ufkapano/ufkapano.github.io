@@ -1,0 +1,290 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (3) - repozytoria z rozgałęzieniami</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Gałęzie Gita są wskaźnikami rewizji.
+Znaczniki są nieruchome, natomiast gałęzie automatycznie przesuwają się
+po utworzeniu nowej rewizji.
+Git jest zoptymalizowany pod względem obsługi gałęzi.
+Testowanie nowych pomysłów warto robić przy użyciu gałęzi.
+
+<p>Przykładowy diagram repo o historii nieliniowej.
+
+<hr><pre>
+        o--o--o &lt;-- Branch A
+       /
+o--o--o--o &lt;-- master &lt;-- HEAD
+       \
+        o--o--o &lt;-- Branch B
+</pre><hr>
+
+<h3>TWORZENIE GAŁĘZI LOKALNYCH</h3>
+
+<hr><pre>
+$ git branch                  # istniejące gałęzie lokalne
+* master                      # gwiazdka wskazuje gałąź bieżącą
+
+# Skrócona informacja o plikach i nazwa gałęzi bieżącej.
+$ git status -sb
+## master                     # tu nie ma plików zmienionych
+
+# Historia repo:
+# A--B--C &lt;-- master &lt;-- HEAD
+
+# git branch [branch_name] [sha1]
+
+$ git branch testing          # utworzenie nowej gałęzi przy bieżącej rewizji
+
+# A--B--C &lt;-- master &lt;-- HEAD
+#       ^
+#       |
+#       testing
+
+$ git branch
+* master                      # gałąź bieżąca
+  testing
+
+$ git checkout testing        # przełączenie się do nowej gałęzi
+Switched to branch 'testing'
+
+# A--B--C &lt;-- master
+#       ^
+#       |
+#       testing &lt;-- HEAD
+
+$ git branch
+  master
+* testing                     # gałąź bieżąca
+
+# W jednym kroku utworzenie nowej gałęzi i przełączenie się do niej.
+# git checkout -b [branch_name] [sha1]
+</pre><hr><pre>
+# Zmiana nazwy gałęzi lokalnej.
+# git branch -m [old_name] [new_name]   # lub --move
+# git branch -M [old_name] [new_name]   # wymuszenie zmiany nazy
+</pre><hr>
+
+<h3>USUWANIE GAŁĘZI LOKALNYCH</h3>
+
+<p>Bezpiecznie można usunąć gałąź, która została włączona (merge)
+do upstream branch.
+Nie można usunąć gałęzi bieżącej.
+
+<hr><pre>
+# git branch -d [branch_name]           # lub --delete
+# git branch -D [branch_name]           # wymuszenie usunięcia gałęzi
+</pre><hr>
+
+<h3>ZAGUBIONE REWIZJE</h3>
+
+<p>Zagubione rewizje (ang. <em>dangling commits</em>)
+to rewizje nieosiągalne za pośrednictwem gałęzi.
+Zagubione rewizje są po pewnym czasie automatycznie usuwane
+z repozytorium.
+Pewne polecenia Gita automatycznie usuwają zagubione rewizje.
+
+<hr><pre>
+$ git prune         # wymuszenie czyszczenia repozytorium
+</pre><hr>
+
+<h3>ŁĄCZENIE GAŁĘZI LOKALNYCH</h3>
+
+<p>Przy łączeniu gałęzi można wyróżnić dwa przypadki:
+
+<ul>
+<li>przewijanie do przodu (ang. <em>fast forward</em>),
+<li>łączenie gałęzi rozłącznych.
+</ul>
+
+<p>Przewijanie do przodu zachodzi wtedy, gdy jedna gałąź 
+zawiera się w drugiej.
+Można wykonać przewijanie do przodu dla wielu gałęzi na raz.
+
+<hr><pre>
+# A--B--C &lt;-- master
+#        \
+#         D--E &lt;-- testing &lt;-- HEAD
+
+$ git branch
+  master
+* testing           # gałąź bieżąca
+
+$ git checkout master
+Switched to branch 'master'
+
+$ git branch
+* master            # gałąź bieżąca
+  testing
+
+# A--B--C &lt;-- master &lt;-- HEAD
+#        \
+#         D--E &lt;-- testing
+
+$ git merge testing
+Updating cccc..eeee
+Fast-forward
+...
+
+# A--B--C--D--E &lt;-- master &lt;-- HEAD
+#             ^
+#             |
+#             testing
+</pre><hr>
+
+<h3>ŁĄCZENIE GAŁĘZI LOKALNYCH ROZŁĄCZNYCH</h3>
+
+<p>Podczas łączenia gałęzi mogą pojawić się konflikty.
+Jeżeli zmiany w różnych gałęziach dotyczyły różnych plików,
+to nie powinno być konfliktów.
+
+<hr><pre>
+# A--B--D &lt;-- testing
+#     \
+#      C &lt;-- master &lt;-- HEAD
+
+$ git branch
+* master                      # gałąź bieżąca
+  testing
+
+$ git merge testing           # uruchamia się edytor do komentarza
+Merge made by the 'recursive' strategy.
+...
+
+$ git log
+commit eeee
+Merge: cccc dddd
+Author: Andrzej Kapanowski &lt;andrzej.kapanowski@uj.edu.pl&gt;
+Date:   Wed Dec 16 09:55:30 2015 +0100
+
+    Merge branch 'testing'
+
+# A--B--D &lt;-- testing
+#     \  \
+#      C--E &lt;-- master &lt;-- HEAD
+
+$ git log --pretty=oneline
+eeee Merge branch 'testing'
+dddd D                        # było tylko w testing
+cccc C                        # było tylko w master
+bbbb B
+aaaa A
+
+# Można przesunąć gałąź testing, aby robić nowe testy.
+
+$ git checkout testing
+
+$ git merge master   # fast forward do rewizji E
+
+# A--B--D
+#     \  \
+#      C--E &lt;-- master
+#         ^
+#         |
+#         testing &lt;-- HEAD
+</pre><hr><pre>
+# Usuwanie łączenia gałęzi wykonanego za pomocą git merge:
+# git reset --hard HEAD~   # lub HEAD^
+
+# Lista gałęzi, których tips są osiągalne z rewizji sha1:
+# git branch --merged
+
+# Lista gałęzi, których tips nie są osiągalne z rewizji sha1:
+# git branch --no-merged
+
+# Sprawdzanie różnic pomiędzy gałęziami:
+# git diff --name-status branch1_name branch2_name
+</pre><hr>
+
+<h3>OPERACJA GIT REBASE</h3>
+
+<p>Innym sposobem łączenia gałęzi jest operacja "git rebase".
+Po tej operacji projekt ma historię liniową.
+Jeżeli gałąź bieżąca jest zawarta w gałęzi dołączanej,
+to "git rebase" jest równoważne "git merge".
+
+<hr><pre>
+# A--B--D &lt;-- testing
+#     \
+#      C &lt;-- master &lt;-- HEAD
+
+$ git checkout master
+
+$ git rebase testing
+First, rewinding head to replay your work on top of it...
+Applying: C
+
+#       testing
+#       |
+#       v
+# A--B--D--C' &lt;-- master &lt;-- HEAD
+#
+# Uwaga: C' ma inne sha1 niż C przed rebase. D jest takie samo.
+# Wniosek: nie stosować rebase do rewizji publicznych.
+
+# Można przesunąć gałąź testing, aby robić nowe testy.
+
+$ git checkout testing
+
+$ git merge master            # fast forward do rewizji C'
+
+#          testing &lt;-- HEAD
+#          |
+#          v
+# A--B--D--C' &lt;-- master
+</pre><hr><pre>
+# W manualu jest przykład "git rebase" z poziomu gałęzi testing.
+# To wydaje się lepsze, jeżeli master jest powiązane ze zdalnym repo.
+# A--B--D &lt;-- testing &lt;-- HEAD
+#     \
+#      C &lt;-- master
+
+$ git checkout testing
+
+$ git rebase master
+First, rewinding head to replay your work on top of it...
+Applying: D
+
+#       master
+#       |
+#       v
+# A--B--C--D' &lt;-- testing &lt;-- HEAD
+
+$ git checkout master
+
+$ git merge testing           # fast forward do rewizji D'
+
+#          master &lt;-- HEAD
+#          |
+#          v
+# A--B--C--D' &lt;-- testing
+</pre><hr>
+
+<p>Usuwanie operacji "git rebase" jest dość skomplikowane,
+używa się dziennika reflog .
+Jeżeli operacja "git rebase" nie uda się, wtedy repo jest
+w stanie "detached HEAD". Operację taką możemy anulować poleceniem
+
+<hr><pre>
+$ git rebase --abort
+</pre><hr>
+
+<h3>ZADANIE 3.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

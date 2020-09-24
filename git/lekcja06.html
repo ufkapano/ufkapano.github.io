@@ -1,0 +1,191 @@
+<html>
+<head>
+<title>Lekcja 6</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (6) - konflikty</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<ul>
+<li>http://stackoverflow.com/questions/572237/whats-the-best-three-way-merge-tool
+<li>https://en.wikipedia.org/wiki/Comparison_of_file_comparison_tools
+</ul>
+
+<p>Podczas pracy z Gitem może pojawić się sytuacja,
+kiedy jeden plik w różnych wersjach jest poddany różnym modyfikacjom.
+Wtedy operacja łączenia wersji prowadzi do <em>konfliktu</em>.
+Konflikty można edytować ręcznie w plikach lub użyć wybranego narzędzia
+do obsługi konfliktu. Polecane narzędzia open source:
+
+<ul>
+<li>KDiff3 [man kdiff3]
+<li>Meld [man meld]
+<li>gvimdiff - program vimdiff uruchomiony z GUI
+<li>P4Merge - nie ma w Debianie Wheezy
+<li>xxdiff - nie ma w Debianie Wheezy, jest w 
+</ul>
+
+<p>Pliki z konfliktami są specjalnie zaznaczane w indeksie,
+dlatego "git commit" nie uda się zrobić, 
+a "git status" raportuje "unmerged files".
+
+<h3>KONFLIKTY LOKALNE</h3>
+
+<p>Zakładam, że istnieją dwie gałęzie: master i testing.
+
+<hr><pre>
+$ git checkout master
+
+$ git merge testing
+# Pojawia się konflikt w pliku a1.txt.
+# Przykładowy komunikat:
+Auto-merging a1.txt
+CONFLICT (content): Merge conflict in a1.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+$ git status
+# On branch master
+# Unmerged paths:
+#   (use "git add/rm &lt;file&gt;..." as appropriate to mark resolution)
+#
+#    both modified:      a1.txt
+#
+no changes added to commit (use "git add" and/or "git commit -a")
+
+$ cat a1.txt        # oglądamy miejsce konfliktu
+plik a1
+<<<<<<< HEAD
+zmiana a1 w galezi master
+=======
+zmiana a1 w galezi testing
+>>>>>>> testing
+
+# Wywołanie konkretnego narzędzia do łączenia.
+# git mergetool -t meld
+# git mergetool --tool=meld
+
+$ git mergetool
+merge tool candidates: meld opendiff kdiff3 tkdiff xxdiff tortoisemerge
+    gvimdiff diffuse ecmerge p4merge araxis bc3 emerge vimdiff
+Merging:
+a1.txt
+
+Normal merge conflict for 'a1.txt':
+  {local}: modified file
+  {remote}: modified file
+Hit return to start merge resolution tool (gvimdiff):
+
+# Po zainstalowaniu KDiff3 i Meld domyślnie uruchamia się Meld.
+# Po wykonaniu edycji a1.txt jest zmieniony, a poprzednia wersja
+# jest zapisana w pliku a1.txt.orig.
+# Czasem jest pytanie od Gita, czy konflikt jest rozwiązany
+# (Git nie pyta, kiedy skorzystał z exit code).
+
+$ git status        # sprawdzamy stan repo
+# On branch master
+# Changes to be committed:
+#
+#    modified:   a1.txt
+#
+# Untracked files:
+#   (use "git add &lt;file&gt;..." to include in what will be committed)
+#
+#    a1.txt.orig
+
+$ rm a1.txt.orig    # usuwam wersję z zaznaczonymi konfliktami
+
+$ git add -A
+
+$ git commit -m "Merge branch testing."
+</pre><hr>
+
+<h3>SYNCHRONIZACJA REPOZYTORIÓW</h3>
+
+<p>Zakładam, że lokalna gałąź master śledzi gałąź origin/master.
+
+<hr><pre>
+# Repo zdalne to mgr-tmp.
+# W repo1 i repo2 jest plik a1, jest synchronizacja.
+# W repo2 tworzę plik b1 i robię git push.
+# W repo1 tworzę plik a2 i git push się nie udaje (non-fast-forward):
+
+$ git push
+Password for 'https://ufkapano@bitbucket.org': 
+To https://ufkapano@bitbucket.org/ufkapano/mgr-tmp.git
+ ! [rejected]        master -> master (non-fast-forward)
+error: failed to push some refs to 'https://ufkapano@bitbucket.org/ufkapano/mgr-tmp.git'
+hint: Updates were rejected because the tip of your current branch is behind
+hint: its remote counterpart. Merge the remote changes (e.g. 'git pull')
+hint: before pushing again.
+hint: See the 'Note about fast-forwards' in 'git push --help' for details.
+
+# W repo1 robię git pull, udaje się, historia jest nieliniowa.
+# Nowa rewizja to "Merge branch 'master' of mgr-tmp".
+# W repo1 robię git push.
+# W repo2 robię git pull, jest synchronizacja.
+</pre><hr><pre>
+# W repo2 zmieniam a2 i robię git commit, git push.
+# W repo1 zmieniam a2, robię git commit. git push się nie udaje.
+# W repo1 robię git fetch.
+# Uaktualnia się origin/master. Próbuje git rebase.
+
+$ git rebase origin/master
+First, rewinding head to replay your work on top of it...
+Applying: a2 changed on dell.
+Using index info to reconstruct a base tree...
+Falling back to patching base and 3-way merge...
+Auto-merging tests/a2.txt
+CONFLICT (content): Merge conflict in tests/a2.txt
+Failed to merge in the changes.
+Patch failed at 0001 a2 changed on dell.
+
+When you have resolved this problem run "git rebase --continue".
+If you would prefer to skip this patch, instead run "git rebase --skip".
+To check out the original branch and stop rebasing run "git rebase --abort".
+
+# Zmiana z repo2 jest nałożona.
+# W pliku a2 jest zaznaczony konflikt.
+# Zmieniam ręcznie rewizję zrobioną w repo1.
+# Ta stara rewizja z repo1 nie będzie widziana w historii!
+
+$ git add -A
+
+$ git rebase --continue
+
+$ git push
+</pre><hr><pre>
+# W repo2 zmieniam a2 i robię git commit, git push.
+# W repo1 zmieniam a2, robię git commit. git push się nie udaje.
+# W repo1 robię git fetch.
+# Uaktualnia się origin/master. Próbuje git merge.
+
+$ git merge origin/master
+Auto-merging tests/a2.txt
+CONFLICT (content): Merge conflict in tests/a2.txt
+Automatic merge failed; fix conflicts and then commit the result.
+
+# Konflikt rozwiązuje ręcznie.
+
+$ git add -A
+
+$ git commit -m "Merge branch origin/master."
+
+$ git push
+</pre><hr>
+
+<h3>ZADANIE 6.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

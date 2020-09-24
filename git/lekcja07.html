@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Lekcja 7</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (7) - różności</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<hr><pre>
+# Ponowna kompresja repo w celu poprawy wydajności.
+
+$ git gc                                # time-consuming
+
+# Sprawdzenie konsystencji repo.
+# Raportuje m.in. dangling objects (commit, blob, tree).
+
+$ git fsck
+</pre><hr>
+
+<h3>PLIKI KONFIGURACYJNE</h3>
+
+<p>Zakładam, że lokalne repo w katalogu <em>myproject</em> jest skojarzone
+ze zdalnym repo <em>ufkapano/myproject</em> w serwisie Bitbucket.
+
+<hr><pre>
+$ cat ~/.gitconfig                      # ustawienia użytkownika
+[user]
+	name = Andrzej Kapanowski
+	email = andrzej.kapanowski@uj.edu.pl
+
+$ cat myproject/.git/config             # ustawienia dla repo
+[core]
+	repositoryformatversion = 0
+	filemode = true
+	bare = false
+	logallrefupdates = true
+[remote "origin"]
+	url = https://ufkapano@bitbucket.org/ufkapano/myproject.git
+	fetch = +refs/heads/*:refs/remotes/origin/*
+[branch "master"]
+	remote = origin
+	merge = refs/heads/master
+</pre><hr>
+
+
+<h3>ZADANIE 7.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

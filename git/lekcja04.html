@@ -1,0 +1,245 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (4) - repozytoria w sieci</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p><em>Repozytoria lokalne</em> służą do zwykłej pracy z plikami, 
+wykonywania rewizji, itp.
+
+<p><em>Repozytoria zdalne</em> służą do synchronizacji rewizji
+i zwykle są repozytoriami surowymi (ang. bare).
+
+<p>Kilka serwisów internetowych udostępnia możliwość tworzenia
+zdalnych repozytoriów prywatnych i publicznych.
+Zwykle są pewne limity na liczbę prywatnych repozytorów
+lub na liczbę współpracowników.
+
+<hr><pre>
+# git remote add [shortname] [url]      # dodanie nowego remote
+# git remote                            # lista shortnames
+# git remote -v                         # sprawdzenie URL (push i fetch)
+# git remote show origin                # jest pytanie o hasło
+# git remote rename [old_name] [new_name]    # zmiana nazwy remote
+# git remote rm [remote_name]           # usunięcie remote
+</pre><hr><pre>
+# git fetch [remote_name] [branch_name]
+# git fetch origin master               # typowe
+
+Teraz lokalnie mamy dostęp do gałęzi origin/master.
+Nie ma automatycznego łączenia z lokalną gałęzią master.
+Klonowanie automatycznie ustawia nazwę "origin" dla remote.
+</pre><hr><pre>
+# git pull [remote_name] [branch_name]
+# git pull origin master                # typowe
+# git pull                              # zwykle to wystarczy
+
+Automatycznie zachodzi "git fetch" i "git merge".
+</pre><hr><pre>
+# git push [remote_name] [branch_name]  # push to upstream
+# git push origin master                # typowe
+# git push                              # zwykle to wystarczy
+</pre><hr>
+
+<h3>KLONOWANIE PROJEKTU Z SIECI</h3>
+
+<p>Klonowanie projektu istniejącego w sieci w trybie tylko do odczytu
+(nie mamy uprawnień do wprowadzania zmian w projekcie).
+
+<hr><pre>
+# Pobieramy kod modułu Pythona o nazwie SymPy.
+
+$ mkdir sympy       # tworzę katalog na repo
+
+$ cd sympy          # przejście do katalogu projektu
+
+$ git clone https://github.com/sympy/sympy.git
+
+# git clone [url]
+# git clone [url] [new_dir_name]
+# Właściwe klonowanie zdalnego repo.
+# sympy - nazwa konta właściciela projektu.
+# sympy.git - repo surowe (końcówka .git) dla projektu sympy.
+# Zdalne repo otrzymuje automatycznie nazwę "origin".
+</pre><hr>
+
+<h3>SERWIS github.com</h3>
+
+<p>Zakładanie w serwisie projektu, który będzie zsynchronizowany
+z lokalnym repo. Zaczynamy od założenia projektu w sieci.
+Konto (łącznie wszystkie repo) ma 1 GB dostępnej powierzchni dyskowej.
+
+<hr><pre>
+Nazwa konta właściciela: ufkapano
+Nazwa projektu: myproject
+Typ repo: publiczne  (bezpłatne w serwisie)
+Pełny identyfikator projektu: ufkapano/myproject
+Adres repo w sieci: https://github.com/ufkapano/myproject.git
+</pre><hr>
+
+<p>Polecenia na lokalnym komputerze.
+
+<hr><pre>
+$ mkdir myproject   # tworzę katalog na repo
+
+$ cd myproject
+
+$ touch README.md   # README z opisem projektu (z Markdown)
+
+$ git init
+
+$ git add -A
+
+$ git commit -m "First commit."         # pierwsza rewizja
+[master abcdefg] First commit.          # 7 znaków SHA-1
+
+$ git remote add origin https://ufkapano@github.com/ufkapano/myproject.git
+
+# origin - alias repo zdalnego,
+# ufkapano@ - opcjonalna nazwa właściciela (inaczej zapyta),
+# myproject.git - zdalne repo jest surowe.
+
+$ git push -u origin master             # lub --set-upstream
+
+# Jednorazowe polecenie, potem wystarczy tylko "git push".
+# Opcja -u powoduje śledzenie gałęzi origin/master
+# przez lokalną gałąź master.
+# master to nazwa gałęzi lokalnej.
+
+$ git remote                            # list shortnames of remotes
+origin
+
+# Pytanie o URL zdalnego repo.
+
+$ git remote -v                         # sprawdzamy URLs
+origin  https://ufkapano@github.com/ufkapano/myproject.git (fetch)
+origin  https://ufkapano@github.com/ufkapano/myproject.git (push)
+</pre><hr>
+
+<h3>SERWIS bitbucket.org</h3>
+
+<p>Procedura jest właściwie analogiczna, wystarczy zamienić
+github.com na bitbucket.org.
+Chyba komunikaty Gita są troszkę inne.
+Można bezpłatnie zakładać repozytoria publiczne i prywatne.
+Zaczynamy od założenia projektu w sieci.
+Repository size: soft limit 1 GB, hard limit 2 GB.
+
+<hr><pre>
+Create a new repository
+Name: myproject
+Description: My project.
+Access level:
+[*] This is a private repository
+Forking: Allow only private forks
+Repository type:
+(*) Git
+( ) Merkurial
+Project management:
+[ ] Issue tracking
+[ ] Wiki
+Language: Python
+
+Przycisk: Create repository
+
+Command line
+&gt; I'm starting from scratch
+&gt; I have an existing project
+</pre><hr>
+
+<p>Polecenia na lokalnym komputerze.
+
+<hr><pre>
+$ mkdir myproject             # tworzę katalog na repo
+
+$ cd myproject
+
+$ touch README.md             # README z opisem projektu (z Markdown)
+
+$ git init
+
+$ git add -A
+
+$ git commit -m "First commit."         # pierwsza rewizja
+[master abcdefg] First commit.          # 7 znaków SHA-1
+
+$ git remote add origin https://ufkapano@bitbucket.org/ufkapano/myproject.git
+
+$ git push -u origin master             # lub --set-upstream
+
+$ git remote
+origin
+
+$ git remote -v                         # sprawdzamy URLs
+origin  https://ufkapano@bitbucket.org/ufkapano/myproject.git (fetch)
+origin  https://ufkapano@bitbucket.org/ufkapano/myproject.git (push)
+</pre><hr><pre>
+# Jak zmienić nazwę repo w Bitbucket?
+1. Go to the repo's overview page, usually 
+https://bitbucket.org/username/oldname/overview
+2. Click the settings cog on the far right end of the menu row !
+Teraz jest ikona z lewej na dole.
+3. Change the name in the Name field.
+4. Click Save repository details.
+
+# Zmiany lokalne.
+1. Polecenie 
+git remote -v 
+pokazuje starą lokalizację
+2. Zmiana lokalizacji na nową:
+git remote set-url origin new_url
+</pre><hr>
+
+<h3>SERWIS gitlab.com</h3>
+
+<p>Nielimitowana liczba prywatnych repozytoriów.
+Często występują długie czasy oczekiwania na dostęp do repo.
+GitLab wyróżnia users, groups i projects.
+Właścicielem projektu może być user lub group.
+Różne role dla users i groups (Owner, Reporter).
+
+<hr><pre>
+Utworzenie nowego projektu.
+Na stronie dashboard mamy: 
+Your Projects, Starred Projects, Explore Projects.
+Przycisk: +NEW PROJECT
+</pre><hr>
+
+<h3>SCHEMAT PRACY ZE ZDALNYM REPO</h3>
+
+<hr><pre>
+$ git pull          # pobranie ewentualnych nowych rewizji z origin
+
+# Robimy zmiany w plikach.
+
+$ git add -A
+
+$ git commit -m "Komentarz."
+
+$ git status
+# On branch master
+# Your branch is ahead of 'origin/master' by 1 commit.
+#
+nothing to commit (working directory clean)
+
+$ git push          # przesłanie nowej rewizji do origin
+</pre><hr>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

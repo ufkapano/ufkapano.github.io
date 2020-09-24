@@ -1,0 +1,62 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (5) - gałęzie zdalne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Synchronizacja repozytoriów polega na uzgodnieniu rewizji
+zawartych w poszczególnych gałęziach.
+Odbywa się to identycznie jak przy łączeniu gałęzi lokalnych.
+
+<hr><pre>
+# Listowanie gałęzi.
+
+$ git branch                  # gałęzie lokalne
+* master
+
+$ git branch -r               # lub --remotes, gałęzie zdalne
+  remotes/origin/master
+
+$ git branch -a               # lub --all, wszystkie gałęzie
+* master
+  remotes/origin/master
+
+# Pelne nazwy (referencje do rewizji) to:
+# ref/heads/master
+# ref/remotes/origin/master
+</pre><hr>
+
+<h3>POBIERANIE GAŁĘZI ZDALNEJ</h3>
+
+<hr><pre>
+# git fetch [remote_name] [branch_name]
+
+$ git fetch origin master     # typowe
+
+# Łączenie pobranej gałęzi zdalnej.
+# Może wystąpić konflikt, jeżeli dodawaliśmy rewizje lokalnie.
+
+$ git merge origin/master
+</pre><hr>
+
+
+
+
+<h3>ZADANIE 5.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (1) - wprowadzenie</h1>
+
+<h3>POMOC</h3>
+
+<ul>
+
+<li>man: git(1), gittutorial(7), git-log(1), git-help(1),
+[ogólnie: man git-commandname], gitworkflows(7),
+
+<li>https://en.wikipedia.org/wiki/SHA-1
+
+</ul>
+
+<h3>OPIS</h3>
+
+<p>Git is a free and open source distributed version control system 
+designed to handle everything from small to very large projects with 
+speed and efficiency.
+
+<p>Git comes with built-in GUI tools for committing (git-gui) 
+and browsing (gitk).
+
+<hr><pre>
+$ git --version     # sprawdzenie, czy Git jest zainstalowany
+git version 1.7.2.5     # Debian 6.0 Squeeze
+#git version 1.7.10.4     # Debian 7.0 Wheezy
+#git version 2.11.0     # Debian 9.1 Stretch
+
+$ git --help
+
+$ git help config     # pomoc dla "config"
+$ git config --help
+$ man git-config
+
+# Ustawienia gita są w trzech lokalizacjach.
+# Ustawienia dla repo są w REPO/.git/config
+# Ustawienia użytkownika (--global) są w ~/.gitconfig
+# Ustawienia systemowe (--system) są w /etc/gitconfig
+
+$ git config --list     # --list, -l, list all
+
+# Tworzę globalne ustawienia dla wszystkich moich repo.
+# Zapisane w pliku ~/.gitconfig (katalog domowy).
+
+$ git config --global user.name "Andrzej Kapanowski"
+
+$ git config --global user.email "andrzej.kapanowski@uj.edu.pl"
+</pre><hr>
+
+<p>W dokumentacji Gita podzielono polecenia na dwie grupy:
+
+<ul>
+<li>polecenia wysokopoziomowe (ang. <em>porcelain</em>)
+[to nas na początek interesuje],
+<li>polecenia niskopoziomowe (ang. <em>plumbing</em>).
+</ul>
+
+<h3>TWORZENIE REPOZYTORIÓW</h3>
+
+<p>Nowe repozytoria możemy tworzyć na dwa sposoby:
+
+<ul>
+<li>inicjalizując nowy projekt (git init),
+<li>klonując istniejące repozytorium (git clone).
+</ul>
+
+<h3>NAZEWNICTWO</h3>
+
+<ul>
+<li>version control system = system kontroli wersji
+<li>revision control system = system kontroli rewizji
+<li>repository (repo) = repozytorium
+<li>bare repo = repozytorium surowe
+<li>commit = zatwierdzenie zmian, rewizja
+<li>staging area = indeks
+</ul>
+
+<h3>TRZY SEKCJE PROJEKTU GITA</h3>
+
+<hr><pre>
+Working             Staging             .git directory
+directory           area (index)        (Repository)
+|                   |                   |
+|     Checkout the project              |
+|o--------------------------------------|
+|                   |                   |
+| Stage files       |                   |
+|------------------o|                   |
+|                   |                   |
+|                   | Commit            |
+|                   |------------------o|
+</pre><hr>
+
+<h3>IMPORTING A NEW PROJECT</h3>
+
+<hr><pre>
+$ tar xzf myproject.tar.gz    # rozpakowanie projektu
+
+$ cd myproject                # wejście do katalogu z projektem
+
+$ git init                    # powstaje podkatalog ukryty .git
+Initialized empty Git repository in .git/
+
+# Automatycznie powstaje lokalna gałąź master.
+
+$ git add -A                  # dodajemy wszystkie pliki do indeksu
+
+$ git commit -m "Initial commit."       # zapis pierwszej rewizji
+[master abcdefg] Initial commit.        # 7 znaków SHA-1
+</pre><hr>
+
+
+<h3>ZADANIE 1.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>

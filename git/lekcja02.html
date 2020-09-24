@@ -1,0 +1,239 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+<hr>
+
+<h1>Korzystanie z programu Git (2) - repozytoria o liniowej historii</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Stany plików:
+
+<ul>
+<li>committed (unmodified) - zapisany w Repository i nie zmieniony.
+<li>staged - zmieniony i dodany do staging area.
+<li>modified - zmieniony i nie dodany do staging area.
+</ul>
+
+<p>Cykl życia plików w repo, główny podział jest na 
+tracked (unmodified, modified, staged) i untracked.
+Tuż po sklonowaniu repo wszystkie pliki są tracked i unmodified.
+
+<hr><pre>
+Untracked           Unmodified          Modified            Staged
+|                   |                   |                   |
+| Add the file      |                   |                   |
+|----------------------------------------------------------o|
+|                   | Edit the file     |                   |
+|                   |------------------o|                   |
+|                   |                   | Stage the file    |
+|                   |                   |------------------o|
+| Remove the file   |                   |                   |
+|o------------------|                   |                   |
+|                   | Commit            |                   |
+|                   |o--------------------------------------|
+</pre><hr>
+
+<h3>ZMIANY W REPO</h3>
+
+<hr><pre>
+$ git status                  # stan repo
+
+$ git status -s               # lub --short, short status
+# Mamy dwuliterowe statusy plików (A, D, R, M, ?).
+
+$ git diff --cached           # różnice między indeksem a HEAD (co obejmie commit)
+
+$ git diff                    # różnice między indeksem a working directory
+
+$ git diff HEAD               # różnice między HEAD a working directory
+
+$ git log                     # historia rewizji
+
+$ git log --pretty=oneline -5           # jest wiele opcji dostępnych
+
+$ git log --grep=lekcja                 # string "lekcja" w komentarzach
+
+$ git log --author=Andrzej              # z pełnego imienia i nazwiska
+
+$ git log --stat                        # statystyki
+</pre><hr>
+
+<h3>PRZEGLĄDANIE HISTORII</h3>
+
+<p>Zakładam, że jesteśmy świeżo po wykonaniu commit.
+
+<hr><pre>
+$ git branch        # mamy jedną gałąź master, którą będziemy zwiedzać
+* master
+
+$ git log --pretty=oneline -4           # ostatnie 4 rewizje
+48ae450a329c92558038de3b721a029d8eea8c14 UnionFind changed.
+64ec8f8edb9ca891b18d94d906d885f91e67e220 Sudoku 6x6 added.
+63557016925125da2239af31bc788efac907e186 Rich comparisons.
+60a68aa1427fc8f4fd47a06ff6d963908c144c0c lekcja10 changed.
+
+# Historia: ...--60a6--6355--64ec--48ae &lt;-- master &lt;-- HEAD
+
+$ git checkout 60a6           # HEAD odkleja się od master
+Note: checking out '60a6'.
+
+You are in 'detached HEAD' state.
+...
+HEAD is now at 60a68aa... lekcja10 changed.
+
+$ git branch
+* (no branch)
+  master
+
+$ git checkout master         # powrót do ostatniej rewizji
+...
+Switched to branch 'master'
+</pre><hr>
+
+<h3>PRZYWRACANIE STANU REPO</h3>
+
+<p>Te operacje wykonujemy tylko na prywatnych gałęziach,
+bo w publicznym repo może popsuć się synchronizacja
+(chyba że nikt nie korzystał w ostatnim czasie).
+
+<hr><pre>
+$ git reset --hard            # stan repo z ostatniej rewizji
+
+$ git reset --hard HEAD       # jw
+
+$ git reset --hard HEAD^      # kasowanie ostatniej rewizji
+
+$ git reset --hard [sha1]     # kasowanie historii!
+</pre><hr><pre>
+# Ignorujemy zmiany które nastapiły po ostatniej rewizji.
+
+$ git checkout -f             # lub --force, stan repo z ostatniej rewizji
+
+$ git checkout -f HEAD        # jw
+</pre><hr>
+
+<p>HEAD to nazwa symboliczna wskazująca na ostatnią rewizję 
+w bieżącej gałęzi.
+HEAD^ oznacza pierwszego rodzica ostatniej rewizji.
+X^n oznacza n-tego rodzica rewizji X.
+X~n oznacza przodka n-tej generacji rewizji X.
+
+<hr><pre>
+# Pełny opis metod identyfikacji rewizji:
+
+$ git revisions --help
+</pre><hr>
+
+<h3>MODYFIKOWANIE OSTATNIEJ REWIZJI</h3>
+
+<p>To jest bezpieczne, jeżeli ostatnia rewizja nie została
+udostępniona publicznie.
+Chodzi o sytuację, gdy wykonaliśmy commit za wcześnie,
+a jeszcze potem doszły pewne drobne zmiany.
+Stara rewizja zostanie usunięta i powstanie nowa.
+W ten sposób można poprawić komentarz ostatniej rewizji
+bez wprowadzania faktycznych zmian w repo.
+
+<hr><pre>
+$ git add -A        # albo coś podobnego
+
+$ git commit --amend -m "Komentarz."
+</pre><hr>
+
+<h3>WYCOFANIE ZMIAN WPROWADZONYCH PRZEZ REWIZJĘ</h3>
+
+<p>Tą operację można bezpiecznie wykonywać na publicznych rewizjach.
+
+<hr><pre>
+# git revert --no-edit [sha1]
+
+# Domyślny komentarz będzie postaci: Revert "..."
+
+# git revert HEAD        # odwrócenie ostatniej rewizji
+
+# git revert HEAD^       # odwrócenie przedostatniej rewizji (możliwy konflikt)
+</pre><hr>
+
+<h3>ŁĄCZENIE KILKU REWIZJI W JEDNEJ GAŁĘZI</h3>
+
+<p>Łączenie wszystkich rewizji występujących po rewizji [sha1]
+w jedną rewizję [zakładam liniowa historię repo].
+Opcja -i włącza tryb interaktywny.
+Łączenie wykonuje się na rewizjach, które nie zostały udostępnione
+publicznie.
+
+<hr><pre>
+# git rebase -i [sha1]        # lub --interactive
+
+$ git rebase -i HEAD~3        # łączenie trzech ostatnich rewizji w jedną
+</pre><hr>
+
+<h3>OPERACJE NA PLIKACH</h3>
+
+<p>Pliki, które Git ma ignorować, umieszczamy w pliku ukrytym
+.gitignore. Zwykle stosujemy tu znaki uogólniające
+(*.log, *.[oa]).
+
+<p>GitHub maintains an official list of recommended .gitignore files 
+for many popular operating systems, environments, and languages 
+in the github/gitignore public repository.
+
+<p>https://github.com/github/gitignore (kolekcja plików .gitignore)
+
+<hr><pre>
+$ git add file1     # dodawanie pliku do indeksu, jest staged, będzie committed
+
+$ git rm file1                # usuwa plik, jest staged, będzie untracked
+
+$ git rm --cached file1       # zostaje na dysku, będzie untracked
+
+$ git mv file1 file2          # Git wie, że jest zmiana nazwy pliku
+</pre><hr>
+
+<h3>ZNACZNIKI</h3>
+
+<p>Git umożliwia oznaczanie rewizji przy użyciu znaczników
+(ang. <em>tags</em>). Dostępne są dwa rodzaje znaczników:
+
+<ul>
+<li>znaczniki lekkie (lightweight tags),
+<li>znaczniki opisane (annotated tags) - są zapisywane w bazie
+danych Gita w postaci rewizji. Te są zalecane.
+</ul>
+
+<hr><pre>
+$ git tag                               # wypisanie znaczników
+
+$ git tag -l "v1.8*"                    # wzorzec wyszukiwania
+
+# git tag -a [tag_name] -m "Komentarz." # tworzenie znacznika opisanego
+# git tag [tag_name]                    # tworzenie znacznika lekkiego
+# git tag [tag_name] [sha1]             # tworzenie znacznika lekkiego
+# git tag -d [tag_name]                 # usuwanie znacznika (obu)
+
+$ git tag -a v1.0 -m "My version 1.0"   # znacznik opisany
+
+# Domyślnie "git push" nie przesyła znaczników do remote.
+# Trzeba specjalnie sobie tego zażyczyć.
+# git push origin [tag_name]
+# git push origin --tags                # wszystkie tagi
+</pre><hr>
+
+
+
+<h3>ZADANIE 2.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Korzystanie z programu Git (index)</a>
+
+</body>
+</html>
