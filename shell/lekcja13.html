@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>Lekcja 13</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (13) - biblioteka skryptów shella</h1>
+
+<h3>ZADANIE 13.1</h3>
+
+<p>Stworzyć plik <em>valid_alnum.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# valid_alnum.sh
+#
+# Sprawdza, czy dane wejsciowe zawieraly tylko
+# znaki alfabetyczne i numeryczne.
+# Stosuje petle nieskonczona while.
+# Stosuje pomocnicza funkcje message(), ktora moze zawierac
+# dodatkowe polecenia formatowania tekstu, np. fold,
+# jezeli sa dostepne w systemie.
+
+message()
+{
+#echo "$*" | fold -s -w ${COLUMNS:-80} &gt;&amp; 2
+echo "$*" &gt;&amp; 2
+}
+
+valid_alnum()
+{
+# Zwraca 0, jesli wszysko jest OK. Jezeli nie, zwraca 1.
+
+if [ -z "$1" ] ; then
+    message "Error: nie podano znakow"
+    return 1
+fi
+
+# Usuwa wszystkie niedozwolone znaki.
+local COMPRESSED="$(echo $1 | sed -e 's/[^[:alnum:]]//g')"
+
+if [ "${COMPRESSED}" != "$1" ] ; then
+    message "Error: dozwolone sa litery i cyfry"
+    return 1
+else
+    return 0
+fi
+}
+
+# Przyklad zastosowania funkcji w skrypcie.
+while [ t ]
+do
+    echo -n "Podaj napis (alnum): "
+    read INPUT
+    if valid_alnum "${INPUT}" ; then
+        echo "Napis jest poprawny"
+        break
+    fi
+
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./valid_alnum.sh</tt>
+
+<p>Podaną funkcję można wykorzystać do sprawdzania poprawności 
+np. klucza bazy danych czy nazwy pliku.
+
+<h3>ZADANIE 13.2</h3>
+
+<p>Stworzyć plik <em>valid_int.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# valid_int.sh
+#
+# Sprawdza wprowadzane liczby calkowite (dodatnie i ujemne).
+# Stosuje pomocnicza funkcje message().
+
+message()
+{
+#echo "$*" | fold -s -w ${COLUMNS:-80} &gt;&amp; 2
+echo "$*" &gt;&amp; 2
+}
+
+valid_int()
+{
+# Sprawdza pierwsze pole. Opcjonalnie testuje minimalna wartosc $2 
+# i/lub maksymalna wartosc $3. Jesli nie sa podane, pomija te testy.
+local NUMBER="$1"
+local MIN="$2"
+local MAX="$3"
+
+if [ -z "${NUMBER}" ] ; then
+    message "Error: nie podano liczby" 
+    return 1
+fi
+
+local TESTVALUE
+
+if [ "$(echo ${NUMBER} | cut -c1)" = "-" ] ; then # czy pierwszy znak to minus?
+# Wszystkie znaki bez pierwszego 
+    TESTVALUE="$(echo ${NUMBER} | cut -c2-)"
+else
+    TESTVALUE="${NUMBER}"
+fi
+
+local NODIGITS="$(echo ${TESTVALUE} | sed 's/[[:digit:]]//g')"
+
+if [ ! -z "${NODIGITS}" ] ; then
+    message "Error: dozwolone tylko cyfry"
+    return 1
+fi
+
+if [ ! -z "${MIN}" ] ; then
+    if [ "${NUMBER}" -lt "${MIN}" ] ; then
+        message "Error: liczba mniejsza niz ${MIN}"
+        return 1
+    fi
+fi
+
+if [ ! -z "${MAX}" ] ; then
+    if [ "${NUMBER}" -gt "${MAX}" ] ; then
+        message "Error: liczba wieksza niz ${MAX}"
+        return 1
+    fi
+fi
+return 0
+}
+
+while [ t ]
+do
+echo -n "Podaj liczby [N (MIN MAX)]: "
+read A1 A2 A3
+if valid_int "${A1}" "${A2}" "${A3}" ; then
+    echo "Liczba wejsciowa jest poprawna w zadanych granicach"
+    break
+fi
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./valid_int.sh</tt>
+
+<p>Podaną funkcję można wykorzystać przy sprawdzaniu poprawności
+podawanej liczby całkowitej.
+
+<h3>BIBLIOTEKA FUNKCJI SHELLA</h3>
+
+<p>Języki programowania w środowisku Uniksowym, szczególnie
+C i Perl, mają ogromne biblioteki z pożytecznymi funkcjami 
+i modułami, pozwalającymi na weryfikowanie formatów liczb,
+obliczanie przesunięcia dat i wykonywanie jeszcze bardziej
+przydatnych zadań. Pracując z powłoką, jesteśmy zdani 
+na samych siebie, dlatego warto stworzyć pewne funkcje 
+narzędziowe, dzięki którym praca ze skryptami stanie się 
+znacznie łatwiejsza.
+Warto szukać inspiracji w literaturze i w samym systemie
+Linux, który zawiera wiele skryptów powłoki, np.
+w katalogu <em>/etc/init.d/</em>.
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

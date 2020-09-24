@@ -1,0 +1,196 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (3) - polecenia shellowe, zmienne</h1>
+
+<h3>ZADANIE 3.1</h3>
+
+<p>Zbadać zmienne powłoki.
+
+<hr><pre>
+$ printenv          (pokaże całe środowisko)
+$ printenv HOME     (pokaże daną zmienną środowiskową)
+
+$ help set
+$ set
+    (wypisze zmienne środowiskowe i programowe)
+    (polecenie służy do zmieniania opcji i argumentów shella)
+
+$ help declare
+$ declare           (tak jak "set")
+
+$ env               (pokaże środowisko jak "printenv")
+    (można też uruchomić program w zmienionym środowisku)
+$ env ZMIENNA="wartosc"       (definiowanie zmiennej w dowolnym shellu)
+
+$ ZMIENNA="jakis napis"
+    (definiowanie zmiennej w bash; nie ma spacji dokola =)
+$ echo $ZMIENNA     (wypisanie zawartości zmiennej)
+$ echo ${ZMIENNA}   (dobry zwyczaj to nawiasy klamrowe)
+
+$ help export
+$ export ZMIENNA    (ustawienie zmiennej jako globalnej)
+$ export            (pokaże zmienne eksportowane)
+
+$ ZMIENNA="wartosc" ; export ZMIENNA
+    (typowy ciąg poleceń stosowany w skryptach)
+$ declare -x ZMIENNA="wartosc"          (jak wyżej)
+$ declare -p ZMIENNA          (pokazanie atrybutów zmiennej)
+
+$ help unset
+$ unset ZMIENNA     (kasowanie zmiennej w bash)
+$ env -u ZMIENNA    (kasowanie zmiennej w dowolnym shellu)
+</pre><hr>
+
+<h3>ZADANIE 3.2</h3>
+
+<p>Stworzyć plik <em>witaj.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# witaj.sh
+#
+# Prosty skrypt korzystajacy ze zmiennych shella.
+
+echo "Witaj ${LOGNAME}!"
+echo "Pracujesz na komputerze ${HOSTNAME}."
+# opcja -n, aby nie bylo przejscia do nowej linii 
+echo -n "Dzisiejsza data: "
+date
+echo -n "Katalog biezacy: "
+pwd
+</pre><hr>
+
+<p>Nadajemy skryptowi prawo wykonywania poleceniem:
+<tt>chmod a+x witaj.sh</tt>
+
+<p>Uruchamiamy skrypt poleceniem: <tt>./witaj.sh</tt>
+
+<p>Modyfikujemy skrypt wykorzystując cytowanie poleceń:
+
+<hr><pre>
+echo "Dzisiejsza data: $(date)."
+echo "Katalog biezacy: $(pwd)."
+</pre><hr>
+
+<h3>ZADANIE 3.3</h3>
+
+<p>Stworzyć plik <em>stan.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# stan.sh
+#
+# Sprawdzanie stanu. Skrypt wykorzystuje polecenie "grep"
+# i wyrazenia regularne.
+
+echo -n "Katalog biezacy: "
+pwd
+echo -n "Liczba pozycji w katalogu biezacym: "
+ls | wc -l
+echo -n "Liczba katalogow: "
+ls -l | grep "^d" | wc -l
+echo -n "Liczba plikow i katalogow ukrytych: "
+ls -a | grep "^[.]" | wc -l
+
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./stan.sh</tt>
+
+<p>Uzupełnić skrypt, aby podawał inne informacje
+o systemie, np. liczbę i identyfikatory pracujących użytkowników.
+
+
+<h3>OPERACJE NA PLIKACH I KATALOGACH</h3>
+
+<p>Polecenia dotyczące katalogów: 
+pwd, ls, cd, mkdir, rmdir, rm -r, cp -R, mv, ln, du.
+
+<p>Polecenia dotyczące plików:
+touch, cat, cp, mv, rm, ln, file, find. 
+
+<p>Polecenia podziału plików:
+split, csplit.
+
+<p>Polecenia wyboru działające na wierszach:
+grep, head, sed, tail, uniq.
+Bardzo przydają się <em>wyrażenia regularne</em>.
+
+<p>Polecenia wyboru działające na kolumnach:
+cut.
+
+<p>Polecenia łączenia plików działające na wierszach:
+cat, join.
+
+<p>Polecenia łączenia plików działające na kolumnach:
+paste.
+
+<p>Zliczanie wierszy: 
+wc.
+
+<p>Polecenia porządkujące pliki:
+sort.
+
+<p>Polecenia przekształcania plików:
+sed, tr, awk.
+
+<p>Polecenia wyświetlania plików:
+more, less, cat, pg.
+
+<p>Polecenia porównywania plików:
+cmp, diff, merge.
+
+<h3>ZMIENNE W BASH</h3>
+
+<p>Zmienne udostępniane przez powłokę możemy podzielić na trzy rodzaje:
+
+<ul>
+<li>zmienne specjalne - zawsze tylko do odczytu (jeden wyjątek),
+wartości są przypisywane w momencie uruchomienia shella
+<li>zmienne środowiskowe - możemy je jeszcze podzielić na ustawiane 
+(set) i używane (used)
+<li>zmienne programowe - definiowane przez użytkownika.
+</ul>
+
+<p>Zmienne muszą się zaczynać od litery lub znaku podkreślenia.
+KONWENCJA: zmienne powłoki w bash piszemy dużymi literami.
+Zmienna albo jest ustawiona (może być pusta), albo nie jest ustawiona,
+czyli nigdy nie przypisano jej wartości.
+Zmienną ustawioną usuwamy poleceniem <em>unset</em>.
+
+<p>Zmienne używane przez Bash tak jak przez Bourne Shell:
+CDPATH, HOME, IFS, MAIL, MAILPATH, OPTARG, OPTIND, PATH, PS1, PS2.
+
+<h3>ZMIENNE SPECJALNE SHELLA</h3>
+
+<hr><pre>
+$#                  (liczba argumentów pozycyjnych)
+$0                  (nazwa bieżącego skryptu lub powłoki) 
+$1, ... , $9        (parametry przekazywane do skryptu - można modyfikować)
+$*                  (rozwijane do "$1 $2 ...")
+$@                  (rozwijane do "$1" "$2" ...)
+$-                  (opcje shella z polecenia set)
+$?                  (kod powrotu ostatnio wykonywanego polecenia)
+$$                  (PID bieżącego procesu powłoki)
+$!                  (PID procesu ostatniego zadania wsadowego)
+</pre><hr>
+
+<p>Zmienną $$ (PID) można wykorzystać w skrypcie do wygenerowania 
+liczby losowej z zadanego przedziału, np. 1-100.
+Każde uruchomienie skryptu da nam praktycznie inną liczbę.
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

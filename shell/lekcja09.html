@@ -1,0 +1,272 @@
+<html>
+<head>
+<title>Lekcja 9</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (9) - funkcje</h1>
+
+<h3>ZADANIE 9.1</h3>
+
+<p>Stworzyć plik <em>minimum.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# minimum.sh
+#
+# Minimum ciagu liczb calkowitych.
+
+minimum() {
+# Sprawdzenie, czy podane sa argumenty funkcji.
+if [ $# -eq 0 ] ; then
+    echo "Syntax: minimum LICZBA1 [LICZBA2 ...]" &gt;&amp; 2
+    return 1
+fi
+
+local MIN=$1
+shift
+
+while [ "$1" ]
+do
+    if [ $1 -lt ${MIN} ] ; then
+        MIN=$1
+    fi
+    shift
+done
+echo ${MIN}
+return 0
+}
+
+# Sprawdzenie minimum
+LICZBY="11 22 33 44 55"
+echo -n "Minimum( ${LICZBY} )= "
+minimum ${LICZBY}
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./minimum.sh</tt>
+
+<p>Poprawić skrypt, aby prosił użytkownika o podanie ciągu liczb. 
+
+<h3>ZADANIE 9.2</h3>
+
+<p>Stworzyć plik <em>maksimum.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# maksimum.sh
+#
+# Maksimum ciagu liczb calkowitych.
+
+maksimum() {
+# Sprawdzenie, czy podane sa argumenty funkcji.
+if [ $# -eq 0 ] ; then
+    echo "Syntax: maksimum LICZBA1 [LICZBA2 ...]" &gt;&amp; 2
+    return 1
+fi
+local MAX=$1
+shift
+while [ "$1" ]
+do
+    if [ $1 -gt ${MAX} ] ; then
+        MAX=$1
+    fi
+    shift
+done
+echo ${MAX}
+return 0
+}
+
+# Sprawdzenie maksimum
+LICZBY="11 22 33 44 55"
+echo -n "Maksimum( ${LICZBY} )= "
+maksimum ${LICZBY}
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./maksimum.sh</tt>
+
+<p>Poprawić skrypt, aby prosił użytkownika o podanie ciągu liczb. 
+
+<h3>ZADANIE 9.3</h3>
+
+<p>Stworzyć plik <em>suma3.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# suma3.sh
+#
+# Dodawanie liczb naturalnych od $1 do $2 na rozne sposoby.
+
+# Sumowanie w petli while.
+# Wynik wyprowadzany przez echo na stdout (zalecane).
+suma3a() {
+# Sprawdzenie, czy podane sa dwa argumenty
+if [ $# -ne 2 ] ; then
+    echo "Syntax: suma3a LICZBA1 LICZBA2" &gt;&amp; 2
+    return 1
+fi
+local TOTAL=0
+local START=$1
+while [ ${START} -le $2 ]
+do
+let  "TOTAL=TOTAL+START"  "START=START+1"
+done
+echo ${TOTAL}
+return 0
+}
+
+# Sumowanie w petli while.
+# Wynik to kod powrotu, ktory moze byc odebrany przez $?.
+# Nie nalezy przekraczac 255.
+suma3b() {
+# Sprawdzenie, czy podane sa dwa argumenty
+if [ $# -ne 2 ] ; then
+    echo "Syntax: suma3b LICZBA1 LICZBA2" &gt;&amp; 2
+    return 1
+fi
+local TOTAL=0
+local START=$1
+while [ ${START} -le $2 ]
+do
+let  "TOTAL=TOTAL+START"  "START=START+1"
+done
+return ${TOTAL}
+}
+
+# Sprawdzanie sumowania liczb roznymi metodami.
+START=1
+KONIEC=10
+echo -n "Suma liczb od ${START} do ${KONIEC} (while, echo): "
+suma3a ${START} ${KONIEC}
+echo -n "Suma liczb od ${START} do ${KONIEC} (while, return): "
+suma3b ${START} ${KONIEC}
+echo $?
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./suma3.sh</tt>
+
+<p>Poprawić skrypt, aby prosił użytkownika o podanie wartości
+zmiennych <tt>START</tt> i <tt>KONIEC</tt>. 
+
+<h3>ZADANIE 9.4</h3>
+
+<p>Stworzyć plik <em>ocena.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# ocena.sh
+#
+# Zastosowanie funkcji w skryptach.
+# Zastosowanie polecenia case.
+
+# Definicja funkcji zwracajacej slowny opis oceny.
+ocena() {
+case $1 in
+1|1.0) echo "niedostateczny" ;;
+2|2.0) echo "dopuszczajacy" ;;
+3|3.0) echo "dostateczny" ;;
+4|4.0) echo "dobry" ;;
+5|5.0) echo "bardzo dobry" ;;
+6|6.0) echo "celujacy" ;;
+1.5|2.5|3.5|4.5|5.5) echo "Error: Podaj pelne oceny" ; exit 1 ;;
+*) echo "Error: Bledna ocena" ; exit 1 ;;
+esac
+return 0
+}
+
+# Przykladowe zastosowanie funkcji.
+echo -n "Podaj ocene w postaci liczby: "
+read OCENA
+echo -n "Ocena ${OCENA} oznacza "
+ocena ${OCENA}
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./ocena.sh</tt>
+
+<h3>ZADANIE 9.5</h3>
+
+<p>Poprawić skrypt <em>nwd.sh</em> tak, aby obliczanie
+największego wspólnego dzielnika dwóch liczb wg algorytmu
+Euklidesa odbywało się w funkcji <tt>nwd()</tt>.
+Po uruchomieniu skrypt powinien prosić użytkownika
+o podanie dwóch liczb naturalnych.
+
+<h3>KORZYSTANIE Z FUNKCJI</h3>
+
+<p>Funkcja to grupa poleceń, której jest przydzielona nazwa służąca
+do wywoływania tej właśnie grupy.
+Przy definicji funkcji ważne są odstępy obok klamer.
+Słowo kluczowe <em>function</em> jest w <em>bash</em> opcjonalne, 
+a w <em>sh</em> go nie ma.
+
+<hr><pre>
+function nazwa() { cmd1 ; cmd2 ; }
+nazwa() { cmd1 ; cmd2 ; }
+</pre><hr>
+
+<p>Jeżeli mamy własne funkcje zapisane w pliku <em>mojefunkcje</em>,
+to jego wczytanie i wywołanie w bieżącym shellu dla skryptu ma postać
+(plik <em>mojefunkcje</em> musi być w katalogu bieżącym skryptu;
+poleceniem jest tu kropka):
+
+<hr><pre>
+.  mojefunkcje
+</pre><hr>
+
+<p>W shellu <em>sh</em> zmienna i funkcja nie mogą mieć tej samej nazwy,
+natomiast w <em>bash</em> mogą.
+
+<p>Funkcje są wykonywane w bieżącym shellu, a nie w nowym shellu.
+<em>exit</em> w definicji funkcji kończy działanie funkcji i skryptu,
+który ją wywołał.
+<em>return</em> w definicji funkcji wychodzi tylko z funkcji.
+W funkcji $1, $2,... oznaczają argumenty funkcji, a nie skryptu.
+
+<p>Można tworzyć funkcje rekurencyjne. Lepiej unikać w funkcjach
+rekurencyjnych przekazywania pewnych parametrów przez <em>return</em>.
+
+<p>Określenie zmiennej lokalnej w funkcji:
+
+<hr><pre>
+local ZMIENNA
+local ZMIENNA="napis"
+</pre><hr>
+
+<h3>FUNKCJE W SH</h3>
+
+<hr><pre>
+$ set               (wypisze zmienne i funkcje)
+$ unset nazwa       (usuwanie zmiennej lub funkcji)
+$ export nazwa      (eksportowanie zmiennej lub funkcji)
+</pre><hr>
+
+<h3>FUNKCJE W BASH</h3>
+
+<hr><pre>
+$ set               (wypisze tylko zmienne)
+$ declare -f        (wypisze funkcje)
+$ typeset -f        (jak wyżej)
+$ unset nazwa       (usuwanie zmiennej)
+$ unset -f nazwa    (usuwanie funkcji)
+$ export nazwa      (eksportowanie zmiennej)
+$ export -f nazwa   (eksportowanie funkcji)
+</pre>
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

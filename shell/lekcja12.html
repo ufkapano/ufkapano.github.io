@@ -1,0 +1,194 @@
+<html>
+<head>
+<title>Lekcja 12</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (12) - generowanie raportów</h1>
+
+<h3>ZADANIE 12.1</h3>
+
+<p>W katalogu domowym stworzyć katalogi <em>raporty</em>
+i <em>raporty/baza</em>. W katalogu <em>raporty/baza</em>
+stworzyć kilka plików dla fikcyjnych osób w formacie:
+
+<hr><pre>
+# Nazwa pliku: ADAMCZYK.KAROL
+NAZWISKO=Adamczyk
+IMIE=Karol
+URODZINY=1983-06-12
+</pre><hr>
+
+<h3>ZADANIE 12.2</h3>
+
+<p>W katalogu <em>raporty</em> stworzyć plik 
+<em>make_db.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# make_db.sh
+#
+# Skrypt tworzacy plik DB, w którym pola w wierszu rozdzielone
+# sa znakiem tabulacji.
+
+BAZADIR="baza"
+PLIK_DB="osoby.db"
+
+rm -f ${PLIK_DB}
+
+for I in ${BAZADIR}/*
+do
+    . $I
+# Tymczasowo wpisujemy srednik, ktory zamienimy na tabulacje.
+    echo "${NAZWISKO};${IMIE1};${URODZINY}"
+done | tr ";" "\t" >> ${PLIK_DB}
+</pre><hr>
+
+<p>Za pomocą polecenia <tt>./make_db.sh</tt>
+wygenerować plik DB z danymi o osobach.
+
+<h3>ZADANIE 12.3</h3>
+
+<p>W katalogu <em>raporty</em> stworzyć plik 
+<em>make_html.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# make_html.sh
+#
+# Skrypt tworzacy plik HTML z tabela.
+
+BAZADIR="baza"
+PLIK_HTML="osoby.html"
+TITLE="Lista uczestników obozu"
+
+rm -f ${PLIK_HTML}
+
+# Poczatek strony.
+echo "&lt;html&gt; &lt;head&gt;" &gt;&gt; ${PLIK_HTML}
+echo "&lt;title&gt;${TITLE}&lt;/title&gt;" &gt;&gt; ${PLIK_HTML}
+echo "&lt;/head&gt; &lt;body&gt;" &gt;&gt;  ${PLIK_HTML}
+echo "&lt;h1&gt;${TITLE}&lt;/h1&gt;" &gt;&gt; ${PLIK_HTML}
+
+# Generuje tabele.
+cat &lt;&lt; EOF &gt;&gt; ${PLIK_HTML}
+&lt;table border=2&gt;
+&lt;tr&gt;
+&lt;td&gt;Nazwisko&lt;/td&gt;
+&lt;td&gt;Imię&lt;/td&gt;
+&lt;td&gt;Data urodzin&lt;/td&gt;
+&lt;/tr&gt;
+EOF
+
+for I in ${BAZADIR}/*
+do
+    . $I
+    echo "&lt;tr&gt;"
+    echo "&lt;td&gt;${NAZWISKO}&lt;/td&gt;"
+    echo "&lt;td&gt;${IMIE}&lt;/td&gt;"
+    echo "&lt;td&gt;${URODZINY}&lt;/td&gt;"
+    echo "&lt;/tr&gt;"
+
+# Mamy tu przekierowanie wyjscia z petli for.
+done &gt;&gt;  ${PLIK_HTML}
+
+# Koniec tabeli.
+echo "&lt;/table&gt; &lt;/body&gt; &lt;/html&gt;" &gt;&gt; ${PLIK_HTML}
+</pre><hr>
+
+<p>Za pomocą polecenia <tt>./make_html.sh</tt>
+wygenerować plik HTML z listą osób.
+
+<h3>ZADANIE 12.4</h3>
+
+<p>W katalogu <em>raporty</em> stworzyć 
+plik <em>db2html.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# db2html.sh
+#
+# Skrypt tworzacy plik HTML z tabela na bazie pliku DB.
+
+PLIK_DB="osoby.db"
+PLIK_HTML="osoby.html"
+TITLE="Lista uczestników obozu"
+
+rm -f ${PLIK_HTML}
+
+cat &lt;&lt; EOF &gt;&gt;  ${PLIK_HTML}
+&lt;html&gt;
+&lt;head&gt;
+&lt;title&gt;${TITLE}&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+&lt;h1&gt;${TITLE}&lt;/h1&gt;
+
+&lt;table border=2&gt;
+&lt;tr&gt;
+&lt;td&gt;Nazwisko&lt;/td&gt;
+&lt;td&gt;Imię&lt;/td&gt;
+&lt;td&gt;Data urodzin&lt;/td&gt;
+&lt;/tr&gt;
+EOF
+
+cat ${PLIK_DB} | \
+while read NAZWISKO IMIE URODZINY
+do
+    echo "&lt;tr&gt;"
+    echo "&lt;td&gt;${NAZWISKO}&lt;/td&gt;"
+    echo "&lt;td&gt;${IMIE}&lt;/td&gt;"
+    echo "&lt;td&gt;${URODZINY}&lt;/td&gt;"
+    echo "&lt;/tr&gt;"
+done &gt;&gt;  ${PLIK_HTML}
+
+# Koniec tabeli i pliku HTML.
+cat &lt;&lt; EOF &gt;&gt; ${PLIK_HTML}
+&lt;/table&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+EOF
+</pre><hr>
+
+<p>Za pomocą polecenia <tt>./db2html.sh</tt>
+z pliku DB wygenerować plik HTML z listą osób.
+
+<h3>RAPORTY W SHELLU</h3>
+
+<p>Jeżeli dane użytkownika przechowywane są w plikach tekstowych
+o ustalonym formacie, wtedy skrypty Shella mogą wyszukiwać
+potrzebną informację i generować raporty w różnych formatach:
+
+<ul>
+<li>zwykłe pliki tekstowe (najprostsze raporty),
+<li>pliki w języku HTML (strony WWW),
+<li>pliki źródłowe dla systemu LaTeX 
+(do przetworzenia na pliki PS czy PDF),
+<li>pliku w XML do dalszego przetwarzania i inne.
+</ul>
+
+<p>Wygodne do przetwarzania w shellu są między innymi: 
+<ul>
+<li>pliki z danymi umieszczonymi w odpowiednich zmiennych shella
+zdefiniowanych przez użytkownika 
+(można tu wykorzystać polecenie <em>source</em> i w pętli
+wczytywać kolejne pliki z danymi), 
+<li>pliki tekstowe w postaci tablic, gdzie wiersz pliku to
+wiersz tablicy, a pola w wierszu oddzielone są odpowiednio
+określonym separatorem, np. znakiem tabulacji
+(przydatne polecenia to <em>grep</em>, <em>cut</em>, <em>paste</em>).
+</ul>
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

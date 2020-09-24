@@ -1,0 +1,214 @@
+<html>
+<head>
+<title>Lekcja 11</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (11) - export, source, macierze</h1>
+
+<h3>ZADANIE 11.1</h3>
+
+<p>Zbadać pliki konfiguracyjne shella <em>bash</em>.
+
+<hr><pre>
+$ less /etc/profile
+    (Debian: ustawienie PATH, PS1, umask)
+
+$ less /etc/bash.bashrc
+    (Debian: wykonywany przez shelle interaktywne)
+
+$ less /etc/bashrc
+    (RedHat: wykonywany przez shelle interaktywne)
+
+$ less ${HOME}/.bash_profile
+    (Debian: wykonywany przez login shells; wczytanie .bashrc)
+
+$ less ${HOME}/.bash_login
+    (wykonywany, jeżeli nie istnieje .bash_profile)
+
+$ less ${HOME}/.profile
+    (wykonywany, jeżeli nie istnieją .bash_profile i .bash_login)
+
+$ less ${HOME}/.bashrc
+    (Debian: wykonywany przez non-login shells)
+
+$ less ${HOME}/.bash_history
+    (polecenia z poprzedniej sesji)
+
+$ less ${HOME}/.bash_logout
+    (wykonywany podczas zamykania sesji)
+
+$ less /etc/shells
+    (powłoki zainstalowane w systemie)
+
+$ set | grep BASH
+    (zmienne związane z bash; w Debianie: 
+    BASH, BASH_VERSINFO, BASH_VERSION)
+
+$ less /etc/inputrc
+
+$ help bind
+$ bind -l
+$ bind -v
+</pre><hr>
+
+<h3>ZADANIE 11.2</h3>
+
+<p>Stworzyć pliki <em>export1.sh</em> i <em>export2.sh</em>.
+
+<hr><pre>
+#!/bin/bash
+#
+# export1.sh
+
+# INSTRUKCJA 1a
+LICZBA=10
+# INSTRUKCJA 1b
+# export LICZBA
+# INSTRUKCJA 1c
+ ./export2.sh
+# INSTRUKCJA 1d
+#. ./export2.sh
+
+echo "$0: LICZBA wynosi $LICZBA"
+</pre><hr><pre>
+#!/bin/bash
+#
+# eksport2.sh
+
+# INSTRUKCJA 2a
+# LICZBA=20
+
+echo "$0: LICZBA wynosi ${LICZBA}"
+</pre><hr>
+
+<p>Uruchomić skrypt <em>export1.sh</em> przy różnych zestawach
+aktywnych (nie zamienionych w komentarz) instrukcji:
+<ul>
+<li>1a 1b 1c 2a (inny shell, export; 20, 10)
+<li>1a 1b 1c (inny shell, export; 10, 10)
+<li>1a 1c (inny shell, bex export; -, 10)
+<li>1c 2a (inny shell; 20, -)
+<li>1a 1d (ten sam shell; 10, 10)
+<li>1a 1d 2a (ten sam shell; 20, 20)
+<li>1d (ten sam shell; -, -)
+<li>1d 2a (ten sam shell; 20, 20)
+</ul>
+
+<h3>ZADANIE 11.3</h3>
+
+<p>Zbadać możliwości korzystania z macierzy w powłoce <em>bash</em>.
+
+<hr><pre>
+$ declare -a MACIERZ_A        # jawna deklaracja macierzy
+
+$ MACIERZ_B[0]="aa"           # niejawna deklaracja macierzy
+
+$ MACIERZ_B[1]="bb"           # z wykorzystaniem indeksów
+
+$ MACIERZ_B[2]="cc"
+
+$ set | less                  # sprawdzenie istnienia macierzy
+
+$ MACIERZ_C=([0]="aa" [1]="bb" [2]="cc")
+    # pełny zapis deklarowania macierzy
+
+$ MACIERZ_D=(aa bb cc)        # skrótowy zapis deklaracji macierzy
+
+$ echo ${MACIERZ_D[1]}        # odwołanie się do elementu macierzy
+bb
+
+$ echo ${MACIERZ_D[*]}        # wypisanie całej macierzy
+aa bb cc
+
+$ readonly -a MACIERZ_C       # ustawienie macierzy tylko do odczytu
+
+$ unset MACIERZ_D[2]          # usunięcie wybranego elementu macierzy
+
+$ unset MACIERZ_D             # usunięcie całej macierzy
+</pre><hr><pre>
+# Zastosowanie w skrypcie do wczytania danych:
+read -p "Podaj elementy macierzy: " -a MACIERZ
+    (elementy macierzy będą automatycznie numerowane od zera)
+</pre><hr>
+
+<h3>ZADANIE 11.4</h3>
+
+<p>Stworzyć plik <em>babelek.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# babelek.sh 
+#
+# Sortowanie babelkowe ciagu liczb przechowywanego w globalnej
+# zmiennej macierzowej MACIERZ.
+# Nie ma ograniczenia na liczbe sortowanych elementow.
+# Nie ma potrzeby wyznaczania na poczatku liczby sortowanych
+# elementow, poniewaz petla while sama zatrzyma sie na koncu.
+# Funkcja dziala poprawnie nawet przy zerowej liczbie elementow.
+
+babelek()
+{
+local TMP
+
+local I=1
+while [ "${MACIERZ[I]}" ]
+do
+    local J=1
+    while [ "${MACIERZ[J]}" ]
+    do
+        if [ ${MACIERZ[J-1]} -gt ${MACIERZ[J]} ] ; then
+        # przestawiamy sasiednie elementy
+        TMP=${MACIERZ[J-1]}
+        MACIERZ[J-1]=${MACIERZ[J]}
+        MACIERZ[J]=${TMP}
+        fi
+        let "J=J+1"
+    done
+    let "I=I+1"
+done
+return 0
+}
+echo -n "Podaj ciag liczb: "
+read -a MACIERZ
+echo "Liczby przed sortowaniem"
+echo ${MACIERZ[*]}
+babelek
+echo "Liczby po sortowaniu"
+echo ${MACIERZ[*]}
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./babelek.sh</tt>
+
+<h3>READLINE</h3>
+
+<p>Wiersz edycji polecenia może pracować w dwóch trybach:
+emacs (domyślny) lub vi.
+Bash korzysta z biblioteki Readline.
+Nazwa pliku konfiguracyjnego znajduje się w zmiennej INPUTRC, 
+która zwykle zawiera <em>/etc/inputrc</em> (jeżeli nie ma tej zmiennej 
+to szukany jest plik <em>~/.inputrc</em>).
+Dostępne funkcje i przypisane do nich klawisze można obejrzeć za
+pomocą polecenia <em>bind</em> i jego opcji.
+
+<h3>MACIERZE</h3>
+
+<p>Bash dostarcza jednowymiarowych zmiennych macierzowych (arrays).
+Elementy macierzy numerowane są od zera, nie ma ograniczeń na rozmiar
+macierzy i nie wszystkie kolejne elementy macierzy muszą być
+przypisane.
+Kilka poleceń wbudowanych Bash ma opcje dotyczące macierzy.
+Bash korzysta z kilku wbudowanych zmiennych macierzowych.
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

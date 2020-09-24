@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (1) - wprowadzenie</h1>
+
+<h3>ZADANIE 1.1</h3>
+
+<p>Zbadać system pomocy dla poleceń wbudowanych <em>bash</em>.
+
+<hr><pre>
+$ help                   (spis poleceń wbudowanych shella)
+$ help cd                (pomoc dotycząca polecenia)
+$ type cd                (pytanie o typ polecenia)
+$ type cat               (pytanie o ścieżkę do pliku polecenia)
+</pre><hr>
+
+<h3>ZADANIE 1.2</h3>
+
+<p>Zbadać sposoby korzystania z opcji poleceń.
+
+<hr><pre>
+$ ls -l /home/adam
+$ ls          -l          /home/adam  (białe znaki są ignorowane)
+$ ls -l -a -h /home/adam
+$ ls -lah /home/adam               (opcje można sklejać)
+$ ls -i /home/adam                (pokaż numer inode)
+$ ls --inode /home/adam          (istnieją długie zamienniki opcji)
+</pre><hr>
+
+<h3>ZADANIE 1.3</h3>
+
+<p>Zbadać sposoby korzystania ze znaków uogólniających 
+dla nazw plików (* ? [] ~).
+
+<hr><pre>
+$ touch a1.txt a2.txt a3.txt a10.txt a11.txt a12.txt
+                    (tworzymy puste pliki do ćwiczeń)
+$ ls *.txt          (gwiazdka to cokolwiek, nawet nic)
+
+$ ls */*.c          (pliki C we wszystkich podkatalogach)
+
+$ ls a?.txt         (pytajnik to dokładnie jeden znak do dopasowania)
+a1.txt a2.txt a3.txt
+
+$ ls a[135].txt     (lista możliwosci, w sumie 6 znaków w nazwie pliku)
+a1.txt a3.txt
+
+$ ls a[!135]*       (zaprzeczenie: pliki bez 1, 3, 5 na drugim miejscu)
+a2.txt
+
+$ ls a[1-4].c       (zakres, będzie pasowało 1, 2, 3, 4 na drugim miejscu)
+
+$ ls a[13-5].txt    (połączenie zakresu z listą możliwości)
+
+$ ls ~/[a-z]*
+         (pliki zaczynające się od małej litery w katalogu domowym)
+$ echo ~/[a-z]*     (efekt jw bo pliki istnieją)
+
+$ ls b*
+ls: b*: Nie ma takiego pliku ani katalogu
+                    (zwracany jest komunikat o błędzie)
+$ echo b*
+b*                  (zwracany jest podany wzorzec)
+
+$ echo a*           (warto sprawdzić co pasuje do wzorca)
+$ rm a*             (kasowanie plików po sprawdzeniu)
+</pre><hr>
+
+<h3>ZADANIE 1.4</h3>
+
+<p>Zbadać sposoby korzystania z mechanizmu rozwijania
+nawiasów w bash ({}).
+
+<hr><pre>
+$ echo napis{3,2,1}
+napis3 napis2 napis1           (wynikiem są trzy napisy nieposortowane)
+
+$ touch p?
+    (tu będzie zmiana czasu powstania w dopasowanych plikach
+    lub stworzenie dziwnego pliku "p?")
+
+$ touch p{a,b,c,d}
+    (wynikiem jest stworzenie czterech pustych plików pa, pb, pc, pd)
+
+$ mkdir kat{1,2,3}
+    (wynikiem jest stworzenie podkatalogów kat1, kat2, kat3)
+
+$ echo kat[3-5]               (sprawdzenie dopasowania przed skasowaniem)
+$ rmdir kat[3-5]
+
+$ ls *{sz,cos}*               (pliki z "sz" lub "cos")
+    (jest to połącznie rozwijania nawiasów i znaków uogólniających)
+
+$ ls ~/*{.txt,.html}          (pliki TXT i HTML w katalogu domowym)
+</pre><hr>
+
+<h3>CHARAKTERYSTYKA SHELLA</h3>
+
+<p>Shell jest pełnym językiem programowania, który zawiera:
+<ul>
+<li>zmienne,
+<li>konstrukcje warunkowe i iteracyjne,
+<li>konfigurowane środowisko użytkownika.
+</ul>
+
+<p>Shell systemu UNIX jest oryginalnym narzędziem szybkiego makietowania,
+uczącym tak fundamentalnych koncepcji jak modularność, wielokrotna
+używalność i rozwój przez kompozycję, zamiast kodowania.
+
+<p>Shell systemu UNIX jest jednym z oryginalnych języków czwartej
+generacji (4GL), który umożliwia szybkie i wydajne budowanie całych
+aplikacji. To co zajmuje jedną linię w programie shella, może zająć
+10 lub więcej linii w C++ albo 100 linii w C.
+
+<p>Shell jest <em>interpreterem</em>, a nie kompilatorem, 
+czyli znaczenie danego polecenia jest określane natychmiast 
+w chwili wprowadzenia tego polecenia do systemu
+(pobierz - analizuj - wykonaj). 
+Dzięki temu można siedzieć przed terminalem i pracowac interakcyjnie, 
+otrzymując natychmiastową odpowiedź na każde polecenie.
+
+<p>Polecenia shella moga porozumiewać się ze sobą za pomocą prostego
+i spójnego sprzęgu (interfejsu), zwanego <em>potokiem</em> (pipe).
+Shell wykorzystuje organizowany przez UNIX system plików, który
+umożliwia grupowanie plików w rożnych katalogach różnego poziomu.
+
+<h3>WYBRANE SHELLE SYSTEMU UNIX</h3>
+
+<pre>
+SHELL (AUTOR)                                NAZWA PROGRAMU
+Bourne Shell (S. R. Bourne)                           sh
+Korn Shell (David Korn)                               ksh
+C Shell (Bill Joy)                                    csh
+Bash = Bourne Again Shell (Free Software Foundation)  bash
+</pre>
+
+<h3>KIEDY UŻYWAĆ SHELLA</h3>
+
+<p>Aby zwiększyć produkcyjność, należy używać shella w każdym 
+przypadku, w którym trzeba:
+<ul>
+<li>coś zrobić z wieloma plikami,
+<li>wielokrotnie wykonać to samo zadanie.
+</ul>
+
+<h3>SKŁADNIA POLECENIA</h3>
+
+<p>Linia poleceń Shella pracującego w trybie interakcyjnym
+zwykle ma następujące składniki:
+<pre>
++-------+-----------+-------+----------+
+| Monit | Polecenie | Opcja | Argument |
++-------+-----------+-------+----------+
+  $       ls          -l      doc
+</pre>
+
+<p>Polecenie może być jednym z setek poleceń dostępnych dla shella
+lub własnym programem użytkownika napisanym w języku Shell.
+Opcje modyfikują działanie polecenia.
+Argumenty to obiekty, na które działa polecenie 
+(zwykle są to pliki lub katalogi).
+
+<p>Białe znaki odstępu: spacja, tabulacja, znak nowego wiersza.
+
+<h3>METAZNAKI</h3>
+
+<p>Shell zakłada, że w wierszu polecenia wszystko co nie jest
+poleceniem lub opcją, jest plikiem zwykłym, katalogiem
+lub plikiem specjalnym. Aby można było łatwiej posługiwać się
+nazwami plików i katalogów shell posiada metaznaki (* ? [] ~), które
+<ul>
+<li>pozwalają oszczędniej pisać,
+<li>zachęcają do stosowania pewnych konwencji nazw, 
+<li>upraszczają programowanie w języku Shell.
+</ul>
+
+<p>Znając siłę metaznaków, należy ostrożnie z nich korzystać.
+
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,212 @@
+<html>
+<head>
+<title>Lekcja 5</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (5) - konstrukcje iteracyjne</h1>
+
+<h3>ZADANIE 5.1</h3>
+
+<p>Stworzyć plik <em>make_old.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# make_old.sh
+#
+# Przyklad przetwarzania plikow w danym katalogu.
+# Wykorzystanie metaznakow i zmiennej specjalnej $0
+# zawierajacej nazwe skryptu.
+
+# for I in *
+for I in *.txt
+do
+    echo "$0: Przetwarzam plik $I ..."
+    cp $I $I.old
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./make_old.sh</tt>
+
+<h3>ZADANIE 5.2</h3>
+
+<p>Stworzyć plik <em>tabela.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# tabela.sh
+#
+# Wypisanie tabeli liczb.
+# Wykorzystanie mechanizmu rozwijania nawiasow w bash.
+
+for I in {0,1,2,3,4,5,6,7,8,9}
+do
+    for J in {0,1,2,3,4,5,6,7,8,9}
+    do
+        echo -n "$I$J  "
+    done
+    echo
+done
+exit 0
+</pre><hr>
+
+<p>Przygotować pliki z rozszerzeniem .txt, np. poleceniem:
+<tt>touch {p1,p2,p3}.txt</tt>
+
+<p>Uruchomić skrypt poleceniem: <tt>./tabela.sh</tt>
+
+<h3>ZADANIE 5.3</h3>
+
+<p>Stworzyć plik <em>gwiazdy.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# gwiazdy.sh
+#
+# Wypisuje piramide gwiazdek.
+# Wykorzystanie petli "while".
+
+GWIAZDY="*"
+NIEBO="*******************"
+# Powtarzaj dopoki warunek jest prawdziwy
+while [ "${GWIAZDY}" != "${NIEBO}" ]
+do
+    echo "${GWIAZDY}"
+# Sukcesywnie wydluzamy napis przechowywany w zmiennej.
+    GWIAZDY=${GWIAZDY}"*"
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./gwiazdy.sh</tt>
+
+<h3>ZADANIE 5.4</h3>
+
+<p>Stworzyć plik <em>licznik.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# licznik.sh
+#
+# Wypisuje liczby naturalne od 1 do ${KONIEC}.
+# Wykorzystanie petli while i zmiennej LICZNIK do sterowania.
+
+START=1
+KONIEC=15
+echo "Liczby naturalne nie wieksze od ${KONIEC}:"
+LICZNIK=${START}
+while [ ${LICZNIK} -le ${KONIEC} ]
+do
+    echo ${LICZNIK}
+    let "LICZNIK=LICZNIK+1"
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./licznik.sh</tt>
+
+<p>Poprawić skrypt, aby wypisywał liczby całkowite od <tt>START</tt>
+do <tt>KONIEC</tt>, gdzie granice zostaną podane przez użytkownika.
+Dodać sprawdzenie, czy <tt>START</tt> jest mniejszy niż <tt>KONIEC</tt>.
+
+<h3>INSTRUKCJA FOR-DO-DONE</h3>
+
+<hr><pre>
+for ZMIENNA in wartosc1 wartosc2 ...
+do
+    lista_poleceń             (tu użyjemy ${ZMIENNA})
+done
+
+Można przetwarzać pliki w katalogu:
+
+for PLIK in * ; do lista_poleceń ; done
+
+for PLIK in plik* ; do lista_poleceń ; done
+
+for PLIK in plik{1,2,3,4,5,6,7,8} ; do lista_poleceń ; done
+
+for I in $(rpm -qa) ; do lista_poleceń ; done
+
+Można przeadresować wyjście całego polecenia for:
+
+for PLIK in * ; do lista_poleceń ; done &gt;&gt; komunikaty.txt
+
+for PLIK in * ; do lista_poleceń ; done | wc &gt; liczba.txt
+
+for ZMIENNA do lista_poleceń ; done
+oznacza 
+for ZMIENNA in "$@" ; do lista_poleceń ; done
+         (ciąg argumentów przekazanych do skryptu)
+</pre><hr>
+
+<h3>INSTRUKCJA WHILE-DO-DONE</h3>
+
+<hr><pre>
+while polecenie               (dopóki prawda, czyli kod powrotu 0)
+do                            (powtarzaj)
+    lista_poleceń
+done
+
+while polecenie ; do lista_poleceń ; done
+
+Przykład ustalenia poprawnej nazwy istniejacego pliku:
+
+while [ t ]         (każda stała to prawda, czyli pętla nieskończona)
+do
+    echo "Podaj nazwe pliku: "
+    read FILENAME                       (wczytanie nazwy)
+    if [ -r ${FILENAME} ]; then
+        echo "Nazwa pliku poprawna"
+        break
+    fi
+done
+
+Przykład przetwarzania zawartości plików:
+
+for PLIK in *.txt
+do
+    cat ${PLIK} | while read LINE       (czytaj wiersz)
+    do
+        przetwarzaj ${LINE}
+    done
+done
+</pre><hr>
+
+<h3>INSTRUKCJA UNTIL-DO-DONE</h3>
+
+<hr><pre>
+until polecenie1              (powtarzaj dopóki kod powrotu jest niezerowy)
+do
+    lista_poleceń             (będzie wykonane co najmniej raz!)
+done
+
+until polecenie1 ; do lista_poleceń ; done
+
+UWAGA Najpierw wykonywane jest polecenie1, ale NIE JEST sprawdzany
+kod powrotu. Potem wykonywana jest lista poleceń, następnie znowu
+wykonywane jest polecenie1 i teraz JEST sprawdzany kod powrotu.
+
+Przykładowe śledzenie włamywacza:
+
+until [ "$(who | grep adam)" ]          (adam nie powinien pracować)
+    sleep 60
+done
+</pre>
+
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

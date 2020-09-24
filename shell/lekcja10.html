@@ -1,0 +1,154 @@
+<html>
+<head>
+<title>Lekcja 10</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (10) - rekurencja</h1>
+
+<h3>ZADANIE 10.1</h3>
+
+<p>Stworzyć plik <em>fibonacci.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# fibonacci.sh
+#
+# Wyliczanie elementow ciagu Fibonacciego:
+# a_1=0, a_2=1, a_{n+2}=a_{n+1}+a_{n}
+# Wynik wyprowadzany przez echo na stdout (zalecane).
+
+fibonacci() {
+# Sprawdzenie, czy podany jest pierwszy argument
+if [ -z "$1" ]; then
+    echo "Syntax: fibonacci LICZBA" &gt;&amp; 2
+    return 1
+fi
+
+local MINUS1
+local MINUS2
+# Warunek wyjscia sluzacy do przerwania rekurencji
+if [ $1 -gt 2 ]; then
+# Ponowne wywolanie funkcji z mniejszymi liczbami
+    MINUS1=$(fibonacci $(($1-1)) )
+    MINUS2=$(fibonacci $(($1-2)) )
+    echo $((MINUS1+MINUS2))
+elif [ $1 -eq 2 ]; then
+    echo "1"
+elif [ $1 -eq 1 ]; then
+    echo "0"
+else
+    echo "fibonacci: Podano liczbe mniejsza od 1" &gt;&amp; 2
+    return 1
+fi
+return 0
+}
+
+# Sprawdzanie ciagu Fibonacciego.
+KONIEC=10
+LICZNIK=1
+while [ ${LICZNIK} -le ${KONIEC} ]
+do
+    echo -n "Fibonacci( ${LICZNIK} )= "
+    fibonacci ${LICZNIK}
+    let "LICZNIK=LICZNIK+1"
+done
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./fibonacci.sh</tt>
+
+<p>Poprawić skrypt, aby prosił użytkownika o podanie numeru,
+dla którego będzie obliczona wartość ciągu Fibonacciego. 
+
+<h3>ZADANIE 10.2</h3>
+
+<p>Stworzyć plik <em>suma4.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# suma4.sh
+#
+# Sumowanie przez rekurencje.
+
+# Wynik wyprowadzany przez echo na stdout (zalecane).
+# Sumuje liczby od najwyzszej!
+suma4a() {
+# Sprawdzenie, czy podane sa dwa argumenty
+if [ $# -ne 2 ] ; then
+    echo "Syntax: suma4a LICZBA1 LICZBA2" &gt;&amp; 2
+    return 1
+fi
+local TOTAL
+# Warunek wyjscia sluzacy do przerwania rekurencji
+if [ $1 -lt $2 ]; then
+# Ponowne wywolanie funkcji z nastepna liczba
+    TOTAL=$(suma4a $(($1+1)) $2)
+# Zsumowanie wartosci zwracanej z biezacym $1
+    let "TOTAL=TOTAL+$1"
+    echo ${TOTAL}            # Zwrot nowej sumy
+else
+    echo $2              # Zwrot $2 po wszystkich wywolaniach
+fi
+return 0
+}
+
+# Wynik to kod powrotu, ktory moze byc odebrany przez $?.
+# Sumuje liczby od najwyzszej!
+suma4b() {
+# Sprawdzenie, czy podane sa dwa argumenty
+if [ $# -ne 2 ] ; then
+    echo "Syntax: suma4b LICZBA1 LICZBA2" &gt;&amp; 2
+    return 1
+fi
+# Warunek wyjscia sluzacy do przerwania rekurencji
+if [ $1 -lt $2 ]; then
+# Ponowne wywolanie funkcji z nastepna liczba
+    suma4b $(($1+1)) $2
+# Zsumowanie wartosci zwracanej z biezacym $1
+    TOTAL=$(($?+$1))
+    return ${TOTAL}       # Zwrot nowej sumy
+else
+    return $2              # Zwrot $2 po wszystkich wywolaniach
+fi
+}
+
+# Sprawdzanie sumowania liczb roznymi metodami.
+# KONIEC=23 i wiecej daje bledny wynik (kod powrotu powyzej 255)
+START=1
+KONIEC=10
+echo -n "Suma liczb od ${START} do ${KONIEC} (rekurencja, echo): "
+suma4a ${START} ${KONIEC}
+echo -n "Suma liczb od ${START} do ${KONIEC} (rekurencja, return): "
+suma4b ${START} ${KONIEC}
+echo $?
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./suma4.sh</tt>
+
+<p>Poprawić skrypt, aby prosił użytkownika o podanie wartości
+zmiennych <tt>START</tt> i <tt>KONIEC</tt>. 
+
+<h3>METODY WPROWADZANIA DANYCH DO SKRYPTU</h3>
+
+<ul>
+<li>Wykorzystanie parametrów skryptu $1, $2,...
+<li>Przez polecenie <em>read</em> (wykorzystanie stdin).
+<li>Wykorzystanie kodu powrotu poprzedniego polecenia.
+<li>Wykorzystanie zmiennych środowiska.
+<li>Wykorzystanie plików wczytywanych przez sourcing.
+</ul>
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,207 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (2) - filtry, potoki</h1>
+
+<h3>ZADANIE 2.1</h3>
+
+<p>Zbadać zastosowanie znaków specjalnych Shella.
+
+<hr><pre>
+$ date ; ls                   (średnik separuje polecenia w wierszu)
+$ echo  Kilka              napisow
+$ echo "Kilka              napisow"     (ochrona spacji)
+$ echo "Dziesiejsza data: `date`"       (cytowanie polecenia)
+$ echo "Dziesiejsza data: $(date)"      (cytowanie polecenia)
+$ echo "Katalog domowy: ${HOME}"        (podstawienie zmiennej)
+$ echo 'Katalog domowy: ${HOME}'        (cytowanie napisu)
+$ echo Gwiazdka *
+$ echo Gwiazdka \*            (zasłanianie specjalnego znaczenia znaku)
+$ echo "Gwiazdka *"
+$ echo "Jeden " dwa " dolar $HOME"      (cytowanie znaków)
+$ echo "Jeden \" dwa \" dolar \$HOME"   (cytowanie znaków)
+</pre><hr>
+
+<h3>ZADANIE 2.2</h3>
+
+<p>Zbadać sposoby tworzenia plików tekstowych.
+
+<hr><pre>
+$ touch p1.txt                          (stworzenie pustego pliku)
+
+$ echo komunikat &gt; p2.txt            (przekierowanie wyjścia)
+
+$ ls &gt; p3.txt
+
+$ vi p4.txt                             (użycie edytora)
+
+$ nano p4.txt
+
+$ cat &gt; p5.txt                       (wpisanie z klawiatury)
+Pierwsza linia.[Enter]
+Druga linia.[Enter]
+[Ctrl]+[d]
+
+$ cat &lt;&lt; EOF! &gt; p6.txt         (to można wykorzystać w skryptach)
+&gt; Pierwsza linia.[Enter]
+&gt; Druga linia.[Enter]
+&gt; EOF![Enter]
+</pre><hr>
+
+<h3>ZADANIE 2.3</h3>
+
+<p>Zbadać mechanizm przekierowania wejścia/wyjścia i tworzenia
+potoku na przykładzie wybranych poleceń systemu Linux.
+
+<hr><pre>
+$ ls &gt;&gt; dirs.txt        (dopisywanie do pliku)
+
+$ cat &lt; d1.txt &gt; d2.txt           (działa jak:    cp d1.txt d2.txt)
+
+$ ls | wc -l
+    (ls może rozpoczynać potok; 
+    otrzymujemy liczbę plików w katalogu bieżącym)
+
+$ ls | cat -n                 (ponumerowanie linii)
+
+$ ps xa | less                (less i more mogą kończyć potok)
+
+$ ps ax | tee lista.txt | wc -l
+    (tee rozgałęzia strumień do pliku lista.txt)
+
+$ ps ax | tee -a lista.txt | wc -l      (tee dopisze do pliku)
+
+$ tty
+    (otrzymamy nazwę pliku specjalnego związanego z naszym 
+    terminalem, czyli standardowym wyjściem)
+
+$ ps ax | tee `tty` | wc -l
+    (tee skieruje na ekran; wykorzystane polecenie tty)
+</pre><hr>
+
+
+<h3>INNE ZNAKI SPECJALNE</h3>
+
+<hr><pre>
+polecenie1 ; polecenie2 ; polecenie3
+Średnik separuje polecenia w jednym wierszu.
+
+polecenie &amp;
+Wykonaj polecenia w tle.
+
+(polecenie1; polecenie2)
+Grupuj standardowe wyjścia poleceń, wykonuj w podshellu.
+
+{ polecenie1; polecenie2;}
+Wykonaj polecenia w bieżącym shellu.
+Ważna jest pierwsza spacja i ostatni średnik!
+
+polecenie1 | polecenie2 
+Potok
+
+&lt; &gt;
+Przeadresowanie wejścia/wyjścia.
+
+${ZMIENNA}
+Podstaw wartość zmiennej shella.
+
+`polecenie`
+Podstaw wynik polecenia ze standardowego wyjścia
+(backquote, znak akcentu, inaczej odwrotny apostrof).
+
+$(polecenie)
+Podstaw wynik polecenia ze standardowego wyjścia (tylko dla bash).
+
+\
+Cytowanie znaku w celu zasłonięcia specjalnego znaczenia
+(backslash, odwrotny ukosnik).
+
+'cokolwiek'      
+Cytuj wszystkie znaki w napisie (single quote, apostrof)
+
+"Napis"
+Cytuj wszystkie znaki w napisie, ale wykonaj pewne podstawienia
+(zachowuje specjalne znaczenie trzech znakow: 
+$ wskazuje nazwę zmiennej [umożliwia podstawienie wartości zmiennej],
+`` znaki akcentu [umożliwia zacytowanie polecenia],
+\ znak maskujący)
+
+#
+Znak komentarza dla shella (ignoruje znaki do końca linii).
+
+polecenie1 &amp;&amp; polecenie2
+Sprawdzenie kodu powrotu i w przypadku prawdy wykonanie polecenia.
+
+polecenie1 || polecenie2
+polecenie1 || { polecenie2; polecenie3;}
+Sprawdzenie kodu powrotu i w przypadku fauszu wykonanie polecenia.
+</pre>
+
+<h3>STRUMIENIE</h3>
+
+<p>Każdemu procesowi w Linuksie są przypisane co najmniej
+trzy strumienie danych:
+<ul>
+<li>wejściowy,
+<li>wyjściowy, 
+<li>błędów (diagnostyczny).
+</ul>
+
+<p>Każdy uruchomiony w systemie proces może otworzyć jednocześnie
+na swoje potrzeby do dwudziestu plików. Otwarty plik proces
+identyfikuje poprzez przyporządkowana mu liczbę całkowitą zwaną
+deskryptorem pliku. Trzy liczby (0, 1, 2) są zarezerwowane 
+i odpowiadają trzem plikom, które są zawsze otwierane w momencie
+utworzenia procesu:
+<ul>
+<li>0 - stdin (standard input) - zwykle klawiatura
+<li>1 - stdout (standard output) - zwykle ekran
+<li>2 - stderr (standard error) - zwykle ekran.
+</ul>
+
+<h3>POTOKI (PIPE) I FILTRY</h3>
+
+<p>Potok to konstrukcja złożona z wielu poleceń, w której stdout 
+pierwszego polecenia jest dołączony do stdin drugiego polecenia,
+z kolei stdout drugiego polecenia jest dołączony do stdin trzeciego
+polecenia itd.
+
+<p>Filtry to polecenia, które:
+<ul>
+<li>są podatne na działanie mechanizmu przełączania stdin/stdout
+<li>zawsze korzystają z stdin, stdout i stderr
+<li>oczekują na wejściu prostego strumienia bajtów (znaków) i takiż
+strumień (po przetworzeniu) wysyłają na wyjście.
+</ul>
+
+<h3>OPERATORY DO PRZEŁĄCZANIA STRUMIENI</h3>
+
+<pre>
+prog &gt; plik
+prog &gt;&gt; plik
+prog &lt; plik_in
+prog &lt;&lt;OGR              (wpisywanie do pliku z klawiatury)
+prog 2&gt; plik_err
+prog 2&gt;&gt; plik_err
+prog &gt; plik 2&gt; plik_err
+prog &gt; plik 2&gt;&amp;1      (stderr idzie tam gdzie stdout; ważna kolejność!)
+prog &amp;&gt; plik           (jw)
+prog 2&gt; plik 1&gt;&amp;2      (stdout idzie tam gdzie stderr; ważna kolejność!)
+</pre>
+
+
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,285 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (4) - konstrukcje warunkowe</h1>
+
+<h3>ZADANIE 4.1</h3>
+
+<p>Zbadać zachowanie polecenia <em>test</em>.
+
+<hr><pre>
+$ help test | less
+$ man test
+$ test -r plik1     (sprawdzamy nieistniejący plik)
+$ echo $?           (sprawdzenie kodu powrotu)
+
+$ test -d /etc      (sprawdzenie istnienia katalogu)
+$ echo $?           (sprawdzenie kodu powrotu)
+
+$ test -d /etc &amp;&amp; echo "to katalog"
+
+$ if [ -d /etc ] ; then echo "to katalog" ; fi
+
+$ test "abc" = "def"          (porównanie napisów)
+$ echo $?           (sprawdzenie kodu powrotu)
+
+$ test -f /etc/passwd -a -r /etc/passwd
+    (czy plik zwykły i czy mamy prawo czytania
+$ echo $?           (sprawdzenie kodu powrotu)
+
+$ printenv PLIK_LOG           (sprawdzenie stanu zmiennej)
+$ if [ -z "${PLIK_LOG}" ] ; then PLIK_LOG="sesja.log" ; fi
+    (ustawienie zmiennej, jeżeli jest pusta)
+$ printenv PLIK_LOG           (sprawdzenie wyniku podstawienia)
+</pre><hr>
+
+<h3>ZADANIE 4.2</h3>
+
+<p>Stworzyć plik <em>bc.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# bc.sh
+#
+# Nakładka na polecenie "bc", zwracająca wynik działania.
+
+if [ "$1" = "-p" ] ; then
+    PRECISION=$2
+    shift 2         # przesuniecie numeracji argumentow
+else
+    PRECISION=2     # wartosc domyslna
+fi
+
+bc -q -l &lt;&lt; EOF
+scale=${PRECISION}
+$*
+quit
+EOF
+
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniami:
+
+<hr><pre>
+$ ./bc.sh  12/456
+$ ./bc.sh -p 6 12/456
+</pre><hr>
+
+<p>Zapoznać się z możliwościami kalkulatora <tt>bc</tt>.
+
+<h3>ZADANIE 4.3</h3>
+
+<p>Stworzyć plik <em>miesiac.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# miesiac.sh
+#
+# Skrypt tlumaczacy skrot na pelna nazwe miesiaca.
+# Wykorzystanie konstrukcji warunkowej "case".
+
+echo -n "Podaj numer lub skrot miesiaca: "
+read MIESIAC
+
+case ${MIESIAC} in
+1|01|Jan*) echo "${MIESIAC} to January (styczen)" ;;
+2|02|F*) echo "${MIESIAC} to February (luty)" ;;
+3|03|Mar*) echo "${MIESIAC} to March (marzec)" ;;
+4|04|Ap*) echo "${MIESIAC} to April (kwiecien)" ;;
+5|05|May) echo "${MIESIAC} to May (maj)" ;;
+6|06|Jun*) echo "${MIESIAC} to June (czerwiec)" ;;
+7|07|Jul*) echo "${MIESIAC} to July (lipiec)" ;;
+8|08|Au*) echo "${MIESIAC} to August (sierpien)" ;;
+9|09|S*) echo "${MIESIAC} to September (wrzesien)" ;;
+10|O*) echo "${MIESIAC} to October (pazdziernik)" ;;
+11|N*) echo "${MIESIAC} to November (listopad)" ;;
+12|D*) echo "${MIESIAC} to December (grudzien)" ;;
+*) echo "Nieznany miesiac";;
+esac
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./miesiac.sh</tt>
+
+<h3>TEST - SPRAWDZANIE PLIKÓW</h3>
+
+<hr><pre>
+Typy plików
+
+[ -f plik1 ]        (plik1 istnieje i jest plikiem zwyklym)
+[ -d plik1 ]        (plik1 istnieje i jest katalogiem)
+[ -b plik1 ]        (plik1 istnieje i jest urządzeniem blokowym)
+[ -c plik1 ]        (plik1 istnieje i jest urządzeniem znakowym)
+[ -h plik1 ]        (plik1 istnieje i jest dowiązaniem symbolicznym)
+[ -p plik1 ]        (plik1 istnieje i jest łączem nazwanym [pipe])
+[ -L plik1 ]        (plik1 istnieje i jest łączem nazwanym [pipe])
+[ -S plik1 ]        (plik1 istnieje i jest gniazdem [socket])
+[ -t 1 ]            (standardowym wyjsciem jest terminal)
+
+Prawa dostępu do plików (wybrane)
+
+[ -r plik1 ]        (plik1 istnieje i mamy do niego prawo czytania)
+[ -w plik1 ]        (plik1 istnieje i mamy do niego prawo pisania)
+[ -x plik1 ]        (plik1 istnieje i mamy do niego prawo wykonywania)
+[ -s plik1 ]        (plik1 istnieje i ma rozmiar wiekszy niz zero bajtow)
+
+Właściwości plików
+
+[ -e plik1 ]             (plik1 istnieje)
+[ -s plik1 ]             (plik1 istnieje i ma rozmiar większy niż zero)
+[ plik1 -nt plik2 ]      (plik1 jest nowszy niż plik2)
+[ plik1 -ot plik2 ]      (plik1 jest starszy niż plik2)
+[ plik1 -ef plik2 ]      (plik1 i plik2 są wzajemnie dowiązaniami sztywnymi)
+</pre><hr>
+
+<h3>TEST - SPRAWDZANIE ŁAŃCUCHÓW ZNAKOWYCH</h3>
+
+<p>Łancuchy dobrze jest umieszczać w cudzysłowach. Wtedy nawet pusta
+zmienna (lub nieustawiona) bedzie dobrze przetworzona.
+
+<hr><pre>
+[ s1 ]              (łańcuch s1 nie jest pusty)
+[ -n s1 ]           (długość łańcucha s1 nie jest zerowa)
+[ -z s1 ]           (długość łańcucha s1 jest zerowa)
+[ s1 = s2 ]         (łańcuchy s1 i s2 są identyczne; ODSTEPY!)
+[ "${ZMIENNA1}" = "${ZMIENNA2}" ]            (stosowanie cudzysłowu)
+[ s1 != s2 ]        (łańcuchy s1 i s2 nie są identyczne)
+[ s1 &lt; s2 ]         (łańcuch s1 sortuje się przed s2)
+[ s1 &gt; s2 ]         (łańcuch s1 sortuje się po s2)
+</pre><hr>
+
+<h3>TEST - OPERACJE DLA LICZB CAŁKOWITYCH</h3>
+
+<hr><pre>
+[ int1 -eq int2 ]             (=, equal to)
+[ int1 -gt int2 ]             (&gt;, greater than)
+[ int1 -ge int2 ]             (&gt;=, greater than or equal to)
+[ int1 -lt int2 ]             (&lt;, less than)
+[ int1 -le int2 ]             (&lt;=, less than or equal to)
+[ int1 -ne int2 ]             (&lt;&gt;, not equal to)
+</pre><hr>
+
+<h3>TEST - SPÓJNIKI LOGICZNE</h3>
+
+<pre>
+[ ! expr1 ]                   (not)
+[ expr1 -a expr2 ]            (and)
+[ expr1 -o expr2 ]            (or)
+</pre>
+
+<h3>KONSTRUKCJE Z || i &amp;&amp;</h3>
+
+<hr><pre>
+polecenie1 &amp;&amp; { polecenie2 ; polecenie3 ;}
+
+Forma równoważna z if jest dłuższa:
+
+polecenie1
+if [ $? -eq 0 ] ; then
+    polecenie2
+    polecenie3
+fi
+</pre><hr><pre>
+polecenie1 || polecenie2 
+
+Forma równoważna z if:
+
+polecenie1
+if [ $? -ne 0 ] ; then
+    polecenie2
+fi
+</pre><hr>
+
+<h3>INSTRUKCJA IF-THEN-ELSE</h3>
+
+<p>Kod powrotu 0 polecenia oznacza <em>true</em> (prawdę).
+Zwykle polecenie to instrukcja <em>test</em> w postaci
+z nawiasami kwadratowymi <em>[ ... ]</em>.
+<hr><pre>
+if polecenie ; then 
+    lista poleceń
+elif polecenie ; then         (opcja)
+    lista poleceń
+else                          (opcja)
+    lista poleceń
+fi
+
+if polecenie ; then polecenie ; fi      (postać minimalna)
+
+if polecenie ; then polecenie ; else polecenie ; fi
+
+if polecenie ; then polecenie ; elif polecenie ; then polecenie ; fi
+
+if polecenie ; then polecenie
+elif polecenie ; then polecenie
+elif polecenie ; then polecenie
+elif polecenie ; then polecenie
+else polecenie ; fi
+    (ta postać może zastąpić instrukcję "case")
+</pre><hr>
+
+<h3>INSTRUKCJA CASE</h3>
+
+<p>Generalnie instrukcja <em>case</em> nie jest polecana
+w różnych językach programowania, ale w shellu się przydaje.
+Zawsze powinno się umieszczać na końcu akcję domyślną.
+
+<hr><pre>
+case ${ZMIENNA} in
+wartosc1)                     (ważna jest kolejność podawanych warunków)
+    lista poleceń
+    ;;
+wartosc2|wartosc3)            (można podać kilka wzorców)
+    lista poleceń
+    ;;
+*)                            (można używać metaznaków)
+    polecenia domyślne        (jako ostatnie)
+    ;;
+esac
+</pre><hr>
+
+<p>Zamiast wyrażenia <tt>${ZMIENNA}</tt> można użyć każdego
+wyrażenia, które daje w wyniku napis, np. wynik jakiegoś
+polecenia <tt>$(ls x*)</tt>.
+
+<h3>INSTRUKCJA read</h3>
+
+<pre>
+help read
+    (pomoc dla polecenia wewnętrznego powłoki)
+
+read LINE
+    (wczytanie całego wiersza ze stdin do zmiennej LINE)
+read
+    (wczytanie wiersza do zmiennej REPLY)
+read ZMIENNA1 ZMIENNA2 ZMIENNA3
+    (wczytanie kolejnych napisów do ZMIENNA1, ZMIENNA2,
+    a reszty do ZMIENNA3)
+
+Typowe zastosowanie w skrypcie:
+echo -n "Podaj napis: "
+read NAPIS
+
+Można jeszcze prościej (opcja [-p prompt]):
+read -p "Podaj napis: " NAPIS
+
+Można wczytywać do zmiennych dane z pól oddzielonych innym znakiem
+niż te ze zmiennej IFS (opcja [-d delim]):
+read -d ":" POLE1 POLE2 POLE3
+</pre>
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

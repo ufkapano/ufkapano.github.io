@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Lekcja 15</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (15) - gry, liczby losowe</h1>
+
+<h3>ZADANIE 15.1</h3>
+
+<p>Stworzyć plik <em>hilow.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# hilow.sh
+#
+# Prosta zgadywanka.
+# Jest sprawdzenie, czy gracz cos podal.
+# Wersja w jezyku polskim.
+
+MAX=100  # maksymalna dozwolona liczba
+TRAF=0      # strzal gracza
+LICZBA=0    # liczba strzalow
+# Losujemy liczbe miedzy 1 a ${MAX}
+let "ZAGADKA=$$%${MAX}"   
+
+while [ ${TRAF} -ne ${ZAGADKA} ] 
+do
+    read -p "Zgaduj: " TRAF
+    if [ -z "${TRAF}" ] ; then
+        echo "Trzeba podawac liczby..." &gt;&amp; 2
+        exit 1
+    fi
+    if [ ${TRAF} -lt ${ZAGADKA} ] ; then
+        echo "... wiecej!"
+    elif [ ${TRAF} -gt ${ZAGADKA} ] ; then
+        echo "... mniej!"
+    fi
+    let "LICZBA=LICZBA+1"
+done
+
+echo "OK Zgadłeś ${ZAGADKA} w ${LICZBA} krokach."
+</pre><hr>
+
+<p>Uruchomić grę poleceniem <tt>./hilow.sh</tt>
+
+<h3>LICZBY LOSOWE (CAŁKOWITE) W SHELLU</h3>
+
+<p>Pierwszy sposób to wykorzystanie zmiennej $$ zawierającej
+PID bieżącego procesu powłoki:<br>
+let "LICZBA_LOSOWA=$$%100"   
+
+<p>Drugi sposób polega na wykorzystaniu zmiennej systemowej
+RANDOM, która dostarcza liczby losowej z przedziału 0-32767:<br>
+let "LICZBA_LOSOWA=${RANDOM}%100"   
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

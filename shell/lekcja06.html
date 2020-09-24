@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>Lekcja 6</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (6) - select, xargs, find</h1>
+
+<h3>ZADANIE 6.1</h3>
+
+<p>Stworzyć plik <em>menu.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# menu.sh
+#
+# Zastosowanie polecenia select do tworzenia menu.
+
+# Tekst objasnienia
+PS3="Wybierz opcje: "
+
+# Stworzenie menu
+clear
+# Naglowek menu z jakas informacja
+echo
+echo "          MENU PROGRAMU ZABAWA"
+echo
+select OPTION in "Jeden" "Dwa" "Trzy" "Break" "Exit"
+do
+# Komunikaty kontrolne
+echo "$0: Zmienna REPLY zawiera ${REPLY}."
+echo "$0: Zmienna sterujaca OPTION zawiera ${OPTION}."
+#
+# Tekst wpisany przez uzytkownika siedzi w zmiennej REPLY
+#
+case ${REPLY} in
+1) echo "Opcja numer jeden." ;;
+2) echo "Opcja numer dwa." ;;
+3) echo "Opcja numer trzy." ;;
+4) break ;;
+5) exit 0 ;;
+# Dzialanie domyslne
+*) echo "Nie trafiles w klawisz?"
+esac
+# Zatrzymujemy obraz, aby nie zniknal
+echo "Naciśnij [ Enter ], aby kontynuować..."
+read
+clear
+# Naglowek menu z jakas informacja
+# (dla drugiego i nastepnych wyswietlen)
+echo
+echo "          MENU PROGRAMU ZABAWA"
+echo
+done
+# Komunikat kontrolny
+echo "$0: Wychodzimy z petli select przez break."
+exit 0
+</pre><hr>
+
+<p>Uruchomić skrypt poleceniem: <tt>./menu.sh</tt>
+
+<h3>ZADANIE 6.2</h3>
+
+<p>Zbadać możliwości polecenia <em>xargs</em>.
+
+<hr><pre>
+$ ls | xargs -n10 rm -f
+    (wykonać rm -f podając mu po 10 plików [opcja -n10];
+    można wykorzystać przy poleceniach, które mają określoną
+    maksymalną liczbę argumentów)
+
+$ touch p{1,2,3,4,5,6,7,8,9}
+    (tworzenie pustych plików do ćwiczeń)
+$ ls | xargs -i mv {} {}.txt
+    (zmieni nazwy plików na p?.txt;
+     -i to tryb wstawiania, oznacza -i{},
+    gdzie {} to miejsce wstawienia argumentu, implikuje -x i -l 1, 
+    czyli wezmie po jednej linii wyprodukowej przez ls)
+
+$ ls chapter* | xargs -i cp {} old{}
+    (stworzenie duplikatów plików chapter1, ...
+    jako plików oldchapter1, ...)
+</pre><hr>
+
+<h3>ZADANIE 6.3</h3>
+
+<p>Zbadać możliwości polecenia <em>find</em>.
+
+<hr><pre>
+$ find kat1 -name plik1 -print  
+    (szukaj plik1 w kat1 i głębiej;
+    brak kat1 oznacza katalog bieżący;
+    wypisuje nazwy plików, po jednym w każdej linii;
+    -print jest domyślną akcją [można pominąć tą opcję])
+
+$ find kat1 -name plik\*
+    (trzeba zasłonić znaki wzorca!)
+
+$ find kat1 -user user1
+    (szukaj plików, których właścicielem jest user1)
+
+$ find kat1 -type type1
+    (szukanie plików określonego typu; 
+    type1 to jeden ze znaków: b, c, d, p, f, l, s)
+
+[root]# find / -user nobody       (szukamy plikow demona httpd)
+[root]# find / -group nobody       (szukamy plików demona httpd)
+[root]# find / -uid 500         (szukamy plików z UID=500)
+[root]# find / -gid 500         (szukamy plików z GID=500)
+
+[root]# find / -perm +7000 -user root
+    (szukamy bitów specjalnych)
+
+$ find ${HOME} -name brudy\* -exec rm -f {} \;
+    (skasuje znalezione pliki [-exec to akcja]; 
+    trzeba zasłonić znaki specjalne przed shellem;
+    nawiasy {} zostaną zastąpione nazwą znalezionego pliku;
+    na końcu polecenia musi być zasłonięty średnik `\;')
+
+$ find ${HOME} -name brudy\* -ok rm -f {} \;
+    (jw, ale pyta o potwierdzenie `y' lub `Y')
+
+$ find . -name p\?.txt -exec cp {} {}.old \;
+    (wszystkie pliki o wzorcu p?.txt skopiuje do postaci p?.txt.old)
+</pre><hr>
+
+<h3>POLECENIE SELECT</h3>
+
+<p>Za pomocą polecenia <tt>select</tt> użytkownik może w łatwy sposób
+tworzyć menu. Polecenie to jak gdyby łączy w sobie polecenia
+<tt>while</tt> i <tt>case</tt>.
+
+<p>Zmienna <tt>PS3</tt> przechowuje objaśnienie do menu.
+Tekst wpisany przez użytkownika wstawiany jest do zmiennej REPLY.
+Jeżeli użytkownik wciśnie [Enter], to menu się powtórzy
+bez przetworzenia poleceń.
+Jeżeli użytkownik wpisze coś złego, to zmienna sterująca
+(np. OPTION) będzie pusta,
+a w zmiennej REPLY będzie umieszczony wybór użytkownika.
+
+<h3>POLECENIE XARGS</h3>
+
+<p>Polecenie <em>xargs</em> jest wygodne, gdy pracujemy 
+z lista plików z jednego katalogu.
+Polecenie pobiera na wejściu kolejne wiersze i wykonuje polecenia,
+dokonując ewentualnych podstawień.
+
+<h3>POLECENIE FIND</h3>
+
+<p>Polecenie <em>find</em> zapewnia możliwość przeglądania
+całego drzewa katalogów w poszukiwaniu określonych plików
+lub katalogów i wykonanie określonego polecenia na znalezionych
+plikach lub katalogach.
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

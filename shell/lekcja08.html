@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Lekcja 8</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (8) - wyrażenia regularne</h1>
+
+<h3>ZADANIE 8.1</h3>
+
+<p>Zbadać polecenia <em>head</em> i <em>tail</em>.
+
+<hr><pre>
+$ man head
+$ info head
+
+$ head /etc/passwd            (wypisze pierwsze 10 linii)
+
+$ head -n 5 /etc/passwd       (wypisze pierwsze 5 linii)
+
+$ head /etc/*conf
+    (wypisze pierwsze 10 linii każdego pliku i objaśniające 
+    nagłówki z nazwami plików)
+
+$ head -n 4 -q /etc/*conf
+    (wypisze po 4 linie bez nagłówkow plików)
+
+$ ls | head -n 4              (czytanie w potoku ze stdin)
+
+$ man tail
+$ info tail
+
+$ tail /etc/passwd            (wypisze ostatnie 10 linii)
+
+$ tail -n 5 /etc/passwd       (wypisze ostatnie 5 linii)
+
+$ tail /etc/*conf
+    (wypisze ostatnie 10 linii każdego pliku i objaśniąjace 
+    nagłówki z nazwami plików)
+
+$ tail -n 4 -q /etc/*conf
+    (po 4 ostatnie linie bez nagłówków plików;
+    można zmienić kolejność opcji: tail -q -n 4 )
+
+$ tail -f plik1
+    (będzie wyświetlał nowe dane dopisywane do pliku)
+
+$ ls | tail -n 3              (czytanie w potoku ze stdin)
+
+$ head -n 6 /etc/passwd | tail -n 1     (wypisze linię 6 od początku)
+
+$ tail -n 7 /etc/passwd | head -n 1     (wypisze linię 7 od końca)
+</pre><hr>
+
+<h3>ZADANIE 8.2</h3>
+
+<p>Zbadać polecenie <em>grep</em>.
+
+<hr><pre>
+$ man grep
+$ info grep
+
+$ cat /etc/passwd                       (cały plik)
+
+$ grep "bash" /etc/passwd               (linie z "bash" w pliku)
+
+$ grep -v "bash" /etc/passwd            (szuka linii gdzie nie ma wzorca)
+
+$ grep -n "bash" /etc/passwd            (wypisze numery linii ze wzorem i linie)
+
+$ grep -i wzorzec plik                  (utożsamia duże i małe litery)
+
+$ ls / | grep "t$"            (na końcu linii "t": boot, mnt, opt, root)
+
+$ ls / | grep "^r"            (linia zaczyna się na "r": root)
+
+$ ls / | grep "r."
+    (obok siebie "r" i drugi znak: cdrom, proc, root;
+    kropka oznacza dowolny znak)
+
+$ ls / | grep ".oo*"
+    (co najmniej jedno "o" po jakimś znaku: "opt" nie pasuje)
+
+$ ls / | grep "ooo*"          (co najmniej "oo" gdziekolwiek: boot, root)
+
+$ ls / | grep "t."
+    ("t" nie może być ostatnie: etc, tmp; 
+    nie pasuje: opt, mnt, root)
+
+$ grep "^[km]$" plik                    (lista)
+
+$ grep -v "[0-9]" plik                  (wiersze bez cyfr - zakres)
+
+$ grep "^[^tn]$" plik                   (dopasuj te, których nie ma t/n)
+
+$ grep -v "[[:digit:]]" plik            (wiersze bez cyfr - klasa znaków)
+
+$ grep -v "^$" plik                     (wiersze niepuste)
+
+$ grep "[[:upper:]]" plik               (gdzieś jest duża litera)
+
+$ grep "[A-Z]" plik
+    (jw, ale lepsza jest forma poprzednia, bo przenośna)
+
+$ grep "^[[:lower:]]*$" plik            (tylko małe litery w całym wierszu)
+</pre><hr>
+
+<h3>ZADANIE 8.3</h3>
+
+<p>Zbadać edytor strumieniowy <em>sed</em>.
+
+<hr><pre>
+$ man sed
+$ info sed
+
+$ sed -n 'p' /etc/passwd                (wyświetla zawartość pliku)
+
+$ sed -n '3p' /etc/passwd               (wyświetli tylko trzeci wiersz)
+
+$ sed -n '2,4p' /etc/passwd             (zakres: wiersze od 2 do 4)
+
+$ sed -n '/bash/p' /etc/passwd          (wiersze z łańcuchem 'bash')
+
+$ sed -n '/^proxy/,/false$/p' /etc/passwd
+    (zakres określony przez dwa wyrażenia regularne)
+
+$ sed -n '3!p' /etc/passwd              (wszystko oprócz trzeciego wiersza)
+
+$ sed '3d' /etc/passwd                  (skasuje trzeci, resztę wyświetli)
+
+$ sed -n '/aaa/,/bbb/!p' plik1          (wiersze poza zakresem)
+
+$ sed '/aaa/,/bbb/d' plik1              (skasuje zakres, resztę wyświetli)
+
+$ sed -e 's/bash/shell/g' /etc/passwd
+    (zastąpienie w całym pliku; g [global] - aby zastąpił wszystkie 
+    wystąpienia w danym wierszu)
+
+$ sed -e '1,5s/bash/shell/g' /etc/passwd          (zastapienie w wierszach 1-5)
+
+$ sed -e '/student/ s/bash/shell/g' /etc/passwd
+    (zastąpienie tylko w wierszach z napisem 'student')
+
+$ sed -e 's/[0-9][0-9]*/y/g' /etc/passwd
+    (zastąpienie ciągu cyfr przez literę 'y';
+    zastosowano wyrażenia regularne)
+
+$ sed -f skrypt.sed plik1
+    (wczytanie poleceń z pliku skrypt.sed)
+</pre><hr>
+
+<h3>ZADANIE 8.4</h3>
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>

@@ -1,0 +1,69 @@
+<html>
+<head>
+<title>Lekcja 14</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+<hr>
+
+<h1>Programowanie w Shellu (14) - programy narzędziowe</h1>
+
+<h3>ZADANIE 14.1</h3>
+
+<p>Stworzyć pliki <em>zapamietaj.sh</em> oraz
+<em>przypomnij.sh</em> postaci:
+
+<hr><pre>
+#!/bin/bash
+#
+# zapamietaj.sh
+#
+# Przypominacz pracujacy w wierszu polecen.
+
+PLIK_NOTATEK="${HOME}/.zapamietaj"
+
+if [ $# -eq 0 ] ; then
+    echo "Wpisz notatke, koniec przez Ctrl+d:"
+    cat - >> ${PLIK_NOTATEK}
+else
+    echo "$@" >> ${PLIK_NOTATEK}
+fi
+
+</pre><hr><pre>
+#!/bin/bash
+#
+# przypomnij.sh
+#
+# Wyszukuje w pliku danych pasujacych wierszy, albo - jesli
+# nie podano argumentow - pokazuje cala zawartosc pliku danych.
+
+PLIK_NOTATEK="${HOME}/.zapamietaj"
+
+if [ $# -eq 0 ] ; then
+    less ${PLIK_NOTATEK}
+#    more ${PLIK_NOTATEK}
+else
+    grep -i "$@" ${PLIK_NOTATEK} | less
+fi
+</pre><hr>
+
+<p>Za pomocą skryptu <em>zapamiętaj.sh</em> umieszczamy notatki,
+numery telefonów, adresy stron WWW w pliku PLIK_NOTATEK.
+Następnie przeszukujemy tę bazę danych za pomocą 
+<em>przypomnij.sh</em>, określając wzorzec.
+Możemy również ręcznie modyfikować plik PLIK_NOTATEK
+za pomocą zwykłego edytora (nano, vi, mcedit).
+
+<h3></h3>
+
+
+
+
+<hr>
+<p><a href="index.html">Programowanie w Shellu (index)</a>
+
+</body>
+</html>
