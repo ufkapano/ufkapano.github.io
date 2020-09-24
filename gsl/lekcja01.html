@@ -1,0 +1,148 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Biblioteka GSL (index)</a>
+<hr>
+
+<h1>Biblioteka GSL (1) - wprowadzenie</h1>
+
+<h3>OPIS</h3>
+
+<p>Biblioteka GSL (GNU Scientific Library) jest napisana w ANSI C.
+
+
+<p>Program raportujący konfigurację GSL to <em>gsl-config</em>.
+
+<hr><pre>
+$ gsl-config --prefix
+/usr            # położenie GSL
+$ gsl-config --libs
+-L/usr/lib -gsl -gslcblas -lm     # library linking information
+$ gsl-config --version
+1.6         # wersja dla Debian Sarge
+1.11        # wersja dla Debian 5 Lenny
+1.15        # wersja dla Debian 7 Wheezy
+</pre><hr>
+
+<h3>KOMPILACJA</h3>
+
+<hr><pre>
+#
+# Makefile
+#
+
+CC = gcc
+LIB = -lgsl -lgslcblas -lm
+# Inne dodatkowe przełączniki:
+# -lgsl -lgslcblas    (wspierająca biblioteka CBLAS)
+# -lgsl -lcblas     (alternatywa)
+# -lgsl -cblas -latlas     (jeszcze biblioteka ATLAS i jej interfejs CBLAS)
+
+CFLAGS = -g -Wall -ansi -pedantic
+# Compiler flags:
+#	-g	-- Enable debugging
+#	-Wall	-- Turn on all warnings
+#	-ansi	-- Don't use GNU extensions.  Stick to ANSI C.
+
+FILE = main.c
+TARGET = main.out
+
+$(TARGET): $(FILE) Makefile
+	$(CC) $(CFLAGS) -o $(TARGET) $(LIB) $(FILE)
+
+# Okreslenie celow sztucznych.
+.PHONY : clean 
+
+clean:
+	$(RM) $(TARGET) core
+</pre><hr>
+
+<h3>OBSŁUGA BŁĘDÓW W GSL</h3>
+
+<p>Funkcje zwracają kody błędów, które można przekonwertować 
+na string czytelny dla użytkownika.
+Oprócz tego biblioteka posiada an error handler function gsl_error,
+która wypisuje krótki komunikat i kończy program.
+
+<hr><pre>
+#include &lt;gsl/gsl_errno.h&gt;
+
+int status = gsl_function(...)
+if (status) {   /* pojawia się błąd */
+	/* trzeba zareagować na błąd, można wypisać jako string */
+	fprintf(stderr, "error: %s\n", gsl_strerror(status));
+	exit(1);   /* można zakończyć program */
+}
+</pre><hr>
+
+<h3>PODSTAWOWE FUNKCJE</h3>
+
+<p>Funkcje z GSL zaczynają się gsl_*, a makra GSL_*.
+GSL dużo korzysta z typu "long double", który zależy od platformy.
+
+<hr><pre>
+// Podstawowe nagłówki w programach, które zawsze występują.
+
+#include &lt;stdio.h&gt;
+#include &lt;gsl/gsl_math.h&gt;
+
+// Są stałe matematyczne M_PI, M_SQRT2,...
+// Są makra GSL_IS_ODD (n), GSL_IS_EVEN (n)
+// Chyba nie trzeba już dawać math.h.
+
+#define GSL_MAX(a, b)   ((a) &gt; (b) ? (a):(b))
+#define GSL_MIN(a, b)   ((a) &lt; (b) ? (a):(b))
+#define GSL_SIGN (x)   ((x) &gt;= 0 ? 1 : -1)
+
+// Są funkcje do wydajnego obliczania niskich potęg zmiennej.
+
+double gsl_pow_int(double x, int n);
+double gsl_pow_2(const double x);   /* aż do potęgi 9 */
+double gsl_pow_3(const double x);
+double gsl_pow_4(const double x);
+double gsl_pow_5(const double x);
+double gsl_pow_6(const double x);
+double gsl_pow_7(const double x);
+double gsl_pow_8(const double x);
+double gsl_pow_9(const double x);
+</pre><hr>
+
+<h3>ZADANIE 1.1 (HORNER)</h3>
+
+<p>Obliczanie wartości wielomianu metodą Hornera.
+
+<hr><pre>
+#include &lt;gsl/gsl_poly.h&gt;
+
+double gsl_poly_eval (const double c[], const int len, const double x);
+// c[0] + c[1]*x + c[2]*x^2 + ... + c[len-1]*x^{len-1}
+// Moja własna funkcja ma zamienione c[] i len, bo sugerowałem się
+// porządkiem dla dmlin.
+</pre><hr>
+
+<h3>ZADANIE 1.2 (COMPLEX)</h3>
+
+<p>Są liczby zespolone i funkcje do nich.
+
+<hr><pre>
+// Definicje typów zespolonych.
+
+#include &lt;gsl/gsl_complex.h&gt;
+
+// Definicje funkcji zespolonych.
+
+#include &lt;gsl/gsl_complex_math.h&gt;
+</pre><hr>
+
+<h3>ZADANIE 1.3 ()</h3>
+
+<hr>
+<p><a href="index.html">Biblioteka GSL (index)</a>
+
+</body>
+</html>

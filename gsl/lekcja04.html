@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Lekcja 4</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Biblioteka GSL (index)</a>
+<hr>
+
+<h1>Biblioteka GSL (4) - wektory i macierze</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Podstawowe typy danych: gsl_block, gsl_vector, gsl_matrix,
+oraz odmiany dla typów liczbowych innych niż double.
+Dla konsystencji cała pamięć jest alokowana poprzez
+strukturę gsl_block. Wektory i macierze są tworzone przez slicing
+danego bloku.
+Domyślnie wektory i macierze mają włączone sprawdzanie poprawności 
+indeksu.
+
+<hr><pre>
+// Definicje funkcji do zarządzania blokami są w tym nagłówku.
+#include &lt;gsl/gsl_block.h&gt;
+
+typedef struct {
+	size_t size;   // rozmiar bloku
+	double *data;   // wskaźnik do obszaru pamięci
+} gsl_block;
+</pre><hr><pre>
+// Definicje funkcji do zarządzania wektorami są w tym nagłówku.
+#include &lt;gsl/gsl_vector.h&gt;
+
+typedef struct {
+	size_t size;   // liczba elementów wektora; zakres [0, size-1]
+	size_t stride;   // rozmiar jednego elementu (fizycznie)
+	double *data;   // wskaźnik do obszaru pamięci (do pierwszego elem)
+	gsl_block *block;   // wskaźnik do bloku posiadanego przez wektor
+	int owner;   // ownership flag (1-posiada, 0-nie posiada)
+} gsl_vector;
+
+// Położenie w pamięci i-tego elementu to v-&gt;data[i*v-&gt;stride].
+// Dzięki stride można chyba tworzyć wektory przechowujące różne
+// inne obiekty. Można też zrobić widok np. tylko na parzyste elementy.
+</pre><hr><pre>
+// Definicje funkcji do zarządzania macierzami są w tym nagłówku.
+#include &lt;gsl/gsl_matrix.h&gt;
+
+typedef struct {
+	size_t size1;   // zakres wierszy [0, size1-1]
+	size_t size2;   // zakres kolumn [0, size2-1]
+	size_t tda;   // fizyczny rozmiar wiersza
+	double *data;   // wskaźnik do pierwszego elementu macierzy
+	gsl_block *block;
+	int owner;
+} gsl_matrix;
+</pre><hr>
+
+<h3>ZADANIE 4.1</h3>
+
+<hr>
+<p><a href="index.html">Biblioteka GSL (index)</a>
+
+</body>
+</html>

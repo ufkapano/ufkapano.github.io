@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Lekcja 3</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Biblioteka GSL (index)</a>
+<hr>
+
+<h1>Biblioteka GSL (3) - całkowanie numeryczne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Mamy tu całkowanie w jednym wymiarze.
+
+<hr><pre>
+#include &lt;gsl/gsl_integration.h&gt;
+
+// Algorytmy obliczają całkę postaci
+//    I = \int_a^b f(x) w(x) dx,
+// gdzie zwykle w(x)=1.
+// Użytkownik dostarcza dopuszczalne błędy (epsabs, epsrel),
+// a program oblicza RESULT i szacuje ABSERR
+//    |RESULT - I| &lt;= ABSERR &lt;= max(epsabs, epsrel*|I|).
+// Konwencja nazw
+//		Q - quadrature routine
+//	N - non-adaptive integrator
+//	A - adaptive integrator
+//		G - general integrand (user-defined)
+//		W - weight function with integrand
+//	S - singularities can be more readily integrated
+//	P - points of special difficulty can be supplied
+//	I - infinite range of integration
+//	O - oscillatory weight function, cos or sin
+//	F - Fourier integral
+//	C - Cauchy principal value
+
+// QNG non-adaptive Gauss-Kronrod integration.
+// Procedura przeznaczona do całkowania gładkich funkcji.
+// Całka z funkcji w przedziale (a, b).
+// epsabs - wymagany błąd bezwzględny
+// epsrel - wymagany błąd względny
+// result - uzyskany wynik
+// abserr - szacowany błąd bezwzględny
+// neval - wykonana liczba wyliczeń funkcji
+
+int gsl_integration_qng (const gsl_function * f, double a, double b, 
+double epsabs, double epsrel, double * result, double * abserr, size_t * neval);
+</pre><hr><pre>
+// Trzeba prawidłowo zbudować funkcję do całkowania.
+// Przykładowo tworzę trójmian kwadratowy.
+
+struct func_params { double a, b, c; };
+
+double func (double x, void *params)
+{
+struct func_params *p = (struct func_params *) params;
+double a = (p-&gt;a);
+double b = (p-&gt;b);
+double c = (p-&gt;c);
+return  (a * x + b) * x + c;
+}
+</pre><hr><pre>
+int main(void) 
+{
+double result, error;
+double a = 1.0, b = 4.0;   // granice calki
+double eps = 1e-6;       // założona dokładność
+size_t neval;
+struct func_params params = { 3.0, 2.0, 1.0 };
+
+gsl_function F;
+F.function = &amp;func;
+F.params = &amp;params;
+// krócej można tak (inicjalizacja struktury):
+// gsl_function F = { &amp;func, &amp;params };
+
+gsl_integration_qng(&F, a, b, eps, eps, &result, &error, &neval);
+
+printf ("result          = % .18f\n", result);
+printf ("estimated error = % .18f\n", error);
+printf ("neval           = %d\n", neval);
+
+return 0;
+}
+</pre><hr><pre>
+// Wartość wielomianu dla danego x0 można obliczyć za pomocą
+// makra GSL_FN_EVAL(&amp;F,x0).
+
+#define GSL_FN_EVAL(F,x)  (*((F)->function))(x,(F)->params)
+</pre><hr>
+
+<h3>ZADANIE 3.1</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Biblioteka GSL (index)</a>
+
+</body>
+</html>

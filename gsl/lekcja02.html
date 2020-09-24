@@ -1,0 +1,70 @@
+<html>
+<head>
+<title>Lekcja 2</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">Biblioteka GSL (index)</a>
+<hr>
+
+<h1>Biblioteka GSL (2) - funkcje specjalne</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Funkcje specjalne są dostępne w dwóch konwencjach:
+w formie naturalnej (zwracają liczbę) i error-handling form
+(zwracają kod błędu).
+
+<hr><pre>
+// Pełny zestaw nagłówków funkcji specjalnych.
+
+#include &lt;gsl/gsl_sf.h&gt;
+
+// Struktura gsl_sf_result jest zadeklarowana w nagłówku.
+
+#include &lt;gsl/gsl_sf_result.h&gt;
+
+typedef struct {
+	double val;
+	double err;
+} gsl_sf_result;
+</pre><hr>
+
+<h3>ZADANIE 2.1 (LEGENDRE)</h3>
+
+<p>Wielomiany Legendre'a.
+
+<hr><pre>
+#include &lt;gsl/gsl_sf_legendre.h&gt;
+
+double gsl_sf_legendre_P1 (double x);
+double gsl_sf_legendre_P2 (double x);
+double gsl_sf_legendre_P3 (double x);
+double gsl_sf_legendre_Pl (int l, double x);  // l &gt;= 0, |x| &lt;= 1
+</pre><hr>
+
+<h3>ZADANIE 2.2 (LAGUERRE)</h3>
+
+<hr><pre>
+#include &lt;gsl/gsl_sf_laquerre.h&gt;
+
+// L^a_n(x) = ((a+1)_n / n!) 1F1(-n,a+1,x)
+// L^0_n(x) = L_n(x)
+
+double gsl_sf_laguerre_1 (double a, double x);
+double gsl_sf_laguerre_2 (double a, double x);
+double gsl_sf_laguerre_3 (double a, double x);
+double gsl_sf_laguerre_n (const int n, const double a, const double x);
+</pre><hr>
+
+<h3>ZADANIE 2.3</h3>
+
+<p>
+
+<hr>
+<p><a href="index.html">Biblioteka GSL (index)</a>
+
+</body>
+</html>
