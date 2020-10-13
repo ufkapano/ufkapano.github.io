@@ -19,11 +19,34 @@ po jednym przykładzie z zadań 1.2, 1.3, 1.4.
 <p>Złożoność czasowa i pamięciowa.
 
 <p>Rozmiar danych wejściowych (ang. input size).
+<br>Przykład. Dla wyszukiwania sekwencyjnego w ciągi n liczb
+rozmiar danych wejściowych to n*b, gdzie b to liczba bitów
+wykorzystywana na przechowywanie jednej liczby.
+<br>Przykład. Obliczanie n-tego wyrazu ciągu Fibonacciego.
+Miarą danych wejściowych jest liczba bitów użyta to zakodowania
+wartości n, czyli |_lg(n)_|+1. Dla n=13=1101_2 mamy 4 bity
+[w pythonie math.log(13,2)=3.7].
 
 <p>Identyfikacja operacji podstawowej.
 Złożoność w przypadku pesymistycznym, średnim, najlepszym.
+<br>Złożoność zwykle wyraża się poprzez dane wejściowe, ale czasem
+można spotkać inne sposoby zapisu:
+<br>(1) algorytmy czułe na wyjście, np. algorytm Jarvisa ma złożoność O(n*h),
+gdzie n to liczba punktów na płaszczyźnie, a h to liczba punktów
+należących do otoczki wypukłej.
+<br>(2) algorytmy parametryzowalne, np. w teorii grafów wyraża się
+złożoność obliczeniową algorytmów nie tylko przez 
+n, m (liczba wierzchołków i krawędzi grafu), ale również przez
+Delta (największy stopień wierzchołka),
+w (treewidth, szerokość drzewowa).
 
 <p>Notacja z thetą, dużym O, omegą, małym o.
+<br>Asymptotyczne ograniczenie górne: g(n) należy do O(f(n)) wtw, gdy
+istnieje c &gt; 0, istnieje N &gt; 0, dla każdego n &gt;= N 
+zachodzi g(n) &lt;= c*f(n).
+
+<p>Przykładowe kategorie złożoności: 
+O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n).
 
 <h3>ROZWIĄZYWANIE RÓWNAŃ REKURENCYJNYCH</h3>
 
@@ -35,10 +58,26 @@ Złożoność w przypadku pesymistycznym, średnim, najlepszym.
 lg(x) to logarytm przy podstawie 2.
 
 <ul>
-<li>t[0]=0, t[n]=t[n-1]+1 dla n>0. Udowodnić, że t[n]=n.
-<li>t[1]=1, t[n]=t[n/2]+1 dla n>1, n=2^k. Udowodnić, że t[n]=lg(n)+1.
-<li>t[1]=1, t[n]=7*t[n/2] dla n>1, n=2^k. Udowodnić, że t[n]=n^lg(7).
+<li>t[0]=0, t[n]=t[n-1]+1 dla n &gt; 0. Udowodnić, że t[n]=n
+(wyszukiwanie sekwencyjne w ciągu nieuporządkowanym; obliczanie silni).
+<li>t[1]=1, t[n]=t[n/2]+1 dla n &gt; 1, n=2^k. Udowodnić, że t[n]=lg(n)+1
+(wyszukiwanie binarne w ciągu posortowanym).
+<li>t[1]=1, t[n]=7*t[n/2] dla n &gt; 1, n=2^k. Udowodnić, że t[n]=n^lg(7)
+[algorytm Strassena mnożenia macierzy, 7^lg(n)=n^lg(7)].
+<li>t[1]=1, t[n]=2*t[n-1]+1 dla n &gt; 1. Udowodnić, że t[n]=2^n-1
+(wieże Hanoi).
+<li>t[1]=0, t[n]=2*t[n/2]+n dla n &gt; 1, n=2^k. Udowodnić, że t[n]=n*lg(n)
+(quicksort, mergesort).
 </ul>
+
+<p>Przykład. t[2^k] = 2^k+2*t[2^(k-1)] 
+<br>= 2^k+2*(2^(k-1)+2*t[2^(k-2)])
+<br>= 2^k+2^k+2^2*t[2^(k-2)]
+<br>= 2^k+2^k+2^2*(2^(k-2)+2*t[2^(k-3)])
+<br>= 2^k+2^k+2^k+2^3*t[2^(k-3)]
+<br>= k*2^k+2^k*t[1] = k*2^k.
+
+<h3>ROZWIĄZYWANIE REKURENCJI Z ZASTOSOWANIEM RÓWNAŃ CHARAKTERYSTYCZNYCH</h3>
 
 <h3>ZADANIE 1.2</h3>
 
@@ -57,13 +96,21 @@ to jedynym rozwiązaniem rekurencji jest
 
 <p>Współczynniki c[] wyznacza się z k warunków początkowych.
 
+<p>Przykład: ciąg Fibonacciego. t[n]-t[n-1]-t[n-2]=0, t[0]=t[1]=0.
+<br>Postulujemy t[n]=r^n,
+równanie charakterystyczne r^2-r-1=0.
+<br>Rozwiązania r[1]=(1+sqrt(5))/2, r[2]=(1-sqrt(5))/2,
+t[n]=c[1]*r[1]^n+c[2]*r[2]^n.
+<br>Warunki początkowe 0=c[1]+c[2], 1=c[1]*r[1]+c[2]*r[2],
+c[1]=1/sqrt(5)=-c[2].
+
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>t[n]-5*t[n-1]+6*t[n-2]=0 dla n>1, t[0]=0, t[1]=1.
-<li>t[n]-3*t[n-1]-4*t[n-2]=0 dla n>1, t[0]=0, t[1]=1.
-<li>t[n]=t[n-1]+t[n-2] dla n>1, t[0]=0, t[1]=1 (ciąg Fibonacciego).
-<li>t[n]=4*t[n-1]-3*t[n-2] dla n>1, t[0]=0, t[1]=1.
+<li>t[n]-5*t[n-1]+6*t[n-2]=0 dla n &gt; 1, t[0]=0, t[1]=1.
+<li>t[n]-3*t[n-1]-4*t[n-2]=0 dla n &gt; 1, t[0]=0, t[1]=1.
+<li>t[n]=t[n-1]+t[n-2] dla n &gt; 1, t[0]=0, t[1]=1 (ciąg Fibonacciego).
+<li>t[n]=4*t[n-1]-3*t[n-2] dla n &gt; 1, t[0]=0, t[1]=1.
 </ul>
 
 <h3>ZADANIE 1.3</h3>
@@ -74,15 +121,22 @@ to jedynym rozwiązaniem rekurencji jest
 wielokrotności m, to w rozwiązaniu rekurencji dla tego pierwiastka
 nateży brać następujące wyrazy:
 
-<p>t[n]=c[1]*r^n+c[2]*n*r^n+c[3]*n^2*r^n+...+c[m]*n^(m-1)*r^n.
+<p>t[n]=c[1]*r^n+c[2]*n*r^n+c[3]*n^2*r^n+...+c[m]*n^(m-1)*r^n+dalsze pierwiastki.
 
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3]=0 dla n>2, t[0]=0, t[1]=1, t[2]=2.
-<li>t[n]=6*t[n-1]-9*t[n-2] dla n>1, t[0]=0, t[1]=1.
-<li>t[n]=5*t[n-1]-8*t[n-2]+4*t[n-3] dla n>2, t[0]=0, t[1]=1, t[2]=2.
+<li>t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3]=0 dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
+<li>t[n]=6*t[n-1]-9*t[n-2] dla n &gt; 1, t[0]=0, t[1]=1.
+<li>t[n]=5*t[n-1]-8*t[n-2]+4*t[n-3] dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
 </ul>
+
+<p>Przykład. t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3]=0 dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
+<br>Postulujemy t[n]=r^n,
+równanie charakterystyczne r^3-7r^2+15r-9=0, (r-1)(r-3)^2=0, jest pierwiastek podwójny.
+<br>Rozwiązanie t[n]=c[1]*(1)^n+c[2]*3^n+c[3]*n*3^n.
+<br>Warunki początkowe 0=c[1]+c[2], 1=c[1]+3*c[2]+3*c[3], 2=c[1]+9*c[2]+18*c[3].
+<br>Rozwiązanie c[1]=-1, c[2]=1, c[3]=-1/3, t[n]=(-1)*1^n+(1)*3^n+(-1/3)*n*3^n.
 
 <h3>ZADANIE 1.4</h3>
 
@@ -104,12 +158,22 @@ z części niehomogenicznej (może być kilka części niehomogenicznych).
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>t[n]-3*t[n-1]=4^n*(2*n+1) dla n>1, t[0]=0, t[1]=12.
-<li>t[n]-t[n-1]=n-1 dla n>0, t[0]=0.
-<li>t[n]-2*t[n-1]=n+2^n dla n>1, t[0]=0.
-<li>t[n]=2*t[n-1]-t[n-2]+n^2+5^n dla n>1, t[0]=0, t[1]=1.
-<li>t[n]=6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n>1, t[0]=0, t[1]=1.
+<li>t[n]-3*t[n-1]=4^n*(2*n+1) dla n &gt; 1, t[0]=0, t[1]=12.
+<li>t[n]-t[n-1]=n-1 dla n &gt; 0, t[0]=0.
+<li>t[n]-2*t[n-1]=n+2^n dla n &gt; 1, t[0]=0.
+<li>t[n]=2*t[n-1]-t[n-2]+n^2+5^n dla n &gt; 1, t[0]=0, t[1]=1.
+<li>t[n]=6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n &gt; 1, t[0]=0, t[1]=1.
 </ul>
+
+<p>Przykład. t[n]-3*t[n-1]=4^n*(2*n+1) dla n &gt; 1, t[0]=0, t[1]=12.
+<br>Równanie homogeniczne t[n]-3*t[n-1]=0,
+równanie charakterystyczne (r-3)=0.
+<br>Część niehomogeniczna b=4, d=1, (r-b)^(d+1)=(r-4)^2.
+<br>Pełne równanie charakterystyczne (r-3)(r-4)^2=0, jest pierwiastek podwójny.
+<br>Rozwiązanie t[n]=c[1]*3^n+c[2]*4^n+c[3]*n*4^n.
+<br>Są 3 stałe, a 2 warunki, trzeba obliczyć t[2]-3*t[1]=4^2*(2*2+1), t[2]=116.
+<br>Warunki początkowe 0=c[1]+c[2], 12=3*c[1]+4*c[2]+4*c[3], 116=9*c[1]+16*c[2]+32*c[3].
+<br>Rozwiązanie c[1]=20, c[2]=-20, c[3]=8, t[n]=(20)*3^n+(-20)*4^n+(8)*n*4^n.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
