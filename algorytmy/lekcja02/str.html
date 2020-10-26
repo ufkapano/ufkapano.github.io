@@ -54,17 +54,34 @@ wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
 | del S                | usuwanie napisu          |
 +----------------------+--------------------------+
 </pre><hr><pre>
-# Zwykłe stringi.
+Standard Unikodu przypisuje abstrakcyjnym znakom (characters)
+liczby całkowite dodatnie (code points).
+String Unikodu jest to ciąg code points.
+Reguły transformacji stringu Unikodu na ciąg bajtów jest to kodowanie.
+Najpopularniejsze obecnie kodowanie to UTF-8.
+
+Code point 97 odpowiada u'\x61' = u'\u0061' = u'\U00000061', 
+(0)110.0001, jeden bajt w UTF-8.
+
+Code point 257 odpowiada u'\u0101', 
+(110)0.0100.(10)00.0001, dwa bajty w UTF-8.
+(u'\u0101').encode('utf-8') zwraca w Pythonie 2 string '\xc4\x81'.
+('\u0101').encode('utf-8') zwraca w Pythonie 3 bytes b'\xc4\x81'.
+
+Code point 8364 (znak euro) odpowiada u'\u20ac',
+(1110).0010.(10)00.0010.(10)10.1100, trzy bajty w UTF-8, '\xe2\x82\xac'.
+</pre><hr><pre>
+# Zwykłe stringi. W Pythonie 3 zawierają znaki Unikodu.
 "pierwszy", 'drugi', "trzeci'x", 'czwarty"y'
 "raz"  'dwa'                  # napisy obok siebie będą sklejone
 
 # Raw strings - napisy ze znakami specjalnymi.
 r"raw string\n\t\a"
 
-# Unicode strings.
+# Unicode strings (Py 2).
 u"unicode"
 
-# Raw Unicode strings.
+# Raw Unicode strings (Py 2).
 ur"raw unicode"
 
 # Potrójne znaki do wielowierszowych bloków.
@@ -235,7 +252,7 @@ S.isspace()
 <p>Jeżeli chcemy sprawdzić, czy obiekt jest łańcuchem, 
 korzystamy z funkcji <em>isinstance(obiekt, basestring)</em>, 
 gdzie <em>basestring</em> to klasa bazowa dla
-str i unicode (Python 2.3).
+str i unicode (Python 2.3+).
 
 <p>Łańcuchy znaków obsługują zaawansowane operacje formatowania
 ze znakiem procenta (%) lub metodą <em>format</em>

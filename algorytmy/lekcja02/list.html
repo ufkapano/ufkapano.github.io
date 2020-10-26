@@ -43,8 +43,9 @@ to lepiej zastosować słowniki lub zbiory.
 | for item in L: pass  | iteracja                    |
 | item in L            | zawieranie (linear-time)    |
 | item not in L        |                             |
-| range(i, j, step)    | budowanie listy             |
-| xrange(i, j, step)   | generator (Py 2.x)          |
+| range(i, j, step)    | budowanie listy (Py 2)      |
+| xrange(i, j, step)   | generator (Py 2)            |
+| range(i, j, step)    | generator (Py 3)            |
 | del L[i]             | usuwanie elementu z listy   |
 | del L[i:j]           | usuwanie wycinka            |
 | del L[:]             | czyszczenie listy           |
@@ -57,9 +58,9 @@ to lepiej zastosować słowniki lub zbiory.
 # Składnia: range([start,] stop[, step]).
 # Domyślny krok jest równy jeden (step=1).
 # Końcowy punkt (stop) jest pomijany.
-range(1, 6)                   # [1, 2, 3, 4, 5]
-range(4)                      # [0, 1, 2, 3], domyślny start to 0
-range(1, 9, 2)                # [1, 3, 5, 7], krok co 2
+list(range(1, 6))                   # [1, 2, 3, 4, 5]
+list(range(4))                      # [0, 1, 2, 3], domyślny start to 0
+list(range(1, 9, 2))                # [1, 3, 5, 7], krok co 2
 
 list1 = [10, 20, 30, 40, 50, 60, 70]
 list2 = ["abc", "d", "ef", "g", "hij"]

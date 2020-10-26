@@ -32,7 +32,9 @@ Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
 
 <hr><pre>
-afile = open(file_name, mode)
+afile = open(file_name, mode='r', buffering)   # Python 2
+afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
+    newline=None, closefd=True, opener=None)   # Python 3
 # file_name (string): nazwa pliku;
 # mode (string):
 # "r" (czytanie),
@@ -43,8 +45,10 @@ afile = open(file_name, mode)
 # "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),
 # "b" (dodatek do poprzednich, tryb binarny, Windows, Macintosh),
 # "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy).
+# encoding : zwykle "utf-8" lub domyślne, używa się w text mode (Python 3);
+help(open)
 dir(afile)     # spis metod
-afile.close()
+afile.close()   # otwarty plik należy zamknąć
 </pre><hr>
 
 <p>Odczytywanie danych z pliku (mode "r").

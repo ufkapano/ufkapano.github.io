@@ -39,15 +39,17 @@ print ( "a %10.1f b %3d" % (1.23456, 2) ) # dwie lub więcej pozycji
 </pre><hr><pre>
 # Wyprowadzanie danych do pliku:
 afile = open("data.txt", "w")
-afile.write((%s %s\n) % (item1, item2))   # typowy sposób
-print &gt;&gt; afile, item1, item2        # niezbyt ładne
+afile.write((%s %s\n) % (item1, item2))   # jeden sposób
+afile.write("{} {}\n".format(item1, item2))   # drugi sposób
+print &gt;&gt; afile, item1, item2        # niezbyt ładne, Python 2
+print(file=afile, item1, item2)           # Python 3
 afile.close()
 </pre><hr><pre>
 # Korzystanie z modułu sys.
 # Obiekt sys.stdout jest typu file, mode "w".
 
 import sys
-print X
+print ( X )
 sys.stdout.write(str(X) + "\n")  # jw, równoważne
 sys.stdout.write("%s\n" % X)     # jw, ale będzie problem dla X tuple
 print ( "{} {}".format("alpha", "beta") )
@@ -71,13 +73,15 @@ mass = 0.511034    # MeV
 print ( "%(name)s, masa %(mass)s MeV" % locals() )
 </pre><hr><pre>
 # Zapis wywołań print działający w Pytonie 2 i 3.
-print("napis")               # jeden obiekt
-print("%s %s %s" % (item1, item2, item3))
+print ( "napis" )   # jeden obiekt
+print ( "%s %s %s" % (item1, item2, item3) )
+print ( "{} {} {}".format(item1, item2, item3) )   # zalecane
 </pre><hr><pre>
 # Emulacja funkcji print() z Pythona 3 w Pythonie 2.
-import sys
+# print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
 
 def print3(*arguments, **keywords):
+    import sys
     sep = keywords.get("sep", " ")
     end = keywords.get("end", "\n")
     file = keywords.get("file", sys.stdout)
@@ -114,7 +118,7 @@ print ( "{1} albo {0}".format("prawda", "fałsz") ) # fałsz albo prawda
 # {position:4d} typ int, szerokość minimum 4 znaki;
 # {position:.3f} typ float, 3 cyfry po przecinku;
 # {position:8.1f} typ float, 1 cyfra po przecinku, całość 8 znaków;
-for x in range(1,11):
+for x in range(1, 11):
     print ( "{0:2d} {1:3d}".format(x, x*x) )
 
 # Argumenty w postaci słów kluczowych.
@@ -146,8 +150,9 @@ print ( "Adam {Adam:d}; Bogdan {Bogdan:d}".format(**table) )
 <h3>F-STRINGS</h3>
 
 <hr><pre>
-# W Pythonie 3.6 pojawiły się f-strings (PEP 498).
+# W Pythonie 3.6 pojawiły się f-strings, formatted string literals (PEP 498).
 # F-strings są szybsze od metody z % i format().
+# Rozpoczynają się od f"..." or F"...", w klamrach {} są wyrażenia lub zmienne.
 name = "Adam"
 age = 18
 print ( f"Hello, {name}. You are {age}." )
