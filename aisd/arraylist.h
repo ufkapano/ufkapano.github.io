@@ -18,16 +18,17 @@ public:
     } // default constructor
     ~ArrayList() { delete [] tab; }
     ArrayList(const ArrayList& other); // copy constructor
-    //ArrayList(ArrayList&& other); // move constructor
+    ArrayList(ArrayList&& other); // move constructor
     ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
-    //ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
+    ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
     bool empty() const { return last == 0; } // checks if the container has no elements
     bool full() const { return last == msize; } // checks if the container is full
     int size() const { return last; } // liczba elementow na liscie
     int max_size() const { return msize; } // najwieksza mozliwa liczba elementow
     void push_front(const T& item); // dodanie na poczatek
-    //void push_front(T&& item); // dodanie na poczatek
+    void push_front(T&& item); // dodanie na poczatek
     void push_back(const T& item); // dodanie na koniec
+    void push_back(T&& item); // dodanie na koniec
     T& front(); // zwraca poczatek, nie usuwa
     T& back(); // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek
@@ -48,6 +49,7 @@ public:
     const T& operator[](int pos) const; // odczyt L[pos]
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
     int insert(int pos, const T& item); // inserts item before pos,
+    int insert(int pos, T&& item); // inserts item before pos,
     // zwraca pozycje wstawionego elementu
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L);
 };

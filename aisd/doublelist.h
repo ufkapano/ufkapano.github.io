@@ -25,10 +25,20 @@ class DoubleList {
 public:
     DoubleList() : head(nullptr), tail(nullptr) {}
     ~DoubleList(); // tu trzeba wyczyscic wezly
+    DoubleList(const DoubleList& other); // copy constructor
+    // usage:   DoubleList<int> list2(list1);
+    DoubleList(DoubleList&& other); // move constructor
+    // usage:   DoubleList<int> list2(std::move(list1));
+    DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
+    // usage:   list2 = list1;
+    DoubleList& operator=(DoubleList&& other); // move assignment operator, return *this
+    // usage:   list2 = std::move(list1);
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1)
+    void push_front(T&& item); // O(1)
     void push_back(const T& item); // O(1)
+    void push_back(T&& item); // O(1)
     T& front() const { return head->value; } // zwraca poczatek, nie usuwa
     T& back() const { return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)
@@ -42,6 +52,7 @@ public:
     const T& operator[](int pos) const; // odczyt L[pos]
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
     int insert(int pos, const T& item); // inserts item before pos,
+    int insert(int pos, T&& item); // inserts item before pos,
     // zwraca pozycje wstawionego elementu
 };
 
@@ -52,6 +63,16 @@ void DoubleList<T>::push_front(const T& item) {
         head->next->prev = head;
     } else {
         head = tail = new DoubleNode<T>(item);
+    }
+}
+
+template <typename T>
+void DoubleList<T>::push_front(T&& item) {
+    if (!empty()) {
+        head = new DoubleNode<T>(std::move(item), head);
+        head->next->prev = head;
+    } else {
+        head = tail = new DoubleNode<T>(std::move(item));
     }
 }
 

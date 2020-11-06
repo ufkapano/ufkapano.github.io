@@ -42,10 +42,16 @@ class DoubleList {
 public:
     DoubleList() : head(nullptr), tail(nullptr) {}
     ~DoubleList(); // tu trzeba wyczyścić węzły
+    DoubleList(const DoubleList& other); // copy constructor
+    DoubleList(DoubleList&amp;&amp; other); // move constructor
+    DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
+    DoubleList& operator=(DoubleList&amp;&amp; other); // move assignment operator, return *this
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyć
     void push_front(const T& item); // O(1)
+    void push_front(T&amp;&amp; item); // O(1)
     void push_back(const T& item); // O(1)
+    void push_back(T&amp;&amp; item); // O(1)
     T& front() const { return head->value; } // zwraca początek, nie usuwa
     T& back() const { return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa początek O(1)
