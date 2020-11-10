@@ -103,7 +103,7 @@ alist = d.keys() # return a list of all existing keys (slow!)
 
 <h3>MODUŁ dumbdbm</h3>
 
-<p>Moduł <em>dumbdbm</em> dostarcza bazę danych, która jest 
+<p>Moduł dumbdbm dostarcza bazę danych, która jest 
 implementacją pliku o organizacji indeksowo-sekwencyjnej.
 Dla bazy danych spam istnieje plik indeksujący spam.dir (tekstowy),
 plik z danymi spam.dat (binarny), oraz czasem kopia pliku
@@ -149,7 +149,7 @@ db["adict"] = adict
 db["alist"] = alist
 
 print ( db )             # jak słownik
-print db["alist"]
+print ( db["alist"] )
 
 # alist.append(3)        # to nie zmienia db["alist"]
 # db["alist"] = alist    # trzeba na nowo zapisać alist w bazie
@@ -180,6 +180,9 @@ Format JSON, w przeciwieństwie do pickle i marshal, nie pozwala
 na serializację więcej niż jednego obiektu do pliku, bo wtedy
 plik JSON będzie niepoprawny.
 
+<p>Plik JSON nie pozwala na zapisywanie w nim komentarzy.
+
+
 <hr><pre>
 import json     # Python 2.6+
 
@@ -207,8 +210,52 @@ with open(file_name) as infile:
 
 # Decoding from JSON string.
 obj = json.loads(word)
+</pre><hr><pre>
+Decoder
++---------------+------------------------+
+| JSON          | Python                 |
++===============+========================+
+| object        | dict                   |
++---------------+------------------------+
+| array         | list                   |
++---------------+------------------------+
+| string        | unicode[Py2], str[Py3] |
++---------------+------------------------+
+| number (int)  | int, long              |
++---------------+------------------------+
+| number (real) | float                  |
++---------------+------------------------+
+| true          | True                   |
++---------------+------------------------+
+| false         | False                  |
++---------------+------------------------+
+| null          | None                   |
++---------------+------------------------+
+
+Encoder
++-------------------+---------------+
+| Python            | JSON          |
++===================+===============+
+| dict              | object        |
++-------------------+---------------+
+| list, tuple       | array         |
++-------------------+---------------+
+| str, unicode      | string        |
++-------------------+---------------+
+| int, long, float  | number        |
++-------------------+---------------+
+| True              | true          |
++-------------------+---------------+
+| False             | false         |
++-------------------+---------------+
+| None              | null          |
++-------------------+---------------+
 </pre><hr>
 
+<p>Istnieje modul simplejson o podobnych możliwościach 
+(pip install simplejson).
+
+<p>https://pypi.org/project/simplejson/
 
 </body>
 </html>

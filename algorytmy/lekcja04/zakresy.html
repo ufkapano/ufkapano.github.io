@@ -85,6 +85,23 @@ outer()   # wypisze 2 z zagnieżdżonego zakresu
 
 # Funkcja inner() widzi zmienną x z zakresu zagnieżdżonego wewnątrz
 # funkcji outer(), a nie z zakresu globalnego, jak było w Pythonie 2.1.
+</pre><hr><pre>
+def make_score(score=0):
+    for i in [1, 2, 3, 4]:
+        def increment(step=i):
+            #global score
+#NameError: name 'score' is not defined
+
+            nonlocal score   # Python 3, bez tego komunikat
+#UnboundLocalError: local variable 'score' referenced before assignment
+            # Wskazujemy, że score nie jest lokalna wewnątrz increment(),
+            # nie jest globalna, jest w zakresie make_score().
+
+            score = score + step
+            print(score)
+        increment()
+
+make_score()   # 1 3 6 10
 </pre><hr>
 
 </body>

@@ -233,7 +233,7 @@ import timeit
 def mysort(L, left, right):
     L[left: right+1] = sorted(L[left: right+1])
 
-lista = range(1000)
+lista = list(range(1000))
 random.shuffle(lista)
 
 t1 = timeit.Timer(stmt="mysort(lista, 0, len(lista)-1)", 
@@ -249,7 +249,7 @@ import timeit
 def mysort(L, left, right):
     L[left: right+1] = sorted(L[left: right+1])
 
-lista = range(1000)
+lista = list(range(1000))
 random.shuffle(lista)
 
 t1 = timeit.Timer(lambda: mysort(lista, 0, len(lista)-1))

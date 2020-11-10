@@ -20,15 +20,15 @@ pamiętać pełnej listy, a lista jest tylko pewnym krokiem
 pośrednim w obliczeniach.
 Generatory to "leniwe funkcje": obliczają wartości tylko wtedy,
 gdy są żądane.
-Generatory są iteratorami, bo obsługują metodę next()
-[więcej o iteratorach powiemy po omówieniu klas i wyjatków (lekcja 7)].
-Inne metody generatorów to close(), send(), throw() [PEP 342].
+Generatory są iteratorami, bo obsługują metodę next() [Python 2]
+lub __next__() [Python 3] i funkcję wbudowaną next() [Python 2.7 i Python 3].
+Więcej o iteratorach powiemy po omówieniu klas i wyjątków (lekcja 7).
 
 <p>Każde wyrażenie yield tymczasowo zatrzymuje przetwarzanie,
 zapamiętuje stan funkcji. Po wznowieniu generatora (ponownym wywołaniu)
 przetwarzanie jest kontunuowane od miejsca zatrzymania.
 
-<p>Generatory są iteratorami, ale można po nich przejść tylko raz.
+<p>Generatory są iteratorami, a więc można po nich przejść tylko raz.
 Wartości generatora nie są przechowywane w pamięci, tylko
 są wytwarzane w locie (on the fly).
 
@@ -37,7 +37,7 @@ są wytwarzane w locie (on the fly).
 x = [i*i for i in range(100)]           # lista w całości
 
 # xrange() jest generatorem, więc dobrze tu pasuje.
-x = (i*i for i in xrange(100))          # generator object
+x = (i*i for i in xrange(100))          # generator object (Python 2)
 
 # W praktyce xrange() nie jest szybsze niż range().
 # Przydaje się przy bardzo długich listach, gdy brakuje pamięci.
@@ -47,7 +47,7 @@ L = range(8)                  # Python 2
 L = list(xrange(8))           # Python 2
 L = list(range(8))            # Python 3, range() to generator
 L = list(range(8))            # UNIWERSALNE
-
+</pre><hr><pre>
 def my_generator(stop):
     """Generator zastępujący xrange(stop)."""
     value = 0
@@ -65,10 +65,10 @@ for i in my_generator(10):
 # Sposób 2 korzystania z generatora.
 # Jawne korzystanie z protokołu iteracji.
 x = my_generator(3)
-print ( x.next() )           # 0
-print ( x.next() )           # 1
-print ( x.next() )           # 2
-print ( x.next() )           # StopIteration
+print ( next(x) )           # 0
+print ( next(x) )           # 1
+print ( next(x) )           # 2
+print ( next(x) )           # StopIteration
 # W następnych wywołaniach też otrzymamy wyjątek StopIteration.
 </pre><hr><pre>
 def fibonacci():
@@ -96,8 +96,8 @@ for i in fib:
     print ( i )
     if i &gt; 100:
         break
-print ( fib.next() )     # 233
-print ( fib.next() )     # 377
+print ( next(fib) )     # 233
+print ( next(fib) )     # 377
 </pre><hr><pre>
 # Przy generatorach jest problem, jeżeli chcemy wykonać podwójną
 # iterację po obiekcie generatora.
@@ -116,7 +116,7 @@ for i in x:
 # 0 64
 # 0 81
 # Druga pętla for wyczerpała generator x.
-
+</pre><hr><pre>
 # Próbujemy z dwoma generatorami
 x = (i*i for i in xrange(10))        # generator object
 y = (i*i for i in xrange(10))        # generator object
@@ -135,7 +135,7 @@ for i in x:
 0 64
 0 81
 # Generator y wyczerpał się po jednym przebiegu (x=0).
-
+</pre><hr><pre>
 # xrange to jest osobna klasa, więc zwraca nowe instancje.
 # Rozwiązaniem są dwa niezależne generatory, które powstają w pętli.
 for i in (i*i for i in xrange(10)):
@@ -264,10 +264,14 @@ Zwykle odpowiada to w Pythonie 2 wyrażeniu:
 
 for item in sequence:
     yield item
+</pre><hr><pre>
+PEP-255 (Simple Generators) [yield is a statement; lazy evaluation]
 
-PEP 380 wprowadza pewien protokół generatorów w dodatkowymi możliwościami.
+PEP-342 (Coroutines via Enhanced Generators) [yield is an expression; send(), throw(), close()]
 
-PEP 342 (Python 2.5) opisuje "Coroutines via Enhanced Generators".
+PEP-380 (Syntax for delegating to a Sub-Generator)
+
+PEP-525 (Asynchronous Generators)PEP 380 wprowadza pewien protokół generatorów w dodatkowymi możliwościami.
 
 http://code.activestate.com/recipes/576727-pure-python-implementation-of-pep-380-yield-from/
 </pre><hr>

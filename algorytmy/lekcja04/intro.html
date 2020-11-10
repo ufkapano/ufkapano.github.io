@@ -26,7 +26,7 @@ Instrukcje i wyrażenia związane z funkcjami
 |             |     return x + y           |
 | global      | def changer():             |
 |             |     global x; x = "nowy"   |
-| nonlocal    | def changer(): # Python 3  |
+| nonlocal    | def changer(): # Python 3  | PEP 3104
 |             |     nonlocal x; x = "nowy" |
 | yield       | generatory                 |
 | lambda      | funkcje anonimowe          |
@@ -126,6 +126,9 @@ def my_len(sequence):              # sequence jest lokalne
         length += 1
     return length
 </pre><hr>
+
+<p>PEP 3104 - Access to Names in Outer Scopes.
+The specification for the nonlocal statement.
 
 </body>
 </html>
