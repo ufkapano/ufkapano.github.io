@@ -209,6 +209,19 @@ def kinetic_energy(m:'in kg', v:'in m/s')->'Joules':
 # {'return': 'Joules', 'v': 'in m/s', 'm': 'in kg'}
 </pre><hr>
 
+<h3>WYMUSZANIE ARGUMENTÓW FUNKCJI</h3>
+
+<hr><pre>
+# Specjalne parametry / oraz * pozwalają wymusić podział argumentów na pozycyjne,
+# pozycyjne lub ze słowem kluczem i tylko ze słowem kluczem.
+
+def func(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2): pass
+
+def func_pos_only(arg, /): pass   # func_pos_only(25)
+
+def func_kwd_only(*, arg): pass   # func_kwd_only(arg=34)
+</pre><hr>
+
 <h3>SLOTS</h3>
 
 <p>Python domyślnie przechowuje atrybuty instancji w słowniku __dict__,
@@ -241,6 +254,8 @@ class ClassWithSlots(object):
 
 <p>https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
 
+<p>https://www.programiz.com/python-programming/methods/built-in/super
+
 <p>W Pythonie 2.2 pojawiła się funkcja wbudowana <em>super()</em>,
 która działa tylko z klasami w nowym stylu.
 Return a proxy object that delegates method calls to a parent 
@@ -252,7 +267,8 @@ methods that have been overridden in a class.
 # Typowe wywołanie funkcji super(): przy pojedynczym dziedziczeniu można
 # odwołać się do klasy nadrzędnej bez jawnego użycia jej nazwy.
 # To będzie działać nawet po zmianie klasy nadrzędnej.
-class B(object):
+class B(object):   # Python 2, klasy w nowym stylu
+#class B:       # Python 3
     def method(self, arg):
         print ( "B: {}".format(arg) )
 

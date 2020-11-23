@@ -11,7 +11,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Iterator jest obiektem reprezentującym strumień danych.
-Kolejne wywołania metody next() zwracają kolejne elementy ze strumienia danych.
+Kolejne wywołania funkcji next() zwracają kolejne elementy ze strumienia danych.
 Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania next()
 wyzwalają wyjątek StopIteration.
 
@@ -21,6 +21,10 @@ Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
 od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
 iterator (dla list dostaniemy świeży iterator idący od początku listy).
 Kiedy iterator zostanie wyczerpany, nie można użyć ponownie ani zresetować.
+
+<p>Funkcja iter(X) zwraca obiekt iteratora, utworzony na bazie obiektu X.
+Obiekt X musi wspierać protokół iteracji (metoda __iter__)
+lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
 
 <hr><pre>
 class Reverse:
@@ -40,8 +44,9 @@ class Reverse:
         return self.data[self.idx]
 
     __next__ = next   # kompatybilność z Pythonem 3
-        # W Pythonie 2 mamy X.next().
-        # W Pythonie 3 i 2.6+ mamy next(X).
+        # W Pythonie 2 mamy metodę X.next().
+        # W Pythonie 3 mamy metodę X.__next__().
+        # W Pythonie 3 i 2.6+ mamy funkcję wbudowaną next().
 
 # Zastosowanie
 for char in Reverse("spam"):
@@ -66,12 +71,36 @@ iter_obj = iter(iterable)
 while True:
     try:
         # get the next item
-        element = iter_obj.next()       # Python 2
-        #element = next(iter_obj)       # Python 3
+        element = next(iter_obj)
         # do something with element
     except StopIteration:
         # if StopIteration is raised, break from loop
         break
+</pre><hr><pre>
+# Przygotowanie iteratora na bazie obiektu wywoływalnego.
+
+class MyInt:
+    """Klasa do tworzenia obiektów wywoływalnych, zwracających kolejne int."""
+
+    def __init__(self):
+        self.n = 0
+
+    def __call__(self):
+        self.n = self.n + 1
+        return self.n
+
+x = MyInt()   # x to MyInt instance, obiekt wywoływalny
+print ( x() )   # 1
+print ( x() )   # 2
+
+# Przygotowanie iteratora, który zakończy pracę, jeżeli x zwróci 10.
+y = iter(x, 10)     # y to callable-iterator object
+
+for i in y:         # zwroci 3,4,5,6,7,8,9 (bez 10)
+    print ( i )
+# 10 wykorzystane na zatrzymanie iteratora
+#print ( next(y) )   # wyzwala StopIteration
+print ( x() )   # 11
 </pre><hr>
 
 <p>Wg dokumentacji Pythona, generatory dostarczają wygodnego sposobu

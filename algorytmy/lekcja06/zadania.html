@@ -137,12 +137,15 @@ class Point:
 
     def __sub__(self, other): pass  # v1 - v2
 
-    def __mul__(self, other): pass  # v1 * v2, iloczyn skalarny
+    def __mul__(self, other): pass  # v1 * v2, iloczyn skalarny (liczba)
 
-    def cross(self, other):         # v1 x v2, iloczyn wektorowy 2D
+    def cross(self, other):         # v1 x v2, iloczyn wektorowy 2D (liczba)
         return self.x * other.y - self.y * other.x
 
     def length(self): pass          # długość wektora
+
+    def __hash__(self):
+        return hash((self.x, self.y))   # bazujemy na tuple, immutable points
 
 # Kod testujący moduł.
 
@@ -272,7 +275,13 @@ class Frac:
 
     def __mul__(self, other): pass  # frac1 * frac2
 
-    def __div__(self, other): pass  # frac1 / frac2
+    def __div__(self, other): pass  # frac1 / frac2, Python 2
+
+    def __truediv__(self, other): pass  # frac1 / frac2, Python 3
+
+    def __floordiv__(self, other): pass  # frac1 // frac2, opcjonalnie
+
+    def __mod__(self, other): pass  # frac1 % frac2, opcjonalnie
 
     # operatory jednoargumentowe
     def __pos__(self):  # +frac = (+1)*frac
@@ -285,6 +294,10 @@ class Frac:
         return Frac(self.y, self.x)
 
     def __float__(self): pass       # float(frac)
+
+    def __hash__(self):
+        return hash(float(self))   # immutable fracs
+        # assert set([2]) == set([2.0])
 
 # Kod testujący moduł.
 

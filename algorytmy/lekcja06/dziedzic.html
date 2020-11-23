@@ -83,6 +83,8 @@ class SecondClass(FirstClass):
         """Konstruktor instancji klasy SecondClass."""
         # Wywołanie kostruktora klasy nadrzędnej.
         FirstClass.__init__(self, x)
+        #super().__init__(x)   # Python 3, nie musimy znać nazwy FirstClass.
+        # Nie musimy zmieniać kodu __init__ po zmianie FirstClass na NextClass.
         instrukcje            # nowe działania inicjalizacyjne
 </pre><hr>
 

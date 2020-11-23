@@ -61,8 +61,7 @@ class Card:
         if self.rank &lt; other.rank:
             return -1
         return 0      # remis
-
-
+</pre><hr><pre>
 class Deck:
     """Klasa reprezentująca talię."""
 
@@ -115,8 +114,7 @@ class Deck:
             card = self.pop_card()    # weź kartę
             hand = hands[i % n_hands] # do której reki
             hand.add_card(card)       # dodaj kartę
-
-
+</pre><hr><pre>
 class Hand(Deck):             # DZIEDZICZENIE z klasy Deck
     """Klasa reprezentująca rękę gracza."""
     # Ręka to odmiana talii, każda metoda talii działa także dla ręki.
@@ -140,8 +138,7 @@ class Hand(Deck):             # DZIEDZICZENIE z klasy Deck
     def add_card(self, card):
         """Dodanie karty do ręki."""
         self.cards.append(card)
-
-
+</pre><hr><pre>
 class CardGame:
     """Ogólna klasa dla gier karcianych."""
     # W tej klasie chcemy mieć wspólne cechy różnych gier.
@@ -158,8 +155,7 @@ class CardGame:
         """Wypisz ręce graczy."""
         for hand in self.hands:
             print ( hand )
-
-
+</pre><hr><pre>
 class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
 
     # Metoda __init__ jest dziedziczona z klasy Hand.
@@ -176,8 +172,7 @@ class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
                 print ( "Ręka {}: {} tworzy parę z {}".format(self.name, card, match) )
                 count = count + 1
         return count
-
-
+</pre><hr><pre>
 class OldMaidGame(CardGame):         # tworzymy naszą grę
 
     def play(self, names):
@@ -225,7 +220,7 @@ class OldMaidGame(CardGame):         # tworzymy naszą grę
             neighbor = (i + next) % n_hands
             if not self.hands[neighbor].is_empty():
                 return neighbor
-
+</pre><hr><pre>
 game = OldMaidGame()
 game.play(["Adam", "Bogdan", "Cezary"])
 </pre><hr>

@@ -65,9 +65,13 @@ class Frac:
 
     __rmul__ = __mul__              # int*frac
 
-    def __div__(self, other): pass  # frac1/frac2, frac/int
+    def __div__(self, other): pass  # frac1/frac2, frac/int, Python 2
 
-    def __rdiv__(self, other): pass # int/frac
+    def __rdiv__(self, other): pass # int/frac, Python 2
+
+    def __truediv__(self, other): pass  # frac1/frac2, frac/int, Python 3
+
+    def __rtruediv__(self, other): pass  # int/frac, Python 3
 
     # operatory jednoargumentowe
     def __pos__(self):  # +frac = (+1)*frac
@@ -78,6 +82,10 @@ class Frac:
     def __invert__(self): pass      # odwrotnosc: ~frac
 
     def __float__(self): pass       # float(frac)
+
+    def __hash__(self):
+        return hash(float(self))   # immutable fracs
+        # assert set([2]) == set([2.0])
 
 # Kod testujący moduł.
 

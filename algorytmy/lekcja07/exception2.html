@@ -97,7 +97,12 @@ raise IndexError("Nasz komunikat")
 # Utworzenie i zgłoszenie instancji klasy.
 # raise klasa
 raise IndexError
-raise               # ponowne zgłoszenie ostatniego wyjątku
+# Ponowne zgłoszenie ostatniego wyjątku.
+raise
+
+# Zgłoszenie nowego wyjątku z wykorzystaniem kontekstu starego wyjątku
+raise new_exception from old_exception   # Python 3
+raise new_exception from None
 
 # Dla wbudowanych wyjątków mamy równoważne formy.
 raise KeyError
@@ -154,10 +159,13 @@ przechwytuje instancje tej klasy, a także instancje wszystkich
 jej klas podrzędnych.
 
 <hr><pre>
-&gt;&gt;&gt; import exceptions          # Python 2.6
-&gt;&gt;&gt; help(exceptions)           # drzewo klas
+&gt;&gt;&gt; import exceptions   # Python 2.6+
+&gt;&gt;&gt; help(exceptions)   # drzewo klas
 </pre><hr><pre>
-BaseException                 # Python 2.5+
+&gt;&gt;&gt; import builtins   # Python 3, built-in functions, exceptions, and other objects
+&gt;&gt;&gt; help(builtins)
+</pre><hr><pre>
+BaseException
     +-- SystemExit
     +-- KeyboardInterrupt
     +-- GeneratorExit

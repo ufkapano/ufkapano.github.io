@@ -149,7 +149,8 @@ można wykonać przy pomocy wyjątków.
 
 <hr><pre>
 # Bezpieczna obsługa pliku.
-filename = raw_input("Podaj nazwę pliku: ")
+filename = raw_input("Podaj nazwę pliku: ")   # Python 2
+#filename = input("Podaj nazwę pliku: ")   # Python 3
 try:                          # pierwszy blok
     afile = open(filename, "r")
 except Exception:             # drugi blok (w razie wyjątku)

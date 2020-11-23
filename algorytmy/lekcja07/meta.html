@@ -44,6 +44,7 @@ Klasy otrzymują nową warstwę logiki.
 # Domyślnie klasy są konstruowane przy użyciu type().
 # Nazwa klasy jest łączona z wynikiem type(name, bases, clsdict), np.
 # MyClass = type("MyClass", (), {})
+# class MyClass: pass   # równoważnym kod
 
 MyClass = type("MyClass", (BaseClass,), {'attribute' : 42})
 
@@ -61,8 +62,8 @@ class Meta(type):        # dziedziczenie z 'type' w klasach w nowym stylu
         # zanim zostanie utworzona nowa klasa.
         return type.__new__(mcls, name, bases, clsdict)
 
-class C(object):
-    __metaclass__ = Meta   # składnia Pythona 2.6
+class C(object):   # klasy w nowym stylu
+    __metaclass__ = Meta   # składnia Pythona 2.6+
     # Teraz zamiast type(name, bases, clsdict)
     # do budowy klasy będzie użyte Meta.
 
@@ -94,7 +95,7 @@ class MyABC(object):   # tworzenie abstrakcyjnej klasy bazowej
 
     @abstractmethod
     def my_abstract_method(self, ...):
-        # Tu może byc jakaś implementacja.
+        # Tu może być jakaś implementacja.
         pass
 
     @abstractproperty

@@ -14,6 +14,12 @@
 <p>Prosty sposób na automatyczne sprawdzenie kodu:
 <br>assert result == expected_result
 
+<p>W zadaniach budujemy całe napisy, a nie wyświetlamy po kawałku.
+
+<p>W przypadku wykrycia błędów (np. nieprawidłowe argumenty) w Pythonie
+rzucamy wyjątkiem, np. raise ValueError("komunikat"),
+a nie wypisujemy komunikatów przez print.
+
 <h3>ZADANIE 4.1</h3>
 
 <p>Jaki będzie wynik poniższego kodu i dlaczego?
@@ -22,7 +28,7 @@
 X = "qwerty"
 
 def func():
-    print X
+    print ( X )
 
 func()
 </pre><hr><pre>
@@ -32,7 +38,7 @@ def func():
     X = "abc"
 
 func()
-print X
+print ( X )
 </pre><hr><pre>
 X = "qwerty"
 
@@ -41,7 +47,7 @@ def func():
     X = "abc"
 
 func()
-print X
+print ( X )
 </pre><hr>
 
 <h3>ZADANIE 4.2</h3>
@@ -49,6 +55,13 @@ print X
 <p>Rozwiązania zadań 3.5 i 3.6 z poprzedniego zestawu
 zapisać w postaci funkcji, które zwracają pełny string
 przez <em>return</em>.
+Funkcje nie powinny pytać użytkownika o dane, tylko korzystać z argumentów.
+
+<hr><pre>
+def make_ruler(n): pass
+
+def make_grid(rows, cols): pass
+</pre><hr>
 
 <h3>ZADANIE 4.3</h3>
 
@@ -98,7 +111,7 @@ jest sekwencją, wykonać przez <em>isinstance(item, (list, tuple))</em>.
 
 <pre>
 seq = [1,(2,3),[],[4,(5,6,7)],8,[9]]
-print flatten(seq)            # [1,2,3,4,5,6,7,8,9]
+print ( flatten(seq) )   # [1,2,3,4,5,6,7,8,9]
 </pre>
 
 </body>

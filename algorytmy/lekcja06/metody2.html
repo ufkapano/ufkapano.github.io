@@ -47,7 +47,7 @@ __new__  pierwsza metoda wywoływana przy inicjalizacji obiektu,
 
 __init__  konstruktor
 
-__del__  destruktor, działa gdy licznik referencji zejdzie do zera
+__del__  destruktor (finalizer), działa gdy licznik referencji zejdzie do zera
     i zaczyna pracować garbage collection;
     wyrażenie del x tylko zmniejsza licznik referencji o 1;
     wyrażenie del x _nie_ przekłada się na x.__del__();
@@ -64,9 +64,14 @@ __repr__  "oficjalna" reprezentacja obiektu przez string repr(x);
 
 __unicode__   wywoływane przez unicode(x);
 
-__format__(self, formatstr)   np. "Obiekt {}".format(x)
+__format__(self, formatstr)   np. "Obiekt {}".format(x);
 
-__hash__   wywoływane przez hash(x), zwraca int
+__hash__   wywoływane przez hash(x), zwraca int;
+    It is advised to mix together the hash values of the components 
+    of the object that also play a part in comparison of objects by packing 
+    them into a tuple and hashing the tuple.
+
+__bytes__   wywoływane przez bytes(x), zwraca obiekt bytes;
 
 # Operatory dwuargumentowe.
 __add__  dodawanie, x + y
@@ -179,6 +184,15 @@ __len__             # len(x)
 Długość kontenera, testy prawdziwości, jeśli nie ma __bool__.
 Metoda wymaga, aby zwracana wartość była typu int.
 
+__iter__            # iter(x)
+This method is called when an iterator is required for a container.
+
+__reversed__        # reversed(x)
+It should return a new iterator that iterates over all the objects 
+in the container in reverse order.
+Jeżeli __reversed__ nie zdefiniowano, wtedy reversed() korzysta z __len__ i __getitem__.
+
+# Zarządzanie atrybutami
 __setattr__(self, "attr", value)   # X.attr = value
 Przypisanie atrybutu do instancji.
 

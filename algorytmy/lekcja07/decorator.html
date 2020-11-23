@@ -268,11 +268,15 @@ class ModelMetaclass(type):
 class Model(object):
     __metaclass__ = ModelMetaclass   # Python 2
 
+#class Model(metaclass=ModelMetaclass): pass   # Python 3
+
 class A(Model):
     pass
 
 class B(A):   # teraz klasa B będzie zarejestrowana w models
     pass
+
+print ( list(models) )   # ['A', 'Model', 'B']
 </pre><hr>
 
 </body>
