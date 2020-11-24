@@ -64,10 +64,13 @@ public:
     MyQueue(); // default constructor
     ~MyQueue();
     MyQueue(const MyQueue& other); // copy constructor
+    MyQueue(MyQueue&amp;&amp; other); // move constructor
     MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
+    MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const; // checks if the container has no elements
     int size() const; // liczba elementow w kolejce
-    void push(const T& item); // dodanie na koniec, push_back()
+    void push(const T& item); // dodanie na koniec, push_back(item)
+    void push(T&amp;&amp; item); // dodanie na koniec, push_back(std::move(item))
     T& front(); // zwraca koniec, nie usuwa
     T& back(); // zwraca koniec, nie usuwa
     void pop(); // usuwa poczatek kolejki, pop_front()
@@ -100,12 +103,15 @@ public:
     } // default constructor
     ~MyQueue() { delete [] tab; }
     MyQueue(const MyQueue& other); // copy constructor
+    MyQueue(MyQueue&amp;&amp; other); // move constructor
     MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
+    MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const { return head == tail; }
     bool full() const { return (head + msize -1) % msize == tail; }
     int size() const { return (tail - head + msize) % msize; }
     int max_size() const { return msize-1; }
     void push(const T& item); // dodanie na koniec
+    void push(T&amp;&amp; item); // dodanie na koniec
     T& front() { return tab[head]; } // zwraca poczatek
     T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
     void pop(); // usuwa poczatek
@@ -116,6 +122,12 @@ public:
 template &lt;typename T&gt;
 void MyQueue&lt;T&gt;::push(const T& item) {
     tab[tail] = item;
+    tail = (tail + 1) % msize;
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void MyQueue&lt;T&gt;::push(T&amp;&amp; item) {
+    tab[tail] = std::move(item);
     tail = (tail + 1) % msize;
 }
 </pre><hr><pre>

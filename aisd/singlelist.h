@@ -49,7 +49,9 @@ public:
     const T& operator[](int pos) const; // odczyt L[pos]
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
     int insert(int pos, const T& item); // inserts item before pos,
-    // zwraca pozycje wstawionego elementu
+    // Jezeli pos=0, to wstawiamy na poczatek.
+    // Jezeli pos=size(), to wstawiamy na koniec.
+    // Zwraca pozycje wstawionego elementu.
 };
 
 template <typename T>

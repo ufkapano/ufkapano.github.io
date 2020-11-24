@@ -131,11 +131,17 @@ public:
     MyPriorityQueue(int s=10) { lst.reserve(s); } // default constructor
     ~MyPriorityQueue() { lst.clear(); }
     MyPriorityQueue(const MyPriorityQueue& other); // copy constructor
+    MyPriorityQueue(MyPriorityQueue&amp;&amp; other); // move constructor
     MyPriorityQueue& operator=(const MyPriorityQueue& other); // copy assignment operator, return *this
+    MyPriorityQueue& operator=(MyPriorityQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const { return lst.empty(); }
     int size() const { return lst.size(); } // liczba elementow w kolejce
     void push(const T& item) { // dodanie do kolejki
         lst.push_back(item);
+        std::push_heap(lst.begin(), lst.end());
+    }
+    void push(T&amp;&amp; item) { // dodanie do kolejki
+        lst.push_back(std::move(item));
         std::push_heap(lst.begin(), lst.end());
     }
     T& top() { return lst.front(); } // zwraca element najwiekszy, nie usuwa

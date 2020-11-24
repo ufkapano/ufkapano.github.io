@@ -29,10 +29,10 @@ public:
     void push_front(T&& item); // dodanie na poczatek
     void push_back(const T& item); // dodanie na koniec
     void push_back(T&& item); // dodanie na koniec
-    T& front(); // zwraca poczatek, nie usuwa
-    T& back(); // zwraca koniec, nie usuwa
-    void pop_front(); // usuwa poczatek
-    void pop_back(); // usuwa koniec
+    T& front(); // zwraca poczatek, nie usuwa, error dla pustej listy
+    T& back(); // zwraca koniec, nie usuwa, error dla pustej listy
+    void pop_front(); // usuwa poczatek, error dla pustej listy
+    void pop_back(); // usuwa koniec, error dla pustej listy
     void clear(); // czyszczenie listy z elementow
     void display(); // lepiej zdefiniowac operator<<
     void reverse(); // odwracanie kolejnosci
@@ -50,6 +50,8 @@ public:
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
     int insert(int pos, const T& item); // inserts item before pos,
     int insert(int pos, T&& item); // inserts item before pos,
+    // Jezeli pos=0, to wstawiamy na poczatek.
+    // Jezeli pos=size(), to wstawiamy na koniec.
     // zwraca pozycje wstawionego elementu
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L);
 };

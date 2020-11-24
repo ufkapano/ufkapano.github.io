@@ -59,12 +59,14 @@ public:
     MyStack(int s=10) { lst.reserve(s); } // default constructor
     ~MyStack() { lst.clear(); }
     MyStack(const MyStack& other); // copy constructor
+    MyStack(MyStack&amp;&amp; other); // move constructor
     MyStack& operator=(const MyStack& other); // copy assignment operator, return *this
-    bool empty() const { return lst.empty(); }
+    MyStack& operator=(MyStack&amp;&amp; other); // move assignment operator, return *this
     bool full() const { return lst.size() == lst.capacity(); }
     int size() const { return lst.size(); }
     int max_size() const { return lst.capacity(); }
     void push(const T& item) { lst.push_back(item); }
+    void push(T&amp;&amp; item) { lst.push_back(std::move(item)); }
     T& top() { return lst.back(); } // zwraca koniec, nie usuwa
     void pop() { lst.pop_back(); } // usuwa koniec
     void clear() { lst.clear(); }
