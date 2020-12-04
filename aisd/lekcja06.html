@@ -62,6 +62,7 @@ public:
     MyStack(MyStack&amp;&amp; other); // move constructor
     MyStack& operator=(const MyStack& other); // copy assignment operator, return *this
     MyStack& operator=(MyStack&amp;&amp; other); // move assignment operator, return *this
+    bool empty() const { return lst.empty(); } // checks if the container has no elements
     bool full() const { return lst.size() == lst.capacity(); }
     int size() const { return lst.size(); }
     int max_size() const { return lst.capacity(); }
