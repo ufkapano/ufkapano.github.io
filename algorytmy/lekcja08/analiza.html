@@ -66,12 +66,12 @@ górne</strong> funkcji.
 
 <ul>
 <li>stała O(1),
-<li>logarytmiczna O(log N),
-<li>liniowa O(N),
-<li>liniowo-logarytmiczna O(N log N),
-<li>kwadratowa O(N ** 2),
-<li>sześcienna O(N ** 3),
-<li>wykładnicza O(a ** N).
+<li>logarytmiczna O(log n),
+<li>liniowa O(n),
+<li>liniowo-logarytmiczna O(n log n),
+<li>kwadratowa O(n^2),
+<li>sześcienna O(n^3),
+<li>wykładnicza O(a^n).
 </ul>
 
 <h3>FUNKCJA SILNIA</h3>
@@ -94,7 +94,7 @@ T(n) = Tc + T(n-1)   dla n &gt;= 1
 
 T(n) = Tc + Tc + T(n-2) = 2*Tc + T(n-2),
 T(n) = n*Tc + T(0) = (n+1)*Tc.          # złożoność praktyczna
-Złożoność klasy O(N).                   # złożoność teoretyczna
+Złożoność klasy O(n).                   # złożoność teoretyczna
 </pre><hr><pre>
 def silnia(n):
     """Funkcja silnia w wersji iteracyjnej."""
@@ -107,25 +107,26 @@ def silnia(n):
 T(1) = Ta + Tc,
 T(n) = Ta + Tc + (n-1)*(Tc + 2*Ta),
 T(n) = Ta*(2*n - 1) + Tc*(n) dla n &gt; 1.
-Złożoność klasy O(N).
+Złożoność klasy O(n).
 </pre><hr>
 
-<h3>ZŁOŻONOŚĆ</h3>
+<h3>ZŁOŻONOŚĆ OBLICZENIOWA</h3>
 
-<p>Czasem opisuje się złożoność biorąc pod uwagę liczbę bitów danych B
-dostarczonych na wejście.
+<p>Złożoność obliczeniową należy opisywać biorąc pod uwagę liczbę bitów danych B
+dostarczonych na wejście. Takie podejście pomaga ustrzec się od błędów.
+Czasem można łatwo przejść w opisie od bitów B do innego, wygodniejszego parametru.
 
 <p>Przykład: Sprawdzić, czy liczba całkowita N jest liczbą pierwszą.
 Metoda sprawdzenia polega na dzieleniu liczby N kolejno przez 
-liczby 2, 3, 4, ..., [sqrt(N)].
+liczby 2, 3, 4, ..., |_sqrt(N)_|.
 
 <p>Pierwsza analiza złożoności: Mierzymy złożoność jako liczbę dzieleń
 liczba przez liczbę, co daje O(sqrt(N)) jednostek pracy.
 
 <p>Druga analiza złożoności: Do przedstawienia liczby N potrzebujemy
-B bitów, N = 2 ** B. W tej sytuacji złożoność wyrażona przez liczbę
-bitów wynosi O(sqrt(2 ** B)) = O(2 ** (B/2)).
-Złożoność jest wykładnicza, czyli algorytm jest powolny.
+B bitów, N = 2^B. W tej sytuacji złożoność wyrażona przez liczbę
+bitów wynosi O(sqrt(2^B)) = O(2^(B/2)) = O(1.4142^B).
+Złożoność obliczeniowa jest wykładnicza, czyli algorytm jest powolny.
 
 <h3>PROBLEMY ŁATWE I TRUDNE</h3>
 

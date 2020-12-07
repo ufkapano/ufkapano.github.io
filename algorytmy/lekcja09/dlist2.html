@@ -35,7 +35,7 @@ class DoubleList:
         self.tail = None
 
     def is_empty(self):
-        # return self.length == 0
+        #return self.length == 0
         return self.head is None
 
     def count(self):
@@ -62,9 +62,9 @@ class DoubleList:
         self.length += 1
 
     def remove_head(self):   # zwraca node
-        if self.head is None:
+        if self.is_empty():
             raise ValueError("pusta lista")
-        elif self.head is self.tail:
+        elif self.head is self.tail:   # length == 1
             node = self.head
             self.head = None
             self.tail = None
@@ -79,9 +79,9 @@ class DoubleList:
             return node
 
     def remove_tail(self):   # zwraca node
-        if self.head is None:
+        if self.is_empty():
             raise ValueError("pusta lista")
-        elif self.head is self.tail:
+        elif self.head is self.tail:   # length == 1
             node = self.tail
             self.head = None
             self.tail = None

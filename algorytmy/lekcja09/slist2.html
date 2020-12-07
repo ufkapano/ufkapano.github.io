@@ -44,34 +44,35 @@ class SingleList:
     """Klasa reprezentująca całą listę jednokierunkową."""
 
     def __init__(self):
-        self.length = 0         # nie trzeba obliczać za każdym razem
+        self.length = 0   # nie trzeba obliczać za każdym razem
         self.head = None
         self.tail = None
 
     def is_empty(self):
-        return self.length == 0
+        #return self.length == 0
+        return self.head is None
 
-    def count(self):      # tworzymy interfejs do odczytu
+    def count(self):   # tworzymy interfejs do odczytu
         return self.length
 
     def insert_head(self, node):
-        if self.length == 0:
-            self.head = self.tail = node
-        else:                   # dajemy na koniec listy
+        if self.head:   # dajemy na koniec listy
             node.next = self.head
             self.head = node
+        else:   # pusta lista
+            self.head = self.tail = node
         self.length += 1
 
     def insert_tail(self, node):   # klasy O(N)
-        if self.length == 0:
-            self.head = self.tail = node
-        else:                   # dajemy na koniec listy
+        if self.head:   # dajemy na koniec listy
             self.tail.next = node
             self.tail = node
+        else:   # pusta lista
+            self.head = self.tail = node
         self.length += 1
 
     def remove_head(self):          # klasy O(1)
-        if self.length == 0:
+        if self.is_empty():
             raise ValueError("pusta lista")
         node = self.head
         if self.head == self.tail:   # self.length == 1

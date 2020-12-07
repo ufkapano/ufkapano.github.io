@@ -147,7 +147,7 @@ b = ["b"]
 c = ["c"]
 for i in range(number):
     a.append(number-i)
-print a, b, c
+print ( "{} {} {}".format(a, b, c) )
 hanoi(number, a, b, c)
 </pre><hr><pre>
 # Inna wersja rozwiązania.
@@ -169,15 +169,15 @@ def hanoi(n, A, B, C):
 ['b'] ['a', 1] ['c', 3, 2]
 ['a'] ['b'] ['c', 3, 2, 1]
 </pre><hr><pre>
-Problem: ile należy wykonać ruchów pojedyńczymi krążkami, 
+Problem: ile ruchów pojedyńczymi krążkami należy wykonać, 
 by rozwiązać łamigłówkę?
 H(1) = 1,
 H(n) = 2 * H(n-1) + 1 dla n &gt; 1,
 H(n) = 2 * [2 * H(n-2) + 1] + 1 = 2 * 2 * H(n-2) + 2 + 1,
 H(n) = 2 * 2 * [2 * H(n-3) + 1] + 2 + 1 = 2 * 2 * 2 * H(n-3) + 2 * 2 + 2 + 1,
-H(n) = 2 ** (n-1) * H(1) + 2 ** (n-2) + ... + 2 ** 2 + 2 + 1,
-H(n) = 2 ** n - 1 dla n > 0.
-Złożoność klasy O(2 ** n).
+H(n) = 2^(n-1) * H(1) + 2^(n-2) + ... + 2^2 + 2 + 1,
+H(n) = 2^n - 1 dla n > 0.
+Złożoność obliczeniowa klasy O(2^n).
 </pre><hr>
 
 
