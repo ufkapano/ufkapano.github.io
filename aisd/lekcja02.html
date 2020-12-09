@@ -146,12 +146,11 @@ i sposób korzystania z narzędzia <em>make</em>.
 
 <hr><pre>
 $ ls                # zawartość katalogu z projektem
-atrapa.cpp  atrapa.h  main.cpp  main.h  Makefile
+atrapa.cpp  atrapa.h  main.cpp  Makefile
 
 # Zależności między plikami:
 # atrapa.cpp zawiera #include "atrapa.h"
-# main.h zawiera #include "atrapa.h"
-# main.cpp zawiera #include "main.h"
+# main.cpp zawiera #include "atrapa.h"
 
 $ make              # kompilacja
 g++ -Wall -std=c++11 -c main.cpp -o main.o
@@ -167,10 +166,10 @@ CC = g++
 # LIBS = -ll -lm
 LIBS =
 CFLAGS = -Wall -std=c++11
-# Pliki obiektowe.
+# Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o atrapa.o
-# Pliki naglowkowe.
-HFILES = $(patsubst %.o,%.h,$(OBJECTS))
+# Pliki naglowkowe - sa wlaczane do plikow *.cpp.
+HFILES = atrapa.h
 # Koncowy plik wykonywalny.
 TARGET = main.out
 
