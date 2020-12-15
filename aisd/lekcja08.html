@@ -50,14 +50,22 @@ Alternatywą są drzewa binarne samobalansujące się.
 //std::priority_queue&lt;int&gt; pq;   // domyslnie vector
 //std::priority_queue&lt;int, std::deque&lt;int&gt; &gt; pq;
 //std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; pq;
-
+</pre><hr><pre>
+// Własna funkcja porównująca.
 auto cmp = [](int left, int right) { return left &gt; right; };
 std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmp) &gt; pq(cmp);
+
 // https://en.cppreference.com/w/cpp/language/decltype
 // decltype() is useful when declaring types that are difficult
 // or impossible to declare using standard notation, like lambda-related
 // types or types that depend on template parameters. 
-
+</pre><hr><pre>
+// Wstawianie do kolejki par (priority, item).
+auto cmp = [](std::pair&lt;int,float&gt; left, std::pair&lt;int,float&gt; right) {
+    return left.first &lt; right.first; };
+std::priority_queue&lt; std::pair&lt;int,float&gt;, std::vector&lt; std::pair&lt;int,float&gt; &gt;,
+    decltype(cmp) &gt; pq(cmp);
+</pre><hr><pre>
 assert( pq.empty() );
 for (auto item : {1, 5, 4, 2, 3})
     pq.push(item);   // wstawienie do kolejki

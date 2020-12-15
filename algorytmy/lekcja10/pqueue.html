@@ -14,13 +14,13 @@
 (priorytetami), która pozwala na przeprowadzenie następujących operacji:
 
 <ul>
-<li>inicjalizacja pustej kolejki (__init__),
-<li>umieszczenie w kolejce nowego elementu (insert), 
-<li>usunięcie z kolejki elementu o największej wartości klucza (remove), 
-<li>sprawdzenie, czy kolejka jest pusta (is_empty),
-<li>zmiana priorytetu arbitralnie wskazanego elementu,
-<li>usunięcie arbitralnie wskazanego elementu,
-<li>połączenie dwóch kolejek priorytetowych w jedną.
+<li>Inicjalizacja pustej kolejki (konstruktor).
+<li>Umieszczenie w kolejce nowego elementu (insert).
+<li>Usunięcie z kolejki elementu o największej wartości klucza (remove).
+<li>Sprawdzenie, czy kolejka jest pusta (is_empty).
+<li>Zmiana priorytetu arbitralnie wskazanego elementu.
+<li>Usunięcie arbitralnie wskazanego elementu.
+<li>Połączenie dwóch kolejek priorytetowych w jedną.
 </ul>
 
 <p>Kolejka priorytetowa jest uogólnieniem stosu i kolejki, 
@@ -53,7 +53,7 @@ Operacja usuwania elementu będzie kosztowna.
 <li>Możemy w kolejce utrzymywać częściowe uporządkowanie na stercie.
 Wtedy operacje wstawiania i usuwania elementu będą wiązały się
 z pewną pracą.
-[zmiana priorytetu wymaga przebudowy stery]
+[zmiana priorytetu wymaga przebudowy sterty]
 </ul>
 
 <p>Na nasze potrzeby zakładamy, że interfejs kolejki priorytetowej
@@ -65,6 +65,25 @@ Sprawdzimy różne sposoby implementacji kolejki priorytetowej.
 Dla prostoty będziemy elementy porównywać bezpośrednio, choć można
 zmodyfikować kod tak, aby funkcja porównująca była parametrem
 określanym w chwili tworzenia kolejki.
+
+<h3>KOLEJKI PRIORYTETOWE W PYTHONIE</h3>
+
+<hr><pre>
+#from Queue import PriorityQueue   # Python 2
+from queue import PriorityQueue   # Python 3
+
+pq = PriorityQueue()
+# pq.put((priority, item))
+# _, item = pq.get()   # lowest first
+# pq.empty()   # czy pusta
+</pre><hr><pre>
+import heapq
+
+H = []   # zwykła lista Pythona
+# heapq.heappush(H, item)
+# item = heapq.heappop(H)   # lowest first
+# len(H) == 0   # czy pusta
+</pre><hr>
 
 <h3>IMPLEMENTACJA 1</h3>
 
@@ -107,7 +126,7 @@ for item in [5, 3, 8]:
     pq.insert(item)
 # Usuwanie elmentów z kolejki w kolejności: 8, 5, 3.
 while not pq.is_empty():
-    print pq.remove()
+    print ( pq.remove() )
 </pre><hr>
 
 <h3>IMPLEMENTACJA 2</h3>

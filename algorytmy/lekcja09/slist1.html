@@ -101,7 +101,7 @@ def print_backward(node):
         print ( node )
 </pre><hr><pre>
 def count_list(node):
-    """Obliczanie liczby węzłów na liście w czasie O(N)."""
+    """Obliczanie liczby węzłów na liście w czasie O(n)."""
     length = 0
     while node:
         length += 1
@@ -109,7 +109,7 @@ def count_list(node):
     return length
 </pre><hr><pre>
 def find_list(node, data):
-    """Wyszukiwanie elementu na liście w czasie O(N)."""
+    """Wyszukiwanie elementu na liście w czasie O(n)."""
     while node:
         if node.data == data:
             return node   # zwracamy węzeł z danymi
@@ -138,17 +138,17 @@ def insert_head(node, new_node):   # algorytm klasy O(1)
 # Zastosowanie.
 # head = insert_head(head, Node(33))
 </pre><hr><pre>
-def insert_tail(node, new_node):   # algorytm klasy O(N)
+def insert_tail(node, new_node):   # algorytm klasy O(n)
     """Wstawienie nowego węzła na koniec listy."""
     head = node
     last = None
-    while node:
+    while node:   # O(n)
         last = node
         node = node.next
     if last is None:      # lista była pusta
         return new_node
     else:                 # last jest ostatni
-        last.next = new_ode
+        last.next = new_node
         return head   # head się nie zmienił
 
 # Zastosowanie.
@@ -183,7 +183,7 @@ def reverse_list(node):   # zwraca nowy head
 <p>Następna funkcja wykonuje sortowanie węzłów listy metodą
 sortowania przez wstawianie. Elementy będą ustawione
 od największego do najmniejszego. Algorytm nie jest zbyt wydajny,
-ponieważ jest klasy O(N**2), ale ma walory dydaktyczne.
+ponieważ jest klasy O(n^2), ale ma walory dydaktyczne.
 Charakterystyczne jest przesuwanie widełek (before, after)
 wzdłuż listy, aby znaleźć miejsce do wstawienia węzła pomiędzy
 nimi. 

@@ -236,6 +236,38 @@ wybierania k największych elementów spośród N elementów,
 szczególnie dla małych k. Wystarczy zatrzymać algorytm
 sortowania przez kopcowanie po wybraniu z kopca k elementów.
 
+<h3>STERTY W PYTHONIE</h3>
+
+<hr><pre>
+import heapq
+import random
+
+H = []                     # creates an empty heap
+for item in [0, 2, 6, 5, 1, 4, 3]:
+    heapq.heappush(H, item)    # pushes a new item on the heap
+
+# item = heapq.heappop(H)    # pops the smallest item from the heap
+
+# item = H[0]          # smallest item on the heap without popping it
+
+# item1 = heapq.heapreplace(H, item2) 
+# pops and returns smallest item1, and adds new item2;
+# the heap size is unchanged
+
+# Mozna wystartowac z niepustej listy.
+L = list(range(7))
+random.shuffle(L)
+heapq.heapify(L)    # linear time, in-place
+# Ciekawe, ze po L.sort() jest poprawna sterta.
+
+# heapq.merge(*iterables) - zwraca generator
+# list(heapq.merge([1,3,5,7], [0,2,4,8], [5,10,15,20], [], [25]))
+# [0, 1, 2, 3, 4, 5, 5, 7, 8, 10, 15, 20, 25]
+
+# heapq.nlargest(n, iterable, key=None)
+
+# heapq.nsmallest(n, iterable, key=None)
+</pre><hr>
 
 </body>
 </html>

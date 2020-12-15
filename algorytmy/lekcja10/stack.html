@@ -32,6 +32,23 @@ Wydaje się, że nie jest ustalony jednolity sposób obsługi błędów.
 W Pythonie możemy zastosować mechanizm wyjątków lub zaimplementować
 inne rozsądne zachowanie (powiększenie stosu).
 
+<h3>STOSY W PYTHONIE</h3>
+
+<p>Najprostsza realizacja stosu to zwykła lista Pythona i operacje append i pop.
+
+<p>Inna implementacja stosu może korzystać z collections.deque i operacji
+len, clear, append+pop lub appendleft+popleft.
+
+<hr><pre>
+#from Queue import LifoQueue   # Python 2
+from queue import LifoQueue   # Python 3
+
+S = LifoQueue()
+# S.put(item)
+# item = S.get()
+# S.empty()   # czy pusta
+</pre><hr>
+
 <h3>IMPLEMENTACJA 1</h3>
 
 <p>Najpierw możemy wykorzystać standardowe listy Pythona
@@ -73,7 +90,7 @@ for item in ["a", 2, 3.5]:
     astack.push(item)
 # Zdejmowanie elementów ze stosu w kolejności 3.5, 2, "a".
 while not astack.is_empty():
-    print astack.pop()
+    print ( astack.pop() )
 </pre><hr>
 
 <h3>IMPLEMENTACJA 2</h3>
@@ -115,11 +132,8 @@ class Stack:
 import slist
 
 class Stack(slist.SingleList):
-
     # __init__ i is_empty są dziedziczone
-
     push = slist.SingleList.insert_head
-
     pop = slist.SingleList.remove_head
 </pre><hr>
 

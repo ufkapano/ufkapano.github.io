@@ -16,7 +16,7 @@ Przy przejściu z funkcji do metod jest problem z pustą listą.
 Nie można wywoływać metod, gdy węzeł jest równy None.
 Rozwiązaniem jest inna implementacja.
 
-<p>Innym problemem są operacje, które są klasy O(N), co powoduje,
+<p>Innym problemem są operacje, które są klasy O(n), co powoduje,
 że dla długich list będą powolne. Są to np. znajdowanie liczby 
 elementów na liście i wstawianie elementu na koniec listy.
 W podejściu obiektowym możemy rozwiązać te problemy wprowadzając
@@ -63,7 +63,7 @@ class SingleList:
             self.head = self.tail = node
         self.length += 1
 
-    def insert_tail(self, node):   # klasy O(N)
+    def insert_tail(self, node):   # klasy O(n)
         if self.head:   # dajemy na koniec listy
             self.tail.next = node
             self.tail = node

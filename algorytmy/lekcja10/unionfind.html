@@ -8,6 +8,9 @@
 
 <h1>Struktura zbiorów rozłącznych</h1>
 
+<p>STACS 1988, Gambosi, Italiano, Talamo,
+Getting back to the past in the union-find problem
+
 <h3>WPROWADZENIE</h3>
 
 <p>Struktura zbiorów rozłącznych jest wykorzystywana
@@ -146,10 +149,8 @@ class UnionFind:
         # Szukamy korzeni drzew.
         x = self.find(x)
         y = self.find(y)
-        if x == y:   # to samo drzewo
-            return
-        # Scalanie.
-        self.parent[x] = y
+        if x != y:   # scalanie
+            self.parent[x] = y
 </pre><hr>
 
 <p>Czas działania algorytmu zależy od natury wprowadzanych danych,

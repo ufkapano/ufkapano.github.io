@@ -27,6 +27,21 @@ to stosuje się jeszcze funkcję is_full().
 Sytuacje prowadzące do błędu: 
 przepełnienie kolejki, pobieranie elementu z pustej kolejki.
 
+<h3>KOLEJKI W PYTHONIE</h3>
+
+<hr><pre>
+#from Queue import Queue   # Python 2
+from queue import Queue   # Python 3
+
+Q = Queue()
+# Q.put(item)
+# item = Q.get()
+# Q.empty()   # czy pusta
+</pre><hr>
+
+<p>Inna implementacja kolejki może korzystać z collections.deque i operacji
+len, clear, append+popleft lub appendleft+pop.
+
 <h3>IMPLEMENTACJA 1</h3>
 
 <p>Implementacja kolejki FIFO za pomocą list Pythona.
@@ -66,7 +81,7 @@ for item in ["a", 2, 3.5]:
     aqueue.put(item)
 # Pobieranie elementów z kolejki w kolejności: "a", 2, 3.5
 while not aqueue.is_empty():
-    print aqueue.get()
+    print ( aqueue.get() )
 </pre><hr>
 
 <h3>IMPLEMENTACJA 2</h3>
@@ -152,7 +167,7 @@ class Queue:
             self.tail = None
         return data
 </pre><hr><pre>
-# Wykorzystanie klasy SingleList do bydowy kolejki.
+# Wykorzystanie klasy SingleList do budowy kolejki.
 import slist
 
 class Queue(slist.SingleList):
