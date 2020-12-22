@@ -10,7 +10,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Dla N liczb możemy wykonać N*(N-1)/2 porównań między nimi.
+<p>Dla n liczb możemy wykonać n*(n-1)/2 porównań między nimi.
 Jednak nie wszystkie porównania są niezbędne, aby posortować te liczby.
 Dla kilku przypadków sprawdzimy, ile maksymalnie porównań jest niezbędnych,
 a ile otrzymamy z podanego wzoru.
@@ -23,12 +23,12 @@ a ile otrzymamy z podanego wzoru.
 </ul>
 
 <hr><pre>
-N - liczba elementów do posortowania
-N! - liczba możliwych permutacji N elementów
+n - liczba elementów do posortowania
+n! - liczba możliwych permutacji n elementów
 k - liczba bitów (zero lub jeden)
 2**k - liczba możliwych ciągów k-elementowych zer i jedynek
 
-k     2**k     N!     N
+k     2**k     n!     n
 0        1      1     1
 1        2      2     2
 2        4
@@ -39,9 +39,9 @@ k     2**k     N!     N
 7      128    120     5
 </pre><hr>
 
-<p>Dla większej liczby N nie jest łatwo podać dokładną liczbę porównań.
-Okazuje się, że dla dużego N dobre algorytmy sortowania
-wymagają liczby porównań proporcjonalnej do N*log(N).
+<p>Dla większej liczby n nie jest łatwo podać dokładną liczbę porównań.
+Okazuje się, że dla dużego n dobre algorytmy sortowania
+wymagają liczby porównań proporcjonalnej do n*log(n).
 Zajmiemy się analizą sortowania kilku liczb.
 
 <p>Przy analizie wydajności algorytmów sortowania bierzemy pod uwagę
@@ -53,7 +53,7 @@ SPECYFIKACJA
 Problem: Sortowanie kilku liczb.
 
 WEJŚCIE
-Ciąg N liczb.
+Ciąg n liczb.
 
 WYJŚCIE
 Uporządkowany ciąg tych liczb od najmniejszej do największej.

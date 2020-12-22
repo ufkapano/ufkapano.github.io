@@ -11,7 +11,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Algorytm sortowania przez scalanie wymaga dodatkowego
-obszaru pamięci proporcjonalnego do liczby N sortowanych elementów.
+obszaru pamięci proporcjonalnego do liczby n sortowanych elementów.
 Sortowanie przez scalanie jest stabilne. Metoda dobrze
 nadaje się do sortowania danych dostępnych sekwencyjnie (listy). 
 Czas działania algorytmu nie zależy od sposobu
@@ -20,8 +20,8 @@ uporządkowania danych wejściowych.
 <ul>
 
 <li><strong>Dziel (Divide):</strong>
-Podziel N-elementową sekwencję do posortowania na dwie sekwencje
-o długości N/2 każda.
+Podziel n-elementową sekwencję do posortowania na dwie sekwencje
+o długości n/2 każda.
 
 <li><strong>Zwyciężaj (Conquer):</strong>
 Posortuj dwie podsekwencje rekurencyjnie wykorzystując
@@ -95,36 +95,36 @@ def merge(L, left, middle, right):
 
 <h3>ZŁOŻONOŚĆ</h3>
 
-<p>Czas sortowania listy o długości N oznaczamy przez T(N),
+<p>Czas sortowania listy o długości n oznaczamy przez T(n),
 przy czym T(1) = c.
 Z definicji algorytmu dostajemy zależność rekurencyjną
-<br>T(N) = 2 * T(N/2) + c * N,
-<br>gdzie c * N to czas scalenia dwóch uporządkowanych ciągów 
-w jeden ciąg N elementowy.
+<br>T(n) = 2 * T(n/2) + c * n,
+<br>gdzie c * n to czas scalenia dwóch uporządkowanych ciągów 
+w jeden ciąg n elementowy.
 
-<p> Z twierdzenia wynika, że czas T(N) jest rzędu O(N * log(N)).
+<p> Z twierdzenia wynika, że czas T(n) jest rzędu O(n*log(n)).
 Liczba porównań w algorytmie sortowania przez scalanie jest
-rzędu O(N * log(N)).
+rzędu O(n*log(n)).
 
 <hr><pre>
-|T(N)    c*N                   c*N
+|T(n)    c*n                   c*n
 |       /   \                /     \
-|   T(N/2)  T(N/2)      c*N/2       c*N/2
+|   T(n/2)  T(n/2)      c*n/2       c*n/2
 |                      /    \       /    \
-|                  T(N/4) T(N/4) T(N/4) T(N/4)
+|                  T(n/4) T(n/4) T(n/4) T(n/4)
 |
-|             c*N  ............................ c*N
+|             c*n  ............................ c*n
 |            /    \
-|       c*N/2       c*N/2  .................... c*N
+|       c*n/2       c*n/2  .................... c*n
 |      /    \       /    \
-|  c*N/4  c*N/4  c*N/4  c*N/4  ................ c*N
+|  c*n/4  c*n/4  c*n/4  c*n/4  ................ c*n
 |  /  \   /  \   /  \   /  \
 |
 |  | | | | | | | | | | | | | | | |
-|  c c c c c c c c c c c c c c c c  ........... c*N
+|  c c c c c c c c c c c c c c c c  ........... c*n
 |
-| Drzewo będzie miało log(N)+1 poziomów, a suma wyrazów
-| z każdego poziomu wynosi c*N.
+| Drzewo będzie miało log(n)+1 poziomów, a suma wyrazów
+| z każdego poziomu wynosi c*n.
 </pre><hr>
 
 <h3>KOMENTARZE</h3>
@@ -137,8 +137,8 @@ Dane posortowane nie będą wymagały w ogóle scalania.
 <p>Algorytm mergesort daje się łatwo zrównoleglić z uwagi
 na zastosowanie techniki dziel i zwyciężaj [CLRS].
 Zrównolegla się nie tylko rekurencyjny podział na listy,
-ale także etap scalania. Wtedy dla N procesorów
-czas sortowania jest O(log(N)).
+ale także etap scalania. Wtedy dla n procesorów
+czas sortowania jest O(log(n)).
 
 </body>
 </html>

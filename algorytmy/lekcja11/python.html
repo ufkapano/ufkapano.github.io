@@ -27,24 +27,45 @@ w Java SE 7 i na platformie Android.
 
 <hr><pre>
 # Jeżeli L to lista, to mamy wywołanie postaci
-# L.sort(cmp=None, key=None, reverse=False)
+# L.sort(cmp=None, key=None, reverse=False)   # Python 2
+# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
 
-L.sort()            # sortowanie listy napisów (duże litery najpierw)
+string_list.sort()   # sortowanie listy napisów (duże litery najpierw)
 
 # Potrzebujemy case-insensitive sort.
 # Stary sposób - określamy funkcję porównującą dwa obiekty.
 
-L.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
+string_list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
 
 # Nowy sposób (Python 2.4) - podajemy klucz, czyli jakby sposób 
 # patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
 # Sortowanie jest stabilne.
 
-L.sort(key=str.lower)
+string_list.sort(key=str.lower)
 
-# Sortowanie pod względem długości napisów.
+# Sortowanie pod względem długości napisów, malejąco.
 
-L.sort(key=len)
+string_list.sort(key=len, reverse=True)
+
+# Sortowanie obiektów względem atrybutów.
+
+student_list.sort(key=lambda student: student.grade)
+import operator
+student_list.sort(key=operator.attrgetter("grade"))
+
+# Sortowanie listy krotek względem pewnej pozycji.
+
+pair_list.sort(key=lambda pair: pair[1])
+import operator
+pair_list.sort(key=operator.itemgetter(1))
+
+# Transforming a comparison function to a key function.
+from functools import cmp_to_key   # Python 3.2+
+alist.sort(key=cmp_to_key(cmp_function))
+sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order
+
+# Sortowanie listy elementów L na bazie wartości ze słownika D.
+sorted(L, key=D.__getitem__)
 </pre><hr>
 
 <p>W bardziej złożonych sytuacjach można korzystać ze schematu
@@ -59,6 +80,7 @@ dla nieposortowanych podsekwencji.
 
 <hr><pre>
 # Sortowanie przy założeniu, że sekwencje mieszczą się w pamięci.
+# Usage: res = smallmerge(seq1, seq2, seq3)
 def smallmerge(*subsequences):
     result = []
     for seq in subsequences:
@@ -91,20 +113,43 @@ persons.append(Person("Lolek", 20))
 persons.append(Person("Bolek", 10))
 
 # Sortowanie wg nazwiska.
-persons.sort(key=lambda x: getattr(x, "name"))
+persons.sort(key=lambda x: x.name)   # atrybut zaszyty na stałe
+persons.sort(key=lambda x: getattr(x, "name"))   # atrybut można przekazać do sortowania
 persons.sort(key=attrgetter("name"))
 # [Person('Adam', 50), Person('Bolek', 10), Person('Edek', 10), Person('Lolek', 20)]
 
 # Sortowanie wg zarobków.
+persons.sort(key=lambda x: x.money)
 persons.sort(key=lambda x: getattr(x, "money"))
 persons.sort(key=attrgetter("money"))
 # [Person('Edek', 10), Person('Bolek', 10), Person('Lolek', 20), Person('Adam', 50)]
 
 # Sortowanie wg zarobków, potem nazwiska.
+persons.sort(key=lambda x: (x.money, x.name))
 persons.sort(key=lambda x: (getattr(x, "money"), getattr(x, "name")))
 persons.sort(key=attrgetter("money", "name"))
 # Zwraca krotkę (person.money, person.name).
 # [Person('Bolek', 10), Person('Edek', 10), Person('Lolek', 20), Person('Adam', 50)]
+</pre><hr>
+
+<h3>WZORZEC DSU</h3>
+
+<p>Jeżeli w Pythonie musimy posortować dane, to najlepiej znaleźć sposób 
+na wykorzystanie wbudowanej w listy Pythona metody sort().
+Często stosowanym rozwiązaniem jest implementacja wzorca DSU 
+(Decorate, Sort, Undecorate; dekoruj-sortuj-usuń dekorację), opisanego w [Receptury].
+Wzorzec opiera się na tym, że w Pythonie sekwencje są porównywane leksykograficznie.
+
+<hr><pre>
+# Wzorzec DSU na przykładzie sortowania stringów
+# bez uwzględniania wielkości liter.
+def case_insensitive_sort(string_list):
+    alist = [(x.lower(), i, x) for (i, x) in enumerate(string_list)]  # dekoruj
+    # Użycie 'i' daje sortowanie stabilne, a także pozwala sortować elementy,
+    # które nie mogą być sortowane bezpośrednio, np. liczby zespolone.
+    alist.sort()                                   # sortuj
+    #return [t[2] for t in alist]          # usuń dekorację
+    return [x for (low, i, x) in alist]   # usuń dekorację
 </pre><hr>
 
 </body>

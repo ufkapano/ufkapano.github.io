@@ -123,7 +123,8 @@ L4 = list(L1)       # jeszcze prościej
 
 <hr><pre>
 # help(list.sort)
-# L.sort(cmp=None, key=None, reverse=False)
+# L.sort(cmp=None, key=None, reverse=False)   # Python 2
+# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
 # Sortowanie stabilne IN PLACE.
 # Funkcja cmp(x, y) ma zwracać jedną wartość z (-1, 0, 1).
 
@@ -154,7 +155,8 @@ dla list, ale dla obiektów iterowanych.
 
 <hr><pre>
 # help(sorted)
-# sorted(iterable, cmp=None, key=None, reverse=False)
+# sorted(iterable, cmp=None, key=None, reverse=False)   # Python 2
+# sorted(iterable, /, *, key=None, reverse=False)   # Python 3
 # Zwraca nową posortowaną listę.
 
 # Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
@@ -178,27 +180,6 @@ alist.sort(key=operator.itemgetter(1))
 
 # Można też utworzyć nowa listę.
 blist = sorted(alist, key=operator.itemgetter(1))
-</pre><hr>
-
-<h3>WZORZEC DSU</h3>
-
-<p>Jeżeli w Pythonie musimy posortować dane, to najlepiej
-znaleźć sposób na wykorzystanie wbudowanej w listy Pythona
-metody sort().
-Często stosowanym rozwiązaniem jest implementacja
-wzorca DSU (Decorate, Sort, Undecorate;
-dekoruj-sortuj-usuń dekorację), opisanego w [Receptury].
-Wzorzec opiera się na tym, że w Pythonie sekwencje są porównywane
-leksykograficznie.
-
-
-<hr><pre>
-# Wzorzec DSU na przykładzie sortowania stringów
-# bez uwzględniania wielkości liter.
-def case_insensitive_sort(string_list):
-    alist = [(x.lower(), x) for x in string_list]  # dekoruj
-    alist.sort()                                   # sortuj
-    return [x[1] for x in alist]          # usuń dekorację
 </pre><hr>
 
 <h3>METODY LIST</h3>
