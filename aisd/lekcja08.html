@@ -60,7 +60,7 @@ std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmp) &gt; pq(cmp);
 // or impossible to declare using standard notation, like lambda-related
 // types or types that depend on template parameters. 
 </pre><hr><pre>
-// Wstawianie do kolejki par (priority, item).
+// Wstawianie do kolejki par (priority, item) [jak w Pythonie].
 auto cmp = [](std::pair&lt;int,float&gt; left, std::pair&lt;int,float&gt; right) {
     return left.first &lt; right.first; };
 std::priority_queue&lt; std::pair&lt;int,float&gt;, std::vector&lt; std::pair&lt;int,float&gt; &gt;,
@@ -173,6 +173,7 @@ Wydajność: wstawianie O(log n), usuwanie O(log n), odczyt największego O(1).
 <p>Przygotować prostą implementację realizującą ADT PRIORITY QUEUE 
 na bazie listy powiązanej pojedynczo. Lista jest stale uporządkowana, 
 a największy element znajduje się na początku listy. 
+Można wykorzystać klasę SingleList lub std::forward_list.
 Wydajność: wstawianie O(n), usuwanie O(1), odczyt największego O(1).
 
 <h3>ZADANIE 8.3</h3>

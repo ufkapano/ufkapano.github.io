@@ -208,17 +208,18 @@ Algorytm działa w miejscu i w czasie O(n).
 
 <p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
 najmniejszą i największą w drzewie BST.
+Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
 
 <h3>ZADANIE 10.2</h3>
 
 <p>Napisać funkcję find_successor() znajdujący następnik danego
-węzła przy przechodzeniu inorder.
+węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
 Węzły powinny posiadać łącze do rodzica.
 
 <h3>ZADANIE 10.3</h3>
 
 <p>Napisać funkcję find_predecessor() znajdujący poprzednik danego
-węzła przy przechodzeniu inorder.
+węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
 Węzły powinny posiadać łącze do rodzica.
 
 <h3>ZADANIE 10.4</h3>
@@ -228,6 +229,11 @@ Węzły powinny posiadać łącze do rodzica.
 <h3>ZADANIE 10.5</h3>
 
 <p>Napisać funkcję sprawdzającą, czy drzewo binarne jest drzewem BST.
+Nie wystarczy sprawdzić dla każdego węzła, czy zachodzi 
+node-&gt;left-&gt;value &lt;= node-&gt;value, oraz 
+node-&gt;value &lt;= node-&gt;right-&gt;value. 
+Musimy do węzła przekazać informację od rodzica o ograniczeniach 
+na wartość przechowywaną w węźle.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

@@ -157,7 +157,7 @@ void RandomBinaryTree&lt;T&gt;::bfs() {
     while (!Q.empty()) {
         node = Q.front(); // podgladamy
         Q.pop();        // usuwamy z kolejki
-        visit(node);
+        visit(node); // tu jest wlasciwe przetworzenie wezla
         if (node->left != nullptr)
             Q.push(node->left);
         if (node->right != nullptr)
@@ -220,7 +220,7 @@ void RandomBinaryTree&lt;T&gt;::iter_preorder() {
     while (!S.empty()) {
         node = S.top(); // podgladamy
         S.pop();        // usuwamy ze stosu
-        visit(node);
+        visit(node); // tu jest wlasciwe przetworzenie wezla
         if (node->right != nullptr) // najpierw prawe poddrzewo!
             S.push(node->right);
         if (node->left != nullptr)
