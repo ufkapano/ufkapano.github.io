@@ -30,43 +30,44 @@ class Edge:
     """Klasa dla krawędzi skierowanej z wagą."""
 
     def __init__(self, source, target, weight=1):
-        """Konstruktor krawędzi.."""
+        """Konstruktor krawędzi."""
         self.source = source
         self.target = target
         self.weight = weight
 
     def __repr__(self):
-        """Zwraca reprezentacje napisowa krawędzi.."""
+        """Zwraca reprezentację napisową krawędzi."""
         if self.weight == 1:
-            return "Edge(%s, %s)" % (
-                repr(self.source), repr(self.target))
+            return "Edge({}, {})".format(repr(self.source), repr(self.target))
         else:
-            return "Edge(%s, %s, %s)" % (
+            return "Edge({}, {}, {})".format(
                 repr(self.source), repr(self.target), repr(self.weight))
 
-    def __cmp__(self, other):
-        """Porównywanie krawędzi."""
-        if self.weight &gt; other.weight:
-            return 1
-        if self.weight &lt; other.weight:
-            return -1
-        if self.source &gt; other.source:
-            return 1
-        if self.source &lt; other.source:
-            return -1
-        if self.target &gt; other.target:
-            return 1
-        if self.target &lt; other.target:
-            return -1
-        return 0
+    def __eq__(self, other):
+        """Porównywanie krawędzi (e1 == e2)."""
+        return (self.source, self.target, self.weight) == (
+            other.source, other.target, other.weight)
+
+    def __ne__(self, other):
+        """Porównywanie krawędzi (e1 != e2)."""
+        return not self == other
+
+    def __lt__(self, other):
+        """Porównywanie krawędzi (e1 &lt; e2)."""
+        return (self.weight, self.source, self.target) &lt; (
+            other.weight, other.source, other.target)
+
+    def __le__(self, other):
+        """Porównywanie krawędzi (e1 &lt;= e2)."""
+        return (self.weight, self.source, self.target) &lt;= (
+            other.weight, other.source, other.target)
 
     def __hash__(self):
         """Krawędzie są hashowalne."""
-        #return hash(repr(self))
         return hash((self.source, self.target, self.weight))
 
     def __invert__(self):
-        """Zwraca krawędź o przeciwnym kierunku."""
+        """Zwraca krawędź o przeciwnym kierunku (~edge)."""
         return Edge(self.target, self.source, self.weight)
 </pre><hr><pre>
 class Graph:
@@ -133,16 +134,16 @@ len(graph)    # liczba wierzchołków grafu
 len(graph[node])   # stopień wierzchołka (graf nieskierowany)
 
 for node in graph:   # iterator po wierzchołkach
-    print "wierzchołek", node
+    print ( "wierzchołek {}".format(node) )
 
 for target in graph[source]:   # iterator po sąsiadach
-    print source, "sąsiaduje z", target
+    print ( "{} sąsiaduje z {}".format(source, target) )
 
 target in graph[source]   # bool, czy jest sąsiadem
 
 for source in graph:   # iteracja po krawędziach bez wag
     for target in graph[source]:
-        print "krawędź", (source, target)
+        print ( "krawędź {} {}".format(source, target) )
 
 sum(len(graph[node]) for node in graph)
 # liczba krawędzi dla grafu skierowanego

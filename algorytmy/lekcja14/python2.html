@@ -107,14 +107,14 @@ def list_edges(graph):
 
 def print_graph(graph):
     """Wypisuje postać grafu skierowanego ważonego na ekranie."""
+    L = []
     for source in graph:
-        print source, ":",
+        L.append("{} : ".format(source))
         for (target, weight) in graph[source]:
-            print "{}({})".format(target, weight),
-        print
+            L.append("{}({}) ".format(target, weight))
+        L.append("\n")
+    print ( "".join(L) )
 </pre><hr>
-
-
 
 </body>
 </html>

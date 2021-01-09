@@ -94,6 +94,18 @@ except NameError:   # Python 3
     integer_types = (int,)
     cmp = lambda x, y: (x > y) - (x < y)
 </pre><hr><pre>
+Sorting, list.sort() i sorted().
+Py2: są dwa parametry cmp i key.
+Py3: jest tylko key.
+UWAGI
+Trzeba używać parametru key.
+Nie można bezpośrednio użyć funkcji porównującej cmp(x, y).
+Rozwiązaniem w Pythonie 3 jest funkcja cmp_to_key() z modułu functools.
+
+from functools import cmp_to_key   # Python 3.2+
+
+alist.sort(key=cmp_to_key(cmp_function))
+</pre><hr><pre>
 The __contains__ method for range objects in Python 3.
 UWAGI
 Przyjmuję, że wyszukiwanie w liście jest wolne O(n) i zwykle korzystam
@@ -103,7 +115,7 @@ Raising exceptions.
 Python 2 dopuszcza starą składnię z przecinkiem:
 raise IOError, "file error"
 UWAGI
-Zawsze stosuję nową składnię z nawiasem (jak konstruktor):
+Zawsze stosować nową składnię z nawiasem (jak konstruktor):
 raise IOError("file error")
 </pre><hr><pre>
 Handling exceptions.
@@ -190,12 +202,6 @@ Py3: exec is a function.
 Metaklasy
 Py2: jest atrybut __metaclass__ w ciele klasy.
 Py3: jest parametr metaclass przekazywany w definicji klasy.
-</pre><hr><pre>
-Sorting, L.sort() i sorted().
-Py2: są dwa parametry cmp i key.
-Py3: jest tylko key.
-UWAGI
-Trzeba używać parametru key.
 </pre><hr><pre>
 Funkcja wbudowana reduce() z Pythona 2 znajduje się w module functools
 w Pythonie 3, ale w Pythonie 2 też jest w tym module. 

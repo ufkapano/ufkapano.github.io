@@ -56,16 +56,18 @@ student_list.sort(key=operator.attrgetter("grade"))
 # Sortowanie listy krotek względem pewnej pozycji.
 
 pair_list.sort(key=lambda pair: pair[1])
+
 import operator
 pair_list.sort(key=operator.itemgetter(1))
 
+# Sortowanie listy elementów L na bazie wartości ze słownika D.
+sorted(L, key=D.get)
+</pre><hr><pre>
 # Transforming a comparison function to a key function.
 from functools import cmp_to_key   # Python 3.2+
+
 alist.sort(key=cmp_to_key(cmp_function))
 sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order
-
-# Sortowanie listy elementów L na bazie wartości ze słownika D.
-sorted(L, key=D.__getitem__)
 </pre><hr>
 
 <p>W bardziej złożonych sytuacjach można korzystać ze schematu
