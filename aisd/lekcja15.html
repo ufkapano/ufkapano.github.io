@@ -54,6 +54,43 @@ są utworzone i nie będą usuwane.
 <li>Lista krawędzi. Pamięć O(m).
 </ul>
 
+<p>Propozycja interfejsu grafu bez wag z wierzchołkami typu int.
+Przyjmujemy, że utworzenie grafu oznacza jednocześnie utworzenie wierzchołków.
+Metoda delNode() usuwa jedynie krawędzie połączone z danym wierzchołkiem.
+
+<hr><pre>
+class Graph {
+    bool directed;
+    // reszta zależy od implementacji
+public:
+    Graph(int size, bool directed = false); // wierzchołki od 0 do size-1
+    ~Graph();
+    Graph(const Graph& other); // copy constructor
+    Graph(Graph&amp;&amp;);  // move constructor
+    Graph& operator=(const Graph& other); // copy assignment operator, return *this
+    Graph& operator=(Graph&amp;&amp;); // move assignment operator, return *this
+    bool is_directed() const { return directed; }
+    int getV() const; // zwraca liczbę wierzchołków
+    int getE() const; // zwraca liczbę krawędzi
+    bool addNode(int i);
+    bool hasNode(int i);
+    void delNode(int i);
+    void addEdge(int i, int j);
+    bool hasEdge(int i, int j);
+    void delEdge(int i, int j);
+    void clear(); // usuwa wszystkie krawędzie
+    static void visit(int i);
+    void DFS(int i) const;
+    void DFSUtil(int, bool*) const;
+    void BFS(int i) const;
+    friend std::ostream& operator&lt;&lt;(std::ostream&, const Graph&);
+};
+// Zwykle potrzebne są jeszcze 3 iteratory:
+// (1) iteracja po wierzchołkach,
+// (2) iteracja po krawędziach,
+// (2) iteracja po sąsiadach danego wierzchołka v.
+</pre><hr>
+
 <h3>ZADANIE 15.1</h3>
 
 <p>https://www.boost.org/doc/libs/1_72_0/libs/graph/doc/index.html
