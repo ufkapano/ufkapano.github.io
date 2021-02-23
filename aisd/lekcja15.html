@@ -72,17 +72,16 @@ public:
     bool is_directed() const { return directed; }
     int getV() const; // zwraca liczbę wierzchołków
     int getE() const; // zwraca liczbę krawędzi
-    bool addNode(int i);
-    bool hasNode(int i);
-    void delNode(int i);
-    void addEdge(int i, int j);
-    bool hasEdge(int i, int j);
-    void delEdge(int i, int j);
+    bool addNode(int v); // tylko test v
+    bool hasNode(int v); // tylko test v
+    void delNode(int v); // usuwa krawędzie połączone z v
+    void addEdge(int u, int v);
+    bool hasEdge(int u, int v);
+    void delEdge(int u, int v);
     void clear(); // usuwa wszystkie krawędzie
-    static void visit(int i);
-    void DFS(int i) const;
-    void DFSUtil(int, bool*) const;
-    void BFS(int i) const;
+    void visit(int v); // można np. wypisać wierzchołek v
+    void dfs(int v); // v to wierzchołek startowy
+    void bfs(int v); // v to wierzchołek startowy
     friend std::ostream& operator&lt;&lt;(std::ostream&, const Graph&);
 };
 // Zwykle potrzebne są jeszcze 3 iteratory:
