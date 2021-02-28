@@ -1,0 +1,183 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Jupyter</h1>
+
+<p><img src="img/jupyter.png" alt="[ jupyter ]" width="150" height="174">
+
+<p>https://jupyter.org/
+<br>Project Jupyter
+
+<p>https://ipython.org/
+<br>IPython. Interactive Computing
+
+<p>https://en.wikipedia.org/wiki/Notebook_interface
+
+<p>https://wiki.debian.org/Jupyter
+
+<p>https://snapcraft.io/install/jupyter/debian
+<br>How to install Project Jupyter on Debian
+<br>(1) Enable snapd
+<br>(2) Install Project Jupyter (sudo snap install jupyter)
+
+<p>https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+<br>Markdown Cheatsheet by Adam Pritchard
+
+<h3>INTRO</h3>
+
+<p>The name 'Jupyter' referred to 'Julia', 'Python' and 'R', 
+the initial languages which were implemented.
+
+<p>'IPython' (Interactive Python) provides a rich architecture 
+for interactive computing in Python.
+
+<p>'Project Jupyter' is a spin-off project from IPython.
+It consists of the notebook and other language-agnostic parts of IPython.
+It supports execution environments in several dozen languages
+(Python, Julia, R, C++, Scheme, Ruby).
+
+<p>'Jupyter Notebook' is a web-based interactive computational environment 
+for creating Jupyter notebook documents (JSON documents). 
+The notebook interface is used for various computational back ends
+(Mathematica, MATLAB, Maple, Python, Julia, Scala).
+A Jupyter Notebook can be converted to a number of open standard output formats 
+(HTML, presentation slides, LaTeX, PDF, ReStructuredText, Markdown, Python).
+
+<p>'JupyterLab' is the next-generation web-based user interface 
+for Project Jupyter. 
+
+<p>An interactive session in Jupyter consists of a 'frontend' (the console, 
+GUI or web interface in which code is entered and results displayed), 
+and a 'kernel' (the process responsible for executing your code).
+The frontend and kernel communicate using the ZMQ messaging library.
+
+<h3>INSTALLING JUPYTER IN LINUX</h3>
+
+<hr><pre>
+Three methods are available:
+(1) apt (Debian),
+(2) snap package,
+(3) conda (Anaconda).
+</pre><hr><pre>
+# Debian 10 packages: python-notebook (Python 2), python3-notebook (Python 3),
+# jupyter-notebook (5.7.8-1), jupyter-core.
+# /etc/jupyter/nbconfig - a directory with JSON files
+# ~/.jupyter - a directory with user config files
+
+$ jupyter-notebook   # run Jupyter, http://localhost:8888/tree
+[I 14:11:02.183 NotebookApp] Writing notebook server cookie secret to /run/user/1000/jupyter/notebook_cookie_secret
+[I 14:11:02.255 NotebookApp] Serving notebooks from local directory: /home/andrzej
+[I 14:11:02.255 NotebookApp] The Jupyter Notebook is running at:
+[I 14:11:02.256 NotebookApp] http://localhost:8888/?token=07117ae22d91019e6deff959a75a3ce78bc13b977178201e
+[I 14:11:02.256 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 14:11:02.262 NotebookApp] 
+    
+    To access the notebook, open this file in a browser:
+        file:///run/user/1000/jupyter/nbserver-28962-open.html
+    Or copy and paste one of these URLs:
+        http://localhost:8888/?token=07117ae22d91019e6deff959a75a3ce78bc13b977178201e
+
+# Stoping Jupyter from the Terminal
+# (the Quit button in the browser can be used).
+
+^C[I 14:20:02.390 NotebookApp] interrupted
+Serving notebooks from local directory: /home/andrzej
+0 active kernels
+The Jupyter Notebook is running at:
+http://localhost:8888/?token=07117ae22d91019e6deff959a75a3ce78bc13b977178201e
+Shutdown this notebook server (y/[n])? y
+[C 14:20:04.384 NotebookApp] Shutdown confirmed
+[I 14:20:04.385 NotebookApp] Shutting down 0 kernels
+
+$ man jupyter-notebook
+$ jupyter-notebook list   # list currently running notebook servers
+$ jupyter-notebook --help
+$ jupyter-notebook stop   $ stop currently running notebook server for a given port
+</pre><hr><pre>
+# https://snapcraft.io/install/jupyter/debian
+# Installing Jupyter Notebook with snap.
+
+$ snap find jupyter
+Name            Version   Publisher        Notes  Summary
+jupyter         1.0.0     projectjupyter✓  -      Jupyter metapackage. Install all the Jupyter components in one go.
+root-framework  v6-22-06  james-carroll    -      An open-source data analysis framework used by high energy physics and others.
+jupyter-aj      0.0.1     mckilroy         -      Simple jupyter App for special control
+$ sudo snap install jupyter
+</pre><hr><pre>
+# Installing Jupyter Notebook with conda.
+
+conda install -c conda-forge notebook
+</pre><hr><pre>
+# Installing Jupyter Notebook with pip.
+
+pip install notebook
+
+jupyter notebook     # run the notebook in your browser
+</pre><hr><pre>
+# Installing JupyterLab with conda.
+
+conda install -c conda-forge jupyterlab
+</pre><hr><pre>
+# Installing JupyterLab with pip.
+
+pip install jupyterlab
+</pre><hr>
+
+<h3>INSTALLING JUPYTER IN WINDOWS 10</h3>
+
+<p>https://medium.com/@kswalawage/install-python-and-jupyter-notebook-to-windows-10-64-bit-66db782e1d02
+
+<hr><pre>
+First install Python 3.9 from www.python.org.
+
+Set 'Python39' path and 'Python39/Scripts' path to environment variable.
+
+Install 'virtualenv' using 'pip install virtualenv'.
+
+Upgrade pip using 'python -m pip install --upgrade pip'.
+
+Install Jupyter using 'python -m pip install jupyter'.
+
+Run Jupyter Notebook using 'jupyter notebook'.
+
+Start the notebook server and popup dashboard in browser using 
+'localhost:8888/tree' url.
+
+Create your first notebook using dashboard.
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<hr><pre>
+# IPython in Debian 10 (ipython for Python 2.7, ipython3 for Python 3.7).
+
+$ ipython
+Python 2.7.16 (default, Oct 10 2019, 22:02:15) 
+Type "copyright", "credits" or "license" for more information.
+
+IPython 5.8.0 -- An enhanced Interactive Python.
+?         -> Introduction and overview of IPython's features.
+%quickref -> Quick reference.
+help      -> Python's own help system.
+object?   -> Details about 'object', use 'object??' for extra details.
+
+In [1]: a = [1,2,3]
+
+In [2]: a
+Out[2]: [1, 2, 3]
+
+In [3]: import math
+
+In [4]: math.sqrt(3)
+Out[4]: 1.7320508075688772
+
+In [5]: quit()
+</pre><hr>
+
+</body>
+</html>

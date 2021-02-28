@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>History of Python</h1>
+
+<p>https://www.python.org/
+
+<p>https://en.wikipedia.org/wiki/Python_(programming_language)
+
+<h3>WHAT IS PYTHON?</h3>
+
+<p>Python is a general purpose, interpreted, high-level, and
+open source computer programming language.
+
+<p>The creator of Python is Guido van Rossum.
+His title given by the Python community is
+'Benevolent Dictator for Life' (BDFL).
+
+<p><img src="img/GvR.jpg" alt="[ GvR ]" width="160" height="240">
+
+<p>The Python Software Foundation (2001) is responsible for 
+developing the core Python distribution, managing intellectual rights, 
+developer conferences including 'PyCon', and raising funds.
+
+<p>Python's development is conducted largely through the 
+'Python Enhancement Proposal' (PEP) process, the primary mechanism 
+for proposing major new features, collecting community input on issues 
+and documenting Python design decisions.
+Python coding style is covered in PEP 8.
+
+<p>Python was named after the BBC TV show 'Monty Python's Flying Circus'.
+
+<p>Python's release culture: X.Y.Z
+<br>X is a main branch ('earth-shattering'), X=2 or X=3 today,
+<br>Y denotes major releases (new features), 2.7 or 3.9 today,
+<br>Z denotes bug-fix releases.
+
+<h3>FEATURES</h3>
+
+<ul>
+<li>Portability (mainstream operating systems are supported).
+<li>Code readability, white spaces are significant
+(a more uniform style is enabled).
+<li>Object-oriented approach.
+<li>Dynamic types, high-level builtin datatypes.
+<li>Automatic memory management with garbage collection.
+<li>Multiple programming paradigms are supported
+(procedural, object-oriented, functional programming).
+<li>A comprehensive standard library ('batteries included').
+<li>Growing Python community (many tutorials, blogs).
+<li>Many people consider using Python a pleasure!
+</ul>
+
+<h3>APPLICATION DOMAINS</h3>
+
+<ul>
+<li>System programming (processes, administration tasks)
+<li>GUI programming
+<li>Internet programming
+<li>Scientific programming (machine learning)
+<li>Education (Python as the first programming language you learn)
+<li>Integration (mixing Python with other languages)
+<li>Database management
+</ul>
+
+<h3>SHORTCOMINGS</h3>
+
+<p>https://wiki.python.org/moin/GlobalInterpreterLock
+
+<p>https://realpython.com/python-gil/
+
+<p>Speed. But:
+<br>(a) Some parts of Python run with C speed (specialized libraries).
+<br>(b) Coding time is reduced, many ideas can be implemented and tested
+(making working prototypes).
+<br>(c) Sometimes there are other slow components: internet connection,
+database response, etc.
+<br>(d) Faster algorithms can be used.
+<br>(e) There are tools to improve the Python performance:
+compilation with Cython, compilation 'just in time' with Numba, caching.
+
+<p>Python GIL (Global Interpreter Lock). 
+<br>It is a mutex (or a lock) that protects access to Python objects, 
+preventing multiple threads from executing Python bytecodes at once.
+This mutex is necessary mainly because CPython's memory management 
+is not thread-safe [threads share the same memory].
+<br>(a) Luckily, many potentially blocking or long-running operations, 
+such as I/O, image processing, and NumPy number crunching, 
+happen outside the GIL.
+<br>(b) The most popular way to avoid GIL is to use a multiple processes 
+instead of threads (a 'multiprocessing' module). 
+<br>(c) One can use alternative Python interpreters, not CPython.
+
+<h3>PYTHON IMPLEMENTATIONS</h3>
+
+<p>https://www.python.org/download/alternatives/
+
+<ul>
+<li>CPython (the reference implementation written in C and Python).
+<li>IronPython (Python written in C#, running on .NET).
+<li>Jython (Python written in Java for the Java Virtual Machine).
+<li>PyPy (a fast Python implementation with a JIT compiler, 
+written in RPython [Restricted Python]).
+<li>Stackless Python (branch of CPython supporting microthreads).
+<li>MicroPython (Python running on micro controllers).
+</ul>
+
+<h3>HISTORY</h3>
+
+<p>Beginnig: December 1989, a 'hobby' programming project based on ABC language.
+<br>Python 1.0, released 1994-01-26
+<br>Python 2.0, released 2000-10-16
+<br>Python 2.1, released 2002-04-15
+<br>Python 2.2, released 2001-12-21
+<br>Python 2.3, released 2003-07-29
+<br>Python 2.4, released 2004-11-30
+<br>Python 2.5, released 2006-09-19
+<br>Python 2.6, released 2008-10-01
+<br>Python 2.7, released 2010-07-03
+<br>Python 2.8, it will never be released
+<br>Python 3.0, released 2008-12-04
+<br>Python 3.1, released 2009-06-27
+<br>Python 3.2, released 2011-02-20
+<br>Python 3.3, released 2012-09-29
+<br>Python 3.4, released 2014-03-17
+<br>Python 3.5, released 2015-09-13
+<br>Python 3.6, released 2016-12-23
+<br>Python 3.7, released 2018-06-27
+<br>Python 3.8, released 2019-10-14
+<br>Python 3.9, released 2020-10-05
+<br>Python 3.10, planned 2021-10-04
+
+
+</body>
+</html>

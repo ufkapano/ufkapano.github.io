@@ -1,0 +1,103 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>PyCharm IDE</h1>
+
+<p><img src="img/pycharm.png" alt="[ pycharm ]" width="128" height="128">
+
+<p>https://www.jetbrains.com/pycharm/
+<br>PyCharm, The Python IDE for Professional Developers.
+
+<p>https://www.jetbrains.com/help/pycharm/2021.1/quick-start-guide.html
+
+<p>https://tecadmin.net/how-to-install-pycharm-on-debian-10/
+<br>How to Install PyCharm on Debian 10.
+
+<p>https://ubuntu.com/tutorials/basic-snap-usage-pl
+<br>Ubuntu Tutorials: Podstawy korzystania ze snapów.
+
+<p>https://snapcraft.io/tutorials/advanced-snap-usage
+<br>Advanced snap usage.
+
+<p>https://linuxiarze.pl/snap/
+
+<h3>INTRO</h3>
+
+<p>PyCharm is the Python IDE with many useful features.
+It has an intelligent Python assistance like smart code completion, 
+code inspections, on-the-fly error highlighting and quick-fixes, 
+and rich navigation capabilities.
+Supported languages: Python 2.7, Python 3.6+.
+
+<p>PyCharm is available in community (free, open-source) and professional 
+editions (licence).
+
+<p>In PyCharm you are working within the context of a project.
+There are three options to start working on a project:
+<br>(1) Open an existing project
+<br>(2) Check out a project from version control
+<br>(3) Create a new project
+
+
+<h3>LINUX DEBIAN 10</h3>
+
+<p>The PyCharm community and professional editions are available 
+as snap package.
+You must have Python installed on your system
+and sudo privileged account access.
+
+<p>Snap is a software packaging and deployment system developed by Canonical 
+for the operating systems that use the Linux kernel.
+
+<p>Snap Store is a graphical desktop application for discovering, 
+installing and managing snaps on Linux.
+Snap Store is based on GNOME Software, optimized for the Snap experience.
+
+<hr><pre>
+$ sudo apt update
+$ sudo apt install snapd   # install snapd
+$ sudo snap install core
+$ sudo snap install snap-store   # install Snap Store
+# /snap folder was created.
+
+$ snap find hello      # finding 'hello' applications
+
+$ sudo snap install hello-world
+
+$ snap find pycharm
+Name                  Version   Publisher   Notes    Summary
+pycharm-community     2020.3.3  jetbrains✓  classic  Python IDE for Professional Developers
+pycharm-professional  2020.3.3  jetbrains✓  classic  Python IDE for Professional Developers
+pycharm-educational   2020.3.2  jetbrains✓  classic  Easy and Professional Tool to Learn & Teach Programming with Python
+
+$ snap list     # list installed snaps
+
+$ sudo snap refresh   # update all snaps
+
+$ sudo snap revert hello-world   # back to the previous version
+
+$ sudo snap remove hello-world
+</pre><hr><pre>
+# Install PyCharm community edition.
+
+$ sudo snap install pycharm-community --classic
+
+# Run PyCharm: /snap/bin/pycharm-community
+</pre><hr>
+
+<p>It is possible to install PyCharm from a tar.gz file:
+pycharm-community-2020.3.3.tar.gz (457 MB).
+
+<p>https://www.jetbrains.com/help/pycharm/installation-guide.html
+
+<h3>WINDOWS 10</h3>
+
+<p>Install PyCharm with Anaconda.
+
+</body>
+</html>

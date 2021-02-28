@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Python in Linux</h1>
+
+<p><img src="img/debian.png" alt="[ debian ]" width="100" height="130">
+
+<p>https://www.debian.org/
+<br>Debian. The universal operating system.
+
+<h3>INTRO</h3>
+
+<p>Good news: Python is probably installed in your system!
+
+<hr><pre>
+# Open a Terminal window.
+
+$ python
+Python 2.7.16 (default, Oct 10 2019, 22:02:15) 
+[GCC 8.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'/usr/bin/python'
+&gt;&gt;&gt; quit()     # back to the shell
+$
+
+$ python3
+Python 3.7.3 (default, Jul 25 2020, 13:03:44) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'/usr/bin/python3'
+&gt;&gt;&gt; quit()
+$
+</pre><hr>
+
+<p>Three systems for managing Python packages can be used in Linux:
+<br>(1) apt (Debian) or rpm (Red Hat),
+<br>(2) pip,
+<br>(3) conda (Anaconda).
+
+<hr><pre>
+# Info about your system.
+# uname - get name and information about current kernel
+
+$ uname --all     # on Dell Latitude 5501 64-bit
+Linux debian 4.19.0-14-amd64 #1 SMP Debian 4.19.171-2 (2021-01-30) x86_64 GNU/Linux
+
+$ uname --all     # on Toshiba Tecra A7 32-bit
+Linux debian 4.19.0-11-686-pae #1 SMP Debian 4.19.146-1 (2020-09-17) i686 GNU/Linux
+
+$ env     # if no COMMAND, print the resulting environment
+# ... selected variables ...
+SHELL=/bin/bash
+LANGUAGE=pl_PL.UTF-8
+LOGNAME=andrzej
+HOME=/home/andrzej
+LANG=pl_PL.UTF-8
+PYTHONPATH=/home/andrzej/python_modules:...   # 
+USER=andrzej
+LC_ALL=pl_PL.UTF-8
+PATH=/usr/local/bin:/usr/bin:/bin:/usr/local/games:/usr/games
+
+$ cd        # back to the home directiory
+
+$ less .bashrc     # setting PYTHONPATH
+# ... selected lines ...
+if [ -n "${PYTHONPATH}" ] ; then
+    PYTHONPATH="${PYTHONPATH}:$HOME/python_modules"
+else
+    PYTHONPATH="$HOME/python_modules"
+fi
+export PYTHONPATH
+export LC_ALL="pl_PL.UTF-8"
+export LANGUAGE="pl_PL.UTF-8"
+</pre><hr>
+
+<h3>DESKTOP ENVIRONMENTS</h3>
+
+<p>https://www.tecmint.com/best-linux-desktop-environments/
+
+<p>A Desktop Environment is a collection of different user and system 
+programs running on top of an operating system, and share a common GUI 
+(Graphical User Interface), also known as a graphical shell.
+
+<p>Parts of a desktop environment:
+<br>a window manager,
+<br>a file manager,
+<br>desktop notifications,
+<br>launchers,
+<br>a display manager,
+<br>a session manager,
+<br>configuration tools.
+
+<p>Most popular Linux desktop environments:
+<br>GNOME 3 Desktop
+<br>KDE Plasma 5
+<br>Cinnamon Desktop
+<br>MATE Desktop
+<br>Xfce Desktop (lightweight)
+<br>LXQt Desktop (lightweight)
+
+<h3>DEBIAN APT</h3>
+
+<p>APT is Advanced Package Tool, the main command-line package manager 
+for Debian and its derivatives.
+
+<p>'Synaptic' is a graphical interface to the Debian package management system.
+<br>[run /usr/bin/synaptic-pkexec as 'root']
+
+<p>Command-line tools dedicated to package management in Debian: 
+dselect, aptitude, apt-get, apt.
+
+</body>
+</html>

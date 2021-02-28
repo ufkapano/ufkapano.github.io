@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>The Python REPL (CLI)</h1>
+
+<p>https://en.wikipedia.org/wiki/Command-line_interface
+<br>Command-line interface
+
+<p>https://problemsolvingwithpython.com/
+<br>Problem Solving with Python (book).
+
+<h3>CONCEPTS</h3>
+
+<ul>
+<li>Open and close the Python REPL
+<li>Compute mathematical calculations
+<li>Use variables in calculations
+<li>Import the math and statistics modules from the Python Standard Library and use their functions
+</ul>
+
+<h3>INTRO</h3>
+
+<p>A command-line interface (CLI) processes commands to a computer program 
+in the form of lines of text. The program which handles the interface 
+is called a command-line interpreter or command-line processor.
+
+<p>An operating system CLI: UNIX/Linux (sh, ksh, csh, bash, tcsh, etc.), 
+Windows (CMD.EXE, Power Shell).
+
+<p>An application CLI: Gnuplot, GNU Octave, MATLAB.
+
+<p>A language CLI: Python, Forth, LISP, Rexx, BASIC.
+
+<p>REPL (read-eval-print loop) or a language shell, is a simple interactive 
+computer programming environment that takes single user inputs, executes them, 
+and returns the result to the user.
+The Python REPL (the Python prompt) can be used as a calculator.
+
+<p>A command prompt (or just prompt) is a sequence of (one or more) 
+characters used in CLI to indicate readiness to accept commands
+[Python (&gt;&gt;&gt;), Linux ($ or #), Windows (&gt;)].
+
+<h3>DEBIAN 10</h3>
+
+<hr><pre>
+$ python             # run Python 2, the same for 'python2' or 'python2.7'
+Python 2.7.16 (default, Oct 10 2019, 22:02:15) 
+[GCC 8.3.0] on linux2
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; 23 + 34     # comments after '#' are ignored
+57
+&gt;&gt;&gt; _ + 12      # '_' (underscore) keeps the last result (read-only)
+69
+&gt;&gt;&gt; a = 2 ; b = 5     # two statements are separated by ;
+# results of assignments are not printed
+&gt;&gt;&gt; a * b
+10
+&gt;&gt;&gt; 1 + 2 + \       # breaking the line with the backslash ...
+... 4 - 3                     # ... continued
+4
+&gt;&gt;&gt; (10 + 12 +     # open "(" or "[" or "{" is more readable
+... 13)                     # ... continued
+35
+&gt;&gt;&gt; [Ctrl]+[d]     # or quit(), the end of the work 
+$                          # back to the shell
+</pre><hr><pre>
+$ python3     # the same for 'python3.7'
+Python 3.7.3 (default, Jul 25 2020, 13:03:44) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; for i in [1, 2, 3]:   # a compound statement
+...     print (i)
+...                      # an empty line required
+1
+2
+3
+&gt;&gt;&gt; import math      # math functions and constants
+&gt;&gt;&gt; help(math)       # exit with [q]
+&gt;&gt;&gt; help(math.sin)
+&gt;&gt;&gt; math.pi
+3.1415926535897931
+&gt;&gt;&gt; math.sqrt(2) / 2.0   # using dot
+0.70710678118654757
+&gt;&gt;&gt; [Ctrl]+[d]     # or quit(), the end of the work 
+$                          # back to the shell
+</pre><hr>
+
+<h3>WINDOWS 10</h3>
+
+
+
+</body>
+</html>
