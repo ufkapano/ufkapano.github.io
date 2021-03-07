@@ -1,0 +1,172 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numbers</h1>
+
+<h3>INTRO</h3>
+
+<p>There are three distinct numeric types: 
+integers, floating point numbers, and complex numbers.
+
+<p>Mathematical modules: math, cmath, random, numpy, scipy.
+
+<h3>INTEGERS</h3>
+
+<p>Operations on integers are exact.
+
+<p>Python 2: 'int' (small integers), 'long' (unlimited precision, the 'L' suffix)
+
+<p>Python 3: 'int' (unlimited precision, the 'L' suffix is never used)
+
+<p>An integer is an abstract notion, it can be written in numeral systems
+with different bases.
+The most common number base is decimal (base 10).
+Other frequently used bases include binary (base 2),
+octal (base 8), and hexadecimal (base 16). 
+In hexadecimal base the following letters are used: 0-9, a-f or A-F
+(1 hex digit per 4 bits).
+
+<hr><pre>
+0, 1, -4 
+12345678901234567890   # 'long' in Py2
+100_000_000_000   # grouping in integer literals (Py3.6+)
+
+027         # base 8, 2*8+7=23 base 10
+0x17, 0X17   # base 16, 1*16+7=23 base 10
+hex(23)   # returns a string '0x17'
+(15).as_integer_ratio()   # (15, 1), Py3.8+
+
+# int(x[, base]) - using a constructor
+int("32"), int(2.345), int(-3.456)
+int("111", 2)   # base 2, 7 base 10
+int("20", 16), 0x20  # base 16, 32 base 10
+
+# Division
+5 % 2, 5 / 2, 5 // 2
+</pre><hr><pre>
+import sys
+
+sys.getsizeof(10)         # 24 bytes
+sys.getsizeof(pow(10, 10))   # 24 bytes
+sys.getsizeof(pow(10, 20))   # 36 bytes
+sys.getsizeof(pow(10, 30))   # 40 bytes
+sys.getsizeof(10.0)   # 24 bytes
+sys.getsizeof(1e20)   # 24 bytes
+sys.getsizeof(1e30)   # 24 bytes
+
+a = 12345678901234567890
+float(a)   # 1.2345678901234567e+19
+int(float(a))   # 12345678901234567168 != a
+</pre><hr><pre>
+# Bitwise operations on integers.
+
+x | y   # bitwise 'or' of x and y
+x ^ y   # bitwise 'exclusive or' of x and y
+x &amp; y   # bitwise 'and' of x and y
+x &lt;&lt; n   # x shifted left by n bits, equivalent to multiplication by pow(2, n)
+x &gt;&gt; n   # x shifted right by n bits, equivalent to floor division by pow(2, n)
+~x       # the bits of x inverted
+</pre><hr>
+
+<h3>FLOATING POINT NUMBERS</h3>
+
+<p>Automatic conversions to a wider type
+[int + float = float, float + complex = complex].
+
+<hr><pre>
+0., .2, -3.45, 2.43e+23
+3.14_15_93   # grouping in floating point literals (Py3.6+)
+
+# float(x) - using a constructor
+float("3.14159"), float(234)
+float(1.0+2.j)   # TypeError
+
+# Numbers are objects!
+(1.5).as_integer_ratio()   # (3, 2)
+(1.2).as_integer_ratio()   # (5404319552844595, 4503599627370496), not (6, 5)
+
+(-2.0).is_integer()   # True
+(3.2).is_integer()   # False
+
+# Division
+5.0 % 2.0, 5.0 / 2.0, 5.0 // 2.0
+</pre><hr>
+
+<h3>COMPLEX NUMBERS</h3>
+
+<p>Complex numbers have a real and imaginary part, which are each 
+a floating point number.
+
+<hr><pre>
+0j, 2+.3j, 8.9-7J
+z = 5+1j, z.real, z.imag   # (5+1j), 5, 1
+z.conjugate()   # (5-1j)
+abs(z)   # 5.0990195135927845, sqrt((z.real)**2 + (z.imag)**2)
+
+# complex(real=0, imag=0) - using a constructor
+complex(5), complex(2, 3)   # (5+0J), (2+3J)
+</pre><hr>
+
+<h3>QUATERNIONS</h3>
+
+<p>https://en.wikipedia.org/wiki/Quaternion
+
+<p>https://github.com/ufkapano/pyquats
+
+<p>The quaternion number system extends the complex numbers.
+Quaternions are used in calculations involving three-dimensional rotations, 
+such as in three-dimensional computer graphics, computer vision, 
+and crystallographic texture analysis.
+
+<h3>DECIMAL</h3>
+
+<hr><pre>
+from decimal import Decimal
+</pre><hr>
+
+<h3>FRACTION</h3>
+
+<hr><pre>
+from fractions import Fraction
+</pre><hr>
+
+<h3>BUILTIN MATHEMATICAL FUNCTIONS</h3>
+
+<hr><pre>
+# pow(x, y)   # x ** y, pow(3, 2), pow(1.2, 3.5)
+# pow(x, y, z)   # (x ** y) % z
+
+# abs(x)
+abs(-5), abs(-4.32), abs(1+1j) # 5, 4.32, 1.41421356237
+
+# round(x[, y]), returns float
+round(3.14159, 2)             # 3.14
+round(123.456,-1)             # 120.0, negative precision
+round(1.2), round(1.5), round(1.8)      # 1.0, 2.0, 2.0
+round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
+
+# min(iterable[, key=func])   # single argument
+# min(a, b, c, ...[, key=func])   # many arguments
+
+# max(iterable[, key=func])
+# max(a, b, c, ...[, key=func]) 
+
+# sum(iterable, start=0)
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<p>(1) Write all numbers from 0 to 15 using base 2, base 8, base 16.
+
+<p>(2) Check differences in three rounding numbers methods:
+round(x), int(x+0.5), math.trunc(x).
+
+<p>(3) Check the size of builtin types in your system.
+
+</body>
+</html>

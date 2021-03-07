@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Variables (names)</h1>
+
+<p>https://docs.python.org/3.9/library/index.html
+
+<h3>INTRO</h3>
+
+<p>Names refer to objects. Names are introduced by name binding operations.
+
+<p>Variables could be thought of as a sticky label you can place on a value.
+
+<hr><pre>
+# The following constructs bind names.
+
+name1 = expression   # assignements
+name2 = name1     # the same value with two 'labels'
+
+def function_name(parameter_name):   # function definitions
+    pass
+
+class ClassName:   # class definitions
+    pass
+
+import module_name   # import statements
+
+for item_name in sequence:
+    pass
+
+with expression as context_name:   # with statements
+    pass
+
+try:
+    statements
+except exception_name as exception_instance_name:
+    statements
+
+del some_name   # unbinding names
+</pre><hr><pre>
+&gt;&gt;&gt; X
+Traceback (most recent call last):
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
+NameError: name 'X' is not defined
+&gt;&gt;&gt; X = 11           # creating X
+&gt;&gt;&gt; X                # checking a value
+11
+&gt;&gt;&gt; del X     # destroying the variable X (the value 11 can survive)
+&gt;&gt;&gt;
+</pre><hr>
+
+<h3>REFERENCE COUNTING</h3>
+
+<hr><pre>
+import sys
+
+word1 = "qwertyuiop"
+sys.getrefcount(word1)   # 2
+word2 = word1
+sys.getrefcount(word1)   # 3
+sys.getrefcount(1)   # 149
+word2 = 2021
+</pre><hr><pre>
+#  name
+# +-----------+
+# | "word1"   |         string
+# +-----------+        +--------------+
+# | reference |-------o| "qwertyuiop" |
+# +-----------+        +--------------+
+#                      | refs counter |
+#  name                +--------------+  integer
+# +-----------+             o           +--------------+
+# | "word2"   |    (1)      |           | 2021         |
+# +-----------+-------------+           +--------------+
+# | reference |------------------------o| refs counter |
+# +-----------+    (2)                  +--------------+
+</pre><hr>
+
+<h3>PYTHON KEYWORDS</h3>
+
+<p>https://docs.python.org/3/library/keyword.html
+
+<p>'Keywords' cannot be used as ordinary identifiers.
+
+<hr><pre>
+&gt;&gt;&gt; help()   # Py2 and Py3
+help&gt; keywords
+...
+help&gt; quit
+&gt;&gt;&gt;
+</pre><hr><pre>
+import keyword   # Py3
+
+keyword.kwlist   # sequence containing all the keywords
+keyword.iskeyword("True")   # True
+keyword.iskeyword("self")   # False
+keyword.iskeyword("max")   # False
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<p>(1) Find all the keywords of the language.
+
+</body>
+</html>

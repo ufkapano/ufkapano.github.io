@@ -1,0 +1,144 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Lists</h1>
+
+<h3>INTRO</h3>
+
+<p>Lists are mutable heterogeneous sequences.
+
+<pre>
++-----------------------+---------------------------------+
+| Operation             | Meaning                         |
++-----------------------+---------------------------------+
+| L = [] ; L = list()   | empty lists                     |
+| L = [5, 1.2]          | a list with two items           |
+| L = list(iterable)    | make a list from iterable       |
+| [x for x in iterable] | list comprehension              |
+| len(L)                | the length                      |
+| L1 + L2               | concatenation                   |
+| L * n ; n * L         | repetition                      |
+| L[i]                  | index                           |
+| L[i:j]                | slice of L (new list)           |
+| L[i:j:k]              | slice of L (new list)           |
+| L[i] = item           | assignment                      |
+| L1[i:j] = L2          | assignment                      |
+| L1[i:j:k] = L2        | assignment, len(slice)==len(L2) |
+| L2 = L1[:]            | shallow copy                    |
+| L2 = list(L1)         | shallow copy                    |
+| L2 = L1.copy()        | shallow copy (Py3.3+)           |
+| for item in L: pass   | iteration                       |
+| item in L             | containing (linear-time)        |
+| item not in L         | containing                      |
+| L.index(item)         | first occurrence                |
+| L.count(item)         | number of occurrences           |
+| max(L), min(L)        | largest|smallest item of L      |
+| del L[i]              | remove item                     |
+| del L[i:j]            | remove slice                    |
+| del L[i:j:k]          | remove items                    |
+| del L[:]              | remove all items                |
+| L.clear()             | remove all items (Py3.3+)       |
+| del L                 | remove the variable L           |
++-----------------------+---------------------------------+
+</pre>
+
+<hr><pre>
+# help(list)
+list1 = [5, 23, 56, 2]   # homogeneous, using square brackets
+list2 = ["qwerty", "abc", "xyz"]   # homogeneous
+list3 = [1, 2.3, "abc", [4, "de"]]   # nested, heterogeneous
+list4 = list("abc")   # ["a", "b", "c"], from iterable
+</pre><hr>
+
+<h3>SORTING</h3>
+
+<hr><pre>
+# help(list.sort)
+# L.sort(cmp=None, key=None, reverse=False)   # Python 2
+# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
+# Stable sort IN PLACE.
+# cmp(x, y) should return one of (-1, 0, 1).
+
+alist = ["auto", "Ala", "bocian", "Barbara"]
+alist.sort()
+# ['Ala', 'Barbara', 'auto', 'bocian']
+
+# Case-insensitive sort.
+alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))   # Python 2
+# ['Ala', 'auto', 'Barbara', 'bocian']
+
+alist.sort(key=str.lower)   # Py 2.4+, Py 3
+# ['Ala', 'auto', 'Barbara', 'bocian']
+
+# Using a length.
+alist.sort(key=len)
+# ['Ala', 'auto', 'bocian', 'Barbara']
+</pre><hr><pre>
+# help(sorted)
+# sorted(iterable, cmp=None, key=None, reverse=False)   # Python 2
+# sorted(iterable, /, *, key=None, reverse=False)   # Python 3
+# Returns a new sorted list.
+</pre><hr>
+
+<h3>METHODS</h3>
+
+<hr><pre>
+L = ["a", "a", "a", "b", "b"]
+L.count("a")   # 3
+
+L.append("c")   # ['a', 'a', 'a', 'b', 'b', 'c']
+
+L.insert(1, "x")   # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
+
+L.remove("a")   # ['x', 'a', 'a', 'b', 'b', 'c']
+
+L.pop()     # remove "c" (index -1), return "c"
+L.pop(2)    # remove "a" index 2), ['x', 'a', 'b', 'b']
+
+L.reverse()  # ['b', 'b', 'a', 'x'], reverse IN PLACE
+
+# L.extend(iterable), append new items
+L.extend("qwerty")  
+# ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
+</pre><hr><pre>
+lists = [[]] * 3   # [[], [], []]
+lists[0].append(3)   # [[3], [3], [3]] surprise!
+# three references to the same empty list
+
+# proper way
+lists = [[] for i in range(3)]   # three different empty lists
+lists[0].append(3)   # [[3], [], []]
+lists[1].append(5)   # [[3], [5], []]
+</pre><hr>
+
+<h3>LIST COMPREHENSION</h3>
+
+<hr><pre>
+[x for x in "qwerty"]                   # ['q', 'w', 'e', 'r', 't', 'y']
+[x * x for x in range(6)]               # [0, 1, 4, 9, 16, 25]
+[3 * x for x in range(6) if x &lt; 4]      # [0, 3, 6, 9]
+[2 ** x for x in range(5)]              # [1, 2, 4, 8, 16]
+[[x, x * x] for x in range(6)]          # list of lists
+[(x, x * x * x) for x in range(6)]      # list with tuples
+[x + y for x in range(3) for y in range(4)]
+[(x, y) for x in range(3) for y in range(4)]
+[chr(x) for x in range(97, 110)]
+"".join([chr(x) for x in range(97, 110)])
+
+sum([x * x for x in range(100)])        # lists Py2
+sum(x * x for x in xrange(100))         # generator Py2
+sum(x * x for x in range(100))          # generator Py3
+sum(len(x) for x in ["a", "bb", "ccc"]) # generator
+
+max(ord(x) for x in "qwerty")           # generetor, the greatest numer
+max("qwerty", key=ord)                  # char with the greatest ord()
+</pre><hr>
+
+
+</body>
+</html>

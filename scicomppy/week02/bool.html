@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>bool</h1>
+
+<h3>INTRO</h3>
+
+<p>Any object can be tested for truth value.
+
+<p>Objects considered false:
+
+<ul>
+<li>constants defined to be false: 'None' and 'False',
+<li>zero of any numeric type: 0, 0.0, 0j, Decimal(0), Fraction(0, 1),
+<li>empty sequences and collections: '', tuple(), [], {}, set(), range(0),
+<li>objects with a '__bool__()' method that returns 'False' [Python 3],
+<li>objects with a '__nonzero__()' method that returns 'False' [Python 2],
+<li>objects with a '__len__()' method that returns zero.
+</ul>
+
+<p>Everything else is considered true.
+
+<h3>BOOLEAN OPERATIONS</h3>
+
+<p>'A or B', 'A and B', 'not A' (ascending priority).
+
+<p>'A or not B and C' is interpreted as 'A or ((not B) and C)'.
+
+<p>'not A == B' is interpreted as 'not (A == B)' ('==' is a non-Boolean operator!).
+
+<p>Use parentheses () in case of doubt.
+
+<p>'and' and 'or' are short-circuit operators:
+
+<ul>
+<li>'False and Anything' returns 'False', 'Anything' is not checked,
+<li>'True and Anything' returns 'Anything', but not converted to 'bool',
+<li>'True or Anything' returns 'True', 'Anything' is not checked,
+<li>'False or Anything' returns 'Anything', but not converted to 'bool'.
+</ul>
+
+<h3>COMPARISONS</h3>
+
+<p>'A == B', 'A != B', 'A &lt; B', 'A &lt;= B', 'A &gt; B', 'A &gt;= B'.
+
+<p>Identity tests: 'A is B' [id(A) == id(B)], 'A is not B'.
+
+<p>'x in S' and 'x not in S' operations are supported by types that are 
+iterable or implement the '__contains__()' method.
+
+
+</body>
+</html>

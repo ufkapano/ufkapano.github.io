@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Unicode</h1>
+
+<p>https://en.wikipedia.org/wiki/Unicode
+
+<p>https://en.wikipedia.org/wiki/UTF-8
+
+<h3>INTRO</h3>
+
+<p>The Unicode standard describes how 'characters' [abstractions] 
+are represented by 'code points' [integer values].
+A Unicode string is a sequence of code points.
+
+<p>The rules for translating a Unicode string into a sequence of bytes 
+are called an 'encoding'.
+UTF-8 is probably the most commonly supported encoding,
+UTF stands for Unicode Transformation Format.
+
+<hr><pre>
+0000=0    0100=4    1000=8    1100=c
+0001=1    0101=5    1001=9    1101=d
+0010=2    0110=6    1010=a    1110=e
+0011=3    0111=7    1011=b    1111=f
+</pre><hr><pre>
+Code point 97 corresponds to u'a' = u'\x61' = u'\u0061' = u'\U00000061', 
+(0)110.0001, one byte in UTF-8 (backward compatibility with ASCII).
+(u'a').encode('utf-8') in Py2 returns a string 'a'.
+(u'a').encode('utf-8') in Py3 returns bytes b'a'.
+
+Code point 257 corresponds to u'\u0101', 
+(110)0.0100.(10)00.0001, two bytes in UTF-8.
+(u'\u0101').encode('utf-8') in Py2 returns a string '\xc4\x81'.
+(u'\u0101').encode('utf-8') in Py3 returns bytes b'\xc4\x81'.
+
+Code point 8364 (Euro sign) corresponds to u'\u20ac',
+(1110).0010.(10)00.0010.(10)10.1100, three bytes in UTF-8.
+(u'\u20ac').encode('utf-8') in Py2 returns a string '\xe2\x82\xac'.
+(u'\u20ac').encode('utf-8') in Py3 returns bytes b'\xe2\x82\xac'.
+
+Code point 1114111 corresponds to u'\U0010ffff'.
+(1111.0)100.(10)00.1111.(10)11.1111.(10)11.1111, four bytes in UTF-8.
+(u'\U0010ffff').encode('utf-8') in Py2 returns a string '\xf4\x8f\xbf\xbf'.
+(u'\U0010ffff').encode('utf-8') in Py3 returns bytes b'\xf4\x8f\xbf\xbf'.
+</pre><hr>
+
+<p>Reading and writing Unicode data:
+
+<ul>
+<li>Check whether the libraries used in your application support 
+Unicode natively [json]. 
+<li>The manual approach (not recommended):
+Converted Unicode data to a particular encoding before it gets written 
+to disk or sent over a socket.
+Read an 8-bit string from a file, and convert the string with 
+unicode(str, encoding) [the problem is that you can read only part 
+of the bytes encoding a single Unicode character; 
+one solution: read the entire file into memory and then perform the decoding].
+<li>Use the 'codecs' module to read and write files.
+</ul>
+
+<p>Tips for writing Unicode-aware programs:
+
+<ul>
+<li>Software should only work with Unicode strings internally, 
+converting to a particular encoding on output.
+<li>Include characters &gt; 127 and, even better, 
+characters &gt; 255 in your test data.
+</ul>
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>None</h1>
+
+<h3>INTRO</h3>
+
+<p>'None' is a special value representing 'nothing' (null object).
+
+<p>Use cases:
+<br>(a) a variable created but not processed yet;
+in graph coloring: a node without color.
+<br>(b) a way to reset a variable to an empty state.
+
+<hr><pre>
+answer = None
+# ... some code ...
+if answer is None:
+    quit = True
+elif answer == "quit":
+    quit = True
+else:
+    quit = False
+</pre><hr>
+
+<p>'None' is a singleton, there is only one instance of it in a program.
+<br>Testing 'answer is None' is better then 'answer == None'
+[or 'answer is not None'].
+
+<p>Functions without an explicit 'return' statement return 'None'.
+That way, programming with functions is much simplified; 
+a function always returns 'something'.
+
+</body>
+</html>

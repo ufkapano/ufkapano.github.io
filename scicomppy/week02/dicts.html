@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dictionaries</h1>
+
+<h3>INTRO</h3>
+
+<p>A mapping object maps 'hashable' values to arbitrary objects. 
+Mappings are mutable objects. 
+There is currently only one standard mapping type, the 'dictionary'.
+
+<p>Dictionary order is guaranteed to be insertion order (Py3.7+).
+
+<pre>
++--------------------------+---------------------------+
+| Operation                | Meaning                   |
++--------------------------+---------------------------+
+| D = {} ; D = dict()      | empty dict                |
+| D = {1: "a", 5: "e"}     | creation (two keys)       |
+| D = dict(iterable)       | creation from iterable    |
+|{x:x**2 for x in iterable}| dict comprehension        |
+| len(D)                   | length                    |
+| D[key] = value           | add (key, value) pair to D|
+| D[key]                   | get value                 |
+| D2 = dict(D1)            | shallow copy              |
+| D2 = D1.copy()           | shallow copy              |
+| D2 = {**D1}              | copy Py3                  |
+| key in D                 | containing                |
+| key not in D             | containing                |
+| D.has_key(key)           | containing Py2            |
+| for key in D: pass       | iteration                 |
+| del D[key]               | remove key                |
+| D.clear()                | remove all keys           |
+| del D                    | remove the variable D     |
++--------------------------+---------------------------+
+</pre>
+
+<h3>METHODS</h3>
+
+<hr><pre>
+# Creation
+D = {}
+D[k1] = v1 ; D[k2] = v2 ; D[k3] = v3
+
+D = {k1:v1, k2:v2, k3:v3}
+
+D = dict([(k1,v1), (k2,v2), (k3,v3)])   # from list of pairs
+
+D = dict(zip([k1, k2, k3], [v1, v2, v3]))
+
+list(D)   # [k1, k2, k3]
+
+D.keys()         # [k1, k2, k3] Py2
+D.values()       # [v1, v2, v3] Py2
+D.items()        # [(k1, v1), (k2, v2), (k3, v3)] Py2
+
+D.keys()         # return a view of keys, Py3
+D.values()       # return a view of values, Py3
+D.items()        # return a view of items ((key, value) pairs) Py3
+
+D = dict(name1=v1, name2=v2)   # {'name1':v1, 'name2':v2}
+
+D.get(key)                    # return D[key] or None
+D.get(key, value)             # return D[key] or value
+D.setdefault(key, value)      # the same and set D[key] = value
+D.pop(key)                    # return D[key] and remove
+D.pop(key, value)             # return D[key] (or value) and remove
+D.popitem()                   # return 2-tuple (key, value)
+
+D = dict.fromkeys(S[, value])    # S to sekwencja, value to domyślnie None
+D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
+D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
+
+D.update(E)   # E is a dict, for k in E: D[k] = E[k]
+D.update(**E)   # E to dict, the same
+D.update(F)   # F=[("x",10),("y",20)], for (k,v) in F: D[k] = v
+</pre><hr>
+
+<h3>DICT COMPREHENSION</h3>
+
+<hr><pre>
+D = {x: x**2 for x in range(9)}        # Py3 and Py2.7
+D = dict((x, x**2) for x in range(9))    # generator
+
+D = {x: x*3 for x in "qwerty"}          # Py3 and Py2.7
+D = dict((x, x*3) for x in "qwerty")    # generator
+</pre><hr>
+
+</body>
+</html>

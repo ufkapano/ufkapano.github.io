@@ -1,0 +1,182 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Strings in Python 3</h1>
+
+<h3>INTRO</h3>
+
+<p>Textual data in Python is handled with strings.
+
+<p>String modules: re, string.
+
+<pre>
++----------------------+--------------------------+
+| Operation            | Meaning                  |
++----------------------+--------------------------+
+| "", '', str()        | empty strings            |
+| S = "abc"            | creation                 |
+| S = str(obj)         | creation using __str__() |
+| S=str(b'...','utf-8')| creation from bytes      |
+| len(S)               | length                   |
+| S1 + S2              | concatenation            |
+| n * S, S * n         | repetition               |
+| S[i]                 | using an index           |
+| S[i:j]               | slice                    |
+| S[i:j:k]             | slice                    |
+| S2 = S1[:]           | copy                     |
+| S2 = str(S1)         | copy                     |
+| for char in S: pass  | iteration                |
+| S1 in S2             | substring (bool)         |
+| S1 not in S2         | substring (bool)         |
+| S1.count(S2)         | number of occurrences    |
+| S1.index(S2)         | first occurrence         |
+| max(S), min(S)       | largest|smallest char    |
+| "%s house" % "old"   | formatting (old)         |
+| "%s %s" % ("a", "b") | formatting (old)         |
+| S.join(iterable)     | joining                  |
+| S.format(...)        | formatting Py2.6+, Py3   |
+| "{} {}".format(a, b) | formatting               |
+| f"{a} {b}"           | f-string Py3.6+          |
+| del S                | destroy S                |
++----------------------+--------------------------+
+</pre>
+
+<h3>STR</h3>
+
+<p>In Python 3, the 'str' type contains Unicode characters (code points).
+The default encoding for Python source code is UTF-8.
+
+<p>There is no separate “character” type.
+For a non-empty string S, we have S[0] == S[0:1].
+
+<hr><pre>
+# Usual string is unicode.
+# A name 'unichr' is not defined.
+# A name 'unicode' is not defined.
+
+"one", 'two', "three 'x' plus", 'four "y" minus'
+"first" (whitespace) 'second'   # will be merged to "firstsecond"
+'''three single quotes'''
+"""three double quotes"""
+
+u'qwerty' = 'qwerty'   # prefix 'u' is ignored
+"qwerty", '\u0394', "\U00000394"
+</pre><hr><pre>
+# Raw strings (disables most escape sequence processing).
+
+r'ab\ncd\tef'   # 'ab\\ncd\\tef'
+</pre><hr><pre>
+# Converting to bytes and from bytes.
+
+u = chr(40960) + 'abcd' + chr(1972)   # '\ua000abcd\u07b4'
+[ord(c) for c in u]   # [40960, 97, 98, 99, 100, 1972]
+u.encode('utf-8')   # b'\xea\x80\x80abcd\xde\xb4'
+
+z = "żółw".encode('utf-8')   # b'\xc5\xbc\xc3\xb3\xc5\x82w'
+z.decode('utf-8')   # 'żółw', code points
+str(z, 'utf-8')   # 'żółw', from bytes
+</pre><hr><pre>
+# S.join(iterable), S is a separator
+
+S.join([S1, S2, S3])   # S1 + S + S2 + S + S3
+"-".join("abc")   # 'a-b-c'
+</pre><hr>
+
+<h3>METHODS</h3>
+
+<hr><pre>
+# help(str)
+
+S.find(S1)
+S.replace(S1, S2)     # zastąpienie wystąpień podłańcucha
+
+word = "hej"
+word.ljust(6)                 # "hej   "
+word.rjust(6)                 # "   hej"
+word.center(6)                # " hej  "
+
+# Remove whitespace.
+word = " abc  "
+word.lstrip()                 # "abc  "
+word.rstrip()                 # " abc"
+word.strip()                  # "abc"
+
+word = "...abc.."
+word.strip(".")               # "abc"
+
+word = "rAz dWa tRzY"
+word.lower()                  # "raz dwa trzy"
+word.upper()                  # "RAZ DWA TRZY"
+word.capitalize()             # "Raz dwa trzy"
+word.title()                  # "Raz Dwa Trzy"
+word.swapcase()               # "RaZ DwA TrZy"
+word.startswith("abc")        # check prefix
+word.endswith("abc")          # check suffix
+.
+line = "a\tb c\nd"
+line.split()                  # ['a', 'b', 'c', 'd'], at whitespace
+line.split("\t")              # ["a", "b c\nd"]
+'1,2,3'.split(',')            # ['1', '2', '3']
+line.splitlines()             # ['a\tb c', 'd']
+
+"111".zfill(8)                # "00000111"
+
+# Badanie typów znaków.
+S.isalnum()
+S.isalpha()
+S.isascii()   # Py3.7
+S.isdigit()
+S.islower()
+S.isupper()
+S.isspace()
+</pre><hr>
+
+<h3>BYTES</h3>
+
+<hr><pre>
+# 'bytes' objects behave like immutable sequences of integers from [0, 255].
+# bytes() is an immutable version of bytearray().
+
+b"one", b'two', b"three'x", b'four"y'
+b'''3 single quotes''', b"""3 double quotes"""
+
+bytes(6)   # return b'\x00\x00\x00\x00\x00\x00'
+
+bytes(range(4))   # return b'\x00\x01\x02\x03'
+
+bytes(obj)   # copying existing binary data via the buffer protocol
+
+bytes.fromhex('2Ef0 F1f2  ')   # b'.\xf0\xf1\xf2', classmethod
+# ASCII whitespaces are skipped.
+
+for x in b'\xf0\xf1\xf2':
+    print(x)      # numbers 240, 241, 242
+
+list(b'abc')   # [97, 98, 99]
+</pre><hr>
+
+<h3>BYTEARRAY</h3>
+
+<hr><pre>
+# 'bytearray' objects are a mutable counterpart to 'bytes' object.
+
+bytearray()   # bytearray(b''), empty
+bytearray(b'qwerty')   # from bytes
+
+bytearray((97, 100, 105))   # bytearray(b'adi'), from integers
+
+bytearray(5)   # bytearray(b'\x00\x00\x00\x00\x00'), null bytes
+
+bytearray('abcd', 'utf-8')   # bytearray(b'abcd'), from string with encoding
+
+list(bytearray(b'abcd'))   # [97, 98, 99, 100]
+</pre><hr>
+
+
+</body>
+</html>

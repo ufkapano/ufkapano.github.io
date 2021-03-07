@@ -1,0 +1,162 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Strings in Python 2</h1>
+
+<h3>INTRO</h3>
+
+<p>Textual data in Python is handled with strings.
+
+<h3>STR</h3>
+
+<hr><pre>
+# Usual 8-bit string, isinstance(word, str) is True.
+# bytes() is an alias for str().
+
+"one", 'two', "three 'x' plus", 'four "y" minus'
+"first" (whitespace) 'second'   # will be merged to "firstsecond"
+'''three single quotes'''
+"""three double quotes"""
+</pre><hr><pre>
+# Raw strings (disables most escape sequence processing).
+
+r"raw string\n\t\a"
+</pre><hr>
+
+<h3>UNICODE</h3>
+
+<hr><pre>
+# Unicode strings, isinstance(word, unicode) is True.
+
+unicode('unicode')   # u"unicode", default 'ascii' decoding
+unicode('unicode', 'utf-8')   # also works, compatibility
+
+s = 'dół'   # from a keyboard, there are unicode chars
+repr(s)   # 'd\xc3\xb3\xc5\x82', default 'utf-8' encoding
+print(s)   # dół
+
+#u = unicode("dół")   # UnicodeDecodeError
+u = unicode("dół", 'utf-8')
+repr(u)   # u'd\xf3\u0142', code points
+print(u)   # dół
+
+u = u"żółw"   # from a keybord (turtle in English)
+repr(u)   # u'\u017c\xf3\u0142w', code points
+print(u)   # żółw
+
+u'\u0061\u0062\u0063' = u'abc' = unicode('abc'), ASCII 97, 98, 99
+</pre><hr><pre>
+# Raw Unicode strings.
+
+ur'raw\tunicode\nline'   # u'raw\\tunicode\\nline'
+</pre><hr><pre>
+# One-character Unicode strings can also be created with the
+# unichr() built-in function.
+
+chr(97)   # return 'a', 8-bit
+chr(255)   # return '\xff', 8-bit
+
+ord('\xff')   # return 255
+
+unichr(97)   # return u'a' = u'\x61' = u'\u0061' = u'\U00000061'
+unichr(256)   # return u'\u0100'
+unichr(40960)   # return u'\ua000'
+ord(u'\ua000')   # return 40960
+
+u = unichr(40960) + u'abcd' + unichr(1972)   # u'\ua000abcd\u07b4'
+[ord(c) for c in u]   # [40960, 97, 98, 99, 100, 1972]
+isinstance(u, unicode)   # return True
+isinstance(u, str)   # return False
+
+# encode() returns an 8-bit string version of the Unicode string
+u_utf8 = u.encode('utf-8')   # return '\xea\x80\x80abcd\xde\xb4' (no u'...')
+isinstance(u_utf8, unicode)   # return False
+isinstance(u_utf8, str)   # return True
+
+# decode() interprets the 8-bit string using the given encoding
+u_utf8.decode('utf-8')   # return u'\ua000abcd\u07b4'
+u'\u0061'.encode('utf-8')   # return 'a'
+</pre><hr><pre>
+unichr(97)   # u'\x61' = u'\u0061', (0)110.0001, 7 bits for code point
+
+# Bytes where the most significant bit is 0 never appear
+# in a multi-byte sequence.
+# Bytes 0xc0=1100.0000 and 0xc1=1100.0001 must never appear in a valid UTF-8
+# sequence, because they could be used only for a 2-byte encoding of a 7-bit
+# ASCII character which should be encoded in 1 byte (overlong sequences).
+# Bytes 0xf5 to 0xff are also invalid.
+
+unichr(257)   # u'\u0101', four-digit Unicode escape
+unichr(257).encode('utf-8')   # '\xc4\x81', 11 bits for code point
+# (110)0.0100.(10)00.0001, continuation bytes start with 10
+
+unichr(1024)   # u'\u0400'
+unichr(1024).encode('utf-8')   # '\xd0\x80',
+# (110)1.0000.(10)00.0000
+
+unichr(4096)   # u'\u1000', 1 and 12 zeros
+unichr(4096).encode('utf-8')   # '\xe1\x80\x80', 16 bits for code point
+# (1110).0001.(10)00.0000.(10)00.0000
+
+unichr(8364)   # u'\u20ac', the Euro sign
+unichr(8364).encode('utf-8')   # '\xe2\x82\xac'
+# (1110).0010.(10)00.0010.(10)10.1100
+
+unichr(4096*8)   # u'\u8000', 1 and 15 zeros
+unichr(4096*8).encode('utf-8')   # '\xe8\x80\x80',
+# (1110).1000.(10)00.0000.(10)00.0000
+
+unichr(4096*16)   # u'\U00010000', 1 and 16 zeros
+unichr(4096*16).encode('utf-8')   # '\xf0\x90\x80\x80', 21 bits for code point
+# (1111.0)000.(10)01.0000.(10)00.0000.(10)00.0000
+
+unichr(1114111)   # u'\U0010ffff'
+unichr(1114111).encode('utf-8')   # '\xf4\x8f\xbf\xbf'
+# (1111.0)100.(10)00.1111.(10)11.1111.(10)11.1111
+</pre><hr><pre>
+import unicodedata   # a database of information about code points
+
+c = unichr(0x0bf2)
+unicodedata.category(c)   # No
+unicodedata.name(c)   # TAMIL NUMBER ONE THOUSAND
+unicodedata.numeric(c)   # 1000.0, numeric value of character
+</pre><hr>
+
+<h3>BYTEARRAY</h3>
+
+<hr><pre>
+# Bytearray objects are created with the built-in function bytearray().
+
+bytearray()   # bytearray(b''), empty
+data = bytearray('abcdef')   # bytearray(b'abcdef'), from str
+data[1] = 'x'                # bytearray(b'axcdef'), mutable!
+
+bytearray(6)   # bytearray(b'\x00\x00\x00\x00\x00\x00'), null bytes
+
+bytearray((97,100,105))   # bytearray(b'adi'), from integers
+
+bytearray(u'abc', 'utf-8')   # bytearray(b'abc'), from unicode with encoding
+u"żółw".encode('utf-8')       # '\xc5\xbc\xc3\xb3\xc5\x82w', 8-bit
+bytearray(u'żółw', 'utf-8')   # bytearray(b'\xc5\xbc\xc3\xb3\xc5\x82w')
+</pre><hr><pre>
+# https://www.geeksforgeeks.org/python-convert-bytearray-to-hexadecimal-string/?ref=rp
+# Python | Convert Bytearray to Hexadecimal String
+
+# Method #1 : Using format() + join()
+nlist = [124, 67, 45, 11]
+"".join("{:02x}".format(i) for i in nlist)   # '7c432d0b'
+
+# Method #2 : Using binascii.hexlify()
+import binascii
+bytearray(nlist)   # bytearray(b'|C-\x0b')
+binascii.hexlify(bytearray(nlist))   # '7c432d0b'
+</pre><hr>
+
+
+</body>
+</html>
