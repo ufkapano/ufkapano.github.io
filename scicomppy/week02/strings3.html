@@ -15,35 +15,35 @@
 <p>String modules: re, string.
 
 <pre>
-+----------------------+--------------------------+
-| Operation            | Meaning                  |
-+----------------------+--------------------------+
-| "", '', str()        | empty strings            |
-| S = "abc"            | creation                 |
-| S = str(obj)         | creation using __str__() |
-| S=str(b'...','utf-8')| creation from bytes      |
-| len(S)               | length                   |
-| S1 + S2              | concatenation            |
-| n * S, S * n         | repetition               |
-| S[i]                 | using an index           |
-| S[i:j]               | slice                    |
-| S[i:j:k]             | slice                    |
-| S2 = S1[:]           | copy                     |
-| S2 = str(S1)         | copy                     |
-| for char in S: pass  | iteration                |
-| S1 in S2             | substring (bool)         |
-| S1 not in S2         | substring (bool)         |
-| S1.count(S2)         | number of occurrences    |
-| S1.index(S2)         | first occurrence         |
-| max(S), min(S)       | largest|smallest char    |
-| "%s house" % "old"   | formatting (old)         |
-| "%s %s" % ("a", "b") | formatting (old)         |
-| S.join(iterable)     | joining                  |
-| S.format(...)        | formatting Py2.6+, Py3   |
-| "{} {}".format(a, b) | formatting               |
-| f"{a} {b}"           | f-string Py3.6+          |
-| del S                | destroy S                |
-+----------------------+--------------------------+
++-------------------------+---------------------------+
+| Operation               | Meaning                   |
++-------------------------+---------------------------+
+| "", '', str()           | empty strings             |
+| S = "abc"               | creation                  |
+| S = str(obj)            | creation using __str__()  |
+| S = str(b'...','utf-8') | creation from bytes       |
+| len(S)                  | length                    |
+| S1 + S2                 | concatenation             |
+| n * S, S * n            | repetition                |
+| S[i]                    | get char at index         |
+| S[i:j]                  | slice of S (new string)   |
+| S[i:j:k]                | slice of S (new string)   |
+| S2 = S1[:]              | copy                      |
+| S2 = str(S1)            | copy                      |
+| for char in S: pass     | iteration                 |
+| S1 in S2                | substring (bool)          |
+| S1 not in S2            | substring (bool)          |
+| S1.count(S2)            | number of occurrences     |
+| S1.index(S2)            | first occurrence          |
+| max(S), min(S)          | the largest|smallest char |
+| "%s house" % "old"      | formatting (old style)    |
+| "%s %s" % ("a", "b")    | formatting (old style)    |
+| S.join(iterable)        | joining                   |
+| S.format(...)           | formatting (Py2.6+, Py3)  |
+| "{} {}".format(a, b)    | formatting                |
+| f"{a} {b}"              | f-string (Py3.6+)         |
+| del S                   | remove the name S         |
++-------------------------+---------------------------+
 </pre>
 
 <h3>STR</h3>

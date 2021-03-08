@@ -90,7 +90,10 @@ float(1.0+2.j)   # TypeError
 (1.5).as_integer_ratio()   # (3, 2)
 (1.2).as_integer_ratio()   # (5404319552844595, 4503599627370496), not (6, 5)
 
-(-2.0).is_integer()   # True
+# float.is_integer()
+# Test if a numer can be converted to 'int' without losing precision.
+(5.0).is_integer()   # True, 5.0 == 5
+(-2.0).is_integer()   # True, -2.0 == -2
 (3.2).is_integer()   # False
 
 # Division

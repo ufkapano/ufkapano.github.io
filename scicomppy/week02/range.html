@@ -14,35 +14,34 @@
 has special tools to handle them.
 
 <pre>
-+--------------------------+------------------------------+
-| Operacja                 | Meaning                      |
-+--------------------------+------------------------------+
-| range(start, stop, step) | make a list (Py2)            |
-| range(start, stop)       | step=1                       |
-| range(stop)              | start=0, step=1              |
-| for x in range(n): pass  | iteration                    |
-| xrange(i, j, k)          | generator (Py2)              |
-| for x in xrange(n): pass | iteration                    |
-+--------------------------+------------------------------+
-| R = range(i, j, k)       | generator (Py3)              |
-| len(R)                   | length                       |
-| L = list(R)              | make a list                  |
-| list(range(0))           | empty list                   |
-| R.start                  | start (Py3.3+)               |
-| R.stop                   | stop (Py3.3+)                |
-| R.step                   | step (Py3.3+)                |
-| for item in R: pass      | iteration                    |
-| item in R                | containing                   |
-| item not in R            | containing                   |
-| R.index(item)            | first occurrence             |
-| R.count(item)            | number of occurrences        |
-| max(R), min(R)           | largest|smallest item of R   |
-| R[i]                     | using an index               |
-| R[i:j]                   | slice (new 'range')          |
-| R[i:j:k]                 | slice (new 'range')          |
-| R1 == R2, R1 != R2       | compare as sequences         |
-| del R                    | destroy R                    |
-+--------------------------+------------------------------+
++--------------------------+---------------------------+
+| Operacja                 | Meaning                   |
++--------------------------+---------------------------+
+| range(start, stop, step) | make a list (Py2)         |
+| range(start, stop)       | step=1                    |
+| range(stop)              | start=0, step=1           |
+| for x in range(n): pass  | iteration                 |
+| xrange(i, j, k)          | generator (Py2)           |
+| for x in xrange(n): pass | iteration                 |
++--------------------------+---------------------------+
+| R = range(i, j, k)       | generator (Py3)           |
+| len(R)                   | length                    |
+| L = list(R)              | make a list               |
+| R.start                  | start (Py3.3+)            |
+| R.stop                   | stop (Py3.3+)             |
+| R.step                   | step (Py3.3+)             |
+| for item in R: pass      | iteration                 |
+| item in R                | containing                |
+| item not in R            | containing                |
+| R.index(item)            | first occurrence          |
+| R.count(item)            | number of occurrences     |
+| max(R), min(R)           | the largest|smallest item |
+| R[i]                     | get item at index         |
+| R[i:j]                   | slice of R (new range)    |
+| R[i:j:k]                 | slice of R (new range)    |
+| R1 == R2, R1 != R2       | compare as sequences      |
+| del R                    | remove the name R         |
++--------------------------+---------------------------+
 </pre>
 
 <h3>INDEXING AND SLICING</h3>
@@ -95,7 +94,8 @@ list(range(1, 6))         # [1, 2, 3, 4, 5]
 list(range(4))            # [0, 1, 2, 3], start=0
 list(range(1, 9, 2))      # [1, 3, 5, 7], step=2
 list(range(5, 2, -1))     # [5, 4, 3]
-list(range(1, 0))         # [], empty range
+list(range(1, 0))         # [], empty range, start &gt;= stop
+list(range(0))            # [], empty range, start == stop
 
 range(0, 3, 2) == range(0, 4, 2)   # True, note that 'stop' differs
 </pre><hr><pre>
