@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Files</h1>
+
+<p>https://docs.python.org/3/library/functions.html#open
+
+<h3>INTRO</h3>
+
+<p>Python distinguishes between binary and text I/O.
+
+<p>Files opened in binary mode ('mode' with 'b) 
+return contents as bytes objects without any decoding.
+
+<p>Files opened in text mode ('mode' with 't', the default)
+return contents as string where bytes are decoded using 'encoding'.
+A text file content can be divided onto lines ending with '\n'.
+Note that the last line may be without '\n'.
+
+<p>'open()' returns a 'file object', and is most commonly used with two 
+arguments: open(filename, mode). Files opened for processing
+should be closed closed as soon as possible.
+
+<hr><pre>
+# open(filename, mode='r', buffering)   # Py2
+# afile = open(filename, mode='r', buffering=-1, encoding=None, errors=None,
+#    newline=None, closefd=True, opener=None)   # Py3
+# filename : a path-like object giving the pathname
+# mode : a string that specifies the mode in which the file is opened
+# encoding : used in text mode, usually 'utf-8'
+
+# Available modes (character - meaning):
+# 'r' - open for reading (default)
+# 'w' - open for writing, truncating the file first
+# 'x' - open for exclusive creation, failing if the file already exists
+# 'a' - open for writing, appending to the end of the file if it exists
+# 'b' - binary mode
+# 't' - text mode (default)
+# '+' - open for updating (reading and writing)
+</pre><hr>
+
+<h3>READING TEXT FILES</h3>
+
+<hr><pre>
+infile = open("book.txt", "r")   # default text mode, Py2 an Py3
+#infile = open('book.txt', 'r', encoding='utf-8')   # Py3
+
+S = infile.read(3)   # read 3 code points
+#S = infile.read()   # read all, problems with large files!
+#S = infile.readline()   # read a line with '\n'
+
+print ( S )   # print() adds '\n'
+infile.close()
+</pre><hr><pre>
+infile = open("book.txt", "r")   # default text mode
+
+#L = infile.readlines()   # list of lines with '\n'
+L = infile.readlines(50)   # list of lines, 50 or more code points
+
+print ( L )
+infile.close()
+</pre><hr><pre>
+infile = open("book.txt", "r")   # default text mode
+
+for line in infile:   # 'line' with '\n'
+    print(line, len(line))
+
+infile.close()
+</pre><hr><pre>
+infile = open('book.txt', 'r')   # default text mode
+
+while True:
+    text = infile.read(3)
+    print(text)
+    if text == "":
+        break
+
+infile.close()
+</pre><hr><pre>
+# Using a context manager.
+
+with open('book.txt', 'r') as infile:   # infile will be closed
+    text = infile.read()
+
+print(text)
+</pre><hr>
+
+<h3>WRITING TEXT FILES</h3>
+
+<hr><pre>
+outfile = open('results.txt', 'w')   # default text mode, Py2 an Py3
+#outfile = open('results.txt', 'w', encoding='utf-8')   # Py3
+
+n = 53
+word = "żarówka"   # 7 code points ('bulb' in English)
+
+outfile.write( "{}\n{}\n".format(n, word) )   # 2 lines
+
+outfile.close()
+</pre><hr><pre>
+outfile = open('results.txt', 'w')
+
+n = 53
+word = "żarówka"   # 7 code points ('bulb' in English)
+
+L = ["{}\n".format(n), "{}\n".format(word)]   # list of lines with '\n'
+
+outfile.writelines(L)
+
+outfile.close()
+</pre><hr><pre>
+# Using a context manager.
+
+n = 53
+word = "żarówka"   # 7 code points ('bulb' in English)
+
+with open('results.txt', 'w') as outfile:   # outfile will be closed
+    outfile.write( "{}\n{}\n".format(n, word) )   # 2 lines
+</pre><hr>
+
+
+</body>
+</html>

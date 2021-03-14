@@ -1,0 +1,55 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>pass statements</h1>
+
+<p>https://docs.python.org/3/tutorial/controlflow.html
+
+<p>https://realpython.com/python-pass/
+
+<h3>INTRO</h3>
+
+<p>'pass' is a keyword and an entire statement.
+This statement doesn’t do anything.
+It is used when a statement is required syntactically 
+but you do not want any code to execute.
+
+<p>Use cases:
+<br>(a) future code,
+<br>(b) planning branching logic (if-elif-else),
+<br>(c) commenting out code,
+<br>(d) breakpoints for debuggers,
+<br>(e) new exceptions, catching exceptions.
+
+<hr><pre>
+while True:   # infinite loop
+    pass   # waiting for keyboard interrupt
+
+def dummy_function():
+    pass   # to complete later
+
+class EmptyClass:
+    pass   # to complete later
+
+class InvalidPasswordError(ValueError):   # a name is important only
+    pass
+
+if x % 2 == 0:   # two cases to consider
+    pass   # what to do if x is even
+else:
+    pass   # what to do if x is odd
+
+if condition:
+    #statement1   # commented out in debugging, because it takes a long time
+    pass
+else:
+    statement2
+</pre><hr>
+
+</body>
+</html>

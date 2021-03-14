@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Standard input</h1>
+
+<p>https://docs.python.org/3/tutorial/inputoutput.html
+
+<p>https://docs.python.org/3/library/io.html
+
+<h3>INTRO</h3>
+
+<hr><pre>
+# In Py2, there are two functions: raw_input() and input().
+# raw_input([prompt]) - returns a string
+# input([prompt]) - returns a value, equivalent to eval(raw_input(prompt))
+
+reply = raw_input("Enter int:")
+n = int(reply)   # exceptions possible
+</pre><hr><pre>
+# In Py3, there is only input(), which works as raw_input() from Py2.
+
+reply = input("Enter float:")   # a string without '\n'
+n = float(reply)   # exceptions possible
+</pre><hr><pre>
+# Compatibility.
+try:
+    input = raw_input
+except NameError:   # we are in Py3
+    pass
+</pre><hr><pre>
+# Using sys.stdin (a file object, mode='r').
+
+import sys
+line = sys.stdin.readline()   # a string with '\n'
+</pre><hr>
+
+
+</body>
+</html>

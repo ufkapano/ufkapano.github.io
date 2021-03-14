@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Standard output</h1>
+
+<p>https://docs.python.org/3/tutorial/inputoutput.html
+
+<p>https://docs.python.org/3/library/string.html
+
+<h3>PRINT</h3>
+
+<hr><pre>
+# In Py2, 'print' is a statement.
+# Expressions are converted to strings [str(expression) or repr(expression)].
+
+print expression   # '\n' at the end
+print expression, expression, expression   # separated by ' '
+print expression,   # a comma, no '\n' at the end
+print &gt;&gt; outfile, expression, expression   # print to an open file
+</pre><hr><pre>
+# In Py3, 'print()' is a builtin function.
+# print(*objects, sep=' ', end='\n', file=sys.stdout, flush=False)
+# Print 'objects' to the text stream 'file', separated by 'sep' and followed by 'end'.
+# 'sep', 'end', 'file' and 'flush', if present, must be given as keyword arguments.
+
+print(expression)   # '\n' at the end
+print(expression, expression, expression)   # separated by ' '
+print(expression, expression, sep='|')   # separated by '|'
+print(expression, end=' ')              # ' ' at the end
+print(expression, expression, file=outfile)   # print to an open file
+</pre><hr><pre>
+# Compatibility: print a single string.
+
+print ( "{} {}".format(expression, expression) )
+</pre><hr>
+
+<h3>STR.FORMAT</h3>
+
+<hr><pre>
+# str.format(*args, **kwargs)
+# Formatting {position}, {position:format_spec}.
+# {position:10} type str, minimum width 10 chars [width]
+# {position:4d} type int, minimum width 4 chars [width][type]
+# {position:.3f} type float, 3 digits after a dot [.precision][type]
+# {position:8.1f} type float, 1 digit after a dot, total width 8 chars [width][.precision][type]
+
+"{0} or {1}".format(True, False)   # 'True or False'
+"{} or {}".format(True, False)   # 'True or False', position may be omitted
+"{1} or {0} and {1}".format(True, False)   # 'False or True and False'
+"doubling {{ and }} {}".format(11)   # 'doubling { and } 11'
+
+"pi is {0:.5f}".format(math.pi)   # 'pi is 3.14159'
+</pre><hr><pre>
+# Using keywords.
+# Formatting {key}, {key:format_spec}.
+
+"{person} is {description}".format(person="Adam", description="funny")
+"We obtained {result:d}".format(result=12)   # 'We obtained 12'
+</pre><hr><pre>
+# Using conversion.
+# '!a' applies ascii(), '!s' applies str(), and '!r' applies repr().
+# Formatting {position!conversion}, {position!conversion:format_spec}.
+# Formatting {key!conversion}, {key!conversion:format_spec}.
+
+word = 'ą\tć'
+"{0!s}|{0!r}|{0!a}".format(word)   # "ą\tć|'ą\\tć'|'\\u0105\\t\\u0107'"
+</pre><hr><pre>
+# Using alignment options in format_spec.
+# '&lt;' forces the field to be left-aligned within the available space
+# '&gt;' forces the field to be right-aligned within the available space
+# '^' forces the field to be centered within the available space
+# '=' forces the padding to be placed after the sign (if any) 
+#    but before the digits (‘+000000120’)
+
+"|{0:&gt;3}|{1:&lt;3}|{2:^3}|{3:0=+5}|".format('a', 'b', 'c', 12)
+# '|  a|b  | c |+0012|'   # [[fill]align][sign][width]
+
+"{:*^20}".format("centered")   # use '*' as a fill char
+# '******centered******'   # [[fill]align][width]
+</pre><hr><pre>
+# Using an attribute name and an element index.
+# Formatting {position.attr_name}, {position[idx]}.
+# Formatting {key.attr_name}, {key[idx]}.
+
+L = [11, 12, 13]
+"{0[1]}".format(L)   # '12'
+"{seq[2]}".format(seq=L)   # '13'
+
+coord = (3, 5)
+"x {0[0]}  y {0[1]}".format(coord)   # 'x 3 y 5'
+
+p = Point(12, 34)
+"{0.x}".format(p)   # '12'
+"{point.y}".format(point=p)   # '34'
+
+c = 2-4j
+"complex {0} real {0.real} imag {0.imag}".format(c)
+# 'complex (2-4j) real 2.0 imag -4.0'
+</pre><hr><pre>
+# Using different bases.
+
+"int: {0:d};  hex: {0:x};  oct: {0:o};  bin: {0:b}".format(42)
+# 'int: 42;  hex: 2a;  oct: 52;  bin: 101010'
+
+# with 0x, 0o, or 0b as prefix:
+"int: {0:d};  hex: {0:#x};  oct: {0:#o};  bin: {0:#b}".format(42)
+# 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
+</pre><hr>
+
+<h3>F-STRINGS</h3>
+
+<p>Formatted string literals (f-strings) begin a string 
+with a prefix 'f' or 'F'.
+
+<hr><pre>
+# f"first {expression} second {expression}"
+# F'single {expression}'
+
+year = 2016
+event = 'Referendum'
+f'Results of the {year} {event}'   # 'Results of the 2016 Referendum'
+</pre><hr><pre>
+# Using optional format specifiers {expression!conversion:format_spec}.
+
+import math
+f'pi is {math.pi:.3f}'   # 'pi is 3.141'
+
+name, phone = 'Andrzej', 4628
+f'|{name:10}|{phone:10d}|'   # '|Andrzej   |      4628|'
+# Alignment options can be used.
+f'|{name:&gt;10}|{phone:&lt;10}|'   # '|   Andrzej|4628      |'
+</pre><hr>
+
+</body>
+</html>

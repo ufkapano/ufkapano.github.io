@@ -1,0 +1,50 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Glossary</h1>
+
+<h3>ITERABLE</h3>
+
+<p>An iterable is an object capable of returning its members one at a time.
+Examples of iterables include all sequence types (list, str, and tuple) 
+and some non-sequence types (dict and file objects), 
+and objects of any classes you define with an __iter__() method 
+or with a __getitem__() method that implements Sequence semantics.
+
+<h3>SEQUENCE</h3>
+
+<p>A sequence is an iterable which supports efficient element access using 
+integer indices via the __getitem__() special method and defines a __len__() method 
+that returns the length of the sequence. 
+
+<h3>ITERATOR</h3>
+
+<p>An iterator is an object representing a stream of data.
+Repeated calls to the iterator’s __next__() method [next() method in Python 2]
+(or passing it to the built-in function next()) 
+return successive items in the stream. 
+When no more data are available a StopIteration exception is raised instead. 
+At this point, the iterator object is exhausted and any further calls to the next() 
+function just raise StopIteration again.
+
+<p>Iterators are required to have an __iter__() method that returns the iterator 
+object itself so every iterator is also iterable and may be used in most places 
+where other iterables are accepted.
+
+<h3>GENERATOR</h3>
+
+<p>A generator is a function which returns a generator iterator. 
+It looks like a normal function except that it contains yield expressions 
+for producing a series of values.
+Each yield temporarily suspends processing, remembering the location 
+execution state (including local variables and pending try-statements). 
+When the generator iterator resumes, it picks up where it left off 
+(in contrast to functions which start fresh on every invocation).
+
+</body>
+</html>

@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Expression statements</h1>
+
+<p>https://docs.python.org/3/reference/expressions.html
+
+<p>https://stackoverflow.com/questions/4728073/what-is-the-difference-between-an-expression-and-a-statement-in-python
+
+<h3>INTRO</h3>
+
+<p>All Python expressions can be used as statements.
+Expressions can be reduced to some kind of 'value',
+but in statements we use 'side effects' (function calls).
+Expression statements are often used in the interactive mode.
+
+<hr><pre>
+# Expression statements.
+
+2 + 5               # arithmetic or boolean operations
+name                # variable
+alist[idx]          # with lists, tuples, dicts
+[x for x in iterable] # list|dict|set comprehension
+some_function()     # function call
+some_object.method() # method call
+print(word)         # function in Py3
+yield x ** 2        # in generators
+lambda x: x ** 2    # anonymous function (lambda function)
+A if condition else B # conditional expression
+</pre><hr><pre>
+# Statements, but not expressions.
+
+print word          # statement in Py2
+a = 5               # assignment
+return name
+if condition: pass
+def some_function(): pass
+class FirstClass: pass
+</pre><hr>
+
+</body>
+</html>

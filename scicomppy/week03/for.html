@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>for loops</h1>
+
+<p>https://docs.python.org/3/tutorial/controlflow.html
+
+<h3>INTRO</h3>
+
+<p>The 'for' statement is used to iterate over the elements 
+of an iterable object.
+
+<hr><pre>
+# Syntax.
+for item in iterable:
+    statements      # item is processed
+    if condition1:
+        break       # optional, terminate the loop without executing 'else'
+    if condition2:
+        continue    # optional, go to the next item from iterable
+else:               # optional, terminate the loop
+    statements      # executed if 'break' was not used, even for an empty iterable
+</pre><hr><pre>
+word = "Python"
+for char in word:   # use decriptive names
+    if char == "o":
+        break   # characters printed: 'P', 'y', 't', 'h'
+    print(char)
+assert char == "o"   # 'char' is alive
+</pre><hr><pre>
+fruits = ["apple", "pear", "plum", "apricot"]   # use plural when possible
+for fruit in fruits:
+    if fruit[0] == "a":
+        continue   # skipping "apple" and "apricot"
+    print(fruit)
+assert fruit == "apricot"
+
+# What if we need an index?
+for i in range(len(fruits)):   # C style
+    print ( "{} {}".format(i, fruits[i]) )
+
+for (i, fruit) in enumerate(fruits):
+    print ( "{} {}".format(i, fruit) )
+
+[c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
+</pre><hr><pre>
+for (a, b) in [(1. "one"), (2, "two"), (3, "three")]:   # unpacking
+    print ( "first {} second {}".format(a, b) )
+</pre><hr><pre>
+# Code that modifies a collection while iterating over that same collection
+# can be tricky to get right.
+# It is safe to extend the list (append at the end).
+# It is not safe to add or remove an item in the middle of the list.
+L = [0, 1, 2, 3, 4, 5]
+for i in L:
+    print ( i )
+    if (i % 2) == 1:      # if i is odd then extend the list
+        L.append(2 * i)   # adding two even numbers
+        L.append(4 * i)
+</pre><hr><pre>
+L = [0, 1, 2, 3, 4, 5]
+for i in L[:]:   # use copy in the loop [or list(L)]
+    if (i % 2) == 1:
+        L.remove(i)   # changing the original list
+
+# Better solution (filtering).
+
+new_list = [i for i in L if (i % 2) != 1]
+</pre><hr><pre>
+# Looping over a sequence in reverse.
+
+for char in reversed("qwerty"):   # 'reversed object'
+    print(char)   # y, t, r, e, w, q
+</pre><hr><pre>
+# Looping over a sequence in sorted order.
+
+for char in sorted("qwerty"):   # ['e', 'q', 'r', 't', 'w', 'y']
+    print(char)
+</pre><hr><pre>
+# Looping over two or more sequences at the same time.
+
+letters = ["a", "b", "c", "d"]
+numbers = [10, 20, 30, 40]
+for letter, number in zip(letters, numbers):
+    print ( "{} {}".format(letter, number) )
+</pre><hr><pre>
+# Eliminating duplicate elements.
+
+for char in set("abracadabra"):   # 'a', 'c', 'd', 'b', 'r'
+    print(char)
+</pre><hr><pre>
+# Using all() and any().
+
+L = [1, 2, 4, 5]
+
+if all(x % 2 == 0 for x in L):
+    print ( "all numbers are even" )
+
+if any(x % 2 == 0 for x in L):
+    print ( "there is an even number on the list" )
+</pre><hr>
+
+</body>
+</html>

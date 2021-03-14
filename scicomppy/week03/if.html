@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>if statements</h1>
+
+<p>https://docs.python.org/3/tutorial/controlflow.html
+
+<h3>INTRO</h3>
+
+<p>The 'if' statement is used for conditional execution.
+It is a compound statement.
+
+<hr><pre>
+# Compound statement structure.
+
+header_statement:   # 'if' or 'while' or 'for'
+    statements   # indentation 4 spaces (recommended)
+</pre><hr><pre>
+# Nested suites in compound statements.
+
+suite1           # no indentation
+header_statement1:
+    suite2       # indentation 4 spaces
+    header_statement2:
+        suite3   # total indentation 8 spaces
+    suite2 (continued)   # indentation 4 spaces
+suite1 (continued)   # no indentation
+</pre><hr><pre>
+# Syntax. Zero or one part of the 'if' statement will be executed.
+
+if condition1:
+    statements
+elif condition2:    # optional, more 'elif' parts is possible
+    statements
+else:               # optional, only one 'else' part is possible
+    statements
+</pre><hr><pre>
+# Short form in a single line (better to avoid).
+
+if condition: simple_statement
+</pre><hr><pre>
+assert isinstance(n, int)
+if n &lt; 0:
+    print ( "negative number" )
+elif n % 2 == 0:
+    print ( "{} {}".format(n, "is even") )
+else:
+    print ( "{} {}".format(n, "is odd") )
+</pre><hr>
+
+<h3>CONDITIONAL EXPRESSION</h3>
+
+
+<hr><pre>
+if condition:
+    A = X
+else:
+    A = Y
+
+# Conditional expression (sometimes called a “ternary operator”) [PEP 308].
+
+A = X if condition else Y
+A = ((X) if (condition) else (Y))   # for more complex expressions
+</pre><hr><pre>
+a, b = 25, 30
+pos_a = (-a) if a &lt; 0 else a
+max_ab = b if a &lt; b else a
+min_ab = a if a &lt; b else b
+</pre><hr>
+
+
+</body>
+</html>
