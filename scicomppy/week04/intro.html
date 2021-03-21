@@ -1,0 +1,124 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Function definitions</h1>
+
+<p>https://docs.python.org/3/reference/compound_stmts.html#function-definitions
+
+<p>https://www.python-course.eu/python3_functions.php
+
+<h3>INTRO</h3>
+
+<p>Why we are using functions?
+<br>(a) To reuse code (repeating code should be avoided; shorter code).
+<br>(b) To make a safe namespace [scopes].
+<br>(c) It is easier to remove bugs.
+
+<p>It lowers the cost for development and maintenance of the software.
+
+<pre>
++-------------+----------------------------+
+| Statements  | Examples                   |
++-------------+----------------------------+
+| Calls       | my_func(12, word="alpha")  |
+| def, return | def func(x, y=1):          |
+|             |     return x + y           |
+| global      | def changer():             |
+|             |     global x; x = "beta"   |
+| nonlocal    | def changer(): # Python 3  | PEP 3104
+|             |     nonlocal x; x = "beta" |
+| yield       | generators                 |
+| lambda      | anonymous functions        |
++-------------+----------------------------+
+</pre>
+
+<h3>CREATING FUNCTIONS</h3>
+
+<p>A function in Python is defined by a 'def' statement (a compound statement).
+The argument list may be empty.
+If a 'return' line is not present then 'return None' is assumed.
+Function names should be in a joined_lower style.
+
+<p>The execution of a 'def' statement binds the function name 
+in the current local namespace to a function object.
+The function body is executed when the function is called.
+
+<p>A function definition may be wrapped by one or more decorator expressions. 
+Decorator expressions are evaluated when the function is defined, 
+in the scope that contains the function definition.
+
+<hr><pre>
+# Syntax.
+
+def function_name(argument_list):
+    docstring   # optional
+    statements
+    return result   # optional
+</pre><hr><pre>
+def do_nothing():   # a placeholder, it can be changed in the future
+    pass            # return None
+</pre><hr><pre>
+# Recommended docstrings.
+
+def first_function(argument1, argument2):
+    """Return the sum of arguments."""   # one line
+    statements
+
+def second_function(argument):
+    """First line.
+    (empty line)
+    More lines with detailes.
+    """
+    statements
+</pre><hr><pre>
+def func(): ...     # definition (statement)
+func()              # call (expression)
+other_name = func   # assignment
+other_name()        # call
+func.atrr = value   # defining an attribute for func
+dir(func)           # the list of attributes
+func.__name__       # string
+func.__doc__        # docstring
+func(x, y)          # two arguments
+func((x, y))        # one argument (tuple)
+</pre><hr>
+
+<h3>RETURNING MULTIPLE VALUES</h3>
+
+<hr><pre>
+def find_minmax(x, y):
+    """Finding min and max simultaneously."""
+    min2 = x if x &lt; y else y
+    max2 = y if x &lt; y else x
+    return (min2, max2)   # make a tuple with values
+
+a, b = find_minmax(5, 3)   # (a, b) = (3, 5)
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<hr><pre>
+# Create a function print_in_squares(word).
+If word = "Python", them the result is
++---+---+---+---+---+---+
+| P | y | t | h | o | n |
++---+---+---+---+---+---+
+Try to build the whole string 'result' and print it at the end.
+</pre><hr><pre>
+# Create a function print_reversed_pyramid(height).
+
+&gt;&gt;&gt; print_reversed_piramid(4)
+*******
+ *****
+  ***
+   *
+</pre><hr>
+
+
+</body>
+</html>

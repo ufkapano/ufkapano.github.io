@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Scopes</h1>
+
+<p>PEP 3104 - Access to Names in Outer Scopes. The specification for the nonlocal statement.
+
+<p>https://realpython.com/python-namespaces-scope/
+<br>Namespaces and Scope in Python
+
+<h3>INTRO</h3>
+
+<p>A 'scope' defines the visibility of a name/variable within a block.
+
+<p>A 'namespace' is a collection of currently defined symbolic names 
+along with information about the object that each name references. 
+You can think of a namespace as a dictionary in which the keys 
+are the object names and the values are the objects themselves.
+
+<p>There are four types of namespaces in a Python program (LEGB rule):
+<br>(1) Local
+<br>(2) Enclosing
+<br>(3) Global
+<br>(4) Builtin
+
+<hr><pre>
+def my_len(sequence):              # sequence is local
+    """Return the length of a sequence."""
+    length = 0                     # length is local
+    for item in sequence:          # item is local
+        length += 1
+    return length
+</pre><hr><pre>
+X = 99   # global name
+
+def func():   # local namespace
+    #print ( X )          # NameError, X will be local
+    X = 88                # local name
+    print ( X )           # 88, reference to the local X
+
+func()
+print ( X )               # 99, X is global here
+</pre><hr><pre>
+X = 99   # global name
+
+def func():
+    global Z              # global statement (declaration)
+    print ( X )           # reading global name
+    Y = 88                # local name
+    Z = 77                # Z is created
+
+#print( Z )       # NameError, Z is not defined
+X = 55     # global X changed
+func()              # 55, here the function body is executed
+#print ( Y )        # ERROR, Y is not defined
+print ( Z )         # 77, Z is global
+</pre><hr><pre>
+X = 99                        # global name
+
+def func():
+    global X              # global statement
+    print ( X )           # OK
+    X = 88                # global X changed
+
+func()                        # 99
+print ( X )                   # 88
+</pre><hr><pre>
+# https://www.python.org/dev/peps/pep-0227/
+# PEP 227 -- Statically Nested Scopes
+
+x = 1
+def outer():
+    #from math import *   # SyntaxError: import * is not allowed ...
+    import math    # possible
+    x = 2
+    def inner():   # nested scope
+        print ( x )
+    inner()
+
+outer()   # print 2 from nested scope, not 1 from global scope
+#print ( math.sin(1) )   # NameError: name 'math' is not defined
+</pre><hr><pre>
+def make_score(score=0):
+    for i in [1, 2, 3, 4]:
+        def increment(step=i):
+            #global score
+#NameError: name 'score' is not defined
+
+            nonlocal score   # if not, there is an exception (Py3)
+#UnboundLocalError: local variable 'score' referenced before assignment
+            # 'score' is not local and it is not global
+
+            score = score + step
+            print(score)
+        increment()
+
+make_score()   # 1 3 6 10
+</pre><hr>
+
+
+</body>
+</html>

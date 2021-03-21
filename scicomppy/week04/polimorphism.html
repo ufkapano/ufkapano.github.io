@@ -1,0 +1,41 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Polimorphism</h1>
+
+<h3>INTRO</h3>
+
+<p>Polimorphism means that the same function name can be used 
+for different types. 
+This makes programming more intuitive and easier.
+
+<hr><pre>
+def times(x, y):
+    """Return the product of arguments."""
+    # The arguments should support the * operator (the __mul__ method).
+    return x * y
+
+times(2, 3)                   # 6, int * int
+times(2, 3.14)                # 6.28, int * float
+times("Bum!", 3)              # "Bum!Bum!Bum!", str * int
+</pre><hr><pre>
+# Polymorphic len() function.
+# Based on the __len__ method.
+
+len("Python")                      # 6, the length of a string
+len(["Python", "C++", "Java"])     # 3, the number of items
+len({"Name": "Adam", "Age": 30})   # 2, the number of keys
+len(set([1, 3, 5, 7]))             # 4, the number of elements
+</pre><hr>
+
+<p>Polymorphism is a very important concept in Object-Oriented Programming.
+Polymorphism in class methods: different (unrelated) classes 
+can have a method with the same name.
+
+</body>
+</html>

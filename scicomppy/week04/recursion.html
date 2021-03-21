@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Recursion</h1>
+
+<p>https://en.wikipedia.org/wiki/Recursion
+
+<h3>INTRO</h3>
+
+<p>A class of objects or methods exhibits recursive behavior 
+when it can be defined by two properties:
+<br>(1) a simple base case (or cases) - a terminating scenario 
+that does not use recursion to produce an answer,
+<br>(2) a recursive step - a set of rules that reduces 
+all other cases toward the base case.
+
+<hr><pre>
+def print_stars(n):
+    if n &gt; 0:   # pass for the base case n=0
+        print ( "*" )
+        print_stars(n-1)
+
+print_stars(5)
+</pre><hr><pre>
+# 0! = 1, 1! = 1, n! = n*(n-1)!
+
+def factorial(n):
+    if n == 0 or n == 1:   # base cases
+        return 1
+    else:
+        return n * factorial(n-1)
+
+import math
+print ( math.factorial(10) )     # Python 2.6+
+print ( factorial(10) )
+</pre><hr><pre>
+# The Fibonacci sequence
+# f(0) = 0, f(1) = 1, f(n) = f(n-1) + f(n-2)
+
+def fibonacci(n):
+    if n == 0 or n == 1:   # base cases
+        return n
+    else:
+        return fibonacci(n-1) + fibonacci(n-2)
+</pre><hr><pre>
+# binomial(n, k) = factorial(n) / (factorial(k) * factorial(n-k))
+# binomial(n, 0) = binomial(n, n) = 1
+
+def binomial(n, k):
+    if k == 0 or k == n:
+        return 1
+    else:
+        return binomial(n-1, k-1) + binomial(n-1, k)
+</pre><hr>
+
+
+</body>
+</html>

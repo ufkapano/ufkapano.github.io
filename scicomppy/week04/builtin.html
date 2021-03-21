@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Builtin functions</h1>
+
+<p>https://docs.python.org/3/library/functions.html
+
+<h3>INTRO</h3>
+
+<p>Builtin functions are always available.
+
+<hr><pre>
+# Builtin objects in Python 2.
+
+import __builtin__   # Py2
+dir(__builtin__)   # list of objects
+</pre><hr><pre>
+# Builtin objects in Python 3.
+
+import builtins   # Py3
+dir(builtins)   # list of objects
+zip is builtins.zip   # True
+zip = my_better_zip
+</pre><hr>
+
+<p>Type names: basestring(), bool(), bytearray(), bytes(), 
+complex(), dict(), float(), frozenset(), 
+int(), list(), long() [Py2], set(), str(), tuple(), unicode() [Py2].
+
+<p>Mathematical functions and tools:
+abs(), all(), any(), ascii() [Py3], bin() , chr(), divmod(), 
+enumerate(), eval(), exec(), filter()
+format(), hex(), iter(), len(), map(), max(), min(), next() [Py2.6+], 
+oct(), open(), ord(), pow(), range(), repr(), reversed(), round(), 
+sorted(), sum(), unichr() [Py2], xrange() [Py2], zip().
+
+<p>OOP: classmethod(), delattr(), dir(), getattr(), hasattr(), 
+isinstance(), issubclass(), object(), property(), 
+setattr(), staticmethod(), super(), type().
+
+<h3>FUNCTIONS FOR ITERABLES</h3>
+
+<hr><pre>
+# map(function, iterable, ...) returns  map object (iterator) in Py3
+
+def cube(x):
+    return x * x * x
+
+list(map(cube, range(10)))   # map object
+list(cube(x) for x in range(10))   # generator object
+# [0, 1, 8, 27, 64, 125, 216, 343, 512, 729]
+
+L = [(1, 2), (3, 4, 5)]
+list(map(sum, L))   # [3, 12] map object
+list(sum(t) for t in L)   # [3, 12] generator object
+
+def calc(x, y):   # two arguments and two iterables in map()
+    return 2 * x + y
+
+R = range(10)
+list(map(calc, R, R))
+list(calc(x, y) for (x, y) in zip(R, R))
+# [0, 3, 6, 9, 12, 15, 18, 21, 24, 27]
+</pre><hr><pre>
+# filter(function or None, iterable) returns filter object (iterator) in Py3
+
+def check(x):
+    return x % 2 != 0 and x % 3 != 0
+
+list(filter(check, range(30)))   # filter object
+list(x for x in range(30) if check(x))   # generator object, equivalent
+# [1, 5, 7, 11, 13, 17, 19, 23, 25, 29]
+
+list(filter(None, [-2,-1,0,1,2]))   # [-2, -1, 1, 2] filter object
+list(x for x in [-2,-1,0,1,2] if x)   # generator object, equivalent
+</pre><hr>
+
+
+</body>
+</html>

@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Lambdas</h1>
+
+<h3>INTRO</h3>
+
+<p>Lambda expressions (sometimes called lambda forms) 
+are used to create anonymous functions.
+Functions created with lambda expressions cannot contain statements 
+or annotations.
+
+<hr><pre>
+# Syntax.
+
+lambda arguments: expression   # yields a function object
+
+# The unnamed object behaves like a function object defined with:
+
+def &lt;lambda&gt;(arguments):
+    return expression
+</pre><hr><pre>
+sum_items = lambda x, y, z: x + y + z
+print ( sum_items(2, 3, 4) )   # 9
+
+def sum_items(x, y, z):   # the same result
+    return x + y + z
+</pre><hr><pre>
+# Default arguments.
+
+sum_items = lambda x=0, y=0, z=0: x + y + z
+print ( sum_items() )   # 0
+print ( sum_items(6, 7) )   # 13
+</pre><hr>
+
+<h3>CUSTOM SORTING</h3>
+
+<hr><pre>
+number_list.sort(reverse=True)
+number_list.sort(key=lambda x: -x)
+</pre><hr><pre>
+L = [(2, "gamma"), (-7, "alpha"), (4, "beta")]   # a list of records
+L.sort(key=lambda t: (-t[0], len(t[1])))
+L.sort(key=lambda t: (t[1], abs(t[0])))
+</pre><hr>
+
+<h3>ACTIONS</h3>
+
+<hr><pre>
+def show_sequence(sequence, action=None):
+    for item in sequence:
+        print ( item )
+        if action:
+            action(item)
+
+show_sequence([1, 2, 3, 4], action=lambda x: print(x*x)) # Python 3
+
+M = []
+show_sequence([1, 2, 3, 4], action=lambda x: M.append(x*x))
+
+# Example: BFS or DFS in graphs.
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<hr>
+
+<p>Define the following functions using lambda:
+abs(x), min(x, y), max(x, y).
+
+<hr>
+
+</body>
+</html>

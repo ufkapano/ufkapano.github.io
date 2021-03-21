@@ -1,0 +1,118 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Passing arguments</h1>
+
+<h3>DEFAULT ARGUMENTS</h3>
+
+<p>Default parameter values are evaluated from left to right 
+when the function definition is executed. 
+This means that the expression is evaluated once, 
+when the function is defined, and that the same “pre-computed” value 
+is used for each call.
+
+<hr><pre>
+def print_word(word, n=1):
+    for i in range(n):
+        print ( "{} {}".format(i, word) )
+
+print_word("spam")   # default n=1
+print_word("spam", 3)   # n=3
+print_word(n=4, word="spam")   # using keywords 'n' and 'word'
+</pre><hr><pre>
+# Problems with mutable default arguments.
+
+def tester1(x, L=[]):   # L is created once
+    L.append(x)
+    print ( "tester1 {}".format(L) )
+
+def tester2(x, L=None):
+    if L is None:   # explicit test for None
+        L = []
+    L.append(x)
+    print ( "tester2 {}".format(L) )
+
+tester1(1)   # [1]
+tester1(2)   # [1, 2]
+tester1(3)   # [1, 2, 3]
+tester2(1)   # [1]
+tester2(2)   # [2]
+tester2(3)   # [3]
+</pre><hr>
+
+<h3>EXCESS POSITIONAL ARGUMENTS</h3>
+
+<hr><pre>
+# '*identifier' is initialized to a tuple with excess positional arguments
+
+def unique_letters(*arguments):
+    letters = set()
+    for word in arguments:   # 'arguments' is a tuple
+        letters.update(word)
+    return letters
+
+unique_letters("abc", "cde", "efg")   # set(['a', 'e', 'f', 'b', 'c', 'g', 'd'])
+</pre><hr>
+
+<h3>KEYWORD ARGUMENTS</h3>
+
+<hr><pre>
+# '**identifier' is initialized to a new ordered mapping receiving
+# any excess keyword arguments
+
+def university(**keywords):
+    for key in sorted(keywords):   # keywords is a dict
+        print ( "{} : {}".format(key, keywords[key]) )
+
+university(rektor="Jacek Popiel", kanclerz="Monika Harpula")
+# kanclerz : Monika Harpula
+# rektor : Jacek Popiel
+</pre><hr>
+
+<h3>EXAMPLE</h3>
+
+<hr><pre>
+def f(a1, a2=v2, *a3, **a4): pass
+
+# a function call f(x1, x2, x3, x4, b1=x5, b2=x6)
+# a1=x1, positional argument
+# a2=x2, positional argument (default value will not be used)
+# a3=(x3, x4), excess positional arguments
+# a4={"b1":x5, "b2":x6}, excess keyword arguments
+</pre><hr>
+
+<h3>UNPACKING ARGUMENTS</h3>
+
+<hr><pre>
+args = (1, 5)
+range(*args)   # range(1, 5)
+</pre><hr><pre>
+def describe(name, age=0, position=None):
+    print ( "{} age {} position {}".format(name, age, position) )
+
+person = {"name": "Bogdan", "age": 30, "position": "teacher"}
+
+describe("Adam", 20, "student")
+# Adam age 20 position student
+
+describe(**person)
+# Bogdan age 30 position teacher
+</pre><hr>
+
+<h3>FORCING ARGUMENTS</h3>
+
+<hr><pre>
+def func(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2): pass
+
+def func_pos_only(arg, /): pass   # func_pos_only(25)
+
+def func_kwd_only(*, arg): pass   # func_kwd_only(arg=34)
+</pre><hr>
+
+</body>
+</html>

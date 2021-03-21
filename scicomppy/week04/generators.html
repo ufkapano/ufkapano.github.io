@@ -1,0 +1,166 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Generators</h1>
+
+<p>https://rmariano.eu/posts/exploring-generators-and-coroutines/
+<br>Exploring Generators and Coroutines
+<br>PEP-255 (Simple Generators) 
+[yield is a statement; lazy evaluation]
+<br>PEP-342 (Coroutines via Enhanced Generators) 
+[yield is an expression; send(), throw(), close()]
+<br>PEP-380 (Syntax for delegating to a Sub-Generator)
+[return in generators; yield from]
+<br>PEP-525 (Asynchronous Generators)
+
+<p>https://snarky.ca/how-the-heck-does-async-await-work-in-python-3-5/
+<br>How the heck does async/await work in Python 3.5? [long essey]
+
+<h3>INTRO</h3>
+
+<p>Use cases of generators:
+<br>(a) Working with data streams or large files, like CSV files.
+<br>(b) Generating an infinite sequence.
+
+<h3>GENERATOR EXPRESSIONS</h3>
+
+<p>This is an expression that returns an iterator. 
+
+<hr><pre>
+# sum of squares 0, 1, 4, ... 81
+
+alist = [i*i for i in range(10)]   # list comprehension
+
+gen = (i*i for i in range(10))   # generator expression
+
+result = sum(i*i for i in range(10))
+</pre><hr>
+
+<h3>GENERATOR FUNCTIONS</h3>
+
+<p>This is a function which returns a generator iterator.
+It looks like a normal function except that it contains yield expressions
+(instead of return) for producing a series of values.
+
+<hr><pre>
+def iter_squares(n):
+    for i in range(n):
+        yield i*i
+
+result = sum(iter_squares(10))
+</pre><hr><pre>
+def my_range(stop):
+    """My version of range(stop)."""
+    value = 0
+    while value &lt; stop:
+        yield value           # yield instead of return
+        value = value + 1
+
+# Example 1 - using for loop (hidden iteration protocole).
+for i in my_range(10):
+    print ( i )
+
+# Example 2 - explicit iteration protocole.
+gen = my_range(3)
+print ( next(gen) )   # 0
+print ( next(gen) )   # 1
+print ( next(gen) )   # 2
+print ( next(gen) )   # StopIteration, gen is exhausted
+print ( next(gen) )   # StopIteration
+</pre><hr>
+
+<h3>INFINITE ITERATORS</h3>
+
+<hr><pre>
+import itertools
+
+iter_zeros1 = iter(int, 1)   # int() gives 0
+iter_zeros2 = iter((lambda: 0), 1)
+iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
+iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
+
+it1 = itertools.count(start=0, step=1)
+</pre><hr><pre>
+def iter_squares2():   # an infinite iterator
+    i = 0
+    while True:
+        yield i*i
+        i += 1
+</pre><hr><pre>
+def fibonacci():   # an infinite iterator
+    """The Fibonacci sequence."""
+    a, b = 0, 1
+    yield a
+    yield b
+    while True:
+        a, b = b, a + b
+        yield b
+
+# Example 1 - using for loop (hidden iteration protocole).
+for i in fibonacci():
+    print ( i )
+    if i &gt; 100:   # we have to break manually
+        break
+# 0 1 1 2 3 5 8 13 21 34 55 89 144
+
+# Example 2 - the generator is alive!
+fib = fibonacci()   # fib is a generator object
+for i in fib:
+    print ( i )
+    if i &gt; 100:
+        break
+print ( next(fib) )   # 233
+print ( next(fib) )   # 377
+</pre><hr>
+
+<h3>SPEED VS MEMORY</h3>
+
+<p>List comprehensions can be faster to evaluate than the equivalent 
+generator expression. 
+
+<hr><pre>
+import sys
+import timeit
+
+sqr_list = [i*i for i in range(1000000)]
+print ( sys.getsizeof(sqr_list) )   # 8697464 bytes
+
+sqr_gen = (i*i for i in range(1000000))
+print ( sys.getsizeof(sqr_gen) )   # 120 bytes
+
+t1 = timeit.Timer(lambda: sum(sqr_list))
+print ( t1.timeit(1) )   # 0.00961924200237263
+
+t2 = timeit.Timer(lambda: sum(sqr_gen))
+print ( t2.timeit(1) )   # 0.05263053500675596 (5 times slower)
+</pre><hr>
+
+<h3>EXAMPLES</h3>
+
+<p>https://realpython.com/introduction-to-python-generators/
+
+<hr><pre>
+# Problem: couting rows in a text file.
+
+txt_gen = txt_reader("some_file.txt")
+row_count = 0
+for row in txt_gen:
+    row_count += 1
+</pre><hr><pre>
+def txt_reader(file_name):   # possible MemoryError
+    file = open(file_name, "r")
+    result = file.read().split("\n") # loads everything into memory at once
+    return result   # list of strings
+</pre><hr><pre>
+def txt_reader(file_name):   # a generator function
+    for row in open(file_name, "r"):
+        yield row
+</pre><hr>
+
+</body>
+</html>
