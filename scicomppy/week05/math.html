@@ -1,0 +1,82 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using math</h1>
+
+<p>https://docs.python.org/3/library/math.html
+
+<h3>INTRO</h3>
+
+<p>This module provides access to the mathematical functions defined 
+by the C standard.
+
+<p>Complex number versions of many functions are in the 'cmath' module.
+
+<hr><pre>
+import math
+
+# Number-theoretic and representation functions
+
+# math.ceil(x) - the smallest integer value greater than or equal to x.
+# math.floor(x) - the largest integer value less than or equal to x.
+# math.trunc(x) - return int 
+# ceil() and floor() return float in Py2 and int in Py3
+
+# math.comb(n, k) - evaluates to n! / (k! * (n - k)!) (Py3.8)
+# math.perm(n, k=None) - evaluates to n! / (n - k)! when k &lt;= n (Py3.8)
+# math.prod(iterable, *, start=1) - the product of all the elements in iterable (Py3.8)
+
+# math.fabs(x)
+# math.fsum(iterable) - more accurate then sum(iterable)
+# math.factorial(x)
+# math.gcd(x, y) - the greatest common divisor
+# math.lcm(x, y) - the least common multiple
+
+# math.isfinite(x)
+# math.isinf(x)
+# math.isnan(x)
+</pre><hr><pre>
+# Power and logarithmic functions
+
+# math.exp(x) - more accurate then math.e ** x
+# math.expm1(x) - more accurate then math.exp(x)-1
+# math.log(x) - the natural logarithm ln(x)
+# math.log(x, base) -  math.log(x)/math.log(base)
+# math.log1p(x) - more accurate then math.log(1 + x)
+# math.log2(x) - more accurate then math.log(x, 2)
+# math.log10(x) - more accurate then math.log(x, 10)
+# math.pow(x, y) - returns x ** y, converts both arguments to float
+# math.sqrt(x) - the square root of x
+</pre><hr><pre>
+# Trigonometric and hyperbolic functions
+
+# math.sin(x), math.cos(x), math.tan(x),
+# math.asin(x), math.acos(x), math.atan(x),
+# math.sinh(x), math.cosh(x), math.tanh(x),
+# math.asinh(x), math.acosh(x), math.atanh(x)
+# math.atan2(y, x) - return atan(y / x) in radians [correct quadrant]
+# math.hypot(x, y) - return math.sqrt(x*x + y*y)
+</pre><hr><pre>
+# Special functions
+
+# math.erf(x) - the error function
+# math.erfc(x) - the complementary error function
+# math.gamma(x) - the Gamma function
+# math.lgamma(x) - the natural log of the Gamma function
+</pre><hr><pre>
+# Constants
+
+# math.pi - 3.141592... stała matematyczna
+# math.e - 2.718281...
+# math.tau - 2 * math.pi
+# math.inf - float('inf'), a floating-point positive infinity
+# math.nan - float('nan'), a floating-point 'not a number' (NaN) value
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using pickle</h1>
+
+<p>https://docs.python.org/3/library/pickle.html
+
+<h3>INTRO</h3>
+
+<p>The 'pickle' module implements binary protocols for serializing and 
+de-serializing a Python object structure.
+'Pickling' is the process whereby a Python object hierarchy is converted 
+into a byte stream, and 'unpickling' is the inverse operation, 
+whereby a byte stream is converted back into an object hierarchy.
+
+<p>Warning: The pickle module is not secure. Only unpickle data you trust.
+
+<hr><pre>
+# pickle.dump(obj, file, protocol=None, *, fix_imports=True, buffer_callback=None)
+# Write the pickled representation of the object 'obj' to the open file object 'file'.
+
+# pickle.dumps(obj, protocol=None, *, fix_imports=True, buffer_callback=None)
+# Return the pickled representation of the object 'obj' as a bytes object,
+# instead of writing it to a file.
+
+# pickle.load(file, *, fix_imports=True, encoding="ASCII", errors="strict", buffers=None)
+# Read the pickled representation of an object from the open file object 'file'
+# and return the reconstituted object hierarchy specified therein.
+
+# pickle.loads(data, /, *, fix_imports=True, encoding="ASCII", errors="strict", buffers=None)
+# Return the reconstituted object hierarchy of the pickled representation
+# 'data' of an object. 'data' must be a bytes-like object.
+</pre><hr><pre>
+import pickle
+
+adict = {"a": "piękny", "b": "książka"}
+
+word = pickle.dumps(adict)   # pickling adict to bytes (b'...')
+
+bdict = pickle.loads(word)   # unpickling from bytes
+
+assert adict == bdict
+</pre><hr><pre>
+import pickle
+
+adict = {"a": "piękny", "b": "książka"}
+
+with open('data.pickle', 'wb') as outfile:   # a binary file
+    pickle.dump(adict, outfile)   # pickling
+
+with open('data.pickle', 'rb') as infile:   # a binary file
+    bdict = pickle.load(infile)   # unpickling
+
+assert adict == bdict
+</pre><hr>
+
+</body>
+</html>

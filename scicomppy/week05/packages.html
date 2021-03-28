@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Packages</h1>
+
+<p>https://docs.python.org/3/reference/import.html
+
+<p>PEP 420 - Implicit Namespace Packages
+[a regular package (with an __init__.py) vs a namespace package]
+
+<h3>INTRO</h3>
+
+<p>Python has a concept of 'packages' to help organize modules 
+and provide a naming hierarchy.
+You can think of packages as the directories on a file system 
+and modules as files within directories.
+
+<p>It’s important to keep in mind that all packages are modules, 
+but not all modules are packages
+[a package contains a '__path__' attribute].
+
+<p>Python defines two types of packages, 'regular packages' 
+and 'namespace packages'.
+
+<h3>REGULAR PACKAGES</h3>
+
+<p>Regular packages are traditional packages typically implemented 
+as a directory containing an '__init__.py' file. 
+
+<p>When a regular package is imported, this '__init__.py' file 
+is implicitly executed, and the objects it defines are bound to names 
+in the package’s namespace. 
+The '__init__.py' file can contain the same Python code that any other 
+module can contain, and Python will add some additional attributes 
+to the module when it is imported.
+
+<hr><pre>
+# Files in the current directory.
+
+script.py      # the main module
+dir1/__init__.py       # required
+dir1/module1.py
+dir1/dir2/__init__.py   # required
+dir1/dir2/module2.py
+</pre><hr><pre>
+# Possible statements in script.py
+
+import dir1.module1
+import dir1.dir2.module2
+
+from dir1.module1 import name1
+from dir1.dir2.module2 import *
+</pre><hr>
+
+<h3>NAMESPACE PACKAGES</h3>
+
+<p>A namespace package is a composite of various 'portions', 
+where each portion contributes a subpackage to the parent package. 
+Portions may reside in different locations on the file system. 
+Portions may also be found in zip files, on the network, 
+or anywhere else that Python searches during import. 
+Namespace packages may or may not correspond directly to objects 
+on the file system; they may be virtual modules that have no concrete 
+representation.
+
+<h3>SYMPY</h3>
+
+<p>https://www.sympy.org/
+
+<p>https://github.com/sympy/sympy
+<br>[GitHub account: sympy, GitHub repo: sympy]
+
+<p>SymPy is the Python Library for Symbolic Mathematics.
+
+<hr><pre>
+sympy/          # main directory
+sympy/__init__.py   # not empty
+
+sympy/core/
+sympy/core/__init__.py   # not empty
+sympy/core/basic.py
+
+sympy/core/tests/
+sympy/core/tests/__init__.py   # empty
+sympy/core/tests/test_basic.py
+
+sympy/combinatorics/
+sympy/combinatorics/__init__.py   # not empty
+sympy/combinatorics/permutations.py
+# from sympy.core.basic import Atom
+
+sympy/combinatorics/tests/
+sympy/combinatorics/tests/__init__.py   # empty
+sympy/combinatorics/tests/test_permutations.py
+# from sympy.combinatorics.permutations import Permutation
+</pre><hr>
+
+</body>
+</html>

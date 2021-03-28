@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using random</h1>
+
+<p>https://docs.python.org/3/library/random.html
+
+<h3>INTRO</h3>
+
+<p>This module implements pseudo-random number generators for various 
+distributions.
+
+<hr><pre>
+import random
+
+# Bookkeeping functions
+
+# random.seed(a=None) - initialize the random number generator
+# random.seed() - the current system time is used
+# random.getstate()
+# random.setstate(state)
+</pre><hr><pre>
+# Functions for integers
+
+# random.randrange(stop)
+# random.randrange(start, stop[, step])
+# random.randint(a, b) - alias for randrange(a, b+1)
+random.randint(1, 6)   # in games
+</pre><hr><pre>
+# Functions for sequences
+
+# random.choice(sequence) - return a random element from sequence
+random.choice([0, 1])   # heads or tails, orzeł czy reszka, random.randint(0, 1)
+random.choice(["A", "B", "C", "D"])   # during exams ...
+random.choice(['win', 'lose', 'draw'])
+
+# random.choices(population, weights=None, *, cum_weights=None, k=1) (Py3.6)
+# Return a k sized list of elements chosen from the population with replacement.
+random.choices(range(10), k=5)   # [2, 7, 5, 8, 5]
+
+# Six roulette wheel spins (weighted sampling with replacement)
+random.choices(['red', 'black', 'green'], [18, 18, 2], k=6)
+#n['red', 'green', 'black', 'black', 'red', 'black']
+
+# random.sample(population, k)
+# random.sample(population, k, *, counts=None) (Py3.9)
+# Return a k length list of unique elements chosen from the population sequence.
+# Members of the population need not be hashable or unique.
+random.sample(['red', 'blue'], counts=[4, 2], k=5)
+random.sample(['red', 'red', 'red', 'red', 'blue', 'blue'], k=5) # the same
+random.sample(range(10000000), k=60)   # fast and space efficient
+
+# random.shuffle(sequence)
+# Shuffle the sequence in place (Fisher-Yates shuffle).
+# To shuffle an immutable sequence and return a new shuffled list,
+# use random.sample(L, k=len(L)) instead.
+</pre><hr><pre>
+# Real-valued distributions
+
+# random.random() - return a random float from [0.0, 1.0)
+# random.uniform(a, b) - return a random float from [a, b]
+# random.triangular(low, high, mode)
+# random.gauss(mu, sigma) - Gaussian distribution
+</pre><hr>
+
+
+</body>
+</html>

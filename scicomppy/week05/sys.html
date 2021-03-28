@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using sys</h1>
+
+<p>https://docs.python.org/3/library/sys.html
+
+<h3>INTRO</h3>
+
+<p>This module provides access to some objects used or maintained by the
+interpreter and to functions that interact strongly with the interpreter.
+
+<hr><pre>
+import sys
+
+# Dynamic objects (selected).
+
+sys.argv   # command line arguments; argv[0] is the script pathname if known
+sys.path   # module search path (a list of strings)
+# sys.path[0] is the script directory, else ''
+sys.modules   # dictionary of loaded modules
+
+sys.stdin   # standard input file object
+sys.stdout   # standard output file object
+sys.stderr   # standard error object; used for error messages
+</pre><hr><pre>
+# Static objects (selected).
+
+sys.executable   # absolute path of the executable binary of the Python interpreter
+sys.maxint   # the largest supported integer
+sys.version   # the version of this interpreter as a string
+sys.platform   # platform identifier
+sys.prefix   # prefix used to find the Python library
+</pre><hr><pre>
+# Functions (selected).
+
+sys.exit()   #  exit the interpreter by raising SystemExit
+# sys.exit(0) is a success, sys.exit(1) is a failure
+sys.getrefcount()   # return the reference count for an object (plus one :-)
+sys.getrecursionlimit()   # return the max recursion depth for the interpreter
+sys.getsizeof()   # return the size of an object in bytes
+sys.setrecursionlimit()   # set the max recursion depth for the interpreter
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<hr><pre>
+import sys
+
+for i, item in enumerate(sys.argv):
+    print( "{} {}".format(i, item) )
+
+</pre><hr><pre>
+$ ./script.py 12 34
+0 ./script.py
+1 12
+2 34
+
+$ python3 script.py 12 34
+0 script.py
+1 12
+2 34
+</pre><hr>
+
+
+</body>
+</html>

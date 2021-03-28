@@ -1,0 +1,110 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using os</h1>
+
+<p>https://docs.python.org/3/library/os.html
+
+<p>https://docs.python.org/3/library/os.path.html
+
+<h3>INTRO</h3>
+
+<p>OS module provides various functions to interact with the operating system. 
+Programs that import and use 'os' stand a better chance of being
+portable between different platforms.
+Programs should leave all pathname manipulation to 'os.path'
+(e.g., split and join).
+
+<hr><pre>
+import os
+
+# current working directory 
+current = os.getcwd()   # '/home/andrzej'
+
+# Using join().
+# parent directory 
+print ( os.pardir )   # ".." in UNIX
+parent = os.path.join(current, os.pardir)   # '/home/andrzej/..'
+# Join two or more pathname components, inserting os.sep as needed.
+
+print ( current + os.sep + os.pardir )   # the same
+print ( os.path.abspath(parent) )   # '/home', the absolute path
+print ( os.path.relpath(parent) )   # '..' the relative path
+</pre><hr><pre>
+# Using split().
+
+path = '/home/andrzej/Pobrane'
+print ( os.path.exists(path) )   # True
+print ( os.path.isabs(path) )   # True, it is the absolute path
+print ( os.path.isfile(path) )   # False
+print ( os.path.isdir(path) )   # True
+print ( os.path.getsize(path) )   # the number of bytes
+
+print ( os.path.split(path) )   # ('/home/andrzej', 'Pobrane')
+# Split a pathname.  Returns tuple "(head, tail)" where "tail" is
+# everything after the final slash.  Either part may be empty.
+
+print ( os.path.basename(path) )   # 'Pobrane'
+print ( os.path.dirname(path) )   # '/home/andrzej'
+</pre><hr><pre>
+dirname = "MyWork"
+print ( os.path.isdir(dirname) )   # False
+os.mkdir(dirname)
+# os.rename(old_name, new_name)
+print ( os.path.isdir(dirname) )   # True
+print ( os.path.abspath(dirname) )   # '/home/andrzej/MyWork'
+os.rmdir(dirname)   # a directory have to be empty
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<hr><pre>
+# Delete everything reachable from the directory named in "top",
+# assuming there are no symbolic links.
+# CAUTION:  This is dangerous!  For example, if top == '/', it
+# could delete all your disk files.
+
+import os
+
+for root, dirs, files in os.walk(top, topdown=False):   # walking bottom-up
+    # 'root' is a string, the path to the directory
+    # 'dirs' is a list of the names of the subdirectories in 'root'
+    # 'files' is a list of the names of the non-directory files in 'root'
+    for name in files:
+        os.remove(os.path.join(root, name))
+    for name in dirs:
+        os.rmdir(os.path.join(root, name))
+</pre><hr><pre>
+# Display the number of bytes taken by non-directory files in each directory
+# under the starting directory ('top'). Skip any CVS subdirectory.
+
+import os
+
+for root, dirs, files in os.walk(top):
+    print(root, "consumes", end=" ")
+    print(sum(os.path.getsize(os.path.join(root, name)) for name in files), end=" ")
+    print("bytes in", len(files), "non-directory files")
+    if 'CVS' in dirs:
+        dirs.remove('CVS')  # don't visit CVS directories
+</pre><hr><pre>
+# For a given directory find the number of PDF files in the directory tree
+# (".pdf" extensions).
+
+import os
+
+n_pdf = 0
+for root, dirs, files in os.walk(dirname):   # walking top-down
+    for name in files:
+        if name[-4:] == ".pdf":
+            n_pdf += 1
+print ( "n_pdf = {}".format(n_pdf) )
+</pre><hr>
+
+
+</body>
+</html>

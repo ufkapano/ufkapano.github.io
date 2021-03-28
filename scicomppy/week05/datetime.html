@@ -1,0 +1,171 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dates and times</h1>
+
+<p>https://docs.python.org/3/library/datetime.html
+
+<p>https://docs.python.org/3/library/time.html
+
+<p>https://docs.python.org/3/library/calendar.html
+
+<h3>DATETIME</h3>
+
+<p>The 'datetime' module supplies classes for manipulating dates and times.
+
+<hr><pre>
+import datetime
+
+# class datetime.date(year, month, day), an idealized naive date.
+# Supported operations:
+# date2 = date1 + timedelta   (timedelta.days are used only)
+# date2 = date1 - timedelta   (timedelta.days are used only)
+# timedelta = date1 - date2
+# date1 &lt; date2
+
+now = datetime.date.today()   # datetime.date(2021, 3, 27)
+print(now)   # 2021-03-27
+print(now.year)   # 2021
+print(now.month)   # 3
+print(now.day)   # 27
+
+birthday = datetime.date(1879, 3, 14)   # Albert Einstein
+birthday.weekday()   # 4 (Mon=0, Sun=6)
+birthday.isoweekday()   # 5 (Mon=1, Sun=7)
+birthday.isoformat()   # '1879-03-14'
+
+war2 = datetime.date.fromisoformat('1939-09-01')   # datetime.date(1939, 9, 1)
+
+now.resolution   # datetime.timedelta(days=1)
+
+age = now-birthday   # datetime.timedelta(days=51878)
+</pre><hr><pre>
+# class datetime.time(hour=0, minute=0, second=0, microsecond=0,
+# tzinfo=None, *, fold=0),
+# an idealized time, independent of any particular day,
+# assuming that every day has exactly 24*60*60 seconds.
+
+t = datetime.time(12, 34, 56, 123456)
+t.isoformat()   # '12:34:56.123456'
+
+# Attributes (read-only):
+# t.hour, t.minute, t.second, t.microsecond
+
+datetime.time.fromisoformat('04:23:01')
+# datetime.time(4, 23, 1)
+
+datetime.time.fromisoformat('04:23:01.000384')
+# datetime.time(4, 23, 1, 384)
+</pre><hr><pre>
+# class datetime.datetime(year, month, day, hour=0, minute=0, second=0,
+# microsecond=0, tzinfo=None, *, fold=0),
+# a combination of a date and a time.
+# Supported operations:
+# datetime2 = datetime1 + timedelta
+# datetime2 = datetime1 - timedelta
+# timedelta = datetime1 - datetime2
+# datetime1 &lt; datetime2
+
+datetime.datetime.now()
+# datetime.datetime(2021, 3, 27, 11, 30, 18, 310257)
+
+dt = datetime.datetime(2010, 7, 4, 12, 15, 58)
+'{:%Y-%m-%d %H:%M:%S}'.format(dt)   # '2010-07-04 12:15:58'
+dt.isoformat()   # '2010-07-04T12:15:58', sep='T'
+dt.isoformat(sep=' ')   # '2010-07-04 12:15:58'
+
+# Attributes (read-only):
+# dt.year, dt.month, dt.day, dt.hour, dt.minute, dt.second, dt.microsecond
+
+dt.date()   # datetime.date(2010, 7, 4)
+dt.time()   # datetime.time(12, 15, 58)
+
+datetime.datetime.fromisoformat('2011-11-04')
+# datetime.datetime(2011, 11, 4, 0, 0)
+
+datetime.datetime.fromisoformat('2011-11-04 12:34:56')
+# datetime.datetime(2011, 11, 4, 12, 34, 56)
+
+d = datetime.date(2005, 7, 14)
+t = datetime.time(12, 30)
+datetime.datetime.combine(d, t)
+# datetime.datetime(2005, 7, 14, 12, 30)
+</pre><hr><pre>
+# class datetime.timedelta(days=0, seconds=0, microseconds=0,
+# milliseconds=0, minutes=0, hours=0, weeks=0),
+# a duration expressing the difference between two 'date', 'time',
+# or 'datetime' instances to microsecond resolution.
+# Only days, seconds and microseconds are stored internally.
+
+# Operations: td + td, td - td, td * int, int * td, td * float, float * td,
+# td / int, td / float, td // int, td // td, td % td,
+# comparisons (==, !=, &lt;, &lt;=, &gt;, &gt;=)
+
+td = datetime.timedelta(1, 2, 3)
+# datetime.timedelta(days=1, seconds=2, microseconds=3), repr(td)
+print(td)   # 1 day, 0:00:02.000003, the result of str(td)
+print(td.days)   # 1
+print(td.seconds)   # 2
+print(td.microseconds)   # 3
+
+datetime.timedelta(minutes=10)
+# changed to datetime.timedelta(seconds=600)
+
+year = datetime.timedelta(days=365)
+year.total_seconds()   # 31536000.0
+ten_years = 10 * year   # datetime.timedelta(days=3650)
+</pre><hr>
+
+<p>'date', 'datetime', and 'time' objects all support a strftime(format) 
+method, to create a string representing the time under the control 
+of an explicit format string.
+
+<p>Conversely, the datetime.strptime() class method creates a 'datetime' 
+object from a string representing a date and time and a corresponding 
+format string.
+
+<h3>TIME</h3>
+
+<p>https://stackoverflow.com/questions/25785243/understanding-time-perf-counter-and-time-process-time
+<br>Understanding time.perf_counter() and time.process_time()
+
+<p>The 'epoch' is the point where the time starts, and is platform dependent. 
+For Unix, the epoch is January 1, 1970, 00:00:00 (UTC).
+
+<p>The term 'seconds since the epoch' refers to the total number 
+of elapsed seconds since the epoch.
+
+<hr><pre>
+import time
+
+# time.sleep(secs), suspend execution, 'secs' may be float.
+
+# time.time(), return the time in seconds since the epoch as float.
+# This is commonly referred to as 'Unix time'.
+
+# time.clock(), return CPU time (secs) since process start as a float (Py2)
+
+# time.perf_counter(), return the value (in fractional seconds)
+# of a performance counter (Py3.3+).
+
+# time.process_time(), return the value (in fractional seconds)
+# of the sum of the system and user CPU time of the current process (Py3.3+).
+
+# time.monotonic(), return  the value (in fractional seconds)
+# of a monotonic clock, i.e. a clock that cannot go backwards.
+# The clock is not affected by system clock updates (Py3.3+).
+
+print(time.gmtime(0))   # show the epoch
+
+start = time.process_time()
+# statements
+elapsed = time.process_time() - start
+</pre><hr>
+
+</body>
+</html>

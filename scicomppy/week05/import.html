@@ -1,0 +1,90 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>import statements</h1>
+
+<p>https://docs.python.org/3/reference/import.html
+
+<h3>INTRO</h3>
+
+<p>Python code in one module gains access to the code in another module 
+by the process of importing it.
+
+<p>The 'import' statement combines two operations:
+<br>(a) searching for the named module [finders], 
+<br>(b) binding the results of that search to a name in the local scope 
+[loaders; module execution].
+
+<p>When a module is first imported, Python searches for the module 
+and if found, it creates a module object, initializing it. 
+If the named module cannot be found, a 'ImportError' (Py2) or
+'ModuleNotFoundError' (Py3.6+) is raised.
+
+<p>The Python interpreter searches for modules in the following sequences:
+<br>(a) the current directory,
+<br>(b) directories in the shell variable PYTHONPATH.
+<br>(c) default locations (installation-dependent).
+
+<p>The module search path is stored in the system module 'sys' 
+as the 'sys.path' variable.
+
+<hr><pre>
+import sys
+
+print ( sys.modules.keys() )   # names of imported modules
+print ( sys.path )           # the module search path
+</pre><hr><pre>
+# Using import statements.
+
+import module1   # recommended
+import module2, module3
+
+print ( module1.name1 )
+module1.name1 = new_value     # zwykle dozwolone, ale ostrożnie!
+module1.name2()      # kwalifikacja funkcji z modułu
+print ( module1.__doc__ )   # docstring
+help(module1)   # NAME, FILE, FUNCTIONS, DATA
+dir(module1)              # namespace
+module1.__dict__.keys()   # namespace
+</pre><hr><pre>
+# Using from...import statements.
+# We can import specific names from a module into the current namespace.
+
+from module1 import name1, name2
+
+# Equivalent statements:
+# import module1
+# name1 = module1.name1
+# name2 = module1.name2
+# del module1
+
+from module2 import *   # importing all names, possible problems
+
+print ( "{} {}".format(name1, name2()) )
+</pre><hr><pre>
+import module1 as module2
+
+# Equivalent statements:
+# import module1
+# module2 = module1
+# del module1
+
+import numpy as np
+import Tkinter as tk   # Python 2
+import tkinter as tk   # Python 3
+import pygame as pg
+</pre><hr><pre>
+from module3 import name1 as name2
+</pre><hr><pre>
+# The reload() function imports a previously imported module again.
+
+reload(module1)
+</pre><hr>
+
+</body>
+</html>

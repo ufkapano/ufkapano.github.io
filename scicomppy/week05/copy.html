@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using copy</h1>
+
+<p>https://docs.python.org/3/library/copy.html
+
+<h3>INTRO</h3>
+
+<p>This module provides generic shallow and deep copy operations.
+<br>A 'shallow copy' constructs a new compound object and then 
+inserts 'references' into it to the objects found in the original.
+<br>A 'deep copy' constructs a new compound object and then, recursively, 
+inserts 'copies' into it of the objects found in the original.
+
+<p>Two problems with deep copy operations:
+<br>(a) recursive objects may cause a recursive loop,
+<br>(b) it may copy too much, such as data which is intended 
+to be shared between copies.
+
+<p>The deepcopy() function avoids these problems by:
+<br>(a) keeping a 'memo' dictionary of objects already copied during 
+the current copying pass,
+<br>(b) letting user-defined classes override the copying operation 
+or the set of components copied.
+
+<hr><pre>
+import copy
+
+# There are two methods available.
+x = "any object"
+y = copy.copy(x)       # a shallow copy of x
+z = copy.deepcopy(x)   # a deep copy of x
+</pre><hr><pre>
+M = [1, 2, 3]
+L = [10, "a", M]
+L2 = copy.copy(L)   # or L2 = L.copy(), or L2 = L[:]
+assert id(L) != id(L2)
+assert id(L[1]) == id(L2[1])
+assert id(L[2]) == id(L2[2])
+L3 = copy.deepcopy(L)
+assert id(L) != id(L3)
+assert id(L[1]) == id(L3[1])   # strings are immutable
+assert id(L[2]) != id(L3[2])
+M[1] = 22
+print(L)   # [10, 'a', [1, 22, 3]]
+print(L2)   # [10, 'a', [1, 22, 3]]
+print(L3)   # [10, 'a', [1, 2, 3]]   # no changes
+</pre><hr><pre>
+# http://stackoverflow.com/questions/1500718/
+# what-is-the-right-way-to-override-the-copy-deepcopy-operations-on-an-object-in-p
+
+class MyClass(object):
+    def __init__(self): ...
+    def __copy__(self): ...
+    def __deepcopy__(self, memo): ...
+</pre><hr>
+
+</body>
+</html>
