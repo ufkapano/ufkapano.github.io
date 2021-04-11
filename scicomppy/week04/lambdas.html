@@ -8,6 +8,8 @@
 
 <h1>Lambdas</h1>
 
+<p>https://docs.python.org/3/reference/expressions.html#lambda
+
 <h3>INTRO</h3>
 
 <p>Lambda expressions (sometimes called lambda forms) 
@@ -44,9 +46,15 @@ print ( sum_items(6, 7) )   # 13
 number_list.sort(reverse=True)
 number_list.sort(key=lambda x: -x)
 </pre><hr><pre>
-L = [(2, "gamma"), (-7, "alpha"), (4, "beta")]   # a list of records
+L = [(2, "gamma"), (-7, "alpha"), (4, "beta"), (4, "delta")]   # a list of records
+
 L.sort(key=lambda t: (-t[0], len(t[1])))
+# t[0] decreasing, for the same t[0] use the length of t[1]
+# [(4, 'beta'), (4, 'delta'), (2, 'gamma'), (-7, 'alpha')]
+
 L.sort(key=lambda t: (t[1], abs(t[0])))
+# t[1] increasing (lexicographic order), for the same t[1] use abs(t[0])
+# [(-7, 'alpha'), (4, 'beta'), (4, 'delta'), (2, 'gamma')]
 </pre><hr>
 
 <h3>ACTIONS</h3>

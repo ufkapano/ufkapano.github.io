@@ -14,10 +14,11 @@
 
 <h3>INTRO</h3>
 
-<p>Why we are using functions?
-<br>(a) To reuse code (repeating code should be avoided; shorter code).
-<br>(b) To make a safe namespace [scopes].
-<br>(c) It is easier to remove bugs.
+<p>Why are we using functions?
+<br>(a) To provide the structure for your code.
+<br>(b) To reuse code (repeating code should be avoided; shorter code).
+<br>(c) To make a safe namespace [scopes].
+<br>(d) It is easier to remove bugs.
 
 <p>It lowers the cost for development and maintenance of the software.
 
@@ -93,9 +94,7 @@ func((x, y))        # one argument (tuple)
 <hr><pre>
 def find_minmax(x, y):
     """Finding min and max simultaneously."""
-    min2 = x if x &lt; y else y
-    max2 = y if x &lt; y else x
-    return (min2, max2)   # make a tuple with values
+    return (x, y) if x &lt; y else (y, x)   # make a tuple with values
 
 a, b = find_minmax(5, 3)   # (a, b) = (3, 5)
 </pre><hr>

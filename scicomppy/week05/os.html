@@ -61,13 +61,13 @@ print ( os.path.abspath(dirname) )   # '/home/andrzej/MyWork'
 os.rmdir(dirname)   # a directory have to be empty
 </pre><hr>
 
-<h3>EXERCISES</h3>
+<h3>EXAMPLES</h3>
 
 <hr><pre>
 # Delete everything reachable from the directory named in "top",
 # assuming there are no symbolic links.
-# CAUTION:  This is dangerous!  For example, if top == '/', it
-# could delete all your disk files.
+# CAUTION:  This is dangerous!  For example, if top == '/',
+# it could delete all your disk files.
 
 import os
 
@@ -85,7 +85,7 @@ for root, dirs, files in os.walk(top, topdown=False):   # walking bottom-up
 
 import os
 
-for root, dirs, files in os.walk(top):
+for root, dirs, files in os.walk(top):   # walking top-down
     print(root, "consumes", end=" ")
     print(sum(os.path.getsize(os.path.join(root, name)) for name in files), end=" ")
     print("bytes in", len(files), "non-directory files")
@@ -97,12 +97,14 @@ for root, dirs, files in os.walk(top):
 
 import os
 
-n_pdf = 0
-for root, dirs, files in os.walk(dirname):   # walking top-down
+n_pdf = 0   # the number of PDF files
+for root, dirs, files in os.walk(top):   # walking top-down
     for name in files:
-        if name[-4:] == ".pdf":
+        #if name[-4:] == ".pdf":
+        if name.endswith(".pdf"):
             n_pdf += 1
-print ( "n_pdf = {}".format(n_pdf) )
+
+print("The number of PDF files in {} directory is {}".format(top, n_pdf))
 </pre><hr>
 
 

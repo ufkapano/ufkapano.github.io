@@ -1,0 +1,132 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Polynomials - constructors</h1>
+
+<p>https://docs.python.org/3/tutorial/classes.html
+
+<p>https://www.python-course.eu/polynomial_class_in_python.php
+
+<h3>INTRO</h3>
+
+<p>Creating a new class creates a new 'type' of object, allowing new 
+'instances' of that type to be made.
+A class in Python is defined by a 'class' statement (a compound statement).
+Class names should be in a StudlyCups style.
+
+<p>When a class definition is entered, a new namespace is created, 
+and used as the local scope.
+
+<hr><pre>
+# Syntax.
+
+class ClassName:   # a 'class object' will be created
+    docstring   # optional
+    statements
+
+class DerivedClassName(BaseClassName):   # inheritance
+    docstring   # optional
+    statements
+
+class DerivedClassName(Base1, Base2, Base3):   # multiple inheritance
+    docstring   # optional
+    statements
+
+# Now ClassName has a reference to the class object.
+instance = ClassName()   # 'calling' a class object
+ClassName.__doc__   # access to the docstring
+instance.__class__   # access to the class object
+</pre><hr>
+
+<h3>POLYNOMIALS</h3>
+
+<hr><pre>
+class Poly:
+    """The class for polynomials of a single variable."""
+
+    def __init__(self, c=0, n=0):   # a special method (constructor)
+        self.data = (n+1) * [0]
+        self.data[-1] = c
+
+    def degree(self):   # a method
+        return len(self.data) -1
+
+    def is_zero(self):   # a method, data can be [0], [0, 0], ...
+        return all(item == 0 for item in self.data)
+
+# Testing the constructor.
+poly1 = Poly(3, 5)
+# Class 'instantiation', poly1 is a new 'instance'.
+# __init__() is automatically invoked.
+
+assert len(poly1.data) == 6
+assert poly1.data == [0, 0, 0, 0, 0, 3]   # data is an instance attribute
+
+assert poly1.degree() == 5   # calling a method
+assert Poly.degree(poly1) == 5
+
+assert not poly1.is_zero()
+assert Poly(0, 3).is_zero()   # data is [0, 0, 0, 0]
+
+poly1.value = 124   # a new instance attribute
+</pre><hr>
+
+<h3>CLASS ATTRIBUTES</h3>
+
+<p>Class variables (attributes) are shared by all instances of the class.
+
+<hr><pre>
+class Poly:
+    counter = 0   # counting created polynomials, a class attribute
+
+    def __init__(self, c=0, n=0):   # a special method
+        self.data = (n+1) * [0]
+        self.data[-1] = c
+        Poly.counter += 1   # using a class attribute
+        # C/C++: 'a (op)= b' is equal to 'a = a (op) b', (op) can be +,-,*,/
+
+    def __del__(self):
+        # It is called when the reference counter drops to zero.
+        # Not exactly a destructor from C++.
+        Poly.counter -= 1
+
+assert Poly.counter == 0
+poly1 = Poly(3, 5)
+assert Poly.counter == 1
+assert poly1.counter == 1   # access from the instance (read-only)
+del poly1
+assert Poly.counter == 0
+</pre><hr>
+
+<h3>STRING REPRESENTATIONS</h3>
+
+<hr><pre>
+class Poly:
+
+    def __str__(self):   # the informal string representation, str(instance)
+        return str(self.data)
+        # it can be also "p0 + p1 x + p2 x^2 + ..."
+
+    def __repr__(self):   # the formal (canonical) string representation, repr(instance)
+        if self.is_zero():   # calling a method inside the class
+            return "Poly()"
+        else:
+            L = list()
+            for (i, c) in enumerate(self.data):
+                if c != 0:
+                    L.append("Poly({}, {})".format(repr(c), i))
+            return " + ".join(L)
+
+poly1 = Poly(3, 5)
+poly1.data[0] = -2   # addition is not implemented yet ...
+print(str(poly1))   # [-2, 0, 0, 0, 0, 3]
+print(repr(poly1))   # Poly(-2, 0) + Poly(3, 5)
+</pre><hr>
+
+</body>
+</html>

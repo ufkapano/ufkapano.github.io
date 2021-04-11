@@ -47,24 +47,21 @@ sys.getsizeof()   # return the size of an object in bytes
 sys.setrecursionlimit()   # set the max recursion depth for the interpreter
 </pre><hr>
 
-<h3>EXERCISES</h3>
+<h3>EXAMPLES</h3>
 
 <hr><pre>
+#!/usr/bin/python
+# script.py
+
 import sys
 
-for i, item in enumerate(sys.argv):
-    print( "{} {}".format(i, item) )
-
+print(sys.argv)
 </pre><hr><pre>
 $ ./script.py 12 34
-0 ./script.py
-1 12
-2 34
+['./script.py', '12', '34']
 
 $ python3 script.py 12 34
-0 script.py
-1 12
-2 34
+['script.py', '12', '34']
 </pre><hr>
 
 

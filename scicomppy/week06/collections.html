@@ -1,0 +1,54 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using collections</h1>
+
+<p>https://docs.python.org/3/library/collections.html
+
+<h3>INTRO</h3>
+
+<p>This module implements specialized container datatypes providing 
+alternatives to Python’s general purpose built-in containers, 
+'dict', 'list', 'set', and 'tuple'.
+
+<ul>
+<li>namedtuple() - factory function for creating tuple subclasses with named fields
+<li>deque - list-like container with fast appends and pops on either end
+<li>Counter - dict subclass for counting hashable objects
+<li>OrderedDict - dict subclass that remembers the order entries were added
+<li>defaultdict - dict subclass that calls a factory function to supply missing values
+</ul>
+
+<h3>DEQUE</h3>
+
+<hr><pre>
+import collections
+
+# collections.deque([iterable[, maxlen]])
+# Methods: copy(), clear(), count(), index(), insert()
+# remove(), reverse(), rotate(n=1),
+# extend(iterable), extendleft(iterable),
+# append(), appendleft(),
+# pop(), popleft().
+
+d = collections.deque('ghi')   # make a new deque with three items
+print(d)   # deque(['g', 'h', 'i'])
+d.append('j')           # add a new entry to the right side
+d.appendleft('f')       # add a new entry to the left side
+print(d)   # deque(['f', 'g', 'h', 'i', 'j'])
+item1 = d.pop()   # 'j', return and remove the rightmost item
+item2 = d.popleft()   # 'f', return and remove the leftmost item
+list(d)   # ['g', 'h', 'i'], list the contents of the deque
+assert d[0] == 'g' and d[-1] == 'i'   # fast only for the ends
+'h' in d   # True
+for item in d:   # iteration
+    print(item)
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Special methods</h1>
+
+<p>https://docs.python.org/3/reference/datamodel.html
+
+<h3>INTRO</h3>
+
+<p>A class can implement certain operations that are invoked by special syntax
+by defining methods with special names. 
+This is Python’s approach to 'operator overloading', allowing classes 
+to define their own behavior with respect to language operators.
+
+<hr><pre>
+__new__   called to create a new instance of class
+
+__init__   called after the instance has been created (a constructor)
+
+__del__   Called when the instance is about to be destroyed (a finalizer, a destructor).
+    Note that 'del x' decrements the reference count for x by one,
+    and 'x.__del__()' is only called when x’s reference count reaches zero.
+
+__str__   Called by str() and the built-in functions format()
+    and print() to compute the 'informal' string representation of an object.
+    The return value must be a string object.
+
+__repr___   called by repr(), must return a string
+
+__format__   called by format() to produce a 'formatted' string representation
+
+__bytes__   called by bytes() to compute a byte-string representation
+
+__hash__   called by hash(), should return an integer
+    If x == y then always hash(x) == hash(y).
+</pre><hr><pre>
+__cmp__   called by cmp() in Py2, should return -1 or 0 or 1
+
+Rich comparison methods.
+
+__lt__   called by x &lt; y
+__gt__   called by x &gt; y
+__eq__   called by x == y
+__le__   called by x &lt;= y
+__ge__   called by x &gt;= y
+__ne__   called by x != y
+assert (x &lt; y) == (y &gt; x)   # may be used by Python
+assert (x &lt;= y) == (y &gt;= x)   # may be used by Python
+assert (x == y) == not (x != y)   # not always True!
+
+PEP 207
+min() and list.sort() operations only use the &lt; operator (less).
+max() only use the &gt; operator.
+'in' and 'not in' operators and dictionary lookup only use the == operator.
+The reflexivity rules are assumed by Python.
+</pre><hr><pre>
+__bool__   called by bool() to implement truth value testing, should return False or True
+
+__nonzero__   truth value testing in Py2
+__bool__ = __nonzero__   compatibility
+</pre><hr><pre>
+Emulating container types.
+
+__len__   called by len(), should return the length of the container;
+    if len(x) == 0 and __bool__ is not defined then x is considered False
+
+__getitem__(self, key)   called to implement evaluation of 'X[key]'
+
+__setitem__(self, key, value)   called to implement assignment 'X[key] = value'
+
+__delitem__(self, key)   called to implement deletion 'del X[key]'
+
+__iter__   called when an iterator is required for a container
+
+__reversed__   called by reversed() to implement reverse iteration
+
+__contains__(self, item)   called to implement membership test operators
+    'item in X' and 'item not in X'
+
+__copy__   shallow copy, Y = copy.copy(X)
+
+__deepcopy__   deep copy, Y = copy.deepcopy(X, memo)
+</pre><hr><pre>
+Emulating numeric types.
+
+__add__   called by x + y
+__sub__   called by x - y
+__mul__   called by x * y
+__mod__   called by x % y (remainder)
+__divmod__   called by divmod(x, y), return (a // b, a % b) for integers
+__pow__   called by pow(x, y) and x ** y
+
+__floordiv__   called by x // y (quotient)
+__truediv__   called by x / y (Py3)
+__div__   called by x / y (Py2)
+__div__ = __truediv__   compatibility (not always good)
+
+__pos__   called by +x
+__neg__   called by -x
+__abs__   called by abs(x)
+__invert__   called by ~x
+__complex__  called by complex(x)
+__int__   called by int(x)
+__long__   called by long(x) (Py2)
+__float__   called by float(x)
+</pre><hr>
+
+</body>
+</html>

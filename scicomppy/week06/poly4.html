@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Polynomials - operations</h1>
+
+<p>https://docs.python.org/3/tutorial/classes.html
+
+<h3>COMPARISONS</h3>
+
+<hr><pre>
+class Poly:
+
+    def __eq__(self, other):   # poly1 == poly2
+        return (self - other).is_zero()
+
+    def __ne__(self, other):   # poly1 != poly2
+        return not self == other
+
+# There is a problem with &lt;, &lt;=, &gt;, &gt;=.
+poly1 = Poly(3, 5)
+poly2 = Poly(1, 2)
+assert poly1 == poly1
+assert poly1 != poly2
+</pre><hr>
+
+<h3>ADDITION, SUBSTRACTION, MULTIPLICATION</h3>
+
+<hr><pre>
+class Poly:
+
+    def __add__(self, other):   # poly1 + poly2
+        new_poly = Poly(0, max(len(self.data), len(other.data)) -1)
+        for i in range(len(self.data)):
+            new_poly.data[i] += self.data[i]
+        for i in range(len(other.data)):
+            new_poly.data[i] += other.data[i]
+        return new_poly
+
+    def __sub__(self, other):   # poly1 - poly2
+        new_poly = Poly(0, max(len(self.data), len(other.data)) -1)
+        for i in range(len(self.data)):
+            new_poly.data[i] += self.data[i]
+        for i in range(len(other.data)):
+            new_poly.data[i] -= other.data[i]
+        return new_poly
+
+    def __mul__(self, other):   # poly1 * poly2
+        new_poly = Poly(0, len(self.data) + len(other.data) -2)
+        for i in range(len(self.data)):
+            for j in range(len(other.data)):
+                new_poly.data[i+j] += self.data[i] * other.data[j]
+        return new_poly
+
+    def __pos__(self):      # +poly1 = (+1)*poly1
+        return self
+
+    def __neg__(self):      # -poly1 = (-1)*poly1
+        new_poly = Poly()
+        new_poly.data = [-item for item in self.data]
+        return new_poly
+</pre><hr>
+
+<h3>COMPOSITION</h3>
+
+<hr><pre>
+class Poly:
+
+    def __call__(self, x):   # Horner, polynomials are callable now
+        result = 0
+        for item in reversed(self.data):
+            result = result * x + item
+        return result
+
+    def combine(self, other):   # Horner
+        new_poly = Poly()
+        for item in reversed(self.data):
+            new_poly = new_poly * other + Poly(item)
+        return new_poly
+
+poly1 = Poly(3, 5)
+poly2 = Poly(1, 2)
+assert poly1(2) == 96
+assert poly2(9) == 81
+assert poly1.combine(poly2) == Poly(3, 10)   # 3*(x^2)^5 = 3*x^10
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<p>Add new methods to the Poly class.
+
+<hr><pre>
+class Poly:
+
+    def copy(self): pass   # shallow copy
+
+    def __pow__(self, n): pass   # poly1 ** n, pow(poly1, n)
+
+    def diff(self): pass   # derivative
+
+    def integrate(self): pass   # indefinite integral
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using timeit</h1>
+
+<p>https://docs.python.org/3/library/timeit.html
+
+<h3>INTRO</h3>
+
+<p>This module provides a simple way to time small bits of Python code.
+It has both a Command-Line Interface as well as a callable one.
+
+<hr><pre>
+import timeit
+
+# class timeit.Timer(stmt='pass', setup='pass', timer=&lt;timer function&gt;, globals=None)
+
+t1 = timeit.Timer(stmt="t=a ; a=b ; b=t", setup="a=1 ; b=2")
+t2 = timeit.Timer(stmt="(a,b) = (b,a)", setup="a=1 ; b=2")
+print ( t1.timeit(number=10) )   # number=1000000 is the default
+print ( t2.repeat(repeat=3, number=10) )   # return a list with 3 results
+print ( min(t2.repeat(10)) )   # this is what we typically want
+</pre><hr><pre>
+import random
+import timeit
+
+def mysort(L):
+    L[:] = sorted(L)
+
+alist = list(range(pow(10,6)))
+random.shuffle(alist)
+
+t1 = timeit.Timer(stmt="mysort(alist)", 
+    setup="from __main__ import mysort, alist")   # using strings
+
+#t1 = timeit.Timer(lambda: mysort(alist))   # using a callable
+
+print ( t1.timeit(1) )   # single run
+</pre><hr><pre>
+# Two functions are available.
+#
+# timeit.timeit(stmt='pass', setup='pass', timer=&lt;default timer&gt;,
+#     number=1000000, globals=None)
+#
+# timeit.repeat(stmt='pass', setup='pass', timer=&lt;default timer&gt;,
+#     repeat=5, number=1000000, globals=None)
+
+print( timeit.timeit("sum(range(pow(10,6)))", number=1) )
+print( timeit.timeit(lambda: sum(range(pow(10,6))), number=1) )
+
+print( timeit.repeat("sum(range(pow(10,6)))", repeat=3, number=1) )
+print( timeit.repeat(lambda: sum(range(pow(10,6))), repeat=3, number=1) )
+</pre><hr>
+
+</body>
+</html>

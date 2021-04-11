@@ -151,9 +151,7 @@ pakując je w krotkę lub inny typ kolekcji.
 <hr><pre>
 def find_minmax(x, y):
     """Równoczesne znajdowanie min i max."""
-    min2 = x if x &lt; y else y
-    max2 = y if x &lt; y else x
-    return (min2, max2)
+    return (x, y) if x &lt; y else (y, x)
 
 # Zastosowanie - rozpakowanie krotki wynikowej.
 a, b = find_minmax(5, 3)

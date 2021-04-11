@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Polynomials - definitions</h1>
+
+<p>https://en.wikipedia.org/wiki/Polynomial
+
+<p>https://en.wikipedia.org/wiki/Horner%27s_method
+
+<h3>INTRO</h3>
+
+<p>A polynomial is an expression consisting of variables and coefficients, 
+that involves only the operations of addition, subtraction, multiplication, 
+and non-negative integer exponentiation of variables.
+Polynomials appear in many areas of mathematics and science.
+
+<hr><pre>
+A polynomial of a single variable x:
+P(x) = x^2 - 4x + 7
+The polynomial P defines a function
+x --&gt; P(x),
+where x can be a number or a polynomial.
+Coefficients are usually numbers.
+
+-4x is a (linear) term, -4 is a coefficient, the degree of x is one.
+5              is a 'constant' polynomial (degree zero).
+2x + 3         is a 'linear' polynomial (degree one).
+3x^2 + 5x -8   is a 'cubic' polynomial (degree two).
+</pre><hr><pre>
+P(x) = p0 + p1 * x + p2 * x^2 = \sum_i pi * x^i,
+Q(x) = q0 + q1 * x + q2 * x^2 = \sum_i qi * x^i.
+
+Addition P + Q (the associative law of addition is used)
+
+P(x) + Q(x) = (p0 + q0) + (p1 + q1) * x + (p2 + q2) * x^2.
+P(x) + Q(x) = \sum_i (pi + qi) * x^i.
+
+Substraction P - Q
+
+P(x) - Q(x) = (p0 - q0) + (p1 - q1) * x + (p2 - q2) * x^2.
+P(x) - Q(x) = \sum_i (pi - qi) * x^i.
+</pre><hr><pre>
+Multiplication P * Q (the distributive law is repeatedly applied)
+
+P(x) * Q(x) = p0 * q0 + p0 * (q1 * x) + p0 * (q2 * x^2)
++ (p1 * x) * q0 + (p1 * x) * (q1 * x) + (p1 * x) * (q2 * x^2)
++ (p2 * x^2) * q0 + (p2 * x^2) * (q1 * x) + (p2 * x^2) * (q2 * x^2).
+
+P(x) * Q(x) = p0 * q0 
++ (p0 * q1 + p1 * q0) * x
++ (p0 * q2 + p1 * q1 + p2 * q0) * x^2
++ (p1 * q2 + p2 * q1) * x^3
++ (p2 * q2) * x^4.
+
+P(x) * Q(x) = \sum_i \sum_j pi * qj * x^(i+j).
+</pre><hr><pre>
+Composition P(Q)
+
+P(Q(x)) = p0 + p1 * Q(x) + p2 * Q(x)^2.
+</pre><hr>
+
+<h3>HORNER'S METHOD</h3>
+
+<p>Horner's method (or Horner's scheme) is an algorithm for polynomial evaluation.
+It allows the evaluation of a polynomial of degree n with only 
+n multiplications and n additions.
+
+<hr><pre>
+P(x) = p0 + p1 * x + p2 * x^2 + p3 * x^3.
+
+P(x) = p0 + x * (p1 + x * (p2 + x * (p3))).
+
+t = p3,
+t = t * x + p2,
+t = t * x + p1,
+t = t * x + p0.
+# Second approach.
+t = 0,
+t = t * x + p3,
+t = t * x + p2,
+t = t * x + p1,
+t = t * x + p0.
+</pre><hr>
+
+</body>
+</html>

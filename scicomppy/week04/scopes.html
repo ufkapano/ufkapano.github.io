@@ -39,11 +39,11 @@ def my_len(sequence):              # sequence is local
 X = 99   # global name
 
 def func():   # local namespace
-    #print ( X )          # NameError, X will be local
+    #print ( X )          # UnboundLocalError, X will be local
     X = 88                # local name
     print ( X )           # 88, reference to the local X
 
-func()
+func()                    # 88
 print ( X )               # 99, X is global here
 </pre><hr><pre>
 X = 99   # global name
@@ -54,10 +54,10 @@ def func():
     Y = 88                # local name
     Z = 77                # Z is created
 
-#print( Z )       # NameError, Z is not defined
-X = 55     # global X changed
+#print( Z )         # NameError, Z is not defined
+X = 55              # global X changed
 func()              # 55, here the function body is executed
-#print ( Y )        # ERROR, Y is not defined
+#print ( Y )        # NameError, Y is not defined
 print ( Z )         # 77, Z is global
 </pre><hr><pre>
 X = 99                        # global name
@@ -70,8 +70,7 @@ def func():
 func()                        # 99
 print ( X )                   # 88
 </pre><hr><pre>
-# https://www.python.org/dev/peps/pep-0227/
-# PEP 227 -- Statically Nested Scopes
+# PEP 227 - Statically Nested Scopes
 
 x = 1
 def outer():

@@ -1,0 +1,47 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Polynomials - interface</h1>
+
+<p>https://www.python-course.eu/polynomial_class_in_python.php
+
+<h3>INTRO</h3>
+
+<p>Polynomials are implemented in many computer systems
+(Mathematica, Maple, Sage) and python modules (numpy, sympy).
+The interface of polynomials is not unique.
+
+<pre>
++-------------------------+-----------------------+
+| Operation               | Method                |
++-------------------------+-----------------------+
+| poly1 = Poly(c, n)      | __init__, constructor |
+| poly2 = Poly(c)         | a constant polynomial |
+| poly1 + poly2           | __add__               |
+| poly1 - poly2           | __sub__               |
+| poly1 * poly2           | __mul__               |
+| +poly1                  | __pos__               |
+| -poly1                  | __neg__               |
+| poly1 == poly2          | __eq__                |
+| poly1 != poly2          | __ne__                |
+| poly1.degree()          | the degree of poly1   |
+| poly1.is_zero()         | zero coefficients     |
+| poly1(x)                | __call__              |
+| poly1.combine(poly2)    | composition           |
+| poly1**n, pow(poly1, n) | power                 |
++-------------------------+-----------------------+
+
+P(x) = p0 + p1 * x + p2 * x^2
+
+will be created as
+
+poly1 = Poly(p0) + Poly(p1, 1) + Poly(p2, 2)
+</pre>
+
+</body>
+</html>
