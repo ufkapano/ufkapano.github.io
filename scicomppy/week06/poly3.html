@@ -113,7 +113,7 @@ class Poly:
         # it can be also "p0 + p1 x + p2 x^2 + ..."
 
     def __repr__(self):   # the formal (canonical) string representation, repr(instance)
-        if self.is_zero():   # calling a method inside the class
+        if self.is_zero():   # calling a method inside the class, Poly.is_zero(self)
             return "Poly()"
         else:
             L = list()

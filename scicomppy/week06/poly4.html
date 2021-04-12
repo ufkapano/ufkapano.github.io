@@ -63,6 +63,12 @@ class Poly:
         new_poly = Poly()
         new_poly.data = [-item for item in self.data]
         return new_poly
+
+poly1 = Poly(3, 5)
+poly2 = Poly(1, 2)
+assert poly1 * poly2 == Poly(3, 7)
+assert poly1.__mul__(poly2) == Poly(3, 7)
+assert Poly.__mul__(poly1, poly2) == Poly(3, 7)
 </pre><hr>
 
 <h3>COMPOSITION</h3>
