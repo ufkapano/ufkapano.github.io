@@ -1,0 +1,44 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - polynomials</h1>
+
+<p>https://numpy.org/doc/stable/reference/generated/numpy.poly1d.html
+
+<h3>POLYNOMIALS</h3>
+
+<hr><pre>
+# numpy.poly1d(c_or_r, r=False, variable=None)
+# c_or_r : array_like (coefficients in decreasing powers)
+# r : bool, optional (the default is False.
+#     If True, c_or_r specifies the polynomial’s roots.
+# variable : str, optional
+#     Default variable is 'x' for printing.
+
+p = np.poly1d([1, 2, 3])
+print (p)
+#    2
+# 1 x + 2 x + 3
+p.r   # or p.roots, array([-1.+1.41421356j, -1.-1.41421356j])
+p(0.5)   # 4.25    value for x = 0.5
+p.c   # or p.coefficients, array([1, 2, 3])
+p[1]   # 2, coefficient
+p.order   # 2
+p * p   # poly1d([ 1,  4, 10, 12,  9])
+p**3 + 4   # poly1d([ 1,  6, 21, 44, 63, 54, 31])
+p.deriv()   # poly1d([2, 2]), derivative
+p.integ()   # poly1d([0.33333333, 1., 3., 0.]), indefinite integral
+</pre><hr><pre>
+# Construct a polynomial from its roots, (x-1)*(x-2)
+
+np.poly1d([1, 2], r=True)   # poly1d([ 1., -3.,  2.])
+np.poly1d([1, -1]) * np.poly1d([1, -2])   # poly1d([ 1, -3,  2])
+</pre><hr>
+
+</body>
+</html>

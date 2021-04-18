@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Iterators</h1>
+
+<p>https://docs.python.org/3/tutorial/classes.html
+
+<p>https://docs.python.org/3/library/functions.html#iter
+
+<p>https://docs.python.org/3/library/stdtypes.html#typeiter
+
+<h3>INTRO</h3>
+
+<p>Three notions:
+<br>(1) an iterable is anything that you can iterate over
+[iter() can build an iterator],
+<br>(2) an iterator is the thing that does the actual iterating
+[__iter__() and __next__() methods should be present],
+<br>(3) generators are one of the simpler ways to create your own iterators
+['lazy evaluation'; generator expressions and generator functions].
+
+<hr><pre>
+for item in iterable:   # iteration
+    print ( item )
+L = list(iterable)
+result = sum(iterable)
+high = max(iterable)
+low = min(iterable)
+</pre><hr>
+
+<h3>FINITE ITERATORS</h3>
+
+<hr><pre>
+# The first version based on a generator function.
+
+def Reverse(sequence):   # a generator iterator is returned
+    """A reverse iterator based on a sequence."""
+    i = len(sequence)
+    while i &gt; 0:
+        i = i-1
+        yield sequence[i]
+</pre><hr><pre>
+# The second version based on a class.
+
+class Reverse:   # an instance of this class is an iterator
+    """A reverse iterator based on a sequence."""
+
+    def __init__(self, sequence):
+        self.sequence = sequence
+        self.idx = len(sequence)
+
+    def __iter__(self):   # for the iter() function
+        return self
+
+    def __next__(self):   # for the next() function
+        if self.idx == 0:
+            raise StopIteration
+        self.idx -= 1
+        return self.sequence[self.idx]
+
+    next = __next__   # compatibility
+        # Python 2 has X.next().
+        # Python 3 has X.__next__().
+        # Python 3 i 2.6+ have a builtin function next(X).
+</pre><hr><pre>
+# Usage.
+
+for char in Reverse("spam"):
+    print ( char )   # m, a, p, s
+
+for item in Reverse([1, 2, 3, 4]):
+    print ( item )   # 4, 3, 2, 1
+</pre><hr>
+
+<h3>ITER</h3>
+
+<hr><pre>
+# iter(iterable) return iterator
+# iter(callable, sentinel) return iterator
+
+# an iterator based on a sequence
+it1 = iter([1, 2])   # list_iterator object in Python 3
+it2 = iter("abcd")   # str_iterator object in Python 3
+it3 = iter(it2)   # all iterators are also iterables
+assert it3 is it2
+
+# Once you have an iterator, the only thing you can do with it is get
+# its next item. And you’ll get a stop iteration exception if you ask
+# for the next item but there aren’t anymore items.
+print ( next(it1) )   # 1
+print ( next(it1) )   # 2
+print ( next(it1) )   # StopIteration
+</pre><hr><pre>
+class Dumb:
+
+    def __init__(self, sequence):
+        self.data = sequence
+
+    def __getitem__(self, n):
+        return self.data[n]
+
+x = Dumb("word")
+print(x[1])   # o
+#print(x[10])   # IndexError: string index out of range
+#len(x)   # AttributeError: Dumb instance has no attribute '__len__'
+
+for item in x:   # iteration
+    print ( item )
+
+# manual iteration
+y = iter(x)         # make an iterator
+print ( next(y) )   # w
+print ( next(y) )   # o
+print ( next(y) )   # r
+print ( next(y) )   # d
+print ( next(y) )   # StopIteration, the iterator is exhausted
+</pre><hr><pre>
+# Chunking list by two using an iterator.
+
+it = iter(range(6))
+list(zip(it, it))   # [(0, 1), (2, 3), (4, 5)]
+</pre><hr>
+
+<h3>FOR LOOP EXPLAINED</h3>
+
+<hr><pre>
+# https://www.programiz.com/python-programming/iterator
+
+for element in iterable:
+    # do something with element
+    process(element)
+
+# It is equivalent to the following code.
+
+# create an iterator object from that iterable
+iter_obj = iter(iterable)
+
+# infinite loop
+while True:
+    try:
+        # get the next item
+        element = next(iter_obj)
+        # do something with element
+        process(element)
+    except StopIteration:
+        # if StopIteration is raised, break from loop
+        break
+</pre><hr>
+
+<h3>AN ITERATOR BASED ON A CALLABLE OBJECT</h3>
+
+<hr><pre>
+class MyInt:
+
+    def __init__(self):
+        self.n = -1
+
+    def __call__(self):
+        self.n = self.n + 1
+        return self.n
+
+x = MyInt()   # x is a MyInt instance, a callable object
+print ( x() )   # returns 0
+print ( x() )   # returns 1
+print ( x() )   # returns 2
+</pre><hr><pre>
+# Preparing an iterator 'y'.
+# If the callable returns 5 then y stops.
+y = iter(MyInt(), 5)   # y is a callable-iterator object
+for i in y:         # returns 0, 1, 2, 3, 4 (without 5)
+    print ( i )
+# 5 was used to stop the iterator y.
+print ( next(y) )   # StopIteration is raised, y is exhausted
+</pre><hr><pre>
+# Infinite iterators.
+
+import itertools
+
+iter_zeros1 = iter(int, 1)   # int() gives 0
+iter_zeros2 = iter((lambda: 0), 1)
+iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
+iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
+
+it1 = itertools.count(start=0, step=1)
+</pre><hr>
+
+</body>
+</html>

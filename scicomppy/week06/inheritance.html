@@ -20,11 +20,11 @@
 that allows us to access methods of the base class.
 
 <p>In Python, super() has two major use cases:
-<br>(1) Allows us to avoid using the base class name explicitly
-<br>(2) Working with Multiple Inheritance
+<br>(1) allows us to avoid using the base class name explicitly,
+<br>(2) working with Multiple Inheritance.
 
 <hr><pre>
-#class Bird(object):   # Python 2
+#class Bird(object):   # Python 2, new style classes
 class Bird:          # Python 3
     def __init__(self, name):
         print ( "{} is a bird.".format(name) )

@@ -31,9 +31,11 @@ The interface of polynomials is not unique.
 | poly1 != poly2          | __ne__                |
 | poly1.degree()          | the degree of poly1   |
 | poly1.is_zero()         | zero coefficients     |
+| len(poly1)              | __len__, monomials    |
 | poly1(x)                | __call__              |
 | poly1.combine(poly2)    | composition           |
-| poly1**n, pow(poly1, n) | power                 |
+| poly1**n, pow(poly1, n) | __pow__               |
+| del poly1               | remove the name poly1 |
 +-------------------------+-----------------------+
 
 P(x) = p0 + p1 * x + p2 * x^2

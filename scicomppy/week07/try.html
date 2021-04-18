@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>try statements</h1>
+
+<p>https://docs.python.org/3/reference/compound_stmts.html#try
+
+<h3>INTRO</h3>
+
+<p>The 'try' statement can be used used to specify exception handlers
+and/or cleanup code for a group of statements.
+
+<p>The 'except' clause(s) specify one or more exception handlers.
+
+<p>The 'finally' clause can be used to specify cleanup code which 
+does not handle the exception, but is executed whether an exception 
+occurred or not in the preceding code.
+
+<hr><pre>
+# Syntax.
+# (1) try + except (one or more) + else (optional) + finally (optional)
+# (2) try + finally
+
+try:
+    statements
+except ExceptionClass1:   # matching ExceptionClass1
+    statements
+except (ExceptionClass2, ExceptionClass3):   # matching two exception classes
+    statements
+except ExceptionClass4 as exception1:   # exception1 is an instance
+    statements
+except (ExceptionClass4, ExceptionClass5) as exception2:
+    statements
+except:   # if present, must be the last; it matches any exception
+    statements
+else:   # optional, executed if no exception was raised
+    statements
+finally:   # if present, it is always executed
+    statements
+</pre><hr><pre>
+L = []
+# L = [1, 2, 3]
+try:
+    print(L[1])
+except IndexError:
+    print("exception is present")
+else:
+    print("no exception")
+print("after try")
+</pre><hr><pre>
+afile = open("book.txt")
+try:        # working wth the file
+    text = afile.read()   # reading the file
+finally:   # the file will always be closed
+    afile.close()
+print("after try")
+# Now 'with' is recommended.
+</pre><hr><pre>
+import sys
+
+print(sys.exc_info())   # return (type, value, traceback)
+# Return information about the most recent exception caught by an except
+# clause in the current stack frame or in an older stack frame.
+</pre><hr>
+
+<h3>EXAMPLES</h3>
+
+<hr><pre>
+# Py2 and Py3 compatibility.
+try:
+    input = raw_input   # input() in Py2 is slow and dangerous
+except NameError:   # we are in Py3
+    pass
+</pre><hr><pre>
+# Py2 and Py3 compatibility.
+try:
+    integer_types = (int, long)
+except NameError:   # we are in Py3
+    integer_types = (int,)
+# Usage: isinstance(variable, integer_types)
+</pre><hr><pre>
+# Interactions with users.
+while True:
+    reply = input("Enter int: ")   # Py3
+    try:
+        value = int(reply)
+    except ValueError:
+        print("This is not int!")
+    else:
+        break
+print("value is set")
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - data type objects</h1>
+
+<p>https://numpy.org/doc/stable/reference/generated/numpy.dtype.html
+
+<p>https://numpy.org/doc/1.18/reference/arrays.dtypes.html
+
+<h3>INTRO</h3>
+
+<p>Default data type in Python: strings, integer, float, boolean, complex.
+NumPy has some extra data types.
+
+<p>A data type object describes how the bytes in the fixed-size block 
+of memory corresponding to an array item should be interpreted.
+
+<hr><pre>
+# Using array-scalar types.
+
+dtype_int = np.dtype(int)   # or np.dtype("int")
+
+# "b" (byte), "i1", 'int8';
+# "h", "i2", "int16";
+# "i", "i4", "int32"; "i8", "int64";
+# unsigned int: "B", "u1", 'uint8';
+# "H", "u2", 'uint16';
+# "u4", "uint32";
+# "u8", "uint64";
+
+dtype_float = np.dtype(float)   # or np.dtype("float")
+
+# "f2", 'float16';
+# "f" (float), "f4", 'float32';
+# "d" (double), "f8", 'float64';
+
+dtype_bool = np.dtype(bool)
+dtype_complex = np.dtype(complex)
+dtype_object = np.dtype(object)
+</pre><hr><pre>
+# Structured types, fields with names.
+
+dtype_gender = np.dtype([("gender","S1")])   # M/F string
+dtype_person = np.dtype([("name","S25"), ("age", "u1")])
+dtype_RGBA = np.dtype([('R','u1'), ('G','u1'), ('B','u1'), ('A','u1')])
+dtype_rgb = np.dtype({'names': ('r','g','b'), 'formats': ('u1','u1','u1')})
+</pre><hr><pre>
+# Converting data types.
+
+a = np.array([1.1, 0, 3.1])   # array([1.1, 0., 3.1])
+print ( a.dtype )   # dtype('float64')
+
+b = a.astype(int)   # array([1, 0, 3]), copy
+print ( b.dtype )   # dtype('int32')
+
+np.may_share_memory(a, b)   # False
+
+c = a.astype(bool)   # array([ True, False, True])
+</pre><hr>
+
+<h3>EXERCISES</h3>
+
+<p>Conversion from string to int: ["1","2"], ["a","2"] (ValueError).
+
+
+</body>
+</html>

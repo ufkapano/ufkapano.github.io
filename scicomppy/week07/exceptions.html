@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>User-defined exceptions</h1>
+
+<p>https://docs.python.org/3/tutorial/errors.html#tut-userexceptions
+
+<h3>INTRO</h3>
+
+<p>Programs may name their own exceptions by creating a new exception class. 
+Exceptions should typically be derived from the 'Exception' class, 
+either directly or indirectly.
+
+<p>All exceptions must be instances of a class that derives 
+from 'BaseException'.
+
+<hr><pre>
+# Syntax.
+
+class SomeError(Exception):   # a name with 'Error' if we want to raport errors
+    docstring   # optional
+    statements
+</pre><hr><pre>
+class MyError(Exception):
+    pass   # the default __init__() is used
+
+raise MyError("message")   # raising the exception
+exception = MyError("a", "b")   # creating an instance of the exception class
+print(exception.args)   # ('a', 'b'), the tuple is created by the constructor
+print(exception)   # ('a', 'b'), str() uses exception.args
+</pre><hr>
+
+</body>
+</html>

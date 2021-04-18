@@ -1,0 +1,61 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - files</h1>
+
+<h3>INTRO</h3>
+
+
+<h3>LOAD DATA FROM A TEXT FILE</h3>
+
+<p>numpy.loadtxt() is a fast reader for simple text files.
+Each row in the text file must have the same number of values.
+
+<hr><pre>
+# numpy.loadtxt(fname, dtype=float, comments='#', delimiter=None,
+#     converters=None, skiprows=0, usecols=None, unpack=False,
+#     ndmin=0, encoding='bytes', max_rows=None)
+# The default delimiter is whitespace.
+# converters = {0: datestr2num} if column 0 is a date string.
+# usecols = (1, 4, 5) will extract the 2nd, 5th and 6th columns.
+
+data = np.loadtxt("two_columns.txt")
+print ( data.shape )   # (100, 2)
+t = data[:,0]   # first column
+x = data[:,1]   # second column
+</pre><hr><pre>
+from io import StringIO   # StringIO behaves like a file object
+
+fname = StringIO(u"1, 2, 3\n4, 5, 6")   # python2 and python3
+data = np.loadtxt(fname, delimiter =', ', usecols =(0, 1, 2))   # dtype=float
+#data = np.loadtxt(fname, dtype=int, delimiter =', ', usecols =(0, 1, 2))
+print ( data.shape )   # (2, 3)
+x = data[:,0]
+y = data[:,1]
+z = data[:,2]
+</pre><hr><pre>
+# https://scipython.com/book/chapter-6-numpy/examples/using-numpys-loadtxt-method/
+
+fname = StringIO(u"M 21 72\nF 35 58") 
+# Structured type
+dtype1 = np.dtype([('gender','S1'), ('age','i4'), ('weight','f4')])
+data = np.loadtxt(fname, dtype=dtype1)
+print ( data.shape )   # (2,) two rows only
+print ( data )
+# [(b'M', 21, 72.) (b'F', 35, 58.)] python3
+# [('M', 21, 72.) ('F', 35, 58.)] python2
+
+male = data['gender'] == b'M'
+print ( male )   # [ True False ]
+print ( data["age"][male] )   # [21] selecting items
+male_av = data['weight'][male].mean()
+female_av = data['weight'][~male].mean()
+</pre><hr>
+
+</body>
+</html>

@@ -77,15 +77,6 @@ print ( next(gen) )   # StopIteration
 <h3>INFINITE ITERATORS</h3>
 
 <hr><pre>
-import itertools
-
-iter_zeros1 = iter(int, 1)   # int() gives 0
-iter_zeros2 = iter((lambda: 0), 1)
-iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
-iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
-
-it1 = itertools.count(start=0, step=1)
-</pre><hr><pre>
 def iter_squares2():   # an infinite iterator
     i = 0
     while True:

@@ -1,0 +1,101 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>with statements</h1>
+
+<p>PEP 343 - The “with” statement
+
+<p>https://docs.python.org/3/library/stdtypes.html#context-manager-types
+
+<p>https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers
+
+<h3>INTRO</h3>
+
+<p>Python’s 'with' statement supports the concept of a runtime context 
+defined by a context manager. This is implemented using a pair of methods 
+that allow user-defined classes to define a runtime context 
+that is entered before the statement body is executed (__enter__)
+and exited when the statement ends (__exit__).
+
+<p>Typical uses of context managers include saving and restoring 
+various kinds of global state, locking and unlocking resources, 
+closing opened files, etc.
+
+<p>The 'with' statement allows common 'try + except + finally' usage patterns 
+to be encapsulated for convenient reuse.
+
+<hr><pre>
+# Syntax.
+
+with expression as target:   # 'as target' is optional
+    statements
+
+with A() as a, B() as b:
+    statements
+
+# is semantically equivalent to nested 'with' statements:
+
+with A() as a:
+    with B() as b:
+        statements
+</pre><hr><pre>
+with open('book.txt', 'r') as infile:   # infile will be closed
+    text = infile.read()
+
+with open('results.txt', 'w') as outfile:   # outfile will be closed
+    outfile.write("message\n")
+</pre><hr>
+
+<h3>CONTEXT MANAGERS</h3>
+
+<hr><pre>
+class ContextManager:
+
+    def __init__(self):   # optional
+        pass
+
+    def message(self, argument):
+        print ( "processing {}".format(argument) )
+
+    def __enter__(self):
+        print ( "start with" )
+        return self   # or something else;
+        # the return value will be assigned to 'target'
+
+    def __exit__(self, exception_type, exception_value, exception_traceback):
+        if exception_type is None:   # (None, None, None) is supplied to __exit__
+            print ( "normal exit" )   # no exception
+            return True
+        else:   # the exception type, value, traceback are supplied to __exit__
+            print ( "exception raised is {}".format(exception_type) )
+            return False    # exception is reraised
+            # return True   # exception is suppressed
+</pre><hr><pre>
+# Usage.
+
+with ContextManager() as context:
+    context.message("test 1")
+    print ( "point reached" )
+
+with ContextManager() as context:
+    context.message("test 2")
+    raise TypeError
+    print ( "point not reached" )
+
+# Results.
+# start with
+# processing test 1
+# point reached
+# normal exit
+# start with
+# processing test 2
+# exception raised is &lt;class 'TypeError'&gt;
+</pre><hr>
+
+</body>
+</html>

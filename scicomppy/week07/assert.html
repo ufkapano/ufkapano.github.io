@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>assert statements</h1>
+
+<p>https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
+
+<h3>ASSERTIONS</h3>
+
+<p>Assert statements are a convenient way to insert debugging assertions 
+into a program.
+
+<hr><pre>
+# Syntax.
+# The name __debug__ is true if Python was not started with an -O option.
+
+assert expression
+# it is equivalent to
+if __debug__:
+    if not expression: raise AssertionError
+
+assert expression1, expression2
+# it is equivalent to
+if __debug__:
+    if not expression1: raise AssertionError(expression2)
+
+assert False              # AssertionError
+assert False, 'message'   # AssertionError: message
+assert False, 2 + 2       # AssertionError: 4
+</pre><hr>
+
+
+</body>
+</html>

@@ -1,0 +1,256 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - basic operations</h1>
+
+<h3>INTRO</h3>
+
+<p>Arithmetic operators on arrays apply elementwise. 
+A new array is created and filled with the result.
+
+<hr><pre>
+a = np.array( [20, 30, 40, 50] )
+b = np.arange( 4 )   # array([0, 1, 2, 3])
+a + b   # array([20, 31, 42, 53]), np.add(a, b)
+a - b   # array([20, 29, 38, 47]), np.subtract(a, b)
+a * b   # array([0, 30, 80, 150]), np.multiply(a, b)
+-a      # array([-20, -30, -40, -50]), np.negative(a)
+b ** 2   # array([0, 1, 4, 9]), np.power(b, 2)
+a ** b   # array([1, 30, 1600, 125000]), np.power(a, b)
+10 * b   # array([0, 10, 20, 30]), elementwise, broadcasting
+a + 5   # array([25, 35, 45, 55]), elementwise, broadcasting
+b - 3   # array([-3, -2, -1,  0]), elementwise, broadcasting
+</pre><hr><pre>
+np.dot(3, 4)   # 12
+np.dot([2, 3, 4], 4)   # array([8, 12, 16])
+np.dot([3], [5])   # 15, scalar product
+np.dot(a, b)   # 260, also for a.dot(b), scalar product
+# np.dot() returns a matrix product for 2D arrays.
+</pre><hr>
+
+<h3>COMPARISON OPERATORS</h3>
+
+<hr><pre>
+a &lt; 35   # array([ True,  True, False, False]), dtype('bool'), itemsize 1
+a == b   # array([False, False, False, False])
+a &gt; b   # array([ True,  True,  True,  True])
+np.array_equal(a, b)   # False
+np.array_equal(a, a)   # True
+</pre><hr><pre>
+# Logical Operators
+
+c = np.array([ [True, True], [False, False]])
+d = np.array([ [True, False], [True, False]])
+np.logical_or(c, d)   # array([[ True,  True], [ True, False]])
+np.logical_and(c, d)   # array([[ True, False], [False, False]])
+</pre><hr>
+
+<h3>MATRIX OPERATIONS</h3>
+
+<hr><pre>
+A = np.array( [[1, 1], [0, 1]] )
+B = np.array( [[2, 0], [3, 4]] )
+A + B   # array([[3, 1], [3, 5]]), np.add(A, B), elementwise
+A - B   # array([[-1,  1], [-3, -3]]), elementwise
+A * B   # array([[2, 0], [0, 4]]), elementwise product
+np.dot(A, B)   # matrix product, also A.dot(B)
+# array([[5, 4],
+#        [3, 4]])
+assert A.shape[-1] == B.shape[-2]   # np.dot() for many dimensions
+A += B   # A is modified!
+</pre><hr><pre>
+a = np.arange(6).reshape(2,3)
+# array([[0, 1, 2],
+#        [3, 4, 5]])
+a.sum()   # 15, the same as np.sum(a)
+a.min()   # 0, the same as np.min(a)
+a.max()   # 5, the same as np.max(a)
+
+b = np.arange(12).reshape(3,4)
+# array([[ 0,  1,  2,  3],
+#        [ 4,  5,  6,  7],
+#        [ 8,  9, 10, 11]])
+
+b.sum(axis=0)   # iter over index 0, the same as np.sum(b, axis=0)
+# array([12, 15, 18, 21])
+
+b.min(axis=1)   # iter over index 1
+# array([0, 4, 8])
+
+b.max(axis=0)   # iter over index 0
+# array([ 8,  9, 10, 11])
+
+b.cumsum(axis=1)
+# array([[ 0,  1,  3,  6],
+#        [ 4,  9, 15, 22],
+#        [ 8, 17, 27, 38]])
+</pre><hr>
+
+<h3>COPYING ARRAYS</h3>
+
+<hr><pre>
+a = np.arange(8)
+b = a.copy()
+np.all(a == b)   # True
+np.may_share_memory(a, b)   # False
+
+c = np.empty(8)
+np.may_share_memory(a, c)   # False
+c[:] = a   # copying
+np.all(a == c)   # True
+
+d = a.view()
+np.all(d == a)   # True
+np.may_share_memory(a, d)   # True
+
+# Exercise: compare a.copy() with a.view().
+</pre><hr>
+
+<h3>ARRAY RESHAPING</h3>
+
+<hr><pre>
+# Reshaping means changing the shape of an array.
+a = np.arange(15).reshape(3, 5)   # array object, note that 3 * 5 = 15 
+
+# In two steps (1):
+# a = np.arange(15)
+# a.reshape(3, 5)
+# a.reshape(3, -1)   # one "unknown" dimension will be calculated
+# a.reshape(-1, 5)
+# a.reshape(-1)   # flattening array
+
+# In two steps (2):
+# a = np.arange(15)
+# a.shape = (3, 5)
+
+# Exercise: np.arange(15).reshape(2,4)   (ValueError, 2 * 4 != 15)
+# Exercise (more functions): flatten, ravel, rot90, flip, fliplr, flipud
+</pre><hr>
+
+<h3>ARRAY ITERATING</h3>
+
+<hr><pre>
+a = np.array([1, 2, 3])
+#for item in a:   # it works
+for i in np.nditer(a):   # over all items
+    print ( item )
+for idx, item in np.ndenumerate(a):
+    print ( "{} {}".format(idx, item) )
+# (0,) 1
+# (1,) 2
+# (2,) 3
+</pre><hr><pre>
+a = np.arange(12).reshape(2,6)
+for row in a:   # over first dimension
+    for item in row:   # over second dimension
+        print ( item )
+for item in np.nditer(a):   # over all items
+    print ( item )
+#for item in a.reshape(-1):   # over all items
+#    print ( item )
+for idx, item in np.ndenumerate(a):
+    print ( "{} {}".format(idx, item) )
+# (0, 0) 0
+# (0, 1) 1
+# (0, 2) 2
+# (0, 3) 3
+# (0, 4) 4
+# (0, 5) 5
+# (1, 0) 6
+# (1, 1) 7
+# (1, 2) 8
+# (1, 3) 9
+# (1, 4) 10
+# (1, 5) 11
+</pre><hr>
+
+<h3>JOINING ARRAYS</h3>
+
+<hr><pre>
+# Joining means putting contents of two or more arrays in a single array.
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+np.concatenate((a,b))
+# array([1, 2, 3, 4, 5, 6])
+
+c = np.array([[1, 2], [3, 4]])
+# array([[1, 2],
+#        [3, 4]])
+
+d = np.array([[5, 6], [7, 8]])
+# array([[5, 6],
+#        [7, 8]])
+
+np.concatenate((c,d), axis=0)
+# array([[1, 2],
+#        [3, 4],
+#        [5, 6],
+#        [7, 8]])
+
+np.concatenate((c,d), axis=1)
+# array([[1, 2, 5, 6],
+#        [3, 4, 7, 8]])
+</pre><hr><pre>
+# Stacking is same as concatenation, the only difference is that stacking
+# is done along a new axis (a new dimension is created).
+
+a = np.array([1, 2, 3])
+b = np.array([4, 5, 6])
+
+np.stack((a,b), axis=0)
+# array([[1, 2, 3],
+#        [4, 5, 6]])
+
+np.stack((a,b), axis=1)
+# array([[1, 4],
+#        [2, 5],
+#        [3, 6]])
+
+# Exercise: np.hstack(), np.vstack(), np.dstack().
+</pre><hr>
+
+<h3>SPLITTING ARRAYS</h3>
+
+<hr><pre>
+# Splitting is reverse operation of joining.
+
+a = np.array([1, 2, 3, 4, 5, 6])
+np.array_split(arr, 3)
+# [array([1, 2]), array([3, 4]), array([5, 6])]
+np.array_split(arr, 4)
+# [array([1, 2]), array([3, 4]), array([5]), array([6])]
+
+b = np.arange(6).reshape(2, 3)
+# array([[0, 1, 2], [3, 4, 5]])
+np.array_split(b, 2, axis=0)
+# [array([[0, 1, 2]]), array([[3, 4, 5]])]
+np.array_split(b, 3, axis=1)
+# [array([[0], [3]]), array([[1], [4]]), array([[2], [5]])]
+
+# Exercise: np.hsplit(), vsplit(), dsplit().
+</pre><hr>
+
+<h3>SORTING ARRAYS</h3>
+
+<hr><pre>
+a = np.array([3, 1, 2, 0, 4])
+b = np.sort(a)   # array([0, 1, 2, 3, 4]), 'a' not changed
+np.may_share_memory(a, b)   # False, different arrays!
+
+c = np.array([[3, 2, 4], [5, 0, 1]])
+d = np.sort(c)   # array([[2, 3, 4], [0, 1, 5]])
+
+words = np.array(['banana', 'cherry', 'apple'])
+np.sort(words)   # alphabetical sorting
+# array(['apple', 'banana', 'cherry'], dtype='|S6')
+</pre><hr>
+
+
+</body>
+</html>

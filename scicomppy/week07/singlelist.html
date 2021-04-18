@@ -1,0 +1,120 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Linked lists with iterators</h1>
+
+<p>https://en.wikipedia.org/wiki/Linked_list
+
+<h3>INTRO</h3>
+
+<p>A linked list is a linear collection of items.
+
+<hr><pre>
+class Node:
+
+    def __init__(self, data=None, next=None):
+        self.data = data
+        self.next = next
+
+    def __str__(self):
+        return str(self.data)
+</pre><hr><pre>
+class SingleList:
+
+    def __init__(self):
+        self.head = None
+        self.tail = None
+
+    def is_empty(self):
+        return self.head is None
+
+    def insert_head(self, data):   # O(1) time
+        node = Node(data)
+        if self.head:
+            node.next = self.head
+            self.head = node
+        else:   # empty list
+            self.head = self.tail = node
+
+    def insert_tail(self, data):   # O(1) time
+        node = Node(data)
+        if self.head:
+            self.tail.next = node
+            self.tail = node
+        else:   # empty list
+            self.head = self.tail = node
+
+    def remove_head(self):          # O(1) time
+        if self.is_empty():
+            raise ValueError("empty list")
+        node = self.head
+        if self.head == self.tail:
+            self.head = self.tail = None
+        else:
+            self.head = self.head.next
+        node.next = None   # cleaning
+        return node.data
+</pre><hr><pre>
+# Usage.
+alist = SingleList()
+alist.insert_head(11)         # [11]
+alist.insert_head(22)         # [22, 11]
+alist.insert_tail(33)         # [22, 11, 33]
+while not alist.is_empty():   # order 22, 11, 33
+    print ( alist.remove_head() )
+</pre><hr>
+
+<h3>ITERATORS</h3>
+
+<hr><pre>
+# Solution 1.
+# SL = SingleList()
+# assert not isinstance(iter(SL), SingleList)
+# assert id(iter(SL)) != id(SL)
+class SingleList:
+    # ... other methods ...
+
+    def __iter__(self):   # using a generator function
+        node = self.head
+        while node:
+            yield node.data
+            node = node.next
+</pre><hr><pre>
+# Solution 2.
+# SL = SingleList()
+# assert isinstance(iter(SL), SingleList)
+# assert id(iter(SL)) == id(SL)
+class SingleList: 
+    # ... other methods ...
+
+    def __iter__(self):
+        self.current = self.head
+        return self
+
+    def __next__(self):
+        if self.current:
+            node = self.current
+            self.current = self.current.next
+            return node.data
+        else:
+            raise StopIteration
+
+    next = __next__   # compatibility
+</pre><hr><pre>
+# Usage.
+SL = SingleList()
+SL.insert_head(11)         # [11]
+SL.insert_head(22)         # [22, 11]
+SL.insert_tail(33)         # [22, 11, 33]
+for item in SL:   # order 22, 11, 33
+    print ( item )
+</pre><hr>
+
+
+</body>
+</html>

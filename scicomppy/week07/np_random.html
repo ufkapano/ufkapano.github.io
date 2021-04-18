@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - random numbers</h1>
+
+<h3>RANDOM</h3>
+
+<p>https://docs.scipy.org/doc/numpy-1.16.0/reference/routines.random.html
+<br>Random sampling (numpy.random)
+
+<hr><pre>
+# Simple random data.
+np.random.rand()   # return a random float from [0,1) (a uniform distribution)
+np.random.rand(d0,d1,...,dn)   # return an array, shape=(d0,d1,...,dn)
+
+np.random.random_sample()
+np.random.random_sample((d0,d1,...,dn))
+
+np.random.random()   # alias for np.random.random_sample()
+</pre><hr><pre>
+np.random.randn()   # return a sample from the 'standard normal' distribution
+np.random.randn(d0,d1,...,dn)   # return an array, shape=(d0,d1,...,dn)
+
+np.random.standard_normal(size=1000)   # mu=0, sigma=1
+np.random.standard_normal(size=(d0,d1,...,dn))   # shape=(d0,d1,...,dn)
+</pre><hr><pre>
+# np.random.randint(low, high=None, size=None, dtype='l')
+#     size=10, size=(2,4), return size-shaped array
+
+np.random.randint(high)   # random integers from [0, high)
+np.random.randint(low, high)   # random integers from [low, high)
+</pre><hr><pre>
+# np.random.choice(a, size=None, replace=True, p=None)
+# a : 1-D array-like or int
+# size : output shape (int or tuple of ints)
+# replace : boolean, whether the sample is with or without replacement
+# p : the probabilities associated with each entry in a
+
+np.random.choice(arr)   # return one item from arr
+np.random.choice(8)   # like np.random.choice(np.arange(8))
+np.random.choice(list_four_strings, size=6, p=[0.5, 0.1, 0.1, 0.3])
+np.random.choice(arr, replace=False)   # every item at most once
+</pre><hr><pre>
+# Permutations
+np.random.shuffle(arr)
+np.random.permutation(arr)
+np.random.permutation(n)   # np.random.permutation(np.arange(n))
+</pre><hr><pre>
+# Distributions
+mu, sigma = 0, 0.1   # mean and standard deviation
+s = np.random.normal(mu, sigma, 1000)
+
+n, p = 10, .5   # number of trials, probability of each trial
+s = np.random.binomial(n, p, 1000)
+# result of flipping a coin 10 times, tested 1000 times.
+
+loc, scale = 10, 1
+s = np.random.logistic(loc, scale, 1000)
+
+low, high = -1, 1
+s = np.random.uniform(low, high, 1000)   # interval [low, high)
+
+left, mode, right = -3, 0, 8
+s = np.random.triangular(left, mode, right, 1000)   # interval [left, right]
+
+s = np.random.poisson(lam=5, size=1000)
+
+s = np.random.exponential(scale=1.0, size=1000)
+
+loc, scale = 0., 1.
+s = np.random.laplace(loc, scale, 1000)
+
+# Random generator
+# seed must be convertible to 32 bit unsigned integers
+np.random.seed(42)
+</pre><hr>
+
+</body>
+</html>

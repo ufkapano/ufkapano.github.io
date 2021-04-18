@@ -1,0 +1,46 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - universal functions</h1>
+
+<h3>INTRO</h3>
+
+<p>Universal functions operate elementwise on an array, 
+producing an array as output.
+
+<hr><pre>
+# np.exp(a) - return array
+# np.sqrt(a) - return array
+# np.abs(a) - return array
+# np.sin(a) - return array
+# np.cos(a) - return array
+</pre><hr><pre>
+# np.sum(a, axis=k) - sum of array elements over a given axis
+# np.cumsum(a, axis=k)
+# np.min(a, axis=k)
+# np.max(a, axis=k)
+# np.median(a, axis=k) - return the median (the middle value of a sorted copy of a)
+# np.average(a, axis=k, weights=w) - compute the weighted average
+# np.mean(a, axis=k) - compute the arithmetic mean 
+# np.var(a, axis=k, ddof=0) - compute the variance
+# np.std(a, axis=k, ddof=0) - compute the standard deviation
+</pre><hr><pre>
+# np.all(a, axis=k) - return bool
+# np.any(a, axis=k) - return bool
+np.all([[True, False], [True, True]], axis=0)   # array([ True, False])
+np.any([[True, False], [False, False]], axis=1)   # array([ True, False])
+
+a = np.arange(-2, 3)   # array([-2, -1,  0,  1,  2])
+np.all(a > 0)   # False
+np.any(a > 0)   # True
+np.abs(a)   # array([2, 1, 0, 1, 2])
+</pre><hr>
+
+
+</body>
+</html>

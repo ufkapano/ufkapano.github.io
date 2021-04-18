@@ -1,0 +1,178 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NumPy - start</h1>
+
+<p>https://numpy.org/
+<br>NumPy. The fundamental package for scientific computing with Python.
+
+<p>https://www.python-course.eu/numpy.php
+<br>Numpy Tutorial
+
+<p>Charles R. Harris et al,
+Array programming with NumPy, Nature 585, 357-362 (2020).
+
+<p>Pauli Virtanen et al,
+SciPy 1.0: fundamental algorithms for scientific computing in Python,
+Nature Methods 17, 261-272 (2020).
+
+<h3>INTRO</h3>
+
+<p>NumPy stands for Numerical Python.
+NumPy is the fundamental package for scientific computing with Python. 
+It contains among other things [version 1.16.2 in Debian 10]:
+
+<ul>
+<li>a powerful N-dimensional array object
+<li>sophisticated (broadcasting) functions
+<li>tools for integrating C/C++ and Fortran code
+<li>useful linear algebra, Fourier transform, and random number capabilities
+</ul>
+
+<h3>INSTALLING NUMPY</h3>
+
+<hr><pre>
+If you already have Python, you can install NumPy with:
+
+conda install numpy
+or
+pip install numpy
+
+In Debian Linux we have python-numpy (Py2.7), python3-numpy (Py3), and dependences.
+</pre><hr>
+
+<h3>THE BASICS</h3>
+
+<p>NumPy’s main object is the homogeneous multidimensional array.
+It is a table of elements (usually numbers), all of the same type, 
+indexed by a tuple of non-negative integers. 
+In NumPy dimensions are called 'axes'.
+
+<hr><pre>
+import numpy as np   # typical import under the 'np' alias
+
+print ( np.__version__ )   # 1.16.2 for Debian 10
+# also help(np) at the end
+
+a = np.arange(15).reshape(3, 5)   # array object 
+# arange() is like range() but returns an array.
+# np.arange( 10, 30, 5 )
+# np.arange( 10, 30, 5, dtype=float )
+# np.arange( 0, 2, 0.3 )   # it accepts float arguments
+
+print ( a )
+# [[ 0  1  2  3  4]
+#  [ 5  6  7  8  9]
+#  [10 11 12 13 14]]
+# The shape of an array is the number of elements in each dimension.
+
+print ( a.shape )   # (3, 5), tuple, np.shape(a)
+print ( a.ndim )   # 2
+print ( a.dtype )   # dtype('int64'), deduced from the sequence
+print ( a.itemsize )   # 8, size of bytes of each element of the array
+print ( a.size )   # 15, the number of items
+</pre><hr>
+
+<h3>MEMORY CONSUMPTION</h3>
+
+<hr><pre>
+#   lst
+#    |
+#    o
+# +------+-----+-----+-----+
+# | info | ref | ref | ref | list object
+# +------+--|--+--|--+--|--+ 64 + len(lst) * 8 bytes
+#           |     |     |
+#           o     o     o
+#         +--+  +--+  +--+
+#         |24|  |12|  |57|    len(lst) * 28 bytes
+#         +--+  +--+  +--+
+#         int   int   int
+# Total: 64 + len(lst) * 8 + len(lst) * 28
+</pre><hr><pre>
+#   arr
+#    |
+#    o
+# +------+----+----+----+
+# | info | 24 | 12 | 57 | array object
+# +------+----+----+----+ 96 + len(arr) * 8 bytes
+#         int  int  int
+</pre><hr><pre>
+# Tests in Python 3 and with a 64-bit laptop.
+import sys
+import numpy as np
+
+print( sys.getsizeof([]) )           # 64, empty list
+print( sys.getsizeof(np.array([])) )   # 96, empty array
+
+lst = [24, 12, 57]
+print( sys.getsizeof(lst) )   # 88 = 64 + 3 * 8, list object
+print( sys.getsizeof(lst[0]) )   # 28, int
+# This is a minimum estimation, as Python integers can use more than 28 bytes.
+
+arr = np.array([24, 12, 57])
+print( arr.dtype )            # dtype('int64')
+print( sys.getsizeof(arr) )   # 120 = 96 + 3 * 8
+
+arr = np.array([24, 12, 57], dtype="int8")   # numbers from -127 to 127
+print( sys.getsizeof(arr) )   # 99 = 96 + 3 * 1
+
+lst[0] = "alpha"
+print( sys.getsizeof("") )       # 49
+print( sys.getsizeof(lst) )   # 88, the same
+print( sys.getsizeof(lst[0]) )   # 54 = 49 + 5, str
+print( sys.getsizeof(lst[1]) )   # 28, int
+</pre><hr>
+
+<h3>TIME COMPARISON</h3>
+
+<hr><pre>
+import timeit
+import numpy as np
+
+N = 1000000
+
+x1 = list(range(N))
+y1 = list(range(N))
+
+x2 = np.arange(N)
+y2 = np.arange(N)
+
+print ( "Testing list comprehension ..." )
+t1 = timeit.Timer(lambda: [x1[i] + y1[i] for i in range(N)])
+print ( t1.timeit(1) )           # single run
+
+print ( "Testing zip ..." )
+t1 = timeit.Timer(lambda: [a+b for (a,b) in zip(x1,y1)])
+print ( t1.timeit(1) )           # single run
+
+print ( "Testing numpy ..." )
+t1 = timeit.Timer(lambda: x2 + y2)
+print ( t1.timeit(1) )           # single run
+
+# Results:
+# Testing list comprehension ...
+# 0.0699481050032773
+# Testing zip ...
+# 0.04706689599697711
+# Testing numpy ...
+# 0.0011762819995055906
+</pre><hr><pre>
+# Warning!
+x1 = list(range(0,120,20))   # [0, 20, 40, 60, 80, 100]
+y1 = [100] * 6
+[a+b for (a,b) in zip(x1,y1)]   # [100, 120, 140, 160, 180, 200]
+
+x2 = np.arange(0,120,20, dtype="int8") # array([0, 20, 40, 60, 80, 100], dtype=int8)
+y2 = np.array([100] * 6, dtype="int8") # array([100, 100, 100, 100, 100, 100], dtype=int8)
+x2 + y2   # array([ 100, 120, -116, -96, -76, -56], dtype=int8) ERROR out of range
+# Great power comes with great responsibility! (Peter Parker principle)
+</pre><hr>
+
+</body>
+</html>
