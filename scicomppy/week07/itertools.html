@@ -33,13 +33,13 @@ list(map(pow, range(10), itertools.repeat(2)))
 # [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]
 </pre><hr><pre>
 # itertools.chain(*iterables)
-itertools.chain(ABC', 'DEF')   # yield A B C D E F
+itertools.chain('ABC', 'DEF')   # yield A B C D E F
 
 # itertools.zip_longest(*iterables[, fillvalue]) in Py3
 # itertools.izip_longest(*iterables[, fillvalue]) in Py2.6+
-itertools.zip_longest('ABCD', 'xy', fillvalue='-')   # yield Ax By C- D-
+itertools.zip_longest('ABCD', 'xy', fillvalue='-')   # yield Ax, By, C-, D-
 itertools.zip_longest([10, 20], [1, 2, 3, 4], fillvalue=0)
-# [(10, 1), (20, 2), (0, 3), (0, 4)]
+# yield (10, 1), (20, 2), (0, 3), (0, 4)
 # It can be used for polynomials.
 
 # itertools.product(*iterables, repeat=1)

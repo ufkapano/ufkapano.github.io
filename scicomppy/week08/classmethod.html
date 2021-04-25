@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>@classmethod decorator</h1>
+
+<p>https://docs.python.org/3/library/functions.html
+
+<h3>INTRO</h3>
+
+<p>A class method receives the class as implicit first argument, 
+just like an instance method receives the instance.
+Class methods are useful for creating alternate class constructors.
+
+<hr><pre>
+# Syntax.
+
+class C:
+    @classmethod
+    def f(cls, arg1, arg2, ...): ...
+
+# Calling: C.f() or C().f() [the instance is ignored except for its class]
+</pre><hr>
+
+<h3>POLYNOMIALS</h3>
+
+<hr><pre>
+class Poly:
+
+    def __init__(self, c=0, n=0):
+        self.data = (n+1) * [0]
+        self.data[-1] = c
+
+    @classmethod
+    def fromiterable(cls, iterable):
+        new_poly = cls()
+        new_poly.data = list(iterable)
+        return new_poly
+
+poly1 = Poly.fromiterable((3, 5, 7))
+assert poly1.data == [3, 5, 7]
+</pre><hr>
+
+</body>
+</html>

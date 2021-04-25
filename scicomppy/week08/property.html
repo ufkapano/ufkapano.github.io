@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>@property decorator</h1>
+
+<p>https://docs.python.org/3/library/functions.html
+
+<h3>INTRO</h3>
+
+<p>@property helps to manipulate attributes.
+
+<hr><pre>
+# First approach.
+
+class Engine:
+
+    def __init__(self):
+        self.temperature = None
+
+e = Engine()
+assert e.temperature == None
+e.temperature = 100
+assert e.temperature == 100
+del e.temperature
+#print(e.temperature)   # AttributeError
+</pre><hr><pre>
+# Second approach with the extended usability.
+# The interface of the Engine class is not changed!
+
+#class Engine(object):   # Py2
+class Engine:         # Py3
+
+    def __init__(self):
+        self._t = None   # the private variable
+
+    @property
+    def temperature(self):
+        """I'm the 'temperature' property."""
+        return self._t
+
+    @temperature.setter
+    def temperature(self, value):
+        if value &lt; 0:
+            raise ValueError("temperature less then zero")
+        self._t = value
+
+    @temperature.deleter
+    def temperature(self):
+        del self._t
+
+
+e = Engine()
+assert e.temperature == None
+e.temperature = 100
+assert e.temperature == 100
+#e.temperature = -1   # ValueError: temperature less then zero
+del e.temperature
+#print(e.temperature)   # AttributeError: 'Engine' object has no attribute '_t'
+</pre><hr>
+
+</body>
+</html>

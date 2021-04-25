@@ -8,6 +8,8 @@
 
 <h1>NumPy - creating arrays</h1>
 
+<p>https://numpy.org/doc/stable/user/basics.creation.html
+
 <h3>INTRO</h3>
 
 <hr><pre>
@@ -20,9 +22,9 @@ a = np.array( [2, 3, 4] )   # from a regular Python list or tuple
 # a = np.array( [2, 3, 4], dtype=int )   # explicite
 print ( a.ndim )   # 1, one-dimensional array
 print ( a.shape )   # (3,)
-
-b = np.array( [(1.5, 2, 3), (4, 5, 6)] )
-# b = np.array( [(1.5, 2, 3), (4, 5, 6)], dtype=float )   # explicite
+</pre><hr><pre>
+b = np.array( [(1.5, 2, 3), [4, 5, 6]] )   # note mix of tuple and list
+# b = np.array( [(1.5, 2, 3), [4, 5, 6]], dtype=float )   # explicite
 print ( b.ndim )   # 2, two-dimensional array
 print ( b.shape )   # (2, 3)
 print ( b.dtype )   # dtype('float64'), deduced
@@ -31,23 +33,34 @@ c = np.array( [[1, 2], [3, 4], [5, 6]], dtype=complex )
 print ( c.ndim )   # 2, two-dimensional array
 print ( c.shape )   # (3, 2)
 print ( c.dtype )   # dtype('complex128')
-
+</pre><hr><pre>
 # numpy.zeros(shape, dtype=float, order='C')
+
 x = np.zeros( 8 )   # float zeros, x.shape=(8,)
-x = np.zeros( (3, 4) )   # float zeros, x.shape=(3, 4)
-
+y = np.zeros( (3, 4) )   # float zeros, x.shape=(3, 4)
+</pre><hr><pre>
 # numpy.ones(shape, dtype=None, order='C')
-y = np.ones( 4 )   # default dtype=float
+
+x = np.ones( 4 )   # default dtype=float
 y = np.ones( (2, 3, 4), dtype=int )   # y.shape=(2, 3, 4)
+</pre><hr><pre>
+# numpy.arange([start,] stop[, step,], dtype=None)
 
-# numpy.empty(shape, dtype=float, order='C')
-z = np.empty( (2, 3) )   # uninitialized, default float
+x = np.arange(8)   # array([0, 1, 2, 3, 4, 5, 6, 7]), dtype('int64')
+y = np.arange(8.0)   # array([0., 1., 2., 3., 4., 5., 6., 7.]), dtype('float64')
+</pre><hr><pre>
+# numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)
 
-t = np.linspace(0, 2, num=9, dtype=float)   # 9 numbers float (default), default num=50
+x = np.linspace(0, 2, num=9, dtype=float)   # 9 numbers float (default), default num=50
 # array([0.  , 0.25, 0.5 , 0.75, 1.  , 1.25, 1.5 , 1.75, 2.  ])
+</pre><hr><pre>
+# numpy.empty(shape, dtype=float, order='C')
 
+x = np.empty( (2, 3) )   # uninitialized, default float
+</pre><hr><pre>
 # numpy.full(shape, fill_value, dtype=None, order='C')
-u = np.full((2, 3), 4)   # array([[4, 4, 4], [4, 4, 4]]), dtype=int deduced
+
+x = np.full((2, 3), 4)   # array([[4, 4, 4], [4, 4, 4]]), dtype=int deduced
 </pre><hr><pre>
 # https://github.com/ufkapano/pyquats
 from quats import Quat

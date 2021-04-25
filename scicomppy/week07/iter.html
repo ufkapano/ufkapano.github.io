@@ -68,7 +68,7 @@ class Reverse:   # an instance of this class is an iterator
         # Python 3 has X.__next__().
         # Python 3 i 2.6+ have a builtin function next(X).
 </pre><hr><pre>
-# Usage.
+# Usage (for both versions).
 
 for char in Reverse("spam"):
     print ( char )   # m, a, p, s
@@ -84,8 +84,8 @@ for item in Reverse([1, 2, 3, 4]):
 # iter(callable, sentinel) return iterator
 
 # an iterator based on a sequence
-it1 = iter([1, 2])   # list_iterator object in Python 3
-it2 = iter("abcd")   # str_iterator object in Python 3
+it1 = iter([1, 2])   # list_iterator object in Python 3 (lists have __iter__)
+it2 = iter("abcd")   # str_iterator object in Python 3 (strings have __iter__)
 it3 = iter(it2)   # all iterators are also iterables
 assert it3 is it2
 
@@ -113,7 +113,7 @@ for item in x:   # iteration
     print ( item )
 
 # manual iteration
-y = iter(x)         # make an iterator
+y = iter(x)         # make an iterator, iter() use the sequence protocol (__getitem__)
 print ( next(y) )   # w
 print ( next(y) )   # o
 print ( next(y) )   # r
@@ -185,8 +185,6 @@ iter_zeros1 = iter(int, 1)   # int() gives 0
 iter_zeros2 = iter((lambda: 0), 1)
 iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
 iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
-
-it1 = itertools.count(start=0, step=1)
 </pre><hr>
 
 </body>

@@ -35,19 +35,19 @@ class SingleList:
 
     def insert_head(self, data):   # O(1) time
         node = Node(data)
-        if self.head:
+        if self.is_empty():
+            self.head = self.tail = node
+        else:
             node.next = self.head
             self.head = node
-        else:   # empty list
-            self.head = self.tail = node
 
     def insert_tail(self, data):   # O(1) time
         node = Node(data)
-        if self.head:
+        if self.is_empty():
+            self.head = self.tail = node
+        else:
             self.tail.next = node
             self.tail = node
-        else:   # empty list
-            self.head = self.tail = node
 
     def remove_head(self):          # O(1) time
         if self.is_empty():
@@ -61,12 +61,12 @@ class SingleList:
         return node.data
 </pre><hr><pre>
 # Usage.
-alist = SingleList()
-alist.insert_head(11)         # [11]
-alist.insert_head(22)         # [22, 11]
-alist.insert_tail(33)         # [22, 11, 33]
-while not alist.is_empty():   # order 22, 11, 33
-    print ( alist.remove_head() )
+SL = SingleList()
+SL.insert_head(11)         # [11]
+SL.insert_head(22)         # [22, 11]
+SL.insert_tail(33)         # [22, 11, 33]
+while not SL.is_empty():   # order 22, 11, 33
+    print ( SL.remove_head() )
 </pre><hr>
 
 <h3>ITERATORS</h3>
@@ -101,8 +101,7 @@ class SingleList:
             node = self.current
             self.current = self.current.next
             return node.data
-        else:
-            self.current = None
+        else:   # self.current is None
             raise StopIteration
 
     next = __next__   # compatibility

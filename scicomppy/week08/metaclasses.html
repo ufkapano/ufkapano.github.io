@@ -1,0 +1,72 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Metaclasses</h1>
+
+<p>https://docs.python.org/3/reference/datamodel.html
+
+<h3>INTRO</h3>
+
+<p>By default, classes are constructed using 'type()'.
+The class body is executed in a new namespace and the class name is bound 
+locally to the result of type(name, bases, namespace).
+
+<hr><pre>
+MyClass = type("MyClass", (), {})
+
+# the same as
+
+class MyClass:
+    pass
+</pre><hr><pre>
+MyClass = type("MyClass", (BaseClass,), {'attribute' : 42})
+
+# the same as
+
+class MyClass(BaseClass):
+    attribute = 42
+</pre><hr><pre>
+class Meta(type):   # inheritence from 'type'
+
+    # __init__ is optional
+
+    def __new__(mcls, name, bases, namespace):
+        namespace['foo'] = 'Meta was here'
+        # 'foo' is added to the class namespace,
+        # before the class name is created
+        return type.__new__(mcls, name, bases, namespace)
+
+class C(metaclass=Meta):
+    pass
+
+print ( dir(C) )   # 'foo' is here
+print ( C.__dict__['foo'] )   # Meta was here
+</pre><hr><pre>
+models = {}
+
+class ModelMetaclass(type):
+
+    def __new__(meta, name, bases, clsdict):
+        cls = type.__new__(meta, name, bases, clsdict)
+        models[name] = cls
+        return cls
+
+class Model(metaclass=ModelMetaclass):
+    pass
+
+class A(Model):
+    pass
+
+class B(A):
+    pass
+
+print ( list(models) )   # ['Model', 'A', 'B']
+</pre><hr>
+
+</body>
+</html>

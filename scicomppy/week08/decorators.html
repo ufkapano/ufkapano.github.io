@@ -1,0 +1,38 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Decorators</h1>
+
+<p>https://docs.python.org/3/reference/compound_stmts.html#function-definitions
+
+<h3>INTRO</h3>
+
+<p>A function definition may be wrapped by one or more decorator expressions. 
+Decorator expressions are evaluated when the function is defined, 
+in the scope that contains the function definition.
+
+<hr><pre>
+# Syntax.
+
+@decorator2(arg)
+@decorator1
+def func(argument_list):
+    pass
+
+# This is equivalent to
+
+def func(argument_list):
+    pass
+
+func = decorator2(arg)(decorator1(func))
+</pre><hr>
+
+
+
+</body>
+</html>
