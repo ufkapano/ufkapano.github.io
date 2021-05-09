@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Matplotlib - functions</h1>
+
+<h3>LIMITS</h3>
+
+<hr><pre>
+plt.xlim(xmin, xmax)
+plt.xlim((xmin, xmax))
+left, right = plt.xlim()   # return the current xlim
+plt.xlim(right=3)  # adjust the right leaving left unchanged
+plt.xlim(left=1)  # adjust the left leaving right unchanged
+</pre><hr><pre>
+plt.ylim(ymin, ymax)
+plt.ylim((ymin, ymax))
+bottom, top = plt.ylim()   # return the current ylim
+plt.ylim(top=3)  # adjust the top leaving bottom unchanged
+plt.ylim(bottom=1)  # adjust the bottom leaving top unchanged
+</pre><hr><pre>
+plt.axis([xmin, xmax, ymin, ymax])
+xmin, xmax, ymin, ymax = plt.axis()   # return the axis limits
+plt.axis('on')   # turn on axis lines and labels
+plt.axis('off')   # turn off axis lines and labels
+</pre><hr>
+
+<h3>TICKS</h3>
+
+<hr><pre>
+# matplotlib.pyplot.xticks(ticks=None, labels=None, **kwargs)
+# matplotlib.pyplot.yticks(ticks=None, labels=None, **kwargs)
+# Call signatures:
+# locs, labels = plt.yticks()            # Get locations and labels
+# plt.yticks(ticks, [labels], **kwargs)  # Set locations and labels
+
+plt.xticks(np.arange(4), ('X1', 'X2', 'X3', 'X4'))
+plt.yticks(np.arange(0, 81, 10))
+</pre><hr>
+
+<h3>SCALES</h3>
+
+<hr><pre>
+# matplotlib.pyplot.xscale(value, **kwargs)
+# matplotlib.pyplot.yscale(value, **kwargs)
+# value: "linear", "log", "symlog", "logit"
+
+plt.xscale('log')
+plt.yscale('linear')
+</pre><hr>
+
+<h3>GRID</h3>
+
+<hr><pre>
+# matplotlib.pyplot.grid(b=None, which='major', axis='both', **kwargs)
+# b: bool or None
+# which: 'major', 'minor', 'both'
+# axis: 'both', 'x', 'y'
+
+plt.grid(color='r', linestyle='-', linewidth=2)
+</pre><hr>
+
+<h3>LINES</h3>
+
+<hr><pre>
+# matplotlib.pyplot.hlines(y, xmin, xmax, colors='k', linestyles='solid',
+# label='', *, data=None, **kwargs)
+# Plot horizontal lines at each y from xmin to xmax.
+#
+# matplotlib.pyplot.vlines(x, ymin, ymax, colors='k', linestyles='solid',
+# label='', *, data=None, **kwargs)
+# Plot vertical lines at each x from ymin to ymax.
+# linestyles: 'solid', 'dashed', 'dashdot', 'dotted'
+
+plt.hlines([1,2,4,7], 0, 10, colors='r')
+plt.vlines([1,2,4,7], 0, 10, colors='b')
+</pre><hr>
+
+
+</body>
+</html>

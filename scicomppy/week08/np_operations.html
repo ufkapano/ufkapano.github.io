@@ -251,6 +251,15 @@ np.sort(words)   # alphabetical sorting
 # array(['apple', 'banana', 'cherry'], dtype='|S6')
 </pre><hr>
 
+<h3>EXAMPLES</h3>
+
+<hr><pre>
+a = np.array([100]*5, dtype="int8")
+# array([100, 100, 100, 100, 100], dtype=int8)
+2 * a   # array([-56, -56, -56, -56, -56], dtype=int8), ERROR
+a.sum()   # 500, default dtype=int, OK
+a.sum(dtype="int8")   # -12, ERROR
+</pre><hr>
 
 </body>
 </html>

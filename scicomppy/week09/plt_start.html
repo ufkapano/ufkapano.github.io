@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Matplotlib - start</h1>
+
+<p>https://matplotlib.org/
+<br>Matplotlib: Visualization with Python
+
+<p>https://matplotlib.org/tutorials/index.html
+
+<h3>INSTALLING MATPLOTLIB</h3>
+
+<hr><pre>
+pip install matplotlib
+or
+conda install matplotlib
+
+In Debian Linux we have python-matplotlib, python3-matplotlib, and dependences.
+</pre><hr>
+
+<h3>INTRODUCTION</h3>
+
+<p>Matplotlib is a comprehensive library for creating static, animated, 
+and interactive visualizations in Python.
+
+<p>Matplotlib 3 is Python 3 only, Matplotlib 2 supports Python 2.
+
+<p>matplotlib.pyplot is a state-based interface to matplotlib. 
+It provides a MATLAB-like way of plotting.
+pyplot is mainly intended for interactive plots and simple cases 
+of programmatic plot generation.
+The object-oriented API is recommended for more complex plots.
+
+<p>There are two big components that you need to take into account:
+
+<ul>
+
+<li>The Figure is the overall window or page that everything is drawn on.
+You can create multiple independent Figures.
+
+<li>To the figure you add Axes. 
+The Axes is the area on which the data is plotted with functions 
+such as plot() and scatter() and that can have ticks, labels, etc. 
+associated with it. 
+This explains why Figures can contain multiple Axes.
+
+</ul>
+
+<hr><pre>
+import matplotlib.pyplot as plt
+
+plt.plot([1, 2, 3, 4], [10, 20, 25, 30])   # line segments
+plt.scatter([0.3, 3.8, 1.2, 2.5], [11, 25, 9, 26])   # points
+plt.show()   # display a figure
+plt.savefig("plot1.png")   # saving a figure to a file
+</pre><hr>
+
+<p><img src="img/plot1.png" alt="[ plot1.png ]">
+
+<h3>DATA FOR MATPLOTLIB PLOTS</h3>
+
+<p>Matplotlib is often used to visualize analyses or calcuations.
+Data can be stored in Python lists, NumPy arrays, PIL images.
+All sequences are converted to numpy arrays internally.
+
+<hr><pre>
+# The vectorization technique. Plotting a function
+# f(x) = x^2 exp(-a*x) sin(pi*x)
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0,10,1000)
+a = 1.0
+y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
+plt.plot(x, y)
+plt.title("f(x)")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+</pre><hr>
+
+<p><img src="img/plot2.png" alt="[ plot2.png ]">
+
+
+</body>
+</html>

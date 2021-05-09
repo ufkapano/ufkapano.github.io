@@ -1,0 +1,53 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Matplotlib - imshow()</h1>
+
+<p>https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.imshow.html
+
+<p>https://matplotlib.org/tutorials/introductory/images.html
+
+<h3>IMSHOW</h3>
+
+<p>Display data as an image, i.e., on a 2D regular raster.
+
+<hr><pre>
+# matplotlib.pyplot.imshow(X, cmap=None, norm=None, aspect=None,
+#     interpolation=None, alpha=None, vmin=None, vmax=None, origin=None,
+#     extent=None, filternorm=1, filterrad=4.0, resample=None, url=None, *,
+#     data=None, **kwargs)
+#
+# X: array-like or PIL image
+#     The image data. Supported array shapes are:
+#     (M, N): an image with scalar data. The data is visualized using a colormap.
+#     (M, N, 3): an image with RGB values (0-1 float or 0-255 int).
+#     (M, N, 4): an image with RGBA values (0-1 float or 0-255 int),
+#     i.e. including transparency.
+# cmap: str or Colormap, default is 'viridis' ['hot', 'cool', 'gray']
+# interpolation: default is 'nearest' (no interpolation) ['bilinear', 'hamming']
+#
+# Colormaps are used to convert data values (floats) from the interval [0, 1]
+# to the RGBA color that the respective Colormap represents.
+
+import numpy as np
+import matplotlib.pyplot as plt
+
+data = np.random.random((8, 8))
+
+plt.imshow(data, cmap='hot', interpolation='nearest') # pixelated
+# 0.0 black, 0.37 red, 0.75 yellow, 1.0 white
+
+#plt.imshow(data, cmap='cool', interpolation='bilinear') # blurry
+
+plt.show()
+</pre><hr>
+
+<p><img src="img/heatmap1.png" alt="[ heatmap1.png ]">
+
+</body>
+</html>

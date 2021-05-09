@@ -8,6 +8,12 @@
 
 <h1>NumPy - files</h1>
 
+<p>https://numpy.org/doc/stable/reference/generated/numpy.loadtxt.html
+
+<p>https://numpy.org/doc/stable/reference/generated/numpy.savetxt.html
+
+<p>https://docs.python.org/3/library/io.html
+
 <h3>LOAD DATA FROM A TEXT FILE</h3>
 
 <p>numpy.loadtxt() is a fast reader for simple text files.
@@ -21,14 +27,14 @@ Each row in the text file must have the same number of values.
 # converters = {0: datestr2num} if column 0 is a date string.
 # usecols = (1, 4, 5) will extract the 2nd, 5th and 6th columns.
 
-data = np.loadtxt("two_columns.txt")
+data = np.loadtxt("two_columns.txt")   # points in the plane; positions in time
 print ( data.shape )   # (100, 2)
 t = data[:,0]   # first column
 x = data[:,1]   # second column
 </pre><hr><pre>
-from io import StringIO   # StringIO behaves like a file object
+import io   # StringIO behaves like a file object
 
-fname = StringIO(u"1, 2, 3\n4, 5, 6")   # python2 and python3
+fname = io.StringIO(u"1, 2, 3\n4, 5, 6")   # python2 and python3
 data = np.loadtxt(fname, delimiter =', ', usecols =(0, 1, 2))   # dtype=float
 #data = np.loadtxt(fname, dtype=int, delimiter =', ', usecols =(0, 1, 2))
 print ( data.shape )   # (2, 3)
@@ -38,7 +44,7 @@ z = data[:,2]
 </pre><hr><pre>
 # https://scipython.com/book/chapter-6-numpy/examples/using-numpys-loadtxt-method/
 
-fname = StringIO(u"M 21 72\nF 35 58") 
+fname = io.StringIO(u"M 21 72\nF 35 58") 
 # Structured type
 dtype1 = np.dtype([('gender','S1'), ('age','i4'), ('weight','f4')])
 data = np.loadtxt(fname, dtype=dtype1)
@@ -52,6 +58,26 @@ print ( male )   # [ True False ]
 print ( data["age"][male] )   # [21] selecting items
 male_av = data['weight'][male].mean()
 female_av = data['weight'][~male].mean()
+</pre><hr>
+
+<h3>SAVE DATA TO A TEXT FILE</h3>
+
+<hr><pre>
+# numpy.savetxt(fname, X, fmt='%.18e', delimiter=' ', newline='\n',
+#    header='', footer='', comments='# ', encoding=None)
+# fname : filename or file handle
+#    If the filename ends in .gz, the file is automatically saved in compressed
+#    gzip format. loadtxt() understands gzipped files transparently.
+# X : 1D or 2D array_like
+
+x = np.arange(0,1,0.1),reshape(2,5)
+# array([[0. , 0.1, 0.2, 0.3, 0.4],
+#        [0.5, 0.6, 0.7, 0.8, 0.9]])
+np.savetxt('x.out', x)   # delimiter=' '
+# np.savetxt('x.out', x, delimiter=', ')
+# np.savetxt('x.out', x, fmt='%1.4e')   # use exponential notation
+y = np.loadtxt('x.out')
+np.array_equal(x, y)   # True
 </pre><hr>
 
 </body>
