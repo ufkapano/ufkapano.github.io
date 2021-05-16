@@ -1,0 +1,98 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using virtualenv</h1>
+
+<p>https://virtualenv.pypa.io/en/stable/
+
+<h3>INTRO</h3>
+
+<p>'virtualenv' is a tool to create isolated Python environments.
+Since Python 3.3, a subset of it has been integrated into the standard 
+library under the 'venv' module. 
+The 'venv' module does not offer all features of this library:
+<br>(a) is slower,
+<br>(b) is not as extendable,
+<br>(c) cannot create virtual environments for arbitrarily installed 
+python versions (and automatically discover these),
+<br>(d) is not upgrade-able via 'pip',
+<br>(e) does not have as rich programmatic API.
+
+<h3>INSTALLING VIRTUALENV</h3>
+
+<hr><pre>
+pip install virtualenv
+
+In Debian Linux we have python-virtualenv, python3-virtualenv, virtualenv.
+</pre><hr>
+
+<h3>USING VIRTUALENV</h3>
+
+<hr><pre>
+$ virtualenv --version   # testing version in Debian 10
+15.1.0
+
+$ virtualenv ENV1   # python2 will be used
+Running virtualenv with interpreter /usr/bin/python2
+New python executable in /home/andrzej/VIRTUAL/ENV1/bin/python2
+Also creating executable in /home/andrzej/VIRTUAL/ENV1/bin/python
+Installing setuptools, pkg_resources, pip, wheel...done.
+
+$ source ENV1/bin/activate
+
+(ENV1) $ python --version
+Python 2.7.16 
+
+(ENV1) $ which python
+/home/andrzej/VIRTUAL/ENV1/bin/python
+
+(ENV1) $ which pip
+/home/andrzej/VIRTUAL/ENV1/bin/pip
+
+(ENV1) $ pip list
+DEPRECATION: Python 2.7 reached the end of its life ...
+Package       Version
+------------- -------
+pip           20.3.4      # different from Debian pip!
+pkg-resources 0.0.0
+setuptools    44.1.1
+wheel         0.36.2
+
+(ENV1) $ deactivate 
+</pre><hr><pre>
+$ virtualenv -p python3 ENV2   # python3 will be used
+Already using interpreter /usr/bin/python3
+Using base prefix '/usr'
+New python executable in /home/andrzej/VIRTUAL/ENV2/bin/python3
+Also creating executable in /home/andrzej/VIRTUAL/ENV2/bin/python
+Installing setuptools, pkg_resources, pip, wheel...done.
+
+$ source ENV2/bin/activate
+
+(ENV2) $ which python
+/home/andrzej/VIRTUAL/ENV2/bin/python
+
+(ENV2) $ python --version
+Python 3.7.3
+
+(ENV2) $ pip --version
+pip 21.1 from /home/andrzej/VIRTUAL/ENV2/lib/python3.7/site-packages/pip (python 3.7)
+
+(ENV2) $ pip list
+Package       Version
+------------- -------
+pip           21.1     # latest, different from Debian pip3!
+pkg-resources 0.0.0
+setuptools    56.0.0
+wheel         0.36.2
+
+(ENV2) $ deactivate
+</pre><hr>
+
+</body>
+</html>

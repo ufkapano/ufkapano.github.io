@@ -1,0 +1,234 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - time series / date functionality</h1>
+
+<p>https://pandas.pydata.org/docs/user_guide/timeseries.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.to_datetime.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.date_range.html
+
+<p>https://pandas.pydata.org/docs/user_guide/timedeltas.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.to_timedelta.html
+
+<h3>INTRO</h3>
+
+<p>pandas contains extensive capabilities and features for working 
+with time series data for all domains.
+
+<hr><pre>
+# Different objects for manipulating dates and times in Python.
+
+datetime.date()
+datetime.time()
+datetime.datetime()
+datetime.timedelta()
+
+numpy.datetime64()
+numpy.timedelta64()
+
+pandas.Timestamp()
+pandas.Timedelta()
+pandas.DatetimeIndex()
+pandas.TimedeltaIndex()
+</pre><hr>
+
+<h3>DATETIME</h3>
+
+<hr><pre>
+# pandas.to_datetime(arg, errors='raise', dayfirst=False, yearfirst=False,
+#    utc=None, format=None, exact=True, unit=None, infer_datetime_format=False,
+#    origin='unix', cache=True)
+# Convert argument to datetime.
+# arg : int, float, str, datetime, list, tuple, 1-d array, Series, DataFrame/dict-like
+# errors : {‘ignore’, ‘raise’, ‘coerce’}, default ‘raise’
+
+# Return type depends on input:
+# list-like: DatetimeIndex
+# Series: Series of datetime64 dtype
+# scalar: Timestamp
+</pre><hr><pre>
+# Parsing time series information from various sources and formats.
+
+import datetime
+
+pd.to_datetime(['20200102', np.datetime64('2020-01-03'),
+    datetime.datetime(2020, 1, 4)])   # list-like input
+# DatetimeIndex(['2020-01-02', '2020-01-03', '2020-01-04'],
+#               dtype='datetime64[ns]', freq=None)
+</pre><hr><pre>
+a = np.arange('2020-01-01', '2020-01-08', dtype='datetime64[D]') # ISO dates
+# array(['2020-01-01', '2020-01-02', '2020-01-03', '2020-01-04',
+#        '2020-01-05', '2020-01-06', '2020-01-07'], dtype='datetime64[D]')
+
+pd.to_datetime(a)
+# DatetimeIndex(['2020-01-01', '2020-01-02', '2020-01-03', '2020-01-04',
+#                '2020-01-05', '2020-01-06', '2020-01-07'],
+#               dtype='datetime64[ns]', freq=None)
+</pre><hr><pre>
+s = pd.Series(['20200501','20200502','20200503','20200504']) # strings (not ISO dates)
+# 0    20200501
+# 1    20200502
+# 2    20200503
+# 3    20200504
+# dtype: object
+
+pd.to_datetime(s)   # return pd.Series
+# 0   2020-05-01
+# 1   2020-05-02
+# 2   2020-05-03
+# 3   2020-05-04
+# dtype: datetime64[ns]
+</pre><hr><pre>
+df = pd.DataFrame({'year': [2015, 2016],'month': [2, 3],'day': [4, 5]})
+#    year  month  day
+# 0  2015      2    4
+# 1  2016      3    5
+
+pd.to_datetime(df)   # return pd.Series
+# 0   2015-02-04
+# 1   2016-03-05
+# dtype: datetime64[ns]
+</pre><hr><pre>
+pd.to_datetime(1234567890)   # interpreted as nanoseconds
+# Timestamp('1970-01-01 00:00:01.234567890')
+
+pd.to_datetime('20210203')
+# Timestamp('2021-02-03 00:00:00')
+</pre><hr><pre>
+# pandas.date_range(start=None, end=None, periods=None, freq=None,
+#    tz=None, normalize=False, name=None, closed=None, **kwargs)
+# Return a fixed frequency DatetimeIndex.
+# start, end : str or datetime-like, optional
+# periods : int, optional
+# freq : str or DateOffset, default ‘D’
+# ['S' second, 'H' hour, 'D' day, 'W' week, 'M' month, 'Y' year]
+# Multiplies are allowed: '6H', '3M'.
+
+pd.date_range(start='20210105', end='20210110')   # closed interval
+# DatetimeIndex(['2021-01-05', '2021-01-06', '2021-01-07',
+#                '2021-01-08', '2021-01-09', '2021-01-10'],
+#               dtype='datetime64[ns]', freq='D')
+
+pd.date_range(start='2020-01-31', periods=5, freq='M')
+# DatetimeIndex(['2020-01-31', '2020-02-29', '2020-03-31',
+#                '2020-04-30', '2020-05-31'],
+#               dtype='datetime64[ns]', freq='M')
+
+pd.date_range("2018-01-01", periods=4, freq="H")
+# DatetimeIndex(['2018-01-01 00:00:00', '2018-01-01 01:00:00',
+#                '2018-01-01 02:00:00', '2018-01-01 03:00:00'],
+#               dtype='datetime64[ns]', freq='H')
+</pre><hr>
+
+<h3>TIMEDELTA</h3>
+
+<p>Timedeltas are differences in times, expressed in difference units, 
+e.g. days, hours, minutes, seconds. They can be both positive and negative.
+Timedelta is a subclass of datetime.timedelta.
+
+<hr><pre>
+# from strings
+
+pd.Timedelta('5 days')
+# Timedelta('5 days 00:00:00')
+
+pd.Timedelta("1 days 2 hours")
+# Timedelta('1 days 02:00:00')
+
+# like datetime.timedelta
+
+pd.Timedelta(days=3, seconds=15)
+# Timedelta('3 days 00:00:15')
+
+# from a datetime.timedelta/np.timedelta64
+
+pd.Timedelta(datetime.timedelta(days=1, seconds=1))
+# Timedelta('1 days 00:00:01')
+
+pd.Timedelta(np.timedelta64(131, 's'))
+# Timedelta('0 days 00:02:11')
+</pre><hr><pre>
+# pandas.to_timedelta(arg, unit=None, errors='raise')
+# Convert argument to timedelta.
+# arg : str, timedelta, list-like or Series
+# unit : str, optional, defaults to 'ns' ['W', 'D', 'h', 'S']
+# errors : {‘ignore’, ‘raise’, ‘coerce’}, default ‘raise’
+
+pd.to_timedelta('2 days 3 h 4 min 5 sec')   # from string
+# Timedelta('2 days 03:04:05')
+
+pd.to_timedelta(['1 days','3 h','4 min','5 sec'] )   # from list
+# TimedeltaIndex(['1 days 00:00:00', '0 days 03:00:00',
+#                 '0 days 00:04:00', '0 days 00:00:05'],
+#                dtype='timedelta64[ns]', freq=None)
+</pre><hr>
+
+<h3>EXAMPLES</h3>
+
+<hr><pre>
+s = pd.Series(pd.date_range("2012-01-01", periods=4, freq="D"))
+# 0   2012-01-01
+# 1   2012-01-02
+# 2   2012-01-03
+# 3   2012-01-04
+# dtype: datetime64[ns]
+
+s.max()   # Timestamp('2012-01-04 00:00:00')
+s.min()   # Timestamp('2012-01-01 00:00:00')
+</pre><hr><pre>
+td = pd.Series([pd.Timedelta(days=i) for i in range(4)])
+# 0   0 days
+# 1   1 days
+# 2   2 days
+# 3   3 days
+# dtype: timedelta64[ns]
+
+td.sum()   # Timedelta('6 days 00:00:00')
+td.max()   # Timedelta('3 days 00:00:00')
+td.min()   # Timedelta('0 days 00:00:00')
+td.mean()   # Timedelta('1 days 12:00:00')
+</pre><hr><pre>
+df = pd.DataFrame({"A": s, "B": td})
+#            A      B
+# 0 2012-01-01 0 days
+# 1 2012-01-02 1 days
+# 2 2012-01-03 2 days
+# 3 2012-01-04 3 days
+
+df["C"] = df["A"] + df["B"]
+print(df)
+#           A      B          C
+# 0 2012-01-01 0 days 2012-01-01
+# 1 2012-01-02 1 days 2012-01-03
+# 2 2012-01-03 2 days 2012-01-05
+# 3 2012-01-04 3 days 2012-01-07
+</pre><hr><pre>
+# Using missing values.
+
+s[1] = np.nan   # df is not changed!
+print(s)
+# 0   2012-01-01
+# 1          NaT
+# 2   2012-01-03
+# 3   2012-01-04
+# dtype: datetime64[ns]
+
+td[2] = np.nan   # df is not changed!
+print(td)
+# 0   0 days
+# 1   1 days
+# 2      NaT
+# 3   3 days
+# dtype: timedelta64[ns]
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - files</h1>
+
+<h3>USING CSV FILES</h3>
+
+<hr><pre>
+# Read CSV and make DataFrama.
+
+df = pd.read_csv(file_name, sep=",", encoding="utf-8")
+df.describe()   # 
+df.head()   # display the first few records
+df.hist("housing_median_age")   # use column name
+</pre><hr><pre>
+# Write DataFrame to CSV.
+
+df.to_csv(file_name, index=False, encoding="utf-8")
+# index : write row names (bool)
+# encoding : "utf-8", "latin1", "iso-8859-1", "cp1252"
+</pre><hr>
+
+<h3>USING JSON FILES</h3>
+
+<p>https://www.geeksforgeeks.org/pandas-parsing-json-dataset/
+<br>Pandas | Parsing JSON Dataset
+
+<hr><pre>
+# Convert the object to a JSON string.
+# Note NaN's and None will be converted to null and datetime objects
+# will be converted to UNIX timestamps.
+#
+# to_json(path_or_buf=None, orient=None, date_format=None, double_precision=10,
+#     force_ascii=True, date_unit='ms', default_handler=None, lines=False,
+#     compression=None, index=True)
+#
+# path_or_buf : default is a string, may be a file path
+# orient : for Series {'split','records','index'}, default is 'index'
+# orient : for DataFeame {'split','records','index','columns','values'},
+#     default is 'columns'
+# date_format : {None, 'epoch', 'iso'}
+# date_unit : string, default 'ms' (milliseconds)
+
+series1 = pd.Series( {'a':10, 'b':20, 'c':30} )
+# series1.to_json(file_name, orient ='index')
+
+print(series1.to_json(orient ='index'))   # default, dict like
+# {"a":10,"b":20,"c":30}
+
+print(series1.to_json(orient ='split'))   # dict like
+# {"name":null,"index":["a","b","c"],"data":[10,20,30]}
+
+print(series1.to_json(orient ='records'))   # list like
+# [10,20,30]
+
+df = pd.DataFrame([['a', 'b'], ['c', 'd']], 
+    index =['row1', 'row2'], columns =['col1', 'col2']) 
+
+df.to_json(orient ='columns')   # default
+# {"col1":{"row1":"a","row2":"c"},"col2":{"row1":"b","row2":"d"}}
+
+df.to_json(orient ='split')   # dict like
+# {"columns":["col1","col2"],"index":["row1","row2"],"data":[["a","b"],["c","d"]]}
+
+df.to_json(orient ='index')
+# {"row1":{"col1":"a","col2":"b"},"row2":{"col1":"c","col2":"d"}}
+
+df.to_json(orient ='values')
+# [["a","b"],["c","d"]]
+</pre><hr><pre>
+# Read JSON and make DataFrama.
+# read_json(path_or_buf=None, orient=None, typ='frame', dtype=True,
+#     convert_axes=True, convert_dates=True, keep_default_dates=True,
+#     numpy=False, precise_float=False, date_unit=None, encoding=None,
+#     lines=False, chunksize=None, compression='infer')
+#
+# path_or_buf : a valid JSON string or file-like, a URL
+# orient : string
+# type : 'frame' or 'series'
+# numpy : boolean, direct decoding to numpy arrays
+# encoding : str, default is 'utf-8', the encoding to use to decode py3 bytes
+
+df = pd.read_json('[[11,12],[21,22]]')
+df
+#     0   1
+# 0  11  12
+# 1  21  22
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,100 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using venv</h1>
+
+<p>https://docs.python.org/3/library/venv.html
+<br>venv - Creation of virtual environments
+
+<h3>INTRO</h3>
+
+<p>The 'venv' module provides support for creating lightweight 
+virtual environments with their own site directories.
+Each virtual environment has its own Python binary (which matches 
+the version of the binary that was used to create this environment) 
+and can have its own independent set of installed Python packages 
+in its site directories.
+
+<hr><pre>
+# Debian 10 apt package - python3-venv
+
+$ python3 -m venv VE1   # creating the virtual environment in the VE1 directory
+
+$ ls VE1
+bin  include  lib  lib64  pyvenv.cfg  share
+
+$ cat VE1/pyvenv.cfg
+home = /usr/bin
+include-system-site-packages = false
+version = 3.7.3
+</pre><hr><pre>
+# Windows 10
+
+c:\> python -m venv c:\path\to\myenv
+</pre><hr>
+
+<p>This will create the 'VE1' directory if it doesn’t exist, 
+and also create directories inside it containing a copy of the Python 
+interpreter, the standard library, and various supporting files.
+A common directory location for a virtual environment is '.venv'.
+Once you’ve created a virtual environment, you may activate it.
+
+<hr><pre>
+$ source VE1/bin/activate   # for the bash shell in Linux
+# source VE1/bin/activate.csh   # for the tcsh shell in Linux
+# C:\> EV1\Scripts\activate.bat   # for cmd.exe in Windows
+# PS C:\> EV1\Scripts\Activate.ps1   # for PowerShell in Windows
+
+(VE1) $ python
+Python 3.7.3 (default, Jan 22 2021, 20:04:44) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import sys
+&gt;&gt;&gt; sys.executable
+'/home/andrzej/VIRTUAL/VE1/bin/python'
+&gt;&gt;&gt; quit()
+
+(VE1) $ pip list
+Package       Version
+------------- -------
+pip           18.1   
+pkg-resources 0.0.0  
+setuptools    40.8.0 
+
+(VE1) $ pip install PrettyTable
+Collecting PrettyTable
+  Downloading https://files.pythonhosted.org/packages/26/1b/42b59a4038bc0442e3a0085bc0de385658131eef8a88946333f870559b09/prettytable-2.1.0-py3-none-any.whl
+Collecting wcwidth (from PrettyTable)
+  Downloading https://files.pythonhosted.org/packages/59/7c/e39aca596badaf1b78e8f547c807b04dae603a433d3e7a7e04d67f2ef3e5/wcwidth-0.2.5-py2.py3-none-any.whl
+Collecting importlib-metadata; python_version < "3.8" (from PrettyTable)
+  Downloading https://files.pythonhosted.org/packages/8e/e2/49966924c93909d47612bb47d911448140a2f6c1390aec2f4c1afbe3748f/importlib_metadata-4.0.1-py3-none-any.whl
+Collecting zipp>=0.5 (from importlib-metadata; python_version < "3.8"->PrettyTable)
+  Downloading https://files.pythonhosted.org/packages/0f/8c/715c54e9e34c0c4820f616a913a7de3337d0cd79074dd1bed4dd840f16ae/zipp-3.4.1-py3-none-any.whl
+Collecting typing-extensions>=3.6.4; python_version < "3.8" (from importlib-metadata; python_version < "3.8"->PrettyTable)
+  Downloading https://files.pythonhosted.org/packages/2e/35/6c4fff5ab443b57116cb1aad46421fb719bed2825664e8fe77d66d99bcbc/typing_extensions-3.10.0.0-py3-none-any.whl
+Installing collected packages: wcwidth, zipp, typing-extensions, importlib-metadata, PrettyTable
+Successfully installed PrettyTable-2.1.0 importlib-metadata-4.0.1 typing-extensions-3.10.0.0 wcwidth-0.2.5 zipp-3.4.1
+
+(VE1) $ pip list
+Package            Version 
+------------------ --------
+importlib-metadata 4.0.1   
+pip                18.1    
+pkg-resources      0.0.0   
+prettytable        2.1.0   
+setuptools         40.8.0  
+typing-extensions  3.10.0.0
+wcwidth            0.2.5   
+zipp               3.4.1 
+
+(VE1) $ deactivate
+$
+</pre><hr>
+
+</body>
+</html>

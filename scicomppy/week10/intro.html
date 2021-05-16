@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Introduction to virtual environments</h1>
+
+<p>https://docs.python.org/3/tutorial/venv.html
+
+<p>https://packaging.python.org/tutorials/installing-packages/
+
+<p>https://packaging.python.org/guides/installing-using-pip-and-virtual-environments/
+
+<p>https://virtualenv.pypa.io/en/stable/user_guide.html
+
+<h3>RATIONALE</h3>
+
+<p>Python applications will often use packages and modules 
+that don’t come as part of the standard library. 
+Applications will sometimes need a specific version of a library, 
+because the application may require that a particular bug has been fixed 
+or the application may be written using an obsolete version 
+of the library’s interface.
+
+<p>This means it may not be possible for one Python installation 
+to meet the requirements of every application.
+The solution for this problem is to create a virtual environment, 
+a self-contained directory tree that contains a Python installation 
+for a particular version of Python, plus a number of additional packages.
+
+<p>Currently, there are two common tools for creating Python 
+virtual environments:
+
+<ul>
+
+<li>'venv' is available by default in Python 3.3 and later, 
+and installs 'pip' and 'setuptools' into created virtual environments 
+in Python 3.4 and later.
+
+<li>'virtualenv' needs to be installed separately, but supports 
+Python 2.7+ and Python 3.3+, and 'pip', 'setuptools' and 'wheel' 
+are always installed into created virtual environments by default 
+(regardless of Python version).
+
+</ul>
+
+<p>It is useful to have a separate directory for virtual environments,
+e.g. VIRTUAL in the home directory.
+
+<p><strong>Warning.</strong> 
+Created python virtual environments are usually not self-contained. 
+A complete python packaging is usually made up of thousands of files, 
+so it’s not efficient to install the entire python again into a new folder. 
+Instead virtual environments are mere shells, that contain little within 
+themselves, and borrow most from the system python.
+This does mean that if you upgrade your system python your virtual 
+environments <em>might</em> break.
+
+<hr><pre>
+# Using 'venv' in Linux.
+
+$ python3 -m venv DIR
+$ source DIR/bin/activate
+(DIR) $ deactivate
+</pre><hr><pre>
+# Using 'venv' in Windows.
+
+python -m venv DIR
+DIR\Scripts\activate
+deactivate
+</pre><hr><pre>
+# Using 'virtualenv' in Linux.
+
+$ virtualenv DIR
+$ source DIR/bin/activate
+(DIR) $ deactivate
+</pre><hr><pre>
+# Using 'virtualenv' in Windows.
+
+virtualenv DIR   # the full path may be needed
+DIR\Scripts\activate
+deactivate
+</pre><hr>
+
+<p>In order to remove a virtual environment you should simply
+deactivate it and remove DIR directory (rm -r DIR).
+You might want to pip freeze a dependency list first.
+
+</body>
+</html>

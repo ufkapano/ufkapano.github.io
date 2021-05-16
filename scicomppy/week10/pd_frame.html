@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - DataFrame</h1>
+
+<p>https://pandas.pydata.org/docs/user_guide/dsintro.html
+
+<h3>INTRO</h3>
+
+<p>'DataFrame' is a 2-dimensional labeled data structure with columns 
+of potentially different types (like a spreadsheet).
+It is generally the most commonly used pandas object.
+
+<hr><pre>
+# pd.DataFrame(data=None, index=None, columns=None, dtype=None, copy=False)
+# data : ndarray, iterable, dict, or DataFrame
+# index : index or array-like
+# colums : index or array-like
+# dtype : numpy.dtype or None
+# copy : boolean, default False; copy input data
+
+# Constructing DataFrame from a dictionary.
+# d = {'col1': series1, 'col2': series2}
+
+d = {'col1': [1, 2], 'col2': [3, 4]}
+
+df1 = pd.DataFrame(data=d)   # inferred dtype is int64
+#df1 = pd.DataFrame(data=d, dtype=np.int8)   # dtype is set
+#    col1  col2
+# 0     1     3
+# 1     2     4
+
+df1.dtypes
+# col1    int64
+# col2    int64
+# dtype: object
+
+df1.index   # RangeIndex(start=0, stop=2, step=1)
+
+df1.columns   # Index(['col1', 'col2'], dtype='object')
+
+# Constructing DataFrame from numpy ndarray.
+
+df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
+    columns=['a', 'b', 'c'])
+#    a  b  c
+# 0  1  2  3
+# 1  4  5  6
+# 2  7  8  9
+</pre><hr>
+
+<h3>OPERATIONS</h3>
+
+<hr><pre>
+df3 = pd.DataFrame(np.random.rand(4,3), columns=list('ABC'))
+#           A         B         C
+# 0  0.658905  0.037961  0.182221
+# 1  0.218680  0.458201  0.080352
+# 2  0.203869  0.960399  0.431482
+# 3  0.186825  0.110853  0.416665
+
+df3['A']   # column selection
+# 0    0.658905
+# 1    0.218680
+# 2    0.203869
+# 3    0.186825
+# Name: A, dtype: float64
+
+# Columns can be deleted or popped like with a dict.
+
+df3['Flag'] = df3['A'] > 0.5   # boolean series will be a new column
+del df3['C']   # column deletion
+two = df3.pop('B')
+df3
+#           A   Flag
+# 0  0.658905   True
+# 1  0.218680  False
+# 2  0.203869  False
+# 3  0.186825  False
+
+f3['Part'] = pd.Series([10, 20])   # not the same index
+df3
+#           A   Flag  Part
+# 0  0.658905   True  10.0
+# 1  0.218680  False  20.0
+# 2  0.203869  False   NaN
+# 3  0.186825  False   NaN
+
+df3.insert(1, 'Scalar', 'bar')
+df3
+#           A Scalar   flag  Part
+# 0  0.658905    bar   True  10.0
+# 1  0.218680    bar  False  20.0
+# 2  0.203869    bar  False   NaN
+# 3  0.186825    bar  False   NaN
+</pre><hr>
+
+</body>
+</html>

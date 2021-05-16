@@ -22,13 +22,13 @@ don't vary in size or color.
 #     verts=None, edgecolors=None, *, plotnonfinite=False, data=None, **kwargs)
 #
 # x, y : float or array-like
-# s: the marker size in points^2, float or array-like
-# c: the marker color, several possible values;
+# s : the marker size in points^2, float or array-like
+# c : the marker color, several possible values;
 #     array-like or list of colors or color
-# marker: the marker style (default: 'o')
+# marker : the marker style (default: 'o')
 # cmap : str or Colormap (default: 'viridis');
 #     cmap is only used if c is an array of floats
-# alpha: the alpha blending value, between 0 (transparent) and 1 (opaque)
+# alpha : the alpha blending value, between 0 (transparent) and 1 (opaque)
 
 x = np.arange(1, 6)
 y = x**2      # a numpy function
@@ -60,6 +60,8 @@ datadict = {'a': np.arange(n),
 
 plt.scatter('a', 'b', c='c', s='d', data=datadict)
 </pre><hr><pre>
+import pandas as pd
+
 n = 100   # n random points in a unit square [0,1]x[0,1]
 df = pd.DataFrame(np.random.rand(n,2), columns=['x', 'y'])
 
@@ -81,7 +83,7 @@ x = np.random.rand(n)
 y = np.random.rand(n)
 
 colors = np.random.rand(n)   # cmap will be used
-#colors = np.random.choice(['r', 'g', 'b'], n)
+#colors = np.random.choice(['r', 'g', 'b'], n) # color names
 
 area = (30 * np.random.rand(n))**2   # 0 to 15 point radii
 
@@ -104,7 +106,8 @@ n = 100
 x = np.random.rand(n)
 y = np.random.rand(n)
 
-colors = ['r' if cond else 'g' for cond in np.logical_and(x > 0.5, y > 0.5)]
+#colors = [('r' if cond else 'g') for cond in np.logical_and(x > 0.5, y > 0.5)]
+colors = np.where(np.logical_and(x > 0.5, y > 0.5) ,'g', 'r')
 
 plt.scatter(x, y, c=colors)
 plt.show()

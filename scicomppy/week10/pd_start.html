@@ -1,0 +1,114 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - start</h1>
+
+<p>https://pandas.pydata.org/
+
+<p>https://pandas.pydata.org/docs/user_guide/10min.html
+
+<p>https://colab.research.google.com/notebooks/mlcc/intro_to_pandas.ipynb
+
+<h3>INSTALLING PANDAS</h3>
+
+<hr><pre>
+If you already have Python, you can install Pandas with:
+
+conda install pandas
+or
+pip install pandas
+
+In Debian Linux we have python-pandas, python3-pandas, and dependences.
+</pre><hr>
+
+<h3>INTRODUCTION</h3>
+
+<p>'pandas' is a fast, powerful, flexible and easy to use open source data 
+analysis and manipulation tool, built on top of the Python programming language.
+pandas aims to be the fundamental high-level building block for doing 
+practical, real world data analysis in Python.
+
+<p>Main features:
+
+<ul>
+<li>Column-oriented data analysis API.
+<li>Easy handling of missing data (float and non-float).
+<li>Label-based slicing, indexing, and subsetting of large data sets.
+<li>Size mutability (columns can be inserted and deleted)
+<li>Easy conversion of different data into DataFrame objects.
+<li>Robust IO tools for loading data from flat files (CVS, Excel, HDF5).
+<li>Time series-specific functionality.
+</ul>
+
+<p>The two primary data structures of pandas are Series (1-dimensional, a single column) 
+and DataFrame (2-dimensional).
+A DataFrame contains one or more Series and a name for each Series.
+
+<p>DataFrame objects can be created by passing a dict mapping string column names 
+to their respective Series. If the Series don't match in length, missing values 
+are filled with special NA/NaN values. 
+
+<hr><pre>
+import numpy as np
+import pandas as pd
+
+print( pd.__version__ )   # 0.23.3 in Debian 10
+</pre><hr><pre>
+# pd.DataFrame
+#         pd.Series
+#         |      |
+#         o      o
+#        col1   col2  o-- columns described by keys
+#      +------+------+      (default 0,1,...)
+# row1 | 'a1' |  11  |
+#      +------+------+
+# row2 | 'a2' |  22  |
+#      +------+------+
+# row3 | 'a3' |  33  |
+#   o  +------+------+
+#   |
+# rows described by indexes (default 0,1,...)
+</pre><hr><pre>
+# Examples from Colab.
+
+city_names = pd.Series(['San Francisco', 'San Jose', 'Sacramento'])
+population = pd.Series([852469, 1015785, 485199])
+
+# Constructing DataFrame from a dictionary.
+df1 = pd.DataFrame({'City name': city_names, 'Population': population})
+print ( df1 )
+#        City name  Population     # column names are shown
+# 0  San Francisco      852469     # row indexes are default (0,1,...)
+# 1       San Jose     1015785
+# 2     Sacramento      485199
+
+# Access to Series using Python dict/list operations.
+print ( df1['City name'] )
+print ( df1['Population'] )
+print ( df1['Population'][1] )   # 1015785
+
+# New colums can be added.
+df1['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
+
+# Calculations with numpy.
+print ( np.log(population) )
+
+population.apply(lambda val: val > 1000000)   # return boolean series
+# 0    False
+# 1     True
+# 2    False
+# dtype: bool
+
+# Indexes.
+print ( df1.index )   # RangeIndex(start=0, stop=3, step=1)
+# df1a = df1.reindex([2, 0, 1])   # changing order
+# df1b = df1.reindex(np.random.permutation(df1.index))   # random order
+</pre><hr>
+
+</body>
+</html>

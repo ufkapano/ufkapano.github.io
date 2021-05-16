@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using pip</h1>
+
+<p>https://pip.pypa.io/en/stable/
+<br>pip documentation
+
+<p>https://packaging.python.org/tutorials/installing-packages/
+
+<h3>INTRO</h3>
+
+<p>'pip' is the package installer for Python. You can use it to install 
+packages from the Python Package Index (PyPI) and other indexes.
+
+<p>In Debian Linux, there is 'pip' (Py2) and 'pip3' (Py3).
+
+<p>'pip' is already installed if you are using Python 2 &gt;= 2.7.9 
+or Python 3 &gt;= 3.4 downloaded from python.org or if you are working 
+in a virtual environment created by 'virtualenv' or 'venv'. 
+
+<hr><pre>
+# Testing if pip is installed.
+# Debian 10 apt packages: python-pip, python-pip-whl, python3-pip
+
+$ pip --version   # Debian 10
+pip 18.1 from /usr/lib/python2.7/dist-packages/pip (python 2.7)
+
+$ pip3 --version   # Debian 10
+pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
+
+$ python -m pip --version   # Py2, from pip documentation
+$ python3 -m pip --version   # Py3, note the name 'pip', not 'pip3' here
+
+$ man pip   # help in Debian Linux
+$ pip --help   # usage and commands
+</pre><hr>
+
+<h3>QUICKSTART</h3>
+
+<hr><pre>
+$ pip install somepackage   # latest version
+$ pip install somepackage==1.0.4   # specific version
+$ pip install --upgrade somepackage   # -U, --upgrade
+$ pip install somepackage-*.whl   # from a wheel archive
+
+$ pip show somepackage   # info about a package
+$ pip show --files somepackage   # show what files were installed
+
+$ pip list              # the list of packages installed
+$ pip list --outdated   # errors in Debian
+
+$ pip uninstall somepackage
+
+$ pip check   # checking a system
+# No broken requirements found.
+
+$ pip search "query"   # errors in Debian
+</pre><hr><pre>
+# Upgrading pip - it is safe in virtual environments.
+
+# For installig packages from binary archives
+$ python -m pip install --upgrade pip
+
+# For installing packages from source archives
+$ python -m pip install --upgrade pip setuptools wheel
+</pre><hr>
+
+<h3>REPRODUCIBLE INSTALLS</h3>
+
+<p>As libraries get updated, results from running your code can change, 
+or your code can break completely. It’s important to be able to reconstruct 
+the set of packages and versions you’re using. Best practice is to:
+<br>(1) use a different environment per project you’re working on,
+<br>(2) record package names and versions using pip in 'requirements files'.
+
+<hr><pre>
+# This is done typically in virtual environments.
+
+$ python -m pip freeze > requirements.txt   # output installed packages in requirements format
+
+$ python -m pip install -r requirements.txt   # -r, --requirement
+</pre><hr>
+
+</body>
+</html>

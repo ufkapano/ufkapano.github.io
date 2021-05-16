@@ -35,6 +35,8 @@ np.dot(a, b)   # 260, also for a.dot(b), scalar product
 
 <h3>COMPARISON OPERATORS</h3>
 
+<p>https://numpy.org/doc/stable/reference/generated/numpy.where.html
+
 <hr><pre>
 a &lt; 35   # array([ True,  True, False, False]), dtype('bool'), itemsize 1
 a == b   # array([False, False, False, False])
@@ -48,6 +50,20 @@ c = np.array([ [True, True], [False, False]])
 d = np.array([ [True, False], [True, False]])
 np.logical_or(c, d)   # array([[ True,  True], [ True, False]])
 np.logical_and(c, d)   # array([[ True, False], [False, False]])
+</pre><hr><pre>
+# numpy.where(condition[, x, y])
+# Return elements chosen from x or y depending on condition.
+# condition : array_like, bool
+# x, y : array_like
+#
+# If all the arrays are 1-D, np.where() is equivalent to:
+# [(xval if cond else yval) for (cond, xval, yval) in zip(condition, x, y)]
+
+a = np.arange(10)
+np.where(a &lt; 5, a, 10*a)
+# array([ 0,  1,  2,  3,  4, 50, 60, 70, 80, 90])
+np.where(a &lt; 5, 'g', 'r')   # broadcasting
+# array(['g', 'g', 'g', 'g', 'g', 'r', 'r', 'r', 'r', 'r'], dtype='&lt;U1')
 </pre><hr>
 
 <h3>MATRIX OPERATIONS</h3>

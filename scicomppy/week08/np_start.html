@@ -21,19 +21,6 @@ Array programming with NumPy, Nature 585, 357-362 (2020).
 SciPy 1.0: fundamental algorithms for scientific computing in Python,
 Nature Methods 17, 261-272 (2020).
 
-<h3>INTRO</h3>
-
-<p>NumPy stands for Numerical Python.
-NumPy is the fundamental package for scientific computing with Python. 
-It contains among other things [version 1.16.2 in Debian 10]:
-
-<ul>
-<li>a powerful N-dimensional array object
-<li>sophisticated (broadcasting) functions
-<li>tools for integrating C/C++ and Fortran code
-<li>useful linear algebra, Fourier transform, and random number capabilities
-</ul>
-
 <h3>INSTALLING NUMPY</h3>
 
 <p>https://numpy.org/install/
@@ -59,7 +46,18 @@ Packages (with dependences): python-numpy (Py2.7), python3-numpy (Py3),
 python-pip, python-pip-whl, python3-pip
 </pre><hr>
 
-<h3>THE BASICS</h3>
+<h3>INTRODUCTION</h3>
+
+<p>NumPy stands for Numerical Python.
+NumPy is the fundamental package for scientific computing with Python. 
+It contains among other things [version 1.16.2 in Debian 10]:
+
+<ul>
+<li>a powerful N-dimensional array object
+<li>sophisticated (broadcasting) functions
+<li>tools for integrating C/C++ and Fortran code
+<li>useful linear algebra, Fourier transform, and random number capabilities
+</ul>
 
 <p>NumPy’s main object is the homogeneous multidimensional array.
 It is a table of elements (usually numbers), all of the same type, 
@@ -69,7 +67,7 @@ In NumPy dimensions are called 'axes'.
 <hr><pre>
 import numpy as np   # typical import under the 'np' alias
 
-print ( np.__version__ )   # '1.16.2' for Debian 10
+print ( np.__version__ )   # 1.16.2 for Debian 10
 # also help(np) at the end
 
 a = np.arange(15).reshape(3, 5)   # array object 
