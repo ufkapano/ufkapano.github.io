@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Traps</h1>
+
+<p>William H. Press, Saul A. Teukolsky, William T. Vetterling,
+Brian P. Flannery, Numerical Recipes in C: The Art of Scientific Computing, 
+Second Edition, Cambridge, University Press, 1992.
+
+<h3>INTRO</h3>
+
+<p>Numerical computing is both the art and science.
+
+<p>Computers store numbers not with infinite precision but rather 
+in some approximation that can be packed into a fixed number of bits 
+(binary digits) or bytes (groups of 8 bits).
+
+<p>A number in integer representation is exact.
+Arithmetic between numbers in integer representation is also exact
+(inside the range).
+
+<p>In floating-point representation, a number is represented internally 
+by a sign bit 's' (interpreted as plus or minus), 
+an exact integer exponent 'e', 
+and an exact positive integer mantissa 'M'.
+Arithmetic among numbers in floating-point representation is not exact.
+
+<p>The smallest (in magnitude) floating-point number which, when added 
+to the floating-point number 1.0, produces a floating-point result different 
+from 1.0 is termed the 'machine accuracy' epsilon_m.
+Pretty much any arithmetic operation among floating numbers 
+should be thought of as introducing an additional fractional error 
+of at least epsilon_m. 
+This type of error is called 'roundoff error'.
+
+<hr><pre>
+for i in range(20):
+    print("{0} {1!r}".format(i, 1.0 + pow(10.0, -i)))
+
+Results on Dell Lattitude with Debian 10:
+0 2.0
+1 1.1
+2 1.01
+3 1.001
+4 1.0001
+5 1.00001
+6 1.000001
+7 1.0000001
+8 1.00000001
+9 1.000000001
+10 1.0000000001
+11 1.00000000001
+12 1.000000000001
+13 1.0000000000001
+14 1.00000000000001
+15 1.000000000000001   # epsilon_m = 1e-15
+16 1.0
+17 1.0
+18 1.0
+19 1.0
+</pre><hr>
+
+<p>Many numerical algorithms compute 'discrete' approximations to some 
+desired 'continuous' quantity. For example, a function may be evaluated 
+by summing a finite number of leading terms in its infinite series, 
+rather than all infinity terms.
+The discrepancy between the true answer and the answer obtained in a practical
+calculation is called the 'truncation error'.
+
+<hr><pre>
+epx(x) = \sum_{n=0} x^n / n! = 1 + x + x^2 / 2 + x^3 / 6 + ...
+
+sin(x) = \sum_{n=0} (-1)^n x^{2n+1} / (2n+1)! = x - x^3 / 6 + x^5 / 120 - ...
+
+cos(x) = \sum_{n=0} (-1)^n x^{2n} / (2n)! = 1 - x^2 / 2 + x^4 / 24 - ...
+</pre><hr>
+
+<p>Most of the time, truncation error and roundoff error do not strongly 
+interact with one another. Sometimes, however an 'unstable' method
+can magnify any roundoff error and the result is useless.
+
+<h3>QUADRATIC EQUATION</h3>
+
+<p>https://en.wikipedia.org/wiki/Quadratic_equation
+
+<p>https://en.wikipedia.org/wiki/Vieta%27s_formulas
+
+<hr><pre>
+A quadratic equation is any equation that can be rearranged in standard form as
+
+a x^2 + b x + c = 0,
+
+where x is an unknown, 
+(a, b, c) are known numbers (coefficients), a != 0.
+If a = 0 then the equation is linear.
+
+A quadratic equation with real or complex coefficients has two solutions, 
+called 'roots'. These two solutions may or may not be distinct, 
+and they may or may not be real.
+
+Discriminant: D = b^2 - 4 a c.
+
+If D &gt; 0, then there are two distinct real roots,
+x1 = (-b + sqrt(D) / (2 a),   # problems for b ~ sqrt(D)
+x2 = (-b - sqrt(D) / (2 a).   # problems for (-b) ~ sqrt(D)
+
+If D = 0, then there is exactly one (double) real root,
+x1 = x2 = -b / (2 a).
+
+If D &lt; 0, then there are no real roots.
+</pre><hr><pre>
+Vieta's formulas [two roots are present, a != 0]
+
+a (x - x1) (x - x2) = 0,
+
+a x^2 + (-a) (x1 + x2) x + a x1 x2 = 0,
+
+x1 + x2 = -b / a, x1 x2 =  c / a.
+</pre><hr>
+
+</body>
+</html>

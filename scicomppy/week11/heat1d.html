@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>1D heat equation</h1>
+
+<p>https://en.wikipedia.org/wiki/Diffusion_equation
+
+<h3>INTRO</h3>
+
+<p>The diffusion equation is a parabolic partial differential equation.
+In physics, it describes the macroscopic behavior of many micro-particles 
+in Brownian motion, resulting from the random movements and collisions 
+of the particles.
+In mathematics, it is related to Markov processes, such as random walks, 
+and applied in many other fields.
+
+<hr><pre>
+Unknown function  u(x,t), x in [0,L], t in [0,T],
+u_t = D * u_xx, D is the diffusion coefficient.
+[u_t is time derivative, u_xx is double spacial derivative.]
+If D is constant we get the heat equation.
+Initial condition  u(x,0) = f(x).
+Boundary condition  u(0,t) = g1(t) and u(L,t) = g2(t).
+
+#          j  u(0,t)=g1(t),   t increasing --&gt;
+#  x=0  +--+--+--+--
+#       |  |  |  |
+# u(x,0)+--+--o--+--
+# =f(x) |  |  |  |
+#       +--+--o--o--  u(i,j)
+#       |  |  |  |
+#     i +--+--o--+--
+#       |  |  |  |
+#  x=L  +--+--+--+--
+#          j  u(L,t)=g2(t)
+
+x = i*dx, i = 0..Nx (Nx+1 points), Nx*dx = L,
+t = j*dt, j = 0..Nt (Nt+1 points), Nt*dt = T,
+
+u_t = [ u(i,j+1) - u(i,j) ] / dt   # forward difference O(dt)
+u_xx = [ u(i-1,j) -2*u(i,j) + u(i+1,j) ] / (dx*dx)   # central difference O(dx^2)
+
+r = D*dt / (dx*dx), formula is stable if r &lt;= 0.5
+
+u(i,j+1) - u(i,j) = r * [ u(i-1,j) -2*u(i,j) + u(i+1,j) ]
+
+Final formula (inside mesh)
+for j in range(Nt):
+    for i in range(1,Nx):
+        u(i,j+1) = r*u(i-1,j) + (1-2*r)*u(i,j) + r*u(i+1,j)
+
+Initial condition, t=0 (j=0)
+for i in range(Nx+1):
+    u(i,0) = f(i*dx)
+
+Boundary condition, x=0 (i=0) and x=L (i=Nx)
+for j in range(1,Nt+1):
+    u(0,j) = g1(j*dt)
+    u(Nx,j) = g2(j*dt)
+</pre><hr>
+
+</body>
+</html>

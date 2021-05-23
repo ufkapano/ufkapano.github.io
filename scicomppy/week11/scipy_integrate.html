@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>SciPy - integration</h1>
+
+<p>https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
+
+<h3>INTRO</h3>
+
+<p>The 'scipy.integrate' sub-package provides several integration 
+techniques including an ordinary differential equation integrator.
+
+<hr><pre>
+import numpy as np
+import scipy.integrate as integrate   # help(integrate)
+
+# The function quad is provided to integrate a function of one variable 
+# between two points.
+
+# \integ_x1^x2 dx f(x)
+# integrate.quad(f, x1, x2)
+# The first argument to quad is a callable Python object.
+# x1 and x2 are the limits of integration.
+# Infinite inputs are also allowed in quad by using 'np.inf'.
+
+result = integrate.quad(lambda x: np.exp(-x), 0, 1)
+# (0.6321205588285578, 7.017947987503856e-15)
+# 0.632_120_558_828_5578(70)
+
+# exact = (np.e - 1) / np.e = 0.632_120_558_828_5577(1)
+
+# np.e = 2.718_281_828_459_045   # 16 digits
+</pre><hr><pre>
+# Double integration with the dblquad function.
+
+# \integ_y1^y2 \integ_x1^x2 dx dy f(x,y)
+# integrate.dblquad(f, y1, y2, x1, x2)
+# Note that x1 an x2 can be functions of y.
+
+# f(x,y) = x*y, the area is a triangle with boundaries:
+# x = 0, y = 0, x + 2*y = 1,
+# vertices are (0, 0), (1, 0), (0, 0.5).
+
+area = integrate.dblquad(lambda x, y: x*y, 0, 0.5, lambda x: 0, lambda x: 1-2*x)
+# (0.010416666666666668, 4.101620128472366e-16)
+# 0.010_416_666_666_666_668(410)
+
+# exact = 1. / 96. = 0.010_416_666_666_666_666(1)
+</pre><hr><pre>
+# Triple integration with the tplquad function.
+
+# For n-fold integration, scipy provides the function nquad.
+# integrate.nquad(f, iterable_with_bounds)
+
+def bounds_y():
+    return [0, 0.5]
+
+def bounds_x(y):
+    return [0, 1-2*y]
+
+area3 = integrate.nquad(lambda x, y: x*y, [bounds_x, bounds_y])
+</pre><hr><pre>
+# Integrating using samples.
+
+# romb - Romberg integration
+# trapezoid - Newton-Coates formulas (straight lines between adjacent points)
+# simpson - Simpson’s rule (parabolas between three adjacent points)
+</pre><hr>
+
+</body>
+</html>

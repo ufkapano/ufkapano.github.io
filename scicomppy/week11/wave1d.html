@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>1D wave equation</h1>
+
+<p>https://en.wikipedia.org/wiki/Wave_equation
+
+<p>http://hplgit.github.io/num-methods-for-PDEs/doc/pub/wave/html/slides_wave-solarized.html
+
+<h3>INTRO</h3>
+
+<p>The wave equation is an important second-order linear partial 
+differential equation for the description of waves,
+such as mechanical waves or light waves. 
+
+<p>The wave equation is the simplest example of a hyperbolic 
+differential equation.
+
+<hr><pre>
+Unknown function  u(x,t)
+u_tt = c^2 u_xx, x in [0,L], t in [0,T].
+c is the constant wave velocity of the medium.
+
+Homogeneous Dirichlet conditions in 1D.
+u(x,0) = f(x), x in [0,L], (initial string shape)
+u_t(x,0) = 0, x in [0,L], (string starts from rest)
+u(0,t) = 0, u(L,t) = 0, t in [0,T]. (fixed ends, no displacement)
+
+Exact solution u(x,t) = f_R(x-ct) + f_L(x+ct),
+For t=0: f_R(x) + f_L(x) = f(x), -cf_R' + cf_L' = 0.
+Solution: f_R(y) = f_L(y) = f(y)/2,
+u(x,t) = ( f(x-ct) + f(x+ct) )/2.
+[Boundary conditions may create reflected waves.]
+
+#         j  u(0,t)=0,   t increasing --&gt;
+# x=0  +--+--+--+--
+#      |  |  |  |
+#u(x,0)+--+--o--+--
+#=f(x) |  |  |  |
+#      +--o--o--o--  u(i,j)
+#      |  |  |  |
+#    i +--+--o--+--
+#      |  |  |  |
+# x=L  +--+--+--+--
+#         j  u(L,t)=0
+</pre><hr><pre>
+Waves on string, wave1D_u0.py
+The initial condition f(x) typically has a triangular shape for a picked guitar string.
+A peak is at x_0 in [0,L], f(x) = 
+[ x/x_0 for x &lt; x_0,
+[ (L-x) / (L-x_0) otherwise.
+
+Discretizing the domain
+x = i*dx, i = 0..Nx (Nx+1 points), Nx*dx = L, (mesh in space)
+t = j*dt, j = 0..Nt (Nt+1 points), Nt*dt = T, (mesh in time)
+We use the notation u(i,j)
+
+Finite difference stencil (or scheme)
+u_tt = [u(i,j-1) -2*u(i,j) + u(i,j+1)] / (dt*dt)   # central difference O(dt^2)
+u_xx = [u(i-1,j) -2*u(i,j) + u(i+1,j)] / (dx*dx)   # central difference O(dx^2)
+
+r = (c*dt/dx)^2, interior mesh points
+Stability criterion: r &lt; 1.
+u(i,j-1) -2*u(i,j) + u(i,j+1) = r*[u(i-1,j) -2*u(i,j) + u(i+1,j)]
+
+The stencil for the first time level.
+u_t = [u(i,j+1) - u(i,j)] / dt   # forward difference O(dt)
+u_t(x,0) = 0, u(i,1) = u(i,0), NOT GOOD
+
+u_t = [u(i,j+1) - u(i,j-1)] / (2*dt)   # central difference O(dt^2)
+u_t(x,0) = 0, u(i,1) = u(i,-1), how to get u(i,-1)?
+Use the equation
+2*u(i,1) -2*u(i,0) = r*[u(i-1,0) -2*u(i,0) + u(i+1,0)],
+</pre><hr><pre>
+# The order of calculating u(i,j)
+
+for i in range(Nx+1):   # initial condition j=0, all i
+    u(i,0) = f(i*dx)   # t=0
+assert u(0,0) == 0 and u(Nx,0) == 0
+
+for j in range(1,Nt+1):   # boundary condition i=0 and i=Nx
+    u(0,j) = 0   # x=0
+    u(Nx,j) = 0   # x=L
+
+for i in range(1,Nx):   # initial condition j=1
+    u(i,1) = u(i,0) + (r/2)*[u(i-1,0) -2*u(i,0) + u(i+1,0)]
+
+for j in range(1,Nt):
+    for i in range(1,Nx):
+        u(i,j+1) = -u(i,j-1) +2*u(i,j) + r*[u(i-1,j) -2*u(i,j) + u(i+1,j)]
+</pre><hr><pre>
+# Given mesh points as arrays x and t (x[i], t[j])
+dx = x[1] - x[0]
+dt = t[1] - t[0]
+r = (c*dt/dx)**2
+
+# During calculations we need u(t) from three points in time:
+# u[i] present time,
+# u1[i] one step to the past,
+# u2[i] two steps to the past.
+# Generally, we cannot affort to keep all point in time.
+# Next optimalization step is the vectorization of loops.
+
+# Scalar version
+for i in range(1,Nx):
+    u[i] = -u2[i] + 2*u1[i] + r*(u1[i-1] -2*u1[i] + u1[i+1])
+
+# Vectorized version
+# 40 times faster, tests in timeit_array.py
+u[1:-1] = -u2[1:-1] + 2*u1[1:-1] + r*(u1[:-2] -2*u1[1:-1] + u1[2:])
+</pre><hr><pre>
+Generalized problem.
+u_tt = c^2 u_xx + s(x,t), x in [0,L], t in [0,T].
+c is the constant wave velocity of the medium,
+s(x,t) source term.
+u(x,0) = f(x), x in [0,L], (initial string shape)
+u_t(x,0) = g(x), x in [0,L],
+u(0,t) = 0, u(L,t) = 0, t in [0,T]. (fixed ends, no displacement)
+</pre><hr>
+
+<p>The wave equation in 1D: reflecting boundaries.
+
+<hr><pre>
+u_tt = c^2 u_xx, x in [0,L], t in [0,T].
+u(x,0) = f(x), x in [0,L], (initial string shape)
+u_t(x,0) = 0, x in [0,L], (string starts from rest)
+
+Neumann conditions in 1D.
+u_x(0,t) = 0, u_x(L,t) = 0, t in [0,T].
+
+#         j  u_x(0,t)=0,   t increasing --&gt;
+# x=0  +--+--+--+--
+#      |  |  |  |
+#u(x,0)+--+--o--+--
+#=f(x) |  |  |  |
+#      +--o--o--o--  u(i,j)
+#      |  |  |  |
+#    i +--+--o--+--
+#      |  |  |  |
+# x=L  +--+--+--+--
+#         j  u_x(L,t)=0
+
+u_x = [u(i+1,j) - u(i-1,j)] / (2*dx)   # central difference O(dx^2)
+u(1,j) = u(-1,j) for i=0,
+u(Nx+1,j) = u(Nx-1,j) for i=Nx.
+
+Use the equation for i=0
+u(0,j-1) -2*u(0,j) + u(0,j+1) = 2*r*[-u(0,j) + u(1,j)]
+
+Use the equation for i=Nx
+u(Nx,j-1) -2*u(Nx,j) + u(Nx,j+1) = 2*r*[u(Nx-1,j) -u(Nx,j)]
+</pre><hr><pre>
+# The order of calculating u(i,j)
+for i in range(Nx+1):   # initial condition j=0
+    u(i,0) = f(i*dx)   # t=0
+
+# It can be done in one loop
+for i in range(Nx+1):   # for j=1
+    ip1 = i+1 if i &lt; Nx else i-1
+    im1 = i-1 if i &gt; 0  else i+1
+    u(i,1) = u(i,0) + (r/2)*[u(im1,0) -2*u(i,0) + u(ip1,0)]
+
+# It can be done in one loop
+for i in range(Nx+1):   # for j &gt; 0
+    ip1 = i+1 if i &lt; Nx else i-1
+    im1 = i-1 if i &gt; 0  else i+1
+    u(i,j+1) = -u(i,j-1) +2*u(i,j) + r*[u(im1,j) -2*u(i,j) + u(ip1,j)]
+</pre><hr>
+
+
+</body>
+</html>

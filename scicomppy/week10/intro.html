@@ -64,30 +64,51 @@ environments <em>might</em> break.
 
 $ python3 -m venv DIR
 $ source DIR/bin/activate
+# some actions ...
 (DIR) $ deactivate
 </pre><hr><pre>
 # Using 'venv' in Windows.
 
 python -m venv DIR
 DIR\Scripts\activate
+# some actions ...
 deactivate
 </pre><hr><pre>
 # Using 'virtualenv' in Linux.
 
 $ virtualenv DIR
 $ source DIR/bin/activate
+# some actions ...
 (DIR) $ deactivate
 </pre><hr><pre>
 # Using 'virtualenv' in Windows.
 
 virtualenv DIR   # the full path may be needed
 DIR\Scripts\activate
+# some actions ...
 deactivate
 </pre><hr>
 
 <p>In order to remove a virtual environment you should simply
 deactivate it and remove DIR directory (rm -r DIR).
 You might want to pip freeze a dependency list first.
+
+<h3>PYTHON SCRIPTS IN VIRTUAL ENVIRONMENTS</h3>
+
+<hr><pre>
+#!/usr/bin/env python
+#
+# hello.py
+
+print("Hello!")
+</pre><hr><pre>
+(DIR) $ python hello.py     # it is safe for Py2 and Py3
+Hello!
+(DIR) $ chmod a+x hello.py
+(DIR) $ ./hello.py     # problems with '#!/usr/bin/python'
+Hello!
+(DIR) $
+</pre><hr>
 
 </body>
 </html>

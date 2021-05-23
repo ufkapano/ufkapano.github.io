@@ -23,7 +23,7 @@ conda install pandas
 or
 pip install pandas
 
-In Debian Linux we have python-pandas, python3-pandas, and dependences.
+In Debian Linux we have python-pandas, python3-pandas, and dependencies.
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
@@ -41,7 +41,7 @@ practical, real world data analysis in Python.
 <li>Label-based slicing, indexing, and subsetting of large data sets.
 <li>Size mutability (columns can be inserted and deleted)
 <li>Easy conversion of different data into DataFrame objects.
-<li>Robust IO tools for loading data from flat files (CVS, Excel, HDF5).
+<li>Robust IO tools for loading data from flat files (CSV, Excel, HDF5).
 <li>Time series-specific functionality.
 </ul>
 
@@ -97,8 +97,13 @@ df1['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
 
 # Calculations with numpy.
 print ( np.log(population) )
+# 0    13.655892
+# 1    13.831172
+# 2    13.092314
+# dtype: float64
 
-population.apply(lambda val: val > 1000000)   # return boolean series
+# population.apply(lambda val: val > 1000000)   # return boolean series
+print ( population > 1000000 )
 # 0    False
 # 1     True
 # 2    False

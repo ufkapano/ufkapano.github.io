@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Ordinary Differential Equations (ODE)</h1>
+
+<p>https://en.wikipedia.org/wiki/Differential_equation
+
+<h3>INTRO</h3>
+
+<p>A differential equation is an equation that relates one or more 
+functions and their derivatives.
+
+<p>An ordinary differential equation (ODE) is an equation containing 
+an unknown function y(t) of one real or complex variable t, 
+its derivatives, and some given functions of t.
+
+<hr><pre>
+Python code
+euler1.py - Euler's forward method
+euler2.py - Heun's method
+euler3.py - Midpoint method
+</pre><hr><pre>
+dy/dt = f(t,y), t in [t_a, t_b].
+y(t) is an unknown function.
+Initial condition y(t_a) = y_a.
+This is ODE Initial Value Problem (IVP).
+
+Euler's forward method from Taylor series
+t[0] = t_a, y[0] = y_a,
+t[i+1] = t[i] + h,
+y[i+1] = y[i] + f(t[i], y[i]) * h.   # dy = f(t,y) * dt
+
+Example: dy/dt = 3(1+t)-y, y(1) = 4, t in [1, 2].
+[pattern: dy/dt + P(t)y = Q(t)]
+
+Dokładne rozwiązanie metodą uzmienniania stałych.
+dy/dt = -P(t)y, y = C(t)*exp(-\int P dt), dC/dt = Q(t)*exp(+\int P dt)
+dy/dt = -y, y = C(t)*exp(-t), dC/dt = 3(1+t)*exp(t),
+Exact solution y = 3t + exp(1-t).
+</pre><hr><pre>
+Improvements of Euler's method
+
+(1) Heun's method
+y0[i+1] = y[i] + f(t[i], y[i]) * h     # a predictor equation
+An estimated slope at the end of the interval: f(t[i+1], y0[i+1]).
+The average slope is used to extrapolate linearly from y[i] to y[i+1].
+Predictor: y0[i+1] = y[i] + f(t[i], y[i]) * h
+Corrector: y[i+1] = y[i] + \frac{ f(t[i], y[i]) + f(t[i+1], y0[i+1]) }{ 2 } * h
+
+(2) Midpoint method
+t[i+1/2] = t[i] + h/2
+y[i+1/2] = y[i] + f(t[i], y[i]) * h/2
+A slope at the midpoint: f(t[i+1/2], y[i+1/2])
+y[i+1] = y[i] + f(t[i+1/2], y[i+1/2]) * h.
+</pre><hr>
+
+</body>
+</html>
