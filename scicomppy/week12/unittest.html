@@ -1,0 +1,170 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using unittest</h1>
+
+<p>https://docs.python.org/3/library/unittest.html
+
+<h3>INTRO</h3>
+
+<p>The 'unittest' unit testing framework supports test automation, 
+sharing of setup and shutdown code for tests, aggregation of tests 
+into collections, and independence of the tests from the reporting framework.
+To achieve this, unittest supports some important concepts 
+in an object-oriented way:
+
+<ul>
+
+<li>A 'test fixture' represents the preparation needed to perform 
+one or more tests, and any associated cleanup actions.
+
+<li>A 'test case' is the individual unit of testing.
+
+<li>A 'test suite' is a collection of test cases, test suites, or both. 
+It is used to aggregate tests that should be executed together.
+
+<li>A 'test runner' is a component which orchestrates the execution of tests 
+and provides the outcome to the user.
+
+</ul>
+
+<p>Names for test files (spam.py is a tested module): 
+test_spam.py or spam_test.py.
+
+<h3>BASIC EXAMPLE</h3>
+
+<p>A test case (test suite?) is created by subclassing unittest.TestCase
+[a class is a container for test cases].
+
+<hr><pre>
+# Content of the file fib3.py
+
+def fibonacci(n):
+    if n &lt; 0:
+        raise ValueError("negative n")
+    old, new = 0, 1
+    for _ in range(n):
+        old, new = new, old + new
+    return old
+</pre><hr><pre>
+# Content of the file test_fib3.py
+
+import unittest
+import math
+from fib3 import fibonacci
+
+class TestFibonacci(unittest.TestCase):   # the class name starts with 'Test'
+
+    def setUp(self): pass
+
+    # individual tests
+    def test_fibonacci(self):   # the method name starts with 'test'
+        for a, b in [(0, 0), (1, 1), (2, 1), (3, 2), (4, 3), (5, 5), (6, 8)]:
+            self.assertEqual(fibonacci(a), b)
+        self.assertNotEqual(fibonacci(10), 10)
+        self.assertTrue(fibonacci(1) &gt; 0)
+        self.assertFalse(fibonacci(10) &lt; 10)
+        self.assertAlmostEqual(math.pi, 3.14159, places=5) # the default is 7
+
+    def test_fibonacci_exceptions(self):   # handling exceptions
+        self.assertRaises(ValueError, fibonacci, -1)
+        with self.assertRaises(ValueError):   # context manager
+            fibonacci(-2)
+
+    def tearDown(self): pass
+
+if __name__ == "__main__":
+    unittest.main()
+</pre><hr><pre>
+# To execute tests:
+
+$ python test_fib3.py
+..
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+$ python test_fib3.py -v   # higher level of verbosity
+test_fibonacci (__main__.TestFibonacci) ... ok
+test_fibonacci_exceptions (__main__.TestFibonacci) ... ok
+
+----------------------------------------------------------------------
+Ran 2 tests in 0.000s
+
+OK
+
+$ python3 -m unittest   # simple test discovery (Py3.2+)
+# discover and run tests from test_fib3.py
+</pre><hr>
+
+<h3>TEST FIXTURE</h3>
+
+<hr><pre>
+class TestSets(unittest.TestCase):
+
+    def test_union(self):
+        setA = set([1, 3, 5])
+        setB = set([2, 3])
+        self.assertEqual(setA | setB, set([1, 2, 3, 5]))
+        self.assertEqual(setA.union(setB), set([1, 2, 3, 5]))
+
+    def test_intersection(self):
+        setA = set([1, 3, 5])
+        setB = set([2, 3])
+        self.assertEqual(setA & setB, set([3]))
+        self.assertEqual(setA.intersection(setB), set([3]))
+
+    def test_difference(self):
+        setA = set([1, 3, 5])
+        setB = set([2, 3])
+        self.assertEqual(setA - setB, set([1, 5]))
+        self.assertEqual(setA.difference(setB), set([1, 5]))
+</pre><hr><pre>
+class TestSets(unittest.TestCase):
+
+    def setUp(self):
+        print("make setA and setB")
+        self.setA = set([1, 3, 5])
+        self.setB = set([2, 3])
+
+    def test_union(self):
+        self.assertEqual(self.setA | self.setB, set([1, 2, 3, 5]))
+        self.assertEqual(self.setA.union(self.setB), set([1, 2, 3, 5]))
+
+    def test_intersection(self):
+        self.assertEqual(self.setA & self.setB, set([3]))
+        self.assertEqual(self.setA.intersection(self.setB), set([3]))
+
+    def test_difference(self):
+        self.assertEqual(self.setA - self.setB, set([1, 5]))
+        self.assertEqual(self.setA.difference(self.setB), set([1, 5]))
+
+    def tearDown(self):
+        print("cleaning")
+        pass
+</pre><hr><pre>
+$ python test_set5.py -v
+test_difference (__main__.TestSets) ... make setA and setB
+cleaning
+ok
+test_intersection (__main__.TestSets) ... make setA and setB
+cleaning
+ok
+test_union (__main__.TestSets) ... make setA and setB
+cleaning
+ok
+
+----------------------------------------------------------------------
+Ran 3 tests in 0.000s
+
+OK
+</pre><hr>
+
+</body>
+</html>

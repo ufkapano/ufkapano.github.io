@@ -1,0 +1,93 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using doctest</h1>
+
+<p>https://docs.python.org/3/library/doctest.html
+
+<p>https://www.python-course.eu/python3_tests.php
+
+<h3>INTRO</h3>
+
+<p>The 'doctest' module searches for pieces of text that look like 
+interactive Python sessions, and then executes those sessions 
+to verify that they work exactly as shown.
+
+<hr><pre>
+# Simple usage: checking examples in docstrings.
+
+# Content of the file fib4.py
+
+def fibonacci(n):
+    """
+    Calculates the n-th Fibonacci number iteratively.
+
+    >>> fibonacci(0)
+    0
+    >>> fibonacci(1)
+    1
+    >>> fibonacci(10)
+    55
+    >>> fibonacci(15)
+    610
+    >>>
+
+    """
+    old, new = 0, 1
+    for _ in range(n):
+        old, new = new, old + new
+    return old
+
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()
+</pre><hr><pre>
+# To execute tests:
+
+$ python fib4.py
+$               # no output = no errors
+$ python fib4.py -v   # verbose mode
+Trying:
+    fibonacci(0)
+Expecting:
+    0
+ok
+Trying:
+    fibonacci(1)
+Expecting:
+    1
+ok
+Trying:
+    fibonacci(10)
+Expecting:
+    55
+ok
+Trying:
+    fibonacci(15)
+Expecting:
+    610
+ok
+1 items had no tests:
+    __main__
+1 items passed all tests:
+   4 tests in __main__.fibonacci
+4 tests in 2 items.
+4 passed and 0 failed.
+Test passed.
+
+$ python -m doctest fib5.py -v   # without the 'if' part
+</pre><hr><pre>
+# Simple usage: checking examples in a text file.
+
+import doctest
+doctest.testfile("example.txt")
+# The file content is treated as if it were a single giant docstring.
+</pre><hr>
+
+</body>
+</html>

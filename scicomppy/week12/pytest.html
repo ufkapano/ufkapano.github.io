@@ -1,0 +1,205 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using pytest</h1>
+
+<p>https://docs.pytest.org/
+
+<p>https://www.python-course.eu/python3_pytest.php
+
+<p>https://realpython.com/pytest-python-testing/
+<br>Effective Python Testing With Pytest
+
+<h3>INSTALLING PYTEST</h3>
+
+<hr><pre>
+PIP (in a virtual environment)
+python -m pip install pytest
+
+APT
+Debian packages: python-pytest, python3-pytest
+</pre><hr>
+
+<h3>INTRO</h3>
+
+<p>The 'pytest' (Py3.6+) framework makes it easy to write small tests, yet scales 
+to support complex functional testing for applications and libraries.
+
+<p>Names for test files (spam.py is a tested module):
+test_spam.py or spam_test.py.
+
+<hr><pre>
+# Content of the file test_sample.py
+
+def inc(x):
+    return x + 1
+
+def test_answer():
+    assert inc(3) == 5   # intentional error, 'assert' is used
+</pre><hr><pre>
+# To execute tests:
+
+$ pytest
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
+rootdir: .../week12/pytest1, inifile:
+collected 1 item                                                               
+
+test_sample.py F                                                         [100%]
+
+=================================== FAILURES ===================================
+_________________________________ test_answer __________________________________
+
+    def test_answer():
+>       assert inc(3) == 5
+E       assert 4 == 5
+E        +  where 4 = inc(3)
+
+test_sample.py:8: AssertionError
+=========================== 1 failed in 0.02 seconds ===========================
+
+# Errors were corrected.
+
+$ pytest
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
+rootdir: .../week12/pytest1, inifile:
+collected 1 item                                                               
+
+test_sample.py .                                                         [100%]
+
+=========================== 1 passed in 0.01 seconds ===========================
+</pre><hr>
+
+<p>The 'pytest' report shows:
+<br>(1) the system state,
+<br>(2) the directory to search under for configuration and tests,
+<br>(3) the number of tests the runner discovered.
+
+<p>The output then indicates the status of each test using a syntax 
+similar to 'unittest':
+<br>(1) a dot (.) means that the test passed,
+<br>(2) an 'F' means that the test has failed,
+<br>(3) an 'E' means that the test raised an unexpected exception.
+
+<h3>IMPORT PYTEST</h3>
+
+<hr><pre>
+# Content of the file test_set.py
+
+import pytest
+
+def test_union():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA | setB == set([1, 2, 3, 5])
+    assert setA.union(setB) == set([1, 2, 3, 5])
+
+def test_intersection():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA & setB == set([3])
+    assert setA.intersection(setB) == set([3])
+
+def test_difference():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA - setB == set([1, 5])
+    assert setA.difference(setB) == set([1, 5])
+
+if __name__ == "__main__":
+    pytest.main()
+</pre><hr><pre>
+# To execute tests:
+
+$ python test_set.py
+</pre><hr>
+
+<h3>FIXTURES</h3>
+
+<p>You can think of a test as being broken down into four steps:
+<br>(1) <strong>Arrange</strong> - preparing everything for tests.
+<br>(2) <strong>Act</strong> - the action that kicks off 
+the 'behavior' we want to test.
+<br>(3) <strong>Assert</strong> - checking the results.
+<br>(4) <strong>Cleanup</strong>.
+
+<p>'Fixtures' are for the 'Arrange' step.
+
+
+<hr><pre>
+@pytest.fixture   # decorator
+def setA():
+    return set([1, 3, 5])
+
+@pytest.fixture
+def setB():
+    return set([2, 3])
+
+def test_union(setA, setB):
+    assert setA | setB == set([1, 2, 3, 5])
+    assert setA.union(setB) == set([1, 2, 3, 5])
+
+def test_intersection(setA, setB):
+    assert setA & setB == set([3])
+    assert setA.intersection(setB) == set([3])
+
+def test_difference(setA, setB):
+    assert setA - setB == set([1, 5])
+    assert setA.difference(setB) == set([1, 5])
+</pre><hr>
+
+<h3>MARKERS</h3>
+
+<p>Test functions can be marked by decorating them with 'pytest.mark'.
+It is possible to create custom markers (markers have to be registered).
+
+<hr><pre>
+$ pytest --markers   # list of existing markers
+@pytest.mark.filterwarnings(warning): add a warning filter to the given test. 
+see https://docs.pytest.org/en/latest/warnings.html#pytest-mark-filterwarnings 
+
+@pytest.mark.skip(reason=None): skip the given test function with an optional reason. 
+Example: skip(reason="no way of currently testing this") skips the test.
+...
+</pre><hr><pre>
+# Exemplary markers
+
+@pytest.mark.skip("no way of currently testing this")
+
+@pytest.mark.skipif('sys.platform == "win32"')
+
+@pytest.mark.xfail()
+
+@pytest.mark.parametrize(argnames, argvalues)
+
+@pytest.mark.tryfirst
+
+@pytest.mark.trylast
+</pre><hr><pre>
+# Content of the file fib2.py
+
+def fibonacci(n):
+    old, new = 0, 1
+    for _ in range(n):
+        old, new = new, old + new
+    return old
+</pre><hr><pre>
+# Content of the file test_fib2.py
+
+import pytest
+from fib2 import fibonacci
+
+@pytest.mark.parametrize('n, res',
+    [(0, 0), (1, 1), (2, 1), (3, 2), (4, 3), (5, 5), (6, 8)])
+def test_fibonacci(n, res):
+    assert fibonacci(n) == res
+</pre><hr>
+
+</body>
+</html>

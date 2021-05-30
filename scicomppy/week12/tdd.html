@@ -1,0 +1,58 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Test-driven development</h1>
+
+<p>https://en.wikipedia.org/wiki/Test-driven_development
+
+<h3>INTRO</h3>
+
+<p>Testing our code increases our confidence that the code behaves 
+as we expect and ensures that changes to our code won't cause regressions.
+Writing and maintaining tests is hard work, so we should leverage 
+all the tools at our disposal to make it as painless as possible.
+
+<p>Test-driven development (TDD) is a software development process 
+relying on software requirements being converted to test cases 
+before software is fully developed, and tracking all software development 
+by repeatedly testing the software against all test cases. 
+This is opposed to software being developed first and test cases created later.
+
+<h3>TEST-DRIVEN DEVELOPMENT CYCLE</h3>
+
+<p>TDD cycle:
+<br>1. Add a test. [The developer must clearly understand the requirements.]
+<br>2. Run all tests and see if the new test fails.
+<br>3. Write the code. [The new code written at this stage is not perfect.]
+<br>4. Run tests. [All test cases now pass.]
+<br>5. Refactor code. [Cleaning up, removing duplication, 
+improving readability and maintainability.]
+<br>Repeat with new tests.
+
+<h3>REMARKS</h3>
+
+<p>Tests should be automated and stateless.
+
+<p>All written code should be covered by at least one test.
+
+<p>Test code must work correctly for both positive and negative cases.
+
+<p>Test code should be treated with the same respect as production code. 
+
+<p>TDD can lead to more modularized, flexible, and extensible code.
+
+<p>Integration tests are separate from the TDD unit tests.
+
+<p>Mock objects have the same interface as the real objects they mimic, 
+allowing a client object to remain unaware of whether it is using 
+a real object or a mock object.
+
+<p>There are tools in Python that support TDD (unittest, pytest, mock).
+
+</body>
+</html>
