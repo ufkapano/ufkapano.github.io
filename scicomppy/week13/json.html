@@ -1,0 +1,252 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using JSON files</h1>
+
+<p>https://en.wikipedia.org/wiki/JSON
+
+<p>https://docs.python.org/3/library/json.html
+
+<h3>INTRO</h3>
+
+<p>JSON (JavaScript Object Notation) is a lightweight data interchange format 
+inspired by JavaScript object literal syntax.
+It is an open standard file format that uses human-readable text to store 
+and transmit data objects consisting of attribute-value pairs and arrays 
+(or other serializable values).
+
+<p>JSON is a language-independent data format.
+
+<p>Comments were purposefully excluded from JSON. 
+
+<p>JSON is not a framed protocol so unlike 'pickle' or 'marshal' 
+it does not make sense to serialize more than one JSON document 
+without some container protocol to delimit them.
+
+<hr><pre>
+Decoder performs the following translations in decoding by default:
++---------------+------------------------+
+| JSON          | Python                 |
++===============+========================+
+| object        | dict                   |
++---------------+------------------------+
+| array         | list                   |
++---------------+------------------------+
+| string        | unicode[Py2], str[Py3] |
++---------------+------------------------+
+| number (int)  | int, long[Py2]         |
++---------------+------------------------+
+| number (real) | float                  |
++---------------+------------------------+
+| true          | True                   |
++---------------+------------------------+
+| false         | False                  |
++---------------+------------------------+
+| null          | None                   |
++---------------+------------------------+
+
+Encoder supports the following objects and types by default:
++-------------------+---------------+
+| Python            | JSON          |
++===================+===============+
+| dict              | object        |
++-------------------+---------------+
+| list, tuple       | array         |
++-------------------+---------------+
+| str, unicode      | string        |
++-------------------+---------------+
+| int, long, float  | number        |
++-------------------+---------------+
+| True              | true          |
++-------------------+---------------+
+| False             | false         |
++-------------------+---------------+
+| None              | null          |
++-------------------+---------------+
+The module serializer sets ensure_ascii=True by default, thus escaping 
+the output so that the resulting strings only contain ASCII characters.
+JSON files looks the same in Py2 and Py3.
+</pre><hr>
+
+<h3>DUMP AND LOAD</h3>
+
+<hr><pre>
+import json
+
+# Serialize a Python object (usually a list or a dict)
+# as a JSON formatted stream to a file-like object.
+#
+# json.dump(obj, fp, skipkeys=False, ensure_ascii=True, check_circular=True,
+#     allow_nan=True, cls=None, indent=None, separators=None,
+#     encoding='utf-8', default=None, sort_keys=False, **kw)
+#
+# separators=(item_separator, key_separator)
+# separators=(', ',': ') is a default
+# separators=(',', ':') is the most compact
+# encoding : the character encoding for str instances, default is UTF-8
+# sort_keys : bool, default is False;
+#     if True then the output of dictionaries will be sorted by key
+
+with open(file_name, mode='w') as outfile:
+    json.dump(obj, outfile)
+    #json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+word = json.dumps(obj)   # serialize to a string
+word = json.dumps('żółw')   # "\u017c\u00f3\u0142w", utf-8 is used
+
+# Pretty printing.
+word = json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
+</pre><hr><pre>
+# Deserialize a file-like object containing a JSON document to a Python object.
+#
+# json.load(fp, encoding=None, cls=None, object_hook=None, parse_float=None,
+#     parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
+
+with open(file_name) as infile:
+    obj = json.load(infile)
+
+# Decoding from JSON string.
+obj = json.loads(word)
+</pre><hr>
+
+<h3>SIMPLEJSON</h3>
+
+<p>https://pypi.org/project/simplejson/
+
+<p>https://simplejson.readthedocs.io/en/latest/
+
+<p>https://github.com/simplejson/simplejson
+
+<p>'simplejson' is a simple, fast, complete, correct and extensible JSON
+encoder and decoder for Python 3.3+ with legacy support for Python 2.5+. 
+It is pure Python code with no dependencies, but includes an optional 
+C extension for a serious speed boost.
+
+<hr><pre>
+Installing simplejson
+
+PIP (in a virtual environment)
+pip install simplejson
+
+APT (for the entire computer)
+Debian packages: python-simplejson, python3-simplejson
+</pre><hr><pre>
+import simplejson as json
+
+# Using Decimal instead of float.
+from decimal import Decimal
+json.loads('1.1', use_decimal=True) == Decimal('1.1')   # True
+</pre><hr>
+
+<h3>USING PANDAS</h3>
+
+<hr><pre>
+import pandas as pd
+
+# Read JSON and make Series or DataFrame.
+
+df1 = pd.read_json('[10,20,30]')   # default typ='frame'
+#     0
+# 0  10
+# 1  20
+# 2  30
+
+series1 = pd.read_json('[10,20,30]', typ='series')
+# 0    10
+# 1    20
+# 2    30
+# dtype: int64
+
+df2 = pd.read_json('[[11,12],[21,22]]')   # default typ='frame'
+#     0   1
+# 0  11  12
+# 1  21  22
+
+series2 = pd.read_json('{"a":10,"b":20,"c":30}', typ='series')
+# a    10
+# b    20
+# c    30
+# dtype: int64
+
+#series3 = pd.read_json("['x','y','z']", typ='series')
+# ValueError: Expected object or value
+series3 = pd.read_json('["x","y","z"]', typ='series') # "" inside, '' outside
+# 0    x
+# 1    y
+# 2    z
+# dtype: object
+</pre><hr><pre>
+# Write Series or DataFrame to JSON.
+
+series4 = pd.Series( {'row1':10, 'row2':20, 'row3':30} )
+# row1    10
+# row2    20
+# row3    30
+# dtype: int64
+
+series4.to_json(file_name)
+word = series4.to_json()   # '{"row1":10,"row2":20,"row3":30}'
+
+df3 = pd.DataFrame([[10, 'alpha'], [20, 'beta']], 
+    index=['row1', 'row2'], columns=['col1', 'col2']) 
+#       col1   col2
+# row1    10  alpha
+# row2    20   beta
+
+df3.to_json(file_name)
+word = df.to_json()
+# '{"col1":{"row1":10,"row2":20},"col2":{"row1":"alpha","row2":"beta"}}'
+</pre><hr>
+
+<h3>EXAMPLES</h3>
+
+<hr><pre>
+import json
+
+class Vector:
+
+    def __init__(self, x, y, z):
+        self.x = x
+        self.y = y
+        self.z = z
+
+    def __repr__(self):
+        return "Vector({0!r}, {1!r}, {2!r})".format(self.x, self. y, self.z)
+
+    def __eq__(self, other):   # v == w
+        return (self.x, self.y, self.z) == (other.x, other.y, other.z)
+
+    def __ne__(self, other):   # v != w
+        return not self == other
+
+def dump_vectors(file_name, vector_list):
+    dict_list = []
+    for v in vector_list:
+        dict_list.append(v.__dict__)
+    with open(file_name, mode='w') as outfile:
+        json.dump(dict_list, outfile, indent=2)
+
+def load_vectors(file_name):
+    with open(file_name, 'r') as infile:
+        dict_list = json.load(infile)
+    vector_list = [Vector(**d) for d in dict_list]
+    return vector_list
+
+v1 = Vector(1, 2, 3)
+v2 = Vector(4, 5, 6)
+v3 = Vector(7, 8, 9)
+
+L = [v1, v2, v3]
+dump_vectors("vectors.json", L)
+
+M = load_vectors("vectors.json")
+assert L == M
+</pre><hr>
+
+</body>
+</html>

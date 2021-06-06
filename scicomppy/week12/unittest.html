@@ -70,6 +70,10 @@ class TestFibonacci(unittest.TestCase):   # the class name starts with 'Test'
         self.assertTrue(fibonacci(1) &gt; 0)
         self.assertFalse(fibonacci(10) &lt; 10)
         self.assertAlmostEqual(math.pi, 3.14159, places=5) # the default is 7
+        # assertAlmostEqual(first, second, places=7, msg=None, delta=None)
+        # This function check that 'first' and 'second' are approximately
+        # equal by computing the difference, rounding to the given number
+        # of decimal 'places', and comparing to zero.
 
     def test_fibonacci_exceptions(self):   # handling exceptions
         self.assertRaises(ValueError, fibonacci, -1)

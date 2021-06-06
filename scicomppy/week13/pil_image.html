@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>PIL - Image</h1>
+
+<p>https://pillow.readthedocs.io/en/stable/reference/Image.html
+
+<h3>INTRO</h3>
+
+<p>The 'Image' module provides a class with the same name which is used 
+to represent a PIL image. The module also provides a number of factory 
+functions, including functions to load images from files, 
+and to create new images.
+
+<h3>READING AND WRITING IMAGES</h3>
+
+<hr><pre>
+# PIL.Image.open(fp, mode='r', formats=None)
+# fp : a filename (string), pathlib.Path object or a file object
+#
+# This is a lazy operation; this function identifies the file, but the file
+# remains open and the actual image data is not read from the file until
+# you try to process the data.
+
+from PIL import Image
+
+image1 = Image.open(file_name)
+
+with Image.open(file_name) as image2:   # recommended
+    print(image2.mode)
+    print(image2.format)
+
+image3.save(file_name, format)
+image3.save("foto.jpg", "JPEG")
+image3.save("foto.jpg") # the filename extension is used to discover the file format
+</pre><hr>
+
+<h3>CREATE THUMBNAILS</h3>
+
+<hr><pre>
+with Image.open("hopper.jpg") as im:
+    im.thumbnail((128, 128))
+    im.save('hopper_thumbnail.jpg', "JPEG")
+</pre><hr>
+
+<h3>CONSTRUCTING IMAGES</h3>
+
+<hr><pre>
+# PIL.Image.new(mode, size, color=0)
+# mode : the mode to use for the new image
+# size : a 2-tuple, containing (width, height) in pixels
+# color : default is black
+
+im = Image.new("RGB", (512, 512), color='black') # color=(0, 0, 0)
+im = Image.new("RGB", (512, 512), color='red') # color=(255, 0, 0)
+im = Image.new("RGB", (512, 512), color='green') # color=(0, 255, 0)
+im = Image.new("RGB", (512, 512), color='blue') # color=(0, 0, 255)
+im = Image.new("RGB", (512, 512), color='gray') # color=(128, 128, 128)
+im = Image.new("RGB", (512, 512), color='white') # color=(255, 255, 255)
+
+im = Image.new("L", (512, 512), color='black') # color=0
+im = Image.new("L", (512, 512), color='gray') # color=128
+im = Image.new("L", (512, 512), color='white') # color=255
+</pre><hr><pre>
+# PIL.Image.fromarray(obj, mode=None)
+
+import numpy as np
+
+a = np.zeros((128,128), dtype="uint8")   # black background
+for i in range(64):
+    for j in range(32,96):
+        a[i,j] = 255   # white square
+
+im = Image.fromarray(a, mode='L')
+</pre><hr><pre>
+im = Image.open("hopper.jpg")
+print(im.mode)   # RGB
+print(im.size)   # (517, 606)
+print(im.format)   # JPEG
+
+a = np.asarray(im)
+
+print(a.dtype)   # uint8
+print(a.shape)   # (606, 517, 3)
+</pre><hr>
+
+<h3>GEOMETRICAL TRANSFORMS</h3>
+
+<hr><pre>
+# Rotating images.
+
+with Image.open("hopper.jpg") as im:
+    im.rotate(45).show()
+    # im.rotate() returns a new rotated image
+    # new_im = im.rotate(45)
+    # new_im.save("rotated.jpg")
+</pre><hr><pre>
+# Resizing images.
+
+with Image.open("hopper.jpg") as im:
+    im.resize((130,150)).show()
+    # im.resize() returns a new rotated image
+    # new_im = im.resize((130,150))
+    # new_im.save("resized.jpg")
+</pre><hr>
+
+<h3>COLOR TRANSFORMS</h3>
+
+<hr><pre>
+with Image.open("hopper.jpg") as im:
+    im.convert("L").show()
+    # im.convert() returns a converted copy of the image
+    # new_im = im.convert("L")
+    # new_im.save("bw.bmp")
+</pre><hr>
+
+</body>
+</html>
