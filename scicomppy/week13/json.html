@@ -203,6 +203,84 @@ word = df.to_json()
 # '{"col1":{"row1":10,"row2":20},"col2":{"row1":"alpha","row2":"beta"}}'
 </pre><hr>
 
+<h3>USING NETWORKX</h3>
+
+<p>https://networkx.org/documentation/stable/reference/readwrite/json_graph.html
+
+<p>Generate and parse JSON serializable data for NetworkX graphs.
+
+<p>There are three formats that can be generated with NetworkX:
+<br>(1) node-link format,
+<br>(2) adjacency format,
+<br>(3) tree format.
+
+<hr><pre>
+# node-link format
+
+import networkx as nx
+
+# Create a graph G.
+
+G = nx.Graph()
+G.graph['name'] = 'K_3'
+for i, node in enumerate('ABC'):
+    G.add_node(node, color=i)
+for (a, b) in [('A', 'B'), ('A', 'C'), ('B', 'C')]:
+    G.add_edge(a, b)
+
+data = nx.readwrite.json_graph.node_link_data(G)   # return a dict
+# 'data' can be serialized with 'json'.
+
+H = nx.readwrite.json_graph.node_link_graph(data)
+
+print(data)
+# {'directed': False,
+# 'graph': {'name': 'K_3'},
+# 'nodes': [{'color': 0, 'id': 'A'},
+#           {'color': 2, 'id': 'C'},
+#           {'color': 1, 'id': 'B'}],
+# 'links': [{'source': 'A', 'target': 'C'},
+#           {'source': 'A', 'target': 'B'},
+#           {'source': 'C', 'target': 'B'}],
+# 'multigraph': False}
+</pre><hr><pre>
+# adjacency format
+
+data = nx.readwrite.json_graph.adjacency_data(G)
+
+H = nx.readwrite.json_graph.adjacency_graph(data)
+
+print(data)
+# {'directed': False,
+# 'graph': [('name', 'K_3')],
+# 'nodes': [{'color': 0, 'id': 'A'},
+# {'color': 2, 'id': 'C'},
+# {'color': 1, 'id': 'B'}],
+# 'adjacency': [[{'id': 'C'}, {'id': 'B'}],
+#               [{'id': 'A'}, {'id': 'B'}],
+#               [{'id': 'A'}, {'id': 'C'}]],
+# 'multigraph': False}
+</pre><hr><pre>
+# tree format
+
+G = nx.DiGraph()   # a directed acyclic graph
+
+for i, node in enumerate('ABCD'):
+    G.add_node(node, color=i)
+for (a, b) in [('A', 'B'), ('A', 'C'), ('B', 'D')]:
+    G.add_edge(a, b)
+
+data = nx.readwrite.json_graph.tree_data(G, root="A")
+
+H = nx.readwrite.json_graph.tree_graph(data)
+
+print(data)
+# {'color': 0, 'id': 'A', 'children':
+#     [{'color': 2, 'id': 'C'},
+#      {'color': 1, 'id': 'B', 'children':
+#         [{'color': 3, 'id': 'D'}]}]}
+</pre><hr>
+
 <h3>EXAMPLES</h3>
 
 <hr><pre>

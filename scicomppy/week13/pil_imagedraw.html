@@ -29,7 +29,7 @@ im = Image.open("hopper.jpg")
 # Create a Draw object.
 draw = ImageDraw.Draw(im)
 
-draw.line((0, 0) + im.size, fill='gray')
+draw.line((0, 0, im.width, im.height), fill='gray')
 draw.line((0, im.height, im.width, 0), fill='gray')
 
 # Write to stdout.
@@ -81,6 +81,9 @@ im.show()
 </pre><hr>
 
 <p><img src="img/figures.png" alt="[ figures.png ]" width="256" height="256">
+<!--
+<p><img src="img/figures.png" alt="[ figures.png ]">
+-->
 
 </body>
 </html>

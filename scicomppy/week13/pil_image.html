@@ -84,6 +84,7 @@ print(im.size)   # (517, 606)
 print(im.format)   # JPEG
 
 a = np.asarray(im)
+#a = np.array(im)   # the same result
 
 print(a.dtype)   # uint8
 print(a.shape)   # (606, 517, 3)
@@ -117,6 +118,45 @@ with Image.open("hopper.jpg") as im:
     # im.convert() returns a converted copy of the image
     # new_im = im.convert("L")
     # new_im.save("bw.bmp")
+</pre><hr>
+
+<h3>PASTE</h3>
+
+<hr><pre>
+# Image.paste(im, box=None, mask=None)
+#
+# Pastes another image into this image.
+
+# Add margins of any width vertically and horizontally.
+
+def add_margin(image, top, right, bottom, left, color):
+    width, height = image.size
+    new_width = width + right + left
+    new_height = height + top + bottom
+    result = Image.new(image.mode, (new_width, new_height), color)
+    result.paste(image, (left, top))
+    return result
+
+# Add margins to the rectangle to make it square.
+# +-----------+  +---+---+---+
+# |           |  |   |   |   |
+# +-----------+  |   |ori|   |
+# | original  |  |   |gin|   |
+# +-----------+  |   |al |   |
+# |           |  |   |   |   |
+# +-----------+  +---+---+---+
+def expand2square(image, background_color):
+    width, height = image.size
+    if width == height:
+        return image
+    elif width > height:
+        result = Image.new(image.mode, (width, width), background_color)
+        result.paste(image, (0, (width - height) // 2))
+        return result
+    else:
+        result = Image.new(image.mode, (height, height), background_color)
+        result.paste(image, ((height - width) // 2, 0))
+        return result
 </pre><hr>
 
 </body>
