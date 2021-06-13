@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Ising model - theory</h1>
+
+<p>https://en.wikipedia.org/wiki/Ising_model
+
+<h3>INTRO</h3>
+
+<p>The Ising model is a mathematical model of ferromagnetism in statistical 
+mechanics. The model consists of discrete variables that represent magnetic 
+dipole moments of atomic "spins" that can be in one of two states (+1 or −1).
+The spins are arranged in a periodical lattice, allowing each spin 
+to interact with its neighbors.
+Neighboring spins that agree have a lower energy than those that disagree; 
+the system tends to the lowest energy but heat disturbs this tendency, 
+thus creating the possibility of different structural phases. 
+The model allows the identification of phase transitions, 
+as a simplified model of reality. 
+The two-dimensional square-lattice Ising model is one of the simplest 
+statistical models to show a phase transition.
+
+<hr><pre>
+# Spins on the 2D lattice 10x10
+#
+# - + + + + - + + - + 
+# + - + + - - + + + - 
+# + + - + - - + - + + 
+# - + - + + + + - + - 
+# - - - - - + + - + + 
+# + - + - + - + - - - 
+# - + + - - + - + + - 
+# + + - + - + + - - + 
+# + - - + - + + - + - 
+# + - - - - - - + + + 
+</pre><hr><pre>
+The energy of a spin configuration S = {S_i} is given by the Hamiltonian function
+
+H(S) = -J \sum_ij S_i S_j,
+
+where the sum is over pairs of adjacent spins (nearest neighbors),
+S_i is a spin configuration at a site i,
+J is an interaction [J has dimensions of energy],
+\beta = 1 / (k_B T) [k_B T has dimensions of energy],
+k_B is the Boltzmann constant.
+
+If J &gt; 0 then the interaction is called 'ferromagnetic'.
+If J &lt; 0 then the interaction is called 'antiferromagnetic'.
+If J = 0 then the spins are 'noninteracting'.
+
+Z(\beta) = \sum_S exp(-\beta H(S)) is the partition function.
+
+The configuration probability is given by the Boltzmann distribution
+
+P_{\beta}(S) = exp(-\beta H(S)) / Z(\beta).
+
+The expectation (mean) value of a function F of the spins is
+
+&lt;F&gt;_{\beta} = \sum_{S} F(S) P_{\beta}(S).
+
+The mean energy is &lt;H&gt;_{\beta}.
+
+Magnetization M(S) = \sum_i S_i.
+
+The mean magnetization is &lt;M&gt;_{\beta}.
+</pre><hr><pre>
+Problem: for a 10x10 lattice there is 2^100 ~ 10^30 possible configurations.
+We are not able to calculate Z(\beta), P_{\beta}(S), and mean values.
+
+This motivates the reason for the Ising model to be simulated using MC methods.
+</pre><hr>
+
+<h3>2D ISING MODEL</h3>
+
+<p>In the ferromagnetic case there is a phase transition.
+
+<p>The transition temperature is T_c = 2.2692 [1944 Onsager].
+
+<h3>3D ISING MODEL</h3>
+
+<p>In the ferromagnetic case there is a continuous phase transition.
+
+<p>The transition temperature is T_c = 4.5116 (the critical point).
+
+</body>
+</html>

@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numbers</h1>
+
+<p>https://en.wikipedia.org/wiki/Number
+
+<h3>NATURAL NUMBERS</h3>
+
+<hr><pre>
+N = {1, 2, 3, ...}
+Operations: n + m, n * m, n // m, n^m.
+Mathematical induction is often used as a proof technique.
+A binary relation n &lt; m (less then) is present.
+</pre><hr>
+
+<h3>INTEGER NUMBERS</h3>
+
+<hr><pre>
+Z = {..., -2, -1, 0, 1, 2, ...}
+Z = {(a, b): a and b are natural numbers from N}
+A pair (a, b) denotes 'a-b' (negative numbers appear).
+Some pairs are considered equal:
+(a1, b1) ~ (a2, b2) only if a1 + b2 = a2 + b1.
+
+Addition (a1, b1) + (a2, b2) = (a1 + a2, b1 + b2).
+Substraction (a1, b1) - (a2, b2) = (a1 + b2, a2 + b1).
+Multiplication (a1, b1) * (a2, b2) = (a1 * a2 + b1 * b2, a1 * b2 + a2 * b1).
+
+Natural numbers can be identified with pairs (a, b), where b &lt; a.
+Zero is identified with pairs (a, a).
+</pre><hr>
+
+<h3>RATIONAL NUMBERS</h3>
+
+<hr><pre>
+Q = {(a, b): a and b are integer numbers from Z, b is not zero}
+A pair (a, b) denotes a fraction 'a / b' [numerator / denumerator].
+Some pairs are considered equal:
+(a1, b1) ~ (a2, b2) only if a1 * b2 = a2 * b1 [2 / 4 ~ 1 / 2].
+
+Addition (a1, b1) + (a2, b2) = (a1 * b2 + a2 * b1, b1 * b2).
+Substraction (a1, b1) - (a2, b2) = (a1 * b2 - a2 * b1, b1 * b2).
+Multiplication (a1, b1) * (a2, b2) = (a1 * a2, b1 * b2).
+Division (a1, b1) / (a2, b2) = (a1, b1) * (b2, a2), where a2 is not zero.
+
+Integer numbers can be identified with pairs (a, 1).
+Problem: x^2 = 2, x can not be rational.
+</pre><hr>
+
+<h3>REAL NUMBERS</h3>
+
+<hr><pre>
+R - there are several definitions ...
+Every real number corresponds to a point on the number line.
+All rational numbers are also real numbers but the reverse is not true.
+Most real numbers can only be 'approximated' by decimal numerals:
+1 / 2 = 0.5   (rational)
+1 / 3 = 0.333... = 0.(3)  (rational)
+0.(12) = 0.1212... = 12 * [10^(-2) + 10^(-4) + ...] = 12 / 99
+sqrt(2) = 1.41421...   (irrational)
+pi = 3.14159...   (irrational)
+e = 2.71828...   (irrational)
+
+Problem: x^2 = -1, x can not be real.
+</pre><hr>
+
+<h3>COMPLEX NUMBERS</h3>
+
+<p>https://en.wikipedia.org/wiki/Complex_number
+
+<hr><pre>
+C = {(x, y): x and y are real numbers from R}
+x is called the real part and y is called the imaginary part.
+Notation: z = (x, y) = x + y i, where i^2 = -1.
+Every complex number corresponds to a point in the plane.
+Real numbers can be identified with pairs (x, 0).
+
+Addition (x1, y1) + (x2, y2) = (x1 + x2, y1 + y2).
+Substraction (x1, y1) - (x2, y2) = (x1 - x2, y1 - y2).
+Multiplication (x1, y1) * (x2, y2) = (x1 * x2 - y1 * y2, x1 * y2 + y1 * x2).
+
+The complex conjugate of z is z^(*) = (x, -y).
+Norm |z|^2 = |x|^2 + |y|^2 = z * z^(*) = z^(*) * z.
+1 / z = z^(*) / (z * z^(*)) = z^(*) / |z|^2 = z^(*) * (1/|z|^2).
+Division z1 / z2 = z1 * (1 / z2) = (1 / z2) * z1.
+
+Every polynomial with complex coefficients has a root in the complex numbers.
+
+The complex numbers lack a total order that is compatible with field operations.
+</pre><hr>
+
+<h3>QUATERNIONS</h3>
+
+<p>https://en.wikipedia.org/wiki/Quaternion
+
+<hr><pre>
+H = {(x, y, z, t): x, y, z, t are real numbers from R}
+Notation: q = (x, y, z, t) = x + y i + z j + t k,
+where i^2 = j^2 = k^2 = ijk = -1,
+ij = -ji = k, jk = -kj = i, ki = -ik = j.
+x is the scalar part of q.
+y i + z j + t k is the vector part of q.
+
+The conjugate of q is q^(*) = (x, -y, -z, -t).
+Norm |q|^2 = |x|^2 + |y|^2 + |z|^2 + |t|^2 = q * q^(*) = q^(*) * q.
+
+Warning: in general q1 * q2 != q2 * q1.
+
+The reciprocal of q is q^(-1) = q^(*) / |q|^2.
+
+Warning: the notation q1 / q2 is ambiguous because in general
+q1 * q2^(-1) != q2^(-1) * q1.
+
+A unit quaternion u is a quaternion of norm one, |u| = 1.
+If q is a non-zero quaternion, then u = q / |q|.
+Unit quaternions can be identified with rotations in R^3.
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,111 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Ising model - simulations</h1>
+
+<p>https://en.wikipedia.org/wiki/Ising_model
+
+<h3>INTRO</h3>
+
+<hr><pre>
+The energy of a spin configuration S = {S_i} is given by
+
+H(S) = -J \sum_ij S_i S_j
+</pre><hr><pre>
+The Metropolis-Hastings algorithm first chooses 'selection probabilities'
+g(u,v), the probability that state v is selected by the algorithm 
+out of all states, given that one is in state u.
+
+g(u,v) must be selected such that ergodicity is met. 
+
+Then the algorithm uses 'acceptance probabilities' 
+A(u,v) so that detailed balance is satisfied. 
+
+In thermal equilibrium a system's energy only fluctuates within a small range.
+This is the motivation behind the concept of 'single-spin-flip dynamics', 
+which states that in each transition, we will only change one of the spin 
+sites on the lattice.
+</pre><hr><pre>
+Specification
+
+g(u,v) = 1 / (the number of sites on the lattice), [assumption]
+g(u,v) = g(v,u),
+P(u,v) = g(u,v) A(u,v),
+Warning P(u,v) != P(v,u).
+
+Detailed balance tells us that the following equation must hold:
+
+P(u) P(u,v) = P(v) P(v,u),
+P(u,v) / P(v,u) = P(v) / P(u) = exp(-\beta (H(v)-H(u))) [Z is cancelled],
+P(u,v) / P(v,u) = A(u,v) / A(v,u).
+
+We want to select A(), the larger A(u,v) or A(v,u) will be 1.
+
+A(u,v) = [ exp(-\beta (H(v)-H(u))), if H(v)-H(u) &gt; 0,
+         [ 1 otherwise.
+</pre><hr><pre>
+The basic form of the Metropolis algorithm is as follows:
+(1) Pick a spin site using selection probability g(u,v) and calculate 
+the contribution to the energy involving this spin.
+(2) Flip the value of the spin and calculate the new contribution.
+(3) If the new energy is less, keep the flipped value.
+(4) If the new energy is more, only keep with probability 
+exp(-\beta (H(v)-H(u))).
+(5) Repeat.
+</pre><hr>
+
+<h3>REMARKS</h3>
+
+<hr><pre>
+Spin lattice
+L = np.ones((x, y), dtype="int8")   # ordered system, energy = -2*L.size
+L = np.empty((x, y), dtype="int8")   # uninitialized spins
+L.shape   # return (x, y)
+L.size   # the number of sites on the lattice
+L.sum()   # total magnetization
+
+If spin = L[i,j] then (periodic boundary conditions)
+neighbors = ( L[(i+1) % x, j] + L[(i+x-1) % x, j] 
++ L[i, (j+1) % y] + L[i, (j+y-1) % y] )
+
+spin * neighbors can have values -4, -2, 0, 2, 4.
+We can calculate in advance 
+prob = math.exp(-2 * spin * neighbors / t),
+this is exp(-\beta (H(v)-H(u))).
+
+After flip [prob &gt; random.random()]
+L[i, j] = -spin
+energy += 2 * spin * neighbors
+magnet -= 2 * spin
+</pre><hr><pre>
+Running simulations in the background.
+'nohup' is a POSIX command to ignore the HUP (hangup) signal.
+
+$ nohup ./ising1.py &gt; output.txt &amp;
+
+Using stdin and stdout.
+
+$ nohup ./ising1.py &lt; input.txt &gt; output.txt &amp;
+</pre><hr><pre>
+# Keeping the configuration in a JSON file.
+#
+# Content of the file 'config3.py'.
+# {
+#     "warmup": 10,
+#     "iterations": 100, 
+#     "temperatures": [4.0, 3.5, 3.0, 2.5, 2.0, 1.5, 1.0, 0.5]
+# }
+
+import json
+
+with open("config3.json") as infile:
+    configuration = json.load(infile)
+</pre><hr>
+
+</body>
+</html>

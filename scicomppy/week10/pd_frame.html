@@ -23,14 +23,14 @@ It is generally the most commonly used pandas object.
 # colums : index or array-like
 # dtype : numpy.dtype or None
 # copy : boolean, default False; copy input data
-
+</pre><hr><pre>
 # Constructing DataFrame from a dictionary.
-# d = {'col1': series1, 'col2': series2}
+# D = {'col1': series1, 'col2': series2}
 
-d = {'col1': [1, 2], 'col2': [3, 4]}
+D = {'col1': [1, 2], 'col2': [3, 4]}
 
-df1 = pd.DataFrame(data=d)   # inferred dtype is int64
-#df1 = pd.DataFrame(data=d, dtype=np.int8)   # dtype is set
+df1 = pd.DataFrame(data=D)   # inferred dtype is int64
+#df1 = pd.DataFrame(data=D, dtype=np.int8)   # dtype is set
 #    col1  col2
 # 0     1     3
 # 1     2     4
@@ -43,7 +43,7 @@ df1.dtypes
 df1.index   # RangeIndex(start=0, stop=2, step=1)
 
 df1.columns   # Index(['col1', 'col2'], dtype='object')
-
+</pre><hr><pre>
 # Constructing DataFrame from numpy ndarray.
 
 df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
@@ -52,6 +52,34 @@ df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
 # 0  1  2  3
 # 1  4  5  6
 # 2  7  8  9
+</pre><hr><pre>
+# Constructing DataFrame from a list of dictionaries.
+# Every row is a dictionary with column names as keys.
+
+L = [{'x':10, 'y':1.1}, {'x':20, 'y':2.2}, {'x':30, 'y':3.3}]
+df5 = pd.DataFrame(L, columns=['x','y'])   # 'columns' for proper column ordering
+#     x    y
+# 0  10  1.1
+# 1  20  2.2
+# 2  30  3.3
+
+df5.dtypes
+# x      int64
+# y    float64
+# dtype: object
+
+df5.values
+# array([[10. ,  1.1],
+#        [20. ,  2.2],
+#        [30. ,  3.3]])
+</pre><hr><pre>
+print(df2.head())   # viewing the first 5 rows
+print(df2.head(n))   # viewing the first n rows
+
+print(df2.tail())   # viewing the last 5 rows
+print(df2.tail(n))   # viewing the last n rows
+
+print(df2.info())   # print info about the data
 </pre><hr>
 
 <h3>OPERATIONS</h3>
@@ -98,6 +126,66 @@ df3
 # 1  0.218680    bar  False  20.0
 # 2  0.203869    bar  False   NaN
 # 3  0.186825    bar  False   NaN
+</pre><hr><pre>
+# Q. How to add new rows to a DataFrame?
+# A. It should be avoided.
+#
+# https://pandas.pydata.org/docs/reference/api/pandas.concat.html
+# The general method is pd.concat().
+#
+# https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.append.html
+# pd.DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)
+
+df1 = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
+#    A  B
+# 0  1  2
+# 1  3  4
+
+df2 = pd.DataFrame([[5, 6], [7, 8]], columns=list('AB'))
+
+df3 = df1.append(df2)
+#    A  B
+# 0  1  2     index with duplicates
+# 1  3  4
+# 0  5  6
+# 1  7  8
+
+df4 = df1.append(df2, ignore_index=True)
+#    A  B
+# 0  1  2
+# 1  3  4
+# 2  5  6
+# 3  7  8
+</pre><hr><pre>
+import random
+
+rows_list = []
+cols_names = ["number", "letter"]
+input_rows = range(5)
+
+for row in input_rows:
+    D = {}
+    D.update( {"number": random.random()} )   # key = col_name
+    D.update( {"letter": random.choice(['a', 'b', 'c', 'd'])} )
+    rows_list.append(D)
+
+#df = pd.DataFrame(rows_list)   # wrong order of columns
+df = pd.DataFrame(rows_list, columns=cols_names)
+</pre><hr><pre>
+import random
+
+rows_list = []
+cols_names = ["number", "letter"]
+input_rows = range(5)
+
+for row in input_rows:
+    L = []
+    L.append( random.random() )
+    L.append( random.choice(['a', 'b', 'c', 'd']) )
+    rows_list.append(L)
+
+#df = pd.DataFrame(rows_list) # no names for columns
+df = pd.DataFrame(rows_list, columns=cols_names) 
 </pre><hr>
 
 </body>

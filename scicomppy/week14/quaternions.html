@@ -1,0 +1,73 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Quaternions</h1>
+
+<p>https://en.wikipedia.org/wiki/Quaternion
+
+<p>https://en.wikipedia.org/wiki/Quaternions_and_spatial_rotation
+
+<p>Stanisław Dawidowicz, Symulacje Monte Carlo ciekłych kryształów 
+nematycznych dwuosiowych, Uniwersytet Jagielloński, Kraków 2018. 
+[Monte Carlo simulations of biaxial nematic liquid crystals]
+
+<h3>INTRO</h3>
+
+<p>Quaternions have practical uses in calculations involving 
+three-dimensional rotations, such as in three-dimensional computer graphics, 
+computer vision, and crystallographic texture analysis.
+
+<p>Quaternions are present in several Python libraries, but
+their interface may be different.
+
+<hr><pre>
+https://pypi.org/project/pyrr/
+
+pip install pyrr
+
+https://github.com/ufkapano/pyquats
+
+git clone https://github.com/ufkapano/pyquats.git
+</pre><hr>
+
+<h3>QUATS</h3>
+
+<hr><pre>
+import math
+from quats import Quat
+from qtools import *
+
+zero = Quat()
+one = Quat(1)
+ii = Quat(0, 1, 0, 0)
+jj = Quat(0, 0, 1, 0)
+kk = Quat(0, 0, 0, 1)
+assert ii * jj == kk
+assert jj * ii == -kk
+assert ii.is_unit()
+assert abs(ii) == 1
+assert Quat(0.5, 0.5, 0.5, 0.5).is_unit()
+assert ii.conjugate() == -ii
+assert ii ** 2 == -one
+</pre><hr><pre>
+# Quaternions and spatial_rotations.
+
+rotZ45 = Quat.from_z_rotation(math.pi/4)
+# Quat(0.923879532511, 0.0, 0.0, 0.382683432365)
+
+vec1 = [2, 0, 0]
+rotate1(vec1, rotZ45)   # [1.414213562373095, 1.4142135623730951, 0.0]
+
+rotY90 = Quat.from_y_rotation(math.pi/2)
+# Quat(0.707106781187, 0.0, 0.707106781187, 0.0)
+
+rotate1(vec1, rotY90)   # [4.440892098500626e-16, 0.0, -2.0]
+</pre><hr>
+
+</body>
+</html>
