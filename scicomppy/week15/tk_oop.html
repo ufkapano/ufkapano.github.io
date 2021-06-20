@@ -1,0 +1,49 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - object-oriented approach</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>It's possible to inherit from just about any tkinter widget, 
+including the root window, but inheriting from 'tk.Frame' is probably 
+the most flexible.
+
+<hr><pre>
+#import Tkinter as tk   # Py2
+import tkinter as tk   # Py3
+
+class Application(tk.Frame):
+
+    def __init__(self, master=None):
+        tk.Frame.__init__(self, master)
+        self.master = master
+        self.master.title("Application")
+        self.pack()   # self to master
+        self.create_widgets()
+
+    def create_widgets(self):
+        self.label = tk.Label(self, text="Hello")
+        self.label.pack()   # label to self
+
+if __name__ == "__main__":
+
+    root = tk.Tk()
+    app = Application(root)
+    #print(app.label["text"])   # Hello
+    root.mainloop()   # or app.mainloop()
+
+# root
+#  |
+# app (Frame)
+#  |
+# Label
+</pre><hr>
+
+</body>
+</html>

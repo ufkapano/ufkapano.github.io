@@ -1,0 +1,107 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Label</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>Label widgets are used to display text or images. 
+The text displayed by a Label widget can’t be edited by the user. 
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+# widgets are added here
+
+label = tk.Label(root, text="A label with a very long text")
+#label = tk.Label(root, text="Hello", bg="red")
+
+label.pack()   # using a geometry manager
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Label()
+
+master=root     # the first argument
+text="Hello"
+fg="white"   # set the text color to white ('fg' or 'foreground')
+bg="black"   # set the background color to black ('bg' or 'background')
+width=50   # in text units
+height=10   # in text units
+font="Times 10 bold"
+</pre><hr><pre>
+Setting parameters in widgets
+
+label = tk.Label(root, text="Hello")   # at creation
+label.config(bg="red", fg="black")   # using config(), many options possible
+label.configure(bg="red")   # the same
+label["fg"] = "blue"   # using dict, only one option
+txt = label.cget("text")   # return string (the current value of an option)
+txt = label["text"]   # the same
+</pre><hr><pre>
+Color formats: "color_name", "#RRGGBB"
+
+Color names: 
+white, black, gray (silver),
+red, pink, orange, yellow (gold, khaki), 
+purple (violet, magenta, indigo),
+green (lime, olive, teal), 
+blue (aqua, cyan, navy), 
+brown (tan, chocolate, sienna, maroon),
+
+Font descriptors, option font=(family, size, style):
+("Times", 10, "bold") or string "Times 10 bold"
+("Helvetica", 10, "bold italic") or string "Helvetica 10 bold italic"
+("Symbol", 8) or string "Symbol 8"
+
+Here are some families available on most Windows platforms:
+Arial (corresponds to Helvetica), Courier New (Courier), Comic Sans MS, 
+Fixedsys, MS Sans Serif, MS Serif, Symbol, System, Times New Roman (Times), 
+and Verdana.
+
+The available font styles are normal, bold, roman, italic, underline, and overstrike.
+</pre><hr>
+
+<h3>IMAGES</h3>
+
+<p>The PhotoImage class is used to display images (either grayscale
+or true color images) in labels, buttons, canvases, and text widgets.
+
+<p>If the 'compound' option is set to tk.BOTTOM, tk.LEFT, tk.RIGHT,
+or tk.TOP, the image is drawn correspondingly to the bottom, left,
+right or top of the text.
+Without the 'compound' option the text is invisible.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()
+
+#logo = tk.PhotoImage(file="img/python_logo.gif")
+logo = tk.PhotoImage(file="img/python_logo.png")
+
+#label = tk.Label(root, image=logo)
+
+label = tk.Label(root,
+    compound=tk.CENTER,   # text and image together
+    image=logo,
+    text="[Python logo]"
+)
+label.image = logo   # keep a reference! (from effbot.org)
+
+label.pack()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

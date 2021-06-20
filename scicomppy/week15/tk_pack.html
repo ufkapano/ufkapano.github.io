@@ -1,0 +1,108 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - geometry managers (.pack)</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Application layout in Tkinter is controlled with 'geometry managers' 
+(.pack, .place, .grid). 
+Different frames can use different geometry managers.
+
+<h3>PACK</h3>
+
+<p>'.pack()' uses a packing algorithm to place widgets in a Frame or window 
+in a specified order. 
+
+<p>The 'fill' keyword argument can be used to specify in which 'direction' 
+the frames should fill. 
+
+<p>The 'side' keyword argument can be used to specify
+on which side of the window the widget should be placed. 
+
+<hr><pre>
+fill=tk.X   # horizontal direction
+fill=tk.Y   # vertical direction
+fill=tk.BOTH   # or fill="both"
+side=tk.TOP   # default, side="top"
+side=tk.BOTTOM   # or side="bottom"
+side=tk.LEFT
+side=tk.RIGHT
+expand=True
+</pre><hr><pre>
+# pack1.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+frame1 = tk.Frame(root, width=200, height=200, bg="red")
+frame1.pack()
+
+frame2 = tk.Frame(root, width=100, height=100, bg="yellow")
+frame2.pack()
+
+frame3 = tk.Frame(root, width=50, height=50, bg="blue")
+frame3.pack()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# pack2.py
+
+import tkinter as tk
+
+root = tk.Tk()   # empty root
+
+frame1 = tk.Frame(root, width=200, height=200, bg="red")
+frame1.pack(fill=tk.X)
+
+frame2 = tk.Frame(root, height=100, bg="yellow") # no width
+frame2.pack(fill=tk.X)
+
+frame3 = tk.Frame(root, height=50, bg="blue") # no width
+frame3.pack(fill=tk.X)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# pack3.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+frame1 = tk.Frame(root, width=200, height=200, bg="red")
+frame1.pack(fill=tk.Y, side=tk.LEFT)
+
+frame2 = tk.Frame(root, width=100, bg="yellow") # no height
+frame2.pack(fill=tk.Y, side=tk.LEFT)
+
+frame3 = tk.Frame(root, width=50, bg="blue") # no height
+frame3.pack(fill=tk.Y, side=tk.LEFT)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# pack4.py ('fill' and 'expand' keyword arguments)
+
+import tkinter as tk
+
+root = tk.Tk()
+
+frame1 = tk.Frame(root, width=200, height=200, bg="red")
+frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+
+frame2 = tk.Frame(root, width=100, bg="yellow") # no height
+frame2.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+
+frame3 = tk.Frame(root, width=50, bg="blue") # no height
+frame3.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,95 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - events</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Applications should perform actions whenever certain events occur 
+(a key or mouse button is pressed, ...). 
+User should write the code (an event handler) that will be executed 
+in response to an event.
+
+<p>The 'mainloop()' method maintains a list of events that have occurred
+and it runs an event handler any time a new event is added to the event list.
+
+<h3>USING BIND</h3>
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()
+
+def handle_keypress(event):
+    """Print the character associated to the key pressed."""
+    print("The key {} was pressed!".format(event.char))
+
+def handle_keyrelease(event):
+    """Print the character associated to the key released."""
+    print("The key {} was released!".format(event.char)) # no char
+
+def handle_click(event):
+    print("Clicked at {} {}".format(event.x, event.y))
+
+# Bind keypress event to handle_keypress().
+# The output is printed to stdout.
+
+#root.bind(event_string, event_handler)
+#root.bind("&lt;Key&gt;", handle_keypress)
+root.bind("&lt;KeyPress&gt;", handle_keypress)   # the same as "&lt;Key&gt;"
+root.bind("&lt;KeyRelease&gt;", handle_keyrelease)
+#root.bind("&lt;Key&gt;", lambda event: print(event.char))
+
+# Mouse clics.
+root.bind("&lt;Button-1&gt;", handle_click)   # the left mouse button
+root.bind("&lt;Button-2&gt;", handle_click)   # the middle mouse button
+root.bind("&lt;Button-3&gt;", handle_click)   # the right mouse button
+root.bind("&lt;Button-4&gt;", handle_click)   # scroll up
+root.bind("&lt;Button-5&gt;", handle_click)   # scroll down
+#root.bind("&lt;Button-3&gt;", lambda event: print(event.char))   # prints ??
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+<h3>USING COMMAND</h3>
+
+<p>Every Button widget has a command attribute that you can assign 
+to a function. Whenever the button is pressed, the function is executed.
+
+<hr><pre>
+import tkinter as tk
+
+def increase():
+    value = int(label_value["text"])
+    label_value["text"] = "{}".format(value + 1)
+
+def decrease():
+    value = int(label_value["text"])
+    label_value["text"] = "{}".format(value - 1)
+
+root = tk.Tk()
+
+root.rowconfigure(0, minsize=100, weight=1)
+root.columnconfigure(0, minsize=100, weight=1)
+root.columnconfigure(1, minsize=100, weight=1)
+root.columnconfigure(2, minsize=100, weight=1)
+
+button_decrease = tk.Button(root, text="-", command=decrease)
+button_decrease.grid(row=0, column=0, sticky=tk.NSEW)
+
+label_value = tk.Label(root, text="0")
+label_value.grid(row=0, column=1)
+
+button_increase = tk.Button(root, text="+", command=increase)
+button_increase.grid(row=0, column=2, sticky=tk.NSEW)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

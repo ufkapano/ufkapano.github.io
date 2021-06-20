@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Frame</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>Frame widgets are used for organizing the layout of other widgets 
+in an application.
+Frames are best thought of as 'containers' for other widgets.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()
+
+frame_a = tk.Frame(root)
+frame_b = tk.Frame(root)
+
+label_a = tk.Label(frame_a, text="In Frame A")
+label_a.pack()
+
+label_b = tk.Label(frame_b, text="In Frame B")
+label_b.pack()
+
+# Ordering of frames is determined here.
+frame_a.pack()
+frame_b.pack()
+
+root.mainloop()   # run the tkinter event loop
+#       root
+#      /     \
+# frame_a   frame_b
+#    |        |
+# label_a   label_b
+</pre><hr><pre>
+import tkinter as tk
+
+border_effects = {
+    "flat": tk.FLAT,
+    "sunken": tk.SUNKEN,
+    "raised": tk.RAISED,
+    "groove": tk.GROOVE,
+    "ridge": tk.RIDGE,
+}
+root = tk.Tk()
+
+for relief_name, relief_obj in border_effects.items():
+    frame = tk.Frame(root, relief=relief_obj, borderwidth=5)
+    frame.pack(side=tk.LEFT)
+    label = tk.Label(frame, text=relief_name)
+    label.pack()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+Selected keyword arguments in Frame()
+
+master=root   # the first argument
+bg="black"   # set the background color to black ('bg' or 'background')
+width=50   # in pixels
+height=30   # in pixels
+relief="..."   # border decoration
+bd=5   # 'borderwidth' or 'bd'
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Text</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Text widgets are used for entering multiple lines of text.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()
+
+textbox = tk.Text(root)
+
+textbox.pack()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+Operations
+
+char = textbox.get("line.char")   # rows are numbered from 1
+char = textbox.get("1.0")   # the first char from the first row
+word = textbox.get(first, last)
+word = textbox.get("1.0", "1.5")   # 5 chars
+word = textbox.get("1.0", tk.END)   # get all
+textbox.delete("line.char")
+textbox.delete("1.0")
+textbox.delete(first, last)
+textbox.delete("1.0", "1.4")
+textbox.delete("1.0", tk.END)   # remove all
+textbox.insert("line.char", "text")
+textbox.insert("1.0", "text")
+textbox.insert("2.0", "\nThis is a new line.")
+textbox.insert(tk.END, "\nPut me at the end!") # insert at the end
+</pre><hr>
+
+</body>
+</html>

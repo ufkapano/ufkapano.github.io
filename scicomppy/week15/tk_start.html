@@ -1,0 +1,122 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - start</h1>
+
+<p>https://docs.python.org/3/library/tkinter.html
+
+<p>https://realpython.com/python-gui-tkinter/ 
+
+<p>https://tkdocs.com/
+
+<p>https://riptutorial.com/tkinter
+
+<h3>INSTALLING TKINTER</h3>
+
+<p>Tkinter comes with the Python installer so we don't need to install 
+it separately. But it is possible that Tkinter was accidentally excluded 
+from the list of Python features, especially on Windows.
+
+<hr><pre>
+CONDA
+# Make sure the conda package tk is installed:
+conda list tk
+# If it is not installed, run:
+conda install tk
+
+PIP (first check that Tkinter is really missing)
+pip install tk
+
+APT (for the entire computer)
+Debian packages: python-tk, python3-tk, and dependencies.
+</pre><hr>
+
+<h3>INTRODUCTION</h3>
+
+<p>The 'tkinter' package is the standard Python interface to the Tk GUI toolkit.
+Both Tk and tkinter are available on most Unix platforms, 
+as well as on Windows systems. 
+Tk itself is not part of Python; it is maintained at ActiveState.
+
+<hr><pre>
+# This should open a window demonstrating a simple Tk interface.
+
+$ python -m Tkinter     # testing in Py2, version 8.6 in Debian 10
+$ python3 -m tkinter    # testing in Py3
+</pre><hr><pre>
+# To check the Tkinter version, type the following commands in your Python REPL:
+
+#import Tkinter as tk   # Py2
+import tkinter as tk   # Py3 or Py2 in Debian
+tk._test()   # this should open a window
+</pre><hr>
+
+<p>Tkinter is lightweight and cross-platform, 
+so the same code works on Windows, MacOS, and Linux. 
+
+<p>Although Tkinter is considered the de-facto Python GUI framework, 
+it’s not without criticism. 
+One notable criticism is that GUIs built with Tkinter look outdated. 
+
+<p>Tkinter is largely unchanged between Python 2 and Python 3, 
+with the major difference being that the tkinter package and modules 
+were renamed.
+
+<hr><pre>
+# Importing in Py2.
+
+import Tkinter as tk
+import tkFileDialog as filedialog
+import ttk   # themed widgets
+
+root = tk.Tk()   # this is the root widget
+
+root.geometry("200x100")   # optional
+#root.geometry("{}x{}".format(width, height)
+#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
+
+root.title("first")   # optional, the default title is "tk"
+
+# Widgets are added here.
+
+label = tk.Label(root, text="Hello")   # a label widget
+label.pack()   # using a geometry manager
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# Importing in Py3.
+
+import tkinter as tk
+from tkinter import filedialog
+from tkinter import ttk   # themed widgets
+
+root = tk.Tk()   # this is the root widget
+
+# Widgets are added here.
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# In simple scripts we can use a universal form of importing.
+
+try:
+    import Tkinter as tk   # Py2
+    import tkFileDialog as filedialog
+    import ttk   # themed widgets
+except ImportError:
+    import tkinter as tk   # Py3
+    from tkinter import filedialog
+    from tkinter import ttk   # themed widgets
+</pre><hr>
+
+<p>The statement 'root.mainloop()' tells Python to run the Tkinter 
+'event loop'. This method listens for events, such as button clicks 
+or keypresses, and <strong>blocks</strong> any code that comes after it 
+from running until the window it’s called on is closed.
+
+</body>
+</html>

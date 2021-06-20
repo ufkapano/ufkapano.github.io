@@ -1,0 +1,40 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - geometry managers (.place)</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>'.place()' can be used to control the precise location that a widget 
+should occupy in a window or Frame.
+
+<p>.place() is not used often, because it has two main drawbacks:
+<br>(1) layout can be difficult to manage with .place(),
+<br>(2) layouts created with .place() are not responsive.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()
+
+frame = tk.Frame(root, width=300, height=300)
+frame.pack()   # .pack() is here
+
+label1 = tk.Label(frame, text="I'm at (0, 0)", bg="red")
+label1.place(x=0, y=0)   # top left, in pixels
+
+label2 = tk.Label(frame, text="I'm at (75, 75)", bg="yellow")
+label2.place(x=75, y=75)   # in pixels from top left
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,129 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - geometry managers (.grid)</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>'.grid()' works by splitting a window or Frame into rows and columns. 
+You specify the location of a widget by calling .grid() and passing 
+the row and column indices to the row and column keyword arguments, 
+respectively. Both row and column indices start at 0.
+
+<hr><pre>
+sticky=tk.N   # "n" or "N"
+sticky=tk.E   # "e" or "E"
+sticky=tk.S   # "s" or "S"
+sticky=tk.W   # "w" or "W"
+sticky=tk.NE   # "ne"
+sticky=tk.NW   # "nw"
+sticky=tk.SE   # "se"
+sticky=tk.SW   # "sw"
+
+sticky=tk.EW   # "ew"
+sticky=tk.NS   # "ns"
+sticky=tk.NSEW   # "nsew"
+
++----------------+--------------+
+| .grid()        | .pack()      |
++================+==============+
+| sticky=tk.NS   | fill=tk.Y    |
++----------------+--------------+
+| sticky=tk.EW   | fill=tk.X    |
++----------------+--------------+
+| sticky=tk.NSEW | fill=tk.BOTH |
++----------------+--------------+
+</pre><hr><pre>
+# grid1.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+for i in range(3):
+    for j in range(3):
+        frame = tk.Frame(
+            master=root,
+            relief=tk.RAISED,
+            borderwidth=1
+        )
+        frame.grid(row=i, column=j)
+        label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
+        label.pack()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# grid2.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+for i in range(3):
+    # Expanding window configuration.
+    # Kazdy wiersz i kolumne trzeba konfigurowac osobno.
+    root.columnconfigure(i, weight=1, minsize=75)
+    root.rowconfigure(i, weight=1, minsize=50)
+
+    for j in range(3):
+        frame = tk.Frame(
+            master=root,
+            relief=tk.RAISED,
+            borderwidth=1
+        )
+        frame.grid(row=i, column=j, padx=5, pady=5)   # external padding in pixels
+        label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
+        label.pack(padx=5, pady=5)   # internal padding in pixels
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# grid3.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+root.columnconfigure(0, minsize=100)   # cell width
+root.rowconfigure(0, minsize=100)   # row 0
+root.rowconfigure(1, minsize=100)   # row 1
+
+label1 = tk.Label(root, text="A", bg="red")
+label1.grid(row=0, column=0, sticky=tk.NE)
+
+label2 = tk.Label(root, text="B", bg="blue")
+label2.grid(row=1, column=0, sticky=tk.SW)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# grid4.py
+
+import tkinter as tk
+
+root = tk.Tk()
+
+root.rowconfigure(0, minsize=100)
+for i in range(4):
+    root.columnconfigure(i, minsize=100)
+
+label1 = tk.Label(root, text="1", bg="black", fg="white")
+label2 = tk.Label(root, text="2", bg="black", fg="white")
+label3 = tk.Label(root, text="3", bg="black", fg="white")
+label4 = tk.Label(root, text="4", bg="black", fg="white")
+
+label1.grid(row=0, column=0)
+label2.grid(row=0, column=1, sticky=tk.EW)
+label3.grid(row=0, column=2, sticky=tk.NS)
+label4.grid(row=0, column=3, sticky=tk.NSEW)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>
