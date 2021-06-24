@@ -10,7 +10,7 @@
 
 <p>https://en.wikipedia.org/wiki/Ising_model
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <hr><pre>
 The energy of a spin configuration S = {S_i} is given by
@@ -69,7 +69,7 @@ L.shape   # return (x, y)
 L.size   # the number of sites on the lattice
 L.sum()   # total magnetization
 
-If spin = L[i,j] then (periodic boundary conditions)
+If spin = L[i,j], then (periodic boundary conditions)
 neighbors = ( L[(i+1) % x, j] + L[(i+x-1) % x, j] 
 + L[i, (j+1) % y] + L[i, (j+y-1) % y] )
 
@@ -91,6 +91,10 @@ $ nohup ./ising1.py &gt; output.txt &amp;
 Using stdin and stdout.
 
 $ nohup ./ising1.py &lt; input.txt &gt; output.txt &amp;
+
+Show output appended data as the file grows.
+
+$ tail -f output.txt
 </pre><hr><pre>
 # Keeping the configuration in a JSON file.
 #
