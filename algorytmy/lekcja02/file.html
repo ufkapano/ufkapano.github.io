@@ -26,15 +26,15 @@ Po zamknięciu pliku nie można go już przetwarzać.
 
 <p>W Pythonie rozróżnia się pomiędzy plikami tekstowymi,
 a plikami binarnymi.
-Pliki tekstowe są podzielone na wiersze. 
+Zawartość pliku tekstowego może być podzielona na wiersze. 
 Każdy wiersz kończy się znakiem końca wiersza (zwykle "\n", newline).
 Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
 
 <hr><pre>
-afile = open(file_name, mode='r', buffering)   # Python 2
+afile = open(file_name, mode='r', buffering)   # Py2
 afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
-    newline=None, closefd=True, opener=None)   # Python 3
+    newline=None, closefd=True, opener=None)   # Py3
 # file_name (string): nazwa pliku;
 # mode (string):
 # "r" (czytanie),
@@ -45,7 +45,7 @@ afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
 # "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),
 # "b" (dodatek do poprzednich, tryb binarny, Windows, Macintosh),
 # "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy).
-# encoding : zwykle "utf-8" lub domyślne, używa się w text mode (Python 3);
+# encoding : zwykle "utf-8" lub domyślne, używa się w text mode (Py3);
 help(open)
 dir(afile)     # spis metod
 afile.close()   # otwarty plik należy zamknąć
@@ -88,14 +88,15 @@ outfile.write("%d\n" % liczba)      # zapis z procentem
 outfile.write("%f\n" % x)
 outfile.write("%s\n" % napis)
 
-# Tego sposobu lepiej unikać, chyba trudniej przerobić na funkcję.
+# Tego sposobu lepiej unikać, chyba trudniej przerobić na funkcję (Py2).
 print &gt;&gt; outfile, liczba   # drukuje tak jak na ekran, jest '\n'
 print &gt;&gt; outfile, x
 print &gt;&gt; outfile, napis
 
 print &gt;&gt; outfile, "%s\t%s\t%s" % ("a1","a2","a3")
-outfile.write("%s\t%s\t%s\n" % ("a1","a2","a3"))        # tutaj trzeba dać '\n'
+outfile.write("%s\t%s\t%s\n" % ("a1","a2","a3"))   # tutaj trzeba dać '\n'
 outfile.write("%s\n" % "\t".join(["a1","a2","a3"]))   # sklejam przed wypisaniem
+outfile.write("{}\t{}\t{}\n".format("a1","a2","a3"))   # zalecane
 
 outfile.flush()
 # Flush the internal I/O buffer.

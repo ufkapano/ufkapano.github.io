@@ -15,7 +15,7 @@
 <ul>
 <li>Liczby całkowite typu <em>int</em>,
 <li>Liczby całkowite długie typu <em>long</em>
-[tożsamy z <em>int</em> w Pythonie 3],
+['L' suffix, tożsamy z <em>int</em> w Pythonie 3],
 <li>Liczby zmiennoprzecinkowe, rzeczywiste typu <em>float</em>,
 <li>Liczby zespolowe typu <em>complex</em>.
 </ul>
@@ -24,16 +24,16 @@
 
 <ul>
 <li>Liczby dziesiętne o ustalonej precyzji 
-(moduł <em>decimal</em>, klasa <em>Decimal</em>, Python 2.4+).
+(moduł <em>decimal</em>, klasa <em>Decimal</em>, Py2.4+).
 <li>Ułamki implementujące obiekt liczby wymiernej, gdzie
 jawnie przechowuje się licznik i mianownik
-(moduł <em>fractions</em>, klasa <em>Fraction</em>, Python 2.6+).
+(moduł <em>fractions</em>, klasa <em>Fraction</em>, Py2.6+).
 </ul>
 
 <p>Po przekroczeniu zakresu <em>int</em> Python 2 automatycznie
 przeskakuje do typu <em>long</em>.
 
-<p>Nazwa typu jest wykorzystywana przy konwersji pomiędzy typami.
+<p>Nazwa typu jest wykorzystywana przy jawnej konwersji pomiędzy typami.
 Trzeba pamiętać, że w Pythonie stringi nie są automatycznie
 konwertowane do liczb.
 Python automatycznie wykonuje konwersję do typu "szerszego",
@@ -52,7 +52,7 @@ opisuje PEP 3141.
 '6.28318'
 &gt;&gt;&gt; print ( 2 * 3.14159 )     # print korzysta z str()
 6.28318
-&gt;&gt;&gt; 0.1     # problem reprezentacji dwójkowej, Python 2.6-
+&gt;&gt;&gt; 0.1     # problem reprezentacji dwójkowej, Py2.6-
 0.10000000000000001
 &gt;&gt;&gt; print ( 0.1 )
 0.1
@@ -85,7 +85,7 @@ Funkcja różni się od <em>math.trunc()</em>.
 <em>max(iterable[, key=func])</em> - jeden argument, 
 <em>max(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
 
-<li>Funkcja <em>sum(sequence[, start])</em>,
+<li>Funkcja <em>sum(iterable[, start])</em>,
 zwraca sumę sekwencji liczb, ale nie stringów.
 Parametr start domyślnie wynosi zero,
 dla pustej sekwencji suma wynosi zero.
@@ -103,20 +103,25 @@ itp.
 <hr><pre>
 # Zmienne i wyrażenia różnych typów.
 0, 1, -4                      # int
-0L, 1L, -3L, 123456789000     # long
+0L, 1L, -3L, 123456789000     # long (Py2)
+100_000_000_000               # grouping in integer literals (Py3.6+)
+
 0., .2, -3.45, 2.43e+23       # float
+3.14_15_93                    # grouping in floating point literals (Py3.6+)
+
 0j, 2+.3j, 8.9-7J             # complex
 z = 5+1j                      # typ complex
+z = complex(5, 1)             # użycie konstruktora
 z, z.real, z.imag             # część rzeczywista i urojona
+z.conjugate()                 # (5-1j), liczba sprzężona do z
+abs(z)                        # moduł liczby zespolonej, sqrt((z.real)**2 + (z.imag)**2)
+
 3 ** 2, 1.2 ** 3.5            # potęgowanie, równoważne pow()
 pow(3, 2), pow(1.2, 3.5)      # funkcja pow()
 pow(2, 10, 5)                 $ (2 ** 10) % 5 = 1024 % 5 = 4
 
-# Sprawdzanie typu wyrażeń.
-type("zdanie"), type(23), type(1L), type(1j)
-
-# Konwersja typów niejawna.
-1 + 1.2, 34/60.               # int + float = float
+# Konwersja typów (niejawna).
+1 + 1.2, 34 / 60.             # int + float = float
 1.2 + 3J                      # float + complex = complex
 
 # Konwersja typów (jawna).
@@ -124,9 +129,9 @@ type("zdanie"), type(23), type(1L), type(1j)
 # int(x[, base]), float(x), complex(real[, imag])
 int("32"), int(2.345), int(-3.456)
 int("111", 2)   # 7; wykorzystanie bazy
-int("20", 16), 0x20  # 32; wykorzystanie bazy
+int("20", 16), 0x20   # 32; wykorzystanie bazy
 float("3.14159"), float(234)
-float(1.0+2.j)                # TypeError, nie ma jednoznacznej konwersji
+float(1.0 + 2.j)                # TypeError, nie ma jednoznacznej konwersji
 str(1234)
 long(43)
 complex(5), complex(2,3)                # (5+0J), (2+3J)

@@ -12,7 +12,12 @@
 
 <p>Łańcuch (string) to uporządkowany ciąg znaków używany do przechowywania
 informacji tekstowej. 
-Łańcuchy zaliczane są do niezmiennych sekwencji, czyli nie można 
+W Pythonie 2 znaki odpowiadają bajtom, więc bytes() to alias do str() (Py2.7).
+W Pythonie 3 string zawiera znaki Unikodu (code points), które
+zamienia się na ciąg bajtów korzystając z ustalonego kodowania.
+Jeden znak Unikodu może odpowiadać kilku bajtom.
+
+<p>Łańcuchy zaliczane są do niezmiennych sekwencji, czyli nie można 
 ich zmieniać w obszarze przechowywania ich w pamięci. 
 Dostęp do znaków możliwy jest za pomocą offsetu (przesunięcia). 
 Dozwolone są ujemne offsety (odliczanie od końca). 
@@ -20,7 +25,7 @@ Dozwolone są ujemne offsety (odliczanie od końca).
 <p>W Pythonie nie ma osobnego typu znakowego jak w języku C. 
 Znakami są po prostu stringi o długości jeden.
 
-<p>Moduły pomocnicze: string, regex, re, itp.
+<p>Moduły pomocnicze: string, re, itp.
 
 <p>Stałe łańcuchowe mogą być zapisywane z użyciem apostrofów lub
 znaków cudzysłowu. Dzięki temu możemy wstawiać znak cudzysłowu/apostrofu
@@ -31,28 +36,32 @@ wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
 <h3>OPERACJE NA ŁAŃCUCHACH</h3>
 
 <pre>
-+----------------------+--------------------------+
-| Operacja             | Znaczenie                |
-+----------------------+--------------------------+
-| "", '', str()        | puste napisy             |
-| S = "abc"            | tworzenie napisu         |
-| S = str(obiekt)      | tworzenie napisu         |
-| len(S)               | długość - liczba pozycji |
-| S1 + S2              | łączenie                 |
-| 3 * S, S * 4         | powtarzanie              |
-| S[i]                 | indeksowanie             |
-| S[i:j]               | wycinanie                |
-| S2 = S1[:]           | kopiowanie               |
-| S2 = str(S1)         | kopiowanie               |
-| for char in S: pass  | iteracja                 |
-| S1 in S2             | zawieranie (bool)        |
-| S1 not in S2         |                          |
-| "%s dom" % "stary"   | formatowanie łańcucha    |
-| "%s %s" % ("a", "b") |                          |
-| S.join(iterable)     | sklejanie z napisem      |
-| S.format(...)        | 2.6+, 3.x                |
-| del S                | usuwanie napisu          |
-+----------------------+--------------------------+
++----------------------+-----------------------------+
+| Operacja             | Znaczenie                   |
++----------------------+-----------------------------+
+| "", '', str()        | puste napisy                |
+| S = "abc"            | tworzenie napisu            |
+| S = str(obiekt)      | tworzenie napisu            |
+| len(S)               | długość napisu              |
+| S1 + S2              | łączenie                    |
+| n * S, S * n         | powtarzanie                 |
+| S[i]                 | indeksowanie                |
+| S[i:j]               | wycinanie                   |
+| S[i:j:k]             | wycinanie                   |
+| S2 = S1[:]           | kopiowanie                  |
+| S2 = str(S1)         | kopiowanie                  |
+| for char in S: pass  | iteracja                    |
+| S1 in S2             | zawieranie (bool)           |
+| S1 not in S2         |                             |
+| S1.count(S2)         | liczba wystąpień            |
+| S1.index(S2)         | pierwsze wystąpienie        |
+| max(S), min(S)       | największy|najmniejszy znak |
+| "%s dom" % "stary"   | formatowanie łańcucha       |
+| "%s %s" % ("a", "b") |                             |
+| S.join(iterable)     | sklejanie z napisem         |
+| S.format(...)        | Py2.6+, Py3.x               |
+| del S                | usuwanie napisu             |
++----------------------+-----------------------------+
 </pre><hr><pre>
 Standard Unikodu przypisuje abstrakcyjnym znakom (characters)
 liczby całkowite dodatnie (code points).
@@ -60,7 +69,7 @@ String Unikodu jest to ciąg code points.
 Reguły transformacji stringu Unikodu na ciąg bajtów jest to kodowanie.
 Najpopularniejsze obecnie kodowanie to UTF-8.
 
-Code point 97 odpowiada u'\x61' = u'\u0061' = u'\U00000061', 
+Code point 97 (litera 'a') odpowiada u'\x61' = u'\u0061' = u'\U00000061', 
 (0)110.0001, jeden bajt w UTF-8.
 
 Code point 257 odpowiada u'\u0101', 
@@ -78,10 +87,14 @@ Code point 8364 (znak euro) odpowiada u'\u20ac',
 # Raw strings - napisy ze znakami specjalnymi.
 r"raw string\n\t\a"
 
-# Unicode strings (Py 2).
+# Unicode strings (Py2). Nazwa typu to unicode().
+unicode('abc')
 u"unicode"
+# Tworzenie jednego znaku Unikodu (Py2).
+unichr(97)   # return u'a' = u'\x61' = u'\u0061' = u'\U00000061'
+unichr(256)   # return u'\u0100'
 
-# Raw Unicode strings (Py 2).
+# Raw Unicode strings (Py2).
 ur"raw unicode"
 
 # Potrójne znaki do wielowierszowych bloków.
@@ -201,9 +214,10 @@ zwracają nowy łańcuch.
 <hr><pre>
 dir(str)                 # lista metod stringów
 print ( ord("a") )       # 97, kod ASCII znaku
+print ( ord(u"ą) )       # 261, ord() działa też dla unikodu w Py2
 print ( chr(98) )        # "b", znak dla danego kodu ASCII
 
-word = "".join(["a","b","c","d","e","f"])    # sklejanie listy znaków
+word = "".join(["a","b","c","d","e","f"])   # sklejanie listy znaków lub stringów
 print ( word )           # "abcdef"
 word.find("cd")     # 2, odnalezienie przesunięcia podłańcucha
 word.replace("bc", "xyz")     # zastąpienie wystąpień podłańcucha
@@ -240,7 +254,7 @@ line.splitlines()             # ['a\tb c', 'd']
 
 "111".zfill(8)                # "00000111"
 
-# Badanie typów znaków.
+# Badanie typów znaków w stringu.
 S.isalnum()
 S.isalpha()
 S.isdigit()
@@ -334,6 +348,25 @@ W Pythonie 3 znika <em>basestring</em> (PEP 3137).
 Obiekt musi wspierać protokół buforowania (buffer protocol), czyli dawać
 dostęp do bufora obiektu bez robienia kopii. 
 Było wiele zmian w kolejnych wersjach Pythona 3.
+
+<h3>PRZYKŁAD</h3>
+
+<p>Praca w systemie Linux Debian 10, ustawienie locale 'pl_PL.UTF-8'.
+
+<hr><pre>
+# Wprowadzanie tekstu z klawiatury (Py2).
+&gt;&gt;&gt; a = 'jabłko'   # str
+&gt;&gt;&gt; a
+'jab\xc5\x82ko'
+&gt;&gt;&gt; b = u'jabłko'   # unicode
+&gt;&gt;&gt; b
+u'jab\u0142ko'
+</pre><hr><pre>
+# Wprowadzanie tekstu z klawiatury (Py3).
+&gt;&gt;&gt; a = 'jabłko'
+&gt;&gt;&gt; a
+'jabłko'
+</pre><hr>
 
 </body>
 </html>

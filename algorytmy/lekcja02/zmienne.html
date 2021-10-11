@@ -19,11 +19,11 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W Pythonie wartości, a nie zmienne, posiadają typ - tak więc Python
-jest językiem z typami dynamicznymi.
+<p>W Pythonie wartości, a nie zmienne (ang. names, variables), 
+posiadają typ - tak więc Python jest językiem z typami dynamicznymi.
 Wszystkie wartości przekazywane są przez referencję.
 
-<p>Każda zmienna posiada nazwę i zawiera referencję do określonego obiektu.
+<p>Każda zmienna posiada (1) nazwę i zawiera (2) referencję do określonego obiektu.
 Zmienna jest uniwersalna, sama nie ma określonego typu,
 może przechowywać referencję do obiektu każdego typu.
 Wszystkie zmienne muszą mieć jawnie przypisane wartości, zanim
@@ -34,9 +34,12 @@ będzie można ich użyć.
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 NameError: name 'X' is not defined
-&gt;&gt;&gt; X = 11           # powołujemy do życia zmienną X
+&gt;&gt;&gt; X = 11           # powołujemy do życia zmienną X, ma referencję do liczby
 &gt;&gt;&gt; X                # sprawdzamy wartość zmiennej
 11
+&gt;&gt;&gt; X = "alpha"    # zmienna teraz ma referencję do napisu
+&gt;&gt;&gt; X                # sprawdzamy wartość zmiennej
+'alpha'
 &gt;&gt;&gt; del X            # usuwamy zmienną
 &gt;&gt;&gt;
 </pre><hr>
@@ -44,16 +47,20 @@ NameError: name 'X' is not defined
 <p>W Pythonie obiekty posiadają dwa standardowe pola:
 
 <ul>
-<li>Desygnator typu; stąd obiekty znają swój typ.
+<li>Desygnator typu; stąd obiekty znają swój niezmienny typ.
 <li>Licznik referencji; wykorzystywany do zwalniania pamięci
 zajmowanej przez obiekt, jeżeli liczba referencji do obiektu
 spadnie do zera.
 </ul>
 
+<p>Każdy obiekt ma jeszcze niezmienną tożsamość (identity),
+co można utożsamiać z adresem w pamięci. 
+Funkcja wbudowana id() zwraca liczbę całkowitą reprezentującą adres w pamięci.
+
 <h3>TYPY WBUDOWANE</h3>
 
-<p>The principal built-in types are numerics, sequences, mappings, 
-files, classes, instances and exceptions (z dokumentacji Pythona).
+<p><em>The principal built-in types are numerics, sequences, mappings, 
+files, classes, instances and exceptions</em> (z dokumentacji Pythona).
 
 
 <p>Python posiada szeroki zakres podstawowych typów liczbowych:
@@ -81,18 +88,21 @@ Niezmienne są przede wszystkim liczby, stringi i krotki.
 <p>Przegląd obiektów wbudowanych Pythona:
 
 <pre>
-+-------------+--------------+----------------------+
-| Typ obiektu | Kategoria    | Czy podlega zmianom? |
-+-------------+--------------+----------------------+
-| Liczby      | Liczbowa     | Nie                  |
-| Łańcuchy    | Sekwencja    | Nie                  |
-| Listy       | Sekwencja    | Tak                  |
-| Słowniki    | Odwzorowanie | Tak                  |
-| Krotki      | Sekwencja    | Nie                  |
-| Pliki       | Rozszerzenie | Nie dotyczy          |
-| Zbiory      | Zbiór        | Tak                  |
-| frozenset   | Zbiór        | Nie                  |
-+-------------+--------------+----------------------+
++-----------------+--------------------+----------------------+
+| Typ obiektu     | Kategoria          | Czy podlega zmianom? |
++-----------------+--------------------+----------------------+
+| Liczby          | Liczbowa           | Nie                  |
+| range           | Sekwencja liczbowa | Nie (Py2 != Py3)     |
+| Łańcuchy (str)  | Sekwencja tekstowa | Nie (Py2 != Py3)     |
+| bytes           | Sekwencja bajtów   | Nie                  |
+| bytearray       | Sekwencja bajtów   | Tak                  |
+| Listy (list)    | Sekwencja          | Tak                  |
+| Krotki (tuple)  | Sekwencja          | Nie                  |
+| Słowniki (dict) | Odwzorowanie       | Tak                  |
+| Pliki           | Rozszerzenie       | Nie dotyczy          |
+| set             | Zbiór              | Tak                  |
+| frozenset       | Zbiór              | Nie                  |
++-----------------+--------------------+----------------------+
 </pre>
 
 <p>Aby sprawdzić, czy obiekt jest danego typu, czy instancją klasy,
@@ -112,17 +122,20 @@ Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.].
 # isinstance(object, class-or-type-or-tuple) -&gt; bool
 
 if isinstance(x, float):
-    print ( "liczba zmiennoprzecinkowa" )
+    print ( "to jest liczba zmiennoprzecinkowa" )
 
-if isinstance(x, (int, long)):   # Python 2 (Python 3 nie ma long)
-    print ( "liczba całkowita" )
+if isinstance(x, (int, long)):   # Py2 (Py3 nie ma typu long)
+    print ( "to jest liczba całkowita" )
+
+if isinstance(S, (set, frozenset)):
+    print ( "to jest zbiór" )
 
 # Dawny, odradzany sposób.
-# Funkcja type() zwraca obiekt typu - są różnice między Pythonem 2 i 3.
-if type(x) is type(1) or type(x) is type(1L):   # Python 2 (Python 3 nie ma long)
+# Funkcja type() zwraca obiekt typu - są różnice między Py2 i Py3.
+if type(x) is type(1) or type(x) is type(1L):   # Py2 (Py3 nie ma long)
     print ( "liczba całkowita" )
 
-if type(x) is int or type(x) is long:   # Python 2 (Python 3 nie ma long)
+if type(x) is int or type(x) is long:   # Py2 (Py3 nie ma long)
     print ( "liczba całkowita" )
 
 # Moduł types zawiera nazwy dla innych typów.
@@ -179,15 +192,28 @@ True
 
 <h3>SŁOWA ZAREZERWOWANE PYTHONA</h3>
 
+<p>https://docs.python.org/3/library/keyword.html
+
+<p>Słowa kluczowe nie mogą być użyte jako nazwy zmiennych.
+
 <hr><pre>
 &gt;&gt;&gt; help()     # pomoc w trybie interaktywnym
 help&gt; keywords            # wypisanie słów kluczowych
 ...
 help&gt; quit
 &gt;&gt;&gt;
+</pre><hr><pre>
+import keyword   # Py3
+
+keyword.kwlist   # lista wszystkich słów kluczowych
+keyword.iskeyword("True")   # True
+keyword.iskeyword("self")   # False
+keyword.iskeyword("max")   # False
 </pre><hr>
 
-<p>Słowa kluczowe Pythona: and, as (2.6+), assert, break,
+<p>Słowa kluczowe Pythona: 
+False (3.9), None (3.9), True (3.9), 
+and, as (2.6+), assert, async (3.9), await (3.9), break (3.9),
 class, continue, def, del, elif, else, except, exec (2.x),
 finally, for, from, global, if, import, in, is, 
 lambda, nonlocal (3.x), 
@@ -195,7 +221,7 @@ not, or, pass, print (2.x), raise,
 return, try, while, with (2.6+), yield (2.3+).
 
 <p>Inne słowa, których lepiej nie używać: 
-False, None, True, NotImplemented, Ellipsis.
+NotImplemented, Ellipsis.
 
 <p>Z dokumentacji na temat Ellipsis: 
 Special value used in conjunction with extended slicing syntax. 

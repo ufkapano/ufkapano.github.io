@@ -32,13 +32,13 @@ muszą być klasy frozenset.
 |S1.issubset(S2)            |S1 &lt;= S2    |czy S1 jest zawarty w S2|
 |S1.issuperset(S2)          |S1 &gt;= S2    |czy S1 zawiera S2       |
 |S1.union(S2)               |S1 | S2     |suma zbiorów            |
-|S1.union(S2, S3)           |S1 | S2 | S3|suma zbiorów            | Python 2.6+
+|S1.union(S2, S3)           |S1 | S2 | S3|suma zbiorów (Py2.6+)   |
 |S1.intersection(S2)        |S1 &amp; S2     |iloczyn zbiorów         |
-|S1.intersection(S2, S3)    |S1 &amp; S2 &amp; S3|iloczyn zbiorów         | Python 2.6+
+|S1.intersection(S2, S3)    |S1 &amp; S2 &amp; S3|iloczyn zbiorów (Py2.6+)|
 |S1.difference(S2)          |S1 - S2     |różnica zbiorów         |
-|S1.difference(S2, S3)      |S1 - S2 - S3|różnica zbiorów         | Python 2.6+
+|S1.difference(S2, S3)      |S1 - S2 - S3|różnica zbiorów (Py2.6+)|
 |S1.symmetric_difference(S2)|S1 ^ S2     |(S1-S2)|(S2-S1)         |
-|S1.isdisjoint(S2)          |            |czy puste przecięcie    | Python 2.6+
+|S1.isdisjoint(S2)          |            |czy rozłączne (Py2.6+)  |
 |S2 = S1.copy()             |            |shallow copy of S1      |
 |S2 = set(S1)               |            |shallow copy of S1      |
 +---------------------------+------------+------------------------+
@@ -48,22 +48,22 @@ muszą być klasy frozenset.
 mogą zmienić swój skład.
 
 <pre>
-+----------------------------------+-------------+
-| Operacja                         | Równoważne  |
-+----------------------------------+-------------+
-|S1.update(S2)                     |S1 |= S2     |
-|S1.update(S2, S3)                 |S1 |= S2 | S3| Python 2.6+
-|S1.intersection_update(S2)        |S1 &amp;= S2     |
-|S1.intersection_update(S2, S3)    |S1 &amp;= S2 &amp; S3| Python 2.6+
-|S1.difference_update(S2)          |S1 -= S2     |
-|S1.difference_update(S2, S3)      |S1 -= S2 | S3| Python 2.6+
-|S1.symmetric_difference_update(S2)|S1 ^= S2     |
-|S.add(item)                       |             |
-|S.remove(item) [item musi należeć]|             |
-|S.discard(item)                   |             |
-|S.pop() [zbiór niepusty]          |             |
-|S.clear() [zostanie pusty]        |             |
-+----------------------------------+-------------+
++----------------------------------+----------------------+
+| Operacja                         | Równoważne           |
++----------------------------------+----------------------+
+|S1.update(S2)                     |S1 |= S2              |
+|S1.update(S2, S3)                 |S1 |= S2 | S3 (Py2.6+)|
+|S1.intersection_update(S2)        |S1 &amp;= S2              |
+|S1.intersection_update(S2, S3)    |S1 &amp;= S2 &amp; S3 (Py2.6+)|
+|S1.difference_update(S2)          |S1 -= S2              |
+|S1.difference_update(S2, S3)      |S1 -= S2 | S3 (Py2.6+)|
+|S1.symmetric_difference_update(S2)|S1 ^= S2              |
+|S.add(item)                       |                      |
+|S.remove(item) [item musi należeć]|                      |
+|S.discard(item)                   |                      |
+|S.pop() [zbiór niepusty]          |                      |
+|S.clear() [zostanie pusty]        |                      |
++----------------------------------+----------------------+
 </pre>
 
 <p>Porównywanie dwóch zbiorów ma sens, gdy jeden zawiera się w drugim.
@@ -71,14 +71,14 @@ W przeciwnym razie wyjdzie False.
 Zbiory nie implementują metody __cmp__().
 
 <hr><pre>
-# Konstrukcja: set([iterable])
+# Konstrukcja: set(iterable)
 # Budowanie zbioru z sekwencji.
 X = set("alfa")
 Y = set(["b", "e", "t", "a"])
-print X, Y
-print "iloczyn", X &amp; Y
-print "suma", X | Y
-print "różnica", X - Y
+print ( "{} {}".format(X, Y) )
+print ( "iloczyn {}".format(X &amp; Y) )
+print ( "suma {}".format(X | Y) )
+print ( "różnica {}".format(X - Y) )
 </pre><hr><pre>
 # Konstrukcja: frozenset([iterable])
 X = frozenset()       # zbiór pusty

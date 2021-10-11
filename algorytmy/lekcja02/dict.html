@@ -26,21 +26,25 @@ i krotki.
 mogą rosnąć lub kurczyć się na życzenie.
 Słowniki obsługują zagnieżdżanie obiektów na dowolną głębokość.
 
+<p>Od Pythona 3.7 mamy gwarancję, że klucze w słowniku będą uporządkowane
+w kolejności ich wstawiania do słownika.
+
 <pre>
 +----------------------+---------------------------+
 | Operacja             | Znaczenie                 |
 +----------------------+---------------------------+
 | D = {} ; D = dict()  | pusty słownik             |
 | D = {1: "a", 5: "e"} | słownik (dwa klucze)      |
-| len(D)               | liczebność                |
+| len(D)               | liczność (liczba par)     |
 | D[key] = value       | dodanie pozycji           |
 | D[key]               | dostęp do wartości        |
-| D = dict(T)          | tworzenie z krotki (pary) |
+| D = dict(iterable)   | tworzenie z listy par     |
 | D2 = dict(D1)        | kopiowanie słownika       |
 | D2 = D1.copy()       | stary sposób kopiowania   |
-| key in D             | zawieranie (bool)         |
+| D2 = {**D1}          | kopiowanie (Py3)          |
+| key in D             | zawieranie klucza (bool)  |
 | key not in D         |                           |
-| D.has_key(key)       | dawny sposób (Py 2)       |
+| D.has_key(key)       | dawny sposób (Py2)        |
 | for key in D: pass   | iteracja po kluczach      |
 | del D[key]           | usuwanie klucza           |
 | D.clear()            | czyszczenie słownika      |
@@ -55,6 +59,7 @@ D['two'] = 'dwa'
 D['three'] = 'trzy'
 
 # Metody słownika bez parametrów.
+D = {k1:v1, k2:v2, k3:v3}
 D.keys()            # [k1, k2, k3]
 D.values()          # [v1, v2, v3]
 D.items()           # [(k1, v1), (k2, v2), (k3, v3)]
@@ -75,8 +80,8 @@ del D['two']
 D = dict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
 
 # Ciekawa pętla po parach - items().
-for (char, n) in D.items():
-    print ( "klucz: {} wartość: {}".format(char, n) )
+for (char, number) in D.items():
+    print ( "key: {} value: {}".format(char, number) )
 </pre><hr>
 
 <p>Sortowanie kluczy dla słowników.
@@ -89,8 +94,8 @@ for char in "abrakadabra":
     chars[char] = chars.get(char, 0) + 1
 print ( chars )
 
-# Sortowanie par (klucz, wartość).
-items = chars.items()        # dostaję listę krotek
+# Sortowanie par (key, value).
+items = chars.items()        # dostaję listę krotek (Py2)
 items.sort()
 
 # Sortowanie samych kluczy.
@@ -124,10 +129,11 @@ E = dict(D)                   # jw, ale wygodniej
 D.has_key(key)                # zwraca True/False
 key in D                      # jw, zalecane
 
-D.items()                     # zwraca listę krotek (key, value)
-D.keys()                      # zwraca listę kluczy
-D.values()                    # zwraca listę wartości
+D.items()                     # zwraca listę krotek (key, value) (Py2)
+D.keys()                      # zwraca listę kluczy (Py2)
+D.values()                    # zwraca listę wartości (Py2)
 
+D.get(key)                    # zwraca D[key] lub None
 D.get(key, value)             # zwraca D[key] lub value
 D.setdefault(key, value)      # jw i jeszcze ustawia D[key] = value
 D.pop(key)                    # zwraca D[key] i usuwa ze słownika
@@ -137,7 +143,10 @@ D.popitem()                   # zwraca 2-tuple (key, value) [chyba losowo]
 D = dict.fromkeys(S[, value])    # S to sekwencja, value to domyślnie None
 D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
 D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
-D.update(E)                   # czyli for key in E: D[key] = E[key]
+
+D.update(E)   # E to dict, czyli for k in E: D[k] = E[k]
+D.update(**E)   # E to dict, jw
+D.update(F)   # F=[("x",10),("y",20)], czyli for (k,v) in F: D[k] = v
 </pre><hr>
 
 <p>Problem sklejania dwóch słowników.
@@ -213,7 +222,7 @@ dict_keys(['second', 'third', 'first'])   # widać zmianę
 True
 </pre><hr>
 
-<p>Nie ma metody D.has_key(key), stosuje się konstrukcję key in D.
+<p>Nie ma metody D.has_key(key), stosuje się konstrukcję 'key in D'.
 
 <p>Występuje konstrukcja słowników składanych (dict comprehension).
 Wydaje się, że można to łatwo zastąpić przez konstrukcję
@@ -222,14 +231,38 @@ z listą par (key, value),
 <hr><pre>
 keys = [k1, k2, k3]
 values = [v1, v2, v3]
-D = dict(zip(keys, values))                  # Python 2 i 3
-D = {k: v for (k, v) in zip(keys, values)}   # Python 3 i 2.7
+D = dict(zip(keys, values))                  # Py2 i Py3
+D = {k: v for (k, v) in zip(keys, values)}   # Py3 i Py2.7
 
-D = {x: x ** 2 for x in [1, 2, 3, 4]}        # Python 3 i 2.7
-D = dict((x, x**2) for x in [1, 2, 3, 4])    # generator w Pythonie 2
+D = {x: x**2 for x in range(9)}        # Py3 i Py2.7
+D = dict((x, x**2) for x in range(9))    # generator
 
-D = {x: x*3 for x in "qwerty"}          # Python 3 i 2.7
-D = dict((x, x*3) for x in "qwerty")    # generator w Pythonie 2
+D = {x: x*3 for x in "qwerty"}          # Py3 i Py2.7
+D = dict((x, x*3) for x in "qwerty")    # generator
+</pre><hr><pre>
+# Korzystanie z operatora ** (Py3).
+# Ta sama idea dla argumentów funkcji (**keywords).
+D1 = {"a": 1, "b": 2}
+D2 = {"c": 3, "d": 4}
+merged_dict = {**D1, **D2}   # unpacking in a single line
+print(merged_dict)   # {"a": 1, "b": 2, "c": 3, "d": 4}
+# Problem: merged_dict to zawsze podstawowy słownik, a D1 i D2
+# mogą być podklasami słowników, np. defaultdict!
+
+# Dawny sposób.
+merged_dict = {}
+merged_dict.update(D1)
+merged_dict.update(D2)
+</pre><hr><pre>
+# PEP 584 -- Add Union Operators To dict
+# Dodanie operatorów '|' i '|=', tak jak dla list.
+
+D3 = D1 | D2   # unia słowników tworzy nowy słownik (Py3.9.7)
+# UWAGA Jeżeli ten sam klucz jest w D1 i D2, to wygrywa D2.
+# Ogólnie D1 | D2 to nie to samo, co D2 | D1.
+
+D1 |= D2   # działa jak D1.update(D2), in-place (augmented assignment)
+# Przypomnienie: dla list mamy L1 += L2, co działa jak L1.extend(L2), in-place
 </pre><hr>
 
 </body>

@@ -29,39 +29,31 @@ to lepiej zastosować słowniki lub zbiory.
 +----------------------+-----------------------------+
 | L = [] ; L = list()  | lista pusta                 |
 | L = [5, 1.2]         | lista dwupozycyjna          |
-| L = list(sequence)   | tworzenie listy z sekwencji |
+| L = list(iterable)   | tworzenie listy z iterable  |
 | len(L)               | rozmiar (długość)           |
 | L1 + L2              | łączenie                    |
-| L * 3 ; 4 * L        | powtarzanie                 |
+| L * n ; n * L        | powtarzanie                 |
 | L[i]                 | indeks                      |
 | L[i:j]               | wycinek (nowa lista)        |
+| L[i:j:k]             | wycinek (nowa lista)        |
 | L[i] = item          | nowy element na liście      |
 | L1[i:j] = L2         | podstawienie pod wycinek    |
 | L2 = L1[:]           | kopiowanie płytkie          |
 | L2 = list(L1)        | kopiowanie płytkie          |
-| L2 = L1.copy()       | kopiowanie płytkie (Py 3.3+)|
+| L2 = L1.copy()       | kopiowanie płytkie (Py3.3+) |
 | for item in L: pass  | iteracja                    |
 | item in L            | zawieranie (linear-time)    |
 | item not in L        |                             |
-| range(i, j, step)    | budowanie listy (Py 2)      |
-| xrange(i, j, step)   | generator (Py 2)            |
-| range(i, j, step)    | generator (Py 3)            |
+| max(L), min(L)       | największy|najmniejszy      |
 | del L[i]             | usuwanie elementu z listy   |
 | del L[i:j]           | usuwanie wycinka            |
 | del L[:]             | czyszczenie listy           |
-| L.clear()            | czyszczenie listy (Py 3.3+) |
+| L.clear()            | czyszczenie listy (Py3.3+)  |
 | del L                | usuwanie listy (zmiennej L) |
 +----------------------+-----------------------------+
 </pre>
 
 <hr><pre>
-# Składnia: range([start,] stop[, step]).
-# Domyślny krok jest równy jeden (step=1).
-# Końcowy punkt (stop) jest pomijany.
-list(range(1, 6))                   # [1, 2, 3, 4, 5]
-list(range(4))                      # [0, 1, 2, 3], domyślny start to 0
-list(range(1, 9, 2))                # [1, 3, 5, 7], krok co 2
-
 list1 = [10, 20, 30, 40, 50, 60, 70]
 list2 = ["abc", "d", "ef", "g", "hij"]
 list3 = [3, "xyz", [10, 20]]  # listy są heterogeniczne
@@ -71,7 +63,7 @@ list2[1] = "xyz"              # pojedynczy element
 list2[2:4] = ["2", "3"]       # podmiana wycinka
 print ( list2 )
 
-alist = range(10)
+alist = list(range(10))
 alist[4:4] = [1, 1, 1]        # wstawianie PRZED elementem o indeksie 4
 alist[2:4] = []               # usuwanie elementów o indeksach 2, 3
 # Bardziej przejrzyste jest korzystanie z del.
@@ -97,7 +89,7 @@ alist[2:4] = []               # usuwanie elementów o indeksach 2, 3
 </pre><hr><pre>
 &gt;&gt;&gt; a = [1,2,3]
 &gt;&gt;&gt; b = a
-&gt;&gt;&gt; del a[:]   # czyszczenie in place, podobnie dla a.clear()
+&gt;&gt;&gt; del a[:]   # czyszczenie wycinka in place, podobnie dla a.clear()
 &gt;&gt;&gt; a
 []
 &gt;&gt;&gt; b
@@ -123,8 +115,9 @@ L4 = list(L1)       # jeszcze prościej
 
 <hr><pre>
 # help(list.sort)
-# L.sort(cmp=None, key=None, reverse=False)   # Python 2
-# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
+# L.sort(cmp=None, key=None, reverse=False)   # Py2
+# L.sort(None, None, True)   # dozwolone tylko w Py2 (bez słów kluczowych)
+# L.sort(/, *, key=None, reverse=False)   # Py3, keywords only
 # Sortowanie stabilne IN PLACE.
 # Funkcja cmp(x, y) ma zwracać jedną wartość z (-1, 0, 1).
 
@@ -138,7 +131,7 @@ print ( alist )     # ['Ala', 'Barbara', 'auto', 'bocian']
 alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
 print ( alist )     # ['Ala', 'auto', 'Barbara', 'bocian']
 
-# Nowy sposób (Python 2.4+) - podajemy klucz, czyli jakby sposób 
+# Nowy sposób (Py2.4+) - podajemy klucz, czyli jakby sposób 
 # patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
 # Sortowanie jest stabilne.
 alist.sort(key=str.lower)
@@ -155,8 +148,8 @@ dla list, ale dla obiektów iterowanych.
 
 <hr><pre>
 # help(sorted)
-# sorted(iterable, cmp=None, key=None, reverse=False)   # Python 2
-# sorted(iterable, /, *, key=None, reverse=False)   # Python 3
+# sorted(iterable, cmp=None, key=None, reverse=False)   # Py2
+# sorted(iterable, /, *, key=None, reverse=False)   # Py3
 # Zwraca nową posortowaną listę.
 
 # Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
@@ -171,7 +164,7 @@ def mysorted(iterable):
 <hr><pre>
 # https://docs.python.org/2/library/operator.html
 
-import operator   # Python 2.4+
+import operator   # Py2.4+
 
 # Sortowanie IN PLACE krotek wg wartości pola o indeksie 1.
 alist = [('apple', 3), ('banana', 2), ('pear', 5), ('orange', 1)]
@@ -185,20 +178,20 @@ blist = sorted(alist, key=operator.itemgetter(1))
 <h3>METODY LIST</h3>
 
 <p>W Pythonie często możemy zobaczyć wyrażenia typu
-obiekt.metoda(argumenty).
+'obiekt.metoda(argumenty)'.
 Nawiązuje to do programowania obiektowego.
 Metoda jest funkcją, która należy do obiektu i nosi pełną nazwę
-obiekt.metoda(). 
+'obiekt.metoda()'. 
 Obiekt innego typu może posiadać metodę o tej samej nazwie, 
-np. obiekt2.metoda(), ale nie prowadzi to do dwuznaczności.
-Mamy również konstrukcje typu obiekt.atrybut i również różne obiekty
+np. 'obiekt2.metoda()', ale nie prowadzi to do dwuznaczności.
+Mamy również konstrukcje typu 'obiekt.atrybut' i również różne obiekty
 mogą mieć atrybut o tej samej nazwie, ale o różnych typach.
 
 <hr><pre>
 dir(list)           # spis metod i atrybutów dla list
 
 L = ["a", "a", "a", "b", "b"]
-L.count("a")        # 3, liczba wystąpień
+L.count("a")        # 3, liczba wystąpień "a" na liście
 
 L.append("c")       # dołączenie "c" na koniec listy
 print ( L )         # ['a', 'a', 'a', 'b', 'b', 'c']
@@ -215,7 +208,10 @@ print ( L )         # ['x', 'a', 'b', 'b']
 
 L.reverse()         #  odwracanie listy IN PLACE
 print ( L )         # ['b', 'b', 'a', 'x']
+
+# L.index(x[, i[, j]])   # indeks x od i, a przed j
 L.index("a")        # 2, jaki indeks ma "a"
+
 L.extend("qwerty")  # L.extend(iterable), dołączyć nowe elementy
 print ( L )         # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
 </pre><hr>

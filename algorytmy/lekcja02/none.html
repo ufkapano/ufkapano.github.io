@@ -10,11 +10,12 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Python posiada specjalny obiekt/wartość <em>None</em>,
+<p>Python posiada specjalny obiekt/wartość 'None' typu NoneType,
 która oznacza obiekt pusty (null object).
-Często w Pythonie zmiennej nadajemy wartość <em>None</em>,
+Często w Pythonie zmiennej nadajemy wartość 'None',
 aby zaznaczyć, że jest ona dostępna, ale chwilowo
 traktujemy ją jako nieokreśloną.
+Inne zastosowanie to przywrócenie zmiennej do umownego stanu pustego.
 
 <hr><pre>
 answer = None
@@ -27,16 +28,14 @@ else:
     quit = False
 </pre><hr>
 
-<p>Obiekt <em>None</em> ma tylko jedną instancję, dlatego test
-<br>
-<em>if answer is None</em> (obiekty tożsame; ZALECANE) 
-<br>
-jest równoważny testowi
-<br>
-<em>if answer == None</em> (równe wartości).
-<br>
-Zwykle w testach chodzi nam o porównanie wartości obiektów (==).
+<p>Obiekt 'None' ma tylko jedną instancję (singleton), dlatego test
+<br><em>if answer is None</em> (obiekty tożsame; ZALECANE) 
+<br>jest równoważny testowi
+<br><em>if answer == None</em> (równe wartości).
+<br>Zwykle w testach chodzi nam o porównanie wartości obiektów (==).
 
+<p>Funkcje bez jawnego użycia 'return' zwracają 'None'.
+W ten sposób funkcje zawsze 'coś' zwracają, co upraszcza programowanie.
 
 </body>
 </html>
