@@ -27,7 +27,7 @@ czyli przejściu do nowej linii.
 # Konstrukcja podobna do C z procentem i krotką.
 # Składnia:
 # %[(nazwa)][opcje][szerokość][.precyzja]kod_typu
-print "int %d float %f str %s" % (5, 3.14159, "napis")
+print ( "int %d float %f str %s" % (5, 3.14159, "napis") )
 
 # Format z %s jest uniwersalny - korzysta z funkcji str().
 print ( "int %s float %s str %s" % (5, 3.14159, "napis") )
@@ -39,10 +39,10 @@ print ( "a %10.1f b %3d" % (1.23456, 2) ) # dwie lub więcej pozycji
 </pre><hr><pre>
 # Wyprowadzanie danych do pliku:
 afile = open("data.txt", "w")
-afile.write((%s %s\n) % (item1, item2))   # jeden sposób
+afile.write("%s %s\n" % (item1, item2))   # jeden sposób
 afile.write("{} {}\n".format(item1, item2))   # drugi sposób
-print &gt;&gt; afile, item1, item2        # niezbyt ładne, Python 2
-print(file=afile, item1, item2)           # Python 3
+print &gt;&gt; afile, item1, item2        # niezbyt ładne, Py2
+print(file=afile, item1, item2)           # Py3
 afile.close()
 </pre><hr><pre>
 # Korzystanie z modułu sys.
@@ -72,12 +72,12 @@ name = "elektron"
 mass = 0.511034    # MeV
 print ( "%(name)s, masa %(mass)s MeV" % locals() )
 </pre><hr><pre>
-# Zapis wywołań print działający w Pytonie 2 i 3.
+# Zapis wywołań print działający w Py2 i Py3.
 print ( "napis" )   # jeden obiekt
 print ( "%s %s %s" % (item1, item2, item3) )
 print ( "{} {} {}".format(item1, item2, item3) )   # zalecane
 </pre><hr><pre>
-# Emulacja funkcji print() z Pythona 3 w Pythonie 2.
+# Emulacja funkcji print() z Py3 w Py2.
 # print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
 
 def print3(*arguments, **keywords):
@@ -96,9 +96,9 @@ print3(4, 5, 6, end="")      # wstrzymanie nowego wiersza
 print3(7, 9, 9, file=sys.stderr)       # przekierowanie strumienia
 </pre><hr><pre>
 # PEP 236 - Back to the __future__
-# W Pythonie 2.6 można włączyć obsługę funkcji print()
-# z Pythona 3 za pomocą instrukcji import.
-# Ta instrukcja nie powoduje błędu w Pythonie 3.
+# W Py2.6 można włączyć obsługę funkcji print()
+# z Py3 za pomocą instrukcji import.
+# Ta instrukcja nie powoduje błędu w Py3.
 
 from __future__ import print_function
 </pre><hr>
@@ -106,12 +106,12 @@ from __future__ import print_function
 <h3>METODA FORMAT</h3>
 
 <hr><pre>
-# Składnia (Python 2.6+, 3.x):
+# Składnia (Py2.6+, Py3):
 # S.format(*arguments, **keywords)
 
 # Argumenty pozycyjne.
 print ( "{0} albo {1}".format("prawda", "fałsz") ) # prawda albo fałsz
-print ( "{} albo {}".format("prawda", "fałsz") ) # prawda albo fałsz (Python 2.7)
+print ( "{} albo {}".format("prawda", "fałsz") ) # prawda albo fałsz (Py2.7, Py3)
 print ( "{1} albo {0}".format("prawda", "fałsz") ) # fałsz albo prawda
 # Formatowanie {position:format_spec}.
 # {position:10} typ str, szerokość minimum 10 znaków;
@@ -150,9 +150,9 @@ print ( "Adam {Adam:d}; Bogdan {Bogdan:d}".format(**table) )
 <h3>F-STRINGS</h3>
 
 <hr><pre>
-# W Pythonie 3.6 pojawiły się f-strings, formatted string literals (PEP 498).
+# W Py3.6 pojawiły się f-strings, formatted string literals (PEP 498).
 # F-strings są szybsze od metody z % i format().
-# Rozpoczynają się od f"..." or F"...", w klamrach {} są wyrażenia lub zmienne.
+# Rozpoczynają się od prefiksu 'f' lub 'F', w klamrach {} są wyrażenia lub zmienne.
 name = "Adam"
 age = 18
 print ( f"Hello, {name}. You are {age}." )
@@ -161,11 +161,17 @@ print ( f"{{18}}" )   # wynik to "{18}"
 print ( f"""{function_name(argument)} is funny.""" )
 print ( f'''{instance.method()} is fast.''' ) 
 print ( f"{variable!r}" )  # używa repr(), a nie str()
+
 message = (
     f"First part {variable1}. "
     f"Second part {variable2}. "
     f"Third part {variable3}."
 )   # multiline f-strings (rezultat to jeden wiersz!)
+
+name, phone = 'Andrzej', 4628
+f'|{name:10}|{phone:10d}|'   # '|Andrzej   |      4628|'
+# Alignment options can be used.
+f'|{name:&gt;10}|{phone:&lt;10}|'   # '|   Andrzej|4628      |'
 </pre><hr>
 
 </body>

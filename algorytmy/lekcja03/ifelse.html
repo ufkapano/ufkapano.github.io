@@ -30,18 +30,20 @@ wiersz_nagłówka:              # obowiązkowy dwukropek
     zagnieżdżony_blok_instrukcji
 
 # Przypadek specjalny - lepiej unikać.
-# Przy prostych wyrażeniach można zrezygnować z wcięcia.
+# Przy instrukcjach prostych można zrezygnować z wcięcia.
 # Może to być wygodne w trybie interaktywnym.
-if x &gt; y: print x       # print x to wyrażenie
+wiersz_nagłówka: instrukcja_prosta
+if condition: simple_statement
+if x &gt; y: print ( x )   # print ( x ) to instrukcja prosta
 </pre><hr><pre>
 # Zagnieżdżone bloki.
-Blok0
+blok1
 Wiersz nagłówka:
-    Blok1
+    blok2
     Wiersz nagłówka:
-        Blok2
-    Blok1 (kontynuacja)
-Blok0 (kontynuacja)
+        blok3
+    blok2 (kontynuacja)
+blok1 (kontynuacja)
 </pre><hr>
 
 <p>Koniec wiersza kończy instrukcję.
@@ -93,7 +95,7 @@ resutl = adict.get(choice, "Error")     # z zabezpieczeniem
 <h3>WYRAŻENIE TRÓJARGUMENTOWE</h3>
 
 <p>Wyrażenie trójargumentowe if-else przypomina operator
-trójargumentowy z języka C.
+trójargumentowy z języka C [PEP 308].
 
 <hr><pre>
 if W:
@@ -105,7 +107,7 @@ A = Y if W else Z
 
 a = 25 ; b = 30
 pos_a = (-a) if a &lt; 0 else a
-max_a_b = b if a &lt; b else a
+max_ab = b if a &lt; b else a
 
 # Zastosowanie do słowników.
 # Ustawienie domyślnej wartości, jeżeli klucza nie ma.

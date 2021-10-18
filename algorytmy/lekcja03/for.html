@@ -36,8 +36,8 @@ else:               # opcjonalne
 </pre><hr><pre>
 word = "praca"
 for char in word:             # pętla po stringu
-    print char,               # przecinek daje wydruk w jednym wierszu, Python 2
-    print(char, end=" ")      # wydruk w jednym wierszu, Python 3
+    print char,               # przecinek daje wydruk w jednym wierszu, Py2
+    #print(char, end=" ")      # wydruk w jednym wierszu, Py3
 print ("")                    # na koniec przechodzimy do nowej linii
 </pre><hr><pre>
 # Pętla po liście liczb z funkcji range().
@@ -87,21 +87,22 @@ for (key, value) in D.items():
 <h3>GENEROWANIE WARTOŚCI PRZESUNIĘCIA I ELEMENTÓW</h3>
 
 <hr><pre>
-owoce = ["jabłko", "gruszka", "śliwka"]
+fruits = ["apple", "pear", "plum"]
 
 # Pętla for po liście stringów.
-for owoc in owoce:
-    print ( "Bardzo lubię " + owoc + "!" )
+for fruit in fruits:
+    print ( "Bardzo lubię " + fruit + "!" )
 
 # Pętla po liście stringów z wykorzystaniem indeksów.
 # Tak można robić, gdy potrzebujemy wykorzystać numer elementu.
-for i in range(len(owoce)):
-    print ( "{} {}".format(i, owoce[i]) )
+for i in range(len(fruits)):
+    print ( "{} {}".format(i, fruits[i]) )
 
 # Obecnie wygodniej jest zastosować iterator enumerate().
-for (i, item) in enumerate(owoce):
+for (i, item) in enumerate(fruits):
     print ( "{} {}".format(i, item) )
 
+list(enumerate(fruits))   # [(0, 'apple'), (1, 'pear'), (2, 'plum')]
 [c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
 [2**i for i in range(5)]                # [1, 2, 4, 8, 16]
 </pre><hr>
@@ -135,8 +136,12 @@ lines = [line.replace("\t", ";") for line in open("words.txt")]
 <h3>PRZECHODZENIE RÓWNOLEGŁE - ZIP</h3>
 
 <hr><pre>
-# Składnia.
-zip(seq1 [, seq2 [...]]) zwraca [(seq1[0], seq2[0] ...), (...)]
+# Składnia Py2.
+# zip(seq1 [, seq2 [...]]) zwraca listę krotek [(seq1[0], seq2[0] ...), (...)].
+# Lista ma długość najkrótszej sekwencji.
+#
+# Składnia Py3.
+# zip(iter1 [,iter2 [...]]) zwraca 'zip object' (iterator).
 </pre><hr><pre>
 L = [1, 2, 3, 4]
 M = [5, 6, 7, 8]
@@ -144,30 +149,31 @@ for (x, y) in zip(L, M):
     print ( "{} {} {}".format(x, y, x+y) )
 for (x, y) in zip("abcdef", "qwerty"):
     print ( "{} {} {}".format(x, y, x+y) )
+list(zip("ab", "1234"))   # [('a', '1'), ('b', '2')]
 </pre><hr>
 
 <h3>PRZECHODZENIE RÓWNOLEGŁE - MAP</h3>
 
 <hr><pre>
-# Składnia.
-map(function, sequence[, sequence, ...]) zwraca list
-# W Pythonie 3 map() zwraca generator.
+# Składnia Py2.
+# map(function, sequence[, sequence, ...]) zwraca listę.
+# W Py3 map() zwraca 'map object' (iterator).
 </pre><hr><pre>
 # Funkcję map można łatwo zastąpić listą składaną.
 L = [-2, -1, 0, 1, 2]
-map(abs, L)                   # [2, 1, 0, 1, 2]
+list(map(abs, L))   # [2, 1, 0, 1, 2]
 [abs(x) for x in L]
 
-map(ord, "qwerty")            # [113, 119, 101, 114, 116, 121]
+list(map(ord, "qwerty"))   # [113, 119, 101, 114, 116, 121]
 [ord(x) for x in "qwerty"]
 
 L = [1, 2, 3, 4]
 M = [1, 1, 2, 2]
-map(pow, L, M)                # [1, 2, 9, 16]
+list(map(pow, L, M))   # [1, 2, 9, 16]
 [pow(x, y) for (x, y) in zip(L, M)]
 
 words = ["jeden", "dwa", "trzy"]
-map(str.upper, words)         # ['JEDEN', 'DWA', 'TRZY']
+list(map(str.upper, words))   # ['JEDEN', 'DWA', 'TRZY']
 [word.upper() for word in words]
 </pre><hr>
 

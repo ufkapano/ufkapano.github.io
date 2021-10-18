@@ -8,6 +8,8 @@
 
 <h1>Pliki</h1>
 
+<p>https://docs.python.org/3/library/functions.html#open
+
 <h3>WPROWADZENIE</h3>
 
 <p>Python jest dobrze przygotowany do bezpośredniej obsługi zarządzania
@@ -27,14 +29,20 @@ Po zamknięciu pliku nie można go już przetwarzać.
 <p>W Pythonie rozróżnia się pomiędzy plikami tekstowymi,
 a plikami binarnymi.
 Zawartość pliku tekstowego może być podzielona na wiersze. 
-Każdy wiersz kończy się znakiem końca wiersza (zwykle "\n", newline).
-Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
+Każdy wiersz, ewentualnie oprócz ostatniego, 
+kończy się znakiem końca wiersza (zwykle "\n", newline).
+W Py3 pliki otwarte w trybie tekstowym zwracają zawartość jako string,
+gdzie bajty są dekodowane do code points z użyciem encoding.
+
+<p>Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
+Takie pliki zwracają ciąg bajtów bez żadnego dekodowania.
 
 <hr><pre>
-afile = open(file_name, mode='r', buffering)   # Py2
+afile = open(file_name, mode='r' [, buffering])   # Py2
 afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
     newline=None, closefd=True, opener=None)   # Py3
+afile = open(file_name, 'r', encoding='utf-8')   # Py3, typowe wywołanie
 # file_name (string): nazwa pliku;
 # mode (string):
 # "r" (czytanie),
@@ -43,19 +51,21 @@ afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
 # "r+" (czytanie i pisanie; poprzednia zawartość pozostaje),
 # "w+" (czytanie i pisanie; kasowanie poprzedniej zawartości),
 # "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),
-# "b" (dodatek do poprzednich, tryb binarny, Windows, Macintosh),
-# "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy).
+# "t" (dodatek do poprzednich, tryb tekstowy, domyślny w Py3),
+# "b" (dodatek do poprzednich, tryb binarny),
+# "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy, deprecated).
 # encoding : zwykle "utf-8" lub domyślne, używa się w text mode (Py3);
 help(open)
 dir(afile)     # spis metod
 afile.close()   # otwarty plik należy zamknąć
 </pre><hr>
 
-<p>Odczytywanie danych z pliku (mode "r").
+<p>Odczytywanie danych z otwartego pliku tekstowego (mode "r").
 
 <hr><pre>
 S = infile.read()      # przeczytanie całego pliku
-S = infile.read(5)      # przeczytanie 5 znaków
+S = infile.read(5)      # przeczytanie 5 znaków/bajtów w Py2
+S = infile.read(5)      # przeczytanie 5 code points w Py3
 # Przy pustym pliku S będzie równe "".
 # Pusta linia to napis równy "\n".
 
@@ -66,13 +76,13 @@ L = infile.readlines()
 # Czyta wszystkie linie i przechowuje je jako listę stringów z \n na końcu.
 
 L = infile.readlines(50)
-# Czyta 50 bajtów lub więcej, aby była pełna linia!
+# Czyta 50 bajtów (code points w Py3) lub więcej, aby była pełna linia!
 # To jest przydatne przy czytaniu dużych plików, aby nie wczytywać
 # całości do pamięci.
 # Taką listę stringów można zapisać do pliku przez outfile.writelines(L).
 </pre><hr>
 
-<p>Zapisywanie danych do otwartego pliku (mode "w").
+<p>Zapisywanie danych do otwartego pliku tekstowego (mode "w").
 
 <hr><pre>
 liczba = 52   # różne typy danych
@@ -110,7 +120,7 @@ outfile.flush()
 afile.write("0123456789abcdefgh")
 
 # afile.seek(offset[, whence])
-# offset - ku końcowi (dodatni) lub początkowi (ujemny, tylko Python 2)
+# offset - ku końcowi (dodatni) lub początkowi (ujemny, tylko Py2)
 # whence=0 (domyślnie), offset &gt; 0, bo od początku pliku
 # whence=1, offset różny, bo liczymy od bieżącego położenia w pliku
 # whence=2, offset &lt; 0, bo od końca pliku
@@ -118,12 +128,12 @@ afile.write("0123456789abcdefgh")
 afile.seek(5)                 # idź do 6-tego bajtu
 N = afile.tell()              # aktualna pozycja w pliku (int lub long)
 S = afile.read(1)             # czytaj 1 bajt
-afile.seek(-3,2)              # idź do 3-go bajtu od końca, tylko Python 2
+afile.seek(-3,2)              # idź do 3-go bajtu od końca, tylko Py2
 </pre><hr>
 
 <h3>PRZYKŁAD</h3>
 
-<p>Mamy napisać funkcję wykonującą kopiowanie pliku.
+<p>Mamy napisać funkcję wykonującą kopiowanie pliku (Py2).
 
 <hr><pre>
 def copy_file(infile_name, outfile_name):
@@ -156,8 +166,19 @@ def print_file(file_name):
     """Wypisywanie zawartości pliku na stdout."""
     afile = open(file_name, "r")
     for line in afile:
-        print line,   # line zawiera \n, Python 2
+        print line,   # line zawiera \n, Py2
     afile.close()
+</pre><hr>
+
+<h3>UŻYCIE MENEDŻERA KONTEKSTU (ZALECANE)</h3>
+
+<hr><pre>
+with open('book.txt', 'r') as infile:   # infile zostanie zamknięte
+    text = infile.read()
+    # for line in infile: ...
+</pre><hr><pre>
+with open('results.txt', 'w') as outfile:   # outfile zostanie zamknięte
+    outfile.write(text)
 </pre><hr>
 
 </body>
