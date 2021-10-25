@@ -53,7 +53,7 @@ wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
 | for char in S: pass  | iteracja                    |
 | S1 in S2             | zawieranie (bool)           |
 | S1 not in S2         |                             |
-| S1.count(S2)         | liczba wystąpień            |
+| S1.count(S2)         | liczba wystąpień            | (non-overlapping matches!)
 | S1.index(S2)         | pierwsze wystąpienie        |
 | max(S), min(S)       | największy|najmniejszy znak |
 | "%s dom" % "stary"   | formatowanie łańcucha       |
@@ -245,6 +245,8 @@ word.title()                  # "Raz Dwa Trzy"
 word.swapcase()               # "RaZ DwA TrZy"
 word.startswith("abc")        # sprawdzam prefix
 word.endswith("abc")          # sprawdzam suffix
+"abbbbc".count("bb")          # wynik 2, a nie 3
+    # bo nie wlicza się nakładających wystąpień
 
 # Lista wyrazów bez białych znaków.
 line = "a\tb c\nd"
@@ -330,24 +332,24 @@ High-Performance in Python with Zero-Copy and the Buffer Protocol (by Julien Dan
 
 <h3>PYTHON 3</h3>
 
-<p>W Pythonie 3 zamiast typów <em>str</em> i <em>unicode</em> 
+<p>W Py3 zamiast typów <em>str</em> i <em>unicode</em> 
 występują typy <em>bytes</em> i <em>str</em>, 
 które mają odmienne własności.
-W Pythonie 3 znika <em>basestring</em> (PEP 3137).
+W Py3 znika <em>basestring</em> (PEP 3137).
 
 <p><em>bytes(object)</em> zwraca niezmienną (immutable) tablicę bajtów.
-[W Pythonie 2.7 jest to alias do str().]
+[W Py2.7 jest to alias do str().]
 
 <p><em>bytearray(object)</em> zwraca zmienną (mutable) tablicę bajtów.
-[Istnieje w Pythonie 2.7.]
+[Istnieje w Py2.7.]
 
 <p><em>str(object)</em> zwraca niezmienny string mogący zawierać znaki unikodu.
-[W Pythonie 2 odpowiada mu unicode().]
+[W Py2 odpowiada mu unicode().]
 
 <p><em>memoryview(object)</em> tworzy widok obiektu. 
 Obiekt musi wspierać protokół buforowania (buffer protocol), czyli dawać
 dostęp do bufora obiektu bez robienia kopii. 
-Było wiele zmian w kolejnych wersjach Pythona 3.
+Było wiele zmian w kolejnych wersjach Py3.
 
 <h3>PRZYKŁAD</h3>
 

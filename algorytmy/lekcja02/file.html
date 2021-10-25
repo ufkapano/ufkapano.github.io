@@ -37,6 +37,7 @@ gdzie bajty są dekodowane do code points z użyciem encoding.
 <p>Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
 Takie pliki zwracają ciąg bajtów bez żadnego dekodowania.
+Nie określa się kodowania dla operacji w trybie binarnym.
 
 <hr><pre>
 afile = open(file_name, mode='r' [, buffering])   # Py2
@@ -48,6 +49,7 @@ afile = open(file_name, 'r', encoding='utf-8')   # Py3, typowe wywołanie
 # "r" (czytanie),
 # "w" (pisanie; kasowanie poprzedniej zawartości; utworzy plik, gdy nie istniał),
 # "a" (dopisywanie; poprzednia zawartość pozostaje), 
+# "x" (exclusive creation, failing if the file already exists),
 # "r+" (czytanie i pisanie; poprzednia zawartość pozostaje),
 # "w+" (czytanie i pisanie; kasowanie poprzedniej zawartości),
 # "a+" (czytanie i pisanie; poprzednia zawartość pozostaje),

@@ -20,8 +20,8 @@ pamiętać pełnej listy, a lista jest tylko pewnym krokiem
 pośrednim w obliczeniach.
 Generatory to "leniwe funkcje": obliczają wartości tylko wtedy,
 gdy są żądane.
-Generatory są iteratorami, bo obsługują metodę next() [Python 2]
-lub __next__() [Python 3] i funkcję wbudowaną next() [Python 2.7 i Python 3].
+Generatory są iteratorami, bo obsługują metodę next() [Py2]
+lub __next__() [Py3] i funkcję wbudowaną next() [Py2.7 i Py3].
 Więcej o iteratorach powiemy po omówieniu klas i wyjątków (lekcja 7).
 
 <p>Każde wyrażenie yield tymczasowo zatrzymuje przetwarzanie,
@@ -34,20 +34,23 @@ są wytwarzane w locie (on the fly).
 
 <hr><pre>
 # Przykładowa lista składana.
-x = [i*i for i in range(100)]           # lista w całości
+x = [i*i for i in range(100)]   # lista w całości
 
+# Wyrażenie generatora (generator expression) to wyrażenie, które zwraca iterator.
 # xrange() jest generatorem, więc dobrze tu pasuje.
-x = (i*i for i in xrange(100))          # generator object (Python 2)
+x = (i*i for i in xrange(100))          # generator object (Py2)
 
 # W praktyce xrange() nie jest szybsze niż range().
 # Przydaje się przy bardzo długich listach, gdy brakuje pamięci.
 
 # Tworzenie list w różnych wersjach Pythona.
-L = range(8)                  # Python 2
-L = list(xrange(8))           # Python 2
-L = list(range(8))            # Python 3, range() to generator
+L = range(8)                  # Py2
+L = list(xrange(8))           # Py2
+L = list(range(8))            # Py3, range() to generator
 L = list(range(8))            # UNIWERSALNE
 </pre><hr><pre>
+# Funkcja generatora (generator function) to funkcja, która zwraca iterator.
+
 def my_generator(stop):
     """Generator zastępujący xrange(stop)."""
     value = 0
@@ -71,6 +74,8 @@ print ( next(x) )           # 2
 print ( next(x) )           # StopIteration
 # W następnych wywołaniach też otrzymamy wyjątek StopIteration.
 </pre><hr><pre>
+# Generator może być skończony lub nieskończony.
+
 def fibonacci():
     """Nieskończony generator liczb Fibonacciego."""
     minus1, minus0 = 0, 1
@@ -99,9 +104,43 @@ for i in fib:
 print ( next(fib) )     # 233
 print ( next(fib) )     # 377
 </pre><hr><pre>
+# Prędkość vs pamięć.
+
+import sys
+import timeit
+
+N = pow(10, 7)
+
+sqr_list = [i*i for i in range(N)]
+print ( sys.getsizeof(sqr_list) )
+
+sqr_gen = (i*i for i in range(N))
+print ( sys.getsizeof(sqr_gen) ) 
+
+# Obiekty budowane na poczekaniu.
+t1 = timeit.Timer(lambda: sum([i*i for i in range(N)]))
+t2 = timeit.Timer(lambda: sum(i*i for i in range(N)))
+
+# Obiekty przygotowane wcześniej.
+t3 = timeit.Timer(lambda: sum(sqr_list))
+t4 = timeit.Timer(lambda: sum(sqr_gen))
+
+print ( "sum list {}".format(t1.timeit(1)) )
+print ( "sum gen {}".format(t2.timeit(1)) )
+print ( "sum list2 {}".format(t3.timeit(1)) )
+print ( "sum gen2 {}".format(t4.timeit(1)) )
+
+# Wyniki (Py3.7):
+# 81528056
+# 120
+# sum list 0.5472016650019214
+# sum gen 0.5155281510014902
+# sum list2 0.13735308399918722
+# sum gen2 0.5134274550000555
+</pre><hr><pre>
 # Przy generatorach jest problem, jeżeli chcemy wykonać podwójną
 # iterację po obiekcie generatora.
-x = (i*i for i in xrange(10))        # generator object
+x = (i*i for i in range(10))        # generator object
 for i in x:
     for j in x:
         print ( "{} {}".format(i, j) )
@@ -118,8 +157,8 @@ for i in x:
 # Druga pętla for wyczerpała generator x.
 </pre><hr><pre>
 # Próbujemy z dwoma generatorami
-x = (i*i for i in xrange(10))        # generator object
-y = (i*i for i in xrange(10))        # generator object
+x = (i*i for i in range(10))        # generator object
+y = (i*i for i in range(10))        # generator object
 for i in x:
     for j in y:
         print ( "{} {}".format(i, j) )
@@ -138,8 +177,8 @@ for i in x:
 </pre><hr><pre>
 # xrange to jest osobna klasa, więc zwraca nowe instancje.
 # Rozwiązaniem są dwa niezależne generatory, które powstają w pętli.
-for i in (i*i for i in xrange(10)):
-    for j in (i*i for i in xrange(10)):
+for i in (i*i for i in range(10)):
+    for j in (i*i for i in range(10)):
         print ( "{} {}".format(i, j) )
 # WYNIK
 0 0

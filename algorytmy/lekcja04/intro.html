@@ -18,19 +18,19 @@ wykorzystania kodu i minimalizowania powtarzalności kodu.
 
 <pre>
 Instrukcje i wyrażenia związane z funkcjami
-+-------------+----------------------------+
-| Instrukcja  | Przykłady                  |
-+-------------+----------------------------+
-| Wywołania   | my_func(12, word="abc")    |
-| def, return | def func(x, y=1):          |
-|             |     return x + y           |
-| global      | def changer():             |
-|             |     global x; x = "nowy"   |
-| nonlocal    | def changer(): # Python 3  | PEP 3104
-|             |     nonlocal x; x = "nowy" |
-| yield       | generatory                 |
-| lambda      | funkcje anonimowe          |
-+-------------+----------------------------+
++-------------+-------------------------------+
+| Instrukcja  | Przykłady                     |
++-------------+-------------------------------+
+| Wywołania   | my_func(12, word="abc")       |
+| def, return | def func(x, y=1):             |
+|             |     return x + y              |
+| global      | def changer():                |
+|             |     global x; x = "nowy"      |
+| nonlocal    | def changer(): # Py3 PEP 3104 |
+|             |     nonlocal x; x = "nowy"    |
+| yield       | generatory                    |
+| lambda      | funkcje anonimowe             |
++-------------+-------------------------------+
 </pre>
 
 <p>Definicja funkcji tworzy obiekt funkcji.
@@ -99,11 +99,18 @@ Zachowanie funkcji zależy od tego, co do niej przekażemy.
 <hr><pre>
 def times(x, y):
     """Zwraca iloczyn argumentów."""
-    return x * y
+    return x * y   # uruchamia metodę __mul__
 
 times(2, 3)                   # 6
 times(2, 3.14)                # 6.28
 times("Bum!", 3)              # "Bum!Bum!Bum!"
+</pre><hr><pre>
+# Polimorficzna funkcja len() bazuje na metodzie __len__.
+
+len("Python")                      # 6, długość stringu
+len(["Python", "C++", "Java"])     # 3, liczba elementów listy
+len({"Name": "Adam", "Age": 30})   # 2, liczba kluczy
+len(set([1, 3, 5, 7]))             # 4, liczność zbioru
 </pre><hr>
 
 <h3>ZMIENNE LOKALNE</h3>

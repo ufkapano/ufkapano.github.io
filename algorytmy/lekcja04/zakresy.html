@@ -38,7 +38,7 @@ wprowadzonym w błąd.
 X = 99                        # zmienna globalna (automatycznie)
 
 def func():
-    #print ( X )          # ERROR, X będzie lokalne
+    #print ( X )          # NameError, X będzie lokalne
     X = 88                # zmienna lokalna
     print ( X )           # 88, odwołanie do lokalnego X
 
@@ -53,9 +53,10 @@ def func():
     Y = 88                # zmienna lokalna
     Z = 77
 
-func()                        # 99
-#print ( Y )                  # ERROR, Y nie istnieje
-print ( Z )                   # 77, Z jest globalne
+X = 55
+func()              # 55, rozwiązywanie nazw następuje w czasie wykonania!
+#print ( Y )        # NameError, Y nie istnieje
+print ( Z )         # 77, Z jest globalne
 </pre><hr><pre>
 X = 99                        # zmienna globalna
 
@@ -68,7 +69,7 @@ func()                        # 99
 print ( X )                   # 88
 </pre><hr><pre>
 # https://www.python.org/dev/peps/pep-0227/
-# PEP 227 -- Statically Nested Scopes
+# PEP 227 - Statically Nested Scopes
 # Przykład działania nested scopes, zagnieżdżonych zakresów.
 
 x = 1
@@ -84,7 +85,7 @@ outer()   # wypisze 2 z zagnieżdżonego zakresu
 #print ( math.sin(1) )   # NameError: name 'math' is not defined
 
 # Funkcja inner() widzi zmienną x z zakresu zagnieżdżonego wewnątrz
-# funkcji outer(), a nie z zakresu globalnego, jak było w Pythonie 2.1.
+# funkcji outer(), a nie z zakresu globalnego, jak było w Py2.1.
 </pre><hr><pre>
 def make_score(score=0):
     for i in [1, 2, 3, 4]:
@@ -92,7 +93,7 @@ def make_score(score=0):
             #global score
 #NameError: name 'score' is not defined
 
-            nonlocal score   # Python 3, bez tego komunikat
+            nonlocal score   # Py3, bez tego komunikat
 #UnboundLocalError: local variable 'score' referenced before assignment
             # Wskazujemy, że score nie jest lokalna wewnątrz increment(),
             # nie jest globalna, jest w zakresie make_score().

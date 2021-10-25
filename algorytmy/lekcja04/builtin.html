@@ -13,24 +13,24 @@
 <hr><pre>
 # Sprawdzenie listy obiektów wbudowanych 
 # (wyjątki i inne klasy, funkcje).
-import __builtin__            # Python 2
+import __builtin__            # Py2
 dir(__builtin__)
 zip                           # funkcja wbudowana
 zip = "qwerty"                # zmieniamy referencję zip
 __builtin__.zip               # dostęp do oryginalnego zip
-__builtin__.zip = "qwerty"    # HORROR! Python 2
+__builtin__.zip = "qwerty"    # HORROR! Py2
 </pre><hr>
 
 <p>W Pythonie 3 występuje moduł <em>builtins</em>.
 
 <p>Nazwy typów: 
 basestring(), bool(), complex(), dict(), float(),
-frozenset(), int(), list(), long() [Python 2], set(), str(),
+frozenset(), int(), list(), long() [Py2], set(), str(),
 tuple(), unicode().
 
 <p>Funkcje matematyczne i narzędziowe:
 abs(), all(), any(), chr(), divmod(), hex(), 
-len(), map(), max(), min(), next() [2.6+].
+len(), map(), max(), min(), next() [Py2.6+].
 oct(), ord(), pow(), range(), repr(), reversed(), round(),
 sorted(), sum(), unichr(), xrange(), zip().
 
@@ -40,30 +40,33 @@ isinstance(), issubclass(), object(), property(),
 setattr(), staticmethod(), super().
 
 <p>Inne funkcje: __import__(), 
-bin() [2.6+], callable(), cmp() [Python 2], compile(), 
-enumerate(), eval(), execfile(), file(), filter(), format() [2.6+],
-globals(), hash(), help(), id(), input(), iter() [2.2+],
+bin() [Py2.6+], callable(), cmp() [Py2], compile(), 
+enumerate(), eval(), execfile(), file(), filter(), format() [Py2.6+],
+globals(), hash(), help(), id(), input(), iter() [Py2.2+],
 locals(), open(), raw_input(),
-reduce() [Python 2], reload(), slice(), type(), vars().
+reduce() [Py2], reload(), slice(), type(), vars().
 
 <h3>FUNKCJE ZWIĄZANE Z LISTAMI</h3>
 
 <p>Wbudowane funkcje przydatne przy pracy na listach:
 
 <ul>
-<li>zip(seq1 [, seq2, ...]) - zwraca jedną listę krotek.
+<li>zip(seq1 [, seq2, ...]) - zwraca jedną listę krotek [Py2] 
+lub generator krotek [Py].
 
-<li>map(function, sequence) - funkcja przetworzy
-po kolei każdy element listy.
+<li>map(func, sequence) - funkcja 'func' przetworzy po kolei każdy element listy
+i zwróci listę wyników [Py2] lub iterator wyników [Py3].
 
-<li>filter(function, sequence) - z listy pozostaną
-elementy, dla których funkcja zwróci True.
+<li>filter(func, sequence) - z sekwencji pozostaną
+elementy, dla których funkcja 'func' zwróci True.
+W Py2 filter() zwraca listę, krotkę lub string.
+W Py3 filter() zwraca 'filter object' (iterator).
 
-<li>reduce(function, sequence) - zwraca pojedyńczą
+<li>reduce(func, sequence) - zwraca pojedyńczą
 wartość obliczaną następująco: funkcja dwóch argumentów pobiera
 pierwsze dwa elementy z listy, oblicza wynik; dalej funkcja pobiera
 poprzedni wynik i trzeci element z listy, oblicza wynik, itd.
-W Pythonie 3 funkcja jest umieszczona w moduje functools.
+W Py3 funkcja jest umieszczona w module 'functools'.
 </ul>
 
 <p>Funkcje map() i filter() można łatwo zastąpić listą składaną.
@@ -72,34 +75,31 @@ W Pythonie 3 funkcja jest umieszczona w moduje functools.
 def cube(x):
     return x * x * x
 
-print ( map(cube, range(10)) )
-print ( [cube(x) for x in range(10)] )  # lista składana
+list(map(cube, range(10)))
+[cube(x) for x in range(10)]   # lista składana
 
 L = [-2, -1, 0, 1, 2]
-print ( map(abs, L) )                   # [2, 1, 0, 1, 2]
-print ( [abs(x) for x in L] )           # lista składana
+list(map(abs, L))             # [2, 1, 0, 1, 2]
+[abs(x) for x in L]           # lista składana
 
-L = [[1, 2], [3, 4]]                    # lista list
-print ( map(sum, L) )                   # [3, 7]
-print ( [sum(x) for x in L] )           # lista składana
-
-# Pythonie 3 map() zwraca generator, czyli aby zobaczyć
-# końcową listę trzeba napisać list(map(sum, L)).
+L = [[1, 2], [3, 4]]          # lista list
+list(map(sum, L))             # [3, 7]
+[sum(x) for x in L]           # lista składana
 </pre><hr><pre>
 # Liczba argumentów funkcji musi zgadzać się z liczbą
 # dostarczonych list, a listy muszą mieć równą długość.
 def calc(x, y):
     return 2 * x + y
 
-alist = range(9)
-print ( map(calc, alist, alist) )
-print ( [calc(x, y) for (x, y) in zip(alist, alist)] )   # lista składana
+L = range(9)
+list(map(calc, L, L))
+[calc(x, y) for (x, y) in zip(alist, alist)]   # lista składana
 </pre><hr><pre>
 def check(x):
     return x % 2 != 0 and x % 3 != 0
 
-print ( filter(check, range(30)) )
-print ( [x for x in range(30) if check(x)] )   # lista składana
+list(filter(check, range(30)))
+[x for x in range(30) if check(x)]   # lista składana
 </pre><hr><pre>
 def add(x, y):
     return x + y
@@ -145,7 +145,7 @@ def my_sum(sequence):
     return reduce(lambda x,y: x+y, sequence, 0)
 </pre><hr><pre>
 # import math
-# print ( math.factorial(10) )
+# math.factorial(n)
 
 def my_factorial(n):
     """Slow factorial()."""
@@ -164,6 +164,7 @@ def lcm(a, b):
 # Najmniejsza wspólna wielokrotność kilku liczb.
 # Zastosowane w pakiecie SymPy do obliczania rzędu
 # permutacji danej jako iloczym cykli.
+
 reduce(lcm, sequence, 1)
 </pre><hr>
 

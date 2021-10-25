@@ -59,13 +59,15 @@ tester2(3)   # [3]
 <h3>DOWOLNA LISTA ARGUMENTÓW</h3>
 
 <hr><pre>
-def print_multiple_items(separator, *arguments):   # arguments to krotka
+# Użycie składni '*identifier'.
+
+def print_multiple_items(separator, *arguments):   # 'arguments' to krotka do utworzenia
     """Sklejenie napisów podanym separatorem."""
     print ( separator.join(arguments) )
 
 print_multiple_items("_", "ab", "cde", "f")       # ab_cde_f
 </pre><hr><pre>
-def union(*arguments):   # arguments to krotka
+def union(*arguments):   # 'arguments' to krotka do utworzenia
     """Wypisanie listy wspólnych znaków występujących w napisach."""
     result = []
     for word in arguments:
@@ -80,7 +82,9 @@ print ( union("abc", "cde", "efg") )   # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 <h3>ARGUMENTY W POSTACI SŁÓW KLUCZOWYCH</h3>
 
 <hr><pre>
-def university(**keywords):   # keywords to słownik
+# Użycie składni '**identifier'.
+
+def university(**keywords):   # 'keywords' to słownik do utworzenia
     """Wypisanie władz uniwersytetu."""
     for key in sorted(keywords):
         print ( "{} : {}".format(key, keywords[key]) )
@@ -142,6 +146,19 @@ describe(**person)
 
 <p>W Pythonie 2 istnieje funkcja <em>apply</em> o podobnym
 zastosowaniu, ale została usunięta z Pythona 3.
+
+<h3>WYMUSZANIE FORMY ARGUMENTÓW (PYTHON 3)</h3>
+
+<hr><pre>
+def func(pos1, pos2, /, pos_or_kwd, *, kwd1, kwd2): pass
+
+def func_pos_only(arg, /): pass   # func_pos_only(25)
+
+def func_kwd_only(*, arg): pass   # func_kwd_only(arg=34)
+
+# sorted(iterable, /, *, key=None, reverse=False)
+# abs(x, /)
+</pre><hr>
 
 <h3>SYMULOWANIE PARAMETRÓW WYJŚCIA</h3>
 

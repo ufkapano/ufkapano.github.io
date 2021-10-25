@@ -15,12 +15,13 @@ dzięki czemu może
 pojawić się w miejscu niedostępnym dla instrukcji def.
 Lambda zwraca obiekt funkcji, do którego można opcjonalnie
 przypisać nazwę.
-Ciałem lambda jest pojedyńcze wyrażenie, a nie blok instrukcji.
-Przykładowo lambda nie może zawierać print [Python 2], bo to jest instrukcja
+Ciałem lambda jest pojedyncze wyrażenie, a nie blok instrukcji.
+Przykładowo lambda nie może zawierać print [Py2], bo to jest instrukcja
 (podobnie yield, return).
 
 <hr><pre>
 # Do lambda można przyporządkować nazwę.
+
 func1 = lambda x, y, z: x + y + z
 print ( func1(2, 3, 4) )
 
@@ -28,14 +29,17 @@ def func1(x, y, z):            # równoważna funkcja
     return x + y + z
 </pre><hr><pre>
 # W argumentach lambda można używać argumentów domyślnych.
+
 func2 = (lambda x=0, y=0, z=0: x + y + z)
 print ( func2(4, 5) )
 </pre><hr><pre>
 # Lambda można stosować w funkcji map().
+
 map(lambda x: 2*x+1, range(9))
 [2*x+1 for x in range(9)]     # lista składana
 </pre><hr><pre>
 # Z lambda można budować listę lub słownik.
+
 action = {
 "jeden": lambda x: x,
 "dwa": lambda x: x**2,
@@ -52,9 +56,17 @@ lambda x: pow(x, 3)
 print ( powers[2](3) )     # pow(3, 2) = 9
 </pre><hr><pre>
 # Zastosowanie logiki wyboru.
+
 lambda_abs = lambda x: -x if x &lt; 0 else x
 lambda_min = lambda x, y: x if x &lt; y else y
 lambda_max = lambda x, y: x if x &gt; y else y
+</pre><hr><pre>
+# Zastosowanie lambda do sortowania.
+
+number_list.sort(reverse=True)
+number_list.sort(key=lambda x: -x)
+pair_list.sort(key=lambda t: abs(t[0]) + abs(t[1]))   # metryka taksówkowa
+pair_list.sort(key=lambda t: (-t[0], t[1]))   # malejąco ze względu na t[0]
 </pre><hr>
 
 </body>
