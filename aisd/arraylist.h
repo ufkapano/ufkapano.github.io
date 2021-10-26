@@ -18,9 +18,13 @@ public:
     } // default constructor
     ~ArrayList() { delete [] tab; }
     ArrayList(const ArrayList& other); // copy constructor
+    // usage:   ArrayList<int> list2(list1);
     ArrayList(ArrayList&& other); // move constructor
+    // usage:   ArrayList<int> list2(std::move(list1));
     ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
+    // usage:   list2 = list1;
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
+    // usage:   list2 = std::move(list1);
     bool empty() const { return last == 0; } // checks if the container has no elements
     bool full() const { return last == msize; } // checks if the container is full
     int size() const { return last; } // liczba elementow na liscie
@@ -53,7 +57,14 @@ public:
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
     // zwraca pozycje wstawionego elementu
-    friend std::ostream& operator<<(std::ostream& os, const ArrayList& L);
+    // zwraca pozycje wstawionego elementu
+    friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
+        for (int i=0; i < L.last; ++i) { // odwolanie L.last
+            os << L.tab[i] << " ";   // odwolanie L.tab
+        }
+        return os;
+    }
+    // usage:   std::cout << L << std::endl;
 };
 
 #endif
