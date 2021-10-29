@@ -129,14 +129,15 @@ void anysort(Iterator first, Iterator last);
 template&lt;typename Iterator, typename Compare&gt;
 void anysort(Iterator first, Iterator last, Compare comp);
 </pre><hr><pre>
+// https://en.cppreference.com/w/cpp/algorithm/is_sorted
+
 // Sprawdzenie poprawności sortowania liczb całkowitych.
 #include &lt;cassert&gt;
 
-for(std::size_t i = 0; i &lt; v.size(); i++)
-    assert( v[i] == (int)i );   // vector, array
-
-for(std::size_t i = 0; i &lt; sizeof(v) / sizeof(*v); i++)
-    assert( v[i] == (int)i );   // zwykła tablica
+// Wykorzystanie funkcji z STL.
+assert( std::is_sorted(v.begin(), v.end()) );   // vector, array
+assert( std::is_sorted(std::begin(v), std::end(v)) );   // zwykła tablica
+assert( std::is_sorted(v, v + (sizeof(v) / sizeof(*v))) );   // zwykła tablica
 </pre><hr>
 
 <h3>MAKEFILE</h3>
