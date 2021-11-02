@@ -27,18 +27,18 @@ public:
     ~DoubleList(); // tu trzeba wyczyscic wezly
     DoubleList(const DoubleList& other); // copy constructor
     // usage:   DoubleList<int> list2(list1);
-    DoubleList(DoubleList&& other); // move constructor
+    DoubleList(DoubleList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   DoubleList<int> list2(std::move(list1));
     DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
     // usage:   list2 = list1;
     DoubleList& operator=(DoubleList&& other); // move assignment operator, return *this
-    // usage:   list2 = std::move(list1);
+    // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1)
-    void push_front(T&& item); // O(1)
+    void push_front(T&& item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
-    void push_back(T&& item); // O(1)
+    void push_back(T&& item); // O(1) NIEOBOWIAZKOWE
     T& front() const { return head->value; } // zwraca poczatek, nie usuwa
     T& back() const { return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)

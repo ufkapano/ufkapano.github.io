@@ -19,10 +19,10 @@ public:
     ~ArrayList() { delete [] tab; }
     ArrayList(const ArrayList& other); // copy constructor
     // usage:   ArrayList<int> list2(list1);
-    ArrayList(ArrayList&& other); // move constructor
+    ArrayList(ArrayList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   ArrayList<int> list2(std::move(list1));
     ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
-    // usage:   list2 = list1;
+    // usage:   list2 = list1; NIEOBOWIAZKOWE
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
     // usage:   list2 = std::move(list1);
     bool empty() const { return last == 0; } // checks if the container has no elements
@@ -30,9 +30,9 @@ public:
     int size() const { return last; } // liczba elementow na liscie
     int max_size() const { return msize; } // najwieksza mozliwa liczba elementow
     void push_front(const T& item); // dodanie na poczatek
-    void push_front(T&& item); // dodanie na poczatek
+    void push_front(T&& item); // dodanie na poczatek NIEOBOWIAZKOWE
     void push_back(const T& item); // dodanie na koniec
-    void push_back(T&& item); // dodanie na koniec
+    void push_back(T&& item); // dodanie na koniec NIEOBOWIAZKOWE
     T& front(); // zwraca poczatek, nie usuwa, error dla pustej listy
     T& back(); // zwraca koniec, nie usuwa, error dla pustej listy
     void pop_front(); // usuwa poczatek, error dla pustej listy
@@ -42,7 +42,7 @@ public:
     void reverse(); // odwracanie kolejnosci
     void sort(); // sortowanie listy
     void merge(ArrayList& other); //  merges two sorted lists into one
-    // Operacje z indeksami.
+    // Operacje z indeksami. NIEOBOWIAZKOWE
     int erase(int pos); // return Iterator following the last removed element,
     // czyli u mnie pos, bo ten element za usunietym sie przesunie na pos;
     // ale jak usune ostatni, to chyba powinien zwrocic -1 (niewlasciwy indeks)

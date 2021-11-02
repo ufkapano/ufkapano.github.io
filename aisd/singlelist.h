@@ -24,18 +24,18 @@ public:
     ~SingleList(); // tu trzeba wyczyscic wezly
     SingleList(const SingleList& other); // copy constructor
     // usage:   SingleList<int> list2(list1);
-    SingleList(SingleList&& other); // move constructor
+    SingleList(SingleList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   SingleList<int> list2(std::move(list1));
     SingleList& operator=(const SingleList& other); // copy assignment operator, return *this
     // usage:   list2 = list1;
     SingleList& operator=(SingleList&& other); // move assignment operator, return *this
-    // usage:   list2 = std::move(list1);
+    // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
-    void push_front(const T& item); // O(1)
-    void push_front(T&& item); // O(1), L.push_front(std::move(item))
-    void push_back(const T& item); // O(1)
-    void push_back(T&& item); // O(1), L.push_back(std::move(item))
+    void push_front(const T& item); // O(1), L.push_front(item)
+    void push_front(T&& item); // O(1), L.push_front(std::move(item)) NIEOBOWIAZKOWE
+    void push_back(const T& item); // O(1), L.push_back(item)
+    void push_back(T&& item); // O(1), L.push_back(std::move(item)) NIEOBOWIAZKOWE
     T& front() const { return head->value; } // zwraca poczatek, nie usuwa
     T& back() const { return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)
@@ -43,7 +43,7 @@ public:
     void clear(); // czyszczenie listy z elementow O(n)
     void display(); // O(n)
     void reverse(); // O(n)
-    // Operacje z indeksami.
+    // Operacje z indeksami. NIEOBOWIAZKOWE
     int erase(int pos); // return Iterator following the last removed element,
     T& operator[](int pos); // podstawienie L[pos]=item
     const T& operator[](int pos) const; // odczyt L[pos]
@@ -56,11 +56,14 @@ public:
 
 template <typename T>
 SingleList<T>::~SingleList() {
+    // I sposob.
     for (SingleNode<T> *node; !empty(); ) {
         node = head->next; // zapamietujemy
         delete head;
         head = node; // kopiowanie wskaznika
     }
+    // II sposob.
+    // while (!empty()) { pop_front(); }
 }
 
 template <typename T>
@@ -94,6 +97,7 @@ void SingleList<T>::display() {
 
 template <typename T>
 void SingleList<T>::pop_front() {
+    assert(!empty());
     SingleNode<T> *node = head; // zapamietujemy
     if (head == tail) { // jeden wezel na liscie
         head = tail = nullptr;
@@ -105,6 +109,7 @@ void SingleList<T>::pop_front() {
 
 template <typename T>
 void SingleList<T>::pop_back() {
+    assert(!empty());
     SingleNode<T> *node = tail; // zapamietujemy
     if (head == tail) { // jeden wezel na liscie
         head = tail = nullptr;
