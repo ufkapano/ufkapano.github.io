@@ -8,6 +8,8 @@
 
 <h1>Korzystanie z modułów</h1>
 
+<p>PEP 302 - New Import Hooks
+
 <h3>WPROWADZENIE</h3>
 
 <p>Python pozwala umieszczać pożyteczne definicje obiektów
@@ -56,6 +58,8 @@ import module1                # zaleca się pojedyńcze zapisy
 import module2, module3       # import kilku modułów
 
 print ( module1.name1 )       # kwalifikacja zmiennej z modułu
+other_name = module1          # przypisanie obiektu modułu
+print ( other_name.name1 )
 module1.name1 = new_value     # zwykle dozwolone, ale ostrożnie!
 print ( module1.name2() )     # kwalifikacja funkcji z modułu
 print ( module1.__doc__ )     # dostęp do łańcucha dokumentacyjnego
@@ -81,13 +85,13 @@ import module1 as module2      # import modułu pod inną nazwą
 # module2 = module1
 # del module1
 import numpy as np
-import Tkinter as tk   # Python 2
-import tkinter as tk   # Python 3
+import Tkinter as tk   # Py2
+import tkinter as tk   # Py3
 import pygame as pg
 </pre><hr><pre>
 from module3 import name1 as name2     # zmiana nazw atrybutów
 </pre><hr><pre>
-reload(module1)               # ponowne ładowanie modułu
+reload(module1)   # ponowne ładowanie modułu
 </pre><hr>
 
 <p>Instrukcja <em>from</em> niszczy podział przestrzeni nazw,

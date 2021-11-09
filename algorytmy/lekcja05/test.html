@@ -22,8 +22,6 @@ with a lighter-weight syntax for writing tests.
 <h3>MODUŁ doctest</h3>
 
 <hr><pre>
-import doctest
-
 def average(values):
     """Oblicza średnią arytmetyczną listy liczb.
     &gt;&gt;&gt; print ( average([20, 30, 70]) )
@@ -31,7 +29,9 @@ def average(values):
     """
     return sum(values, 0.0) / len(values)
 
-doctest.testmod()   # automatyczne sprawdzanie wbudowanych testów
+if __name__ == "__main__":
+    import doctest
+    doctest.testmod()   # automatyczne sprawdzanie wbudowanych testów
 </pre><hr>
 
 <h3>MODUŁ unittest</h3>
@@ -192,6 +192,22 @@ zapisane w systemie rzymskim można znaleźć w książce
 Marka Pilgrima <em>Dive Into Python</em>, 
 dostępną za darmo pod adresem
 <em>http://www.diveintopython.net/</em>.
+
+<h3>MODUŁ pytest</h3>
+
+<p>Moduł 'pytest' należy do biblioteki standardowej od Pythona 3.6.
+
+<hr><pre>
+# Przykładowy plik z testami test_sample.py
+
+def inc(x):
+    return x + 1
+
+def test_answer():
+    assert inc(3) == 5   # intentional error, 'assert' is used
+
+# Testy uruchamiamy w powłoce systemu oeracyjnego poleceniem 'pytest'.
+</pre><hr>
 
 <h3>MODUŁ timeit</h3>
 
