@@ -46,7 +46,16 @@ przypomnimy typowe operacje dla tego ADT.
 <li>czyszczenie listy [clear()],
 </ul>
 
+<p>Lista pojedynczo powiązana występuje w STL jako std::forward_list.
+
 <hr><pre>
+|   head              tail            |
+|    |                 |              |
+|    o                 o              |
+|  +--+-+   +--+-+   +--+-+    puste  |
+|  |11| +--o|33| +--o|22| +--| łącze  |
+|  +--+-+   +--+-+   +--+-+           |
+</pre><hr><pre>
 // Szablon dla pojedynczego węzła listy.
 template &lt;typename T&gt;
 struct SingleNode {

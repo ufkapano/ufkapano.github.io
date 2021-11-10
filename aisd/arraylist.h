@@ -13,6 +13,7 @@ class ArrayList {
     int last; // pierwsza wolna pozycja
 public:
     ArrayList(int s=10) : msize(s), last(0) {
+        assert( s > 0 );
         tab = new T[s];
         assert( tab != nullptr );
     } // default constructor
@@ -43,28 +44,22 @@ public:
     void sort(); // sortowanie listy
     void merge(ArrayList& other); //  merges two sorted lists into one
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    int erase(int pos); // return Iterator following the last removed element,
-    // czyli u mnie pos, bo ten element za usunietym sie przesunie na pos;
-    // ale jak usune ostatni, to chyba powinien zwrocic -1 (niewlasciwy indeks)
-    //
     // https://en.cppreference.com/w/cpp/language/operators
     // Array subscript operator
     T& operator[](int pos); // podstawienie L[pos]=item
     const T& operator[](int pos) const; // odczyt L[pos]
+    void erase(int pos); // usuniecie elementu na pozycji pos
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
-    int insert(int pos, const T& item); // inserts item before pos,
-    int insert(int pos, T&& item); // inserts item before pos,
+    void insert(int pos, const T& item); // inserts item before pos
+    void insert(int pos, T&& item); // inserts item before pos
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
-    // zwraca pozycje wstawionego elementu
-    // zwraca pozycje wstawionego elementu
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
         for (int i=0; i < L.last; ++i) { // odwolanie L.last
             os << L.tab[i] << " ";   // odwolanie L.tab
         }
         return os;
-    }
-    // usage:   std::cout << L << std::endl;
+    } // usage:   std::cout << L << std::endl;
 };
 
 #endif

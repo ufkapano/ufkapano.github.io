@@ -9,181 +9,152 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (8) - ADT PRIORITY QUEUE</h1>
+<h1>AiSD (8) - ADT QUEUE</h1>
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
 <h3>WPROWADZENIE</h3>
 
-<p>Kolejka priorytetowa to ADT zawierający elementy z kluczami (priorytetami), 
-która pozwala na przeprowadzenie następujących operacji: 
+<p>Kolejka to ADT, który pozwala zapisywać dane i następnie pobierać je 
+w takiej kolejności, w jakiej je zapisano 
+(ang. first in, first out, FIFO; pierwszy wchodzi, pierwszy wychodzi).
+Typowe operacje dla ADT QUEUE są następujące:
 
 <ul>
 <li>konstruktor tworzący pustą kolejkę,
 <li>testowanie, czy kolejka nie jest pusta [empty()],
 <li>odczyt liczby elementów w kolejce [size()],
-<li>wstawienie elementu do kolejki [push(item) lub put(item)],
-<li>usuwanie elementu o największym priorytecie [pop()],
-<li>dostęp do elementu o największym priorytecie [top()],
+<li>wstawienie elementu na koniec kolejki [push(item) lub put(item)],
+<li>usuwanie pierwszego elementu z kolejki [pop() lub get()],
+<li>dostęp do pierwszego elementu kolejki [front()],
+<li>dostęp do ostatniego elementu kolejki [back()],
 <li>czyszczenie kolejki [clear()].
 </ul>
 
-<p>Kolejki priorytetowe często używają wewnętrznie kopca.
-Wtedy tablicę zamienia się w kopiec w czasie O(n),
-a wstawianie i usuwanie elementów zajmuje czas O(log n).
-Alternatywą są drzewa binarne samobalansujące się.
-
 <hr><pre>
-// https://en.cppreference.com/w/cpp/container/priority_queue
+// https://en.cppreference.com/w/cpp/container/queue
+
+// https://en.cppreference.com/w/cpp/container/deque
 
 #include &lt;queue&gt;
 
-// W STL kolejka priorytetowa jest zbudowana na bazie std::vector,
-// inna możliwość to std::deque.
-// Jest to otoczka do zarządzania wewnętrznym kopcem.
-// Domyślnie w stałym czasie mamy dostęp do elementu największego.
-// Wstawianie i usuwanie elementów z kolejki zajmuje czas O(log n).
-// Można dostarczyć funkcję porównującą, która będzie użyta do ustalenia
-// priorytetów elementów, domyślnie jest to std::less.
-// Przykład użycia kolejki priorytetowej.
-
-//std::priority_queue&lt;int&gt; pq;   // domyslnie vector
-//std::priority_queue&lt;int, std::deque&lt;int&gt; &gt; pq;
-//std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; pq;
-</pre><hr><pre>
-// Własna funkcja porównująca.
-auto cmp = [](int left, int right) { return left &gt; right; };
-std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmp) &gt; pq(cmp);
-
-// https://en.cppreference.com/w/cpp/language/decltype
-// decltype() is useful when declaring types that are difficult
-// or impossible to declare using standard notation, like lambda-related
-// types or types that depend on template parameters. 
-</pre><hr><pre>
-// Wstawianie do kolejki par (priority, item) [jak w Pythonie].
-auto cmp = [](std::pair&lt;int,float&gt; left, std::pair&lt;int,float&gt; right) {
-    return left.first &lt; right.first; };
-std::priority_queue&lt; std::pair&lt;int,float&gt;, std::vector&lt; std::pair&lt;int,float&gt; &gt;,
-    decltype(cmp) &gt; pq(cmp);
-</pre><hr><pre>
-assert( pq.empty() );
-for (auto item : {1, 5, 4, 2, 3})
-    pq.push(item);   // wstawienie do kolejki
-assert( pq.size() == 5 );
-// Pobranie z kolejki elementu i wypisanie go.
-std::cout &lt;&lt; pq.top() &lt;&lt; std::endl;   // wypisuje, ale nie zdejmuje!
-pq.pop();    // usuwa z kolejki, ale nie zwraca
-assert( pq.size() == 4 );
-while (!pq.empty()) {
-    std::cout &lt;&lt; pq.top() &lt;&lt; std::endl;
-    pq.pop();
+// W STL std::queue jest zbudowana na bazie std::deque.
+// Przykład użycia kolejki.
+std::queue&lt;int&gt; Q;   // domyślnie std::deque
+assert( Q.empty() );
+for (auto item : {1, 2, 3, 5, 7})
+    Q.push(item);   // wstawienie do kolejki
+assert( Q.front() == 1 );   // odczyt
+assert( Q.back() == 7 );   // odczyt
+assert( Q.size() == 5 );
+Q.front() = 11;   // zmiana na początku kolejki
+Q.back() = 77;   // zmiana na końcu kolejki
+assert( Q.front() == 11 );
+assert( Q.back() == 77 );
+while(!Q.empty()) {
+    std::cout &lt;&lt; Q.front() &lt;&lt; std::endl; // odczyt
+    Q.pop();   // usuwa z kolejki
 }
 </pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/make_heap
-
-// Constructs a max heap in the range [first, last).
-
-template &lt; class RandomIt &gt;
-void make_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void make_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/push_heap
-
-// A new element can be added using std::push_heap().
-// Element na pozycji last-1 jest wstawiany do kopca [first, last-1).
-
-template &lt; class RandomIt &gt;
-void push_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void push_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/pop_heap
-
-// The first element can be removed using std::pop_heap().
-// Element z pozycji first jest zamieniany z last-1, a następnie
-// zakres [first, last-1) jest zamieniany na kopiec.
-
-template &lt; class RandomIt &gt;
-void pop_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void pop_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/sort_heap
-
-// Converts the max heap [first, last) into a sorted range in ascending order.
-// The resulting range no longer has the heap property. 
-
-template &lt; class RandomIt &gt;
-void sort_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void sort_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// Sortowanie przez kopcowanie, złożoność O(n log n).
-std::vector&lt;int&gt; v = {3, 1, 4, 1, 5, 9};
-std::make_heap(v.begin(), v.end()); // tworzenie kopca
-std::sort_heap(v.begin(), v.end()); // wyjmowanie elementów największych
-</pre><hr><pre>
-// Interfejs kolejki priorytetowej na bazie kopca z STL.
-
-#include &lt;algorithm&gt;   // make_heap, push_heap, pop_heap
-
+// Interfejs kolejki.
 template &lt;typename T&gt;
-class MyPriorityQueue {
-    std::vector&lt;T&gt; lst;
+class MyQueue {
+    // zależne od implementacji
 public:
-    MyPriorityQueue(int s=10) { lst.reserve(s); } // default constructor
-    ~MyPriorityQueue() { lst.clear(); }
-    MyPriorityQueue(const MyPriorityQueue& other); // copy constructor
-    MyPriorityQueue(MyPriorityQueue&amp;&amp; other); // move constructor
-    MyPriorityQueue& operator=(const MyPriorityQueue& other); // copy assignment operator, return *this
-    MyPriorityQueue& operator=(MyPriorityQueue&amp;&amp; other); // move assignment operator, return *this
-    bool empty() const { return lst.empty(); }
-    int size() const { return lst.size(); } // liczba elementow w kolejce
-    void push(const T& item) { // dodanie do kolejki
-        lst.push_back(item);
-        std::push_heap(lst.begin(), lst.end());
-    }
-    void push(T&amp;&amp; item) { // dodanie do kolejki
-        lst.push_back(std::move(item));
-        std::push_heap(lst.begin(), lst.end());
-    }
-    T& top() { return lst.front(); } // zwraca element najwiekszy, nie usuwa
-    void pop() { // usuwa element najwiekszy
-        std::pop_heap(lst.begin(), lst.end());
-        lst.pop_back();
-    }
-    void clear() { lst.clear(); } // czyszczenie listy z elementow
+    MyQueue(); // default constructor
+    ~MyQueue();
+    MyQueue(const MyQueue& other); // copy constructor
+    MyQueue(MyQueue&amp;&amp; other); // move constructor
+    MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
+    MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
+    bool empty() const; // checks if the container has no elements
+    int size() const; // liczba elementow w kolejce
+    void push(const T& item); // dodanie na koniec, push_back(item)
+    void push(T&amp;&amp; item); // dodanie na koniec, push_back(std::move(item))
+    T& front(); // zwraca koniec, nie usuwa
+    T& back(); // zwraca koniec, nie usuwa
+    void pop(); // usuwa poczatek kolejki, pop_front()
+    void clear(); // czyszczenie listy z elementow
     void display();
 };
 </pre><hr>
 
 <h3>ZADANIE 8.1</h3>
 
-<p>Przygotować implementację realizującą ADT PRIORITY QUEUE 
-nie korzystającą z kopca z STL, tylko własnych funkcji.
-Wydajność: wstawianie O(log n), usuwanie O(log n), odczyt największego O(1).
+<p>Przygotować implementację realizującą ADT QUEUE na bazie tablicy cyklicznej.
+Kolejne elementy będą wstawiane do tablicy cyklicznie, czyli po dojściu
+do końca tablicy będzie przejście do początku tablicy.
+Rozmiar tablicy jest o jeden większy niż maksymalna planowana
+liczba elementów w kolejce, po to aby rozróżnić sytuacje pustej
+i pełnej kolejki.
+
+<hr><pre>
+// myqueue.h
+template &lt;typename T&gt;
+class MyQueue {
+    T* tab;
+    int msize; // największa możliwa liczba elementów plus jeden
+    int head; // pierwszy do pobrania
+    int tail; // pierwsza wolna pozycja
+public:
+    MyQueue(int s=10) : msize(s+1), head(0), tail(0) {
+        tab = new T[s+1];
+        assert( tab != nullptr );
+    } // default constructor
+    ~MyQueue() { delete [] tab; }
+    MyQueue(const MyQueue& other); // copy constructor
+    MyQueue(MyQueue&amp;&amp; other); // move constructor
+    MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
+    MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
+    bool empty() const { return head == tail; }
+    bool full() const { return (head + msize -1) % msize == tail; }
+    int size() const { return (tail - head + msize) % msize; }
+    int max_size() const { return msize-1; }
+    void push(const T& item); // dodanie na koniec
+    void push(T&amp;&amp; item); // dodanie na koniec
+    T& front() { return tab[head]; } // zwraca poczatek
+    T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
+    void pop(); // usuwa poczatek
+    void clear(); // czyszczenie listy z elementow
+    void display();
+};
+</pre><hr><pre>
+template &lt;typename T&gt;
+void MyQueue&lt;T&gt;::push(const T& item) {
+    tab[tail] = item;
+    tail = (tail + 1) % msize;
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void MyQueue&lt;T&gt;::push(T&amp;&amp; item) {
+    tab[tail] = std::move(item);
+    tail = (tail + 1) % msize;
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void MyQueue&lt;T&gt;::display() {
+    for (int i = head; i != tail; i=(i+1) % msize) {
+        std::cout &lt;&lt; tab[i] &lt;&lt; " ";
+    }
+    std::cout &lt;&lt; std::endl;
+}
+</pre><hr>
 
 <h3>ZADANIE 8.2</h3>
 
-<p>Przygotować prostą implementację realizującą ADT PRIORITY QUEUE 
-na bazie listy powiązanej pojedynczo. Lista jest stale uporządkowana, 
-a największy element znajduje się na początku listy. 
-Można wykorzystać klasę SingleList lub std::forward_list.
-Wydajność: wstawianie O(n), usuwanie O(1), odczyt największego O(1).
+<p>Przygotować implementację realizującą ADT QUEUE na bazie listy
+powiązanej pojedynczo.
+Wykorzystać klasę SingleList [push_back(), pop_front()] lub 
+std::forward_list [tu jest trudniej, bo nie ma back() i push_back()].
 
 <h3>ZADANIE 8.3</h3>
 
-<p>Przygotować prostą implementację realizującą ADT PRIORITY QUEUE 
-na bazie tablicy. Tablica nie jest uporządkowana. 
-Wstawiamy nowy element na koniec tablicy.
-Przy usuwaniu elementu największego znajdujemy jego indeks, 
-zamieniamy go miejscami z ostatnim elementem i skracamy tablicę jak dla stosu. 
-Wydajność: wstawianie O(1), usuwanie O(n), odczyt największego O(n).
+<p>Przygotować implementację realizującą ADT QUEUE na bazie listy
+powiązanej podwójnie.
+Wykorzystać klasę DoubleList lub std::list.
+Możliwe są dwa warianty realizacji push() i pop():
+(a) push_back() i pop_front(),
+(b) push_front() i pop_back().
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

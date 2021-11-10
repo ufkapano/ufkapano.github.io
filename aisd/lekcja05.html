@@ -15,14 +15,25 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Listy powiązane podwójne mają elementy powiązane dwoma łączami: 
+<p>Listy powiązane podwójnie mają elementy powiązane dwoma łączami: 
 do elementu następnego (next) i do elementu poprzedniego (prev). 
 W łatwy sposób możemy poruszać się po liście do przodu i wstecz. 
 Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego, 
 podczas gdy przy listach połączonych pojedynczo potrzebne było też łącze 
 do węzła poprzedzającego. 
 
+<p>Lista powiązana podwójnie może być wykorzystana do implementacji
+std::list z biblioteki STL.
+
 <hr><pre>
+|      head                  tail             |
+|       |                     |               |
+|       o                     o               |
+|    +-+--+-+              +-+--+-+    puste  |
+| |--+ |11| +--o+-+--+-+o--+ |22| +--| łącze  |
+|    +-+--+-+o--+ |33| +--o+-+--+-+           |
+|               +-+--+-+                      |
+</pre><hr><pre>
 // Szablon dla pojedynczego węzła listy.
 template &lt;typename T&gt;
 struct DoubleNode {

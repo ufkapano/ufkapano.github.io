@@ -35,13 +35,16 @@ Typowe operacje dla ADT LIST są następujące:
 <li>dostęp do elementu o danym indeksie i,
 <li>dołączanie elementu przed element na pozycji i [insert()],
 <li>usunięcie elementu o danym indeksie i [erase()],
-<li>pobieranie wycinka listy,
 <li>sortowanie listy [sort()],
 <li>łączenie dwóch <em>posortowanych</em> list w jedną [merge()].
 </ul>
 
 <p>ADT LIST jest typowo implementowany jako lista powiązana 
 (liniowa lub cykliczna) lub tablica, zwykle o zmiennej długości.
+
+<p>W STL indeksowany dostęp do elementów zapewniają kontenery
+std::vector (ciągły obszar pamięci) i 
+std::deque (sekwencja indywidualnie alokowanych tablic o stałym rozmiarze).
 
 <hr><pre>
 // Kontenery w STL realizujące w pewnym stopniu ADT LIST.

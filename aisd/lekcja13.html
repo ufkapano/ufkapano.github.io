@@ -9,140 +9,310 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (13) - ADT MAP (trie)</h1>
+<h1>AiSD (13) - ADT MAP (mieszanie)</h1>
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
-<p>https://en.wikipedia.org/wiki/Trie
+<p>https://en.wikipedia.org/wiki/Associative_array
+
+<p>https://en.wikipedia.org/wiki/Hash_table
+
+<p>https://en.wikipedia.org/wiki/Hash_function
+
+<p>https://en.wikipedia.org/wiki/Open_addressing
+
+<p>https://en.wikipedia.org/wiki/Lazy_deletion
+
+<p>https://www.geeksforgeeks.org/hashing-data-structure/
 
 <h3>WPROWADZENIE</h3>
 
-<p>Drzewo trie (ang. prefix tree) jest to drzewo poszukiwań przechowujące 
-w węzłach fragmenty kluczy (drzewa BST przechowją w węzłach całe klucze). 
-Węzeł przechowujący ostatni fragment klucza przechowuje
-również wartość związaną z danym kluczem (lub tylko znacznik końca klucza).
-Wyszukiwanie klucza w drzewie trie zajmuje czas O(m), 
-a w zrównoważonych drzewach BST czas O(m*log(n)), 
-gdzie n to liczba kluczy, a m to największa długość klucza.
+<p>ADT MAP to inaczej tablica asocjacyjna (ang. associative array), 
+tablica skojarzeniowa, mapa, słownik.
+Przechowuje on pary (klucz, wartość) i umożliwia dostęp do wartości 
+za pomocą klucza. Jest to mapowanie klucza na wartość.
+ADT MAP może być realizowany jako drzewa poszukiwań (BST, AVL, trie),
+tablice mieszające, czy listy z przeskokami.
+Kluczami są najczęściej stringi, liczby, krotki, itp.
+Jeżeli szukany klucz nie istnieje, to w zależności od implementacji
+albo rzucany jest wyjątek, albo do mapy dodawana jest para
+złożona z szukanego klucza i pewnej domyślnej wartości
+(np. zero dla wartości będących liczbami).
 
-<p>Modyfikacją drzew trie są drzewa Patricia (ang. compact prefix tree), 
-w których węzły mające tylko jednego syna są usuwane, 
-a drzewo odpowiednio modyfikowane.
+<p>Typowe operacje dla ADT MAP są następujące:
+
+<ul>
+<li>konstruktor tworzący pustą mapę,
+<li>testowanie, czy mapa nie jest pusta [empty()],
+<li>odczyt liczby par w mapie [size()],
+<li>dodanie nowej pary do mapy [insert(pair)],
+<li>dodanie nowej wartości do istniejącego klucza (modyfikacja pary),
+<li>usunięcie pary z mapy,
+<li>testowanie, czy mapa zawiera klucz key [find(key)],
+<li>dostęp do wartości połączonej z danym kluczem,
+<li>iterowanie po wszystkich kluczach/wartościach/parach,
+zwykle kolejność zwracanych elementów zależy od implementacji,
+<li>czyszczenie mapy [clear()].
+</ul>
 
 
 
 <hr><pre>
-| Wstawione pary (key, value) do drzewa trie:
-| ("kot",1),("koc",2),("los",3),("loty",4)
-|           *
-|        /    \
-|       k      l
-|      /        \
-|     o          o
-|    / \        / \
-| t(1) c(2)  s(3)  t
-|                 /
-|               y(4)
+// https://en.cppreference.com/w/cpp/utility/pair/make_pair
+
+#include &lt;utility&gt;   // make_pair()
+
+auto p1 = std::make_pair(2, 3.4)   // dedukcja typów
+std::pair&lt;int,float&gt; p2 = {6, 2.5};
+// Dostęp do składowych przez p2.first i p2.second.
+
+// Uogólniony operator operator&lt;&lt; do wyświetlania par.
+namespace std {
+template&lt;typename F, typename S&gt;
+ostream& operator&lt;&lt;(ostream& os, const std::pair&lt;F,S&gt; p) {
+    return os &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second;
+}
+}
 </pre><hr><pre>
-| Wstawione pary (key, value) do drzewa Patricia:
-| ("kot",1),("koc",2),("los",3),("loty",4),("dach",5)
-|           *
-|       /      \    \
-|     ko        lo   dach(5)
-|    / \        / \
-| t(1) c(2)  s(3)  ty(4)
+// https://en.cppreference.com/w/cpp/container/map
+
+#include &lt;map&gt;
+
+std::map&lt;int, float&gt; m;   // mapa
+assert( m.empty() );
+m.insert( std::make_pair(1, 1.1) ); // zwraca std::pair&lt;iterator,bool&gt;
+m[2];   // wstawienie pary (2, 0.0)
+assert( m[2] == 0 );
+m[3] = 3.3;
+m.emplace( std::make_pair(4, 4.4) ); // insert a new element in-place
+m.insert( {5, 5.5} );
+assert( m.size() == 5 );
+assert( m.count(3) == 1 );   // dozwolone 0 lub 1 dla map
+assert( m.count(7) == 0 );   // dozwolone 0 lub 1 dla map
+
+for (auto it = m.begin(); it != m.end(); ++it) {
+    std::cout &lt;&lt; it->first &lt;&lt; " " &lt;&lt; it->second &lt;&lt; std::endl;
+}
+for (auto p : m) { // pętla zakresowa
+    std::cout &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second &lt;&lt; std::endl;
+}
+auto it = m.find(3);   // szukam klucza 3
+assert( it != m.end() );   // wiem ze jest ten klucz
+assert( m.find(8) == m.end() );   // brak klucza
+
+m.erase(it); // remove at position
+m.erase(5); // remove key
+
+m.clear();   // czyszczenie
 </pre><hr>
 
-<h3>WSTAWIANIE</h3>
+<h3>MIESZANIE</h3>
 
-<p>Każdy znak klucza jest wstawiany jako osobny węzeł.
-Jeżeli wstawiany węzeł k1 jest prefiksem innego klucza k2,
-to nie tworzy się nowych węzłów, tylko ustawiamy znacznik końca klucza.
-Jeżeli wstawiany klucz k1 ma wspólny prefiks z kluczem k2,
-to tworzymy tylko węzły dla znaków następujących po wspólnym prefiksie.
+<p>Jeżeli klucze są liczbami z niedużego zakresu, to można łącze
+do pary (key, value) przechowywać w tablicy pod indeksem key.
+Zwykle jednak wykorzystuje się funkcję mieszającą hash(key), 
+która oblicza położenie w tablicy.
+Dobra funkcja mieszająca powinna (1) działać szybko [niski koszt]
+i (2) jednorodnie rozmieszczać klucze w tablicy.
+Wtedy wstawianie, wyszukiwanie i usuwanie klucza działa w czasie O(1).
 
-<h3>WYSZUKIWANIE</h3>
+<p>W praktyce nie jest łatwo znaleźć doskonałą funkcję mieszającą
+i pojawiają się <em>kolizje</em>, czyli dla kluczy key1 != key2 otrzymujemy
+hash(key1) = hash(key2).
+Kolizje zdarzają się zwykle tym częściej im bardziej zapełniona jest tablica,
+dlatego zwykle tablica jest większa niż spodziewana liczba kluczy.
+Niektóre metody mieszania dobrze działają dla rozmiaru tablicy
+będącym potęgą dwójki, inne dla liczb pierwszych.
 
-<p>Wyszukujemy kolejne znaki klucza w węzłach przechodząc w dół drzewa.
-Jeżeli wszystkie węzły istnieją i w węźle z ostatnim znakiem klucza
-jest ustawiony znacznik końca klucza, to klucz istnieje.
-W przeciwnym razie klucza nie ma w drzewie.
+<h3>FUNKCJE MIESZAJĄCE</h3>
 
-<h3>USUWANIE</h3>
+<p>Pomysły na funkcje mieszające.
 
-<p>Usuwanie klucza można wykonać rekurencyjnie.
-Możliwe są następujące przypadki.
+<ul>
+<li>Jeżeli klucz to int, to można wybrać hash(key) = key mod table_size
+[metoda dzielenia, haszowanie modularne].
+Tutaj zaleca się, aby table_size był liczbą pierwszą lub przynajmniej
+liczbą bez małych podzielników.
 
-<ol>
+<li>Jeżeli klucz to string, to można dodać do siebie wartości
+wszystkich liter i podzielić przez table_size.
+Problem: hash("ab") = hash("ba").
 
-<li>Klucza nie ma w drzewie, a wtedy drzewo nie jest modyfikowane.
+<li>Jeżeli klucz to ciąg cyfr, to można go podzielić na ciągi
+dwucyfrowe lub trzycyfrowe i zsumować te liczby (mod table_size).
+Przykładowo numer ubezpieczenia SNN 123-45-6797 można podzielić 
+(12,34,56,78,9) lub (123,456,789) [Drozdek]. 
+Można ponadto co drugą część zapisać w odwrotnej kolejności 
+(123,654,789) [metoda składania].
 
-<li>Klucz nie jest prefiksem innego klucza oraz żadna część klucza nie
-jest prefiksem innego klucza.
-Usuwamy wszystkie węzły klucza.
+<li>Jeżeli klucz to string, to można podstringi przetworzyć używając
+różnicy symetrycznej. Ilość znaków w podstringu może odpowiadać
+ilości bajtów liczby całkowitej, np.
+<br>hash("abcd") = ("ab" xor "cd") mod table_size.
 
-<li>Klucz k1 jest prefiksem innego dłuższego klucza k2.
-Usuwamy znacznik końca klucza k1.
+<li>W niektórych przypadkach wystarczy przetwarzać tylko części klucza
+[metoda wycinania]. Przykładowo przetwarzając polskie numery telefonów nie
+musimy zajmować się przedrostkiem +48.
 
-<li>Klucz k1 jest obecny w drzewie, ale inny klucz k2 jest prefiksem k1
-lub klucze k1 i k2 mają wspólny prefix.
-Usuwamy węzły z końca klucza k1 aż do momentu, gdy znajdziemy znacznik
-końca k2 lub dojdziemy do węzła kończącego wspólny prefix k1 i k2
-(ten węzeł będzie miał co najmniej jedno dziecko).
+<li>Jeżeli klucz to string, to można użyć funkcji [metoda Cichelliego]
+<br>hash(key) = (len(key) + first_letter(key) + last_letter(key)) mod table_size,
+<br>gdzie poszczególne funkcje zwracają wartości liczbowe.
 
-</ol>
+</ul>
 
-<h3>PREFIKSY</h3>
+<h3>PROBLEM KOLIZJI</h3>
 
-<p>Ważną cechą drzew trie jest łatwe wyszukiwanie wszystkich kluczy
-o wspólnym prefiksie. Takie klucze będę zlokalizowane w poddrzewie
-zaczepionym w węźle kończącym prefiks.
-Jako szczególny przypadek dostajemy możliwość wypisania wszystkich
-kluczy zawartych w drzewie (pusty wspólny prefiks).
+<p>Typowe sposoby radzenia sobie z kolizjami 
+(ang. collision resolution) [Drozdek].
 
-<h3>IMPLEMENTACJA 1</h3>
+<ul>
 
-<p>Jeżeli liczba znaków, z których zbudowane są klucze, jest znana
-i mała, to każdy wezeł może mieć tablicę łączy do kolejnych węzłów
-dla odpowiednich znaków.
-Nie trzeba przechowywać samych znaków.
+<li>Metoda łańcuchowa (ang. chaining).
+<br>Każda komórka tablicy jest łączem do listy powiązanej,
+która przechowuje klucze kolidujące. Lista może być nieuporządkowana,
+posortowana, albo samoorganizująca się, w celu poprawienia efektywności.
+Metoda ta wymaga dodatkowej pamięci na wskaźniki w tablicy i na listach.
 
-<hr><pre>
-struct TrieNode {
-    struct TrieNode *children[ALPHABET_SIZE]; // tablica wskaznikow
-    bool isEndOfWord;
-};
-</pre><hr>
+<li>Adresowanie otwarte (ang. open addressing).
+<br>Jeżeli klucz koliduje z innym kluczem, wybiera się inną dostępną
+komórkę niż tą wskazywaną przez klucz.
+Najprostszym rozwiązaniem jest <em>próbkowanie liniowe</em>,
+gdzie wybiera się następną wolną komórkę
+[przy końcu tablicy przechodzi się na początek,
+wzór na indeks (hash(key) + i) mod table_size].
+Próbkowanie liniowe ma tendencję do tworzenia zgrupowań zajętych komórek,
+co pogarsza wydajność tablicy mieszającej.
+Przy wyszukiwaniu klucza sprawdza się komórki po kolei aż klucz zostanie
+znaleziony lub będzie jasne, że klucza nie ma w tablicy 
+(napotkanie pustej komórki lub sprawdzenie całej pełnej tablicy).
+Jeżeli tablica zbliża się do całkowitego zapełnienia, to zwykle
+alokuje się nową większą tablicę (np. dwa razy większą)
+i kopiuje się dane do nowej tablicy na nowo obliczając położenia.
+Usuwanie kluczy w metodzie adresowania otwartego jest trudne,
+zwykle zaznacza się klucze jako usunięte, a faktyczne usuwanie 
+przeprowadza się okresowo.
 
-<h3>IMPLEMENTACJA 2</h3>
-
-<p>Jeżeli liczba znaków, z których zbudowane są klucze, jest duża
-lub nieznana, to każdy węzeł może mieć tablicę lub listę zmiennej
-długości z łączami do węzłów, ale musimy przechowywać znak w węźle.
-
-<p>Inny pomysł to zastosowanie reprezentacji na lewo syn, na prawo brat
-(ang. left-child right-sibling representation).
-
-<hr><pre>
-template &lt;typename T&gt;
-struct TrieNode {
-    T partial_key;
-    struct TrieNode *left_child;
-    struct TrieNode *right_sibling;
-    bool isEndOfWord;
-};
-</pre><hr>
+</ul>
 
 <h3>ZADANIE 13.1</h3>
 
-<p>Przygotować implementację realizującą ADT MAP na bazie drzewa trie.
-Założyć, że kluczami będą stringi.
-Można rozwinąć przykładowy <a href="trie1.cpp">program</a>.
+<p>Przygotować implementację realizującą ADT MAP na bazie tablicy
+mieszającej z wykorzystaniem metody łańcuchowej.
+
+<hr><pre>
+// Szablon dla prostej mapy wykorzystującej metodę łańcuchową.
+// Pomysł zaczerpnięty ze strony
+// https://www.geeksforgeeks.org/c-program-hashing-chaining/
+template &lt;typename F, typename S&gt;
+class HashTable {
+    int BUCKET;    // liczba bukietów
+    std::list&lt; std::pair&lt;F,S&gt; &gt; *table;
+public:
+    HashTable(int b);
+    ~HashTable() { clear(); delete [] table; }
+    bool empty() const; // czy wszystkie listy puste
+    int size() const; // liczba par na wszystkich listach
+    void insert(std::pair&lt;F,S&gt; p); // m[p.first]=p.second
+    S&amp; operator[](const F&amp; key); // m[key]=value lub m[key] z domyślną wartością
+    S* find(const F& key); // zwraca &amp;value lub nullptr
+    void remove(const F& key);
+    int hash(const F& key) { return (int(key) % BUCKET); } // działa dla int, float
+    void display() const;
+    void clear(); // czyścimy wszystkie listy
+};
+
+template&lt;typename F, typename S&gt;
+HashTable&lt;F,S&gt;::HashTable(int b) {
+    BUCKET = b;
+    table = new std::list&lt; std::pair&lt;F,S&gt; &gt;[BUCKET];
+    assert( table != nullptr );
+}
+
+template&lt;typename F, typename S&gt;
+void HashTable&lt;F,S&gt;::display() const {
+    for (int i = 0; i &lt; BUCKET; i++) {
+        std::cout &lt;&lt; i;
+        for (const auto &amp;p : table[i])
+            std::cout &lt;&lt; " --&gt; " &lt;&lt; p;
+        std::cout &lt;&lt; std::endl;
+    }
+}
+
+template&lt;typename F, typename S&gt;
+S& HashTable&lt;F,S&gt;::operator[](const F&amp; key) {
+    int index = hash(key);
+    // find the key
+    for (auto it = table[index].begin();
+        it != table[index].end(); it++) {
+        if (it->first == key) {
+            return it->second;
+        }
+    }
+    table[index].push_back(std::make_pair(key, S()));
+    return (table[index].back()).second;
+}
+</pre><hr>
 
 <h3>ZADANIE 13.2</h3>
 
-<p>Przygotować implementację realizującą ADT MAP na bazie drzewa Patricia.
-Założyć, że kluczami będą stringi.
+<p>Przygotować implementację realizującą ADT MAP na bazie tablicy
+mieszającej z wykorzystaniem adresowania otwartego
+i próbkowania linowego.
+
+<hr><pre>
+Wstawiane klucze: A5, A2, A3, B5, A9, B2, B9, C2
+|0 |1 |2 |3 |4 |5 |6 |7 |8 |9 |
+|--|--|A2|A3|--|A5|--|--|--|--|
+|--|--|A2|A3|B2|A5|B5|--|--|A9|
+|B9|--|A2|A3|B2|A5|B5|C2|--|A9| problem przy usuwaniu A3
+</pre><hr><pre>
+// Szablon dla prostej mapy wykorzystującej adresowanie otwarte.
+template &lt;typename F, typename S&gt;
+class HashTable {
+    int BUCKET;    // liczba bukietów
+    std::pair&lt;F,S&gt; **table; // tablica wskaznikow do par
+public:
+    HashTable(int b);
+    ~HashTable() { clear(); delete [] table; }
+    bool empty() const;
+    int size() const;
+    void insert(std::pair&lt;F,S&gt; p);
+    S& operator[](const F& key);
+    S* find(const F& key);
+    void remove(const F& key); // TRUDNE
+    int hash(const F& key) { return (int(key) % BUCKET); } // dziala dla int, float
+    void display() const;
+    void clear();
+};
+
+template &lt;typename F, typename S&gt;
+HashTable&lt;F,S&gt;::HashTable(int b) {
+    BUCKET = b;
+    table = new std::pair&lt;F,S&gt;* [BUCKET];
+    assert( table != nullptr );
+    for (int i = 0; i &lt; BUCKET; i++)
+        table[i] = nullptr;
+}
+</pre><hr>
+
+<h3>ZADANIE 13.3</h3>
+
+<p>Poprawić metodę adresowania otwartego przez zastosowanie innych
+metod próbkowania.
+
+<ul>
+<li>Próbkowanie kwadratowe (ang. quadratic probing).
+<br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
+sprawdzamy komórkę (hash(key)+i*i) mod table_size.
+Inny sposób to (hash(key)+c1*i+c2*i*i) mod table_size,
+gdzie c1, c2 to pewne stałe.
+
+<li>Podwójne mieszanie (ang. double hashing).
+<br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
+sprawdzamy komórkę (hash(key)+i*hash2(key)) mod table_size,
+gdzie hash2(key) jest drugą funkcją mieszającą.
+
+</ul>
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

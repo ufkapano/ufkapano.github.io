@@ -47,15 +47,14 @@ public:
     void display(); // O(n)
     void display_reversed(); // O(n)
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    int erase(int pos); // return Iterator following the last removed element,
     T& operator[](int pos); // podstawienie L[pos]=item
     const T& operator[](int pos) const; // odczyt L[pos]
+    void erase(int pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
-    int insert(int pos, const T& item); // inserts item before pos,
-    int insert(int pos, T&& item); // inserts item before pos,
+    void insert(int pos, const T& item); // inserts item before pos,
+    void insert(int pos, T&& item); // inserts item before pos,
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
-    // Zwraca pozycje wstawionego elementu.
 };
 
 template <typename T>
