@@ -24,6 +24,8 @@ class Time:
 
     def __init__(self, s=0):
         """Zwraca instancję klasy Time."""
+        if s &lt; 0:
+            raise ValueError("ujemny czas")
         self.s = int(s)
 
     def __str__(self):
@@ -36,17 +38,17 @@ class Time:
 
     def __repr__(self):
         """Zwraca string 'Time(s)'."""
-        return "Time({0})".format(self.s)
+        return "Time({})".format(self.s)
 
     def __add__(self, other):
         """Dodawanie odcinków czasu."""
         return Time(self.s + other.s)
 
-    #def __cmp__(self, other): # Python 2, porównywanie, -1|0|+1
+    #def __cmp__(self, other): # Py2, porównywanie, -1|0|+1
     #    """Porównywanie odcinków czasu."""
     #    return cmp(self.s, other.s)
 
-    # Python 2.7 i Python 3, rich comparisons.
+    # Py2.7 i Py3, rich comparisons.
     def __eq__(self, other):
         return self.s == other.s
 
@@ -71,15 +73,18 @@ class Time:
         """Konwersja odcinka czasu do int."""
         return self.s
 
-# Kod testujący moduł.
+# Kod testujący moduł - dopisać co najmniej dwa testy do każdej sekcji.
 
 import unittest
 
 class TestTime(unittest.TestCase):
 
-    def setUp(self): pass
+    def setUp(self):
+        self.t1 = Time(3723)
 
     def test_print(self): pass      # test str() i repr()
+        self.assertEqual(str(self.t1), "01:02:03")
+        self.assertEqual(repr(self.t1), "Time(3723)")
 
     def test_cmp(self):
         # Trzeba sprawdzać ==, !=, &gt;, &gt;=, &lt;, &lt;=.
@@ -137,9 +142,9 @@ class Point:
 
     def __sub__(self, other): pass  # v1 - v2
 
-    def __mul__(self, other): pass  # v1 * v2, iloczyn skalarny (liczba)
+    def __mul__(self, other): pass  # v1 * v2, iloczyn skalarny, zwraca liczbę
 
-    def cross(self, other):         # v1 x v2, iloczyn wektorowy 2D (liczba)
+    def cross(self, other):         # v1 x v2, iloczyn wektorowy 2D, zwraca liczbę
         return self.x * other.y - self.y * other.x
 
     def length(self): pass          # długość wektora
@@ -217,11 +222,13 @@ class Triangle:
     def __repr__(self): pass        # "Triangle(x1, y1, x2, y2, x3, y3)"
 
     def __eq__(self, other): pass   # obsługa tr1 == tr2
+        # Trójkąty powinny być równe, jeżeli mają ten sam zbiór wierzchołków,
+        # niezależnie od kolejności pt1, pt2, pt3.
 
     def __ne__(self, other):        # obsługa tr1 != tr2
         return not self == other
 
-    def center(self): pass          # zwraca środek trójkąta
+    def center(self): pass          # zwraca środek (masy) trójkąta
 
     def area(self): pass            # pole powierzchni
 
@@ -253,11 +260,9 @@ class Frac:
 
     def __repr__(self): pass        # zwraca "Frac(x, y)"
 
-    # Python 2
-    #def __cmp__(self, other): pass  # cmp(frac1, frac2)
+    #def __cmp__(self, other): pass  # cmp(frac1, frac2)    # Py2
 
-    # Python 2.7 i Python 3
-    def __eq__(self, other): pass
+    def __eq__(self, other): pass    # Py2.7 i Py3
 
     def __ne__(self, other): pass
 
@@ -275,9 +280,9 @@ class Frac:
 
     def __mul__(self, other): pass  # frac1 * frac2
 
-    def __div__(self, other): pass  # frac1 / frac2, Python 2
+    def __div__(self, other): pass  # frac1 / frac2, Py2
 
-    def __truediv__(self, other): pass  # frac1 / frac2, Python 3
+    def __truediv__(self, other): pass  # frac1 / frac2, Py3
 
     def __floordiv__(self, other): pass  # frac1 // frac2, opcjonalnie
 

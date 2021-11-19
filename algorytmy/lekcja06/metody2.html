@@ -62,7 +62,7 @@ __repr__  "oficjalna" reprezentacja obiektu przez string repr(x);
     metoda działa również wtedy, gdy obiekt jest zagnieżdżony 
     w innym obiekcie, np. jest elementem listy;
 
-__unicode__   wywoływane przez unicode(x);
+__unicode__   wywoływane przez unicode(x) (Py2);
 
 __format__(self, formatstr)   np. "Obiekt {}".format(x);
 
@@ -72,7 +72,7 @@ __hash__   wywoływane przez hash(x), zwraca int;
     them into a tuple and hashing the tuple.
 
 __bytes__   wywoływane przez bytes(x), zwraca obiekt bytes;
-
+</pre><hr><pre>
 # Operatory dwuargumentowe.
 __add__  dodawanie, x + y
 __sub__  odejmowanie, x - y
@@ -81,12 +81,12 @@ __mod__  reszta z dzielenia, x % y
 __divmod__  zwraca krotkę (div, mod), divmod(x, y)
 __pow__  potęgowanie, pow(x, y) lub x ** y; powinien być opcjonalny 
     trzeci argument, jeżeli ma być wspierane pow(x, y, z)]
-
+</pre><hr><pre>
 # Definiowanie operatora dzielenia /.
 __div__  dzielenie klasyczne (x/y)
 __floordiv__  dzielenie całkowite, x // y
-__truediv__ działa w Pythonie 2, jeżeli jest aktywne __future__.division
-
+__truediv__ działa w Py2, jeżeli jest aktywne __future__.division
+</pre><hr><pre>
 # Reflected arithmetic operators.
 # Wersje prawe operatorów, które wywoływane są wtedy, gdy obiekt
 # po prawej stronie operatora jest naszą instancją klasy, jednak
@@ -108,7 +108,7 @@ __rfloordiv__  right
 __rmod__  reszta z dzielenia
 __rdivmod__  zwraca tuple
 __rpow__  potęgowanie
-
+</pre><hr><pre>
 # Augmented arithmetic assignments powinny być robione in-place
 # (zmieniać self) i zwracać wynik (niekoniecznie self).
 __iadd__  add (x += y)
@@ -143,7 +143,7 @@ __and__(self, other)   bitowe and, operator &amp;
 __or__(self, other)   bitowe or, operator |
 __xor__(self, other)   bitowe xor, operator ^
 Są jeszcze prawe (i augmented) wersje operatorów bitowych.
-
+</pre><hr><pre>
 # Operatory jednoargumentowe.
 __pos__  znak plus, +x
 __neg__  znak minus, -x
@@ -153,7 +153,7 @@ __complex__  implementacja complex(x)
 __int__  implementacja int(x)
 __long__  implementacja long(x)
 __float__  implementacja float(x)
-
+</pre><hr><pre>
 # Porównywanie.
 __cmp__  porównywanie (Python 2), zwraca -1|0|+1
 __len__  długość kontenera, len(x)
@@ -164,7 +164,7 @@ __bool__ = __nonzero__        # kod dla zachowania kompatybilności Pythona 2 i 
 # Tak zwane "rich comparison" methods (Python 2.6+).
 # Jeżeli nie są zdefiniowane, wywoływane jest __cmp__
 __lt__  mniejsze, x &lt; y
-__gt__  większe, y &gt; y
+__gt__  większe, x &gt; y
 __eq__  równe, x == y
 __le__  mniejsze lub równe, x &lt;= y
 __ge__  większe lub równe, x &gt;= y
@@ -178,7 +178,7 @@ assert (x == y) == not (x != y)   # nie zawsze tak musi być!
 # 'in' and 'not in' operators and dictionary lookup only use the == operator.
 # The reflexivity rules are assumed by Python.
 # x &gt; y jest równe y &lt; x (interpreter może przestawić).
-
+</pre><hr><pre>
 # Emulowanie typów kontenerowych.
 __len__             # len(x)
 Długość kontenera, testy prawdziwości, jeśli nie ma __bool__.
@@ -191,7 +191,7 @@ __reversed__        # reversed(x)
 It should return a new iterator that iterates over all the objects 
 in the container in reverse order.
 Jeżeli __reversed__ nie zdefiniowano, wtedy reversed() korzysta z __len__ i __getitem__.
-
+</pre><hr><pre>
 # Zarządzanie atrybutami
 __setattr__(self, "attr", value)   # X.attr = value
 Przypisanie atrybutu do instancji.
@@ -212,7 +212,7 @@ Może być trudne do zaimplementowania bez popadnięcia w nieskończoną pętlę
 Należy się odwołać do klasy bazowej, np.
 super(Foo, self).__getattribute__("attr")
 
-__getitem__  indeksowanie, wycinanie (Python 3), iteracje, 
+__getitem__  indeksowanie, wycinanie (Py3), iteracje, 
 X[key], X[i:j], pętle for oraz inne iteracje, jeśli nie ma __iter__
 def __getitem__(self, key): pass  # kod dla X[key]
 
@@ -224,8 +224,8 @@ __delitem__  usuwanie indeksu i wycinka,
 del X[key], del X[i:j]
 
 __contains__  test przynależności
-item in X (dowolny iterator)
-
+item in X, item not in X (dowolny iterator)
+</pre><hr><pre>
 # Wspomaganie kopiowania z modułem copy.
 __copy__(self)  płytka kopia
 Y = copy.copy(X)
@@ -267,17 +267,22 @@ który na bieżąco zwiększa wartość o jeden przy tworzeniu instancji,
 a także zmniejsza wartość o jeden przy niszczeniu instancji.
 Atrybut klasy istnieje w przestrzeni nazw klasy, więc potrzebna
 jest odpowiednia kwalifikacja przy odnoszeniu się do niego.
+Bez kwalifikacji atrybut klasy nie jest widoczny w metodach klasy,
+listach składanych, wyrażeniach generatorów.
 
 <hr><pre>
 class Point:
     """Klasa dla punktów."""
     counter = 0                     # atrybut klasy
+    # seq = list(counter + i for i in range(10))   # nie działa!
+    # seq = list(Point.counter + i for i in range(10))   # potrzebna kwalifikacja
 
     def __init__(self, x=0, y=0):
         """Konstuktor punktu."""
         self.x = x
         self.y = y
-        Point.counter += 1
+        # counter += 1   # nie działa!
+        Point.counter += 1   # potrzebna kwalifikacja
         print ("init: counter = {}".format(Point.counter))
 
     def __str__(self):
@@ -297,7 +302,7 @@ class Point:
         Point.counter -= 1
         print ("del: counter = {}".format(Point.counter))
 
-print "counter =", Point.counter        # na starcie counter=0
+print ( "counter = {}".format(Point.counter) )   # na starcie counter=0
 pt1 = Point(3.4, 5.6)                   # counter=1
 pt2 = Point(4.5, 2.1)                   # counter=2
 print ( "metoda __str__ {} {}".format(pt1, pt2) )
@@ -337,7 +342,7 @@ PEP 207 - Rich Comparisons.
 https://www.python.org/dev/peps/pep-0207/
 </pre><hr><pre>
 # https://docs.python.org/2/library/functools.html
-# W Pythonie 2.7 wprowdzono dekorator, który ułatwia tworzenie metod
+# W Pythonie 2.7 wprowadzono dekorator, który ułatwia tworzenie metod
 # specjalnych dla rich comparisons.
 # Klasa musi zdefiniować metodę __eq__() oraz jedną z metod:
 # __lt__(), __le__(), __gt__(), __ge__().
