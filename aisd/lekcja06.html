@@ -66,8 +66,8 @@ public:
     void clear(); // czyszczenie listy z elementów
     void display();
     // Operacje z indeksami.
-    T& operator[](int pos); // podstawienie L[pos]=item
-    const T& operator[](int pos) const; // odczyt L[pos]
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](int pos) const; // dostep do obiektu const
     void erase(int pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
     void insert(int pos, const T& item); // inserts item before pos
@@ -136,8 +136,8 @@ public:
     void clear(); // czyszczenie listy z elementow
     void display();
     // Operacje z indeksami.
-    T& operator[](int pos); // podstawienie L[pos]=item
-    const T& operator[](int pos) const; // odczyt L[pos]
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](int pos) const; // dostęp do obiektu const
     void erase(int pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
     void insert(int pos, const T& item); // inserts item before pos

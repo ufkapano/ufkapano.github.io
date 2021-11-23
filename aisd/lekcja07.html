@@ -82,14 +82,56 @@ public:
 <p>Potrzebna jest implementacja stosu, która umożliwia przechowywanie
 na nim elementów dwóch różnych typów.
 
+<hr><pre>
+Zapis konwencjonalny:   (2+3)*6   // wynik 30
+Zapis w ONP:   2 3 + 6 *
+
+Zapis konwencjonalny:   6/2   // wynik 3
+Zapis w ONP:   6 2 /
+
+Pseudokod algorytmu obliczania wartości wyrażenia w ONP:
+
+S = Stack()
+for item in input:
+    if item is number:
+        S.push(item)
+    elif item is operator:
+        a = S.pop()
+        b = S.pop()
+        S.push(b item a)   // kolejność odwrotna!
+
++-------+-------+-----------------------------------------+
+| input | stack | operations                              |
++-------+-------+-----------------------------------------+
+| 2     | 2     | S.push(2)                               |
+| 3     | 2 3   | S.push(3)                               |
+| +     | 5     | a = S.pop() ; b = S.pop() ; S.push(b+a) |
+| 6     | 5 6   | S.push(6)                               |
+| *     | 30    | a = S.pop() ; b = S.pop() ; S.push(b*a) |
++-------+-------+-----------------------------------------+
+</pre><hr>
+
 <h3>ZADANIE 7.1</h3>
+
+<p>Zaimplementować algorytm obliczania wartości wyrażenia podanego w ONP.
+Zakładamy, że na wejściu będą liczby całkowite i cztery możliwe działania:
+"+", "-", "*", "/". Algorytm może mieć postać funkcji:
+
+<hr><pre>
+int rpn(std::vector&lt;std::string&gt; input);
+
+// std::vector&lt;std::string&gt; input { "-6", "2", "/" };
+// int result = rpn(input); // result = -3
+</pre><hr>
+
+<h3>ZADANIE 7.2</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie tablicy.
 Wykorzystać klasę ArrayList.
 Operacje push() i pop() działające w stałym czasie można uzyskać
 przy użyciu push_back() i pop_back().
 
-<h3>ZADANIE 7.2</h3>
+<h3>ZADANIE 7.3</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej pojedynczo.
@@ -97,7 +139,7 @@ Wykorzystać klasę SingleList lub std::forward_list.
 Operacje push() i pop() działające w stałym czasie można uzyskać
 przy użyciu push_front() i pop_front().
 
-<h3>ZADANIE 7.3</h3>
+<h3>ZADANIE 7.4</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej podwójnie.
@@ -107,7 +149,7 @@ działąjące w stałym czasie:
 (a) push_back() i pop_back(), 
 (b) push_front() i pop_front(). 
 
-<h3>ZADANIE 7.4</h3>
+<h3>ZADANIE 7.5</h3>
 
 <p>Zaimplementować algorytm dopasowywania ograniczników [Drozdek str. 134].
 Algorytm wykorzystuje stos do przechowywania kolejno odczytanych
@@ -116,7 +158,7 @@ Dla prostoty argumentem funkcji może być napis zawierający ograniczniki
 i inne znaki, komentarze w pierwszym przybliżeniu można pominąć.
 Funkcja zwraca bool.
 
-<h3>ZADANIE 7.5</h3>
+<h3>ZADANIE 7.6</h3>
 
 <p>Zaimplementować algorytm dodawania wielkich liczb całkowitych dodatnich
 [Drozdek str. 135]. Algorytm wykorzystuje trzy stosy do przechowywania cyfr: 
