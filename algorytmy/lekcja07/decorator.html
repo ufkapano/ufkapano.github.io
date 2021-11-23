@@ -257,7 +257,7 @@ class B(A):
     pass
 # Klasa B nie będzie rejestrowana, chyba że jawnie użyjemy znowu @model.
 # Lepsze rozwiązanie wykorzystuje metaklasy.
-
+</pre><hr><pre>
 models = {}
 
 class ModelMetaclass(type):
@@ -266,9 +266,9 @@ class ModelMetaclass(type):
         return cls
 
 class Model(object):
-    __metaclass__ = ModelMetaclass   # Python 2
+    __metaclass__ = ModelMetaclass   # Py2
 
-#class Model(metaclass=ModelMetaclass): pass   # Python 3
+#class Model(metaclass=ModelMetaclass): pass   # Py3
 
 class A(Model):
     pass

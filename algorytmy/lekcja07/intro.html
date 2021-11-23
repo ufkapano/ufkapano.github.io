@@ -23,9 +23,9 @@ W efekcie otrzymujemy komunikat z numerem linii z błędem i jej treścią.
 Mała strzałka pokazuje token <em>przed którym wykryto błąd</em>.
 
 <hr><pre>
->>> if True print "word"
+>>> if True print ( "word" )
   File "&lt;stdin&gt;", line 1
-    if True print "word"      # brak średnika PRZED print
+    if True print ( "word" )      # brak średnika PRZED print
                 ^
 SyntaxError: invalid syntax
 </pre><hr>
@@ -54,7 +54,7 @@ narzędzie sterowania wysokiego poziomu.
 oczyszczające.
 <li>raise - ręczne wywołanie wyjątku w kodzie.
 <li>assert - warunkowe wywołanie wyjątku w kodzie.
-<li>with/as - implementuje menedżery kontekstu (Python 2.6+ i 3.x).
+<li>with/as - implementuje menedżery kontekstu (Py2.6+, Py3).
 </ul>
 
 <p>Najważniejsze powody wykorzystywania wyjątków:
@@ -149,8 +149,8 @@ można wykonać przy pomocy wyjątków.
 
 <hr><pre>
 # Bezpieczna obsługa pliku.
-filename = raw_input("Podaj nazwę pliku: ")   # Python 2
-#filename = input("Podaj nazwę pliku: ")   # Python 3
+filename = raw_input("Podaj nazwę pliku: ")   # Py2
+#filename = input("Podaj nazwę pliku: ")   # Py3
 try:                          # pierwszy blok
     afile = open(filename, "r")
 except Exception:             # drugi blok (w razie wyjątku)
@@ -180,13 +180,13 @@ choć musi pojawić się przynajmniej jeden.
 # Składnia.
 try:
     instrukcje                 # podstawowe działanie instrukcji
-except Exception1:                 # przechwytuje wskazany wyjątek
+except ExceptionClass1:                 # przechwytuje wskazany wyjątek
     instrukcje
-except (Exception2, Exception3):   # przechwytuje wymienione wyjątki
+except (ExceptionClass2, ExceptionClass3):   # przechwytuje wymienione wyjątki
     instrukcje
-except Exception4 as Value1:       # przechwytuje wyjątek i jego instancję
+except ExceptionClass4 as exception1:   # przechwytuje wyjątek i jego instancję
     instrukcje
-except (Exception4, Exception5) as Value2: # przechwytuje wyjątki i instancję
+except (ExceptionClass4, ExceptionClass5) as exception2: # przechwytuje wyjątki i instancję
     instrukcje
 except:                            # przechwytuje wszystkie (pozostałe) wyjątki
     instrukcje

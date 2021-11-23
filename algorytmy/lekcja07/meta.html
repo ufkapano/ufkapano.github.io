@@ -63,18 +63,18 @@ class Meta(type):        # dziedziczenie z 'type' w klasach w nowym stylu
         return type.__new__(mcls, name, bases, clsdict)
 
 class C(object):   # klasy w nowym stylu
-    __metaclass__ = Meta   # składnia Pythona 2.6+
+    __metaclass__ = Meta   # składnia Py2.6+
     # Teraz zamiast type(name, bases, clsdict)
     # do budowy klasy będzie użyte Meta.
 
-# class C(metaclass=Meta): pass   # składnia Pythona 3 (PEP 3115)
+# class C(metaclass=Meta): pass   # składnia Py3 (PEP 3115)
 
 print ( dir(C) )   # znajdziemy klucz 'foo'
 </pre><hr>
 
 <h3>ABSTRACT BASE CLASSES</h3>
 
-<p>PEP 3119 - Introducing Abstract Base Classes [Python 3]
+<p>PEP 3119 - Introducing Abstract Base Classes [Py3]
 
 <p>PEP 3141 - A Type Hierarchy for Numbers 
 [Number (the root of the numeric hierarchy), 
@@ -91,7 +91,7 @@ Abstrakcyjne klasy bazowe mają zestaw metod abstrakcyjnych.
 from abc import ABCMeta
 
 class MyABC(object):   # tworzenie abstrakcyjnej klasy bazowej
-    __metaclass__ = ABCMeta   # Python 2.7
+    __metaclass__ = ABCMeta   # Py2.7
 
     @abstractmethod
     def my_abstract_method(self, ...):

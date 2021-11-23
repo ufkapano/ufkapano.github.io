@@ -42,7 +42,7 @@ class MyClass(object):
         # This could be arbitrarily complex:
         return bool(self.value)
 
-    # Kompatybilność z Pythonem 3.
+    # Kompatybilność z Py3.
     __bool__ = __nonzero__
 </pre><hr>
 
@@ -263,23 +263,44 @@ or sibling class of type. This is useful for accessing inherited
 methods that have been overridden in a class.
 
 <hr><pre>
-# super(type[, object-or-type])    # Python 2.7
+# super(type[, object-or-type])    # Py2.7
 # Typowe wywołanie funkcji super(): przy pojedynczym dziedziczeniu można
 # odwołać się do klasy nadrzędnej bez jawnego użycia jej nazwy.
 # To będzie działać nawet po zmianie klasy nadrzędnej.
-class B(object):   # Python 2, klasy w nowym stylu
-#class B:       # Python 3
+class B(object):   # Py2, klasy w nowym stylu
+#class B:       # Py3
     def method(self, arg):
         print ( "B: {}".format(arg) )
 
 class C(B):
     def method(self, arg):
-        super(C, self).method(arg)   # Python 2, szuka powyżej C
-        # super(self.__class__, self).method(arg)   # Python 2, bez powtarzania C
-        # super().method(arg)     # Python 3
+        super(C, self).method(arg)   # Py2, szuka powyżej C
+        # super(self.__class__, self).method(arg)   # Py2, bez powtarzania C
+        # super().method(arg)     # Py3
 </pre><hr><pre>
 # Korzystanie z nowej wersji super() w Pythonie 2.5 wymaga (PEP 367):
 from __future__ import new_super
+</pre><hr>
+
+<h3>TWORZENIE INSTANCJI KLASY W JEJ METODACH</h3>
+
+<p>Pewne metody klasy mogą tworzyć nowe instancje danej klasy.
+Powstaje pytanie jak to zrobić, aby w przyszłości ułatwić sobie zmiany w kodzie.
+
+<hr><pre>
+class Time:
+    """Klasa reprezentująca odcinek czasu."""
+
+    def __init__(self, s=0):
+        """Zwraca instancję klasy Time."""
+        self.s = int(s)
+
+    def __add__(self, other):
+        """Dodawanie odcinkow czasu."""
+        #return Time(self.s + other.s)   # jawnie używamy nazwy "Time"
+        #return type(self)(self.s + other.s)   # działa dla klas w nowym stylu
+        return self.__class__(self.s + other.s)   # uniwersalne
+        # self.__class__.__name__ to string "Time", np. dla __repr__
 </pre><hr>
 
 </body>

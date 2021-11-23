@@ -27,26 +27,35 @@ Obiekt X musi wspierać protokół iteracji (metoda __iter__)
 lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
 
 <hr><pre>
+def Reverse(sequence):
+    """Iterator odwrotny na bazie sekwencji."""
+    i = len(sequence)
+    while i &gt; 0:
+        i = i-1
+        yield sequence[i]
+</pre><hr><pre>
 class Reverse:
-    """Iterator odwrotny."""
+    """Iterator odwrotny na bazie sekwencji."""
 
-    def __init__(self, data):
-        self.data = data
-        self.idx = len(data)
+    def __init__(self, sequence):
+        self.sequence = sequence
+        self.idx = len(sequence)
 
     def __iter__(self):   # typowa postać
+        #self.idx = len(self.sequence)   # iter() może odświeżyć iterator
+        # Chyba się tego nie stosuje, nie odświeża się wyczerpanego iteratora.
         return self
 
-    def next(self):
+    def __next__(self):
         if self.idx == 0:
             raise StopIteration
         self.idx = self.idx - 1
-        return self.data[self.idx]
+        return self.sequence[self.idx]
 
-    __next__ = next   # kompatybilność z Pythonem 3
-        # W Pythonie 2 mamy metodę X.next().
-        # W Pythonie 3 mamy metodę X.__next__().
-        # W Pythonie 3 i 2.6+ mamy funkcję wbudowaną next().
+    next = __next__   # kompatybilność Py2 z Py3
+        # W Py2 mamy metodę X.next().
+        # W Py3 mamy metodę X.__next__().
+        # W Py3 i Py2.6+ mamy funkcję wbudowaną next().
 
 # Zastosowanie
 for char in Reverse("spam"):

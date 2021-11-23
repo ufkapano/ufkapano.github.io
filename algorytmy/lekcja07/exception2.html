@@ -65,8 +65,8 @@ class MyError(Exception):
 
 try:
     raise MyError(2*2)    # instancja
-except MyError as exception:  # Python 2.6+ i 3.x
-# except MyError, exception:   # Python 2.6-
+except MyError as exception:  # Py2.6+, Py3
+# except MyError, exception:   # Py2.6-
 # Python 3 interpretuje przecinek jako oznaczający krotkę.
 # Obiekt exception jest to zgłoszona instancja klasy MyError.
     print ( "mam wyjątek, value {}".format(exception.value) )
@@ -90,25 +90,25 @@ Jeżeli żaden wyjątek nie jest obsługiwany, to zwracana krotka ma postać
 <hr><pre>
 # Składnia.
 # Zgłoszenie instancji klasy [najbardziej typowe].
-# raise instancja
+# raise instancja_wyjątku
 raise IndexError()
 raise IndexError("Nasz komunikat")
 
 # Utworzenie i zgłoszenie instancji klasy.
-# raise klasa
+# raise klasa_wyjątku
 raise IndexError
 # Ponowne zgłoszenie ostatniego wyjątku.
 raise
 
 # Zgłoszenie nowego wyjątku z wykorzystaniem kontekstu starego wyjątku
-raise new_exception from old_exception   # Python 3
+raise new_exception from old_exception   # Py3
 raise new_exception from None
 
 # Dla wbudowanych wyjątków mamy równoważne formy.
 raise KeyError
 raise KeyError()
 
-# Utworzenie instancji z wyprzedzeniem.
+# Utworzenie instancji wyjątku z wyprzedzeniem.
 exception = IndexError()
 raise exception
 </pre><hr>
@@ -132,8 +132,8 @@ czy innych błędów pojawiających się w trakcie pracy programu.
 # Składnia.
 assert warunek
 assert warunek, komunikat
-# warunek to wyrażenie zwracające bool
-# komunikat to strig
+# 'warunek' to wyrażenie zwracające bool
+# 'komunikat' to string
 
 # Równoważny kod.
 if __debug__:
@@ -143,11 +143,11 @@ if __debug__:
 &gt;&gt;&gt; x = 1
 &gt;&gt;&gt; assert x == 0
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 AssertionError
 &gt;&gt;&gt; assert x == 0, "x have to be zero"
 Traceback (most recent call last):
-  File "<stdin>", line 1, in <module>
+  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 AssertionError: x have to be zero
 &gt;&gt;&gt;
 </pre><hr>
@@ -159,10 +159,10 @@ przechwytuje instancje tej klasy, a także instancje wszystkich
 jej klas podrzędnych.
 
 <hr><pre>
-&gt;&gt;&gt; import exceptions   # Python 2.6+
+&gt;&gt;&gt; import exceptions   # Py2.6+
 &gt;&gt;&gt; help(exceptions)   # drzewo klas
 </pre><hr><pre>
-&gt;&gt;&gt; import builtins   # Python 3, built-in functions, exceptions, and other objects
+&gt;&gt;&gt; import builtins   # Py3, built-in functions, exceptions, and other objects
 &gt;&gt;&gt; help(builtins)
 </pre><hr><pre>
 BaseException

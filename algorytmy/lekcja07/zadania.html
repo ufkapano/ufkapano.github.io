@@ -16,13 +16,24 @@
 <p>W pliku <em>fracs.py</em> zdefiniować klasę Frac
 wraz z potrzebnymi metodami.
 Wykorzystać wyjątek <em>ValueError</em> do obsługi błędów w ułamkach.
-Dodać możliwości dodawania liczb (int, long)
+Dodać możliwości dodawania|odejmowania|mnożenia|dzielenia|porównywania liczb (int, long)
 do ułamków (działania lewostronne i prawostronne).
 Rozważyć możliwość włączenia liczb float do działań na ułamkach
 [Wskazówka: metoda float.as_integer_ratio()].
 Napisać kod testujący moduł <em>fracs</em>.
 
 <hr><pre>
+# Przykład zachowania klasy Fraction.
+&lt;&lt;&lt; from fractions import Fraction
+&lt;&lt;&lt; Fraction(3.14159)
+Fraction(3537115888337719, 1125899906842624)
+&lt;&lt;&lt; Fraction(3.14159).limit_denominator(1000) # default is 1000000
+Fraction(355, 113)
+&lt;&lt;&lt; Fraction(0.4)
+Fraction(3602879701896397, 9007199254740992)
+&lt;&lt;&lt; Fraction(0.4).limit_denominator(1000)
+Fraction(2, 5)
+</pre><hr><pre>
 class Frac:
     """Klasa reprezentująca ułamki."""
 
@@ -35,10 +46,10 @@ class Frac:
 
     def __repr__(self): pass        # zwraca "Frac(x, y)"
 
-    # Python 2
+    # Py2
     #def __cmp__(self, other): pass  # cmp(frac1, frac2)
 
-    # Python 2.7 i Python 3
+    # Py2.7 i Py3
     def __eq__(self, other): pass
 
     def __ne__(self, other): pass
@@ -65,13 +76,13 @@ class Frac:
 
     __rmul__ = __mul__              # int*frac
 
-    def __div__(self, other): pass  # frac1/frac2, frac/int, Python 2
+    def __div__(self, other): pass  # frac1/frac2, frac/int, Py2
 
     def __rdiv__(self, other): pass # int/frac, Python 2
 
-    def __truediv__(self, other): pass  # frac1/frac2, frac/int, Python 3
+    def __truediv__(self, other): pass  # frac1/frac2, frac/int, Py3
 
-    def __rtruediv__(self, other): pass  # int/frac, Python 3
+    def __rtruediv__(self, other): pass  # int/frac, Py3
 
     # operatory jednoargumentowe
     def __pos__(self):  # +frac = (+1)*frac
@@ -207,6 +218,11 @@ class Rectangle:
     def cover(self, other): pass    # prostąkąt nakrywający oba
 
     def make4(self): pass           # zwraca krotkę czterech mniejszych
+# A-------B   po podziale  A---+---B
+# |       |                |   |   |
+# |       |                +---+---+
+# |       |                |   |   |
+# D-------C                D---+---C
 
 # Kod testujący moduł.
 
@@ -251,6 +267,11 @@ class Triangle:
     def move(self, x, y): pass      # przesunięcie o (x, y)
 
     def make4(self): pass           # zwraca krotkę czterech mniejszych
+#     A       po podziale    A
+#    / \                    / \
+#   /   \                  +---+
+#  /     \                / \ / \
+# C-------B              C---+---B
 
 # Kod testujący moduł.
 
