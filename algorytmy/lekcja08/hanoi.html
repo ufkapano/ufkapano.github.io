@@ -44,7 +44,11 @@ Pierwsze wyrazy ciągu: 0, 1, 1, 2, 3, 5, 8,...
 
 Wzór na n-ty wyraz ciągu Fibonacciego [sqrt(5) = 2.236...]:
 
-F(n) = {[(1 + sqrt(5)) / 2] ** n - [(1 - sqrt(5)) / 2] ** n} / sqrt(5).
+F(n) = (r1^n - r2^n) / sqrt(5),
+
+r1 = (1 + sqrt(5)) / 2 = 1.618...,
+r2 = (1 - sqrt(5)) / 2 = -0.618...,
+r1 + r2 = 1.
 
 Wzór można wykorzystać do szybkiego obliczania dużych liczb Fibonacciego.
 </pre><hr><pre>
@@ -66,14 +70,15 @@ Analiza złożoności.
 Tc to czas wykonania instrukcji if.
 T(0) = Tc,
 T(1) = Tc,
-T(n) = Tc + T(n-1) + T(n-2) dla n &gt;= 2,
+T(n) = Tc + T(n-1) + T(n-2) dla n &gt;= 2,   # niehomogeniczna rekurencja liniowa
 T(2) = 3 * Tc,
 T(3) = Tc + 3 * Tc + Tc = 5 * Tc,
 T(4) = Tc + 5 * Tc + 3 * Tc = 9 * Tc.
+T(n) = [2 * F(n+1) -1] * Tc.   # złożoność wykładnicza
 </pre><hr>
 
 <p>Zastosowanie: opis rozrastania się stada królików, 
-liczba rozwiązań układanki z klocków,..
+liczba rozwiązań układanki z klocków, itp.
 
 <h3>WIEŻE HANOI</h3>
 

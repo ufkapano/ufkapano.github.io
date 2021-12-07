@@ -115,7 +115,7 @@ def traverse_stack(top, visit):
     stack.append(top)
     while stack:
         node = stack.pop()
-        visit(node)
+        visit(node)   # przetworzenie node po zdjęciu ze stosu
         if node.right:
             stack.append(node.right)
         if node.left:
@@ -127,6 +127,8 @@ def traverse_stack(top, visit):
 
 <p>Warto zauważyć, że zamieniając stos na kolejkę uzyskamy
 procedurę realizującą przechodzenie przez drzewo poziomami.
+Odpowiada to przechodzeniu przez graf wszerz (BFS),
+zaczynając od korzenia.
 
 <hr><pre>
 from Queue import Queue
@@ -138,7 +140,7 @@ def traverse_queue(top, visit):
     Q.put(top)
     while not Q.empty():
         node = Q.get()
-        visit(node)
+        visit(node)   # przetworzenie node po wyjęciu z kolejki
         if node.left:
             Q.put(node.left)
         if node.right:
@@ -167,7 +169,7 @@ def btree_count_iteratively(top):
     stack.append(top)
     while stack:
         node = stack.pop()
-        counter += 1
+        counter += 1   # przetworzenie node po zdjęciu ze stosu
         if node.left:
             stack.append(node.left)
         if node.right:
@@ -175,13 +177,14 @@ def btree_count_iteratively(top):
     return counter
 </pre><hr>
 
-<p>Następna funkcja będzie obliczała wysokość drzewa binarnego.
+<p>Następna funkcja będzie obliczała wysokość drzewa binarnego,
+rozumianą jako liczbę poziomów (samotny korzeń to wysokość 1).
 Tu również pojawia się rekurencja.
 
 <hr><pre>
 def btree_height(top):
     if top is None:
-        return 0
+        return 0   # czasem przyjmuje się -1
     left = btree_height(top.left)
     right = btree_height(top.right)
     return 1 + max(left, right)

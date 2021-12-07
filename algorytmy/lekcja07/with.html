@@ -91,13 +91,14 @@ class ContextManager:
         return self   # czasem może być inny obiekt
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
-        # typ, wartość, ślad
-        if exception_type is None:
+        # typ, wartość, ślad wyjątku
+        if exception_type is None:   # brak wyjątku
             print ( "normalne wyjście" )
             return True
         else:
             print ( "zgłoszenie wyjątku {}".format(exception_type) )
             return False    # przekazanie wyjątku
+            # return True   # porzucenie wyjątku
 
 # Zastosowanie.
 
@@ -127,7 +128,7 @@ Warto prześledzić przykłady z dokumentacji [25.3 unittest].
 with self.assertRaises(SomeException) as context:
     do_something()
 
-# Sprawdzenie pewnego kodu błędu.
+# Sprawdzenie pewnego kodu błędu (na zewnątrz instrukcji with).
 self.assertEqual(context.exception.error_code, 3)
 
 # Można sprawdzić, czy dostaliśmy daną klasę wyjątku,
@@ -142,7 +143,7 @@ self.assertTrue("NoneType" in str(context.exception))
 <p>W Pythonie 3.4 pojawił się menedżer kontekstu subTest(), który
 pomaga tworzyć testy o bardziej czytelnych komunikatach.
 Zwykle używa się subTest() gdy mamy wiele mało różniących się testów,
-np. zmieniają się tylko paramatry wywołania danej funkcji.
+np. zmieniają się tylko parametry wywołania danej funkcji.
 
 <hr><pre>
 # https://docs.python.org/3/library/unittest.html
@@ -158,7 +159,7 @@ class NumbersTest(unittest.TestCase):
         Test that numbers between 0 and 5 are all even.
         """
         for i in range(0, 6):
-            with self.subTest(i=i):
+            with self.subTest(i=i):   # Python 3
                 self.assertEqual(i % 2, 0)
                 # self.assertTrue(is_even(i))   # wersja z funkcją
 

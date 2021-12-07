@@ -302,7 +302,8 @@ class Frac:
 
     def __hash__(self):
         return hash(float(self))   # immutable fracs
-        # assert set([2]) == set([2.0])
+        # w Pythonie set([2]) == set([2.0])
+        # chcemy set([2]) == set([Frac(2)])
 
 # Kod testujący moduł.
 

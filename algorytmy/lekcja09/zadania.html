@@ -24,11 +24,37 @@ class SingleList:
         # Zwraca cały węzeł, skraca listę.
         # Dla pustej listy rzuca wyjątek ValueError.
 
-    def merge(self, other): pass   # klasy O(1)
+    def join(self, other): pass   # klasy O(1)
         # Węzły z listy other są przepinane do listy self na jej koniec.
         # Po zakończeniu operacji lista other ma być pusta.
 
     def clear(self): pass     # czyszczenie listy
+</pre><hr><pre>
+POCZĄTEK JOIN
+A1 &lt;- self.head
+|
+A2 &lt;- self.tail
+|
+None
+
+B1 &lt;- other.head
+|
+B2 &lt;- other.tail
+|
+None
+
+KONIEC JOIN
+A1 &lt;- self.head
+|
+A2
+|
+B1
+|
+B2 &lt;- self.tail
+|
+None
+
+None &lt;- other.head=other.tail
 </pre><hr>
 
 <h3>ZADANIE 9.2 (SINGLELIST)</h3>
@@ -66,7 +92,7 @@ class DoubleList:
         # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
 
     def remove(self, node): pass
-        # Usuwa wskazany węzeł z listy.
+        # Usuwa wskazany węzeł z listy (węzeł należy do listy).
 
     def clear(self): pass     # czyszczenie listy
 </pre>

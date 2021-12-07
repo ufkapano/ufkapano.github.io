@@ -78,7 +78,7 @@ class Frac:
 
     def __div__(self, other): pass  # frac1/frac2, frac/int, Py2
 
-    def __rdiv__(self, other): pass # int/frac, Python 2
+    def __rdiv__(self, other): pass # int/frac, Py2
 
     def __truediv__(self, other): pass  # frac1/frac2, frac/int, Py3
 
@@ -96,7 +96,8 @@ class Frac:
 
     def __hash__(self):
         return hash(float(self))   # immutable fracs
-        # assert set([2]) == set([2.0])
+        # w Pythonie set([2]) == set([2.0])
+        # chcemy set([2]) == set([Frac(2)])
 
 # Kod testujący moduł.
 
@@ -129,17 +130,17 @@ class Poly:
     def __str__(self):
         return str(self.a)
 
-    def __add__(self, other): pass  # poly1+poly2, poly+int
+    def __add__(self, other): pass  # poly1+poly2, poly+liczba
 
-    __radd__ = __add__              # int+poly
+    __radd__ = __add__              # liczba+poly
 
-    def __sub__(self, other): pass  # poly1-poly2, poly-int
+    def __sub__(self, other): pass  # poly1-poly2, poly-liczba
 
-    def __rsub__(self, other): pass # int-poly
+    def __rsub__(self, other): pass # liczba-poly
 
-    def __mul__(self, other): pass  # poly1*poly2, poly*int
+    def __mul__(self, other): pass  # poly1*poly2, poly*liczba
 
-    __rmul__ = __mul__              # int*poly
+    __rmul__ = __mul__              # liczba*poly
 
     def __pos__(self):              # +poly1 = (+1)*poly1
         return self
