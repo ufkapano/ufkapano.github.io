@@ -69,8 +69,8 @@ określanym w chwili tworzenia kolejki.
 <h3>KOLEJKI PRIORYTETOWE W PYTHONIE</h3>
 
 <hr><pre>
-#from Queue import PriorityQueue   # Python 2
-from queue import PriorityQueue   # Python 3
+#from Queue import PriorityQueue   # Py2
+from queue import PriorityQueue   # Py3
 
 pq = PriorityQueue()
 # pq.put((priority, item))
@@ -204,7 +204,7 @@ class PriorityQueue:
         self.head = Node(data, next=self.head)
 
     def remove(self):  # nie ma zabezpieczenia
-        # Etap 1 - wyszukanie węzła. Wydajność O(N).
+        # Etap 1 - wyszukanie węzła. Wydajność O(n).
         before = None
         best = self.head
         node = self.head   # następnego za tym będziemy sprawdzać

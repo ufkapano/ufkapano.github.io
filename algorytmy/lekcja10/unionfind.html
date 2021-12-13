@@ -51,14 +51,14 @@ grafu G = (V, E) lub też mogą pochodzić z innego źródła.
 class UnionFind:
     """Klasa realizująca strukturę zbiorów rozłącznych."""
 
-    def __init__(self): pass  # inicjalizacja
+    def __init__(self): pass   # inicjalizacja
 
-    def create(self, x): pass  # stworzenie zbioru jednoelementowego
+    def create(self, x): pass   # stworzenie zbioru jednoelementowego
 
-    def find(self, x): pass    # reprezentant zbioru zawierającego x
+    def find(self, x): pass   # reprezentant zbioru zawierającego x
 
-    def union(self, x, y): pass # łączenie zbioru zawierającego x
-                                # ze zbiorem zawierającym y
+    def union(self, x, y): pass   # łączenie zbioru zawierającego x
+                                  # ze zbiorem zawierającym y
 </pre><hr><pre>
 # Zastosowanie.
 uf = UnionFind()
@@ -95,7 +95,7 @@ class UnionFind:
 
     def union(self, x, y):
         # Szukamy korzeni drzew.
-        z = self.parent[x]      # zmienna tymczasowa jest konieczna
+        z = self.parent[x]   # zmienna tymczasowa jest konieczna
         if z == self.parent[y]:   # to samo drzewo
             return
         # Łączenie - poprawiamy korzenie.

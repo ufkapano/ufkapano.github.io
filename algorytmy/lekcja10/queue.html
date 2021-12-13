@@ -13,13 +13,13 @@
 <p>Kolejka to ADT, który pozwala zapisywać dane
 i następnie pobierać je w takiej kolejności, w jakiej je zapisano 
 (ang. <em>first in, first out</em>, FIFO; pierwszy wchodzi, pierwszy wychodzi).
-Interfejs kolejki ma 4 funkcje:
+Interfejs kolejki ma minimum 4 funkcje:
 
 <ul>
-<li>konstruktor __init__() [inicjalizacja pustej kolejki], 
-<li>is_empty() [test czy kolejka jest pusta], 
-<li>put() lub enqueue() [wstawienie elementu], 
-<li>get() lub dequeue() [pobranie elementu].
+<li>inicjalizacja pustej kolejki (konstruktor), 
+<li>test czy kolejka jest pusta (is_empty), 
+<li>wstawienie elementu (put lub enqueue), 
+<li>pobranie elementu (get lub dequeue).
 </ul>
 
 <p>Jeżeli kolejka ma ograniczenie na liczbę przechowywanych elementów, 
@@ -30,8 +30,8 @@ przepełnienie kolejki, pobieranie elementu z pustej kolejki.
 <h3>KOLEJKI W PYTHONIE</h3>
 
 <hr><pre>
-#from Queue import Queue   # Python 2
-from queue import Queue   # Python 3
+#from Queue import Queue   # Py2
+from queue import Queue   # Py3
 
 Q = Queue()
 # Q.put(item)
@@ -54,13 +54,13 @@ class Queue:
     def __init__(self):
         self.items = []
 
-    def __str__(self):             # podglądanie kolejki
+    def __str__(self):   # podglądanie kolejki
         return str(self.items)
 
     def is_empty(self):
         return not self.items
 
-    def is_full(self):             # nigdy nie jest pusta
+    def is_full(self):   # nigdy nie jest pusta
         return False
 
     def put(self, data):
@@ -106,7 +106,7 @@ class Queue:
     def is_empty(self):
         return not self.head
 
-    def put(self, data):        # linear-time
+    def put(self, data):   # linear-time O(n)
         node = Node(data)   # next jest domyślnie None
         if self.is_empty():
             self.head = node
@@ -116,13 +116,13 @@ class Queue:
                 last = last.next
             last.next = node
 
-    def get(self):                  # constat-time
+    def get(self):   # constat-time O(1)
         data = self.head.data
         self.head = self.head.next
         return data
 </pre><hr>
 
-<p>Metoda put() nie jest optymalna, ponieważ jest klasy O(N).
+<p>Metoda put() nie jest optymalna, ponieważ jest klasy O(n).
 Wymaga przejścia przez wszystkie węzły, aby dotrzeć do ostatniego
 węzła. Rozwiązaniem tego problemu jest dodatkowy atrybut tail
 w klasie Queue, w którym zapisana będzie referencja do ostatniego
@@ -152,22 +152,23 @@ class Queue:
     def is_empty(self):
         return not self.head
 
-    def put(self, data):            # constat-time
-        node = Node(data)   # next jest domyslnie None
+    def put(self, data):   # constat-time O(1)
+        node = Node(data)   # next jest domyślnie None
         if self.is_empty():
             self.head = self.tail = node
-        else:                   # dajemy na koniec listy
+        else:   # dajemy na koniec listy
             self.tail.next = node
             self.tail = node
 
-    def get(self):                  # constat-time
+    def get(self):   # constat-time O(1)
         data = self.head.data
         self.head = self.head.next
-        if self.is_empty():       # zabezpieczenie
+        if self.is_empty():   # zabezpieczenie
             self.tail = None
         return data
 </pre><hr><pre>
 # Wykorzystanie klasy SingleList do budowy kolejki.
+# Tutaj insert_tail() i remove_head() używają 'node.data', a nie 'node'.
 import slist
 
 class Queue(slist.SingleList):
@@ -195,7 +196,7 @@ class Queue(dlist.DoubleList):
 
 <h3>IMPLEMENTACJA 5</h3>
 
-<p>Implementacja kolejki FIFO za pomocą tablic.
+<p>Implementacja kolejki FIFO za pomocą tablicy cyklicznej.
 Przy inicjalizacji kolejki trzeba podać maksymalną liczbę
 przechowywanych w kolejce elementów (size).
 Wykorzystywana w implementacji tablica będzie o jeden większa,
@@ -214,7 +215,7 @@ class Queue:
         return self.head == self.tail
 
     def is_full(self):
-        return (self.head + self.n-1) % self.n == self.tail
+        return (self.tail + 1) % self.n == self.head
 
     def put(self, data):
         self.items[self.tail] = data
@@ -222,11 +223,28 @@ class Queue:
 
     def get(self):
         data = self.items[self.head]
-        self.items[self.head] = None      # usuwam referencję
+        self.items[self.head] = None   # usuwam referencję
         self.head = (self.head + 1) % self.n
         return data
+</pre><hr><pre>
+Przykładowe operacje dla tablicy pięcioelementowej (size = 4, n = 5).
+kolejka pusta (head == tail)
++--+--+--+--+--+ head = 0 (pierwszy zajęty)
+|  |  |  |  |  | tail = 0 (pierwszy wolny)
++--+--+--+--+--+
+put(11) ; put(22) ; put(33) ; put(44)
++--+--+--+--+--+ head = 0
+|11|22|33|44|  | tail = 4
++--+--+--+--+--+ kolejka pełna ((tail + 1) % n == head)
+get() ; get()
++--+--+--+--+--+ head = 2
+|  |  |33|44|  | tail = 4
++--+--+--+--+--+
+put(55) ; put(66)
++--+--+--+--+--+ head = 2
+|66|  |33|44|55| tail = 1
++--+--+--+--+--+ kolejka pełna
 </pre><hr>
-
 
 </body>
 </html>
