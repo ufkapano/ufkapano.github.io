@@ -11,7 +11,7 @@
 
 <h1>AiSD (10) - ADT TREE</h1>
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: dwa zadania
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
 <h3>WPROWADZENIE</h3>
 
@@ -65,8 +65,8 @@ template &lt;typename T&gt;
 class RandomBinaryTree {
     BSTNode&lt;T&gt; *root;
 public:
-    RandomBinaryTree() : root(nullptr) {} // konstruktor domyslny
-    ~RandomBinaryTree() { clear(); } // trzeba wyczyscic
+    RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
+    ~RandomBinaryTree() { clear(); } // trzeba wyczyścić
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     void insert(const T& item) { root = insert(root, item); }
@@ -82,7 +82,7 @@ public:
     void iter_preorder();
     void iter_inorder(); // trudne
     void iter_postorder(); // trudne
-    void bfs(); // przejscie poziomami (wszerz)
+    void bfs(); // przejście poziomami (wszerz)
     void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
 
@@ -151,13 +151,13 @@ W implementacji wykorzystuje się kolejkę.
 template &lt;typename T&gt;
 void RandomBinaryTree&lt;T&gt;::bfs() {
     if (root == nullptr) return;
-    std::queue&lt;BSTNode&lt;T&gt;*&gt; Q; // wskazniki do wezlow
+    std::queue&lt;BSTNode&lt;T&gt;*&gt; Q; // wskaźniki do wezłów
     BSTNode *node = root;
     Q.push(node);
     while (!Q.empty()) {
-        node = Q.front(); // podgladamy
+        node = Q.front(); // podglądamy
         Q.pop();        // usuwamy z kolejki
-        visit(node); // tu jest wlasciwe przetworzenie wezla
+        visit(node); // tu jest właściwe przetworzenie węzła
         if (node->left != nullptr)
             Q.push(node->left);
         if (node->right != nullptr)
@@ -214,13 +214,13 @@ zaimplementować nierekurencyjnie za pomocą stosu.
 template &lt;typename T&gt;
 void RandomBinaryTree&lt;T&gt;::iter_preorder() {
     if (root == nullptr) return;
-    std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskazniki do wezlow
+    std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskaźniki do węzłów
     BSTNode&lt;T&gt; *node = root;
     S.push(node);
     while (!S.empty()) {
-        node = S.top(); // podgladamy
+        node = S.top(); // podglądamy
         S.pop();        // usuwamy ze stosu
-        visit(node); // tu jest wlasciwe przetworzenie wezla
+        visit(node); // tu jest właściwe przetworzenie węzła
         if (node->right != nullptr) // najpierw prawe poddrzewo!
             S.push(node->right);
         if (node->left != nullptr)
