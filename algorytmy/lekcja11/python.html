@@ -27,8 +27,8 @@ w Java SE 7 i na platformie Android.
 
 <hr><pre>
 # Jeżeli L to lista, to mamy wywołanie postaci
-# L.sort(cmp=None, key=None, reverse=False)   # Python 2
-# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
+# L.sort(cmp=None, key=None, reverse=False)   # Py2
+# L.sort(/, *, key=None, reverse=False)   # Py3, keywords only
 
 string_list.sort()   # sortowanie listy napisów (duże litery najpierw)
 
@@ -37,7 +37,7 @@ string_list.sort()   # sortowanie listy napisów (duże litery najpierw)
 
 string_list.sort(cmp=lambda x, y: cmp(x.lower(), y.lower()))
 
-# Nowy sposób (Python 2.4) - podajemy klucz, czyli jakby sposób 
+# Nowy sposób (Py2.4) - podajemy klucz, czyli jakby sposób 
 # patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
 # Sortowanie jest stabilne.
 
@@ -64,7 +64,7 @@ pair_list.sort(key=operator.itemgetter(1))
 sorted(L, key=D.get)
 </pre><hr><pre>
 # Transforming a comparison function to a key function.
-from functools import cmp_to_key   # Python 3.2+
+from functools import cmp_to_key   # Py3.2+
 
 alist.sort(key=cmp_to_key(cmp_function))
 sorted(iterable, key=cmp_to_key(locale.strcoll))  # locale-aware sort order
