@@ -39,10 +39,10 @@ template &lt;typename T&gt;
 class BinarySearchTree {
     BSTNode&lt;T&gt; *root;
 public:
-    BinarySearchTree() : root(nullptr) {} // konstruktor domyslny
+    BinarySearchTree() : root(nullptr) {} // konstruktor domyślny
     ~BinarySearchTree() { clear(); } // trzeba wyczyscic
     bool empty() const { return root == nullptr; }
-    T& top() { assert(root != nullptr); return root->value; } // podglad korzenia
+    T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     void insert(const T& item) { root = insert(root, item); }
     void remove(const T& item); // usuwanie przez złączanie
     // Szukając element dostajemy wskaźnik do elementu lub nullptr.
@@ -86,7 +86,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, con
     } else {
         node->right = insert(node->right, item);
     }
-    return node; // zwraca nowy korzen
+    return node; // zwraca nowy korzeń
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
@@ -123,7 +123,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_right(BSTNode&lt;T&gt; *nod
     node = top->left;
     top->left = node->right;
     node->right = top;
-    return node; // zwraca najwyzszy wezel
+    return node; // zwraca najwyższy węzeł
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
@@ -134,7 +134,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node
     node = top->right;
     top->right = node->left;
     node->left = top;
-    return node; // zwraca najwyzszy wezel
+    return node; // zwraca najwyższy węzeł
 }
 </pre><hr>
 
@@ -142,7 +142,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node
 
 <hr><pre>
 template &lt;typename T&gt;
-void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez zlaczanie
+void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez złączanie
     // Najpierw znajdujemy wezel i jego rodzica.
     BSTNode&lt;T&gt; *node = root;
     BSTNode&lt;T&gt; *prev = nullptr;
@@ -156,9 +156,9 @@ void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez zlacza
             node = node->right;
         }
     }
-    // Szukamy przyczyny przerwania petli while.
+    // Szukamy przyczyny przerwania pętli while.
     if (node != nullptr && node->value == item) {
-        // node ma byc usuniety.
+        // node ma być usunięty.
         if (node == root) {
             root = remove(node);
         } else if (prev->left == node) {
@@ -175,7 +175,7 @@ void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez zlacza
 </pre><hr><pre>
 template &lt;typename T&gt;
 BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
-    // Mamy usunac wezel i zwrocic nowy korzen poddrzewa.
+    // Mamy usunąć węzeł i zwrócić nowy korzeń poddrzewa.
     assert(node != nullptr);
     BSTNode&lt;T&gt; *new_root;
     if (node->right == nullptr) { // node nie ma prawego dziecka
@@ -183,14 +183,14 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
     } else if (node->left == nullptr) { // node nie ma lewego dziecka
         new_root = node->right;
     } else { // obecne lewe i prawe dziecko
-        new_root = node; // zapisujemy stary korzen
+        new_root = node; // zapisujemy stary korzeń
         node = node->left; // idziemy w lewo
-        while (node->right != nullptr) { // idziemy w prawo do konca
+        while (node->right != nullptr) { // idziemy w prawo do końca
             node = node->right;
         }
-        node->right = new_root->right; // prawe poddrzewo przelaczone
-        node = new_root; // wezel do usuniecia
-        new_root = node->left; // nowy korzen
+        node->right = new_root->right; // prawe poddrzewo przełączone
+        node = new_root; // węzeł do usunięcia
+        new_root = node->left; // nowy korzeń
     }
     delete node;
     return new_root;

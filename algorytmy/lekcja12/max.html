@@ -49,13 +49,17 @@ Wyszukiwanie elementu najmniejszego jest analogiczne.
 <h3>WYSZUKIWANIE MAX LUB MIN W PYTHONIE</h3>
 
 <hr><pre>
-min(arg1, arg2, *args, *[, key=func]) -&gt; value
-min(iterable[, key=func]) -&gt; value          # Python 2
-min(iterable, *[, default=obj, key=func]) -&gt; value   # Python 3.4
+min(arg1, arg2, *args, *[, key])   # dwa lub więcej argumentów
+min(iterable[, key=func])   # Py2, jeden argument
+min(iterable, *[, key, default])   # Py3.4, jeden argument
 
-max(arg1, arg2, *args, *[, key=func]) -&gt; value
-max(iterable[, key=func]) -&gt; value          # Python 2
-max(iterable, *[, default=obj, key=func]) -&gt; value   # Python 3.4
+max(arg1, arg2, *args, *[, key])   # dwa lub więcej argumentów
+max(iterable[, key=func])   # Py2, jeden argument
+max(iterable, *[, key, default])   # Py3.4, jeden argument
+
+# The 'default' argument specifies an object to return if the provided
+# iterable is empty. If the iterable is empty and default is not provided,
+# a ValueError is raised.
 </pre><hr>
 
 <h3>IMPLEMENTACJA</h3>

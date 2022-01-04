@@ -363,7 +363,7 @@ def rotate_left(top):
     if top.right is None:
         return top           # nie ma rotacji
     node = top.right
-    top.right = node.left   # B
+    top.right = node.left   # poddrzewo B
     node.left = top
     return node   # jest wyżej
 </pre><hr>

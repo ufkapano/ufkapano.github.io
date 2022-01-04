@@ -165,10 +165,10 @@ def select_five(L, left, right, k):
 
 <p>Niech T(n) oznacza złożoność czasową algorytmu.
 Wykonanie algorytmu składa się z trzech etapów.
-(1) Znajdowanie median piątek w czasie O(n).
-(2) Znajdowanie rekurencyjne mediany median w czasie T(n/5).
-(3) Wykonania rekurencyjnego w czasie T(3n/4). 
-To ostatnie oszacowanie wynika z faktu, że przynajmniej 1/4 elementów 
+<br>(1) Znajdowanie median piątek w czasie O(n).
+<br>(2) Znajdowanie rekurencyjne mediany median w czasie T(n/5).
+<br>(3) Wykonania rekurencyjnego w czasie T(3n/4). 
+<br>To ostatnie oszacowanie wynika z faktu, że przynajmniej 1/4 elementów 
 jest nie większa od mediany median M (lewa górna ćwiartka),
 a więc 3/4 elementów jest większa lub równa M. 
 Podobnie przynajmniej 1/4 elementów jest nie mniejsza od M 
@@ -197,7 +197,7 @@ Wygodnie jest to pokazać na rysunku.
 co daje rozwiązanie postaci T(n) = O(n).
 Kluczowa jest nierówność 1/5 + 3/4 = 19/20 &lt; 1.
 
-<p>Zamiast podziału na zbiory 5-elementowe mozna zrobić podziały
+<p>Zamiast podziału na zbiory 5-elementowe można zrobić podziały
 na zbiory 7-elementowe, co nie zmieni idei algorytmu.
 Istotne jest uzyskanie oszacowania
 T(n) &lt;= O(n) + T(an) + T(bn), gdzie a+b &lt; 1, co daje

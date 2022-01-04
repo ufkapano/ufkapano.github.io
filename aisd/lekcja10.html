@@ -208,7 +208,7 @@ void RandomBinaryTree&lt;T&gt;::postorder(BSTNode&lt;T&gt; *node) {
 </pre><hr>
 
 <p>Przechodzenie przez drzewo w kolejności preorder możemy 
-zaimplementować nierekurencyjnie za pomocą stosu. 
+zaimplementować iteracyjnie za pomocą stosu. 
 
 <hr><pre>
 template &lt;typename T&gt;
@@ -229,34 +229,37 @@ void RandomBinaryTree&lt;T&gt;::iter_preorder() {
 }
 </pre><hr>
 
-<p>Nierekurencyjne wersje inorder() i postorder() są bardziej skomplikowane
+<p>Iteracyjne wersje inorder() i postorder() są bardziej skomplikowane
 [Drozdek].
 
 <h3>ZADANIE 10.1</h3>
 
 <p>Napisać funkcję calc_leafs(), która zlicza liście drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 10.2</h3>
 
 <p>Załóżmy, że drzewo binarne przechowuje liczby. 
 Napisać funkcję calc_total(), która podaje sumę liczb przechowywanych w drzewie. 
-Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 10.3</h3>
 
 <p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
 najmniejszą i największą w drzewie binarnym.
-Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 10.4</h3>
 
 <p>Napisać funkcję calc_height() obliczającą wysokość drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+Wskazówka: w wersji iteracyjnej na stos można odkładać parę 
+(węzeł, poziom węzła), poziom korzenia wynosi 1.
 
 <h3>ZADANIE 10.5</h3>
 
 <p>Napisać funkcję calc_nodes() znajdującą liczbę węzłów drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i nierekurencyjną.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
