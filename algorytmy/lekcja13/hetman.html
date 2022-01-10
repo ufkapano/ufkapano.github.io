@@ -8,9 +8,11 @@
 
 <h1>Problem ośmiu hetmanów (the queens problem)</h1>
 
+<p>https://en.wikipedia.org/wiki/Eight_queens_puzzle
+
 <h3>WPROWADZENIE</h3>
 
-<p>[Wikipedia] Hetman jest figurą szachową, która bije figury 
+<p>Hetman jest figurą szachową, która bije figury 
 znajdujące się w tej samej kolumnie, wierszu lub przekątnej, co on sam. 
 W jaki sposób rozstawić osiem hetmanów na tradycyjnej szachownicy 8x8 tak, 
 aby wzajemnie się nie atakowały? Ile jest możliwych rozstawień?
@@ -44,9 +46,9 @@ def wymaz(w, k):
     b[w+k] = True
     c[w-k] = True
 
-def probuj(k):
+def probuj(k):   # wstaw hetmana do kolumny k
     udany = False
-    w = 0                 # numery od 0 do N-1
+    w = 0                 # numery wierszy od 0 do N-1
     while (not udany) and (w &lt; N):
         if dopuszczalny(w, k):
             zapisz(w, k)

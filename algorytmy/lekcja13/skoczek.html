@@ -8,6 +8,8 @@
 
 <h1>Droga skoczka szachowego</h1>
 
+<p>https://en.wikipedia.org/wiki/Knight%27s_tour
+
 <h3>WPROWADZENIE</h3>
 
 <p>Problem polega na obejściu całej szachownicy w taki sposób,
@@ -21,14 +23,19 @@ przypadkiem NP-trudnego problemu znajdowania ścieżki lub cyklu Hamiltona
 w grafie nieskierowanym.
 Okazuje się, problem znalezienia drogi skoczka szachowego
 jest taką instancją ogólnego problemu, która ma rozwiązanie wielomianowe.
-Istnieją algorytmy działające w czasie liniowym O(n*n) 
-[n to bok planszy kwadratowej], które znajdują rozwiązanie.
-Otwarta ścieżka Hamiltona istnieje dla każdego n większego lub równego 5.
+Istnieją algorytmy działające w czasie liniowym względem liczby
+pól szachownicy O(n^2) [n to bok planszy kwadratowej], 
+które znajdują rozwiązanie problemu.
+
+<p>Otwarta ścieżka Hamiltona istnieje dla każdego n większego lub równego 5.
 Zamknięta ścieżka Hamiltona (cykl) istnieje dla każdego n parzystego
 większego lub równego 6.
 Algorytmy znajdujące rozwiązanie zwykle wykorzystują metodę
 dziel i zwyciężaj, gdzie rozwiązania dla małych planszy są
 zawczasu przygotowane.
+
+<p>Problem znajdowania zamkniętej ścieżki skoczka może być rozwiązany
+przy pomocy sztucznej sieci neuronowej (Takefuji, Lee, 1992).
 
 <hr><pre>
 # Problem drogi skoczka na kwadratowej szachownicy o boku N.
@@ -45,12 +52,12 @@ def zapisz(krok, x, y):
     plansza[x, y] = krok   # zapis ruchu
 
 def wymaz(x, y):
-    plansza[x, y] = 0
+    plansza[x, y] = 0   # pole nieodwiedzone
 
 def probuj(krok, x, y):
     # krok - nr kolejnego kroku do zrobienia
     # x, y - pozycja startowa skoczka
-    # Funkcja zwraca bool True/False (czy udany ruch).
+    # Funkcja zwraca bool (czy udany ruch).
     udany = False
     kandydat = 0          # numery od 0 do RUCHY_SKOCZKA-1
     while (not udany) and (kandydat &lt; RUCHY_SKOCZKA):
