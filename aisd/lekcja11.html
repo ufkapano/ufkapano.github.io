@@ -50,13 +50,25 @@ public:
         auto ptr = search(root, item);
         return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
     }
+    T* iter_search(const T& item) const { // wg libavl
+        for (auto node=root; node != nullptr; ) {
+            if (item == node->value) {
+                return &amp;(node->value);
+            } else if (item &lt; node->value) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+        return nullptr;
+    }
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
     void iter_preorder();
     void iter_inorder(); // trudne
     void iter_postorder(); // trudne
-    void bfs(); // przejscie poziomami (wszerz)
+    void bfs(); // przejście poziomami (wszerz)
     void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
 
@@ -195,6 +207,14 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
     delete node;
     return new_root;
 }
+</pre><hr><pre>
+|      X                      Usuwamy węzeł X.
+|    /   \               Nowym korzeniem poddrzewa będzie Y.
+|   Y     C       Y         Z jest poprzednikiem X.
+|  / \           / \
+| A   Z         A   Z
+|    /             / \
+|   B             B   C
 </pre><hr>
 
 <h3>ALGORYTM DSW</h3>

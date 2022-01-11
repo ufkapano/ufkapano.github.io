@@ -55,8 +55,8 @@ struct BSTNode {
     //BSTNode *parent;   // używane w pewnych zastosowaniach
     // kostruktor domyślny
     BSTNode() : value(T()), left(nullptr), right(nullptr) {}
-    BSTNode(const T& item, BSTNode *le=nullptr, BSTNode *ri=nullptr) :
-        value(item), left(le), right(ri) {} // konstruktor
+    // konstruktor zwykły
+    BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
     ~BSTNode() {} // destruktor
 };
 </pre><hr><pre>
