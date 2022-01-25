@@ -22,7 +22,7 @@ w węzłach fragmenty kluczy (drzewa BST przechowją w węzłach całe klucze).
 Węzeł przechowujący ostatni fragment klucza przechowuje
 również wartość związaną z danym kluczem (lub tylko znacznik końca klucza).
 Wyszukiwanie klucza w drzewie trie zajmuje czas O(m), 
-a w zrównoważonych drzewach BST czas O(m*log(n)), 
+a w zrównoważonych drzewach BST czas O(m log n), 
 gdzie n to liczba kluczy, a m to największa długość klucza.
 
 <p>Modyfikacją drzew trie są drzewa Patricia (ang. compact prefix tree), 
@@ -131,6 +131,16 @@ struct TrieNode {
     struct TrieNode *right_sibling;
     bool isEndOfWord;
 };
+</pre><hr><pre>
+| Wstawione pary (key, value) do drzewa trie:
+| ("kot",1),("koc",2),("kil",3),("lot",4),("lis",5)
+|         *
+|        /
+|       k---------------l
+|      /               /
+|     o---------i     o-----i
+|    /         /     /     /
+| t(1)--c(2)  l(3)  t(4)  s(5)
 </pre><hr>
 
 <h3>ZADANIE 14.1</h3>
