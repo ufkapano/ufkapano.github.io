@@ -12,7 +12,7 @@
 
 <p>https://numpy.org/doc/stable/reference/arrays.dtypes.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Default data type in Python: strings, integer, float, boolean, complex.
 NumPy has some extra data types.
@@ -38,10 +38,29 @@ dtype_float = np.dtype(float)   # or np.dtype("float")
 # "f2", 'float16';
 # "f" (float), "f4", 'float32';
 # "d" (double), "f8", 'float64';
+# 'float128';
 
 dtype_bool = np.dtype(bool)
+
 dtype_complex = np.dtype(complex)
+# 'complex64', 'complex128', 'complex256'
+
 dtype_object = np.dtype(object)
+</pre><hr><pre>
+np.sqrt(np.array([-1, 0, 1]))   # default dtype=float
+# RuntimeWarning: invalid value encountered in sqrt
+# array([nan,  0.,  1.])
+
+np.sqrt(np.array([-1, 0, 1], dtype=complex))
+# array([0.+1.j, 0.+0.j, 1.+0.j])
+
+a = np.array([1, 2, 3], dtype=complex)
+
+a.real   # or np.real(a)
+# array([1., 2., 3.])
+
+a.imag   # or np.imag(a)
+# array([0., 0., 0.])
 </pre><hr><pre>
 # Structured types, fields with names.
 

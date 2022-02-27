@@ -8,7 +8,7 @@
 
 <h1>NumPy - basic operations</h1>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Arithmetic operators on arrays apply elementwise. 
 A new array is created and filled with the result.
@@ -19,6 +19,8 @@ b = np.arange( 4 )   # array([0, 1, 2, 3])
 a + b   # array([20, 31, 42, 53]), np.add(a, b)
 a - b   # array([20, 29, 38, 47]), np.subtract(a, b)
 a * b   # array([0, 30, 80, 150]), np.multiply(a, b)
+c = np.array([2., 4., 6., 8.])
+a / c   # array([10., 7.5, 6.66666667, 6.25]), np.divide(a, c)
 -a      # array([-20, -30, -40, -50]), np.negative(a)
 b ** 2   # array([0, 1, 4, 9]), np.power(b, 2)
 a ** b   # array([1, 30, 1600, 125000]), np.power(a, b)
@@ -33,16 +35,32 @@ np.dot(a, b)   # 260, also for a.dot(b), scalar product
 # np.dot() returns a matrix product for 2D arrays.
 </pre><hr>
 
+<h3>OPERATIONS IN PLACE</h3>
+
+<hr><pre>
+a = np.array([20, 30, 40, 50])
+b = np.arange( 4 )
+a + b   # array([20, 31, 42, 53]) new array
+a += b
+a   # array([20, 31, 42, 53]) 'a' changed!
+a *= 2
+a   # array([ 40,  62,  84, 106]) 'a' changed!
+</pre><hr>
+
 <h3>COMPARISON OPERATORS</h3>
 
 <p>https://numpy.org/doc/stable/reference/generated/numpy.where.html
 
 <hr><pre>
+a = np.array([20, 30, 40, 50])
+b = np.array([0, 1, 2, 3])
 a &lt; 35   # array([ True,  True, False, False]), dtype('bool'), itemsize 1
 a == b   # array([False, False, False, False])
 a &gt; b   # array([ True,  True,  True,  True])
 np.array_equal(a, b)   # False
 np.array_equal(a, a)   # True
+np.all(a &gt; b)   # True
+np.any(a &lt; 35)   # True
 </pre><hr><pre>
 # Logical Operators
 
@@ -74,11 +92,15 @@ B = np.array( [[2, 0], [3, 4]] )
 A + B   # array([[3, 1], [3, 5]]), np.add(A, B), elementwise
 A - B   # array([[-1,  1], [-3, -3]]), elementwise
 A * B   # array([[2, 0], [0, 4]]), elementwise product
+
 np.dot(A, B)   # matrix product, also A.dot(B)
 # array([[5, 4],
 #        [3, 4]])
 assert A.shape[-1] == B.shape[-2]   # np.dot() for many dimensions
-A += B   # A is modified!
+
+B.transpose()
+# array([[2, 3],
+#        [0, 4]]), np.transpose(B)
 </pre><hr><pre>
 a = np.arange(6).reshape(2,3)
 # array([[0, 1, 2],

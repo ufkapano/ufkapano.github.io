@@ -10,7 +10,7 @@
 
 <p>https://numpy.org/doc/stable/user/basics.creation.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <hr><pre>
 age = np.array(35)   # zero-dimensional array
@@ -54,6 +54,18 @@ y = np.arange(8.0)   # array([0., 1., 2., 3., 4., 5., 6., 7.]), dtype('float64')
 x = np.linspace(0, 2, num=9, dtype=float)   # 9 numbers float (default), default num=50
 # array([0.  , 0.25, 0.5 , 0.75, 1.  , 1.25, 1.5 , 1.75, 2.  ])
 </pre><hr><pre>
+# numpy.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None, axis=0)
+# In linear space, the sequence starts at base ** start and ends with base ** stop.
+
+x = np.logspace(1, 2, 11)
+# array([ 10.        ,  12.58925412,  15.84893192,  19.95262315,
+#        25.11886432,  31.6227766 ,  39.81071706,  50.11872336,
+#        63.09573445,  79.43282347, 100.        ])
+
+# np.logspace is equivalent to the code:
+# y = np.linspace(start, stop, num, endpoint)
+# x = np.power(base, y).astype(dtype)
+</pre><hr><pre>
 # numpy.empty(shape, dtype=float, order='C')
 
 x = np.empty( (2, 3) )   # uninitialized, default float
@@ -61,6 +73,8 @@ x = np.empty( (2, 3) )   # uninitialized, default float
 # numpy.full(shape, fill_value, dtype=None, order='C')
 
 x = np.full((2, 3), 4)   # array([[4, 4, 4], [4, 4, 4]]), dtype=int deduced
+# This is faster than
+# x = 4 * np.ones((2, 3), dtype=int)
 </pre><hr><pre>
 # https://github.com/ufkapano/pyquats
 from quats import Quat
@@ -84,6 +98,45 @@ s = np.array(["alpha", "beta", "gamma"], dtype=object)
 print ( s.itemsize )   # 4 or 8
 </pre><hr>
 
+<h3>ARRAYS 2D</h3>
+
+<hr><pre>
+# numpy.identity(n, dtype=None, *, like=None)
+
+np.identity(3)
+# array([[1.,  0.,  0.],
+#        [0.,  1.,  0.],
+#        [0.,  0.,  1.]])
+</pre><hr><pre>
+# numpy.eye(N, M=None, k=0, dtype=float, order='C', *, like=None)
+
+np.eye(3, k=1)
+# array([[0.,  1.,  0.],
+#        [0.,  0.,  1.],
+#        [0.,  0.,  0.]])
+
+np.eye(3, k=-1)
+# array([[0.,  0.,  0.],
+#        [1.,  0.,  0.],
+#        [0.,  1.,  0.]])
+</pre><hr><pre>
+# numpy.diag(v, k=0)
+# Extract a diagonal or construct a diagonal array.
+
+np.diag([1, 2, 3])
+# array([[1, 0, 0],
+#        [0, 2, 0],
+#        [0, 0, 3]])   creation
+
+x = np.arange(9).reshape((3,3))
+# array([[0, 1, 2],
+#        [3, 4, 5],
+#        [6, 7, 8]])
+
+np.diag(x)       # array([0, 4, 8])   extration
+np.diag(x, k=1)   # array([1, 5])   extration
+np.diag(x, k=-1)   # array([3, 7])   extration
+</pre><hr>
 
 </body>
 </html>

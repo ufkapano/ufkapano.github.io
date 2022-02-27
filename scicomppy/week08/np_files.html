@@ -23,9 +23,12 @@ Each row in the text file must have the same number of values.
 # numpy.loadtxt(fname, dtype=float, comments='#', delimiter=None,
 #     converters=None, skiprows=0, usecols=None, unpack=False,
 #     ndmin=0, encoding='bytes', max_rows=None)
+# dtype : data-type of the resulting array (default: float).
 # The default delimiter is whitespace.
-# converters = {0: datestr2num} if column 0 is a date string.
-# usecols = (1, 4, 5) will extract the 2nd, 5th and 6th columns.
+# delimiter=',' for CSV files.
+# converters={0: datestr2num} if column 0 is a date string.
+# skiprows : skip the first skiprows lines, including comments.
+# usecols=(1, 4, 5) will extract the 2nd, 5th and 6th columns.
 
 data = np.loadtxt("two_columns.txt")   # points in the plane; positions in time
 print ( data.shape )   # (100, 2)
@@ -34,7 +37,7 @@ x = data[:,1]   # second column
 </pre><hr><pre>
 import io   # StringIO behaves like a file object
 
-fname = io.StringIO(u"1, 2, 3\n4, 5, 6")   # python2 and python3
+fname = io.StringIO(u"1, 2, 3\n4, 5, 6")   # Py2 and Py3
 data = np.loadtxt(fname, delimiter =', ', usecols =(0, 1, 2))   # dtype=float
 #data = np.loadtxt(fname, dtype=int, delimiter =', ', usecols =(0, 1, 2))
 print ( data.shape )   # (2, 3)
@@ -69,15 +72,36 @@ female_av = data['weight'][~male].mean()
 #    If the filename ends in .gz, the file is automatically saved in compressed
 #    gzip format. loadtxt() understands gzipped files transparently.
 # X : 1D or 2D array_like
+# header : string that will be written at the beginning of the file
+# footer : string that will be written at the end of the file
+# comments : string that will be prepended to the header and footer strings,
+#     to mark them as comments
 
 x = np.arange(0,1,0.1),reshape(2,5)
 # array([[0. , 0.1, 0.2, 0.3, 0.4],
 #        [0.5, 0.6, 0.7, 0.8, 0.9]])
+
 np.savetxt('x.out', x)   # delimiter=' '
-# np.savetxt('x.out', x, delimiter=', ')
+# np.savetxt('x.out', x, delimiter=',')
 # np.savetxt('x.out', x, fmt='%1.4e')   # use exponential notation
+
 y = np.loadtxt('x.out')
 np.array_equal(x, y)   # True
+</pre><hr><pre>
+data = np.random.randn(5,3)
+
+np.savetxt("data.csv", data, delimiter=",", comments="# ", 
+    header="x, y, z", footer="end of data")
+
+# The content of the file "data.csv".
+
+# x, y, z
+-2.653479360505936469e-01,1.716230058430250338e-01,2.831800738912415016e-01
+-1.030493245302025684e+00,1.127211883360050626e+00,-7.984555882272663663e-01
+7.069631944228116360e-01,-5.481806388086940540e-01,4.934060973542733208e-01
+-1.037116411318822040e+00,-1.603295439838508252e-01,-6.553986822288586367e-02
+4.523746268916202795e-01,1.416743281175641966e+00,-1.391845318345590998e+00
+# end of data
 </pre><hr>
 
 </body>

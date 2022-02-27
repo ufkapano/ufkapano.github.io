@@ -28,7 +28,7 @@ Nature Methods 17, 261-272 (2020).
 <hr><pre>
 If you already have Python, you can install NumPy with:
 
-# CONDA
+ANACONDA
 # Best practice, use an environment rather than install in the base env
 conda create -n my-env
 conda activate my-env
@@ -37,13 +37,12 @@ conda config --env --add channels conda-forge
 # The actual install command
 conda install numpy
 
-# PIP
-# It’s good practice to use a virtual environment
+PIP (in a virtual environment)
 pip install numpy
 
-# APT (Debian Linux)
-Packages (with dependences): python-numpy (Py2.7), python3-numpy (Py3), 
-python-pip, python-pip-whl, python3-pip
+APT (Debian Linux)
+Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3), 
+python-pip, python-pip-whl, python3-pip.
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
@@ -87,6 +86,8 @@ print ( a.ndim )   # 2
 print ( a.dtype )   # dtype('int64'), deduced from the sequence
 print ( a.itemsize )   # 8, size of bytes of each element of the array
 print ( a.size )   # 15, the number of items
+print ( a.nbytes )   # 120
+assert a.nbytes == a.size * a.itemsize
 </pre><hr>
 
 <h3>MEMORY CONSUMPTION</h3>

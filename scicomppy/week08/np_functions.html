@@ -8,22 +8,28 @@
 
 <h1>NumPy - universal functions</h1>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Universal functions operate elementwise on an array, 
 producing an array as output.
 
 <hr><pre>
-# np.exp(a) - return array
-# np.sqrt(a) - return array
-# np.abs(a) - return array
-# np.sin(a) - return array
-# np.cos(a) - return array
+# np.cos(a), np.sin(a), np.tan(a),
+# np.arccos(a), np.arcsin(a), np.arctan(a),
+# np.cosh(a), np.sinh(a), np.tanh(a),
+# np.arccosh(a), np.arcsinh(a), np.arctanh(a),
+# np.exp(a), np.sqrt(a), np.abs(a), np.sign(a), np.round(a),
+# np.log(a), np.log2(a), np.log10(a)
 </pre><hr><pre>
 # np.sum(a, axis=k) - sum of array elements over a given axis
+# np.prod(a, axis=k)
 # np.cumsum(a, axis=k)
+# np.cumprod(a, axis=k)
 # np.min(a, axis=k)
 # np.max(a, axis=k)
+# np.argmin(a, axis=k)
+# np.argmax(a, axis=k)
+</pre><hr><pre>
 # np.median(a, axis=k) - return the median (the middle value of a sorted copy of a)
 # np.average(a, axis=k, weights=w) - compute the weighted average
 # np.mean(a, axis=k) - compute the arithmetic mean 
