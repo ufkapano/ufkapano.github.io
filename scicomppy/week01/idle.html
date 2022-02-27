@@ -10,7 +10,7 @@
 
 <p>https://docs.python.org/3/library/idle.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>IDLE is Python’s Integrated Development and Learning Environment.
 
@@ -25,49 +25,6 @@
 <h3>DEBIAN 10</h3>
 
 <p>Debian packages: idle, idle-python2.7, idle-python3.7.
-
-<p>Console editors: nano, mcedit (with Midnight Commander).
-
-<p>Linux Desktop Environments: 
-
-<p>Editors with GUI: gedit (GNOME), kate (KDE).
-
-<h3>SCRIPTS IN LINUX</h3>
-
-<p>Create a file 'hello.py'. Run the script.
-
-<hr><pre>
-#!/usr/bin/python
-# coding: utf-8
-#
-# Your first program in Python (2 or 3).
-# '#!' is called 'hash bang', it is used by the Linux shell.
-# Usage:
-# python hello.py [number]
-# ./hello.py [number]
-
-import sys
-import math
-
-if len(sys.argv) == 1:
-    r = 1.0
-else:
-    r = float(sys.argv[1])
-
-s = math.sin(r)
-print ( "Hello, sin({}) = {}".format(r, s) )
-
-#input("Press any key ...")   # on Windows
-</pre><hr><pre>
-$ python hello.py
-Hello, sin(1.0) = 0.841470984808
-$ python hello.py 2
-Hello, sin(2.0) = 0.909297426826
-$ chmod a+x hello.py     # add ('+') the 'x' (execute) mode bit to all users ('a')
-$ ./hello.py
-Hello, sin(1.0) = 0.841470984808
-</pre><hr>
-
 
 </body>
 </html>

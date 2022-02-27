@@ -13,7 +13,7 @@
 <p>https://www.debian.org/
 <br>Debian. The universal operating system.
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Good news: Python is probably installed in your system!
 
@@ -82,6 +82,12 @@ export LC_ALL="pl_PL.UTF-8"
 export LANGUAGE="pl_PL.UTF-8"
 </pre><hr>
 
+<h3>EDITORS</h3>
+
+<p>Console editors: nano, mcedit (with Midnight Commander).
+
+<p>Editors with GUI: gedit (GNOME), kate (KDE).
+
 <h3>DESKTOP ENVIRONMENTS</h3>
 
 <p>https://www.tecmint.com/best-linux-desktop-environments/
@@ -117,6 +123,43 @@ for Debian and its derivatives.
 
 <p>Command-line tools dedicated to package management in Debian: 
 dselect, aptitude, apt-get, apt.
+
+<h3>SCRIPTS IN LINUX</h3>
+
+<p>Create a file 'hello.py'. Run the script.
+
+<hr><pre>
+#!/usr/bin/python
+# coding: utf-8
+#
+# Your first program in Python (2 or 3).
+# '#!' is called 'hash bang', it is used by the Linux shell.
+# Usage:
+# python hello.py [number]
+# ./hello.py [number]
+
+import sys
+import math
+
+if len(sys.argv) == 1:
+    r = 1.0
+else:
+    r = float(sys.argv[1])
+
+s = math.sin(r)
+print ( "Hello, sin({}) = {}".format(r, s) )
+
+#input("Press any key ...")   # on Windows
+</pre><hr><pre>
+$ python hello.py
+Hello, sin(1.0) = 0.841470984808
+$ python hello.py 2
+Hello, sin(2.0) = 0.909297426826
+$ chmod a+x hello.py     # add ('+') the 'x' (execute) mode bit to all users ('a')
+$ ./hello.py
+Hello, sin(1.0) = 0.841470984808
+</pre><hr>
+
 
 </body>
 </html>

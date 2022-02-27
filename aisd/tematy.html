@@ -10,14 +10,20 @@
 
 <p>W celu zaliczenia ćwiczeń z AiSD należy:
 <br>(1) zaliczyć 10 zestawów zadań,
-<br>(2) zaliczyć projekt programistyczny w C++ (kod plus PDF z dokumentacją;
-minimum 100 wierszy kodu).
+<br>(2) zaliczyć projekt programistyczny w C++
+[kod plus dokumentacja (PDF, README.md, HTML); 
+minimum 100 wierszy kodu;
+nie używać 'using namespace std;'; 
+Makefile z -Wall -std=c++11].
 
 <ul>
 
 <li>Implementacja wielomianów na bazie list powiązanych pojedynczo.
 Działania na wielomianach: dodawanie, odejmowanie, mnożenie,
 obliczanie wartości wielomianu (algorytm Hornera) [klasy Term, Poly].
+<!--
+Konstruktor Poly(T c, int n) może tworzyć jednomian c*x^n [Sedgewick].
+-->
 
 <li>Implementacja wielomianów na bazie tablic.
 Działania na wielomianach: dodawanie, odejmowanie, mnożenie,
@@ -60,6 +66,9 @@ Wierzchołki są liczbami int od 0 do n-1.
 Zaimplementować BFS i DFS.
 
 <li>Implementacja grafów oparta na liście krawędzi.
+Zaimplementować BFS i DFS.
+
+<li>Implementacja grafów oparta na macierzy incydencji.
 Zaimplementować BFS i DFS.
 
 <li>Algorytm kolorowania wierzchołków grafu.
@@ -105,9 +114,6 @@ algorytm genetyczny, symulowane wyżarzanie.
 
 <li>Implementacja drzewa czwórkowego
 [https://en.wikipedia.org/wiki/Quadtree].
-
-<li>Implementacja listy z przeskokami 
-[Drozdek; https://en.wikipedia.org/wiki/Skip_list].
 
 <li>Triangulacja Delaunaya (trudne)
 [https://en.wikipedia.org/wiki/Delaunay_triangulation].
