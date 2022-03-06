@@ -8,7 +8,9 @@
 
 <h1>Dictionaries</h1>
 
-<h3>INTRO</h3>
+<p>https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
+
+<h3>INTRODUCTION</h3>
 
 <p>A mapping object maps 'hashable' values to arbitrary objects. 
 Mappings are mutable objects. 
@@ -45,16 +47,17 @@ There is currently only one standard mapping type, the 'dictionary'.
 
 <hr><pre>
 # Creation
+
 D = {}
 D[k1] = v1 ; D[k2] = v2 ; D[k3] = v3
 
-D = {k1:v1, k2:v2, k3:v3}
+D = {k1: v1, k2: v2, k3: v3}
 
-D = dict([(k1,v1), (k2,v2), (k3,v3)])   # from list of pairs
+D = dict(pair_list)
+D = dict([(k1, v1), (k2, v2), (k3, v3)])
 
+D = dict(zip(key_list, value_list))
 D = dict(zip([k1, k2, k3], [v1, v2, v3]))
-
-list(D)   # [k1, k2, k3]
 
 D.keys()         # [k1, k2, k3] Py2
 D.values()       # [v1, v2, v3] Py2
@@ -64,11 +67,18 @@ D.keys()         # return a view of keys, Py3
 D.values()       # return a view of values, Py3
 D.items()        # return a view of items ((key, value) pairs), Py3
 
+list(D)   # [k1, k2, k3]
+# iter(D) is a shortcut for iter(D.keys()).
+# reversed(D) is a shortcut for reversed(D.keys()).
+
 D = dict(name1=v1, name2=v2)   # {'name1':v1, 'name2':v2}
 
 D.get(key)                    # return D[key] or None
 D.get(key, value)             # return D[key] or value
-D.setdefault(key, value)      # the same and set D[key] = value
+D.setdefault(key, value)
+# if key in D then return D[key],
+# if key not in D then set D[key] = value and return value
+
 D.pop(key)                    # return D[key] and remove
 D.pop(key, value)             # return D[key] (or value) and remove
 D.popitem()                   # return 2-tuple (key, value)
@@ -78,8 +88,10 @@ D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
 D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
 
 D.update(E)   # E is a dict, for k in E: D[k] = E[k]
-D.update(**E)   # E to dict, the same
+D.update(**E)   # E is a dict, the same
 D.update(F)   # F=[("x",10),("y",20)], for (k,v) in F: D[k] = v
+D.update(name1=value1, name2=value2)
+# the same as D.update({'name1': value1, 'name2': value2})
 </pre><hr>
 
 <h3>DICT COMPREHENSION</h3>

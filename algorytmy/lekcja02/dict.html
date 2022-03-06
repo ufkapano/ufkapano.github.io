@@ -135,7 +135,10 @@ D.values()                    # zwraca listę wartości (Py2)
 
 D.get(key)                    # zwraca D[key] lub None
 D.get(key, value)             # zwraca D[key] lub value
-D.setdefault(key, value)      # jw i jeszcze ustawia D[key] = value
+D.setdefault(key, value)
+# if key in D then return D[key],
+# if key not in D then set D[key] = value and return value
+
 D.pop(key)                    # zwraca D[key] i usuwa ze słownika
 D.pop(key, value)             # zwraca D[key] lub value, gdy key nie ma w słowniku
 D.popitem()                   # zwraca 2-tuple (key, value) [chyba losowo] 
@@ -147,6 +150,8 @@ D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
 D.update(E)   # E to dict, czyli for k in E: D[k] = E[k]
 D.update(**E)   # E to dict, jw
 D.update(F)   # F=[("x",10),("y",20)], czyli for (k,v) in F: D[k] = v
+D.update(name1=value1, name2=value2)
+# inaczej D.update({'name1': value1, 'name2': value2})
 </pre><hr>
 
 <p>Problem sklejania dwóch słowników.
@@ -164,15 +169,15 @@ def merge_dict(a, b):
     return c
 # Użycie: C = merge_dict(A, B)
 
-# Uogólnienie działa w Pythonie 2 i 3.
+# Uogólnienie działa w Py2 i Py3.
 def merge_dicts(*dict_args):
     '''
     Given any number of dicts, shallow copy and merge into a new dict,
     precedence goes to key value pairs in latter dicts.
     '''
     result = dict()
-    for dictionary in dict_args:
-        result.update(dictionary)
+    for d in dict_args:
+        result.update(d)
     return result
 </pre><hr>
 

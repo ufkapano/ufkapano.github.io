@@ -8,7 +8,7 @@
 
 <h1>Numbers</h1>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>There are three distinct numeric types: 
 integers, floating point numbers, and complex numbers.
@@ -39,6 +39,7 @@ In hexadecimal base the following letters are used: 0-9, a-f or A-F
 027         # base 8, 2*8+7=23 base 10
 0x17, 0X17   # base 16, 1*16+7=23 base 10
 hex(23)   # returns a string '0x17'
+bin(23)   # returns a string '0b10111'
 (15).as_integer_ratio()   # (15, 1), Py3.8+
 
 # int(x[, base]) - using a constructor
@@ -92,12 +93,18 @@ float(1.0+2.j)   # TypeError
 
 # float.is_integer()
 # Test if a numer can be converted to 'int' without losing precision.
-(5.0).is_integer()   # True, 5.0 == 5
-(-2.0).is_integer()   # True, -2.0 == -2
-(3.2).is_integer()   # False
+(5.0).is_integer()   # True, 5.0 == 5, int(5.0) == 5.0
+(-2.0).is_integer()   # True, -2.0 == -2, int(-2.0) == -2.0
+(3.2).is_integer()   # False, int(3.2) != 3.2
 
-# Division
-5.0 % 2.0, 5.0 / 2.0, 5.0 // 2.0
+# Division in Python.
+5.0 % 2.0   # 1.0
+5 % 1       # 1 (int)
+5.0 / 2.0   # 2.5 (float)
+5 / 2       # 2.5 (Py3, true division, float)
+5 / 2       # 2 (Py2, C/C++, int)
+5.0 // 2.0   # 2.0 (float, floor division)
+5 // 2       # 2 (int)
 </pre><hr>
 
 <h3>COMPLEX NUMBERS</h3>
@@ -156,10 +163,10 @@ round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
 # min(iterable[, key=func])   # single argument
 # min(a, b, c, ...[, key=func])   # many arguments
 
-# max(iterable[, key=func])
-# max(a, b, c, ...[, key=func]) 
+# max(iterable[, key=func])   # single argument
+# max(a, b, c, ...[, key=func])   # many arguments
 
-# sum(iterable, start=0)
+# sum(iterable, start=0)   # single argument
 </pre><hr>
 
 <h3>EXERCISES</h3>

@@ -12,11 +12,11 @@
 
 <p>https://en.wikipedia.org/wiki/UTF-8
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The Unicode standard describes how 'characters' [abstractions] 
 are represented by 'code points' [integer values].
-A Unicode string is a sequence of code points.
+<strong>A Unicode string is a sequence of code points.</strong>
 
 <p>The rules for translating a Unicode string into a sequence of bytes 
 are called an 'encoding'.
@@ -29,25 +29,39 @@ UTF stands for Unicode Transformation Format.
 0010=2    0110=6    1010=a    1110=e
 0011=3    0111=7    1011=b    1111=f
 </pre><hr><pre>
-Code point 97 corresponds to u'a' = u'\x61' = u'\u0061' = u'\U00000061', 
+Code point 97 (binary 110 0001)
+corresponds to u'a' = u'\x61' = u'\u0061' = u'\U00000061', 
 (0)110.0001, one byte in UTF-8 (backward compatibility with ASCII).
 (u'a').encode('utf-8') in Py2 returns a string 'a'.
 (u'a').encode('utf-8') in Py3 returns bytes b'a'.
-
-Code point 257 corresponds to u'\u0101', 
+</pre><hr><pre>
+Code point 257 (binary 1 0000 0001)
+corresponds to u'\u0101', 
 (110)0.0100.(10)00.0001, two bytes in UTF-8.
 (u'\u0101').encode('utf-8') in Py2 returns a string '\xc4\x81'.
 (u'\u0101').encode('utf-8') in Py3 returns bytes b'\xc4\x81'.
-
-Code point 8364 (Euro sign) corresponds to u'\u20ac',
+</pre><hr><pre>
+Code point 8364 (Euro sign, binary 10 0000 1010 1100) 
+corresponds to u'\u20ac',
 (1110).0010.(10)00.0010.(10)10.1100, three bytes in UTF-8.
 (u'\u20ac').encode('utf-8') in Py2 returns a string '\xe2\x82\xac'.
 (u'\u20ac').encode('utf-8') in Py3 returns bytes b'\xe2\x82\xac'.
-
-Code point 1114111 corresponds to u'\U0010ffff'.
+</pre><hr><pre>
+Code point 1114111 (binary 1 0000 1111 1111 1111 1111)
+corresponds to u'\U0010ffff'.
 (1111.0)100.(10)00.1111.(10)11.1111.(10)11.1111, four bytes in UTF-8.
 (u'\U0010ffff').encode('utf-8') in Py2 returns a string '\xf4\x8f\xbf\xbf'.
 (u'\U0010ffff').encode('utf-8') in Py3 returns bytes b'\xf4\x8f\xbf\xbf'.
+</pre><hr><pre>
+p = 8364     # code point for Euro sign (int)
+hex(p)       # '0x20ac'
+bin(p)       # '0b10000010101100'
+char = chr(p)   # Euro sign (str)
+ascii(char)       # '\u20ac'
+utf = char.encode('utf-8')   # b'\xe2\x82\xac' (bytes)
+list(utf)         # [226, 130, 172] (list of int)
+[bin(b) for b in utf]   # ['0b11100010', '0b10000010', '0b10101100']
+[bin(b)[2:] for b in utf]   # ['11100010', '10000010', '10101100']
 </pre><hr>
 
 <p>Reading and writing Unicode data:

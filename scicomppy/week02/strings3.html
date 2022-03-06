@@ -8,7 +8,9 @@
 
 <h1>Strings in Python 3</h1>
 
-<h3>INTRO</h3>
+<p>https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
+
+<h3>INTRODUCTION</h3>
 
 <p>Textual data in Python is handled with strings.
 
@@ -73,18 +75,25 @@ r'ab\ncd\tef'   # 'ab\\ncd\\tef'
 </pre><hr><pre>
 # Converting to bytes and from bytes.
 
-u = chr(40960) + 'abcd' + chr(1972)   # '\ua000abcd\u07b4'
-[ord(c) for c in u]   # [40960, 97, 98, 99, 100, 1972]
-u.encode('utf-8')   # b'\xea\x80\x80abcd\xde\xb4'
+word = chr(40960) + 'abcd' + chr(1972)   # '\ua000abcd\u07b4' string
+[ord(c) for c in word]   # [40960, 97, 98, 99, 100, 1972] list of code points (int)
+word.encode('utf-8')   # b'\xea\x80\x80abcd\xde\xb4' bytes
 
-z = "żółw".encode('utf-8')   # b'\xc5\xbc\xc3\xb3\xc5\x82w'
-z.decode('utf-8')   # 'żółw', code points
+z = "żółw".encode('utf-8')   # b'\xc5\xbc\xc3\xb3\xc5\x82w' bytes
+z.decode('utf-8')   # 'żółw', string
 str(z, 'utf-8')   # 'żółw', from bytes
+</pre><hr><pre>
+# A printable representation of a string, where the non-ASCII characters
+# are escaped by using '\x', '\u' or '\U'.
+
+word = 'żółw'
+ascii(word)   # '\u017c\xf3\u0142w', code points
 </pre><hr><pre>
 # S.join(iterable), S is a separator
 
 S.join([S1, S2, S3])   # S1 + S + S2 + S + S3
 "-".join("abc")   # 'a-b-c'
+"-".join("a")   # 'a'
 </pre><hr>
 
 <h3>METHODS</h3>
@@ -133,7 +142,7 @@ S.isascii()   # Py3.7
 S.isdigit()
 S.islower()
 S.isupper()
-S.isspace()
+S.isspace()   # " " or "\n" or "\t"
 </pre><hr>
 
 <h3>BYTES</h3>
@@ -145,7 +154,7 @@ S.isspace()
 b"one", b'two', b"three'x", b'four"y'
 b'''3 single quotes''', b"""3 double quotes"""
 
-bytes(6)   # return b'\x00\x00\x00\x00\x00\x00'
+bytes(5)   # return b'\x00\x00\x00\x00\x00'
 
 bytes(range(4))   # return b'\x00\x01\x02\x03'
 
@@ -170,7 +179,8 @@ bytearray(b'qwerty')   # from bytes
 
 bytearray((97, 100, 105))   # bytearray(b'adi'), from integers
 
-bytearray(5)   # bytearray(b'\x00\x00\x00\x00\x00'), null bytes
+tab = bytearray(5)   # bytearray(b'\x00\x00\x00\x00\x00'), null bytes
+tab[1] = 12   # bytearray(b'\x00\x0c\x00\x00\x00')
 
 bytearray('abcd', 'utf-8')   # bytearray(b'abcd'), from string with encoding
 

@@ -8,67 +8,100 @@
 
 <h1>Sets</h1>
 
-<h3>INTRO</h3>
+<p>https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset
+
+<h3>INTRODUCTION</h3>
 
 <p>A set object is an unordered collection of distinct 'hashable' objects.
 Common uses include membership testing, removing duplicates from a sequence, 
 and computing mathematical operations such as intersection, union, 
 difference, and symmetric difference.
 
-<p>There are two built-in set types, 'set' (mutable) and 'frozenset' (immutable).
+<p>There are two built-in set types, 'set' (mutable) and 
+'frozenset' (immutable, hashable).
 
 <pre>
-+---------------------------+------------+-------------------------+
-| Operation                 | Short      | Meaning                 |
-+---------------------------+------------+-------------------------+
-|S = set() ; S = frozenset()|            |empty sets               |
-|S = {item1, item2}         |            |creation (set)           |
-|S = set(iterable)          |            |creation (set)           |
-|S = frozenset(iterable)    |            |creation                 |
-|S = {c for c in iterable}  |            |set comprehension        |
-|len(S)                     |            |length                   |
-|for item in S: pass        |            |iteration                |
-|item in S                  |            |containing               |
-|item not in S              |            |containing               |
-|max(S), min(S)             |            |the largest|smallest item|
-|S1.issubset(S2)            |S1 &lt;= S2    |subset                   |
-|S1.issuperset(S2)          |S1 &gt;= S2    |superset                 |
-|S1.union(S2)               |S1 | S2     |union                    |
-|S1.union(S2, S3)           |S1 | S2 | S3|union (Py2.6+)           |
-|S1.intersection(S2)        |S1 &amp; S2     |iloczyn zbiorów          |
-|S1.intersection(S2, S3)    |S1 &amp; S2 &amp; S3|iloczyn zbiorów (Py2.6+) |
-|S1.difference(S2)          |S1 - S2     |difference               |
-|S1.difference(S2, S3)      |S1 - S2 - S3|dfference (Py2.6+)       |
-|S1.symmetric_difference(S2)|S1 ^ S2     |(S1-S2)|(S2-S1)          |
-|S1.isdisjoint(S2)          |            |if intersection is empty |
-|S2 = S1.copy()             |            |shallow copy of S1       |
-|S2 = set(S1)               |            |shallow copy of S1       |
-|S1 == S2, S1 != S2         |            |comparisons              |
-+---------------------------+------------+-------------------------+
++-----------------------------+--------------+---------------------------+
+| Operation                   | Short        | Meaning                   |
++-----------------------------+--------------+---------------------------+
+| S = set() ; S = frozenset() |              | empty sets                |
+| S = {item1, item2}          |              | creation (set)            |
+| S = set(iterable)           |              | creation                  |
+| S = frozenset(iterable)     |              | creation                  |
+| S = {c for c in iterable}   |              | set comprehension         |
+| len(S)                      |              | cardinality of S          |
+| for item in S: pass         |              | iteration                 |
+| item in S                   |              | containing O(1)           |
+| item not in S               |              | containing O(1)           |
+| max(S), min(S)              |              | the largest|smallest item |
+| S2 = S1.copy()              |              | shallow copy of S1        |
+| S2 = set(S1)                |              | shallow copy of S1        |
+| S1 == S2, S1 != S2          |              | comparisons               |
+| S1.issubset(S2)             | S1 &lt;= S2     | subset                    |
+|                             | S1 &lt; S2      | proper subset, S1 != S2   |
+| S1.issuperset(S2)           | S1 &gt;= S2     | superset                  |
+|                             | S1 &gt; S2      | proper superset, S1 != S2 |
+| S1.union(S2)                | S1 | S2      | union                     |
+| S1.union(S2, S3)            | S1 | S2 | S3 | union                     |
+| S1.intersection(S2)         | S1 &amp; S2      | iloczyn zbiorów           |
+| S1.intersection(S2, S3)     | S1 &amp; S2 &amp; S3 | iloczyn zbiorów           |
+| S1.difference(S2)           | S1 - S2      | difference                |
+| S1.difference(S2, S3)       | S1 - S2 - S3 | dfference                 |
+| S1.symmetric_difference(S2) | S1 ^ S2      | (S1 - S2) | (S2 - S1)     |
+| S1.isdisjoint(S2)           |              | if intersection is empty  |
++-----------------------------+--------------+---------------------------+
 </pre>
 
 <h3>MUTABLE SETS</h3>
 
 <pre>
-+----------------------------------+-------------+
-| Operation                        | Short       |
-+----------------------------------+-------------+
-|S1.update(S2)                     |S1 |= S2     |
-|S1.update(S2, S3)                 |S1 |= S2 | S3| Py2.6+
-|S1.intersection_update(S2)        |S1 &amp;= S2     |
-|S1.intersection_update(S2, S3)    |S1 &amp;= S2 &amp; S3| Py2.6+
-|S1.difference_update(S2)          |S1 -= S2     |
-|S1.difference_update(S2, S3)      |S1 -= S2 | S3| Py2.6+
-|S1.symmetric_difference_update(S2)|S1 ^= S2     |
-|S.add(item)                       |             |
-|S.remove(item) [item in S]        |             |
-|S.discard(item)                   |             |
-|S.pop() [non-empty]               |             |
-|S.clear()                         |             |
-+----------------------------------+-------------+
++------------------------------------+---------------+
+| Operation                          | Short         |
++------------------------------------+---------------+
+| S1.update(S2)                      | S1 |= S2      |
+| S1.update(S2, S3)                  | S1 |= S2 | S3 |
+| S1.intersection_update(S2)         | S1 &amp;= S2      |
+| S1.intersection_update(S2, S3)     | S1 &amp;= S2 &amp; S3 |
+| S1.difference_update(S2)           | S1 -= S2      |
+| S1.difference_update(S2, S3)       | S1 -= S2 | S3 |
+| S1.symmetric_difference_update(S2) | S1 ^= S2      |
+| S.add(item)                        |               |
+| S.remove(item) [item in S]         |               |
+| S.discard(item)                    |               |
+| S.pop() [non-empty]                |               |
+| S.clear()                          |               |
++------------------------------------+---------------+
 </pre>
 
+<h3>METHODS</h3>
 
+<hr><pre>
+# Creation
+
+# Using a comma-separated list of elements within braces.
+{'one', 'two', 'three'}
+# set(['three', 'two', 'one']) in Py2
+
+# Using the type constructor.
+set('abracadabra')   # {'a', 'c', 'b', 'r', 'd'}, different chars
+frozenset([1, 2, 1, 2, 3])   # frozenset({1, 2, 3})
+
+# Using a set comprehension.
+{c for c in 'abracadabra' if c not in 'abc'}   # {'r', 'd'}
+</pre><hr><pre>
+# Instances of 'set' are compared to instances of 'frozenset' based on their members.
+
+assert set('abc') == frozenset('abc')
+
+# Binary operations that mix 'set' instances with 'frozenset'
+# return the type of the first operand.
+
+frozenset('ab') | set('bc')   # frozenset({'a', 'c', 'b'})
+set('ab') | frozenset('bc')   # {'a', 'c', 'b'}
+
+# Warning: sets only define partial ordering (subset relationships).
+set_list.sort()   # result undefined!
+</pre><hr>
 
 </body>
 </html>

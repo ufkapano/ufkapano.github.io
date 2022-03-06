@@ -8,7 +8,9 @@
 
 <h1>Lists</h1>
 
-<h3>INTRO</h3>
+<p>https://docs.python.org/3/library/stdtypes.html#lists
+
+<h3>INTRODUCTION</h3>
 
 <p>Lists are mutable heterogeneous sequences.
 
@@ -17,7 +19,7 @@
 | Operation             | Meaning                         |
 +-----------------------+---------------------------------+
 | L = [] ; L = list()   | empty lists                     |
-| L = [5, 1.2]          | a list with two items           |
+| L = [5, 1.2, "a"]     | a list with three items         |
 | L = list(iterable)    | make a list from iterable       |
 | [x for x in iterable] | list comprehension              |
 | len(L)                | the length                      |
@@ -34,7 +36,7 @@
 | L2 = L1.copy()        | shallow copy (Py3.3+)           |
 | for item in L: pass   | iteration                       |
 | item in L             | containing (linear-time)        |
-| item not in L         | containing                      |
+| item not in L         | containing (linear-time)        |
 | L.index(item)         | first occurrence                |
 | L.count(item)         | number of occurrences           |
 | max(L), min(L)        | largest|smallest item of L      |
@@ -59,8 +61,8 @@ list4 = list("abc")   # ["a", "b", "c"], from iterable
 
 <hr><pre>
 # help(list.sort)
-# L.sort(cmp=None, key=None, reverse=False)   # Python 2
-# L.sort(/, *, key=None, reverse=False)   # Python 3, keywords only
+# L.sort(cmp=None, key=None, reverse=False)   # Py2
+# L.sort(/, *, key=None, reverse=False)   # Py3, keywords only
 # Stable sort IN PLACE.
 # cmp(x, y) should return one of (-1, 0, 1).
 
@@ -69,10 +71,10 @@ alist.sort()
 # ['Ala', 'Barbara', 'auto', 'bocian']
 
 # Case-insensitive sort.
-alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))   # Python 2
+alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))   # Py2
 # ['Ala', 'auto', 'Barbara', 'bocian']
 
-alist.sort(key=str.lower)   # Py 2.4+, Py 3
+alist.sort(key=str.lower)   # Py2.4+, Py3
 # ['Ala', 'auto', 'Barbara', 'bocian']
 
 # Using a length.
@@ -80,8 +82,8 @@ alist.sort(key=len)
 # ['Ala', 'auto', 'bocian', 'Barbara']
 </pre><hr><pre>
 # help(sorted)
-# sorted(iterable, cmp=None, key=None, reverse=False)   # Python 2
-# sorted(iterable, /, *, key=None, reverse=False)   # Python 3
+# sorted(iterable, cmp=None, key=None, reverse=False)   # Py2
+# sorted(iterable, /, *, key=None, reverse=False)   # Py3
 # Returns a new sorted list.
 </pre><hr>
 
@@ -121,7 +123,7 @@ lists[1].append(5)   # [[3], [5], []]
 <hr><pre>
 [x for x in "qwerty"]                   # ['q', 'w', 'e', 'r', 't', 'y']
 [x * x for x in range(6)]               # [0, 1, 4, 9, 16, 25]
-[3 * x for x in range(6) if x &lt; 4]      # [0, 3, 6, 9]
+[3 * x for x in range(6) if x &lt; 4]      # [0, 3, 6, 9], filtering
 [2 ** x for x in range(5)]              # [1, 2, 4, 8, 16]
 [[x, x * x] for x in range(6)]          # list of lists
 [(x, x * x * x) for x in range(6)]      # list with tuples
@@ -135,7 +137,7 @@ sum(x * x for x in xrange(100))         # generator Py2
 sum(x * x for x in range(100))          # generator Py3
 sum(len(x) for x in ["a", "bb", "ccc"]) # generator
 
-max(ord(x) for x in "qwerty")           # generetor, the greatest numer
+max(ord(x) for x in "qwerty")           # generator, the greatest numer
 max("qwerty", key=ord)                  # char with the greatest ord()
 </pre><hr>
 
