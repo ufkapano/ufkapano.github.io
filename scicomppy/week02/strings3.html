@@ -62,11 +62,13 @@ For a non-empty string S, we have S[0] == S[0:1].
 # A name 'unicode' is not defined.
 
 "one", 'two', "three 'x' plus", 'four "y" minus'
+'three \'x\' plus', "four \"y\" minus"
+# whitespace is ' ', '\t', '\n'
 "first" (whitespace) 'second'   # will be merged to "firstsecond"
 '''three single quotes'''
 """three double quotes"""
 
-u'qwerty' = 'qwerty'   # prefix 'u' is ignored
+assert u'qwerty' == 'qwerty'   # prefix 'u' is ignored
 "qwerty", '\u0394', "\U00000394"
 </pre><hr><pre>
 # Raw strings (disables most escape sequence processing).
@@ -80,7 +82,7 @@ word = chr(40960) + 'abcd' + chr(1972)   # '\ua000abcd\u07b4' string
 word.encode('utf-8')   # b'\xea\x80\x80abcd\xde\xb4' bytes
 
 z = "żółw".encode('utf-8')   # b'\xc5\xbc\xc3\xb3\xc5\x82w' bytes
-z.decode('utf-8')   # 'żółw', string
+z.decode('utf-8')   # 'żółw' (turtle), string
 str(z, 'utf-8')   # 'żółw', from bytes
 </pre><hr><pre>
 # A printable representation of a string, where the non-ASCII characters
@@ -101,8 +103,9 @@ S.join([S1, S2, S3])   # S1 + S + S2 + S + S3
 <hr><pre>
 # help(str)
 
-S.find(S1)
-S.replace(S1, S2)     # zastąpienie wystąpień podłańcucha
+S.find(S1)   # find the first occurrence of S1, return -1 if S1 is not found
+
+S.replace(S1, S2)   # replace S1 (all occurences) with S2
 
 word = "hej"
 word.ljust(6)                 # "hej   "

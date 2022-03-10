@@ -131,9 +131,11 @@ lists[1].append(5)   # [[3], [5], []]
 [(x, y) for x in range(3) for y in range(4)]
 [chr(x) for x in range(97, 110)]
 "".join([chr(x) for x in range(97, 110)])
-
+</pre><hr><pre>
+# Generators
 sum([x * x for x in range(100)])        # lists Py2
-sum(x * x for x in xrange(100))         # generator Py2
+sum((x * x for x in xrange(100)))         # generator Py2
+sum(x * x for x in xrange(100))         # the same
 sum(x * x for x in range(100))          # generator Py3
 sum(len(x) for x in ["a", "bb", "ccc"]) # generator
 
