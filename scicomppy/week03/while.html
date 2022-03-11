@@ -8,7 +8,7 @@
 
 <h1>while loops</h1>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The 'while' statement is used for repeated execution as long as 
 an expression is true.
@@ -21,6 +21,7 @@ while condition1:
         break       # optional, terminate the loop without executing 'else'
     if condition3:
         continue    # optional, go to condition1
+    statements
 else:               # optional
     statements      # executed if condition1 is false, the loop terminates
 </pre><hr><pre>
@@ -29,7 +30,7 @@ while n &gt; 0:
     if n == 13:
         n = n - 1
         continue   # skipping 13
-    print ( n )
+    print(n)
     if (n % 2) == 0:
         n = n // 2
     else:
@@ -40,7 +41,7 @@ while True:   # infinite loop
     reply = input("Input word (or 'stop'):")   # Py3
     if reply == "stop":
         break
-    print ( reply.upper() )
+    print(reply.upper())
 </pre><hr>
 
 

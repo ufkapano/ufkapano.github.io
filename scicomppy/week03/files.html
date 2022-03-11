@@ -10,7 +10,7 @@
 
 <p>https://docs.python.org/3/library/functions.html#open
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Python distinguishes between binary and text I/O.
 
@@ -24,10 +24,10 @@ Note that the last line may be without '\n'.
 
 <p>'open()' returns a 'file object', and is most commonly used with two 
 arguments: open(filename, mode). Files opened for processing
-should be closed closed as soon as possible.
+should be closed as soon as possible.
 
 <hr><pre>
-# open(filename, mode='r', buffering)   # Py2
+# afile = open(filename, mode='r', buffering)   # Py2
 # afile = open(filename, mode='r', buffering=-1, encoding=None, errors=None,
 #    newline=None, closefd=True, opener=None)   # Py3
 # filename : a path-like object giving the pathname
@@ -82,7 +82,7 @@ while True:
 
 infile.close()
 </pre><hr><pre>
-# Using a context manager.
+# Using a context manager (recommended).
 
 with open('book.txt', 'r') as infile:   # infile will be closed
     text = infile.read()
@@ -114,7 +114,7 @@ outfile.writelines(L)
 
 outfile.close()
 </pre><hr><pre>
-# Using a context manager.
+# Using a context manager (recommended).
 
 n = 53
 word = "żarówka"   # 7 code points ('bulb' in English)

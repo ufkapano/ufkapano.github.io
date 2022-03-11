@@ -10,7 +10,7 @@
 
 <p>https://docs.python.org/3/tutorial/controlflow.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The 'if' statement is used for conditional execution.
 It is a compound statement.
@@ -66,13 +66,15 @@ else:
 
 A = X if condition else Y
 A = ((X) if (condition) else (Y))   # for more complex expressions
+
+# In C/C++:
+# A = ( (condition) ? (X) : (Y) )
 </pre><hr><pre>
 a, b = 25, 30
-pos_a = (-a) if a &lt; 0 else a
-max_ab = b if a &lt; b else a
-min_ab = a if a &lt; b else b
+pos_a = (-a) if a &lt; 0 else a   # abs(a) is better
+max_ab = b if a &lt; b else a   # max(a, b) is better
+min_ab = a if a &lt; b else b   # min(a, b) is better
 </pre><hr>
-
 
 </body>
 </html>

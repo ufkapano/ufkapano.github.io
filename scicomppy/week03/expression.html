@@ -12,7 +12,7 @@
 
 <p>https://stackoverflow.com/questions/4728073/what-is-the-difference-between-an-expression-and-a-statement-in-python
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>All Python expressions can be used as statements.
 Expressions can be reduced to some kind of 'value',
@@ -22,16 +22,16 @@ Expression statements are often used in the interactive mode.
 <hr><pre>
 # Expression statements.
 
-2 + 5               # arithmetic or boolean operations
-name                # variable
-alist[idx]          # with lists, tuples, dicts
-[x for x in iterable] # list|dict|set comprehension
-some_function()     # function call
-some_object.method() # method call
-print(word)         # function in Py3
-yield x ** 2        # in generators
-lambda x: x ** 2    # anonymous function (lambda function)
-A if condition else B # conditional expression
+2 + 5                   # arithmetic or boolean operations
+name                    # variable
+alist[idx]              # with lists, tuples, dicts
+[x for x in iterable]   # list|dict|set comprehension
+some_function()         # function call
+some_object.method()    # method call
+print(word)             # function in Py3 (the result is None and a message)
+yield x ** 2            # in generators
+lambda x: x ** 2        # anonymous function (lambda function)
+A if condition else B   # conditional expression
 </pre><hr><pre>
 # Statements, but not expressions.
 
