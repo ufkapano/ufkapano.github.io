@@ -31,6 +31,14 @@ Using sorting keys: point_list.sort(key=lambda p: ...)
 the right index is included.
 Write iterative and recursive versions.
 
+<hr><pre>
+# Example.
+L = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
+reverse_range(L, 3, 6)   # index 6 is included!
+print(L)   # [0, 1, 2, 6, 5, 4, 3, 7, 8, 9]   # the list L changed
+# The numbers outside the range are intact.
+</pre><hr>
+
 <h3>EXERCISE 4.3</h3>
 
 <p>Create the following infinite generators:
