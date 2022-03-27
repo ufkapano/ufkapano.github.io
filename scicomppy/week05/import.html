@@ -10,7 +10,7 @@
 
 <p>https://docs.python.org/3/reference/import.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Python code in one module gains access to the code in another module 
 by the process of importing it.
@@ -39,12 +39,14 @@ import sys
 print ( sys.modules.keys() )   # names of imported modules
 print ( sys.path )           # the module search path
 </pre><hr><pre>
-# Using import statements.
+# Using 'import' statements.
 
 import module1   # recommended
 import module2, module3
 
 print ( module1.name1 )
+other_name = module1   # modules are objects
+print ( other_name.name1 )
 module1.name1 = new_value     # be careful!
 module1.name2()      # a function call
 print ( module1.__doc__ )   # docstring
@@ -52,7 +54,7 @@ help(module1)   # NAME, FILE, FUNCTIONS, DATA
 dir(module1)              # namespace
 module1.__dict__.keys()   # namespace
 </pre><hr><pre>
-# Using from...import statements.
+# Using 'from ... import' statements.
 # We can import specific names from a module into the current namespace.
 
 from module1 import name1, name2
@@ -75,8 +77,8 @@ import module1 as module2
 # del module1
 
 import numpy as np
-import Tkinter as tk   # Python 2
-import tkinter as tk   # Python 3
+import Tkinter as tk   # Py2
+import tkinter as tk   # Py3
 import pygame as pg
 </pre><hr><pre>
 from module3 import name1 as name2

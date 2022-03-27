@@ -12,7 +12,7 @@
 
 <p>https://docs.python.org/3/library/os.path.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>OS module provides various functions to interact with the operating system. 
 Programs that import and use 'os' stand a better chance of being
@@ -24,7 +24,7 @@ Programs should leave all pathname manipulation to 'os.path'
 import os
 
 # current working directory 
-current = os.getcwd()   # '/home/andrzej'
+current = os.getcwd()   # '/home/andrzej' in Linux Debian
 
 # Using join().
 # parent directory 
@@ -52,6 +52,8 @@ print ( os.path.split(path) )   # ('/home/andrzej', 'Pobrane')
 print ( os.path.basename(path) )   # 'Pobrane'
 print ( os.path.dirname(path) )   # '/home/andrzej'
 </pre><hr><pre>
+# Create a directory.
+
 dirname = "MyWork"
 print ( os.path.isdir(dirname) )   # False
 os.mkdir(dirname)
@@ -59,6 +61,11 @@ os.mkdir(dirname)
 print ( os.path.isdir(dirname) )   # True
 print ( os.path.abspath(dirname) )   # '/home/andrzej/MyWork'
 os.rmdir(dirname)   # a directory have to be empty
+
+# Create directory and all intermediate directories if don't exists.
+dirname = "A/B/C"
+if not os.path.exists(dirname):
+    os.makedirs(dirname)
 </pre><hr>
 
 <h3>EXAMPLES</h3>
@@ -85,7 +92,7 @@ for root, dirs, files in os.walk(top, topdown=False):   # walking bottom-up
 
 import os
 
-for root, dirs, files in os.walk(top):   # walking top-down
+for root, dirs, files in os.walk(top):   # walking top-down (default)
     print(root, "consumes", end=" ")
     print(sum(os.path.getsize(os.path.join(root, name)) for name in files), end=" ")
     print("bytes in", len(files), "non-directory files")
@@ -98,10 +105,11 @@ for root, dirs, files in os.walk(top):   # walking top-down
 import os
 
 n_pdf = 0   # the number of PDF files
-for root, dirs, files in os.walk(top):   # walking top-down
+for root, dirs, files in os.walk(top):   # walking top-down (default)
     for name in files:
         #if name[-4:] == ".pdf":
-        if name.endswith(".pdf"):
+        #if name.endswith(".pdf"):
+        if name.lower().endswith(".pdf"):   # for *.PDF files
             n_pdf += 1
 
 print("The number of PDF files in {} directory is {}".format(top, n_pdf))
