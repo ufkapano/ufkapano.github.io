@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/reference/import.html
 
+<p>https://docs.python.org/3/library/importlib.html
+
 <h3>INTRODUCTION</h3>
 
 <p>Python code in one module gains access to the code in another module 
@@ -54,7 +56,7 @@ help(module1)   # NAME, FILE, FUNCTIONS, DATA
 dir(module1)              # namespace
 module1.__dict__.keys()   # namespace
 </pre><hr><pre>
-# Using 'from ... import' statements.
+# Using 'from...import' statements.
 # We can import specific names from a module into the current namespace.
 
 from module1 import name1, name2
@@ -85,6 +87,9 @@ from module3 import name1 as name2
 </pre><hr><pre>
 # The reload() function imports a previously imported module again.
 
+#reload(module1)   # Py2
+
+from importlib import reload   # Py3.4+
 reload(module1)
 </pre><hr>
 

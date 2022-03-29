@@ -16,12 +16,16 @@
 
 <h3>DATETIME</h3>
 
-<p>The 'datetime' module supplies classes for manipulating dates and times.
+<p>The 'datetime' module supplies classes for manipulating dates and times
+(date, time, datetime, timedelta).
 
 <hr><pre>
 import datetime
 
-# class datetime.date(year, month, day), an idealized naive date.
+# class datetime.date(year, month, day), an idealized 'naive' date.
+# year must be in 1..9999 (int)
+# month must be in 1..12 (int)
+# day must be in the range for month (int)
 # Supported operations:
 # date2 = date1 + timedelta   (timedelta.days are used only)
 # date2 = date1 - timedelta   (timedelta.days are used only)
@@ -30,9 +34,11 @@ import datetime
 
 now = datetime.date.today()   # datetime.date(2021, 3, 27)
 print(now)   # 2021-03-27
-print(now.year)   # 2021
-print(now.month)   # 3
-print(now.day)   # 27
+# Attributes (read-only):
+# now.year (2021), now.month (3), now.day (27)
+
+min_date = datetime.date(1, 1, 1)
+max_date = datetime.date(9999, 12, 31)
 
 birthday = datetime.date(1879, 3, 14)   # Albert Einstein
 birthday.weekday()   # 4 (Mon=0, Sun=6)
@@ -43,12 +49,16 @@ war2 = datetime.date.fromisoformat('1939-09-01')   # datetime.date(1939, 9, 1)
 
 now.resolution   # datetime.timedelta(days=1)
 
-age = now-birthday   # datetime.timedelta(days=51878)
+age = now - birthday   # datetime.timedelta(days=51878)
 </pre><hr><pre>
 # class datetime.time(hour=0, minute=0, second=0, microsecond=0,
 # tzinfo=None, *, fold=0),
 # an idealized time, independent of any particular day,
 # assuming that every day has exactly 24*60*60 seconds.
+# hour must be in 0..23 (int)
+# minute must be in 0..59 (int)
+# second must be in 0..59 (int)
+# microsecond must be in 0..999999 (int)
 
 t = datetime.time(12, 34, 56, 123456)
 t.isoformat()   # '12:34:56.123456'
@@ -109,9 +119,12 @@ datetime.datetime.combine(d, t)
 td = datetime.timedelta(1, 2, 3)
 # datetime.timedelta(days=1, seconds=2, microseconds=3), repr(td)
 print(td)   # 1 day, 0:00:02.000003, the result of str(td)
-print(td.days)   # 1
-print(td.seconds)   # 2
-print(td.microseconds)   # 3
+print(td.days)   # 1 (int)
+print(td.seconds)   # 2 (int)
+print(td.microseconds)   # 3 (int)
+
+datetime.timedelta(1.3, 882.9, 3.4)   # float can be used
+# datetime.timedelta(days=1, seconds=26802, microseconds=900003)
 
 datetime.timedelta(minutes=10)
 # changed to datetime.timedelta(seconds=600)
@@ -162,7 +175,7 @@ import time
 
 print(time.gmtime(0))   # show the epoch
 
-start = time.process_time()
+start = time.process_time()   # Py3.3+
 # statements
 elapsed = time.process_time() - start
 </pre><hr>
