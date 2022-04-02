@@ -12,7 +12,7 @@
 
 <p>https://en.wikipedia.org/wiki/Horner%27s_method
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>A polynomial is an expression consisting of variables and coefficients, 
 that involves only the operations of addition, subtraction, multiplication, 
@@ -32,36 +32,36 @@ Coefficients are usually numbers.
 2x + 3         is a 'linear' polynomial (degree one).
 3x^2 + 5x -8   is a 'cubic' polynomial (degree two).
 </pre><hr><pre>
-P(x) = p0 + p1 * x + p2 * x^2 = \sum_i pi * x^i,
-Q(x) = q0 + q1 * x + q2 * x^2 = \sum_i qi * x^i.
+P(x) = p_0 + p_1 * x + p_2 * x^2 = \sum_i p_i * x^i,   # LaTeX notation
+Q(x) = q_0 + q_1 * x + q_2 * x^2 = \sum_i q_i * x^i.
 
 Addition P + Q (the associative law of addition is used)
 
-P(x) + Q(x) = (p0 + q0) + (p1 + q1) * x + (p2 + q2) * x^2.
-P(x) + Q(x) = \sum_i (pi + qi) * x^i.
+P(x) + Q(x) = (p_0 + q_0) + (p_1 + q_1) * x + (p_2 + q_2) * x^2.
+P(x) + Q(x) = \sum_i (p_i + q_i) * x^i.
 
 Substraction P - Q
 
-P(x) - Q(x) = (p0 - q0) + (p1 - q1) * x + (p2 - q2) * x^2.
-P(x) - Q(x) = \sum_i (pi - qi) * x^i.
+P(x) - Q(x) = (p_0 - q_0) + (p_1 - q_1) * x + (p_2 - q_2) * x^2.
+P(x) - Q(x) = \sum_i (p_i - q_i) * x^i.
 </pre><hr><pre>
 Multiplication P * Q (the distributive law is repeatedly applied)
 
-P(x) * Q(x) = p0 * q0 + p0 * (q1 * x) + p0 * (q2 * x^2)
-+ (p1 * x) * q0 + (p1 * x) * (q1 * x) + (p1 * x) * (q2 * x^2)
-+ (p2 * x^2) * q0 + (p2 * x^2) * (q1 * x) + (p2 * x^2) * (q2 * x^2).
+P(x) * Q(x) = p_0 * q_0 + p_0 * (q_1 * x) + p_0 * (q_2 * x^2)
++ (p_1 * x) * q_0 + (p_1 * x) * (q_1 * x) + (p_1 * x) * (q_2 * x^2)
++ (p_2 * x^2) * q_0 + (p_2 * x^2) * (q_1 * x) + (p_2 * x^2) * (q_2 * x^2).
 
-P(x) * Q(x) = p0 * q0 
-+ (p0 * q1 + p1 * q0) * x
-+ (p0 * q2 + p1 * q1 + p2 * q0) * x^2
-+ (p1 * q2 + p2 * q1) * x^3
-+ (p2 * q2) * x^4.
+P(x) * Q(x) = p_0 * q_0 
++ (p_0 * q_1 + p_1 * q_0) * x
++ (p_0 * q_2 + p_1 * q_1 + p_2 * q_0) * x^2
++ (p_1 * q_2 + p_2 * q_1) * x^3
++ (p_2 * q_2) * x^4.
 
-P(x) * Q(x) = \sum_i \sum_j pi * qj * x^(i+j).
+P(x) * Q(x) = \sum_i \sum_j p_i * q_j * x^{i+j}.
 </pre><hr><pre>
 Composition P(Q)
 
-P(Q(x)) = p0 + p1 * Q(x) + p2 * Q(x)^2.
+P(Q(x)) = p_0 + p_1 * Q(x) + p_2 * Q(x)^2.
 </pre><hr>
 
 <h3>HORNER'S METHOD</h3>
@@ -71,20 +71,21 @@ It allows the evaluation of a polynomial of degree n with only
 n multiplications and n additions.
 
 <hr><pre>
-P(x) = p0 + p1 * x + p2 * x^2 + p3 * x^3.
+P(x) = p_0 + p_1 * x + p_2 * x^2 + p_3 * x^3.
 
-P(x) = p0 + x * (p1 + x * (p2 + x * (p3))).
+P(x) = p_0 + x * (p_1 + x * (p_2 + x * (p_3))).
 
-t = p3,
-t = t * x + p2,
-t = t * x + p1,
-t = t * x + p0.
+# First approach.
+t = p_3,
+t = t * x + p_2,
+t = t * x + p_1,
+t = t * x + p_0.
 # Second approach.
 t = 0,
-t = t * x + p3,
-t = t * x + p2,
-t = t * x + p1,
-t = t * x + p0.
+t = t * x + p_3,
+t = t * x + p_2,
+t = t * x + p_1,
+t = t * x + p_0.
 </pre><hr>
 
 </body>

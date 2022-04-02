@@ -12,7 +12,7 @@
 
 <p>https://www.python-course.eu/polynomial_class_in_python.php
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Creating a new class creates a new 'type' of object, allowing new 
 'instances' of that type to be made.
@@ -57,7 +57,7 @@ class Poly:
         return len(self.data) -1
 
     def is_zero(self):   # a method, data can be [0], [0, 0], ...
-        return all(item == 0 for item in self.data)
+        return all(c == 0 for c in self.data)
 
 # Testing the constructor.
 poly1 = Poly(3, 5)
@@ -110,7 +110,7 @@ class Poly:
 
     def __str__(self):   # the informal string representation, str(instance)
         return str(self.data)
-        # it can be also "p0 + p1 x + p2 x^2 + ..."
+        # it can be also "p_0 + p_1 x + p_2 x^2 + ..."
 
     def __repr__(self):   # the formal (canonical) string representation, repr(instance)
         if self.is_zero():   # calling a method inside the class, Poly.is_zero(self)

@@ -31,25 +31,25 @@ class Poly:
 
     def __add__(self, other):   # poly1 + poly2
         new_poly = Poly(0, max(len(self.data), len(other.data)) -1)
-        for i in range(len(self.data)):
-            new_poly.data[i] += self.data[i]
-        for i in range(len(other.data)):
-            new_poly.data[i] += other.data[i]
+        for (i, c) in enumerate(self.data):
+            new_poly.data[i] += c
+        for (i, c) in enumerate(other.data):
+            new_poly.data[i] += c
         return new_poly
 
     def __sub__(self, other):   # poly1 - poly2
         new_poly = Poly(0, max(len(self.data), len(other.data)) -1)
-        for i in range(len(self.data)):
-            new_poly.data[i] += self.data[i]
-        for i in range(len(other.data)):
-            new_poly.data[i] -= other.data[i]
+        for (i, c) in enumerate(self.data):
+            new_poly.data[i] += c
+        for (i, c) in enumerate(other.data):
+            new_poly.data[i] -= c
         return new_poly
 
     def __mul__(self, other):   # poly1 * poly2
         new_poly = Poly(0, len(self.data) + len(other.data) -2)
-        for i in range(len(self.data)):
-            for j in range(len(other.data)):
-                new_poly.data[i+j] += self.data[i] * other.data[j]
+        for (i, c) in enumerate(self.data):
+            for (j, d) in enumerate(other.data):
+                new_poly.data[i+j] += c * d
         return new_poly
 
     def __pos__(self):      # +poly1 = (+1)*poly1
@@ -57,7 +57,7 @@ class Poly:
 
     def __neg__(self):      # -poly1 = (-1)*poly1
         new_poly = Poly()
-        new_poly.data = [-item for item in self.data]
+        new_poly.data = [-c for c in self.data]
         return new_poly
 
 poly1 = Poly(3, 5)
@@ -76,14 +76,14 @@ class Poly:
 
     def __call__(self, x):   # Horner, polynomials are callable now
         result = 0
-        for item in reversed(self.data):
-            result = result * x + item
+        for c in reversed(self.data):
+            result = result * x + c
         return result
 
     def combine(self, other):   # Horner
         new_poly = Poly()
-        for item in reversed(self.data):
-            new_poly = new_poly * other + Poly(item)
+        for c in reversed(self.data):
+            new_poly = new_poly * other + Poly(c)
         return new_poly
 
 poly1 = Poly(3, 5)

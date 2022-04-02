@@ -8,9 +8,9 @@
 
 <h1>Inheritance</h1>
 
-<p>PEP 367 - New Super [Python 2.6]
+<p>PEP 367 - New Super [Py2.6]
 
-<p>PEP 3135 - New Super [Python 3.0]
+<p>PEP 3135 - New Super [Py3.0]
 
 <p>https://www.programiz.com/python-programming/methods/built-in/super
 
@@ -24,23 +24,22 @@ that allows us to access methods of the base class.
 <br>(2) working with Multiple Inheritance.
 
 <hr><pre>
-#class Bird(object):   # Python 2, new style classes
-class Bird:          # Python 3
+#class Bird(object):   # Py2, new style classes
+class Bird:          # Py3
     def __init__(self, name):
         print ( "{} is a bird.".format(name) )
 
 class Parrot(Bird):
     def __init__(self, name, food):
         #Bird.__init__(self, name)   # old style
-        #super(Parrot, self).__init__(name)   # Python 2 and 3
-        super().__init__(name)   # Python 3, the name Bird is not used
+        #super(Parrot, self).__init__(name)   # Py2 and Py3
+        super().__init__(name)   # Py3, the name Bird is not used
         print ( "{} is a parrot and it likes {}.".format(name, food) )
 
 parrot = Parrot("Ara", "seeds")
 # Ara is a bird.
 # Ara is a parrot and it likes seeds.
 </pre><hr>
-
 
 </body>
 </html>
