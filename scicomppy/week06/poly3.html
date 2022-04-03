@@ -88,12 +88,14 @@ class Poly:
         self.data = (n+1) * [0]
         self.data[-1] = c
         Poly.counter += 1   # using a class attribute
+        #Poly.counter = Poly.counter + 1   # the same
         # C/C++: 'a (op)= b' is equal to 'a = a (op) b', (op) can be +,-,*,/
 
     def __del__(self):
         # It is called when the reference counter drops to zero.
         # Not exactly a destructor from C++.
         Poly.counter -= 1
+        #Poly.counter = Poly.counter - 1   # the same
 
 assert Poly.counter == 0
 poly1 = Poly(3, 5)

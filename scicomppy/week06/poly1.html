@@ -28,9 +28,10 @@ where x can be a number or a polynomial.
 Coefficients are usually numbers.
 
 -4x is a (linear) term, -4 is a coefficient, the degree of x is one.
-5              is a 'constant' polynomial (degree zero).
-2x + 3         is a 'linear' polynomial (degree one).
-3x^2 + 5x -8   is a 'cubic' polynomial (degree two).
+5                  is a 'constant' polynomial (degree 0).
+2x +3              is a 'linear' polynomial (degree 1).
+3x^2 +5x -8        is a 'quadratic' polynomial (degree 2).
+2x^3 -4x^2 +6x -1  is a 'cubic' polynomial (degree 3).
 </pre><hr><pre>
 P(x) = p_0 + p_1 * x + p_2 * x^2 = \sum_i p_i * x^i,   # LaTeX notation
 Q(x) = q_0 + q_1 * x + q_2 * x^2 = \sum_i q_i * x^i.
@@ -39,7 +40,7 @@ Addition P + Q (the associative law of addition is used)
 
 P(x) + Q(x) = (p_0 + q_0) + (p_1 + q_1) * x + (p_2 + q_2) * x^2.
 P(x) + Q(x) = \sum_i (p_i + q_i) * x^i.
-
+</pre><hr><pre>
 Substraction P - Q
 
 P(x) - Q(x) = (p_0 - q_0) + (p_1 - q_1) * x + (p_2 - q_2) * x^2.
@@ -71,9 +72,9 @@ It allows the evaluation of a polynomial of degree n with only
 n multiplications and n additions.
 
 <hr><pre>
-P(x) = p_0 + p_1 * x + p_2 * x^2 + p_3 * x^3.
+P(x) = p_0 + p_1 * x + p_2 * x^2 + p_3 * x^3.  # 6 mul, 3 add
 
-P(x) = p_0 + x * (p_1 + x * (p_2 + x * (p_3))).
+P(x) = p_0 + x * (p_1 + x * (p_2 + x * (p_3))).   # 3 mul, 3 add, Horner
 
 # First approach.
 t = p_3,

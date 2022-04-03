@@ -40,6 +40,12 @@ __hash__   called by hash(), should return an integer
     If x == y then always hash(x) == hash(y).
 </pre><hr><pre>
 __cmp__   called by cmp() in Py2, should return -1 or 0 or 1
+cmp(1, 4) returns -1
+cmp(3, 3) returns 0
+cmp(5, 3) returns 1
+
+We can define our cmp() function in Py3:
+cmp = lambda x, y: (x &gt; y) - (x &lt; y)
 
 Rich comparison methods.
 
