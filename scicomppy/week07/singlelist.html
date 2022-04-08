@@ -10,7 +10,7 @@
 
 <p>https://en.wikipedia.org/wiki/Linked_list
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>A linked list is a linear collection of items.
 
@@ -61,10 +61,28 @@ class SingleList:
         return node.data
 </pre><hr><pre>
 # Usage.
-SL = SingleList()
+SL = SingleList()   # head = tail = None
 SL.insert_head(11)         # [11]
+
+# head=tail
+# +----++
+# | 11 ||
+# +----++
+
 SL.insert_head(22)         # [22, 11]
+
+# head      tail
+# +----++   +----++
+# | 22 |+--o| 11 ||
+# +----++   +----++
+
 SL.insert_tail(33)         # [22, 11, 33]
+
+# head                tail
+# +----++   +----++   +----++
+# | 22 |+--o| 11 |+--o| 33 ||
+# +----++   +----++   +----++
+
 while not SL.is_empty():   # order 22, 11, 33
     print ( SL.remove_head() )
 </pre><hr>

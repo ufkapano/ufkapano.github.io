@@ -20,14 +20,16 @@ into a program.
 # The name __debug__ is true if Python was not started with an -O option.
 
 assert expression
-# it is equivalent to
-if __debug__:
-    if not expression: raise AssertionError
+
+# It is equivalent to
+# if __debug__:
+#     if not expression: raise AssertionError
 
 assert expression1, expression2
-# it is equivalent to
-if __debug__:
-    if not expression1: raise AssertionError(expression2)
+
+# It is equivalent to
+# if __debug__:
+#     if not expression1: raise AssertionError(expression2)
 
 assert False              # AssertionError
 assert False, 'message'   # AssertionError: message
