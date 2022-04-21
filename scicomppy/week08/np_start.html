@@ -41,8 +41,7 @@ PIP (in a virtual environment)
 pip install numpy
 
 APT (Debian Linux)
-Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3), 
-python-pip, python-pip-whl, python3-pip.
+Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3).
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
@@ -52,10 +51,10 @@ NumPy is the fundamental package for scientific computing with Python.
 It contains among other things [version 1.16.2 in Debian 10]:
 
 <ul>
-<li>a powerful N-dimensional array object
-<li>sophisticated (broadcasting) functions
-<li>tools for integrating C/C++ and Fortran code
-<li>useful linear algebra, Fourier transform, and random number capabilities
+<li>a powerful N-dimensional array object,
+<li>sophisticated (broadcasting) functions,
+<li>tools for integrating C/C++ and Fortran code,
+<li>useful linear algebra, Fourier transform, and random number capabilities.
 </ul>
 
 <p>NumPy’s main object is the homogeneous multidimensional array.
@@ -142,6 +141,15 @@ print( sys.getsizeof("") )       # 49
 print( sys.getsizeof(lst) )   # 88, the same
 print( sys.getsizeof(lst[0]) )   # 54 = 49 + 5, str
 print( sys.getsizeof(lst[1]) )   # 28, int
+</pre><hr><pre>
+# Numpy arrays can be like Python lists.
+
+arr2 = np.array([1, 2.3, "word"], dtype=object)
+sys.getsizeof(arr2)   # 120 = 96 + 3 * 8 (3 references)
+sys.getsizeof(arr2[0])   # 28, int
+sys.getsizeof(arr2[1])   # 24, float
+sys.getsizeof(arr2[2])   # 53 = 49 + 4, str
+# Total: 120 + 28 + 24 + 52 = 224 bytes
 </pre><hr>
 
 <h3>TIME COMPARISON</h3>

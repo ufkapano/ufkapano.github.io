@@ -23,29 +23,29 @@ of memory corresponding to an array item should be interpreted.
 <hr><pre>
 # Using array-scalar types.
 
-dtype_int = np.dtype(int)   # or np.dtype("int")
+dt_int = np.dtype(int)   # Python-compatible integer
 
 # "b" (byte), "i1", 'int8';
 # "h", "i2", "int16";
-# "i", "i4", "int32"; "i8", "int64";
+# "i", "i4", "int32"; "i8", "int64" ('int' 64-bit);
 # unsigned int: "B", "u1", 'uint8';
 # "H", "u2", 'uint16';
 # "u4", "uint32";
 # "u8", "uint64";
 
-dtype_float = np.dtype(float)   # or np.dtype("float")
+dt_float = np.dtype(float)   # Python-compatible floating-point number
 
 # "f2", 'float16';
-# "f" (float), "f4", 'float32';
-# "d" (double), "f8", 'float64';
+# "f", "f4", 'float32' ('float' in 32-bit);
+# "d", "f8", 'float64' ('double', 'float' in 64-bit);
 # 'float128';
 
-dtype_bool = np.dtype(bool)
+dt_bool = np.dtype(bool)
 
-dtype_complex = np.dtype(complex)
+dt_complex = np.dtype(complex)
 # 'complex64', 'complex128', 'complex256'
 
-dtype_object = np.dtype(object)
+dt_object = np.dtype(object)   # Python object
 </pre><hr><pre>
 np.sqrt(np.array([-1, 0, 1]))   # default dtype=float
 # RuntimeWarning: invalid value encountered in sqrt
@@ -64,10 +64,10 @@ a.imag   # or np.imag(a)
 </pre><hr><pre>
 # Structured types, fields with names.
 
-dtype_gender = np.dtype([("gender","S1")])   # M/F string
-dtype_person = np.dtype([("name","S25"), ("age", "u1")])
-dtype_RGBA = np.dtype([('R','u1'), ('G','u1'), ('B','u1'), ('A','u1')])
-dtype_rgb = np.dtype({'names': ('r','g','b'), 'formats': ('u1','u1','u1')})
+dt_gender = np.dtype([("gender","S1")])   # M/F string
+dt_person = np.dtype([("name","S25"), ("age", "u1")])
+dt_RGBA = np.dtype([('R','u1'), ('G','u1'), ('B','u1'), ('A','u1')])
+dt_rgb = np.dtype({'names': ('r','g','b'), 'formats': ('u1','u1','u1')})
 </pre><hr><pre>
 # Converting data types.
 

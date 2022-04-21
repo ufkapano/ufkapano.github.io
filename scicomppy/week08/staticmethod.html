@@ -12,7 +12,8 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>A static method does not receive an implicit first argument (self).
+<p>The @staticmethod decorator transforms a method into a static method.
+A static method does not receive an implicit first argument (self).
 
 <hr><pre>
 # Syntax.
@@ -22,6 +23,12 @@ class C:
     def f(arg1, arg2, ...): ...
 
 # Calling: C.f() or C().f()
+</pre><hr><pre>
+def regular_function():
+    pass
+
+class C:
+    method = staticmethod(regular_function)
 </pre><hr>
 
 <h3>POLYNOMIALS</h3>

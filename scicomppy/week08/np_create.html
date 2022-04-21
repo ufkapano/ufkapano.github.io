@@ -28,7 +28,7 @@ b = np.array( [(1.5, 2, 3), [4, 5, 6]] )   # note mix of tuple and list
 print ( b.ndim )   # 2, two-dimensional array
 print ( b.shape )   # (2, 3)
 print ( b.dtype )   # dtype('float64'), deduced
-
+</pre><hr><pre>
 c = np.array( [[1, 2], [3, 4], [5, 6]], dtype=complex )
 print ( c.ndim )   # 2, two-dimensional array
 print ( c.shape )   # (3, 2)
@@ -37,7 +37,7 @@ print ( c.dtype )   # dtype('complex128')
 # numpy.zeros(shape, dtype=float, order='C')
 
 x = np.zeros( 8 )   # float zeros, x.shape=(8,)
-y = np.zeros( (3, 4) )   # float zeros, x.shape=(3, 4)
+y = np.zeros( (3, 4), dtype=int )   # int zeros, x.shape=(3, 4)
 </pre><hr><pre>
 # numpy.ones(shape, dtype=None, order='C')
 
@@ -52,7 +52,7 @@ y = np.arange(8.0)   # array([0., 1., 2., 3., 4., 5., 6., 7.]), dtype('float64')
 # numpy.linspace(start, stop, num=50, endpoint=True, retstep=False, dtype=None, axis=0)
 
 x = np.linspace(0, 2, num=9, dtype=float)   # 9 numbers float (default), default num=50
-# array([0.  , 0.25, 0.5 , 0.75, 1.  , 1.25, 1.5 , 1.75, 2.  ])
+# array([0., 0.25, 0.5, 0.75, 1., 1.25, 1.5, 1.75, 2.])
 </pre><hr><pre>
 # numpy.logspace(start, stop, num=50, endpoint=True, base=10.0, dtype=None, axis=0)
 # In linear space, the sequence starts at base ** start and ends with base ** stop.
