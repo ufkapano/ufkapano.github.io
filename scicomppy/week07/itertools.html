@@ -35,6 +35,7 @@ zip(itertools.count(start=0), iterable)
 
 # itertools.cycle(iterable)
 itertools.cycle('ABCD')   # yield A B C D A B C D ...
+itertools.cycle(range(1, 4))   # yield 1 2 3 1 2 3 1 2 3
 
 # itertools.repeat(item [,n])
 itertools.repeat(10)   # yield 10 10 10 10 ...

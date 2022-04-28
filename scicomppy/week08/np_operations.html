@@ -22,8 +22,8 @@ a * b   # array([0, 30, 80, 150]), np.multiply(a, b)
 c = np.array([2., 4., 6., 8.])
 a / c   # array([10., 7.5, 6.66666667, 6.25]), np.divide(a, c)
 -a      # array([-20, -30, -40, -50]), np.negative(a)
-b ** 2   # array([0, 1, 4, 9]), np.power(b, 2)
-a ** b   # array([1, 30, 1600, 125000]), np.power(a, b)
+a ** b   # array([1, 30, 1600, 125000]), np.power(a, b), broadcasting
+b ** 2   # array([0, 1, 4, 9]), np.power(b, 2), broadcasting
 10 * b   # array([0, 10, 20, 30]), elementwise, broadcasting
 a + 5   # array([25, 35, 45, 55]), elementwise, broadcasting
 b - 3   # array([-3, -2, -1,  0]), elementwise, broadcasting
@@ -54,9 +54,9 @@ a   # array([ 40,  62,  84, 106]) 'a' changed!
 <hr><pre>
 a = np.array([20, 30, 40, 50])
 b = np.array([0, 1, 2, 3])
-a &lt; 35   # array([ True,  True, False, False]), dtype('bool'), itemsize 1
-a == b   # array([False, False, False, False])
+a == b   # array([False, False, False, False]), dtype('bool'), itemsize 1
 a &gt; b   # array([ True,  True,  True,  True])
+a &lt; 35   # array([ True,  True, False, False])
 np.array_equal(a, b)   # False (bool)
 np.array_equal(a, a)   # True
 np.all(a &gt; b)   # True (numpy.bool_, not bool)

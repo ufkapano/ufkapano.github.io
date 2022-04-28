@@ -36,7 +36,8 @@ except ExceptionClass4 as exception1:   # exception1 is an instance
     statements
 except (ExceptionClass4, ExceptionClass5) as exception2:
     statements
-except:   # if present, must be the last; it matches any exception
+#except:   # if present, must be the last; it matches any exception
+except Exception:   # recommended
     statements
 else:   # optional, executed if no exception was raised
     statements

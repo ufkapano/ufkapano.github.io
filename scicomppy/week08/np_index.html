@@ -110,10 +110,10 @@ a[ np.array([[1, 1], [2, 3]]) ]
 # array([[30, 30],
 #        [40, 50]])
 </pre><hr><pre>
-b = np.arange( 4 )   # array([0, 1, 2, 3])
+b = np.arange( 10 )   # array([0, 1, 2, 3, 4, 5, 6, 7])
 
-b % 2 == 0   # array([ True, False,  True, False])
-b[b % 2 == 0]   # array([0, 2]) even numbers
+b % 2 == 0   # array([True, False, True, False, True, False, True, False])
+b[b % 2 == 0]   # array([0, 2, 4, 6]) even numbers
 </pre><hr><pre>
 c = np.arange(35).reshape(5,7)
 # array([[ 0,  1,  2,  3,  4,  5,  6],

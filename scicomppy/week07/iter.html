@@ -40,10 +40,10 @@ low = min(iterable)
 
 def Reverse(sequence):   # a generator iterator is returned
     """A reverse iterator based on a sequence."""
-    i = len(sequence)
-    while i &gt; 0:
-        i = i-1
-        yield sequence[i]
+    idx = len(sequence)
+    while idx &gt; 0:
+        idx = idx-1
+        yield sequence[idx]
 </pre><hr><pre>
 # The second version based on a class.
 
@@ -84,8 +84,8 @@ for item in Reverse([1, 2, 3, 4]):
 # iter(callable, sentinel) return iterator
 
 # an iterator based on a sequence
-it1 = iter([1, 2])   # list_iterator object in Python 3 (lists have __iter__)
-it2 = iter("abcd")   # str_iterator object in Python 3 (strings have __iter__)
+it1 = iter([1, 2])   # list_iterator object in Py3 (lists have __iter__)
+it2 = iter("abcd")   # str_iterator object in Py3 (strings have __iter__)
 it3 = iter(it2)   # all iterators are also iterables
 assert it3 is it2
 

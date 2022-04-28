@@ -17,6 +17,10 @@ The class body is executed in a new namespace and the class name is bound
 locally to the result of type(name, bases, namespace).
 
 <hr><pre>
+# Syntax.
+# type(object) return the type of an object, like object.__class__ (one argument)
+# type(name, bases, namespace) return a new type object (three arguments)
+
 MyClass = type("MyClass", (), {})   # a dynamic form of the 'class' statement
 
 # the same as
@@ -38,21 +42,22 @@ class Meta(type):   # inheritence from 'type'
     def __new__(mcls, name, bases, namespace):
         namespace['foo'] = 'Meta was here'
         # 'foo' is added to the class namespace,
-        # before the class name is created
+        # before the class 'name' is created
         return type.__new__(mcls, name, bases, namespace)
 
 class C(metaclass=Meta):
     pass
 
-print ( dir(C) )   # 'foo' is here
-print ( C.__dict__['foo'] )   # Meta was here
+print(C.foo)   # Meta was here
+print(dir(C))   # 'foo' is here
+print(C.__dict__['foo'])   # Meta was here
 </pre><hr><pre>
 models = {}
 
 class ModelMetaclass(type):
 
-    def __new__(meta, name, bases, clsdict):
-        cls = type.__new__(meta, name, bases, clsdict)
+    def __new__(mcls, name, bases, namespace):
+        cls = type.__new__(mcls, name, bases, namespace)
         models[name] = cls
         return cls
 

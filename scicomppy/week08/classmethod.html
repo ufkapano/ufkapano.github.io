@@ -44,6 +44,12 @@ class Poly:
 
 poly1 = Poly.fromiterable((3, 5, 7))
 assert poly1.data == [3, 5, 7]
+assert isinstance(poly1, Poly)
+
+class BetterPoly(Poly): pass
+
+poly2 = BetterPoly.fromiterable([4, 3, 2])
+assert isinstance(poly2, BetterPoly)
 </pre><hr>
 
 </body>
