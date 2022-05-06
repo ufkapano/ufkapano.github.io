@@ -42,42 +42,45 @@ plt.plot(x, y, 'cs--')   # cyan square and dashed line
 plt.plot(x, y, 'kD-')   # black diamond and solid line
 </pre><hr><pre>
 # The supported color abbreviations are the single letter codes.
-#
+
 # character   color   keyword
-# 'b'   blue      color="blue"
-# 'g'   green     color="green"
-# 'r'   red       color="red"
-# 'c'   cyan      color="cyan"
-# 'm'   magenta   color="magenta"
-# 'y'   yellow    color="yellow"
-# 'k'   black     color="black"
-# 'w'   white     color="white"
+'b'   blue      color="blue"
+'g'   green     color="green"
+'r'   red       color="red"
+'c'   cyan      color="cyan"
+'m'   magenta   color="magenta"
+'y'   yellow    color="yellow"
+'k'   black     color="black"
+'w'   white     color="white"
 </pre><hr><pre>
 # Line styles.
-#
+
 # characters   description   keyword
-# '-'    solid line style      linestyle="solid"
-# '--'   dashed line style     linestyle="dashed"
-# '-.'   dash-dot line style   linestyle="dashdot"
-# ':'    dotted line style     linestyle="dotted"
+'-'    solid line style      linestyle="solid"
+'--'   dashed line style     linestyle="dashed"
+'-.'   dash-dot line style   linestyle="dashdot"
+':'    dotted line style     linestyle="dotted"
 </pre><hr><pre>
 # Selected keywords.
 # When conflicting with fmt, keyword arguments take precedence.
-#
-# color='yellow'
-# linestyle="solid"
-# linewidth=2.0
-# marker='o'
-# markersize=12
-# label='line 1'   # for legends
+
+color='yellow'
+linestyle="solid"   # ls="solid"
+linewidth=2.0   # float, lw=2.0
+marker='o'
+markersize=12   # float
+markerfacecolor='r'
+markeredgewidth=2   # float
+label='line 1'   # for legends
 </pre><hr>
 
 <h3>MARKERS</h3>
 
-<p>https://matplotlib.org/3.2.0/api/markers_api.html
+<p>https://matplotlib.org/stable/api/markers_api.html
 
 <hr><pre>
 # Selected markers (keyword marker).
+
 marker="."   # point
 marker="o"   # circle
 marker="v"   # triangle_down

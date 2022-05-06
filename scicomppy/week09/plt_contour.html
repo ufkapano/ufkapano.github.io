@@ -1,0 +1,68 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Matplotlib - contour(), contourf()</h1>
+
+<p>https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contour.html
+
+<p>https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.contourf.html
+
+<p>https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.colorbar.html
+
+<p>https://numpy.org/doc/stable/reference/generated/numpy.meshgrid.html
+
+<h3>CONTOUR AND CONTOURF</h3>
+
+<p>'contour' and 'contourf' draw contour lines and filled contours, respectively.
+
+<hr><pre>
+# matplotlib.pyplot.contour(*args, data=None, **kwargs)
+# Call signature:
+# contourf([X, Y,] Z, [levels], **kwargs)
+# X, Y : array-like, the coordinates of the values in Z.
+# Z : array-like, the height values over which the contour is drawn.
+</pre><hr><pre>
+# matplotlib.pyplot.contourf(*args, data=None, **kwargs)
+# Call signature:
+# contourf([X, Y,] Z, [levels], **kwargs)
+</pre><hr><pre>
+# contour1.py
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(-5,5,101)
+y = np.linspace(-5,5,101)
+xx, yy = np.meshgrid(x, y)
+#print(xx.shape)   # (101, 101)
+#print(yy.shape)   # (101, 101)
+zz = np.sqrt(xx**2 + yy**2)   # numpy functions
+#print(zz.shape)   # (101, 101)
+
+plt.contourf(xx, yy, zz)
+#plt.contourf(x, y, zz)   # it works
+#plt.contourf(zz)   # indices are used
+
+#plt.contour(xx, yy, zz)
+#plt.contour(x, y, zz)   # it works
+#plt.contour(zz)   # indices are used
+
+plt.axis('scaled')
+plt.colorbar()
+plt.title("contourf")
+#plt.title("contour")
+plt.xlabel("x")
+plt.ylabel("y")
+plt.show()
+</pre><hr>
+
+<p><img src="img/contour1.png" alt="[ contour1.png ]">
+
+<p><img src="img/contourf1.png" alt="[ contourf1.png ]">
+
+</body>
+</html>

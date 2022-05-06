@@ -31,7 +31,8 @@ The return value is typically a tuple (n, bins, patches).
 # align : {'left', 'mid', 'right'}
 # orientation : {'vertical', 'horizontal'}
 # label : a string for the legend
-
+</pre><hr><pre>
+# histogram1.py
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -39,7 +40,7 @@ x = np.random.uniform(0.0, 10.0, 100)
 
 #plt.hist(x, bins=10)
 plt.hist(x, bins=10, density=True)
-# `density=False` would make counts
+# `density=False` (default) would make counts
 
 plt.ylabel('Probability')
 plt.xlabel('Data')

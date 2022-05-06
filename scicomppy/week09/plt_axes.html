@@ -1,0 +1,84 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Matplotlib - Figure and Axes</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p><img src="img/plot2.png" alt="[ plot2.png ]">
+
+<hr><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0,10,1000)
+a = 1.0
+y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
+
+plt.plot(x, y)
+plt.title("f(x)")
+plt.xlabel("x")
+plt.ylabel("y")
+#plt.legend()
+plt.show()
+</pre><hr><pre>
+# (0,1)                  (1,1)
+# +----------------------+
+# | Figure      (0.9,0.9)|  Figure provides the working area (canvas).
+# | +------------------+ |  Axes provides coordinates.
+# | | Axes             | |
+# | |                  | |
+# | |                  | |
+# | |(0.1,0.1)         | |
+# | +------------------+ |
+# |(0,0)                 |(1,0)
+# +----------------------+
+</pre><hr><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.linspace(0,10,1000)
+a = 1.0
+y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
+
+# Solution I.
+#fig, ax = plt.subplots(1, 1)
+
+# Solution II.
+#ax = plt.subplot(111)   # 1 row and 1 column
+#assert plt.gca() == ax
+
+# Solution III.
+#fig = plt.figure()   # returns the Figure instance
+#ax = fig.add_subplot(111)   # returns the Axes instance
+#assert plt.gca() == ax
+
+# Solution IV.
+fig = plt.figure()
+ax = fig.add_axes((0.1, 0.1, 0.8, 0.8), facecolor="white")
+
+ax.plot(x, y)
+ax.set_title("f(x)")
+ax.set_xlabel("x")
+ax.set_ylabel("y")
+plt.show()   # display a figure
+</pre><hr><pre>
+# Comparison
++-------------------+----------------------+
+| pyplot            | axes                 |
++-------------------+----------------------+
+| plt.plot(x, y)    | ax.plot(x, y)        |
+| plt.title("f(x)") | ax.set_title("f(x)") |
+| plt.xlabel("x")   | ax.set_xlabel("x")   |
+| plt.ylabel("y")   | ax.set_ylabel("y")   |
+| plt.legend()      | ax.legend()          |
++-------------------+----------------------+
+</pre><hr>
+
+</body>
+</html>

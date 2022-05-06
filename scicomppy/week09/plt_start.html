@@ -16,13 +16,16 @@
 <h3>INSTALLING MATPLOTLIB</h3>
 
 <hr><pre>
-If you already have Python, you can install Pandas with:
+If you already have Python, you can install Matplotlib with:
 
-pip install matplotlib
-or
+ANACONDA
 conda install matplotlib
 
-In Debian Linux we have python-matplotlib, python3-matplotlib, and dependences.
+PIP (in a virtual environment)
+pip install matplotlib
+
+APT (for the entire computer)
+Debian packages: python-matplotlib, python3-matplotlib, and dependencies.
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
@@ -54,6 +57,19 @@ This explains why Figures can contain multiple Axes.
 </ul>
 
 <hr><pre>
+# (0,1)                  (1,1)
+# +----------------------+
+# | Figure               |  Figure provides the working area (canvas).
+# | +------------------+ |  Axes provides coordinates.
+# | | Axes             | |
+# | |                  | |
+# | |                  | |
+# | |                  | |
+# | +------------------+ |
+# |                      |
+# +----------------------+
+# (0,0)                   (1,0)
+</pre><hr><pre>
 import matplotlib.pyplot as plt
 
 plt.plot([1, 2, 3, 4], [10, 20, 25, 30])   # line segments
@@ -79,6 +95,7 @@ import matplotlib.pyplot as plt
 x = np.linspace(0,10,1000)
 a = 1.0
 y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
+
 plt.plot(x, y)
 plt.title("f(x)")
 plt.xlabel("x")

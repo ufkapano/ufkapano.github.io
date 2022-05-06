@@ -18,9 +18,35 @@
 and the annotate() method provides helper functionality 
 to make annotations easy. 
 
+<hr><pre>
+# Font options.
+
+fontsize=12
+family="serif"   # or fontfamily or fontname
+backgroundcolor="white"
+color="red"
+alpha=0.5   # the alpha value used for blending (alpha=0 invisible)
+rotation=45   # the rotation angle in degrees (counterclockwise)
+</pre><hr>
+
+<h3>TITLE</h3>
+
+<hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.title.html
+
+# matplotlib.pyplot.title(label, fontdict=None, loc=None, pad=None, *, y=None, **kwargs)
+# Set a title for the Axes.
+# loc : 'left', 'right', 'center' (default)
+
+plt.title('Special functions', loc='left', color='red')
+</pre><hr>
+
 <h3>LABELS</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlabel.html
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylabel.html
+
 plt.xlabel('x', color='red')
 plt.ylabel('y')
 </pre><hr>
@@ -28,6 +54,8 @@ plt.ylabel('y')
 <h3>TEXT</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.text.html
+
 # matplotlib.pyplot.text(x, y, s, fontdict=None, **kwargs)
 # x, y : scalars, the position to place the text
 # s : string, the text
@@ -38,11 +66,10 @@ plt.text(120, .025, r'$\alpha=5,\ \delta=10$')   # raw strings for TeX expressio
 
 <h3>ANNOTATE</h3>
 
-<p>https://matplotlib.org/tutorials/text/annotations.html
-
-<p>https://matplotlib.org/gallery/text_labels_and_annotations/annotation_demo.html
-
 <hr><pre>
+# https://matplotlib.org/tutorials/text/annotations.html
+# https://matplotlib.org/gallery/text_labels_and_annotations/annotation_demo.html
+
 # matplotlib.pyplot.annotate(text, xy, *args, **kwargs)
 # text : the text of the annotation
 # xy : the point (x,y) to annotate
@@ -54,14 +81,22 @@ plt.annotate("Info", (1.5, 0.5))
 <h3>LEGEND</h3>
 
 <hr><pre>
-# matplotlib.pyplot.legend(*args, **kwargs)
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.legend.html
+
+# matplotlib.pyplot.legend(*args, **kwargs)   # use after plot()
 #
 # Call signatures:
 # plt.legend()   # automatic detection of elements to be shown in the legend
 #     [use label="..." in plot() or scatter()]
 #
-# plt.legend(loc="upper left")   # location
-#     "lower right", 'center left', 'upper center', 'best' (default)
+# plt.legend(loc="best")   # location (default)
+# loc=1  or  loc='upper right',
+# loc=2  or  loc='upper left',
+# loc=3  or  loc='lower left',
+# loc=4  or  loc='lower right',
+# loc='center left', 'center right', 'center', 'upper center', 'lower center'
+#
+# plt.legend(ncol=n)   # the number of colums in the legend
 #
 # plt.legend(labels)   # labeling existing plot elements
 # plt.legend(['A simple line'])   # problems when many lines
@@ -72,7 +107,7 @@ plt.annotate("Info", (1.5, 0.5))
 line1, = plt.plot(x, y1)
 line2, = plt.plot(x, y2)
 line3, = plt.plot(x, y3)
-plt.legend((line1, line2, line3), ('label1', 'label2', 'label3'))
+plt.legend((line1, line2, line3), ('label1', 'label2', 'label3'))   # after plot()
 </pre><hr>
 
 <h3>EXAMPLES</h3>
@@ -80,7 +115,6 @@ plt.legend((line1, line2, line3), ('label1', 'label2', 'label3'))
 <p>https://matplotlib.org/tutorials/introductory/pyplot.html
 
 <hr><pre>
-# hist1.py
 import numpy as np
 import matplotlib.pyplot as plt
 
@@ -103,6 +137,21 @@ plt.show()
 </pre><hr>
 
 <p><img src="img/hist1.png" alt="[ hist1.png ]">
+
+<hr><pre>
+import numpy as np
+import matplotlib.pyplot as plt
+
+x = np.arange(-1, 1, .01)
+
+for i in range(1, 5):
+    plt.plot(x, i*x, 'k-', lw=i, label='y(x)={}*x'.format(i))
+
+plt.legend(ncol=2, loc=2)
+plt.show()
+</pre><hr>
+
+<p><img src="img/legend3.png" alt="[ legend3.png ]">
 
 </body>
 </html>

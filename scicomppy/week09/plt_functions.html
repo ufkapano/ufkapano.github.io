@@ -11,43 +11,60 @@
 <h3>LIMITS</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xlim.html
+
 plt.xlim(xmin, xmax)
 plt.xlim((xmin, xmax))
 left, right = plt.xlim()   # return the current xlim
 plt.xlim(right=3)  # adjust the right leaving left unchanged
 plt.xlim(left=1)  # adjust the left leaving right unchanged
 </pre><hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.ylim.html
+
 plt.ylim(ymin, ymax)
 plt.ylim((ymin, ymax))
 bottom, top = plt.ylim()   # return the current ylim
 plt.ylim(top=3)  # adjust the top leaving bottom unchanged
 plt.ylim(bottom=1)  # adjust the bottom leaving top unchanged
 </pre><hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.axis.html
+
 plt.axis([xmin, xmax, ymin, ymax])
 xmin, xmax, ymin, ymax = plt.axis()   # return the axis limits
-plt.axis('on')   # turn on axis lines and labels
-plt.axis('off')   # turn off axis lines and labels
+plt.axis('on')   # turn on axis lines and labels (same as True)
+plt.axis('off')   # turn off axis lines and labels (same as False)
+plt.axis('equal')   # set equal scaling by changing axis limits
+plt.axis('scaled')   # set equal scaling by changing dimensions of the plot box
+plt.axis('square')   # square plot, forcing xmax-xmin == ymax-ymin
+plt.axis('tight')   # set limits just large enough to show all data
 </pre><hr>
 
 <h3>TICKS</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xticks.html
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.yticks.html
+
 # matplotlib.pyplot.xticks(ticks=None, labels=None, **kwargs)
 # matplotlib.pyplot.yticks(ticks=None, labels=None, **kwargs)
 # Call signatures:
-# locs, labels = plt.yticks()            # Get locations and labels
-# plt.yticks(ticks, [labels], **kwargs)  # Set locations and labels
+# locs, labels = plt.yticks()            # get locations and labels
+# plt.yticks(ticks, [labels], **kwargs)  # set locations and labels
 
 plt.xticks(np.arange(4), ('X1', 'X2', 'X3', 'X4'))
 plt.yticks(np.arange(0, 81, 10))
+yticks([])   # disable yticks
 </pre><hr>
 
 <h3>SCALES</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.xscale.html
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.yscale.html
+
 # matplotlib.pyplot.xscale(value, **kwargs)
 # matplotlib.pyplot.yscale(value, **kwargs)
-# value: "linear", "log", "symlog", "logit"
+# value : "linear", "log", "symlog", "logit"
 
 plt.xscale('log')
 plt.yscale('linear')
@@ -56,30 +73,41 @@ plt.yscale('linear')
 <h3>GRID</h3>
 
 <hr><pre>
-# matplotlib.pyplot.grid(b=None, which='major', axis='both', **kwargs)
-# b: bool or None
-# which: 'major', 'minor', 'both'
-# axis: 'both', 'x', 'y'
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.grid.html
 
-plt.grid(color='r', linestyle='-', linewidth=2)
+# matplotlib.pyplot.grid(b=None, which='major', axis='both', **kwargs)
+# b : bool or None
+# which : 'major', 'minor', 'both'
+# axis : 'both' (default), 'x', 'y'
+
+# Example 1 (x and y are the same).
+plt.grid(color='grey', linestyle='-', linewidth=2)
+
+# Example 2 (x different from y).
+plt.grid(color='grey', which='major', axis='x', linestyle='-')
+plt.grid(color='grey', which='major', axis='y', linestyle=':')
 </pre><hr>
 
 <h3>LINES</h3>
 
 <hr><pre>
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.hlines.html
+# https://matplotlib.org/stable/api/_as_gen/matplotlib.pyplot.vlines.html
+
 # matplotlib.pyplot.hlines(y, xmin, xmax, colors='k', linestyles='solid',
-# label='', *, data=None, **kwargs)
+#     label='', *, data=None, **kwargs)
 # Plot horizontal lines at each y from xmin to xmax.
-#
+# y : float or array-like
+# xmin, xmax : float or array-like
+# colors : list of colors or color ('colors' or 'color' can be used)
+
 # matplotlib.pyplot.vlines(x, ymin, ymax, colors='k', linestyles='solid',
-# label='', *, data=None, **kwargs)
+#     label='', *, data=None, **kwargs)
 # Plot vertical lines at each x from ymin to ymax.
-# linestyles: 'solid', 'dashed', 'dashdot', 'dotted'
 
-plt.hlines([1,2,4,7], 0, 10, colors='r')
-plt.vlines([1,2,4,7], 0, 10, colors='b')
+plt.hlines([1,2,4,7], 0, 10, colors=['r','g','r','g'], label='red/green')
+plt.vlines([1,2,4,7], 0, 10, colors='b', label='blue')   # the same color
 </pre><hr>
-
 
 </body>
 </html>
