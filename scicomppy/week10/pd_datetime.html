@@ -6,7 +6,7 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Pandas - time series / date functionality</h1>
+<h1>Pandas - time series</h1>
 
 <p>https://pandas.pydata.org/docs/user_guide/timeseries.html
 
@@ -18,7 +18,7 @@
 
 <p>https://pandas.pydata.org/docs/reference/api/pandas.to_timedelta.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>pandas contains extensive capabilities and features for working 
 with time series data for all domains.
@@ -34,9 +34,9 @@ datetime.timedelta()
 numpy.datetime64()
 numpy.timedelta64()
 
-pandas.Timestamp()
+pandas.Timestamp()   # numpy.datetime64 inside
 pandas.Timedelta()
-pandas.DatetimeIndex()
+pandas.DatetimeIndex()   # array of numpy.datetime64 inside
 pandas.TimedeltaIndex()
 </pre><hr>
 
@@ -102,7 +102,11 @@ pd.to_datetime(1234567890)   # interpreted as nanoseconds
 
 pd.to_datetime('20210203')
 # Timestamp('2021-02-03 00:00:00')
-</pre><hr><pre>
+</pre><hr>
+
+<h3>DATE RANGE</h3>
+
+<hr><pre>
 # pandas.date_range(start=None, end=None, periods=None, freq=None,
 #    tz=None, normalize=False, name=None, closed=None, **kwargs)
 # Return a fixed frequency DatetimeIndex.
@@ -126,6 +130,49 @@ pd.date_range("2018-01-01", periods=4, freq="H")
 # DatetimeIndex(['2018-01-01 00:00:00', '2018-01-01 01:00:00',
 #                '2018-01-01 02:00:00', '2018-01-01 03:00:00'],
 #               dtype='datetime64[ns]', freq='H')
+</pre><hr><pre>
+dates = pd.date_range("20210501", periods=6)   # 6 days
+# DatetimeIndex(['2021-05-01', '2021-05-02', '2021-05-03',
+#                '2021-05-04', '2021-05-05', '2021-05-06'],
+#               dtype='datetime64[ns]', freq='D')
+
+s4 = pd.Series(dates)
+# 0   2021-05-01
+# 1   2021-05-02
+# 2   2021-05-03
+# 3   2021-05-04
+# 4   2021-05-05
+# 5   2021-05-06
+# dtype: datetime64[ns]
+
+s4[2]   # Timestamp('2021-05-03 00:00:00')
+
+s4.values
+# array(['2021-05-01T00:00:00.000000000', '2021-05-02T00:00:00.000000000',
+#        '2021-05-03T00:00:00.000000000', '2021-05-04T00:00:00.000000000',
+#        '2021-05-05T00:00:00.000000000', '2021-05-06T00:00:00.000000000'],
+#       dtype='datetime64[ns]')
+</pre><hr><pre>
+s5 = pd.Series(data=range(10, 70, 10), index=dates)
+# 2021-05-01    10
+# 2021-05-02    20
+# 2021-05-03    30
+# 2021-05-04    40
+# 2021-05-05    50
+# 2021-05-06    60
+# Freq: D, dtype: int64
+
+s4.equals(s5)   # False, test whether two objects contain the same elements
+
+s5.plot()   # xtics are days
+# plt.plot(s5.index, s5.values, 'ks')   # different result
+plt.show()
+</pre><hr><pre>
+t1 = pd.to_datetime('20210504')   # Timestamp('2021-05-04 00:00:00')
+del s5[t1]
+s5.index
+# DatetimeIndex(['2021-05-01', '2021-05-02', '2021-05-03', '2021-05-05',
+#                '2021-05-06'], dtype='datetime64[ns]', freq=None)
 </pre><hr>
 
 <h3>TIMEDELTA</h3>

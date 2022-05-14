@@ -66,6 +66,7 @@ n = 100   # n random points in a unit square [0,1]x[0,1]
 df = pd.DataFrame(np.random.rand(n,2), columns=['x', 'y'])
 
 plt.scatter('x', 'y', data=df)
+#plt.scatter(df['x'], df['y'])   # the same
 </pre><hr>
 
 <h3>EXAMPLES</h3>
@@ -107,7 +108,7 @@ x = np.random.rand(n)
 y = np.random.rand(n)
 
 #colors = [('r' if cond else 'g') for cond in np.logical_and(x > 0.5, y > 0.5)]
-colors = np.where(np.logical_and(x > 0.5, y > 0.5) ,'g', 'r')
+colors = np.where(np.logical_and(x > 0.5, y > 0.5) ,'r', 'g')
 
 plt.scatter(x, y, c=colors)
 plt.show()

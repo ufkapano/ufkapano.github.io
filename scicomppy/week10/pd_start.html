@@ -35,7 +35,7 @@ Debian packages: python-pandas, python3-pandas, and dependencies.
 
 <p>'pandas' is a fast, powerful, flexible and easy to use open source data 
 analysis and manipulation tool, built on top of the Python programming language.
-pandas aims to be the fundamental high-level building block for doing 
+'pandas' aims to be the fundamental high-level building block for doing 
 practical, real world data analysis in Python.
 
 <p>Main features:
@@ -61,6 +61,7 @@ are filled with special NA/NaN values.
 <hr><pre>
 import numpy as np
 import pandas as pd
+import matplotlib.pyplot as plt   # for plots
 
 print( pd.__version__ )   # 0.23.3 in Debian 10
 </pre><hr><pre>
@@ -81,8 +82,8 @@ print( pd.__version__ )   # 0.23.3 in Debian 10
 </pre><hr><pre>
 # Examples from Colab.
 
-city_names = pd.Series(['San Francisco', 'San Jose', 'Sacramento'])
-population = pd.Series([852469, 1015785, 485199])
+city_names = pd.Series(['San Francisco', 'San Jose', 'Sacramento'])   # strings
+population = pd.Series([852469, 1015785, 485199])   # numbers (int)
 
 # Constructing DataFrame from a dictionary.
 df1 = pd.DataFrame({'City name': city_names, 'Population': population})
@@ -95,9 +96,11 @@ print ( df1 )
 # Access to Series using Python dict/list operations.
 print ( df1['City name'] )
 print ( df1['Population'] )
+print ( df1.Population )   # only if labels are proper Python identifiers
 print ( df1['Population'][1] )   # 1015785
+print ( df1.Population[1] )   # 1015785
 
-# New colums can be added.
+# New colums can be added (with new labels).
 df1['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
 
 # Calculations with numpy.
@@ -107,8 +110,9 @@ print ( np.log(population) )
 # 2    13.092314
 # dtype: float64
 
-# population.apply(lambda val: val > 1000000)   # return boolean series
-print ( population > 1000000 )
+# Transforming series.
+# population.apply(lambda item: item > 1000000)   # return new boolean series
+print ( population > 1000000 )   # numpy style (elementwise)
 # 0    False
 # 1     True
 # 2    False

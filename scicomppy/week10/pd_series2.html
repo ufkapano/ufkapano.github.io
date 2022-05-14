@@ -1,0 +1,164 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - Series, operations</h1>
+
+<p>https://pandas.pydata.org/docs/user_guide/dsintro.html
+
+<h3>INTRODUCTION</h3>
+
+<hr><pre>
+s1 = pd.Series(np.random.randn(4), index=list("abcd"))
+# a   -0.588964   # standard normal distribution
+# b    0.474307
+# c   -1.149516
+# d    1.096136
+# dtype: float64
+
+# Indexing
+# s1.loc[] is primarily label based.
+# s1.iloc[] is primarily integer position based.
+# s1[] combines both styles (possible problems when index is int).
+
+s1.loc['a':'b']   # using labels, both ends included
+s1.iloc[0:2]   # numpy style
+s1[0:2]   # slicing will also slice the index, numpy style
+s1['a':'b']   # using labels, both ends included
+#s1['a':'b'] = 1.0   # update is possible
+# a   -0.588964
+# b    0.474307
+# dtype: float64
+
+s1['a']   # -0.5889642925100458, Series is dict-like
+#s1['a'] = 0.0   # update is possible
+assert s1.a == s1['a']
+'c' in s1   # True
+s1['k']   # KeyError: 'k'
+
+s1 &gt; 0   # boolean series, numpy style
+#s1.apply(lambda item: item &gt; 0)
+# a    False
+# b     True
+# c    False
+# d     True
+# dtype: bool
+
+s1[s1 &gt; 0]   # filtering using boolean series
+#s1.loc[s1 &gt; 0]
+# b    0.474307
+# d    1.096136
+# dtype: float64
+
+s1[[3,1,0]]   # using index array, numpy style
+s1.iloc[[3,1,0]]   # numpy style
+s1.loc[['d','b','a']]   # using labels
+# d    1.096136
+# b    0.474307
+# a   -0.588964
+# dtype: float64
+
+s1 * 2   # vectorized operations, numpy style
+#s1.apply(lambda item: item * 2)
+# a   -1.177929
+# b    0.948614
+# c   -2.299031
+# d    2.192273
+# dtype: float64
+
+np.exp(s1)   # numpy functions
+# a    0.554902
+# b    1.606901
+# c    0.316790
+# d    2.992581
+# dtype: float64
+</pre><hr>
+
+<h3>APPEND</h3>
+
+<hr><pre>
+# https://pandas.pydata.org/docs/reference/api/pandas.Series.append.html
+# pd.Series.append(to_append, ignore_index=False, verify_integrity=False)
+# Concatenate two or more Series.
+# to_append : Series or list/tuple of Series
+# ignore_index : bool, default False
+#     If True, the resulting axis will be labeled 0, 1, ...
+# verify_integrity : bool, default False
+#     If True, raise Exception on creating index with duplicates.
+#
+# Note: do not append items to a series one by one,
+# better extend with an ordered collection.
+# Accumulate data in an external list or a dictionary,
+# make a second series, then append to the first series.
+
+s1 = pd.Series([1, 2, 3])
+s2 = pd.Series([4, 5, 6])
+
+s3 = s1.append(s2)
+# 0    1    index with duplicates
+# 1    2
+# 2    3
+# 0    4
+# 1    5
+# 2    6
+# dtype: int64
+
+s3.index   # Int64Index([0, 1, 2, 0, 1, 2], dtype='int64')
+
+# Note that s3[0] gives a new series with duplicate labels (problems!)
+# 0    1
+# 0    4
+# dtype: int64
+
+# https://pandas.pydata.org/docs/user_guide/duplicates.html
+</pre><hr><pre>
+s4 = s1.append(s2, ignore_index=True)
+# 0    1
+# 1    2
+# 2    3
+# 3    4
+# 4    5
+# 5    6
+# dtype: int64
+
+s4.index   # RangeIndex(start=0, stop=6, step=1)
+</pre><hr><pre>
+s1.append(s2, verify_integrity=True)
+# Traceback (most recent call last):
+# ...
+# ValueError: Indexes have overlapping values: Int64Index([0, 1, 2], dtype='int64')
+</pre><hr>
+
+<h3>PLOTS</h3>
+
+<hr><pre>
+s1 = pd.Series(np.random.randn(10)) # s1.index vs s1.values
+
+#s1 = pd.Series(np.random.randn(10), index=list("qwertyuiop")) # no xtics
+
+s1.plot()   # return Axes
+#plt.scatter(s1.index, s1.values)   # simple approach
+#plt.plot(s1.index, s1.values)   # simple approach
+
+# Selected options
+# kind : 'line', 'bar', 'barh', 'hist', 'box', 'area', 'pie'
+# ax : matplotlib axes object; if not passed, uses gca()
+# figsize : a tuple (width, height) in inches
+# use_index : boolean, default True; use index as ticks for x axis
+# title : string, title to use for the plot
+# grid : boolean, default None
+# legend : False/True/'reverse'
+# xlim : 2-tuple/list
+# ylim : 2-tuple/list
+# rot : int, default None; rotation for ticks
+# fontsize : int, default None
+
+plt.show()
+</pre><hr>
+
+</body>
+</html>

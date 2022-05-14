@@ -1,0 +1,193 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - DataFrame, operations</h1>
+
+<p>https://pandas.pydata.org/docs/user_guide/dsintro.html
+
+<p>https://pandas.pydata.org/docs/user_guide/indexing.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html
+
+<h3>INTRODUCTION</h3>
+
+<hr><pre>
+# Working with columns
+
+df3 = pd.DataFrame(np.random.rand(4,3), columns=list('ABC'))
+#           A         B         C
+# 0  0.658905  0.037961  0.182221
+# 1  0.218680  0.458201  0.080352
+# 2  0.203869  0.960399  0.431482
+# 3  0.186825  0.110853  0.416665
+
+df3['A']   # column selection, return a new Series
+#df3.A   # column selection
+# 0    0.658905
+# 1    0.218680
+# 2    0.203869
+# 3    0.186825
+# Name: A, dtype: float64
+
+# Columns can be deleted or popped like with a dict.
+
+df3['Flag'] = df3['A'] > 0.5   # boolean series will be a new column
+del df3['C']   # column deletion
+two = df3.pop('B')
+df3
+#           A   Flag
+# 0  0.658905   True
+# 1  0.218680  False
+# 2  0.203869  False
+# 3  0.186825  False
+
+f3['Part'] = pd.Series([10, 20])   # not the same index
+df3
+#           A   Flag  Part
+# 0  0.658905   True  10.0
+# 1  0.218680  False  20.0
+# 2  0.203869  False   NaN
+# 3  0.186825  False   NaN
+
+df3.insert(1, 'Scalar', 'bar')
+df3
+#           A Scalar   flag  Part
+# 0  0.658905    bar   True  10.0
+# 1  0.218680    bar  False  20.0
+# 2  0.203869    bar  False   NaN
+# 3  0.186825    bar  False   NaN
+</pre><hr><pre>
+# Working with rows
+
+df1 = pd.DataFrame({"Numbers":[10,20,30],
+                      "Words":['a','b','c'],
+                     "Floats":[1.1, 2.2, 3.3]}
+#    Numbers Words  Floats
+# 0       10     a     1.1
+# 1       20     b     2.2
+# 2       30     c     3.3
+
+# Indexing
+# df1[column_name] return Series
+# df1[row1:row2] row selection (slice), numpy style
+
+# df1.iloc[row_pos1:row_pos2] row selection (slice), numpy style
+# df1.iloc[row_pos1:row_pos2,col_pos1:col_pos2] numpy style
+# df1.iloc[:,col_pos1:col_pos2] all rows
+# df1.iloc[row_pos_list,col_pos_list]
+
+# df1.loc[row_indexer,column_indexer] row and column selection using labels
+# df1.loc[row_indexer] is the same as df1.loc[row_indexer,:]
+# df1.loc[row,col] single item
+# df1.loc[row1:row2,col1:col2] row and column selection (slice)
+# df1.loc[row_list,col_list]
+
+df1.loc[1]   # row selection, return a row as a Series
+#df1.loc[1,:]   # the same
+#df1.loc[1] = pd.Series( {'Numbers':25, 'Words':'bb', 'Floats':2.5} )  # update is possible
+# Numbers     20
+# Words        b
+# Floats     2.2
+# Name: 1, dtype: object
+
+df1.loc[[0,2]]   # row selection, return a DataFrame
+#df1.loc[[0,2],:]   # the same
+#df1.loc[[True,False,True]]   # using a boolean list
+#    Numbers Words  Floats
+# 0       10     a     1.1
+# 2       30     c     3.3
+
+df1.loc[df1.Numbers > 15]   # row selection, using a boolean Series
+#    Numbers Words  Floats
+# 1       20     b     2.2
+# 2       30     c     3.3
+
+df1.loc[0:1]   # Warning: both ends are included!
+df1.iloc[0:2]   # row selection, numpy style
+df1[0:2]   # row selection, numpy style
+#    Numbers Words  Floats
+# 0       10     a     1.1
+# 1       20     b     2.2
+
+df1[::-1]   # reversed ordering of rows
+df1.iloc[::-1]   # the same
+
+df1.loc[[0,2], 'Numbers']   # row selection with a single column
+df1.loc[[0,2], ['Numbers']]   # the same
+
+df1.loc[[0,2], ['Numbers','Floats']]   # row selection with many columns
+
+df1.T   # transposing
+#            0    1    2
+# Numbers   10   20   30
+# Words      a    b    c
+# Floats   1.1  2.2  3.3
+</pre><hr><pre>
+# Q. How to add new rows to a DataFrame?
+# A. It should be avoided.
+#
+# https://pandas.pydata.org/docs/reference/api/pandas.concat.html
+# The general method is pd.concat().
+#
+# https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.append.html
+# pd.DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)
+
+df1 = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
+#    A  B
+# 0  1  2
+# 1  3  4
+
+df2 = pd.DataFrame([[5, 6], [7, 8]], columns=list('AB'))
+
+df3 = df1.append(df2)
+#    A  B
+# 0  1  2     index with duplicates
+# 1  3  4
+# 0  5  6
+# 1  7  8
+
+df4 = df1.append(df2, ignore_index=True)
+#    A  B
+# 0  1  2
+# 1  3  4
+# 2  5  6
+# 3  7  8
+</pre><hr><pre>
+import random
+
+rows_list = []
+cols_names = ["number", "letter"]
+input_rows = range(5)
+
+for row in input_rows:
+    D = {}
+    D.update( {"number": random.random()} )   # key = col_name
+    D.update( {"letter": random.choice(['a', 'b', 'c', 'd'])} )
+    rows_list.append(D)
+
+#df = pd.DataFrame(rows_list)   # wrong order of columns
+df = pd.DataFrame(rows_list, columns=cols_names)
+</pre><hr><pre>
+import random
+
+rows_list = []
+cols_names = ["number", "letter"]
+input_rows = range(5)
+
+for row in input_rows:
+    L = []
+    L.append( random.random() )
+    L.append( random.choice(['a', 'b', 'c', 'd']) )
+    rows_list.append(L)
+
+#df = pd.DataFrame(rows_list) # no names for columns
+df = pd.DataFrame(rows_list, columns=cols_names) 
+</pre><hr>
+
+</body>
+</html>

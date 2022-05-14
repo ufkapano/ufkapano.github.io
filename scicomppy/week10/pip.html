@@ -13,20 +13,19 @@
 
 <p>https://packaging.python.org/tutorials/installing-packages/
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>'pip' is the package installer for Python. You can use it to install 
 packages from the Python Package Index (PyPI) and other indexes.
 
-<p>In Debian Linux, there is 'pip' (Py2) and 'pip3' (Py3).
+<p>In Debian 10 Linux, there is 'pip' (Py2) and 'pip3' (Py3).
 
 <p>'pip' is already installed if you are using Python 2 &gt;= 2.7.9 
 or Python 3 &gt;= 3.4 downloaded from python.org or if you are working 
 in a virtual environment created by 'virtualenv' or 'venv'. 
 
 <hr><pre>
-# Testing if pip is installed.
-# Debian 10 apt packages: python-pip, python-pip-whl, python3-pip
+# Testing if 'pip' is installed.
 
 $ pip --version   # Debian 10
 pip 18.1 from /usr/lib/python2.7/dist-packages/pip (python 2.7)
@@ -41,34 +40,43 @@ $ man pip   # help in Debian Linux
 $ pip --help   # usage and commands
 </pre><hr>
 
+<h3>INSTALLING PIP</h3>
+
+<hr><pre>
+APT (for the entire computer)
+Debian packages: python-pip, python-wheel, python-pip-whl, 
+python3-pip, python3-wheel, and dependencies.
+</pre><hr>
+
 <h3>QUICKSTART</h3>
 
 <hr><pre>
-$ pip install somepackage   # latest version
-$ pip install somepackage==1.0.4   # specific version
-$ pip install --upgrade somepackage   # -U, --upgrade
-$ pip install somepackage-*.whl   # from a wheel archive
+$ python3 -m pip install somepackage   # latest version
+$ python3 -m pip install somepackage==1.0.4   # specific version
+$ python3 -m pip install --upgrade somepackage   # -U, --upgrade
+$ python3 -m pip install somepackage-1.0-py3-none-any.whl   # from a wheel archive
+$ python3 -m pip install somepackage-1.0.tar.gz   # from a tar.gz archive
 
-$ pip show somepackage   # info about a package
-$ pip show --files somepackage   # show what files were installed
+$ python3 -m pip show somepackage   # info about a package
+$ python3 -m pip show --files somepackage   # show what files were installed
 
-$ pip list              # the list of packages installed
-$ pip list --outdated   # errors in Debian
+$ python3 -m pip list              # the list of packages installed
+$ python3 -m pip list --outdated   # errors in Debian
 
-$ pip uninstall somepackage
+$ python3 -m pip uninstall somepackage
 
-$ pip check   # checking a system
+$ python3 -m pip check   # checking a system
 # No broken requirements found.
 
-$ pip search "query"   # errors in Debian
+$ python3 -m pip search "query"   # errors in Debian
 </pre><hr><pre>
 # Upgrading pip - it is safe in virtual environments.
 
 # For installig packages from binary archives
-$ python -m pip install --upgrade pip
+$ python3 -m pip install --upgrade pip
 
 # For installing packages from source archives
-$ python -m pip install --upgrade pip setuptools wheel
+$ python3 -m pip install --upgrade pip setuptools wheel
 </pre><hr>
 
 <h3>REPRODUCIBLE INSTALLS</h3>
@@ -82,9 +90,9 @@ the set of packages and versions you’re using. Best practice is to:
 <hr><pre>
 # This is done typically in virtual environments.
 
-$ python -m pip freeze > requirements.txt   # output installed packages in requirements format
+$ python3 -m pip freeze > requirements.txt   # output installed packages in requirements format
 
-$ python -m pip install -r requirements.txt   # -r, --requirement
+$ python3 -m pip install -r requirements.txt   # -r, --requirement
 </pre><hr>
 
 </body>

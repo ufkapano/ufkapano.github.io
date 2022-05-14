@@ -6,39 +6,48 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Pandas - Series</h1>
+<h1>Pandas - Series, creation</h1>
 
 <p>https://pandas.pydata.org/docs/user_guide/dsintro.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>'Series' is a one-dimensional labeled array capable of holding any data 
 type (integers, strings, floating point numbers, Python objects, etc.). 
 The axis labels are collectively referred to as the 'index'.
 
+<h3>CREATION</h3>
+
 <hr><pre>
-# pd.Series(data=None, index=None, dtype=None, copy=False)
+# pd.Series(data=None, index=None, dtype=None, name=None, copy=False)
 # data : array-like, dict, or scalar value
 # index : values must be hashable and have the same length as 'data'
 # dtype : numpy.dtype or None
+# name : string, optional
 # copy : boolean, default False; copy input data
 
 s1 = pd.Series(24)   # scalar value
 # 0    24
 # dtype: int64
-
-s2 = pd.Series(range(0,7,2))   # default integer index
+</pre><hr><pre>
+s2 = pd.Series(range(0,7,2), name='Numbers')   # default integer index
 # 0    0
 # 1    2
 # 2    4
 # 3    6
-# dtype: int64
+# Name: Numbers, dtype: int64
 
 s2.index   # RangeIndex(start=0, stop=4, step=1)
+# s2.index = list("abcd")
+# Changing index to Index(['a', 'b', 'c', 'd'], dtype='object')
+
 s2.values   # array([0, 2, 4, 6])
 s2.dtype   # dtype('int64')
-list(s2)   # [0, 2, 4, 6] from data, not from index
+s2.name   # 'Numbers'
+# s2.name = 'Integers'   # changing 'name'
 
+list(s2)   # [0, 2, 4, 6] from data, not from index
+</pre><hr><pre>
 s3 = pd.Series(np.arange(0, 1.1, 0.2))   # from a numpy array
 # 0    0.0
 # 1    0.2
@@ -48,7 +57,24 @@ s3 = pd.Series(np.arange(0, 1.1, 0.2))   # from a numpy array
 # 5    1.0
 # dtype: float64
 
-s4 = pd.Series("word")   # it is not interpreted as a sequence
+s3.index   # RangeIndex(start=0, stop=6, step=1)
+
+del s3[3]   # removing a single item from the series (slow?)
+# 0    0.0
+# 1    0.2
+# 2    0.4
+# 4    0.8   # unchanged index
+# 5    1.0   # unchanged index
+# dtype: float64
+
+s3.index   # Int64Index([0, 1, 2, 4, 5], dtype='int64')
+
+# Indexing
+# s3[3]   # KeyError, 3 is interpreted as a label
+# s3.loc[3]   # KeyError, 3 is interpreted as a label
+# s3.iloc[3]   # 0.8, using a position along the index
+</pre><hr><pre>
+s4 = pd.Series("word")   # a string is not interpreted as a sequence
 # 0    word
 # dtype: object
 
@@ -58,8 +84,9 @@ s5 = pd.Series(list("word"))   # from a list of strings
 # 2    r
 # 3    d
 # dtype: object
-
-s6 = pd.Series([1, np.nan, 5], dtype=complex)   # using dtype and np.nan
+</pre><hr><pre>
+# Missing values.
+s6 = pd.Series([1, np.nan, 5], dtype=complex)   # using dtype and np.nan (or None)
 # 0    (1+0j)
 # 1       NaN
 # 2    (5+0j)
@@ -68,17 +95,26 @@ s6 = pd.Series([1, np.nan, 5], dtype=complex)   # using dtype and np.nan
 s1 = pd.Series( {'a':10, 'b':20, 'c':30} )   # from dict, dtype="int64"
 
 s1.index   # Index(['a', 'b', 'c'], dtype='object')
+s1.values   # array([10, 20, 30])
 
-s2 = pd.Series(data=[10, 20, 30], index=["a", "b", "c"]) # dtype="int64"
+s2 = pd.Series(data=[10, 20, 30], index=list("abc")) # dtype="int64"
 # s1 and s2 are the same
+assert s1.equals(s2)
+# Note that s1 == s2 gives a new bool series (elementwise comparizon)
+# a    True
+# b    True
+# c    True
+# dtype: bool
+
 print ( s1['a'] )   # 10
-print ( s1 + s2 )
+print ( s1.a )   # 10, only if labels are proper Python identifiers
+print ( s1 + s2 )   # creating new series (elementwise addition)
 # a    20
 # b    40
 # c    60
 # dtype: int64
 
-s3 = pd.Series(data=[1, 2, 4], index=["a", "b", "d"])
+s3 = pd.Series(data=[1, 2, 4], index=list("abd"))
 
 print ( s2 + s3 )   # "c" and "d" do not match, s2.add(s3)
 # a    11.0
@@ -93,141 +129,61 @@ print ( s2.add(s3, fill_value=0) )
 # c    30.0
 # d     4.0
 # dtype: float64
-
-s4 = pd.Series(5.0, index=["a", "b", "c", "d"])   # from scalar value
+</pre><hr><pre>
+s4 = pd.Series(5.0, index=list("abcd"))   # from scalar value
 # The value will be repeated to match the length of index.
 # a    5.0
 # b    5.0
 # c    5.0
 # d    5.0
 # dtype: float64
-</pre><hr><pre>
-dates = pd.date_range("20210501", periods=6)   # 6 days
-# DatetimeIndex(['2021-05-01', '2021-05-02', '2021-05-03',
-#                '2021-05-04', '2021-05-05', '2021-05-06'],
-#               dtype='datetime64[ns]', freq='D')
-
-s4 = pd.Series(dates)
-# 0   2021-05-01
-# 1   2021-05-02
-# 2   2021-05-03
-# 3   2021-05-04
-# 4   2021-05-05
-# 5   2021-05-06
-# dtype: datetime64[ns]
-
-s5 = pd.Series(data=range(10, 70, 10), index=dates)
-# 2021-05-01    10
-# 2021-05-02    20
-# 2021-05-03    30
-# 2021-05-04    40
-# 2021-05-05    50
-# 2021-05-06    60
-# Freq: D, dtype: int64
-</pre><hr><pre>
-# pd.Series.head(n=5)
-#     Return the first n rows.
-#
-# pd.Series.tail(n=5)
-#     Return the last n rows.
-#
-# pd.Series.equals(other)
-#     Test whether two objects contain the same elements.
 </pre><hr>
 
-<h3>OPERATIONS</h3>
+<h3>FUNCTIONS</h3>
 
 <hr><pre>
-s1 = pd.Series(np.random.randn(4), index=["a", "b", "c", "d"])
-# a   -0.588964   # standard normal distribution
-# b    0.474307
-# c   -1.149516
-# d    1.096136
+s1 = pd.Series(np.random.randn(20))
+
+s1.describe()
+# count    20.000000
+# mean      0.163855
+# std       0.908906
+# min      -1.635898
+# 25%      -0.219260
+# 50%       0.201758
+# 75%       0.741498
+# max       2.139399
 # dtype: float64
 
-s1[:2]   # slicing will also slice the index
-# a   -0.588964
-# b    0.474307
+s1.head()   # s1.head(n=5), return the first n rows
+# 0    2.139399
+# 1    0.731533
+# 2    0.501570
+# 3    0.094640
+# 4    0.771390
 # dtype: float64
 
-s1['a']   # -0.5889642925100458, Series is dict-like
-assert s1[1] == s1['b']
-'c' in s1   # True
-s1['k']   # KeyError: 'k'
-
-s1 &gt; 0   # boolean series
-# a    False
-# b     True
-# c    False
-# d     True
-# dtype: bool
-
-s1[s1 > 0]   # filtering using boolean series
-# b    0.474307
-# d    1.096136
+s1.tail()   # s1.tail(n=5), return the last n rows.
+# 15    0.215668
+# 16   -1.451227
+# 17    0.207832
+# 18   -0.000653
+# 19   -0.124284
 # dtype: float64
 
-s1[[3,1,0]]   # using index array
-# d    1.096136
-# b    0.474307
-# a   -0.588964
-# dtype: float64
+# Statistics
+s1.median(), s1.mean(), s1.std()
+# (0.20175811256676268, 0.16385549628466706, 0.9089058621043952)
 
-s1 * 2   # vectorized operations
-# a   -1.177929
-# b    0.948614
-# c   -2.299031
-# d    2.192273
-# dtype: float64
+s1.min(), s1.max()
+# (-1.6358983302701848, 2.1393994684147994)
 
-np.exp(s1)   # numpy functions
-# a    0.554902
-# b    1.606901
-# c    0.316790
-# d    2.992581
-# dtype: float64
-</pre><hr><pre>
-# https://pandas.pydata.org/docs/reference/api/pandas.Series.append.html
-# pd.Series.append(to_append, ignore_index=False, verify_integrity=False)
-# Concatenate two or more Series.
-# to_append : Series or list/tuple of Series
-# ignore_index : bool, default False
-#     If True, the resulting axis will be labeled 0, 1, ...
-# verify_integrity : bool, default False
-#     If True, raise Exception on creating index with duplicates.
-#
-# Note: do not append items to a series one by one,
-# better extend with an ordered collection.
-# Accumulate data in an external list or a dictionary,
-# make a second series, then append to the first series.
+s1.quantile(q=0.25), s1.quantile(q=0.5), s1.quantile(q=0.75)
+# (-0.21926045832145363, 0.20175811256676268, 0.7414975321407481)
 
-s1 = pd.Series([1, 2, 3])
-s2 = pd.Series([4, 5, 6])
+s1_copy = s1.copy()
 
-s3 = s1.append(s2)
-# 0    1    index with duplicates
-# 1    2
-# 2    3
-# 0    4
-# 1    5
-# 2    6
-# dtype: int64
-s3.index   # Int64Index([0, 1, 2, 0, 1, 2], dtype='int64')
-
-s4 = s1.append(s2, ignore_index=True)
-# 0    1
-# 1    2
-# 2    3
-# 3    4
-# 4    5
-# 5    6
-# dtype: int64
-s4.index   # RangeIndex(start=0, stop=6, step=1)
-
-s1.append(s2, verify_integrity=True)
-# Traceback (most recent call last):
-# ...
-# ValueError: Indexes have overlapping values: Int64Index([0, 1, 2], dtype='int64')
+s1_vc = s1.value_counts()   # new Series
 </pre><hr>
 
 </body>

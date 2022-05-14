@@ -78,6 +78,30 @@ plt.show()   # display a figure
 | plt.ylabel("y")   | ax.set_ylabel("y")   |
 | plt.legend()      | ax.legend()          |
 +-------------------+----------------------+
+</pre><hr><pre>
+ax1 = plt.subplot(211)   # or plt.subplot(2, 1, 1), nrows, ncols, index
+ax2 = plt.subplot(212)   # or plt.subplot(2, 1, 2)
+# +---+
+# |ax1| grid 2x1
+# +---+
+# |ax2|
+# +---+
+</pre><hr><pre>
+ax1 = plt.subplot(121)
+ax2 = plt.subplot(122)
+# +---+---+
+# |ax1|ax2| grid 1x2
+# +---+---+
+</pre><hr><pre>
+ax1 = plt.subplot(221)
+ax2 = plt.subplot(222)
+ax3 = plt.subplot(223)
+ax4 = plt.subplot(224)
+# +---+---+
+# |ax1|ax2| grid 2x2
+# +---+---+
+# |ax3|ax4|
+# +---+---+
 </pre><hr>
 
 </body>

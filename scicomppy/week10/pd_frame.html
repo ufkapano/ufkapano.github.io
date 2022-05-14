@@ -6,11 +6,11 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Pandas - DataFrame</h1>
+<h1>Pandas - DataFrame, creation</h1>
 
 <p>https://pandas.pydata.org/docs/user_guide/dsintro.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>'DataFrame' is a 2-dimensional labeled data structure with columns 
 of potentially different types (like a spreadsheet).
@@ -29,8 +29,8 @@ It is generally the most commonly used pandas object.
 
 D = {'col1': [1, 2], 'col2': [3, 4]}
 
-df1 = pd.DataFrame(data=D)   # inferred dtype is int64
-#df1 = pd.DataFrame(data=D, dtype=np.int8)   # dtype is set
+df1 = pd.DataFrame(D)   # inferred dtype is int64
+#df1 = pd.DataFrame(D, dtype=np.int8)   # dtype is set
 #    col1  col2
 # 0     1     3
 # 1     2     4
@@ -41,13 +41,17 @@ df1.dtypes
 # dtype: object
 
 df1.index   # RangeIndex(start=0, stop=2, step=1)
+#df1.index = ['first', 'second']   # changing index
 
 df1.columns   # Index(['col1', 'col2'], dtype='object')
+#df1.columns = ['A', 'B']   # changing columns
+
+df1.values   # array([[1, 3], [2, 4]])
 </pre><hr><pre>
 # Constructing DataFrame from numpy ndarray.
 
 df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
-    columns=['a', 'b', 'c'])
+    columns=list('abc'))
 #    a  b  c
 # 0  1  2  3
 # 1  4  5  6
@@ -73,119 +77,19 @@ df5.values
 #        [20. ,  2.2],
 #        [30. ,  3.3]])
 </pre><hr><pre>
-print(df2.head())   # viewing the first 5 rows
-print(df2.head(n))   # viewing the first n rows
+print(df.head())   # viewing the first 5 rows
+print(df.head(n))   # viewing the first n rows
 
-print(df2.tail())   # viewing the last 5 rows
-print(df2.tail(n))   # viewing the last n rows
+print(df.tail())   # viewing the last 5 rows
+print(df.tail(n))   # viewing the last n rows
 
-print(df2.info())   # print info about the data
-</pre><hr>
+print(df.info())   # print info about the data
 
-<h3>OPERATIONS</h3>
+df_copy = df.copy()
 
-<hr><pre>
-df3 = pd.DataFrame(np.random.rand(4,3), columns=list('ABC'))
-#           A         B         C
-# 0  0.658905  0.037961  0.182221
-# 1  0.218680  0.458201  0.080352
-# 2  0.203869  0.960399  0.431482
-# 3  0.186825  0.110853  0.416665
+df_idex = df.set_index(column_name)   # new DataFrame
 
-df3['A']   # column selection
-# 0    0.658905
-# 1    0.218680
-# 2    0.203869
-# 3    0.186825
-# Name: A, dtype: float64
-
-# Columns can be deleted or popped like with a dict.
-
-df3['Flag'] = df3['A'] > 0.5   # boolean series will be a new column
-del df3['C']   # column deletion
-two = df3.pop('B')
-df3
-#           A   Flag
-# 0  0.658905   True
-# 1  0.218680  False
-# 2  0.203869  False
-# 3  0.186825  False
-
-f3['Part'] = pd.Series([10, 20])   # not the same index
-df3
-#           A   Flag  Part
-# 0  0.658905   True  10.0
-# 1  0.218680  False  20.0
-# 2  0.203869  False   NaN
-# 3  0.186825  False   NaN
-
-df3.insert(1, 'Scalar', 'bar')
-df3
-#           A Scalar   flag  Part
-# 0  0.658905    bar   True  10.0
-# 1  0.218680    bar  False  20.0
-# 2  0.203869    bar  False   NaN
-# 3  0.186825    bar  False   NaN
-</pre><hr><pre>
-# Q. How to add new rows to a DataFrame?
-# A. It should be avoided.
-#
-# https://pandas.pydata.org/docs/reference/api/pandas.concat.html
-# The general method is pd.concat().
-#
-# https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.append.html
-# pd.DataFrame.append(other, ignore_index=False, verify_integrity=False, sort=False)
-
-df1 = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
-#    A  B
-# 0  1  2
-# 1  3  4
-
-df2 = pd.DataFrame([[5, 6], [7, 8]], columns=list('AB'))
-
-df3 = df1.append(df2)
-#    A  B
-# 0  1  2     index with duplicates
-# 1  3  4
-# 0  5  6
-# 1  7  8
-
-df4 = df1.append(df2, ignore_index=True)
-#    A  B
-# 0  1  2
-# 1  3  4
-# 2  5  6
-# 3  7  8
-</pre><hr><pre>
-import random
-
-rows_list = []
-cols_names = ["number", "letter"]
-input_rows = range(5)
-
-for row in input_rows:
-    D = {}
-    D.update( {"number": random.random()} )   # key = col_name
-    D.update( {"letter": random.choice(['a', 'b', 'c', 'd'])} )
-    rows_list.append(D)
-
-#df = pd.DataFrame(rows_list)   # wrong order of columns
-df = pd.DataFrame(rows_list, columns=cols_names)
-</pre><hr><pre>
-import random
-
-rows_list = []
-cols_names = ["number", "letter"]
-input_rows = range(5)
-
-for row in input_rows:
-    L = []
-    L.append( random.random() )
-    L.append( random.choice(['a', 'b', 'c', 'd']) )
-    rows_list.append(L)
-
-#df = pd.DataFrame(rows_list) # no names for columns
-df = pd.DataFrame(rows_list, columns=cols_names) 
+df_sort = df.sort_index()   # new DataFrame
 </pre><hr>
 
 </body>
