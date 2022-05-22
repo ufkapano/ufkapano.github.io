@@ -8,7 +8,7 @@
 
 <h1>2D heat equation</h1>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <hr><pre>
 Unknown function  u(x,y,t)
@@ -29,7 +29,7 @@ r = D*dt / (dx*dx), formula is stable if r &lt;= 0.25 (?)
 u(i,j,k+1) - u(i,j,k) = r * [
 u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k)
 + u(i,j-1,k) -2*u(i,j,k) + u(i,j+1,k) ]
-
+</pre><hr><pre>
 Final formula (inside mesh)
 u(i,j,k+1) = r*u(i-1,j,k) + r*u(i+1,j,k) + r*u(i,j-1,k) + r*u(i,j+1,k) + (1-4*r)*u(i,j,k)
 

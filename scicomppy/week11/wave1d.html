@@ -12,7 +12,7 @@
 
 <p>http://hplgit.github.io/num-methods-for-PDEs/doc/pub/wave/html/slides_wave-solarized.html
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The wave equation is an important second-order linear partial 
 differential equation for the description of waves,
@@ -20,6 +20,8 @@ such as mechanical waves or light waves.
 
 <p>The wave equation is the simplest example of a hyperbolic 
 differential equation.
+
+<h3>FIXED BOUNDARIES (DIRICHLET)</h3>
 
 <hr><pre>
 Unknown function  u(x,t)
@@ -103,7 +105,7 @@ r = (c*dt/dx)**2
 # u[i] present time,
 # u1[i] one step to the past,
 # u2[i] two steps to the past.
-# Generally, we cannot affort to keep all point in time.
+# Generally, we cannot affort to keep all points in time.
 # Next optimalization step is the vectorization of loops.
 
 # Scalar version
@@ -122,6 +124,8 @@ u(x,0) = f(x), x in [0,L], (initial string shape)
 u_t(x,0) = g(x), x in [0,L],
 u(0,t) = 0, u(L,t) = 0, t in [0,T]. (fixed ends, no displacement)
 </pre><hr>
+
+<h3>REFLECTING BOUNDARIES (NEUMAN))</h3>
 
 <p>The wave equation in 1D: reflecting boundaries.
 

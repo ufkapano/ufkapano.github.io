@@ -14,7 +14,7 @@
 
 <p>https://en.wikipedia.org/wiki/Pendulum
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The 'scipy.integrate' sub-package provides several integration 
 techniques including an ordinary differential equation integrator.
@@ -46,7 +46,11 @@ sol1 = integrate.solve_ivp(func, t_span, y0, t_eval=t)
 
 plt.plot(sol1.t, sol1.y[0], label="solver")
 plt.plot(t, y_exact, label="exact")
-</pre><hr><pre>
+</pre><hr>
+
+<p><img src="img/field2.png" alt="[ field2.png ]">
+
+<hr><pre>
 A simple harmonic oscillator: -k x = m x'' [a constant amplitude]
 
 A damped harmonic oscillator: -k x -b x' = m x''
@@ -58,14 +62,17 @@ A damped gravity pendulum:
 
 x'' = -b x' - w2 six(x), t in [t_a, t_b].
 Initial conditions x(t_a) = x_a, x'(t_a) = v_a.
-v = x'
+Introducing a new variable:
+x' = v,
+v' = -b v - w2 six(x).
+
 #     |v|       |v_a|
-# y = |x|, y0 = |x_a|
+# y = |x|, y0 = |x_a|,
 #
 #         |v'|   |-b v - w2 sin(x)|
 # dy/dt = |x'| = | v              |
 
-t_a, t_b, x_a, v_a = 0.0, 10*np.pi, np.pi * 0.5, 0.0
+t_a, t_b, x_a, v_a = 0.0, 10*np.pi, 0.5*np.pi, 0.0
 N = 100   # the number of intervals
 t = np.linspace(t_a, t_b, N+1)   # dtype=float, N+1 points
 y0 = [v_a, x_a]
@@ -77,9 +84,13 @@ def func(t, y):   # y - a vector with two items
 
 sol1 = integrate.solve_ivp(func, t_span, y0, t_eval=t)
 
-plt.plot(sol1.t, sol1.y[0], label="v")
-plt.plot(sol1.t, sol1.y[1], label="x")
+plt.plot(sol1.t, sol1.y[0], label="v(t)")
+plt.plot(sol1.t, sol1.y[1], label="x(t)")
 </pre><hr>
+
+<p><img src="img/pendulum1.png" alt="[ pendulum1.png ]">
+
+<p><img src="img/pendulum2.png" alt="[ pendulum2.png ]">
 
 </body>
 </html>
