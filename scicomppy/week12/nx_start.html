@@ -18,10 +18,10 @@ PIP (in a virtual environment)
 pip install networkx
 
 APT (for the entire computer)
-In Debian Linux we have python-networkx, python3-networkx, and dependencies.
+Debian packages: python-networkx, python3-networkx, and dependencies.
 </pre><hr>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>NetworkX is a Python package for the creation, manipulation, 
 and study of the structure, dynamics, and functions of complex networks.
@@ -44,34 +44,60 @@ for (a, b) in [(1, 2), (1, 3), (2, 3), (3, 4)]:
 G.number_of_nodes()   # 4
 G.number_of_edges()   # 4
 
-G.nodes   # NodeView((1, 2, 3, 4))
+G.nodes     # NodeView((1, 2, 3, 4))
+G.nodes()   # NodeView((1, 2, 3, 4))
 list(G.nodes)   # [1, 2, 3, 4]
 
-G.nodes.data()   # NodeDataView({1: {}, 2: {}, 3: {}, 4: {}})
+G.nodes(data=True)   # NodeDataView({1: {}, 2: {}, 3: {}, 4: {}})
+G.nodes.data()       # NodeDataView({1: {}, 2: {}, 3: {}, 4: {}})
 list(G.nodes.data())   # [(1, {}), (2, {}), (3, {}), (4, {})]
 
-G.edges   # EdgeView([(1, 2), (1, 3), (2, 3), (3, 4)])
+G.edges     # EdgeView([(1, 2), (1, 3), (2, 3), (3, 4)])
+G.edges()   # EdgeView([(1, 2), (1, 3), (2, 3), (3, 4)])
 list(G.edges)   # [(1, 2), (1, 3), (2, 3), (3, 4)]
 
-G.edges.data()   # EdgeDataView([(1, 2, {}), (1, 3, {}), (2, 3, {}), (3, 4, {})])
+G.edges(data=True)   # EdgeDataView([(1, 2, {}), (1, 3, {}), (2, 3, {}), (3, 4, {})])
+G.edges.data()       # EdgeDataView([(1, 2, {}), (1, 3, {}), (2, 3, {}), (3, 4, {})])
 list(G.edges.data())   # [(1, 2, {}), (1, 3, {}), (2, 3, {}), (3, 4, {})]
 
 G[3]   # AtlasView({1: {}, 2: {}, 4: {}})
 list(G[3])   # [1, 2, 4]
 
-G.degree   # DegreeView({1: 2, 2: 2, 3: 3, 4: 1})
+G.degree     # DegreeView({1: 2, 2: 2, 3: 3, 4: 1})
+G.degree()   # DegreeView({1: 2, 2: 2, 3: 3, 4: 1})
 list(G.degree)   # [(1, 2), (2, 2), (3, 3), (4, 1)]
 G.degree[3]   # 3
-
+deg_max = max(deg for (node, deg) in G.degree())   # 3
+deg_max_list = [node for (node, deg) in G.degree() if deg == deg_max]   # [3]
+</pre><hr><pre>
 import matplotlib.pyplot as plt
+
 nx.draw(G)
 #nx.draw(G, with_labels=True, font_weight='bold')
+
+# Selected keywords:
+# with_labels=True - draw labels on the nodes
+# node_size=300 - size of nodes (scalar or array)
+# node_shape='o' - the shape of the node (string), one of ‘so^&gt;v&lt;dph8’
+# node_color='r' - color or array of colors [node_color=(0.5,0.5,0.5)]
+# edge_color='k' - color or array of colors
+# width=1.0 - line width of edges (float)
+# style='solid' - edge line style (solid|dashed|dotted|dashdot)
+# cmap=None - colormap for mapping intensities of nodes
+# edge_cmap=None - colormap for mapping intensities of edges
+# font_size=12 - font size for text labels (int)
+# font_color='k' - font color (string)
+# font_weight='normal' - font weight (string)
+# font_family='sans-serif' - font family (string)
+
 plt.show()
 </pre><hr>
 
 <p><img src="img/lollipop.png" alt="[ lollipop.png ]" width="320" height="240">
 
 <h3>GRAPH GENERATORS</h3>
+
+<p>https://networkx.org/documentation/stable/reference/generators.html
 
 <hr><pre>
 P_6 = nx.path_graph(6)
@@ -80,6 +106,8 @@ K_5 = nx.complete_graph(5)
 K_3_5 = nx.complete_bipartite_graph(3, 5)
 barbell = nx.barbell_graph(10, 10)
 lollipop = nx.lollipop_graph(10, 20)
+gnm = nx.gnm_random_graph(n=10, m=20) # n nodes, m edges
+regular = nx.random_regular_graph(d=5, n=10) # random d-regular graph on n nodes
 
 petersen = nx.petersen_graph()
 tutte = nx.tutte_graph()

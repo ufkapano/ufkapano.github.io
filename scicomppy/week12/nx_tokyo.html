@@ -1,0 +1,71 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>NetworkX - Tokyo metro</h1>
+
+<p>Robert Johansson, Matematyczny Python. Obliczenia naukowe i analiza danych
+z użyciem NumPy, SciPy i Matplotlib, Helion 2021.
+[Tokyo metro example]
+
+<h3>INTRODUCTION</h3>
+
+<hr><pre>
+import json
+import numpy as np
+import networkx as nx
+import matplotlib.pyplot as plt
+
+# Importing data.
+with open("tokyo-metro.json") as infile:
+    data = json.load(infile)
+
+print(list(data))   # metro lines (keys)
+# ['C', 'G', 'F', 'H', 'M', 'N', 'T', 'Y', 'Z']
+
+print(data['C'])   # line info (values are dicts)
+# {'color': '#149848', 
+# 'transfers': [['C3', 'F15'], ['C4', 'Z2'], ...], 
+# 'travel_times': [['C1', 'C2', 2], ['C2', 'C3', 2], ...]}
+
+# Creating the metro graph.
+G = nx.Graph()
+for line in data.values():
+    G.add_weighted_edges_from(line["travel_times"])
+    G.add_edges_from(line["transfers"])
+
+# Edges for transfers do not have weights.
+# We add the additional attribute (bool) for all edges.
+for (node1, node2) in G.edges():
+    G[node1][node2]['transfer'] = ("weight" not in G[node1][node2])
+
+# We add 5 minutes for transfer.
+for (node1, node2) in G.edges():
+    if G[node1][node2]['transfer']:
+        G[node1][node2]['weight'] = 5
+
+# Colors for all nodes from the same metro line.
+# node[0] gives the metro line.
+colors = [data[node[0].upper()]["color"] for node in G.nodes()]
+
+nx.draw(G, with_labels=True, node_color=colors)
+plt.show()
+</pre><hr><pre>
+deg_max = max(deg for (node, deg) in G.degree())   # 6
+
+deg_max_list = [node for (node, deg) in G.degree() if deg == deg_max]
+# ['G5', 'M13', 'Y16', 'Z4', 'N7']
+
+path = nx.shortest_path(G, "Y24", "C19")
+# ['Y24', 'Y23', 'Y22', 'Y21', 'Y20', 'Y19', 'Y18', 'C9', 'C10',
+# 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19']
+
+path_time = sum(G[path[n]][path[n+1]]['weight'] for n in range(len(path)-1)) # 40 min
+</pre><hr>
+
+</body>
+</html>

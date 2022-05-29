@@ -25,7 +25,7 @@ APT
 Debian packages: python-pytest, python3-pytest
 </pre><hr>
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The 'pytest' (Py3.6+) framework makes it easy to write small tests, yet scales 
 to support complex functional testing for applications and libraries.
@@ -62,7 +62,7 @@ E        +  where 4 = inc(3)
 
 test_sample.py:8: AssertionError
 =========================== 1 failed in 0.02 seconds ===========================
-
+</pre><hr><pre>
 # Errors were corrected.
 
 $ pytest
@@ -175,6 +175,7 @@ Example: skip(reason="no way of currently testing this") skips the test.
 @pytest.mark.skipif('sys.platform == "win32"')
 
 @pytest.mark.xfail()
+@pytest.mark.xfail(raises=IndexError)   # why the test is failing
 
 @pytest.mark.parametrize(argnames, argvalues)
 
@@ -199,6 +200,45 @@ from fib2 import fibonacci
     [(0, 0), (1, 1), (2, 1), (3, 2), (4, 3), (5, 5), (6, 8)])
 def test_fibonacci(n, res):
     assert fibonacci(n) == res
+</pre><hr>
+
+<h3>TESTS IN CLASSES</h3>
+
+<p>Grouping tests in classes can be beneficial for the following reasons:
+<br>(1) test organization,
+<br>(2) sharing fixtures for tests only in that particular class,
+<br>(3) applying marks at the class level and having them implicitly 
+apply to all tests.
+
+<p>Each test has a unique instance of the class.
+
+<hr><pre>
+import pytest
+
+class TestSets:   # 'Test' prefix is important
+
+# scope: the scope for which this fixture is shared;
+# "function" (default), "class", "module", "package", "session"
+
+    @pytest.fixture(scope="class")
+    def setA(self):   # 'self' is the first argument in methods
+        return set([1, 3, 5])
+
+    @pytest.fixture(scope="class")
+    def setB(self):
+        return set([2, 3])
+
+    def test_union(self, setA, setB):
+        assert setA | setB == set([1, 2, 3, 5])
+        assert setA.union(setB) == set([1, 2, 3, 5])
+
+    def test_intersection(self, setA, setB):
+        assert setA & setB == set([3])
+        assert setA.intersection(setB) == set([3])
+
+    def test_difference(self, setA, setB):
+        assert setA - setB == set([1, 5])
+        assert setA.difference(setB) == set([1, 5])
 </pre><hr>
 
 </body>
