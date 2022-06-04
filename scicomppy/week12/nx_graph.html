@@ -31,11 +31,13 @@ etc. [do not use None!]
 # Adding nodes.
 
 # G.add_node(node)
-# G.add_node(node, key=value)   # gives {'key':value}
+# G.add_node(node, key1=value1, key2=value2)
+# G.add_node(node, **node_attribute_dict)
 #     but not: G.add_node(node, node_attribute_dict)
 #
-# (1) G.add_node(node)   # first create, then add attribute
-# (2) G.nodes[node]['key'] = value
+# (1) G.add_node(node)   # first create, then add attributes
+# (2a) G.nodes[node]['key'] = value
+# (2b) G.nodes[node].update(node_attribute_dict)
 # G.nodes[node] is node_attribute_dict.
 # Use G.add_node() to add new nodes!
 #
@@ -64,11 +66,18 @@ for source in G.nodes:   # iteration over nodes
 # Adding edges.
 
 # G.add_edge(node1, node2)
+# G.add_edge(node1, node2, key1=value1, key2=value2)
+#     Note that key1 and key2 are like Python names here (not numbers!).
+# G.add_edge(node1, node2, **edge_attribute_dict)
 #     but not: G.add_edge(node1, node2, edge_attribute_dict)
 #
 # (1) G.add_edge(node1, node2)   # first create, then add attribute
-# (2) G[node1][node2]['key'] = value
-# G[node1][node2] is  edge_attribute_dict.
+# (2a) G[node1][node2]['key'] = value
+# (2b) G[node1][node2].update(edge_attribute_dict)
+# (2c) G.edges[node1,node2]['key'] = value
+# (2d) G.edges[node1,node2].update(edge_attribute_dict)
+#     Note that we can use numbers here as keys.
+# G[node1][node2] and G.edges[node1,node2] are edge_attribute_dict.
 # Use G.add_edge() to add new edges!
 #
 # G.add_edges_from(iterable)
@@ -79,6 +88,7 @@ for source in G.nodes:   # iteration over nodes
 #     iterable can yield 3-tuples (node1, node2, weight)
 
 G.add_edge(1, 2)
+G.add_edges_from( [ (7, 8) ] )
 G.add_edges_from( [ (2, 3, {'weight': 3.1415}) ] )
 G.add_weighted_edges_from( [ (4, 5, 0.5), (5, 6, 1.2)] )
 

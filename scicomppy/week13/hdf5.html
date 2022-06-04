@@ -1,0 +1,91 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Using HDF5 files</h1>
+
+<p>https://en.wikipedia.org/wiki/Hierarchical_Data_Format
+
+<p>https://www.h5py.org/
+<br>https://docs.h5py.org/en/stable/
+<br>HDF5 for Python
+
+<p>https://www.pytables.org/
+
+<p>Andrew Collette, Python and HDF5, O'Reilly, 2013.
+
+<h3>INTRODUCTION</h3>
+
+<p>Hierarchical Data Format (HDF) is a set of file formats (HDF4, HDF5) 
+designed to store and organize large amounts of data
+(typically bigger than available memory).
+HDF5 uses two major types of object:
+<br>(1) Datasets, which are multidimensional arrays of a homogeneous type
+[similar to 'files'],
+<br>(2) Groups, which are container structures which can hold datasets 
+and other groups [similar to 'folders'].
+
+<h3>H5PY</h3>
+
+<p>The h5py package is a Pythonic interface to the HDF5 binary data format.
+
+<p>Groups work like dictionaries, and datasets work like NumPy arrays.
+
+<hr><pre>
+Install
+
+ANACONDA
+conda install h5py
+
+PIP (in a virtual environment)
+pip install h5py
+</pre><hr><pre>
+import h5py
+
+f = h5py.File('mytestfile.hdf5', mode='r')
+list(f.keys())   # ['mydataset']
+list(f.attrs.keys())   # metadata for the group
+dset = f['mydataset']   # get an HDF5 dataset
+dset.shape
+dset.dtype
+list(dset.attrs.keys())   # metadata for the dataset
+#f.flush()   # flush the buffers (when mode="w")
+f.close()
+</pre><hr>
+
+<h3>PYTABLES</h3>
+
+<p>PyTables is a package for managing hierarchical datasets and designed 
+to efficiently and easily cope with extremely large amounts of data.
+The foundation of the underlying hierarchical data organization 
+is the HDF5 library.
+
+<p>The package 'pandas' can import from and export to HDF5 via PyTables
+[pandas.HDFStore].
+
+<hr><pre>
+Install
+
+ANACONDA
+conda install pytables
+
+PIP (in a virtual environment)
+python3 -m pip install tables
+
+APT (for the entire computer)
+Debian packages: python-tables, python-tables-data, and dependencies.
+</pre><hr><pre>
+import tables
+
+f = tables.open_file("mytestfile.hdf5", mode="r")
+
+#f.flush()   # flush the buffers (when mode="w")
+f.close()
+</pre><hr>
+
+</body>
+</html>

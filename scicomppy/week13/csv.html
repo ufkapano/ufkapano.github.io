@@ -14,7 +14,7 @@
 
 <p>https://docs.python.org/3/library/functions.html#open
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>The CSV (Comma Separated Values) format is the most common import 
 and export format for spreadsheets and databases.
@@ -60,7 +60,7 @@ with open('spam.csv', 'r', newline='', encoding='utf-8') as infile:   # Py3
     spam_reader = csv.reader(infile, delimiter=' ')
 
     for row in spam_reader:
-        print(row)   # ['item1', 'item2', ...]
+        print(row)   # ['item1', 'item2', ...] a list of strings
 </pre><hr><pre>
 # Parsing strings.
 
@@ -92,6 +92,21 @@ with open(file_name, 'w', newline='', encoding='utf-8') as outfile:   # Py3
         spam_writer.writerow(row)
 </pre><hr>
 
+<h3>USING NUMPY</h3>
+
+<hr><pre>
+import numpy as np
+
+# Read CSV and make np.array.
+
+data = np.loadtxt(file_name, delimiter=",")
+# default dtype=float
+</pre><hr><pre>
+# Write np.array to CSV.
+
+np.savetxt(file_name, data, delimiter=",")
+</pre><hr>
+
 <h3>USING PANDAS</h3>
 
 <hr><pre>
@@ -100,6 +115,7 @@ import pandas as pd
 # Read CSV and make DataFrame.
 
 df = pd.read_csv(file_name, sep=",", encoding="utf-8", names=None)
+df.info()   # numbers and strings are recognized
 </pre><hr><pre>
 # Write DataFrame to CSV.
 
