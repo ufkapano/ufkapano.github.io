@@ -57,7 +57,7 @@ G.nodes.data()   # NodeDataView(...)
 list(G.nodes.data())   # a list of 2-tuples (node, node_attribute_dict)
 
 for source in G.nodes:   # iteration over nodes
-    G.nodes[source]['color'] = None
+    G.nodes[source]['size'] = None
 </pre><hr>
 
 <h3>EDGES</h3>
@@ -71,7 +71,7 @@ for source in G.nodes:   # iteration over nodes
 # G.add_edge(node1, node2, **edge_attribute_dict)
 #     but not: G.add_edge(node1, node2, edge_attribute_dict)
 #
-# (1) G.add_edge(node1, node2)   # first create, then add attribute
+# (1) G.add_edge(node1, node2)   # first create, then add attributes
 # (2a) G[node1][node2]['key'] = value
 # (2b) G[node1][node2].update(edge_attribute_dict)
 # (2c) G.edges[node1,node2]['key'] = value
@@ -100,6 +100,10 @@ list(G.edges.data())   # a list of 3-tuples (node1, node2, edge_attribute_dict)
 
 for (source, target) in G.edges:   # iteration over edges
     G[source][target]['length'] = None
+    #G.edges[source,target]['length'] = None
+
+for e in G.edges:   # e is 2-tuple
+    G.edges[e]['color'] = 'black'
 </pre><hr>
 
 <h3>NEIGHBORS</h3>

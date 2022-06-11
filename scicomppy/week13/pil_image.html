@@ -10,6 +10,8 @@
 
 <p>https://pillow.readthedocs.io/en/stable/reference/Image.html
 
+<p>https://pillow.readthedocs.io/en/latest/reference/open_files.html
+
 <h3>INTRODUCTION</h3>
 
 <p>The 'Image' module provides a class with the same name which is used 
@@ -30,6 +32,8 @@ and to create new images.
 from PIL import Image
 
 image1 = Image.open(file_name)
+# processing ...
+image1.close()
 
 with Image.open(file_name) as image2:   # recommended
     print(image2.mode)
@@ -43,8 +47,14 @@ image3.save("foto.jpg") # the filename extension is used to discover the file fo
 <h3>CREATE THUMBNAILS</h3>
 
 <hr><pre>
+# The thumbnail size will preserve the aspect of the image and
+# it will be no larger than the given size.
+# Note that this function modifies the Image object in place.
+# If you need to use the full resolution image as well,
+# apply this method to a copy() of the original image.
+
 with Image.open("hopper.jpg") as im:
-    im.thumbnail((128, 128))
+    im.thumbnail((128, 128))   # miniatura
     im.save('hopper_thumbnail.jpg', "JPEG")
 </pre><hr>
 
@@ -77,11 +87,15 @@ for i in range(64):
         a[i,j] = 255   # white square
 
 im = Image.fromarray(a, mode='L')
+print ( im.getpixel((0,0)) ) # 0, (x,y)
+print ( im.getpixel((32,64)) ) # 0, (x,y)
+print ( im.getpixel((64,32)) ) # 255, (x,y)
 </pre><hr><pre>
 im = Image.open("hopper.jpg")
 print(im.mode)   # RGB
 print(im.size)   # (517, 606)
 print(im.format)   # JPEG
+print(im.getpixel((0,0)))   # pixel (21, 26, 82)
 
 a = np.asarray(im)
 #a = np.array(im)   # the same result
@@ -108,6 +122,16 @@ with Image.open("hopper.jpg") as im:
     # im.resize() returns a new rotated image
     # new_im = im.resize((130,150))
     # new_im.save("resized.jpg")
+</pre><hr><pre>
+# This crops the input image with the provided coordinates.
+
+with Image.open("hopper.jpg") as im:
+    (left, upper, right, lower) = (20, 20, 100, 100)
+    im.crop((left, upper, right, lower)).show()
+    #
+    # Here the image "im" is cropped and assigned to new variable im_crop
+    # im_crop = im.crop((left, upper, right, lower))
+    # im_crop.save("cropped.jpg")
 </pre><hr>
 
 <h3>COLOR TRANSFORMS</h3>

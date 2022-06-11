@@ -1,0 +1,86 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - @jitclass</h1>
+
+<p>https://numba.readthedocs.io/en/stable/user/jitclass.html
+
+<h3>INTRODUCTION</h3>
+
+<p>Numba supports code generation for classes via the 
+numba.experimental.jitclass() decorator. 
+A class can be marked for optimization using this decorator 
+along with a specification of the types of each field. 
+We call the resulting class object a 'jitclass'. 
+All methods of a jitclass are compiled into nopython functions.
+
+<p>@classmethod and special methods are not supported.
+
+<p>Numpy arrays with 'dtype=object' are not supported in 'nopython mode'.
+
+<hr><pre>
+import numpy as np
+from numba import types    # import the types
+from numba.experimental import jitclass
+
+spec = [('value', types.int64),        # a simple scalar field
+        ('array', types.float64[:]),   # an array field
+]   # the order is in agreement with __init__
+
+@jitclass(spec)
+class Bag(object):
+
+    def __init__(self, value):
+        # the fields should be initialized
+        self.value = value
+        self.array = np.zeros(value, dtype=np.float64)
+
+    @property
+    def size(self):
+        return self.array.size
+
+    def increment(self, val):
+        for i in range(self.size):
+            self.array[i] += val
+        return self.array
+
+    @staticmethod
+    def add(x, y):
+        return x + y
+
+n = 5
+mybag = Bag(n)
+print(mybag.array)   # [0. 0. 0. 0. 0.]
+print(mybag.size)   # 5
+print(Bag.add(1,2))   # 3
+</pre><hr><pre>
+# Specifying 'numba.typed' containers as class members.
+# (1) Using explicit Numba types and explicit construction.
+# (2) Using numba.typeof(), pobieranie typu z istniejącej instancji.
+
+from numba import types, typed
+from numba.experimental import jitclass
+
+spec = [('d', types.DictType(types.int64, types.unicode_type)),
+        ('lst', types.ListType(types.float64)),
+]   # the order is in agreement with __init__
+
+@jitclass(spec)
+class ContainerHolder(object):
+    def __init__(self):
+        # initialize the containers
+        self.d = typed.Dict.empty(types.int64, types.unicode_type)
+        self.lst = typed.List.empty_list(types.float64)
+
+container = ContainerHolder()
+container.d[1] = "apple"
+container.lst.append(12.3)
+</pre><hr>
+
+</body>
+</html>

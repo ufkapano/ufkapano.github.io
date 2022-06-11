@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - decorators</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Numba has several decorators.
+
+<hr><pre>
+@jit
+@jit()   # the same as @jit
+@jit(nopython=True)
+@jit('float64(int64[:,:,:])', nopython=True)   # energy for Ising 3D
+</pre><hr><pre>
+@njit   # alias for @jit(nopython=True)
+@njit('float64(int64)')   # nopython=True is included
+</pre><hr><pre>
+@vectorize   # produces NumPy 'ufunc' (universal functions)
+@vectorize([float64(float64, float64)])   # a list of signatures
+</pre><hr><pre>
+@guvectorize   # produces NumPy generalized 'ufunc'
+
+The typical example is a running median or a convolution filter.
+</pre><hr><pre>
+@stencil   # declare a function as a kernel for a stencil like operation
+</pre><hr><pre>
+@jitclass   # for jit aware classes (experimental)
+</pre><hr><pre>
+@cfunc   # declare a function for use as a native call back (to be called from C/C++ etc)
+</pre><hr><pre>
+@overload   # register your own implementation of a function for use in nopython mode
+@overload(scipy.special.j0)
+</pre><hr>
+
+</body>
+</html>

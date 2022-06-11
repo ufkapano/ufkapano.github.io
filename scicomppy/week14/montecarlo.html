@@ -66,7 +66,7 @@ This sequence can be used to approximate the distribution
 (e.g. an expected value).
 
 <p>The Metropolis-Hastings algorithm can draw samples from any probability 
-distribution P(x), provided that we know a function f(x) proportional 
+distribution P(x), provided that we know a function f(x) <em>proportional</em> 
 to the density of P(x) and the values of f(x) can be calculated.
 The algorithm works by generating a sequence of sample values in such a way 
 that, as more and more sample values are produced, the distribution of values 
@@ -80,11 +80,11 @@ The probability of acceptance is determined by comparing the values
 of the function f(x) of the current and candidate sample values 
 with respect to the desired distribution P(x).
 
-<p>Problem: the samples are correlated. 
+<p><strong>Problem: the samples are correlated.</strong>
 We have to throw away the majority of samples and only take every nth sample,
 for some value of n.
 
-<p>Problem: the initial samples may depend on the initial point.
+<p><strong>Problem: the initial samples may depend on the initial point.</strong>
 A 'warmup' period is typically necessary, where an initial number of samples
 are thrown away.
 

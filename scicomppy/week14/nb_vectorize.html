@@ -1,0 +1,36 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - @vectorize</h1>
+
+<p>https://numba.readthedocs.io/en/stable/user/vectorize.html
+
+<p>https://numpy.org/doc/stable/reference/ufuncs.html
+
+<h3>INTRODUCTION</h3>
+
+<p>Numba’s @vectorize allows Python functions taking scalar input arguments 
+to be used as NumPy 'ufuncs' (universal functions).
+NumPy ufuncs automatically get other features such as reduction, 
+accumulation or broadcasting.
+
+<hr><pre>
+import numpy as np
+from numba import vectorize, float64
+
+@vectorize([float64(float64, float64)])   # a list of signatures is required
+def f(x, y):
+    return x + y
+
+a = np.arange(6, dtype=np.float64)
+print(f(1.2, 3.4))   # 4.6
+print(f(a, a))   # [ 0.  2.  4.  6.  8. 10.]
+</pre><hr>
+
+</body>
+</html>

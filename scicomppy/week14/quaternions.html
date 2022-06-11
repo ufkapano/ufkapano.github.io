@@ -16,7 +16,7 @@
 nematycznych dwuosiowych, Uniwersytet Jagielloński, Kraków 2018. 
 [Monte Carlo simulations of biaxial nematic liquid crystals]
 
-<h3>INTRO</h3>
+<h3>INTRODUCTION</h3>
 
 <p>Quaternions have practical uses in calculations involving 
 three-dimensional rotations, such as in three-dimensional computer graphics, 
@@ -30,17 +30,18 @@ https://pypi.org/project/pyrr/
 
 pip install pyrr
 </pre><hr><pre>
-https://github.com/ufkapano/pyquats
+https://pypi.org/project/pyquats/
 
-git clone https://github.com/ufkapano/pyquats.git
+pip install pyquats
 </pre><hr>
 
-<h3>QUATS</h3>
+<h3>PYQUATS</h3>
 
 <hr><pre>
 import math
-from quats import Quat
-from qtools import *
+from pyquats.quats import Quat   # quaternions based on Python lists
+#from pyquats.numpyquats import Quat   # quaternions based on numpy arrays
+from pyquats.qtools import *
 
 zero = Quat()
 one = Quat(1)

@@ -121,14 +121,14 @@ print ( s2 + s3 )   # "c" and "d" do not match, s2.add(s3)
 # b    22.0
 # c     NaN
 # d     NaN
-# dtype: float64
+# dtype: float64   # not int64!
 
 print ( s2.add(s3, fill_value=0) )
 # a    11.0
 # b    22.0
 # c    30.0
 # d     4.0
-# dtype: float64
+# dtype: float64   # not int64!
 </pre><hr><pre>
 s4 = pd.Series(5.0, index=list("abcd"))   # from scalar value
 # The value will be repeated to match the length of index.

@@ -73,12 +73,12 @@ MODES
 The 'mode' of an image is a string which defines the type and depth 
 of a pixel in the image. Selected standard modes:
 
-1 (1-bit pixels, black and white, stored with one pixel per byte) # a range of 0-1
-L (8-bit pixels, black and white) # a range of 0-255
-P (8-bit pixels, mapped to any other mode using a color palette)
-RGB (3x8-bit pixels, true color)
-RGBA (4x8-bit pixels, true color with transparency mask)
-CMYK (4x8-bit pixels, color separation)
+'1' (1-bit pixels, black and white, stored with one pixel per byte) # a range of 0-1
+'L' (8-bit pixels, black and white) # a range of 0-255
+'P' (8-bit pixels, mapped to any other mode using a color palette)
+'RGB' (3x8-bit pixels, true color)
+'RGBA' (4x8-bit pixels, true color with transparency mask)
+'CMYK' (4x8-bit pixels, color separation)
 
 image.mode   # the image mode
 </pre><hr><pre>
@@ -91,7 +91,7 @@ COORDINATE SYSTEM
 PIL uses a Cartesian pixel coordinate system, with (0,0) 
 in the upper left corner.
 Coordinates are usually passed to the library as 2-tuples (x, y).
-Rectangles are represented as 4-tuples (upper left, lower right).
+Rectangles are represented as 4-tuples (left, upper, right, lower).
 </pre><hr><pre>
 PALETTE
 

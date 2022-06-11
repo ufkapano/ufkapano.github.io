@@ -63,23 +63,18 @@ exp(-\beta (H(v)-H(u))).
 
 <hr><pre>
 Spin lattice
-L = np.ones((x, y), dtype="int8")   # ordered system, energy = -2*L.size
-L = np.empty((x, y), dtype="int8")   # uninitialized spins
+L = np.ones((x, y), dtype=np.int64)   # ordered system, energy = -2*L.size
+L = np.empty((x, y), dtype=np.int64)   # uninitialized spins
 L.shape   # return (x, y)
-L.size   # the number of sites on the lattice
+L.size   # the number of sites on the lattice (x*y)
 L.sum()   # total magnetization
 
 If spin = L[i,j], then (periodic boundary conditions)
 neighbors = ( L[(i+1) % x, j] + L[(i+x-1) % x, j] 
 + L[i, (j+1) % y] + L[i, (j+y-1) % y] )
 
-spin * neighbors can have values -4, -2, 0, 2, 4.
-We can calculate in advance 
-prob = math.exp(-2 * spin * neighbors / t),
-this is exp(-\beta (H(v)-H(u))).
-
 After flip [prob &gt; random.random()]
-L[i, j] = -spin
+L[i, j] = -spin         # the 'spin' variable keeps the old value
 energy += 2 * spin * neighbors
 magnet -= 2 * spin
 </pre><hr><pre>

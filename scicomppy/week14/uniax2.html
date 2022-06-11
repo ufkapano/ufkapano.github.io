@@ -8,16 +8,66 @@
 
 <h1>Lebwohl-Lasher model - simulations</h1>
 
-<h3>INTRODUCTION</h3>
+<h3>NEMATICS 2D</h3>
 
 <hr><pre>
-3D lattice with quaternions
-L = numpy.empty((x, y, z), dtype=object)   # Quat is not a standard type
-L.shape   # return (x, y, z)
-L.size   # the number of sites on the lattice
+2D square lattice with complex numbers z, |z| = 1.
+If \vec{n} = [\cos(t1), \sin(t1)], then z = exp(2 i t1).
+
+L = np.empty((x, y), dtype=np.complex128)
+
+L[i, j] = random_complex()   # random orientation
+L[i, j] = complex(1, 0)   # ordered system
+
+def random_complex():   # abs(z)=1
+    return cmath.rect(1.0, 2 * cmath.pi * random.random())
+
+@njit('float64(complex128)')
+def interaction(spin):   # spin = z2/z1
+    # H12 = P2(cos(t2-t1)) = (3/4) * Re{z2/z1} + (1/4)
+    return 0.75 * spin.real + 0.25
+
+@njit('complex128(complex128[:,:])')
+def calc_magnetization(L):
+    return L.sum()
+
+@njit('float64(complex128[:,:])')
+def calc_energy(L): ...
+
+@njit('Tuple((float64,float64,float64,float64))(complex128[:,:],float64)')
+def mc_simulation(L, t): ...
+
+40 times faster with numba.
+</pre><hr>
+
+<h3>NEMATICS 3D</h3>
+
+<hr><pre>
+3D cubic lattice with quaternions.
+
+L = np.empty((x, y, z), dtype=object)   # Quat is not a standard type
 
 L[i, j, k] = random_quat_uniax()   # random orientation
 L[i, j, k] = Quat(1)   # ordered system
+
+def interaction(unit_quat): ... # unit_quat = ~spin * neighbor
+
+def calc_energy(L): ...
+</pre><hr><pre>
+Changes for numba.
+
+L = np.empty((x, y, z, 4), dtype=np.float64)
+
+L[i, j, k, :] = random_quat_biax().q   # random orientation
+L[i, j, k, :] = Quat(1).q   # ordered system
+
+@njit('float64(float64[:],float64[:])')
+def interaction(arr1, arr2): ...
+
+@njit('float64(float64[:,:,:,:])')
+def calc_energy(L): ...
+
+18 times faster with numba.
 </pre><hr>
 
 </body>

@@ -8,6 +8,16 @@
 
 <h1>Pandas - files</h1>
 
+<p>https://pandas.pydata.org/docs/reference/api/pandas.read_csv.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_csv.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.read_json.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_json.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.Series.to_json.html
+
 <h3>INTRODUCTION</h3>
 
 <p>andas supports the integration with many file formats or data sources 
@@ -32,12 +42,19 @@ with the prefix 'read_*'. Similarly, the 'to_*' methods are used to store data.
 #     doublequote=True, delim_whitespace=False, low_memory=True, memory_map=False,
 #     float_precision=None)
 #
-# Read CSV and make DataFrama.
+# Read CSV and make DataFrame.
+# File 'data1.csv'
+# 11,a,2011
+# 12,b,2012
+# 13,c,2013
 
-df = pd.read_csv(file_name, sep=",", encoding="utf-8")
-df.describe()   # 
+df = pd.read_csv('data1.csv', sep=",", encoding="utf-8", header=None)
+#     0  1     2
+# 0  11  a  2011
+# 1  12  b  2012
+# 2  13  c  2013
+df.describe()
 df.head()   # display the first few records
-df.hist("housing_median_age")   # use column name
 </pre><hr><pre>
 # pandas.DataFrame.to_csv(self, path_or_buf=None, sep=',', na_rep='',
 #     float_format=None, columns=None, header=True, index=True, index_label=None,
@@ -46,10 +63,25 @@ df.hist("housing_median_age")   # use column name
 #     doublequote=True, escapechar=None, decimal='.')
 #
 # Write DataFrame to CSV.
-
-df.to_csv(file_name, index=False, encoding="utf-8")
-# index : write row names (bool)
 # encoding : "utf-8", "latin1", "iso-8859-1", "cp1252"
+# index : write row names (bool)
+
+df = pd.DataFrame({'pos':[11,12,13], 'char':['a','b','c'], 'year':[2011,2012,2013]})
+#    pos char  year
+# 0   11    a  2011
+# 1   12    b  2012
+# 2   13    c  2013
+
+df.to_csv('data2.csv', encoding="utf-8")
+# ,pos,char,year
+# 0,11,a,2011
+# 1,12,b,2012
+# 2,13,c,2013
+
+df.to_csv("data2.csv", encoding="utf-8", header=False, index=False)
+# 11,a,2011
+# 12,b,2012
+# 13,c,2013
 </pre><hr>
 
 <h3>USING JSON FILES</h3>
@@ -75,8 +107,9 @@ df.to_csv(file_name, index=False, encoding="utf-8")
 # date_unit : string, default 'ms' (milliseconds)
 
 series1 = pd.Series( {'a':10, 'b':20, 'c':30} )
+
 # series1.to_json(file_name)
-# json_string = series1.to_json()
+# json_string = series1.to_json()   # no file_name
 
 print(series1.to_json(orient='index'))   # default, dict like
 # {"a":10,"b":20,"c":30}
@@ -86,9 +119,12 @@ print(series1.to_json(orient='split'))   # dict like
 
 print(series1.to_json(orient='records'))   # list like
 # [10,20,30]
-
+</pre><hr><pre>
 df = pd.DataFrame([['a', 'b'], ['c', 'd']], 
     index=['row1', 'row2'], columns=['col1', 'col2']) 
+
+# df.to_json(file_name)
+# json_string = df.to_json()   # no file_name
 
 df.to_json(orient='columns')   # default
 # {"col1":{"row1":"a","row2":"c"},"col2":{"row1":"b","row2":"d"}}

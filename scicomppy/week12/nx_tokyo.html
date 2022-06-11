@@ -22,19 +22,19 @@ import matplotlib.pyplot as plt
 
 # Importing data.
 with open("tokyo-metro.json") as infile:
-    data = json.load(infile)
+    D = json.load(infile)
 
-print(list(data))   # metro lines (keys)
+print(list(D))   # metro lines (keys)
 # ['C', 'G', 'F', 'H', 'M', 'N', 'T', 'Y', 'Z']
 
-print(data['C'])   # line info (values are dicts)
+print(D['C'])   # line info (values are dicts)
 # {'color': '#149848', 
 # 'transfers': [['C3', 'F15'], ['C4', 'Z2'], ...], 
 # 'travel_times': [['C1', 'C2', 2], ['C2', 'C3', 2], ...]}
 
 # Creating the metro graph.
 G = nx.Graph()
-for line in data.values():
+for line in D.values():
     G.add_weighted_edges_from(line["travel_times"])
     G.add_edges_from(line["transfers"])
 
@@ -50,7 +50,7 @@ for (node1, node2) in G.edges():
 
 # Colors for all nodes from the same metro line.
 # node[0] gives the metro line.
-colors = [data[node[0].upper()]["color"] for node in G.nodes()]
+colors = [D[node[0].upper()]["color"] for node in G.nodes()]
 
 nx.draw(G, with_labels=True, node_color=colors)
 plt.show()

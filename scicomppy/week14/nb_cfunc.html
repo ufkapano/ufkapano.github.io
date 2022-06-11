@@ -1,0 +1,45 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - @cfunc</h1>
+
+<p>https://numba.readthedocs.io/en/stable/user/cfunc.html
+
+<h3>INTRODUCTION</h3>
+
+<p>The 'numba.cfunc()' decorator creates a compiled function callable 
+from foreign C code, using the signature of your choice.
+
+<hr><pre>
+import numpy as np
+from numba import cfunc
+import scipy.integrate as integrate
+
+def integrand1(t):
+    return np.exp(-t) / t**2
+
+# integrand2 = cfunc("float64(float64)")(integrand1)
+
+@cfunc("float64(float64)")   # passing a single signature is mandatory
+def integrand2(t):
+    return np.exp(-t) / t**2
+
+# integrand2.address - callable from any foreign C or C++ library
+# integrand2.ctypes - callable from Python; the integration function does not invoke
+#     the Python interpreter each time it evaluates the integrand
+
+def do_integrate(func):
+    """Integrate the given function from 1.0 to +inf."""
+    return integrate.quad(func, 1, np.inf)
+
+result1 = do_integrate(integrand1)   # 105 us
+result2 = do_integrate(integrand2.ctypes)   # 14 us, 7.5x faster
+</pre><hr>
+
+</body>
+</html>

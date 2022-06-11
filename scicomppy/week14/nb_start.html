@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - start</h1>
+
+<p>https://numba.pydata.org/
+
+<p>https://numba.readthedocs.io/en/stable/user/index.html
+<br>User Manual
+
+<h3>INSTALLING NUMBA</h3>
+
+<hr><pre>
+CONDA
+conda install numba
+
+PIP (in a virtual environment)
+pip install numba   # for Python 3 only
+
+APT (for the entire computer)
+Debian packages: python3-numba, numba-doc, and dependences.
+</pre><hr>
+
+<p>Numba is often used as a core package so its dependencies are kept 
+to an absolute minimum, however, extra packages can be installed 
+as follows to provide additional functionality:
+<br>(1) 'scipy' - enables support for compiling 'numpy.linalg' functions.
+<br>(2) 'colorama' - enables support for color highlighting in 
+backtraces/error messages.
+<br>(3) 'pyyaml' - enables configuration of Numba via a YAML config file.
+<br>(4) 'icc_rt' - allows the use of the Intel SVML
+(high performance short vector math library, x86_64 only).
+
+<p>Working in the virtual environment with the latest version
+of Numba is recommended.
+
+<h3>INTRODUCTION</h3>
+
+<p>Numba is an open source JIT (just-in-time) compiler that translates 
+a subset of Python and NumPy code into fast machine code.
+Numba translates Python functions to optimized machine code at runtime 
+using the industry-standard LLVM compiler library.
+
+<p>Numba offers a range of options for parallelizing your code 
+for CPUs and GPUs, often with only minor code changes.
+
+<hr><pre>
+# numba1.py
+from numba import jit
+import numpy as np
+import time
+
+x = np.arange(1000000, dtype=np.float64).reshape(1000, 1000)
+
+@jit(nopython=True)   # set "nopython" mode for best performance
+def go_fast(arr):   # function is compiled to machine code when called the first time
+    trace = 0.0
+    for i in range(arr.shape[0]):   # Numba likes loops
+        trace += np.tanh(arr[i, i]) # Numba likes NumPy functions
+    return arr + trace              # Numba likes NumPy broadcasting
+
+start = time.time()
+go_fast(x)
+end = time.time()
+print("Elapsed (with compilation) = {}".format(end - start))
+
+start = time.time()
+go_fast(x)
+end = time.time()
+print("Elapsed (after compilation) = {}".format(end - start))
+
+# Results.
+# Without numba = 0.0017561912536621094
+# Elapsed (with compilation) = 0.12379336357116699
+# Elapsed (after compilation) = 0.0009722709655761719
+</pre><hr><pre>
+# Second version - eager compilation.
+from numba import njit, float64
+
+@njit('float64[:,:](float64[:,:])')
+def go_fast(arr): ...
+</pre><hr>
+
+<h3>OBJECT MODE AND NOPYTHON MODE</h3>
+
+<p>The Numba @jit decorator fundamentally operates in two compilation modes, 
+'nopython' mode and 'object' mode.
+
+<p>The behaviour of the 'nopython' compilation mode is to essentially compile 
+the decorated function so that it will run entirely without the involvement 
+of the Python interpreter. This is the recommended and best-practice way 
+to use the Numba @jit decorator as it leads to the best performance.
+
+<p>Should the compilation in 'nopython' mode fail, Numba can compile 
+using 'object' mode. This is a fall back mode for the @jit decorator 
+if 'nopython=True' is not set.
+In this mode Numba will identify loops that it can compile and compile 
+those into functions that run in machine code, and it will run 
+the rest of the code in the interpreter. 
+For best performance avoid using this mode!
+
+<p>Speed up varies depending on application but can be one to two 
+orders of magnitude.
+
+<p><strong>Warning</strong>. Now (numba 0.55.2)
+the NumbaDeprecationWarning is raised 
+if this fall-back behaviour is present without 'forceobj=True'.
+@jit will by default compile in 'nopython' mode and 'object' mode 
+compilation will become opt-in only.
+
+<h3>HOW DOES NUMBA WORK?</h3>
+
+<p>Numba reads the Python bytecode for a decorated function and combines 
+this with information about the types of the input arguments to the function. 
+It analyzes and optimizes your code, and finally uses the LLVM compiler 
+library to generate a machine code version of your function, 
+tailored to your CPU capabilities. 
+This compiled version is then used every time your function is called.
+
+</body>
+</html>

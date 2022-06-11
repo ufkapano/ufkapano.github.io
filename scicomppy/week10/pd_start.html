@@ -104,7 +104,7 @@ print ( df1.Population[1] )   # 1015785
 df1['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
 
 # Calculations with numpy.
-print ( np.log(population) )
+print ( np.log(population) )   # return new series
 # 0    13.655892
 # 1    13.831172
 # 2    13.092314
@@ -120,8 +120,8 @@ print ( population > 1000000 )   # numpy style (elementwise)
 
 # Indexes.
 print ( df1.index )   # RangeIndex(start=0, stop=3, step=1)
-# df1a = df1.reindex([2, 0, 1])   # changing order
-# df1b = df1.reindex(np.random.permutation(df1.index))   # random order
+# df1a = df1.reindex([2, 0, 1])   # changing order of rows
+# df1b = df1.reindex(np.random.permutation(df1.index))   # random order of rows
 </pre><hr>
 
 </body>

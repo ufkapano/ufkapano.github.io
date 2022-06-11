@@ -1,0 +1,127 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Numba - types</h1>
+
+<p>https://numba.readthedocs.io/en/stable/reference/types.html
+
+<h3>INTRODUCTION</h3>
+
+<p>Numba needs to decide on the type of each variable to generate 
+efficient machine code.
+Python’s standard types are not precise enough for that, 
+so Numba has own fine-grained type system.
+
+<h3>SIGNATURE SPECIFICATIONS</h3>
+
+<p>Explicit @jit signatures can use a number of types.
+
+<hr><pre>
+boolean   # represented as a byte
+void   # the return type of functions returning nothing (None in Python)
+intp   # signed pointer-sized integers
+uintp   # unsigned pointer-sized integers
+intc   # equivalent to C 'int' integer type
+uintc   # equivalent to C 'unsigned int' integer type
+int8 (char), int16, int32, int64   # signed fixed-width integers
+uint8 (byte), uint16, uint32, uint64   # unsigned fixed-width integers
+float32   # single-precision floating-point numbers
+float64   # double-precision floating-point numbers
+complex64   # single-precision complex numbers
+complex128   # double-precision complex numbers
+</pre><hr><pre>
+# Arrays (Numpy arrays).
+# Note that only len(arr.shape) is important.
+
+int64[:]   # 1-dimensional array of int64
+float64[:,:]   # 2-dimensional array of float64
+</pre><hr><pre>
+# Functions.
+# The feature of considering functions as first-class type objects is under development.
+</pre><hr><pre>
+# Example function signatures.
+# We have to pass most specific signatures before least specific ones.
+# In the case of string signatures, we don't have to import types.
+
+from numba import int32, int64, float64
+
+"float64(int64, int64)"   # as a string
+int64(int64)   # using types
+'float64(int64[:,:,:])'   # energy for Ising 3D
+[int32(int32, int32), int64(int64, int64)]   # list of sygnatures
+'float64[:,:](float64[:,:])'   # array is returned
+'Tuple((float64, float64))(float64[:])'   # tuple is returned
+</pre><hr>
+
+<h3>USING NUMBA.TYPES</h3>
+
+<hr><pre>
+from numba import float64, int64, types
+
+assert int64 == types.int64
+assert float64 == types.float64
+types.unicode_type   # string
+types.NPDatetime(unit)   # 'unit' is a string ('Y', 'M', 'D', ...)
+types.NPTimedelta(unit)
+types.void   # for functions returning None
+</pre><hr>
+
+<h3>INFERENCE</h3>
+
+<hr><pre>
+import numpy as np
+from numba import typeof
+
+typeof(np.empty(3))   # float64[:], numpy array
+typeof([0])   # reflected list(int64)
+typeof((1, 2.0))   # Tuple(int64, float64), heterogenous tuples
+typeof((2,)*4)   # UniTuple(int64 x 4), homogeneous tuples
+typeof((1.2,)*3)   # UniTuple(float64 x 3)
+</pre><hr>
+
+<h3>USING NUMBA.TYPED</h3>
+
+<hr><pre>
+from numba import njit, types, typed
+
+L1 = typed.List()   # homogeneous lists
+L1.append(12.3)   # necessary
+print(typeof(L1))   # ListType[float64] deduced
+assert typeof(L1) == types.ListType(types.float64)
+
+L2 = typed.List.empty_list(types.int64)   # homogeneous lists
+L2.append(12)   # not necessary
+print(typeof(L2))   # ListType[int64]
+assert typeof(L1) == types.ListType(types.int64)
+</pre><hr><pre>
+@njit
+def fun2():
+    return {1:1.1, 2:2.2}   # dict() replaced with types.DictType()
+
+m2 = fun2()
+print(typeof(m2))   # DictType[int64,float64] deduced
+assert typeof(m2) == types.DictType(types.int64, types.float64)
+</pre><hr><pre>
+d1 = typed.Dict.empty(types.int64, types.float64)   # homogeneous dicts
+#d1 = typed.Dict.empty(key_type=types.int64, value_type=types.float64)
+d1[3] = 3.45
+print(typeof(d1))   # DictType[int64,float64]
+
+#d2 = typed.Dict.empty(types.int64, types.unicode_type)   # homogeneous dicts
+d2 = typed.Dict()
+d2[1] = "apple"
+print(typeof(d2))   # DictType[int64,unicode_type]
+
+#d3 = typed.Dict.empty(types.unicode_type, types.float64[:])
+d3 = typed.Dict()
+d3["a"] = np.arange(3, dtype=np.float64)
+print(typeof(d3))   # DictType[unicode_type,array(float64, 1d, C)]
+</pre><hr>
+
+</body>
+</html>
