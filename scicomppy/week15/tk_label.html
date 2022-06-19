@@ -16,6 +16,7 @@
 The text displayed by a Label widget can’t be edited by the user. 
 
 <hr><pre>
+# label1.py
 import tkinter as tk
 
 root = tk.Tk()   # root widget
@@ -28,6 +29,12 @@ label = tk.Label(root, text="A label with a very long text")
 label.pack()   # using a geometry manager
 
 root.mainloop()
+</pre><hr><pre>
+# It is possible to pack a widget without assigning it a variable.
+# We can use this form if the widget is never again referenced.
+# The widget is not garbage collected because it is used internally.
+
+tk.Label(root, text="Hello").pack()   # None is returned here!
 </pre><hr><pre>
 Selected keyword arguments in Label()
 
@@ -45,6 +52,7 @@ label = tk.Label(root, text="Hello")   # at creation
 label.config(bg="red", fg="black")   # using config(), many options possible
 label.configure(bg="red")   # the same
 label["fg"] = "blue"   # using dict, only one option
+label["text"] = "text changed"
 txt = label.cget("text")   # return string (the current value of an option)
 txt = label["text"]   # the same
 </pre><hr><pre>
@@ -82,6 +90,7 @@ right or top of the text.
 Without the 'compound' option the text is invisible.
 
 <hr><pre>
+# label3.py
 import tkinter as tk
 
 root = tk.Tk()

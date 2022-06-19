@@ -47,7 +47,7 @@ Tk itself is not part of Python; it is maintained at ActiveState.
 # This should open a window demonstrating a simple Tk interface.
 
 $ python -m Tkinter     # testing in Py2, version 8.6 in Debian 10
-$ python3 -m tkinter    # testing in Py3
+$ python3 -m tkinter    # testing in Py3, version 8.6 in Debian 10
 </pre><hr><pre>
 # To check the Tkinter version, type the following commands in your Python REPL:
 
@@ -59,7 +59,7 @@ tk._test()   # this should open a window
 <p>Tkinter is lightweight and cross-platform, 
 so the same code works on Windows, MacOS, and Linux. 
 
-<p>Although Tkinter is considered the de-facto Python GUI framework, 
+<p>Although Tkinter is considered the de-facto standard Python GUI framework, 
 it’s not without criticism. 
 One notable criticism is that GUIs built with Tkinter look outdated. 
 
@@ -76,7 +76,8 @@ import ttk   # themed widgets
 
 root = tk.Tk()   # this is the root widget
 
-root.geometry("200x100")   # optional
+#root.configure(width=200, height=100)   # optional
+#root.geometry("200x100")   # optional, the same
 #root.geometry("{}x{}".format(width, height)
 #root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
 
@@ -84,7 +85,7 @@ root.title("first")   # optional, the default title is "tk"
 
 # Widgets are added here.
 
-label = tk.Label(root, text="Hello")   # a label widget
+label = tk.Label(root, text="Hello", bg="red")   # a label widget
 label.pack()   # using a geometry manager
 
 root.mainloop()   # run the tkinter event loop

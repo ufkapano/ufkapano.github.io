@@ -12,6 +12,10 @@
 
 <p>https://numpy.org/doc/stable/reference/ufuncs.html
 
+<p>https://numpy.org/doc/stable/reference/generated/numpy.ufunc.reduce.html
+
+<p>https://numpy.org/doc/stable/reference/generated/numpy.ufunc.accumulate.html
+
 <h3>INTRODUCTION</h3>
 
 <p>Numba’s @vectorize allows Python functions taking scalar input arguments 
@@ -30,6 +34,8 @@ def f(x, y):
 a = np.arange(6, dtype=np.float64)
 print(f(1.2, 3.4))   # 4.6
 print(f(a, a))   # [ 0.  2.  4.  6.  8. 10.]
+print(f.reduce(a))   # 3.0
+print(f.accumulate(a))   # [0.  0.2 0.6 1.2 2.  3. ]
 </pre><hr>
 
 </body>

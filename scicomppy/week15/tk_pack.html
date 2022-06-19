@@ -25,18 +25,22 @@ the frames should fill.
 <p>The 'side' keyword argument can be used to specify
 on which side of the window the widget should be placed. 
 
+<p>The 'anchor' keyword argument can be used to specify
+the position of a widget within its allocated space.
+
 <hr><pre>
 fill=tk.X   # horizontal direction
 fill=tk.Y   # vertical direction
 fill=tk.BOTH   # or fill="both"
 side=tk.TOP   # default, side="top"
 side=tk.BOTTOM   # or side="bottom"
-side=tk.LEFT
-side=tk.RIGHT
-expand=True
+side=tk.LEFT   # or side="left"
+side=tk.RIGHT   # or side="right"
+expand=tk.YES   # or expand=True
+anchor=tk.N   # or tk.S, tk.E, tk.W, tk.CENTER (default)
+anchor=tk.NE   # or tk.NW, tk.SE, tk.SW
 </pre><hr><pre>
 # pack1.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -53,7 +57,6 @@ frame3.pack()
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # pack2.py
-
 import tkinter as tk
 
 root = tk.Tk()   # empty root
@@ -70,7 +73,6 @@ frame3.pack(fill=tk.X)
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # pack3.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -87,7 +89,6 @@ frame3.pack(fill=tk.Y, side=tk.LEFT)
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # pack4.py ('fill' and 'expand' keyword arguments)
-
 import tkinter as tk
 
 root = tk.Tk()

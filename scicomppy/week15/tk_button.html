@@ -19,6 +19,7 @@ They can be configured to call a function whenever they’re clicked.
 the Button widget.
 
 <hr><pre>
+# button1.py
 import tkinter as tk
 
 root = tk.Tk()
@@ -49,7 +50,26 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
 height=10   # in text units
 font="Times 10 bold"
-command=callback
+command=callback   # an action to call when the widget's event occurs
+command=sys.exit   # it shuts down the calling program
+command=(lambda: print("message in the command line"))
+command=root.quit   # it ends the current mainloop event loop call
+</pre><hr><pre>
+# button2.py
+import tkinter as tk
+
+root = tk.Tk()
+
+label = tk.Label(root, text="Press any button")
+label.pack(side=tk.TOP)
+
+button = tk.Button(root, text="Hello", command=lambda: print("Hello!"))
+button.pack(side=tk.LEFT)
+
+button = tk.Button(root, text="Quit", command=root.quit)
+button.pack(side=tk.RIGHT)
+
+root.mainloop()   # run the tkinter event loop
 </pre><hr>
 
 </body>

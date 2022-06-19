@@ -21,6 +21,7 @@ and it runs an event handler any time a new event is added to the event list.
 <h3>USING BIND</h3>
 
 <hr><pre>
+# event1.py
 import tkinter as tk
 
 root = tk.Tk()
@@ -52,16 +53,20 @@ root.bind("&lt;Button-3&gt;", handle_click)   # the right mouse button
 root.bind("&lt;Button-4&gt;", handle_click)   # scroll up
 root.bind("&lt;Button-5&gt;", handle_click)   # scroll down
 #root.bind("&lt;Button-3&gt;", lambda event: print(event.char))   # prints ??
+root.bind("&lt;Double-1&gt;", lambda event: print("left double-click"))
+root.bind("&lt;Double-2&gt;", lambda event: print("middle double-click"))
+root.bind("&lt;Double-3&gt;", lambda event: print("right double-click"))
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr>
 
 <h3>USING COMMAND</h3>
 
-<p>Every Button widget has a command attribute that you can assign 
+<p>Every Button widget has a 'command' attribute that you can assign 
 to a function. Whenever the button is pressed, the function is executed.
 
 <hr><pre>
+# event2.py
 import tkinter as tk
 
 def increase():
