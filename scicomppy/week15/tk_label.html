@@ -17,7 +17,7 @@ The text displayed by a Label widget can’t be edited by the user.
 
 <hr><pre>
 # label1.py
-import tkinter as tk
+import tkinter as tk   # Py3
 
 root = tk.Tk()   # root widget
 
@@ -45,6 +45,8 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
 height=10   # in text units
 font="Times 10 bold"
+cursor="pencil"   # set the appearance of the mouse pointer when it moves
+   # over the widget ('gumby', 'watch', 'pencil', 'cross', 'hand2')
 </pre><hr><pre>
 Setting parameters in widgets
 
@@ -67,16 +69,17 @@ blue (aqua, cyan, navy),
 brown (tan, chocolate, sienna, maroon),
 
 Font descriptors, option font=(family, size, style):
-("Times", 10, "bold") or string "Times 10 bold"
-("Helvetica", 10, "bold italic") or string "Helvetica 10 bold italic"
-("Symbol", 8) or string "Symbol 8"
+("Times", 10, "bold") or string "Times 10 bold" (10-point size),
+("Helvetica", 10, "bold italic") or string "Helvetica 10 bold italic",
+("Symbol", 8) or string "Symbol 8".
 
 Here are some families available on most Windows platforms:
 Arial (corresponds to Helvetica), Courier New (Courier), Comic Sans MS, 
 Fixedsys, MS Sans Serif, MS Serif, Symbol, System, Times New Roman (Times), 
 and Verdana.
 
-The available font styles are normal, bold, roman, italic, underline, and overstrike.
+The available font styles are 'normal', 'bold', 'roman', 'italic', 'underline', 
+'overstrike', or combination of these ("bold italic").
 </pre><hr>
 
 <h3>IMAGES</h3>

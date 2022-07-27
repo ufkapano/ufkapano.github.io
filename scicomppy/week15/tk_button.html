@@ -20,7 +20,7 @@ the Button widget.
 
 <hr><pre>
 # button1.py
-import tkinter as tk
+import tkinter as tk   # Py3
 
 root = tk.Tk()
 
@@ -54,6 +54,7 @@ command=callback   # an action to call when the widget's event occurs
 command=sys.exit   # it shuts down the calling program
 command=(lambda: print("message in the command line"))
 command=root.quit   # it ends the current mainloop event loop call
+command=top.destroy   # it kills the current top-level window
 </pre><hr><pre>
 # button2.py
 import tkinter as tk

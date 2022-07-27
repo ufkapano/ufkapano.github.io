@@ -1,0 +1,63 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - dialogs</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Dialogs are windows popped up by a script to provide or request
+additional information. Dialogs are generally implemented with the
+'Toplevel' window object.
+
+<ul>
+<li>'Modal' dialogs block the rest of the interace until the dialog
+window is dismissed.
+<li>'Nonmodal' dialogs can remain on-screen indefinitely without
+interfering with other windows in the interface.
+</ul>
+
+<p>Tkinter comes with a collection of precoded (modal) dialog windows
+and they are called 'standard dialogs' od 'common dialogs'.
+
+<hr><pre>
+import tkinter as tk   # Py3
+
+root = tk.Tk()
+
+def callback():
+    if messagebox.askyesno("Verify", "Do you really want to quit?"):
+        messagebox.showwarning("Yes", "Quit not implemented")
+    else:
+        messagebox.showinfo("No", "Quit has been cancelled")
+
+button1 = tk.Button(root, text="Quit", command=callback)
+button1.pack(fill=tk.X)
+
+button2 = tk.Button(root, text="Spam", command=lambda:
+    messagebox.showerror("Error", "Error message"))
+button2.pack(fill=tk.X)
+
+root.mainloop() 
+</pre><hr><pre>
+# The first group of standard dialogs is used to present information. 
+
+messagebox.showinfo("Info", "Some info")
+messagebox.showwarning("Warning", "Warning message")
+messagebox.showerror("Error", "Error message")
+
+# The second group is used to ask questions.
+
+reply = messagebox.askquestion("Title", "Question?")   # return yes/no
+reply = messagebox.askokcancel("Title", "Proceed?")   # return True/False
+reply = messagebox.askretrycancel("Title", "Try again?")   # return True/False
+reply = messagebox.askyesno("Print", "Print this report?")   # return True/False
+reply = messagebox.askyesnocancel("Print", "Print this report?")   # return True/False/None
+</pre><hr>
+
+</body>
+</html>

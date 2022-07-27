@@ -15,21 +15,27 @@ that needs to be instantiated and the GUI will shut down when it is destroyed.
 
 <p>'Toplevel' is a window in the application, closing the window will destroy 
 all children widgets placed on that window, but will not shut down the program.
+It is possible to create many 'Toplevel' windows. They are not separate
+processes; if the program exits, all 'Toplevel' windows are erased.
 
 <hr><pre>
 import tkinter as tk
 
-root = tk.Tk()
+root = tk.Tk()   # we should start from root
 root.title("root")
 
-# create root window contents...
+# Create root window contents...
+# In Button, command=root.quit kills all windows.
 
 top = tk.Toplevel()
+#top = tk.Toplevel(root)   # using explicit parent
 top.title("top")
 
-# create top window contents...
+# Create top window contents...
+# In Button, command=top.destroy only kills the current top window.
 
 root.mainloop()   # run the tkinter event loop
+#top.mainloop()   # also works
 </pre><hr>
 
 </body>

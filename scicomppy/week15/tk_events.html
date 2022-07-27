@@ -42,9 +42,19 @@ def handle_click(event):
 
 #root.bind(event_string, event_handler)
 #root.bind("&lt;Key&gt;", handle_keypress)
+#root.bind("&lt;Key&gt;", lambda event: print(event.char))
 root.bind("&lt;KeyPress&gt;", handle_keypress)   # the same as "&lt;Key&gt;"
 root.bind("&lt;KeyRelease&gt;", handle_keyrelease)
-#root.bind("&lt;Key&gt;", lambda event: print(event.char))
+
+root.bind("&lt;Return&gt;", lambda event: print("Return was pressed"))
+root.bind("&lt;Escape&gt;", lambda event: print("Escape was pressed"))
+root.bind("&lt;BackSpace&gt;", lambda event: print("BackSpace was pressed"))
+root.bind("&lt;Tab&gt;", lambda event: print("Tab was pressed"))
+# Cursors.
+root.bind("&lt;Up&gt;", lambda event: print("Up was pressed"))
+root.bind("&lt;Down&gt;", lambda event: print("Down was pressed"))
+root.bind("&lt;Left&gt;", lambda event: print("Left was pressed"))
+root.bind("&lt;Right&gt;", lambda event: print("Right was pressed"))
 
 # Mouse clics.
 root.bind("&lt;Button-1&gt;", handle_click)   # the left mouse button
@@ -57,7 +67,28 @@ root.bind("&lt;Double-1&gt;", lambda event: print("left double-click"))
 root.bind("&lt;Double-2&gt;", lambda event: print("middle double-click"))
 root.bind("&lt;Double-3&gt;", lambda event: print("right double-click"))
 
+root.bind("&lt;Motion&gt;", lambda event: print("a mouse pointer is moved"))
+root.bind("&lt;Configure&gt;", lambda event: print("a window is resized|repositioned|..."))
+root.bind("&lt;Destroy&gt;", lambda event: print("a window is destroyed"))
+
+root.bind("&lt;Enter&gt;", lambda event: print("mouse enters a window"))
+root.bind("&lt;Leave&gt;", lambda event: print("mouse leaves a window"))
+
+root.bind("&lt;Map&gt;", lambda event: print("a window is opened"))
+root.bind("&lt;Unmap&gt;", lambda event: print("a window is iconified"))
+
+root.bind("&lt;FocusIn&gt;", lambda event: print("a window gains focus"))
+root.bind("&lt;FocusOut&gt;", lambda event: print("a window loses focus"))
+
 root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# Modifiers.
+"&lt;Motion&gt;" and "&lt;B1-Motion&gt;" (moving the mouse with the left button pressed)
+"&lt;KeyPress&gt;" and "&lt;KeyPress-a&gt;" (pressing the "a" key only)
+
+# Synonyms.
+"&lt;ButtonPress-1&gt;", "&lt;Button-1&gt;", "&lt;1&gt;"
+"&lt;KeyPress-a&gt;", "&lt;Key-a&gt;"
 </pre><hr>
 
 <h3>USING COMMAND</h3>
