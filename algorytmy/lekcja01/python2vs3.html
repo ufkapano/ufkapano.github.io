@@ -11,7 +11,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Kiedy chcemy mieć kompatybilność Py2 i Py3, to trzeba się zdecydować
-na Pythona 2.7, bo jest dalej wspierany.
+na Py2.7, bo jest dalej wspierany (od 2020 już nie).
 Oto szereg uwag i wskazówek jak tworzyć kod działający niezależnie
 od wersji Pythona.
 
@@ -30,8 +30,8 @@ UWAGI
 Wydaje mi się, że nie jest dobrze łączyć w ten sposób dwóch światów
 Py2 i Py3. Można przeoczyć import i być zaskoczonym nowym działaniem.
 </pre><hr><pre>
-Python 2: instrukcja print (ang. print statement). 
-Python 3: funkcja print().
+Py2: instrukcja print (ang. print statement). 
+Py3: funkcja print().
 UWAGI
 print(item1, item2) w Py2 wypisze krotkę.
 Kompatybilna forma to
@@ -47,7 +47,7 @@ Jeżeli chcemy mieć wynik float, to lepiej zawsze pisać 3/2.0
 lub float(x)/2 (a nie 3/2 lub x/2).
 Taki zapis nie zmyli usera z Py2.
 
-If you need to support both Python 2 and Python 3 use:
+If you need to support both Py2 and Py3 use:
 from __future__ import division
 
 We własnych klasach trzeba pamiętać o metodach:
@@ -60,7 +60,7 @@ Py3: jest tylko int.
 Sprawdzanie typów liczbowych można zrobić przez try/except:
 try:
     integer_types = (int, long)
-except NameError:   # Python 3
+except NameError:   # Py3
     integer_types = (int,)
 # Zastosowanie: isinstance(variable, integer_types)
 </pre><hr><pre>
@@ -69,30 +69,30 @@ Py3: str() dla Unicode, byte() i bytearray() dla bajtów.
 UWAGI
 W bibliotece stosujemy czyste ASCII i str() lub repr() do napisów.
 </pre><hr><pre>
-W Pythonie 2 jest iterator xrange(), a range() tworzy listę.
-W Pythonie 3 nie ma xrange(), a range() jest iteratorem.
+W Py2 jest iterator xrange(), a range() tworzy listę.
+W Py3 nie ma xrange(), a range() jest iteratorem.
 UWAGI
 Listę można tworzyć uniwersalnie przez list(range(n)).
 Z iteratorem jest problem.
 
-Jest moduł six, który w Pythonie 3 podobno posiada xrange(), 
+Jest moduł six, który w Py3 podobno posiada xrange(), 
 ale nie ma go w bibliotece standardowej.
-Moje podejscie:
+Moje podejście:
 try:
     integer_types = (int, long)
-except NameError:   # Python 3
+    range = xrange   # range będzie zawsze generatorem
+except NameError:   # Py3
     integer_types = (int,)
-    xrange = range
 </pre><hr><pre>
-W Pythonie 3 nie ma wbudowanej funkcji cmp().
+W Py3 nie ma wbudowanej funkcji cmp().
 Obejście proponowane w oficjalnej dokumentacji Pythona ma postać
-cmp = lambda x, y: (x > y) - (x < y)
-Moje podejscie:
+cmp = lambda x, y: (x &gt; y) - (x &lt; y)
+Moje podejście:
 try:
     integer_types = (int, long)
-except NameError:   # Python 3
+except NameError:   # Py3
     integer_types = (int,)
-    cmp = lambda x, y: (x > y) - (x < y)
+    cmp = lambda x, y: (x &gt; y) - (x &lt; y)
 </pre><hr><pre>
 Sorting, list.sort() i sorted().
 Py2: są dwa parametry cmp i key.
@@ -100,19 +100,19 @@ Py3: jest tylko key.
 UWAGI
 Trzeba używać parametru key.
 Nie można bezpośrednio użyć funkcji porównującej cmp(x, y).
-Rozwiązaniem w Pythonie 3 jest funkcja cmp_to_key() z modułu functools.
+Rozwiązaniem w Py3 jest funkcja cmp_to_key() z modułu functools.
 
-from functools import cmp_to_key   # Python 3.2+
+from functools import cmp_to_key   # Py3.2+
 
 alist.sort(key=cmp_to_key(cmp_function))
 </pre><hr><pre>
-The __contains__ method for range objects in Python 3.
+The __contains__ method for range objects in Py3.
 UWAGI
 Przyjmuję, że wyszukiwanie w liście jest wolne O(n) i zwykle korzystam
 ze zbioru lub słownika.
 </pre><hr><pre>
 Raising exceptions. 
-Python 2 dopuszcza starą składnię z przecinkiem:
+Py2 dopuszcza starą składnię z przecinkiem:
 raise IOError, "file error"
 UWAGI
 Zawsze stosować nową składnię z nawiasem (jak konstruktor):
@@ -131,9 +131,9 @@ try:
 except NameError as exception:
     print( "{} --> our error message".format(exception) )
 </pre><hr><pre>
-The next() function (Python 3) and .next() method (Python 2).
+The next() function (Py3) and .next() method (Py2).
 UWAGI
-W Pythonie 2.6 pojawiła się wbudowana funkcja next(), więc kod może
+W Py2.6 pojawiła się wbudowana funkcja next(), więc kod może
 być uniwersalny:
 my_generator = (letter for letter in 'abcdefg')
 next(my_generator)
@@ -185,12 +185,12 @@ UWAGI
 https://en.wikipedia.org/wiki/Rounding#Round_half_to_even
 https://en.wikipedia.org/wiki/IEEE_floating_point#Roundings_to_nearest
 </pre><hr><pre>
-Moduł Queue z Pythona 2 nazywa się queue w Pythonie 3.
+Moduł Queue z Py2 nazywa się queue w Py3.
 
 # Use feature detection instead of version detection.
 try:
     from Queue import Queue   # kolejka
-except ImportError:   # Python 3
+except ImportError:   # Py3
     from queue import Queue
 
 Kolejkę priorytetową minimum na bazie stosu można zbudować za pomocą
@@ -203,8 +203,8 @@ Metaklasy
 Py2: jest atrybut __metaclass__ w ciele klasy.
 Py3: jest parametr metaclass przekazywany w definicji klasy.
 </pre><hr><pre>
-Funkcja wbudowana reduce() z Pythona 2 znajduje się w module functools
-w Pythonie 3, ale w Pythonie 2 też jest w tym module. 
+Funkcja wbudowana reduce() z Py2 znajduje się w module functools
+w Py3, ale w Py2 też jest w tym module. 
 To sugeruje rozwiązanie uniwersalne:
 from functools import reduce
 </pre><hr>

@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Jupyter</h1>
+
+<p>https://ipython.org/
+
+<p>https://jupyter.org/
+
+<h3>WPROWADZENIE</h3>
+
+<p>Projekt 'IPython' dostarcza bogatą architekturę do obliczeń
+interaktywnych, m.in. interaktywną powłokę.
+
+<p>'Project Jupyter' powstał na bazie IPython i zawiera notatnik 
+oraz inne cześci IPython niezależne od języka programowania.
+Wspiera uruchamianie programów w wielu językach programowania,
+m.in. Python, Julia, R, C++, Scheme, Ruby.
+
+<p>Nazwa 'Jupyter' odnosi się do 'Julia', 'Python' and 'R',
+pierwszych języków, które zostały zaimplementowane.
+
+<p>'Jupyter Notebook' to webowe interaktywne środowisko obliczeniowe
+do tworzenia notatników w formacie JSON.
+
+<h3>INSTALACJA</h3>
+
+<hr><pre>
+W Linuksie jest kilka (wykluczających się) metod instalacji Jupytera:
+(1) apt (Debian),
+(2) pip,
+(2) pakiet systemu snap,
+(3) conda (Anaconda).
+</pre><hr><pre>
+# APT
+Pakiety Debiana 10: python-notebook (Py2), python3-notebook (Py3),
+jupyter-notebook, jupyter-core i zależności.
+</pre><hr><pre>
+# PIP
+pip3 install --upgrade pip
+pip3 install jupyter
+# use pip if using legacy Python 2.7
+</pre><hr><pre>
+# Uruchomienie Jupytera w wierszu poleceń,
+
+$ jupyter-notebook   # http://localhost:8888
+
+# Sterowanie przechodzi do przeglądarki internetowej.
+# Zatrzymanie serwera zachodzi po wciśnięciu przycisku 'Quit' w oknie przeglądarki
+# lub kombinacji klawiszy Ctrl+c na klawiaturze.
+</pre><hr>
+
+<h3>GOOGLE COLABORATORY (COLAB)</h3>
+
+<p>https://colab.research.google.com/notebooks/intro.ipynb
+
+<p>'Google Colaboratory' (lub krótko 'Colab') jest to usługa, która umożliwia
+pisanie i uruchamianie kodu w języku Python 3 bezpośrednio w przeglądarce.
+Kod wykonywalny programu zapisywany jest w notatniku Colab, 
+łączącym kod z tekstem sformatowanym, obrazami, itp. 
+
+<p>Notatnik Colab zapisywany jest na Dysku Google, powiązanym z kontem Google, 
+które dostarcza użytkownikowi adres email z domeny google.com i wiele 
+innych usług. Do przechowywania notatników Colab służy tworzony
+automatycznie folder 'Colab Notebooks'.
+
+<p>Przy problemie przesyłania danych trzeba rozważyć co najmniej 
+trzy lokalizacje, pomiędzy którymi może odbywać się ten przesył:
+<br>(1) środowisko wykonawcze, 
+<br>(2) Dysk Google, 
+<br>(3) lokalny komputer.
+
+</body>
+</html>
