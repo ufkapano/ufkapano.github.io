@@ -78,7 +78,7 @@ def greedy_color(graph, color, source):
     for target in graph[source]:
         if color[target] is not None:
             used[color[target]] = True
-    for i in xrange(n):   # sprawdzam kolejne kolory
+    for i in range(n):   # sprawdzam kolejne kolory
         if not used[i]:
             color[source] = i
             break
@@ -223,7 +223,7 @@ def graph_color(k, k_colors):   # szukanie wszystkich rozwiazan
             if k+1 &lt; N:
                 graph_color(k+1, k_colors)
             else:
-                print color   # rysuj rozwiazanie
+                print ( color )   # rysuj rozwiazanie
             color[node] = None   # wymazuje
 
 # Znajduje wszystkie rozwiazania.

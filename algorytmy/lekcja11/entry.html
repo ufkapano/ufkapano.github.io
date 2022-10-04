@@ -1,0 +1,57 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter Entry</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Widżet 'Entry' jest używany do pobrania jednego wiersza tekstu
+od użytkownika, np. nazwiska czy adresu email.
+
+<hr><pre>
+# entry1.py
+import tkinter as tk   # Py3
+from tkinter import ttk
+
+root = tk.Tk()
+
+label = tk.Label(root, text="Name", bg="red")
+entry = tk.Entry(root, width=40)
+button = tk.Button(root, text="Print", command=lambda: print(entry.get()))
+
+label.grid()
+entry.grid()
+button.grid()
+
+entry.focus()   # save a click
+entry.bind('&lt;Return&gt;', (lambda event: print(entry.get())))
+# lambda is used to ignore the 'event' argument
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+Wybrane 'keyword arguments' dla Entry()
+
+master=root     # pierwszy argument
+fg="white"   # set the text color to white ('fg' or 'foreground')
+bg="black"   # set the background color to black ('bg' or 'background')
+width=50   # in text units (no height argument)
+show='*'   # for passwords
+state='disabled'   # set the widget readonly
+</pre><hr><pre>
+Operacje
+
+name = entry.get()   # pobranie stringu z widżetu
+entry.delete(pos)   # usunięcie znaku na danej pozycji
+entry.delete(first, last)   # usunięcie zakresu znaków [first:last]
+entry.delete(first, tk.END)   # usunięcie do końca napisu
+entry.insert(pos, "text")   # wstawienie tekstu od danej pozycji
+entry.insert(0, "What is your name?")   # tekst z informacją dla użytkownika
+</pre><hr>
+
+</body>
+</html>

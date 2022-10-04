@@ -168,7 +168,8 @@ def print_file(file_name):
     """Wypisywanie zawartości pliku na stdout."""
     afile = open(file_name, "r")
     for line in afile:
-        print line,   # line zawiera \n, Py2
+        #print line,   # line zawiera \n, Py2
+        print(line, end="")   # line zawiera \n, Py3
     afile.close()
 </pre><hr>
 

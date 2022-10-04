@@ -9,164 +9,20 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: 11.1 i jedno z pozostałych
-
-<p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
-
 <h3>ZADANIE 11.1</h3>
 
-<p>Przygotować moduł Pythona z funkcjami tworzącymi listy liczb całkowitych
-do sortowania. Przydatne są m.in. następujące rodzaje danych:
-<br>(a) różne liczby int od 0 do n-1 w kolejności losowej,
-<br>(b) różne liczby int od 0 do n-1 prawie posortowane 
-(liczby są blisko swojej prawidłowej pozycji),
-<br>(c) różne liczby int od 0 do n-1 prawie posortowane w odwrotnej kolejności,
-<br>(d) n liczb float w kolejności losowej o rozkładzie gaussowskim,
-<br>(e) n liczb int w kolejności losowej, o wartościach powtarzających się, 
-należących do zbioru k elementowego (k &lt; n, np. k^2 = n).
-
-<pre>
-</pre>
+<p>Napisać program z GUI, który symuluje rzut kostką sześcienną.
+Program powinien mieć przycisk uruchamiający rzut kostką
+i etykietę wyświetlającą wynik (liczba od 1 do 6 lub odpowiedni obrazek).
 
 <h3>ZADANIE 11.2</h3>
 
-<p>Dla wybranego algorytmu sortowania zbadać jego zachowanie
-w czasie działania. 
-Do kodu wstawić funkcję zapisującą stan listy na danym etapie sortowania.
-Dane można zapisywać w pliku <em>sort1.dat.</em> w dwóch kolumnach:
-numer pozycji na liście i wartość liczby na tej pozycji.
-Liczby w wierszu może oddzielać spacja lub tabulacja.
-Wtedy poglądowy rysunek można wygenerować za pomocą skryptu
-dla programu Gnuplot.
-Poniżej podane są skrypty tworzące rysunki w formatach EPS, PNG, PDF.
+<p>Napisać program z GUI, który realizuje grę Papier-Kamień-Nożyce
+użytkownika z komputerem.
+Wybór komputera jest losowany.
+Program może zawierać trzy przyciski dla każdego wyboru użytkownika
+(P, K, N) oraz etykietę wyświetlającą wybór komputera i wynik gry.
 
-<hr><pre>
-# Plik sort1eps.gnu
-set term postscript eps enhanced color 22
-set output "sort1.eps"
-
-set title "Sortowanie X"
-set xlabel "numer pozycji"              # opis osi x
-set ylabel "liczba na pozycji"          # opis osi y
-unset key                               # bez legendy
-
-plot "sort1.dat" using 1:2 with points pt 5
-</pre><hr><pre>
-# Plik sort1png.gnu
-set term png
-set output "sort1.png"
-
-set title "Sortowanie X"
-set xlabel "numer pozycji"              # opis osi x
-set ylabel "liczba na pozycji"          # opis osi y
-unset key                               # bez legendy
-
-plot "sort1.dat" using 1:2 with points pt 5
-</pre><hr><pre>
-# Plik sort1pdf.gnu
-set term pdf enhanced
-set output "sort1.pdf"
-
-set title "Sortowanie X"
-set xlabel "numer pozycji"              # opis osi x
-set ylabel "liczba na pozycji"          # opis osi y
-unset key                               # bez legendy
-
-plot "sort1.dat" using 1:2 with points pt 5
-</pre><hr><pre>
-# Polecenia generowania rysunku w powłoce systemu UNIX.
-$ gnuplot sort1eps.gnu        # powstanie plik sort1.eps
-$ gnuplot sort1png.gnu        # powstanie plik sort1.png
-$ gnuplot sort1pdf.gnu        # powstanie plik sort1.pdf
-</pre><hr><pre>
-# Generowanie rysunku z poziomu skryptu pythona.
-import os
-
-os.system("gnuplot sort1eps.gnu")
-os.system("gnuplot sort1png.gnu")
-os.system("gnuplot sort1pdf.gnu")
-</pre><hr>
-
-<p>Przykładowe rysunki dla różnych liczb od 0 do 49,
-które przed sortowaniem są w kolejności losowej.
-
-<p><img src="img/sort1.png" alt="[ sort1 ]">
-
-<p><img src="img/sort2.png" alt="[ sort2 ]">
-
-<p>Animacje w Pythonie (gif, mp4, mpeg):
-<br>(1) gnuplot
-<br>(2) Matplotlib: FuncAnimation, ArtistAnimation
-<br>(3) pip install celluloid (Py3.6+, używa matplotlib)
-<br>(4) Plotly
-
-<p>https://medium.com/@kirthi.tej92/animations-using-python-a-comprehensive-guide-7d0e075e5c6e
-<br>Animations Using Python: A Comprehensive Guide
-
-<hr><pre>
-# Przykład rysowania danych w matplotlib.
-import random
-import matplotlib.pyplot as plt
-
-n = 50
-x = list(range(n))
-y = list(range(n))
-random.shuffle(y)
-
-plt.title("Sortowanie X")
-plt.xlabel("numer pozycji")
-plt.ylabel("liczba na pozycji")
-plt.plot(x, y, 'rs')   # red squares
-plt.show()
-#plt.savefig("plot1.png")   # zapis rysunku do pliku PNG
-</pre><hr>
-
-<h3>ZADANIE 11.3</h3>
-
-<p>Poprawić wybrany algorytm sortowania, aby przyjmował jako
-dodatkowy argument funkcję porównującą elementy na liście
-[przykład na wykładzie dla funkcji bubblesort()].
-
-<pre>
-</pre>
-
-<h3>ZADANIE 11.4</h3>
-
-<p>Porównaj czasy działania wybranych algorytmów 
-dla listy zawierającej n różnych liczb, przy
-n = 10^2, 10^3, 10^4, 10^5, 10^6.
-
-<h3>ZADANIE 11.5</h3>
-
-<p>Zaimplementować w języku Python algorytm sortowania,
-który nie został omówiony na wykładzie.
-Dołączyć krótką informację o cechach algorytmu.
-
-<h3>ZADANIE 11.6</h3>
-
-<p>Napisać iteracyjną wersję funkcji quicksort().
-
-<pre>
-</pre>
-
-<h3>ZADANIE 11.7</h3>
-
-<p>Zmienić funkcję mergesort() tak, aby przy okazji sortowania
-przez scalanie zliczała inwersje w sortowanej tablicy L.
-Inwersję tworzy para liczb na pozycjach i, j, jeżeli
-i &lt; j, oraz L[i] &gt; L[j].
-Nie wolno pogorszyć wydajności sortowania O(n log n). [trudne]
-
-<h3>ZADANIE 11.8</h3>
-
-<p>Napisać funkcję frequencysort(), która sortuje liczby w tablicy L
-zgodnie z częstością ich występowania. Jeżeli dwie liczby mają taką
-samą częstość występowania to o kolejności decyduje indeks pierwszego 
-pojawienia się liczby w tablicy L.
-Wydajność sortowania nie powinna być gorsza niż O(n*log(n)).
-
-<pre>
-</pre>
 
 </body>
 </html>

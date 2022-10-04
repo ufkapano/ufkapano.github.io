@@ -63,6 +63,8 @@ a &lt; b, a &lt;= b, a &gt; b, a &gt;= b,
 a == b, a &lt;&gt; b [zniknie], a != b.
 
 <p>Testy identyczności: a is b [id(a) == id(b)], a is not b [id(a) != id(b)].
+Operatory 'is' i 'is not' mogą być stosowane do dowolnych obiektów
+i nigdy nie wywołują wyjątków.
 
 <p>Zawieranie się w sekwencji lub kolekcji: a in S, a not in S.
 Te operacje są wspierane dla typów, które są iterowalne lub mają
@@ -71,6 +73,15 @@ zaimplementowaną metodę '__contains__()'.
 <p>Sekwencje w Pythonie są porównywane leksykograficznie.
 Dozwolone jest porównywanie obiektów różnych typów (tylko Python 2),
 ale rezultaty mogą zależeć od wersji języka.
+
+<h3>ŁĄCZENIE PORÓWNAŃ W ŁAŃCUCHY</h3>
+
+<p>Dokumentacja Pythona określa osiem operacji porównywania:
+a &lt; b, a &lt;= b, a &gt; b, a &gt;= b, a == b, a != b, a is b, a is not b.
+Operacje porównywania mogą być dowolnie łączone w łańcuchy:
+<br>(a &lt; b &lt;= c) oznacza (a &lt; b) and (b &lt;= c), 
+ale b będzie obliczone tylko raz;
+<br>(a is b is c is d) oznacza (a is b) and (b is c) and (c is d).
 
 
 </body>

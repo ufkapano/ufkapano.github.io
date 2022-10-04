@@ -32,7 +32,7 @@ tworzy drzewo rozpinające grafu.
 
 <hr><pre>
 def visit(node):     # pewna operacja na wierzchołku
-    print "odwiedzamy", node
+    print ( "odwiedzamy {}".format(node) )
 
 def traverse_dfs(graph, start, visit, visited=None):
     # Przy pierwszym wywołaniu funkcji traverse_dfs
@@ -59,21 +59,19 @@ przechodzenia przez graf używającą jawnego stosu,
 podobnie jak przy przechodzeniu przez drzewo binarne metodą preorder.
 
 <hr><pre>
-import Queue   # moduł z biblioteki standardowej Pythona 2
-
 def traverse_stack(graph, start, visit):
     # Przechodzenie w głąb z jawnym stosem.
-    stack = Queue.LifoQueue()
+    stack = []   # lista jako stos
     visited = []
-    stack.put(start)
-    while not stack.empty():
-        start = stack.get()
+    stack.append(start)
+    while stack:
+        start = stack.pop()
         if start not in visited:
             visit(start)
             visited.append(start)
             for node in graph[start]:
                 if node not in visited:
-                    stack.put(node)
+                    stack.append(node)
 </pre><hr>
 
 <p>Podejście ze stosem ma tę wadę, że na stosie może się znaleźć
@@ -123,20 +121,20 @@ Przed przejściem z danego węzła do kolejnego odwiedza wszystkie
 połączone z nim węzły.
 
 <hr><pre>
-import Queue   # moduł z biblioteki standardowej Pythona 2
+import collections
 
 def traverse_bfs(graph, start, visit):
-    queue = Queue.Queue()
+    queue = collections.deque()   # deque jako kolejka
     visited = []
-    queue.put(start)
-    while not queue.empty():
-        start = queue.get()
+    queue.append(start)
+    while queue:
+        start = queue.popleft()
         if start not in visited:
             visit(start)
             visited.append(start)
             for node in graph[start]:
                 if node not in visited:
-                    queue.put(node)
+                    queue.append(node)
 </pre><hr>
 
 <p>W tym podejściu w kolejce również może się znaleźć
@@ -148,21 +146,21 @@ Wtedy wielkość kolejki można ograniczyć do liczby wierzchołków V.
 <hr><pre>
 # Wersja wyznaczająca drzewo BFS w postaci słownika.
 
-import Queue     # Python 2
+import collections
 
 def traverse_bfs(graph, source, pre_action=None, post_action=None):
-    parent = {source: None}   # before queue.put
-    queue = Queue.Queue()
-    queue.put(source)
-    if pre_action:   # when queue.put
+    parent = {source: None}
+    queue = collections.deque()
+    queue.append(source)
+    if pre_action:
         pre_action(source)
-    while not queue.empty():
-        source = queue.get()
+    while queue:
+        source = queue.popleft()
         for target in graph[source]:
             if target not in parent:
-                parent[target] = source   # before queue.put
-                queue.put(target)
-                if pre_action:   # when queue.put
+                parent[target] = source
+                queue.append(target)
+                if pre_action:
                     pre_action(target)
         if post_action:
             post_action(source)

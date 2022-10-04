@@ -1,0 +1,185 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Zdarzenia w tkinter</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Aplikacje powinny wykonywać działania, kiedy pojawią się pewne zdarzenia,
+np. naciśnięcie przycisku w aplikacji, naciśnięcie klawisza klawiatury 
+lub myszy, zmiana rozmiaru aplikacji.
+Użytkownik powinien napisać kod (obsługę zdarzenia), który będzie
+uruchamiany w odpowiedzi na zdarzenie.
+
+<p>Metoda 'mainloop()' utrzymuje listę zdarzeń otrzymanych od systemu
+operacyjnego i uruchamia obsługę zdarzenia za każdym razem, kiedy
+nowe zdarzenie zostaje dodane do listy zdarzeń.
+
+<p>Najczęściej używane zdarzenia to niskopoziomowe zdarzenia systemu
+operacyjnego, np. kliknięcie myszy "&lt;Button-1&gt;", 
+zmiana rozmiaru lub pozycji widżetu "&lt;Configure&gt;".
+Wiele widżetów generuje także wysokopoziomowe, semantyczne zdarzenia,
+zwane 'zdarzeniami wirtualnymi'. 
+Oznaczane są przez podwójne ostre nawiasy ("&lt;&lt;virtual_event&gt;&gt;").
+Przykładem może być zaznaczenie przez użytkownika elementu na liście 'Listbox'.
+
+<h3>UŻYCIE BIND</h3>
+
+<hr><pre>
+# event1.py
+import tkinter as tk
+
+root = tk.Tk()
+
+def handle_keypress(event):
+    """Print the character associated to the key pressed."""
+    print("The key {} was pressed!".format(event.char))
+
+def handle_keyrelease(event):
+    """Print the character associated to the key released."""
+    print("The key {} was released!".format(event.char)) # no char
+
+def handle_click(event):
+    print("Clicked at {} {}".format(event.x, event.y))
+
+# Bind keypress event to handle_keypress().
+# The output is printed to stdout.
+# Tutaj zdarzenia są dowiązane do głównego okna (root).
+
+#root.bind(event_string, event_handler)
+#root.bind("&lt;Key&gt;", handle_keypress)
+#root.bind("&lt;Key&gt;", lambda event: print(event.char))
+root.bind("&lt;KeyPress&gt;", handle_keypress)   # the same as "&lt;Key&gt;"
+root.bind("&lt;KeyRelease&gt;", handle_keyrelease)
+
+root.bind("&lt;Return&gt;", lambda event: print("Return was pressed"))
+root.bind("&lt;Escape&gt;", lambda event: print("Escape was pressed"))
+root.bind("&lt;BackSpace&gt;", lambda event: print("BackSpace was pressed"))
+root.bind("&lt;Tab&gt;", lambda event: print("Tab was pressed"))
+# Cursors.
+root.bind("&lt;Up&gt;", lambda event: print("Up was pressed"))
+root.bind("&lt;Down&gt;", lambda event: print("Down was pressed"))
+root.bind("&lt;Left&gt;", lambda event: print("Left was pressed"))
+root.bind("&lt;Right&gt;", lambda event: print("Right was pressed"))
+
+# Mouse clics.
+root.bind("&lt;Button-1&gt;", handle_click)   # the left mouse button
+root.bind("&lt;Button-2&gt;", handle_click)   # the middle mouse button
+root.bind("&lt;Button-3&gt;", handle_click)   # the right mouse button
+root.bind("&lt;Button-4&gt;", handle_click)   # scroll up
+root.bind("&lt;Button-5&gt;", handle_click)   # scroll down
+#root.bind("&lt;Button-3&gt;", lambda event: print(event.char))   # prints ??
+root.bind("&lt;Double-1&gt;", lambda event: print("left double-click"))
+root.bind("&lt;Double-2&gt;", lambda event: print("middle double-click"))
+root.bind("&lt;Double-3&gt;", lambda event: print("right double-click"))
+
+root.bind("&lt;Motion&gt;", lambda event: print("a mouse pointer is moved"))
+root.bind("&lt;Configure&gt;", lambda event: print("a window is resized|repositioned|..."))
+root.bind("&lt;Destroy&gt;", lambda event: print("a window is destroyed"))
+
+root.bind("&lt;Enter&gt;", lambda event: print("mouse enters a window"))
+root.bind("&lt;Leave&gt;", lambda event: print("mouse leaves a window"))
+
+root.bind("&lt;Map&gt;", lambda event: print("a window is opened"))
+root.bind("&lt;Unmap&gt;", lambda event: print("a window is iconified"))
+
+root.bind("&lt;FocusIn&gt;", lambda event: print("a window gains focus"))
+root.bind("&lt;FocusOut&gt;", lambda event: print("a window loses focus"))
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# Modyfikatory.
+
+"&lt;Motion&gt;" and "&lt;B1-Motion&gt;" (moving the mouse with the left button pressed)
+"&lt;KeyPress&gt;" and "&lt;KeyPress-a&gt;" (pressing the "a" key only)
+</pre><hr><pre>
+# Synonimy.
+
+"&lt;ButtonPress-1&gt;", "&lt;Button-1&gt;", "&lt;1&gt;"
+"&lt;Double-ButtonPress-1&gt;", "&lt;Double-1&gt;"
+"&lt;KeyPress-a&gt;", "&lt;Key-a&gt;"
+</pre><hr><pre>
+# Konfiguracja widżetu w reakcji na zdarzenie.
+import tkinter as tk
+
+root = tk.Tk()
+label = tk.Label(root, text="Initial string")
+label.grid()
+
+# Zdarzenia są dowiązane do widżetu Label.
+label.bind('&lt;Enter&gt;', lambda event: label.configure(text='Moved mouse inside'))
+label.bind('&lt;Leave&gt;', lambda event: label.configure(text='Moved mouse outside'))
+
+root.mainloop()
+</pre><hr>
+
+<h3>UŻYCIE COMMAND</h3>
+
+<p>Każdy widżet Button ma atrybut 'command', który służy do podstawienia
+funkcji. Jeśli przycisk zostanie naciśnięty, wtedy uruchamiana jest funkcja.
+
+<hr><pre>
+# event2.py
+import tkinter as tk
+
+# Funkcje do zmiany tekstu wyświetlanego przez etykietę.
+def increase():
+    value = int(label["text"])
+    label["text"] = "{}".format(value + 1)
+
+def decrease():
+    value = int(label["text"])
+    label["text"] = "{}".format(value - 1)
+
+root = tk.Tk()
+
+root.rowconfigure(0, minsize=100, weight=1)
+root.columnconfigure(0, minsize=100, weight=1)
+root.columnconfigure(1, minsize=100, weight=1)
+root.columnconfigure(2, minsize=100, weight=1)
+
+button_decrease = tk.Button(root, text="-", command=decrease)
+button_decrease.grid(row=0, column=0, sticky=tk.NSEW)
+
+label = tk.Label(root, text="0")
+label.grid(row=0, column=1)
+
+button_increase = tk.Button(root, text="+", command=increase)
+button_increase.grid(row=0, column=2, sticky=tk.NSEW)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+# Użycie zmiennej tkinter.
+import tkinter as tk
+
+root = tk.Tk()
+
+root.rowconfigure(0, minsize=100, weight=1)
+root.columnconfigure(0, minsize=100, weight=1)
+root.columnconfigure(1, minsize=100, weight=1)
+root.columnconfigure(2, minsize=100, weight=1)
+
+var = tk.StringVar()
+var.set(0)   # automatyczna konwersja na string
+
+button_decrease = tk.Button(root, text="-",
+    command=lambda: var.set(int(var.get()) - 1))
+button_decrease.grid(row=0, column=0, sticky=tk.NSEW)
+
+label = tk.Label(root, textvariable=var)   # zmienna tkinter
+label.grid(row=0, column=1)
+
+button_increase = tk.Button(root, text="+",
+    command=lambda: var.set(int(var.get()) + 1))
+button_increase.grid(row=0, column=2, sticky=tk.NSEW)
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

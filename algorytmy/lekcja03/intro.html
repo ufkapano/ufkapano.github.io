@@ -58,6 +58,43 @@ front, *L = M          # M[0], M[1:]
 first, *L, last = M    # M[0], M[1:-1], M[-1]
 </pre><hr>
 
+<h3>WYRAŻENIA PRZYPISANIA</h3>
+
+<p>PEP 572 - Assignment Expressions (walrus operator)
+
+<p>W Pythonie 3.8 pojawiły się wyrażenia przypisania i nowa składnia ':=',
+która przypisuje wartości do zmiennych jako część większego wyrażenia.
+W wielu przypadkach nowa składnia pozwala stworzyć krótszy kod,
+uniknąć dwukrotnego obliczania tego samego wyrażenia,
+uniknąć głębokiego zagnieżdżania kodu, itp.
+Na ogół wymagane są nawiasy otaczające wyrażenie przypisania.
+
+<p>Warto pamiętać, że ':=' tworzy wyrażenie (expression), a '=' tworzy
+instrukcję (statement), przez co ich dozwolone zakresy występowania
+tylko częściowo się pokrywają.
+
+<hr><pre>
+# The assignment expression helps avoid calling len() twice.
+if (n := len(a)) &gt; 10:
+    print("List is too long ({} elements, expected &lt;= {})".format(n, 10))
+</pre><hr><pre>
+# Handle a matched regex.
+if (match := pattern.search(data)) is not None:
+    process(match)
+</pre><hr><pre>
+# Loop over fixed length blocks.
+while (block := f.read(256)) != '':
+    process(block)   # 'block' is needed twice
+</pre><hr><pre>
+# Reuse a value that's expensive to compute.
+[y := f(x), y**2, y**3]
+# zamiast [f(x), f(x)**2, f(x)**3]
+</pre><hr><pre>
+# Share a subexpression between a comprehension filter clause and its output.
+filtered_data = [y for x in data if (y := f(x)) is not None]
+# zamiast [f(x) for x in data if f(x) is not None]
+</pre><hr>
+
 <h3>INSTRUKCJE WYRAŻEŃ</h3>
 
 <p>Wyrażenia można użyć jako instrukcji, ale ma to sens

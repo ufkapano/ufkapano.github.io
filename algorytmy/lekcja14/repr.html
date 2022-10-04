@@ -35,7 +35,7 @@ gdzie wiersze i kolumny są numerowane wierzchołkami.
 Jeżeli istnieje krawędź (a,b), to A[a,b] wynosi 1 (True).
 W przeciwnym wypadku A[a,b] wynosi 0 (False).
 Reprezentacja ta jest wydajna dla grafów gęstych z dużą liczbą krawędzi.
-Wykorzystanie pamięci jest rzędu O(V*V).
+Wykorzystanie pamięci jest rzędu O(V^2).
 Do takiej tablicy łatwo można wpisywać wagi dla każdej krawędzi.
 Reprezentacja jest też przydatna w sytuacji, gdy chcemy szybko
 sprawdzić istnienie krawędzi między dwoma wierzchołkami [Cormen].
@@ -64,7 +64,11 @@ graph = {0: {1: 1}, 1: {2: 1}, 2: {0: 1, 3: 1}, 3: {1: 1}} # wagi (dict+dict)
 graph = {0: {1: Edge(0, 1, 1)}, 
 1: {2: Edge(1, 2, 1)}, 
 2: {0: Edge(2, 0, 1), 3: Edge(2, 3, 1)}, 
-3: {1: Edge(3, 1, 1)}} # wagi
+3: {1: Edge(3, 1, 1)}} # wagi w pakiecie 'graphtheory'
+graph = {0: {1: {'weight': 1}}, 
+1: {2: {'weight': 1}}, 
+2: {0: {'weight': 1}, 3: {'weight': 1}}, 
+3: {1: {'weight': 1}}} # wagi w NetworkX
 </pre>
 
 <li><em>Lista krawędzi</em>. 

@@ -1,0 +1,117 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter Label</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>Widżet 'Label' jest używany do wyświetlania tekstu lub obrazów.
+Tekst wyświetlany przez widżet nie może być edytowany przez użytkownika.
+
+<hr><pre>
+# label1.py
+import tkinter as tk   # Py3
+from tkinter import ttk   # themed widgets
+
+root = tk.Tk()   # root widget
+
+# tutaj dodajemy widżety
+
+label = tk.Label(root, text="A label with a very long text")
+#label = tk.Label(root, text="Hello", bg="red")
+#label = ttk.Label(root, text="Hello")
+
+label.grid()   # użycie menedżera geometrii
+
+root.mainloop()
+</pre><hr><pre>
+Wybrane 'keyword arguments' dla Label()
+
+master=root     # pierwszy argument
+text="Hello"
+fg="white"   # set the text color to white ('fg' or 'foreground')
+bg="black"   # set the background color to black ('bg' or 'background')
+width=50   # in text units
+height=10   # in text units
+font="Times 10 bold"
+justify=tk.LEFT
+padx=20
+cursor="pencil"   # wygląd kursora myszy, gdy przesuwa się nad widżetem
+# ('pencil', 'gumby', 'watch', 'cross', 'hand2')
+</pre><hr><pre>
+Ustawianie parametrów w widżetach
+
+label = tk.Label(root, text="Hello")   # w czasie tworzenia
+label.config(bg="red", fg="black")   # użycie config(), można podać wiele opcji
+label.configure(bg="red")   # jw
+label["fg"] = "blue"   # użycie dict, możliwa tylko jedna opcja na raz
+label["text"] = "text changed"
+txt = label.cget("text")   # return string (bieżąca wartość opcji)
+txt = label["text"]   # jw
+</pre><hr><pre>
+Formaty dla kolorów (stringi): "color_name", "#RRGGBB"
+
+Nazwy kolorów: 
+white, black, gray (silver),
+red, pink, orange, yellow (gold, khaki), 
+purple (violet, magenta, indigo),
+green (lime, olive, teal), 
+blue (aqua, cyan, navy), 
+brown (tan, chocolate, sienna, maroon),
+
+Opis fontów, opcja font=(family, size, style):
+("Times", 10, "bold") or string "Times 10 bold" (10-point size),
+("Helvetica", 10, "bold italic") or string "Helvetica 10 bold italic",
+("Symbol", 8) or string "Symbol 8".
+
+Typowe rodziny dostępne dla większości platform:
+Arial (corresponds to Helvetica), Courier New (Courier), Comic Sans MS, 
+Fixedsys, MS Sans Serif, MS Serif, Symbol, System, Times New Roman (Times), 
+and Verdana.
+
+Dostępne style fontów to 'normal', 'bold', 'roman', 'italic', 'underline', 
+'overstrike', albo ich kombinacje ("bold italic").
+</pre><hr>
+
+<h3>OBRAZY</h3>
+
+<p>Klasa 'PhotoImage' jest używana do wyświetlania obrazów
+w etykietach, przyciskach i widżetach tekstowych.
+
+<p>Jeżeli opcja 'compound' jest ustawiona na tk.BOTTOM, tk.LEFT, tk.RIGHT,
+lub tk.TOP, wtedy obraz jest rysowany odpowiednio na dole, z lewej, z prawej
+lub na górze tekstu.
+Bez opcji 'compound' tekst jest niewidoczny.
+
+<hr><pre>
+# label3.py
+import tkinter as tk
+
+root = tk.Tk()
+
+#logo = tk.PhotoImage(file="img/python_logo.gif")
+logo = tk.PhotoImage(file="img/python_logo.png")
+
+#label = tk.Label(root, image=logo)
+
+label = tk.Label(root,
+    compound=tk.CENTER,   # tekst i obraz razem
+    image=logo,
+    text="[Python logo]"
+)
+label.image = logo   # zapisujemy referencję (wg effbot.org)
+
+label.grid()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

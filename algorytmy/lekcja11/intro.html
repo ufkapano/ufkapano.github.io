@@ -6,153 +6,85 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Podstawy sortowania</h1>
+<p><a href="../index.html">Python (index)</a>
+<hr>
 
-<h3>WPROWADZENIE</h3>
+<h1>Wprowadzenie do tkinter</h1>
 
-<p><em>Sortowaniem</em> nazywamy proces ustawiania zbioru obiektów 
-w określonym porządku [Wirth]. 
-Sortowanie stosuje się w celu ułatwienia
-późniejszego wyszukiwania elementów sortowanego zbioru.
+<p>https://docs.python.org/3/library/tkinter.html
 
-<hr><pre>
-SPECYFIKACJA
-Problem sortowania [Cormen].
+<p>https://realpython.com/python-gui-tkinter/
 
-DANE WEJŚCIOWE
-Ciąg n liczb (a_1, a_2, ..., a_n).
+<p>https://tkdocs.com/
 
-DANE WYJŚCIOWE
-Permutacja (zmiana kolejności) (a_1', a_2', ..., a_n')
-ciągu wejściowego taka, że a_1' &lt;= a_2' &lt;= ... &lt;= a_n'.
-</pre><hr>
+<h3>INSTALACJA</h3>
 
-<p>Podział metod sortowania:
-
-<ul>
-<li>Sortowanie tablic (sortowanie wewnętrzne).
-Dane są przechowywane w szybkiej, ale ograniczonej
-pamięci o dostępie swobodnym. Znamy liczbę elementów.
-Sortowanie powinno być wykonane <em>in situ</em> (w miejscu, in place).
-
-<li>Sortowanie plików sekwencyjnych (sortowanie zewnętrzne).
-Dane są przechowywane w powolnej, ale pojemnej pamięci
-zewnętrznej o dostępie sekwencyjnym. Nie znamy liczby
-przetwarzanych elementów, ale na końcu ciągu umieszczamy
-wyróżniony element, wartownika, który nie należy do tego zbioru. 
-Czasem wartownik pełni rolę ogólniejszą niż tylko zakończenie zbioru.
-</ul>
-
-<p>Algorytmy sortowania są zazwyczaj klasyfikowane według 
-kilku kryteriów.
-
-<ul>
-<li>Złożoność czasowa (pesymistyczna, oczekiwana) - 
-zależność liczby wykonanych operacji w stosunku do liczebności 
-sortowanego zbioru (n).
-
-<li>Złożoność pamięciowa.
-
-<li>Sortowanie stabilne albo niestabilne.
-
-<li>Sortowanie adaptacyjne (polega na wykonywaniu różnych sekwencji
-operacji dla różnych układów danych)
-albo nieadaptacyjne 
-(sekwencja wykonywanych operacji nie zależy od kolejności danych).
-</ul>
-
-<h3>MODELE SORTOWANIA</h3>
-
-<p>Podstawowy model sortowania polega na porównywaniu całych 
-kluczy w celu ustalenia, który jest większy.
-Mamy teoretyczne ograniczenie na złożoność czasową O(n*log(n)).
-Czasem można zastosować inne podejście.
-
-<p>W sortowaniu pozycyjnym na raz przetwarza się fragmenty kluczy,
-a nie całe klucze [radix sort]. 
-Przykładem może być sprawdzanie kolejnych
-cyfr liczby naturalnej lub znaków w napisie.
-Można zaczynać sortowanie od cyfr najbardziej znaczących lub 
-najmniej znaczących.
-
-<p>Jeżeli klucze należą do skończonego zbioru k-elementowego, 
-to zamiast porównywania kluczy można zliczać wystąpienia kolejnych kluczy
-[counting sort].
-Złożoność czasowa to O(n+k), złożoność pamięciowa to O(k)
-[klucze nierozróżnialne] lub O(n+k) [klucze rozróżnialne, to jest
-właściwie sortowanie bukietowe, bucket sort].
-
-<h3>STABILNOŚĆ</h3>
-
-<p>Metodę sortowania nazywamy <em>stabilną</em>, jeżeli podczas
-procesu sortowania pozostaje nie zmieniony względny
-porządek obiektów o identycznych kluczach. Przykład:
-alfabetyczna lista nazwisk uczniów sortowana wg ocen.
+<p>Biblioteka 'tkinter' jest dostarczana z Pythonem 3, więc zwykle nie trzeba
+jej osobno instalować. Jednak czasami, szczególnie pod Windows,
+biblioteka może być przypadkowo usunięta z listy instalowanych 
+elementów Pythona.
 
 <hr><pre>
-Przykład sortowania par liczb całkowitych względem
-pierwszej wartości.
+PIP (konto użytkownika lub środowisko wirtualne)
+pip install tk
 
-(4, 1) (3, 7) (3, 1) (5, 6) - oryginalna kolejność
-(3, 7) (3, 1) (4, 1) (5, 6) - kolejność zachowana
-(3, 1) (3, 7) (4, 1) (5, 6) - kolejność zmieniona
+APT (dla całego komputera)
+Pakiety Debiana: python-tk, python3-tk, oraz zależności.
 </pre><hr>
 
-<h3>PRZYKŁADOWE ALGORYTMY STABILNE</h3>
+<h3>START</h3>
 
-<p>n to liczba elementów do posortowania, 
-k to liczba różnych elementów.
+<p>Pakiet 'tkinter' jest standardowym interfejsem Pythona do Tcl/Tk GUI toolkit.
+Tk i tkinter są dostępne na większości platform Uniksowych i na Windows.
+Samo Tk nie jest częścią Pythona, jest rozwijane w firmie ActiveState.
 
-<ul>
-<li>Sortowanie bąbelkowe (ang. bubblesort) - czas O(n^2),
-dodatkowa pamięć O(1).
+<hr><pre>
+# Podane polecenie powinno otworzyć okno ukazujące interfejs Tk.
 
-<li>Sortowanie przez wstawianie (ang. insertion sort) - czas O(n^2),
-dodatkowa pamięć O(1).
+$ python2 -m Tkinter     # Py2, version 8.6 in Debian 10
+$ python3 -m tkinter    # Py3, version 8.6 in Debian 10
+</pre><hr><pre>
+# Sprawdzenie wersji tkinter w trybie interaktywnym Pythona.
 
-<li>Sortowanie przez scalanie (ang. merge sort) 
-- czas O(n log n), wymaga O(n) dodatkowej pamięci.
+#import Tkinter as tk   # Py2
+import tkinter as tk   # Py3 lub Py2 w Debianie
+tk._test()   # otwarcie okna
+</pre><hr>
 
-<li>Sortowanie przez zliczanie (ang. counting sort lub count sort) 
-- czas O(n + k), wymaga O(n + k) dodatkowej pamięci.
+<p>Tkinter jest lekki i wieloplatformowy (Windows, MacOS, Linux). 
+Jest to faktycznie standardowy GUI framework dla Pythona,
+choć czasem jest krytykowany za przestarzały wygląd.
+Przy przejściu z Py2 do Py3 pewne moduły tkinter zmieniły nazwy,
+przez co zmienił się sposób importu.
 
-<li>Sortowanie kubełkowe (ang. bucket sort) 
-- czas O(n), wymaga O(k) dodatkowej pamięci.
+<hr><pre>
+import tkinter as tk   # Py3
+from tkinter import ttk   # themed widgets
 
-<li>Sortowanie pozycyjne (ang. radix sort) -
-czas O(d*(n+k)), gdzie k to wielkość domeny cyfr, 
-a d szerokość kluczy w cyfrach.
-Wymaga O(n+k) dodatkowej pamięci.
+root = tk.Tk()   # ustawienie głównego okna aplikacji
 
-<li>Sortowanie biblioteczne (ang. library sort) 
-- czas O(n*log(n)), pesymistyczny O(n^2).
+root.title("first")   # opcjonalny tytuł okna, domyślny tytuł to "tk"
 
-<li>Sortowanie algorytmem <em>timsort</em> stosowanym w Pythonie.
-</ul>
+#root.configure(width=200, height=100)   # optional
+#root.geometry("200x100")   # optional, the same
+#root.geometry("{}x{}".format(width, height)
+#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
 
-<h3>PRZYKŁADOWE ALGORYTMY NIESTABILNE</h3>
+# Tutaj dodajemy widżety.
 
-<ul>
-<li>Sortowanie przez wybieranie (ang. selection sort)  
-- czas O(n^2), może być stabilne po odpowiednich zmianach.
+#label = tk.Label(root, text="Hello")
+label = ttk.Label(root, text="Hello")
 
-<li>Sortowanie Shella (ang. shellsort) - złożoność nieznana.
+label.grid()   # użycie menedżera geometrii
 
-<li>Sortowanie grzebieniowe (ang. combsort) - złożoność nieznana.
+root.mainloop()   # uruchomienie pętli zdarzeń tkinter
+</pre><hr>
 
-<li>Sortowanie szybkie (ang. quicksort) - czas O(n*log(n)), pesymistyczny O(n^2),
-z wykorzystaniem algorytmu selekcji "mediana median" ("magicznych piątek") 
-do wyszukiwania mediany, optymistyczna złożoność to O(n log n).
-
-<li>Sortowanie introspektywne (ang. introspective sort lub introsort)
-- czas O(n log n).
-
-<li>Sortowanie przez kopcowanie (ang. heapsort) - czas O(n log n).
-
-</ul>
-
-
-
+<p>Instrukcja 'root.mainloop()' poleca Pythonowi uruchomić 
+'pętlę zdarzeń' tkinter. Wtedy rozpoczyna się nasłuchiwanie zdarzeń,
+takich jak naciśnięcia przycisków lub klawiszy klawiatury.
+Kod następujący po tej instrukcji jest blokowany aż do chwili,
+kiedy wywołane okno zostaje zamknięte.
 
 </body>
 </html>

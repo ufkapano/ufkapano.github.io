@@ -78,7 +78,7 @@ Rozwiązaniem jest ciąg kolejno usuwanych wierzchołków.
 <p>Wersja dla grafów GvR bez otoczki obiektowej.
 
 <hr><pre>
-import Queue
+import collections
 
 def topsort_queue(graph):
     # Słownik z liczbą poprzedników wierzchołka 
@@ -90,13 +90,13 @@ def topsort_queue(graph):
     # Zakończyło się wczytywanie danych.
     # Tworzymy kolejkę wierzchołków nie mających poprzedników.
     sorted_nodes = list()
-    queue = Queue.Queue()
+    queue = collections.deque()
     # Do kolejki idą pierwsze wierzchołki bez poprzedników.
     for node in graph:
         if in_edges[node] == 0:
-            queue.put(node)
-    while not queue.empty():
-        source = queue.get()   # weź wierzchołek z kolejki
+            queue.append(node)
+    while queue:
+        source = queue.popleft()   # weź wierzchołek z kolejki
         sorted_nodes.append(source)   # wstaw wierzchołek do rozwiązania
         # Usuwamy wszystkie krawędzie wychodzące z wierzchołka.
         for target in graph[source]:
@@ -104,7 +104,7 @@ def topsort_queue(graph):
             in_edges[target] -= 1
             # Jeżeli zero, to wstawiamy do kolejki.
             if in_edges[target] == 0:
-                queue.put(target)
+                queue.append(target)
     return sorted_nodes
 </pre><hr>
 

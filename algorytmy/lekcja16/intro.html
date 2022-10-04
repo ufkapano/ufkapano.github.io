@@ -1,0 +1,158 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podstawy sortowania</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p><em>Sortowaniem</em> nazywamy proces ustawiania zbioru obiektów 
+w określonym porządku [Wirth]. 
+Sortowanie stosuje się w celu ułatwienia
+późniejszego wyszukiwania elementów sortowanego zbioru.
+
+<hr><pre>
+SPECYFIKACJA
+Problem sortowania [Cormen].
+
+DANE WEJŚCIOWE
+Ciąg n liczb (a_1, a_2, ..., a_n).
+
+DANE WYJŚCIOWE
+Permutacja (zmiana kolejności) (a_1', a_2', ..., a_n')
+ciągu wejściowego taka, że a_1' &lt;= a_2' &lt;= ... &lt;= a_n'.
+</pre><hr>
+
+<p>Podział metod sortowania:
+
+<ul>
+<li>Sortowanie tablic (sortowanie wewnętrzne).
+Dane są przechowywane w szybkiej, ale ograniczonej
+pamięci o dostępie swobodnym. Znamy liczbę elementów.
+Sortowanie powinno być wykonane <em>in situ</em> (w miejscu, in place).
+
+<li>Sortowanie plików sekwencyjnych (sortowanie zewnętrzne).
+Dane są przechowywane w powolnej, ale pojemnej pamięci
+zewnętrznej o dostępie sekwencyjnym. Nie znamy liczby
+przetwarzanych elementów, ale na końcu ciągu umieszczamy
+wyróżniony element, wartownika, który nie należy do tego zbioru. 
+Czasem wartownik pełni rolę ogólniejszą niż tylko zakończenie zbioru.
+</ul>
+
+<p>Algorytmy sortowania są zazwyczaj klasyfikowane według 
+kilku kryteriów.
+
+<ul>
+<li>Złożoność czasowa (pesymistyczna, oczekiwana) - 
+zależność liczby wykonanych operacji w stosunku do liczebności 
+sortowanego zbioru (n).
+
+<li>Złożoność pamięciowa.
+
+<li>Sortowanie stabilne albo niestabilne.
+
+<li>Sortowanie adaptacyjne (polega na wykonywaniu różnych sekwencji
+operacji dla różnych układów danych)
+albo nieadaptacyjne 
+(sekwencja wykonywanych operacji nie zależy od kolejności danych).
+</ul>
+
+<h3>MODELE SORTOWANIA</h3>
+
+<p>Podstawowy model sortowania polega na porównywaniu całych 
+kluczy w celu ustalenia, który jest większy.
+Mamy teoretyczne ograniczenie na złożoność czasową O(n log n).
+Czasem można zastosować inne podejście.
+
+<p>W sortowaniu pozycyjnym na raz przetwarza się fragmenty kluczy,
+a nie całe klucze [radix sort]. 
+Przykładem może być sprawdzanie kolejnych
+cyfr liczby naturalnej lub znaków w napisie.
+Można zaczynać sortowanie od cyfr najbardziej znaczących lub 
+najmniej znaczących.
+
+<p>Jeżeli klucze należą do skończonego zbioru k-elementowego, 
+to zamiast porównywania kluczy można zliczać wystąpienia kolejnych kluczy
+[counting sort].
+Złożoność czasowa to O(n+k), złożoność pamięciowa to O(k)
+[klucze nierozróżnialne] lub O(n+k) [klucze rozróżnialne, to jest
+właściwie sortowanie bukietowe, bucket sort].
+
+<h3>STABILNOŚĆ</h3>
+
+<p>Metodę sortowania nazywamy <em>stabilną</em>, jeżeli podczas
+procesu sortowania pozostaje nie zmieniony względny
+porządek obiektów o identycznych kluczach. Przykład:
+alfabetyczna lista nazwisk uczniów sortowana wg ocen.
+
+<hr><pre>
+Przykład sortowania par liczb całkowitych względem
+pierwszej wartości.
+
+(4, 1) (3, 7) (3, 1) (5, 6) - oryginalna kolejność
+(3, 7) (3, 1) (4, 1) (5, 6) - kolejność zachowana
+(3, 1) (3, 7) (4, 1) (5, 6) - kolejność zmieniona
+</pre><hr>
+
+<h3>PRZYKŁADOWE ALGORYTMY STABILNE</h3>
+
+<p>n to liczba elementów do posortowania, 
+k to liczba różnych elementów.
+
+<ul>
+<li>Sortowanie bąbelkowe (ang. bubblesort) - czas O(n^2),
+dodatkowa pamięć O(1).
+
+<li>Sortowanie przez wstawianie (ang. insertion sort) - czas O(n^2),
+dodatkowa pamięć O(1).
+
+<li>Sortowanie przez scalanie (ang. merge sort) 
+- czas O(n log n), wymaga O(n) dodatkowej pamięci.
+
+<li>Sortowanie przez zliczanie (ang. counting sort lub count sort) 
+- czas O(n + k), wymaga O(n + k) dodatkowej pamięci.
+
+<li>Sortowanie kubełkowe (ang. bucket sort) 
+- czas O(n), wymaga O(k) dodatkowej pamięci.
+
+<li>Sortowanie pozycyjne (ang. radix sort) -
+czas O(d*(n+k)), gdzie k to wielkość domeny cyfr, 
+a d szerokość kluczy w cyfrach.
+Wymaga O(n+k) dodatkowej pamięci.
+
+<li>Sortowanie biblioteczne (ang. library sort) 
+- czas O(n log n), pesymistyczny O(n^2).
+
+<li>Sortowanie algorytmem <em>timsort</em> stosowanym w Pythonie.
+</ul>
+
+<h3>PRZYKŁADOWE ALGORYTMY NIESTABILNE</h3>
+
+<ul>
+<li>Sortowanie przez wybieranie (ang. selection sort)  
+- czas O(n^2), może być stabilne po odpowiednich zmianach.
+
+<li>Sortowanie Shella (ang. shellsort) - złożoność nieznana.
+
+<li>Sortowanie grzebieniowe (ang. combsort) - złożoność nieznana.
+
+<li>Sortowanie szybkie (ang. quicksort) - czas O(n log n), pesymistyczny O(n^2),
+z wykorzystaniem algorytmu selekcji "mediana median" ("magicznych piątek") 
+do wyszukiwania mediany, optymistyczna złożoność to O(n log n).
+
+<li>Sortowanie introspektywne (ang. introspective sort lub introsort)
+- czas O(n log n).
+
+<li>Sortowanie przez kopcowanie (ang. heapsort) - czas O(n log n).
+
+</ul>
+
+
+
+
+</body>
+</html>

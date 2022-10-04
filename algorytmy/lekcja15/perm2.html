@@ -29,7 +29,7 @@ class Perm:
                 raise ValueError("different size and len(data)")
             self.data = data
         else:
-            self.data = range(self.size)
+            self.data = list(range(self.size))
 
     def __str__(self):
         """Napis odpowiadający liście wewnętrznej w permutacji."""
@@ -37,7 +37,7 @@ class Perm:
 
     def __repr__(self):
         """Reprezentacja napisowa permutacji."""
-        return "Perm({0}, data={1})".format(self.size, self.data)
+        return "Perm({}, data={})".format(self.size, self.data)
 
     def __mul__(self, other):
         """Mnożenie dwóch permutacji."""

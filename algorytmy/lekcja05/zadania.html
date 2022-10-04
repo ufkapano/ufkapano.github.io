@@ -56,11 +56,12 @@ def cmp_frac(frac1, frac2): pass        # -1 | 0 | +1
 
 def frac2float(frac): pass              # konwersja do float
 
-f1 = [-1, 2]                  # -1/2
-f2 = [0, 1]                   # zero
-f3 = [3, 1]                   # 3
-f4 = [6, 2]                   # 3 (niejednoznaczność)
-f5 = [0, 2]                   # zero (niejednoznaczność)
+# f1 = [-1, 2]      # -1/2
+# f2 = [1, -2]      # -1/2 (niejednoznaczność)
+# f3 = [0, 1]       # zero
+# f4 = [0, 2]       # zero (niejednoznaczność)
+# f5 = [3, 1]       # 3
+# f6 = [6, 2]       # 3 (niejednoznaczność)
 
 import unittest
 
@@ -119,11 +120,12 @@ def pow_poly(poly, n): pass             # poly(x) ** n
 
 def diff_poly(poly): pass               # pochodna wielomianu
 
-p1 = [2, 1]                   # W(x) = 2 + x
-p2 = [-3, 0, 1]               # W(x) = -3 + x**2
-p3 = [3]                      # W(x) = 3, wielomian zerowego stopnia
-p4 = [0]                      # zero
-p5 = [0, 0, 0]                # zero (niejednoznaczność)
+# p1 = [2, 1]                   # W(x) = 2 + x
+# p2 = [2, 1, 0]                # jw  (niejednoznaczność)
+# p3 = [-3, 0, 1]               # W(x) = -3 + x^2
+# p4 = [3]                      # W(x) = 3, wielomian zerowego stopnia
+# p5 = [0]                      # zero
+# p6 = [0, 0, 0]                # zero (niejednoznaczność)
 
 import unittest
 
@@ -131,7 +133,7 @@ class TestPolynomials(unittest.TestCase):
 
     def setUp(self):
         self.p1 = [0, 1]      # W(x) = x
-        self.p2 = [0, 0, 1]   # W(x) = x*x
+        self.p2 = [0, 0, 1]   # W(x) = x^2
 
     def test_add_poly(self):
         self.assertEqual(add_poly(self.p1, self.p2), [0, 1, 1])
@@ -142,7 +144,7 @@ class TestPolynomials(unittest.TestCase):
 
     def test_is_zero(self): pass
 
-    def test_cmp_poly(self): pass
+    def test_eq_poly(self): pass
 
     def test_eval_poly(self): pass
 

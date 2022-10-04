@@ -1,0 +1,52 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter Text</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Widżet 'Text' jest używany do wstawiania wielowierszowego tekstu.
+
+<hr><pre>
+import tkinter as tk   # Py3
+from tkinter import ttk
+
+root = tk.Tk()
+
+textbox = tk.Text(root)
+
+textbox.grid()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+Wybrane 'keyword arguments' dla Text()
+
+master=root     # pierwszy argument
+width=50   # in text units
+height=10   # in text units
+</pre><hr><pre>
+Operacje
+
+char = textbox.get("line.char")   # wiersze są numerowane od 1
+char = textbox.get("1.0")   # pierwszy znak z pierwszego wiersza
+word = textbox.get(first, last)   # pobranie zakresu znaków jako stringu
+word = textbox.get("1.0", "1.5")   # pobranie 5 znaków
+word = textbox.get("1.0", tk.END)   # pobranie całego tekstu
+textbox.delete("line.char")   # usuwanie znaku
+textbox.delete("1.0")
+textbox.delete(first, last)   # usuwanie zakresu znaków
+textbox.delete("1.0", "1.4")
+textbox.delete("1.0", tk.END)   # usuwanie całego tekstu
+textbox.insert("line.char", "text")
+textbox.insert("1.0", "text")
+textbox.insert("2.0", "\nThis is a new line.")
+textbox.insert(tk.END, "\nPut me at the end!") # wstawienie tekstu na koniec
+</pre><hr>
+
+</body>
+</html>

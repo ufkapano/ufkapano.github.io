@@ -8,7 +8,17 @@
 
 <h1>Iteratory</h1>
 
+<p>https://docs.python.org/3/library/functions.html#iter
+
 <h3>WPROWADZENIE</h3>
+
+<p>Warto zestawić trzy ważne pojęcia:
+<br>(1) 'iterable' to cokolwiek, po czym można iterować,
+[funkcja iter() potrafi zbudować iterator],
+<br>(2) 'iterator' to rzecz, która realizuje iterowanie
+[metody __iter__() i __next__() powinny być obecne],
+<br>(3) 'generator' to jeden z prostszych sposobów zbudowania własnego 
+iteratora ['generator expressions' i 'generator functions'].
 
 <p>Iterator jest obiektem reprezentującym strumień danych.
 Kolejne wywołania funkcji next() zwracają kolejne elementy ze strumienia danych.
@@ -20,11 +30,20 @@ obiekt iteratora. Po każdym iteratorze można iterować (jest iterable).
 Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
 od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
 iterator (dla list dostaniemy świeży iterator idący od początku listy).
-Kiedy iterator zostanie wyczerpany, nie można użyć ponownie ani zresetować.
+Kiedy iterator zostanie wyczerpany, nie można go użyć ponownie ani zresetować.
 
-<p>Funkcja iter(X) zwraca obiekt iteratora, utworzony na bazie obiektu X.
-Obiekt X musi wspierać protokół iteracji (metoda __iter__)
-lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
+<hr><pre>
+# Przykłady iterowania.
+
+for item in iterable:
+    print(item)
+L = list(iterable)
+result = sum(iterable)
+high = max(iterable)
+low = min(iterable)
+</pre><hr>
+
+<h3>ITERATORY SKOŃCZONE</h3>
 
 <hr><pre>
 def Reverse(sequence):
@@ -56,8 +75,8 @@ class Reverse:
         # W Py2 mamy metodę X.next().
         # W Py3 mamy metodę X.__next__().
         # W Py3 i Py2.6+ mamy funkcję wbudowaną next().
-
-# Zastosowanie
+</pre><hr><pre>
+# Zastosowanie.
 for char in Reverse("spam"):
     print ( char )   # m, a, p, s
 
@@ -85,7 +104,16 @@ while True:
     except StopIteration:
         # if StopIteration is raised, break from loop
         break
-</pre><hr><pre>
+</pre><hr>
+
+<h3>FUNKCJA iter()</h3>
+
+<p>Funkcja iter(X) zwraca obiekt iteratora, utworzony na bazie obiektu X.
+Obiekt X musi wspierać protokół iteracji (metoda __iter__)
+lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
+
+
+<hr><pre>
 # Przygotowanie iteratora na bazie obiektu wywoływalnego.
 
 class MyInt:
@@ -101,7 +129,7 @@ class MyInt:
 x = MyInt()   # x to MyInt instance, obiekt wywoływalny
 print ( x() )   # 1
 print ( x() )   # 2
-
+</pre><hr><pre>
 # Przygotowanie iteratora, który zakończy pracę, jeżeli x zwróci 10.
 y = iter(x, 10)     # y to callable-iterator object
 
@@ -110,12 +138,16 @@ for i in y:         # zwroci 3,4,5,6,7,8,9 (bez 10)
 # 10 wykorzystane na zatrzymanie iteratora
 #print ( next(y) )   # wyzwala StopIteration
 print ( x() )   # 11
+</pre><hr><pre>
+# Iteratory nieskończone.
+
+import itertools
+
+iter_zeros1 = iter(int, 1)   # int() gives 0
+iter_zeros2 = iter((lambda: 0), 1)
+iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
+iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
 </pre><hr>
-
-<p>Wg dokumentacji Pythona, generatory dostarczają wygodnego sposobu
-implementacji protokołu iteracji.
-Każdy generator jest iteratorem, ale nie na odwrót.
-
 
 </body>
 </html>

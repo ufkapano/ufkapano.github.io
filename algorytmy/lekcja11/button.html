@@ -1,0 +1,80 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter Button</h1>
+
+<p>https://realpython.com/python-gui-tkinter/
+
+<h3>INTRODUCTION</h3>
+
+<p>Widżet 'Button' jest używany do wyświetlania klikalnego przycisku.
+Można go skonfigurować tak, aby naciśnięcie przycisku wywoływało
+pewną funkcję.
+
+<p>Wiele 'keyword arguments' z widżetu 'Label' działa także w widżecie 'Button'.
+
+<hr><pre>
+# button1.py
+import tkinter as tk   # Py3
+from tkinter import ttk   # themed widgets
+
+root = tk.Tk()
+
+def callback():
+    print("called the callback!")
+
+#button = tk.Button(root, text="Click")
+#button = ttk.Button(root, text="Click")
+
+button = tk.Button(root,
+    text="Click",
+    width=25,
+    height=5,
+    bg="blue",   # zmiana koloru w obecności wskaźnika
+    fg="yellow",
+    command=callback,
+)
+button.grid()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr><pre>
+Wybrane 'keyword arguments' dla Button()
+
+master=root     # pierwszy argument
+text="Click"
+fg="white"   # set the text color to white ('fg' or 'foreground')
+bg="black"   # set the background color to black ('bg' or 'background')
+width=50   # in text units
+height=10   # in text units
+font="Times 10 bold"
+command=callback   # funkcja wywoływana po kliknięciu przycisku
+command=sys.exit   # zakończenie programu
+command=(lambda: print("message in the command line"))
+command=root.quit   # zakończenie działania pętli zdarzeń
+command=top.destroy   # zamknięcie okna top-level
+</pre><hr><pre>
+# button2.py
+import tkinter as tk
+from tkinter import ttk   # themed widgets
+
+root = tk.Tk()
+
+label = tk.Label(root, text="Press any button")
+label.grid()
+
+button = tk.Button(root, text="Hello", command=lambda: print("Hello!"))
+button.grid()
+
+button = tk.Button(root, text="Quit", command=root.quit)
+button.grid()
+
+root.mainloop()   # run the tkinter event loop
+</pre><hr>
+
+</body>
+</html>

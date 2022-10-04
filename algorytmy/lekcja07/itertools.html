@@ -1,0 +1,140 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduł itertools</h1>
+
+<p>https://docs.python.org/3/library/itertools.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'itertools' (Py2.3+) zawiera funkcje tworzące iteratory 
+do wydajnego realizowania pętli. 
+Prawdziwa siła tych narzędzi leży w odpowiednim komponowaniu funkcji 
+do szybkiego, wydajnego pamięciowo i dobrze wyglądającego kodu.
+
+<hr><pre>
+import itertools
+
+# Iteratory nieskończone
+
+# itertools.count(start=0, step=1])
+itertools.count(10)   # yield 10 11 12 13 14 ...
+itertools.count(10, 5)   # yield 10 15 20 25 ...
+
+# enumerate(iterable, start=0)
+zip(itertools.count(start=0), iterable)   # emulacja bez pętli for
+
+# itertools.cycle(iterable)
+itertools.cycle('ABCD')   # yield A B C D A B C D ...
+itertools.cycle(range(1, 4))   # yield 1 2 3 1 2 3 1 2 3
+
+# itertools.repeat(item [,n])
+itertools.repeat(10)   # yield 10 10 10 10 ...
+itertools.repeat(10, 3)   # yield 10 10 10 (3 times)
+
+list(map(pow, range(10), itertools.repeat(2)))   # działa dla każdego range() (bez pętli for)
+#list(map(pow, range(10), iter((lambda: 2), 1)))   # jw
+#list(pow(x, 2) for x in range(10))   # proste podejście
+# [0, 1, 4, 9, 16, 25, 36, 49, 64, 81]   # wynik
+</pre><hr><pre>
+# itertools.chain(*iterables)
+itertools.chain('ABC', 'DEF')   # yield A B C D E F
+
+# itertools.chain.from_iterable(iterable)   # alternatywny konstruktor dla chain()
+itertools.chain.from_iterable(['ABC', 'DEF'])   # yield A B C D E F
+</pre><hr><pre>
+# itertools.islice(iterable, stop)
+# itertools.islice(iterable, start, stop [, step])
+# Jeżeli 'stop' jest None, wtedy iteracja trwa aż iterator się wyczerpie,
+# o ile nie jest nieskończony.
+
+list(itertools.islice('ABCDEFG', 2))   # ['A', 'B'], stop=2
+
+list(itertools.islice('ABCDEFG', 2, None))   # ['C', 'D', 'E', 'F', 'G']
+
+list(itertools.islice('ABCDEFG', 0, None, 2))   # ['A', 'C', 'E', 'G']
+</pre><hr><pre>
+# itertools.zip_longest(*iterables[, fillvalue]) in Py3
+# itertools.izip_longest(*iterables[, fillvalue]) in Py2.6+
+# Może być wykorzystany dla wielomianów.
+
+itertools.zip_longest('ABCD', 'xy', fillvalue='-')
+# yield ('A', 'x'), ('B', 'y'), ('C', '-'), ('D', '-')
+
+itertools.zip_longest([10, 20], [1, 2, 3, 4], fillvalue=0)
+# yield (10, 1), (20, 2), (0, 3), (0, 4)
+</pre><hr><pre>
+# itertools.product(*iterables, repeat=1)
+# Iloczyn kartezjański wejściowych iteratorów.
+# product(A, B) jest równoważne ((x,y) for x in A for y in B).
+
+list(itertools.product("abc", "123"))
+# [('a', '1'), ('a', '2'), ('a', '3'),
+# ('b', '1'), ('b', '2'), ('b', '3'), 
+# ('c', '1'), ('c', '2'), ('c', '3')]
+
+[x+y for (x,y) in itertools.product("abc","123")]
+# ['a1', 'a2', 'a3', 'b1', 'b2', 'b3', 'c1', 'c2', 'c3']
+
+[x+y for (x,y) in itertools.product("abc", repeat=2)]
+# ['aa', 'ab', 'ac', 'ba', 'bb', 'bc', 'ca', 'cb', 'cc']
+</pre><hr><pre>
+# Generatory kombinatoryczne.
+
+# itertools.permutations(p[, r])
+# yield r-length tuples, all possible orderings, no repeated elements
+
+list(itertools.permutations([1, 2, 3]))   # 3! = 6 perms
+# [(1, 2, 3), (1, 3, 2), (2, 1, 3), (2, 3, 1), (3, 1, 2), (3, 2, 1)]
+
+list(itertools.permutations([1, 2, 3], 2))
+# [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
+
+# itertools.combinations(p, r)
+# yield r-length tuples, in sorted order, no repeated elements
+
+list(itertools.combinations([1, 2, 3, 4], 3))
+[(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
+
+# itertools.combinations_with_replacement(p, r)
+# yield r-length tuples, in sorted order, with repeated elements
+
+list(itertools.combinations_with_replacement([1, 2, 3, 4], 3))
+# [(1, 1, 1), (1, 1, 2), (1, 1, 3), (1, 1, 4), (1, 2, 2), (1, 2, 3),
+# (1, 2, 4), (1, 3, 3), (1, 3, 4), (1, 4, 4), (2, 2, 2), (2, 2, 3),
+# (2, 2, 4), (2, 3, 3), (2, 3, 4), (2, 4, 4), (3, 3, 3), (3, 3, 4),
+# (3, 4, 4), (4, 4, 4)]
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+# Mamy daną listę wartości 'inputs' i dodatnią liczbę całkowitą n.
+# Napisać funkcję, która dzieli 'inputs' na grupy długości n.
+
+def naive_grouper(inputs, n):
+    num_groups = len(inputs) // n
+    return [tuple(inputs[i*n:(i+1)*n]) for i in range(num_groups)]
+    # Wszystkie elementy z inputs są w pamięci.
+    # Gubimy elementy, jeżeli len(inputs) nie dzieli się przez n.
+
+def better_grouper(inputs, n):
+    iters = [iter(inputs)] * n
+    # To jest lista referencji do tego samego iteratora.
+    return zip(*iters)
+    # zip() zwraca iterator po krotkach.
+    # Gubimy elementy, jeżeli len(inputs) nie dzieli się przez n.
+
+def best_grouper(inputs, n, fillvalue=None):
+    iters = [iter(inputs)] * n
+    return itertools.zip_longest(*iters, fillvalue=fillvalue)
+    # Działa nawet jeżeli n nie dzieli len(inputs).
+</pre><hr>
+
+</body>
+</html>

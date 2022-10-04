@@ -37,7 +37,7 @@ import math
 print ( math.factorial(10) )     # Python 2.6+
 print ( factorial(10) )
 </pre><hr><pre>
-# f(0) = 0, f(1) = 1, f(n) = f(n-1) + f(n-2)
+# f(0) = 0, f(1) = 1, f(n) = f(n-1) + f(n-2).
 
 def fibonacci(n):
     """Ciąg Fibonacciego (definicja rekurencyjna)."""
@@ -46,8 +46,18 @@ def fibonacci(n):
     else:
         return fibonacci(n-1) + fibonacci(n-2)
 </pre><hr><pre>
-# binomial(n, k) = factorial(n) / (factorial(k) * factorial(n-k))
-# binomial(n, 0) = binomial(n, n) = 1
+# avl(0) = 0, avl(1) = 1, avl(h) = avl(h-1) + avl(h-1) + 1,
+# minimalna liczba węzłów w drzewie AVL o wysokości h.
+
+def leonardo(h):
+    """Liczby Leonardo."""
+    if h == 0 or h == 1:
+        return h
+    else:
+        return leonardo(h-1) + leonardo(h-2) + 1
+</pre><hr><pre>
+# binomial(n, k) = factorial(n) / (factorial(k) * factorial(n-k)),
+# binomial(n, 0) = binomial(n, n) = 1.
 
 def binomial(n, k):
     """Dwumian Newtona w wersji z rekurencyjnej."""
