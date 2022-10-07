@@ -35,6 +35,10 @@ Stąd otrzymujemy ograniczenie wysokości drzewa h w zależności
 od liczby węzłów n:
 <br>lg(n+1) &lt;= h &lt; 1.44 lg(n+2) - 0.328.
 
+<p>Liczby Fibonacciego: F(n) = F(n-1) + F(n-2), F(0) = 0, F(1) = 1.
+<br>[AVL(h) + 1] = [AVL(h-1) + 1] + [AVL(h-2) + 1],
+<br>stąd AVL(h) + 1 = F(h+2), a na F(n) mamy zwarty wzór.
+
 <hr><pre>
 | https://en.wikipedia.org/wiki/AVL_tree
 | Algorithm   Average    Worst case

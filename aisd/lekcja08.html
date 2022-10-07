@@ -68,13 +68,13 @@ public:
     MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
     MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const; // checks if the container has no elements
-    int size() const; // liczba elementow w kolejce
+    int size() const; // liczba elementów w kolejce
     void push(const T& item); // dodanie na koniec, push_back(item)
     void push(T&amp;&amp; item); // dodanie na koniec, push_back(std::move(item))
     T& front(); // zwraca koniec, nie usuwa
     T& back(); // zwraca koniec, nie usuwa
-    void pop(); // usuwa poczatek kolejki, pop_front()
-    void clear(); // czyszczenie listy z elementow
+    void pop(); // usuwa początek kolejki, pop_front()
+    void clear(); // czyszczenie listy z elementów
     void display();
 };
 </pre><hr>
@@ -112,10 +112,10 @@ public:
     int max_size() const { return msize-1; }
     void push(const T& item); // dodanie na koniec
     void push(T&amp;&amp; item); // dodanie na koniec
-    T& front() { return tab[head]; } // zwraca poczatek
+    T& front() { return tab[head]; } // zwraca początek
     T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
-    void pop(); // usuwa poczatek
-    void clear(); // czyszczenie listy z elementow
+    void pop(); // usuwa początek
+    void clear(); // czyszczenie listy z elementów
     void display();
 };
 </pre><hr><pre>
