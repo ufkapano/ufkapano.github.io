@@ -8,6 +8,8 @@
 
 <h1>Zbiory</h1>
 
+<p>https://docs.python.org/3/library/stdtypes.html#set-types-set-frozenset
+
 <h3>WPROWADZENIE</h3>
 
 <p>Zbiory są dostępne bez importu od Pythona 2.4.
@@ -85,9 +87,11 @@ X = frozenset()       # zbiór pusty
 X = frozenset([])     # zbiór pusty
 X = frozenset(["b", "e", "t", "a"])
 X = frozenset("beta")     # jw
-# Przy mieszanych set instances wynik jest typu pierwszego.
+
+# Przy mieszanych instancjach zbiorów wynik jest typu pierwszego.
 X = frozenset("ab") | set("bc")   # wynik to frozenset
 X = set("bc") | frozenset("ab")   # wynik to set
+
 # Sprawdzanie: isinstance(x, (set, frozenset))
 set('abc') == frozenset('abc')   # wynik to True
 </pre><hr>

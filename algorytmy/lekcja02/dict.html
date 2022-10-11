@@ -8,6 +8,8 @@
 
 <h1>Słowniki</h1>
 
+<p>https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
+
 <h3>WPROWADZENIE</h3>
 
 <p>Słownik (dictionary) to nieuporządkowany zbiór par (klucz: wartość),
@@ -60,9 +62,14 @@ D['three'] = 'trzy'
 
 # Metody słownika bez parametrów.
 D = {k1:v1, k2:v2, k3:v3}
-D.keys()            # [k1, k2, k3]
-D.values()          # [v1, v2, v3]
-D.items()           # [(k1, v1), (k2, v2), (k3, v3)]
+
+D.keys()            # [k1, k2, k3] Py2
+D.values()          # [v1, v2, v3] Py2
+D.items()           # [(k1, v1), (k2, v2), (k3, v3)] Py2
+
+D.keys()            # zwraca widok kluczy (Py3)
+D.values()          # zwraca widok wartości (Py3)
+D.items()           # zwraca widok par (Py3)
 
 # Metody słownika z parametrami.
 D.has_key('one')    # obecnie zalecane: 'one' in D

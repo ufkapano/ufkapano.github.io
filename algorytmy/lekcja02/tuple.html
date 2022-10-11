@@ -8,6 +8,8 @@
 
 <h1>Krotki</h1>
 
+<p>https://docs.python.org/3/library/stdtypes.html#tuples
+
 <h3>WPROWADZENIE</h3>
 
 <p>Krotki (tuples) to uporządkowane kolekcje dowolnych obiektów. 
@@ -61,8 +63,8 @@ L = [1, 2, 3, 4]
 front, L = L[0], L[1:]        # odcięcie początku
 # Konwersja listy do krotki.
 T = tuple(L)
-
-# Krotki mogą występować w nietypowym podstawieniu.
+</pre><hr><pre>
+# Krotki i listy mogą występować w nietypowym podstawieniu.
 (x, y) = (12, 34)             # podstawiamy za x i y
 a, b = b, a                   # zamiana w Pythonie
 dane = (43, 54)
@@ -75,8 +77,8 @@ dane = (43, 54)
 <hr><pre>
 dir(tuple)     # spis metod
 T = (1, 2, 3, 5, 7)
-T.index(5)     # 3, jaki indeks ma 5
-T.count(5)     # 1, 5 pojawia się raz
+T.index(5)     # 3, jaki indeks ma liczba 5
+T.count(5)     # 1, liczba 5 pojawia się raz w krotce
 </pre><hr><pre>
 &gt;&gt;&gt; T = (5, 7)
 &gt;&gt;&gt; T[1] = 9

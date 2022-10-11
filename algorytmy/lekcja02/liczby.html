@@ -8,6 +8,8 @@
 
 <h1>Liczby</h1>
 
+<p>https://docs.python.org/3/library/stdtypes.html#numeric-types-int-float-complex
+
 <h3>WPROWADZENIE</h3>
 
 <p>Python posiada kilka wbudowanych typów liczbowych:
@@ -15,7 +17,7 @@
 <ul>
 <li>Liczby całkowite typu <em>int</em>,
 <li>Liczby całkowite długie typu <em>long</em>
-['L' suffix, tożsamy z <em>int</em> w Pythonie 3],
+['L' suffix, tożsamy z <em>int</em> w Py3],
 <li>Liczby zmiennoprzecinkowe, rzeczywiste typu <em>float</em>,
 <li>Liczby zespolowe typu <em>complex</em>.
 </ul>
@@ -96,12 +98,13 @@ zawarte są w module <em>math</em>, a działające na liczbach
 zespolonych w module <em>cmath</em>.
 Inne moduły matematyczne: 
 <em>random</em>,
-<em>scipy</em>, 
 <em>numpy</em>, 
+<em>scipy</em>, 
 itp.
 
 <hr><pre>
 # Zmienne i wyrażenia różnych typów.
+
 0, 1, -4                      # int
 0L, 1L, -3L, 123456789000     # long (Py2)
 100_000_000_000               # grouping in integer literals (Py3.6+)
@@ -119,14 +122,16 @@ abs(z)                        # moduł liczby zespolonej, sqrt((z.real)**2 + (z.
 3 ** 2, 1.2 ** 3.5            # potęgowanie, równoważne pow()
 pow(3, 2), pow(1.2, 3.5)      # funkcja pow()
 pow(2, 10, 5)                 $ (2 ** 10) % 5 = 1024 % 5 = 4
-
+</pre><hr><pre>
 # Konwersja typów (niejawna).
+
 1 + 1.2, 34 / 60.             # int + float = float
 1.2 + 3J                      # float + complex = complex
-
+</pre><hr><pre>
 # Konwersja typów (jawna).
 # Składnia:
 # int(x[, base]), float(x), complex(real[, imag])
+
 int("32"), int(2.345), int(-3.456)
 int("111", 2)   # 7; wykorzystanie bazy
 int("20", 16), 0x20   # 32; wykorzystanie bazy
@@ -134,22 +139,25 @@ float("3.14159"), float(234)
 float(1.0 + 2.j)                # TypeError, nie ma jednoznacznej konwersji
 str(1234)
 long(43)
-complex(5), complex(2,3)                # (5+0J), (2+3J)
-
+complex(5), complex(2, 3)                # (5+0J), (2+3J)
+</pre><hr><pre>
 # Dzielenie liczb.
-5 % 2, 5. % 2., 5 / 2, 5. / 2., 5 // 2, 5. // 2.
 
+5 % 2, 5. % 2., 5 / 2, 5. / 2., 5 // 2, 5. // 2.
+</pre><hr><pre>
 # Zaokrąglanie liczb.
+
 round(3.14159, 2)             # 3.14
 round(123.456,-1)             # 120.0, ujemna precyzja
 round(1.2), round(1.5), round(1.8)      # 1.0, 2.0, 2.0
 round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
 int(1.2+0.5), int(1.5+0.5), int(1.8+0.5)   # 1.0, 2.0, 2.0
 int(-1.2+0.5), int(-1.5+0.5), int(-1.8+0.5)   # 0, -1.0, -1.0
-
+</pre><hr><pre>
 # Wartość bezwzględna.
-abs(-5), abs(-4.32), abs(1+1j) # 5, 4.32, 1.41421356237
 
+abs(-5), abs(-4.32), abs(1+1j) # 5, 4.32, 1.41421356237
+</pre><hr><pre>
 # Liczby całkowite można zapisywać w układzie ósemkowym i szesnastkowym.
 23, 027, 0x17, 0X17     # zapis liczby 23
 hex(23)   # return string '0x17'
@@ -157,14 +165,16 @@ hex(23)   # return string '0x17'
 # Pozostałość po ułamkach w liczbach całkowitych.
 (4).numerator        # licznik 4
 (4).denominator      # mianownik 1
-
+</pre><hr><pre>
 # Funkcja ord() [string --&gt; kod ASCII].
 # Funkcja chr() [kod ASCII --&gt; string].
+
 ord("b")   # return 98
 chr(99)   # return "c"
-
+</pre><hr><pre>
 # Metody dla liczb float, liczby to obiekty.
 # Zamiana na krotkę liczb int, odpowiadającą ułamkowi.
+
 (0.5).as_integer_ratio()      # (1, 2)
 (0.6).as_integer_ratio()      # (5404319552844595L, 9007199254740992L)
 # Powinno być (3, 5), ale są błędy reprezentacji.

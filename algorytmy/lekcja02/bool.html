@@ -8,12 +8,16 @@
 
 <h1>Typ bool</h1>
 
+<p>https://docs.python.org/3/library/constants.html
+
+<p>https://docs.python.org/3/library/functions.html#bool
+
 <h3>WPROWADZENIE</h3>
 
 <p>Typ logiczny 'bool' to dwie stałe: 
 'True' (dawniej równe 1) i 
 'False' (dawniej równe 0).
-'True' i 'False' pojawiły się w Pythonie 2.3.
+'True' i 'False' pojawiły się w Py2.3.
 Jednak ogólnie w Pythonie jako fausz logiczny traktuje się:
 
 <ul>
@@ -60,7 +64,7 @@ niepoprawne, np. odwołanie się poza obszar listy.
 
 <p>Operatory porównań:
 a &lt; b, a &lt;= b, a &gt; b, a &gt;= b, 
-a == b, a &lt;&gt; b [zniknie], a != b.
+a == b, a &lt;&gt; b [Py2], a != b.
 
 <p>Testy identyczności: a is b [id(a) == id(b)], a is not b [id(a) != id(b)].
 Operatory 'is' i 'is not' mogą być stosowane do dowolnych obiektów
@@ -71,7 +75,7 @@ Te operacje są wspierane dla typów, które są iterowalne lub mają
 zaimplementowaną metodę '__contains__()'.
 
 <p>Sekwencje w Pythonie są porównywane leksykograficznie.
-Dozwolone jest porównywanie obiektów różnych typów (tylko Python 2),
+Dozwolone jest porównywanie obiektów różnych typów (tylko Py2),
 ale rezultaty mogą zależeć od wersji języka.
 
 <h3>ŁĄCZENIE PORÓWNAŃ W ŁAŃCUCHY</h3>
