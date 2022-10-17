@@ -123,12 +123,12 @@ class Time:
         return "{} sec".format(self.s)
 
     def __repr__(self):
-        return "Time({})".fomat(self.s)
+        return "Time({})".format(self.s)
 
 time1 = Time(12)
 time2 = Time(3456)
-print time1, time2            # Python wywołuje str(), Python 2
-print [time1, time2]          # Python wywołuje repr(), Python 2
+print("{} {}".format(time1, time2))   # Python wywołuje str()
+print("{}".format([time1, time2]))   # Python wywołuje repr()
 </pre><hr>
 
 <h3>ZADANIE 3.8</h3>

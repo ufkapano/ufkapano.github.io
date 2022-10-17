@@ -8,21 +8,26 @@
 
 <h1>Standardowe wejście</h1>
 
+<p>https://docs.python.org/3/tutorial/inputoutput.html
+
+<p>https://docs.python.org/3/library/io.html
+
 <h3>WPROWADZENIE</h3>
 
-<p>Funkcja input() próbuje interpretować wprowadzone dane
-i z tego powodu jest powolna. Lepiej wczytać napis za pomocą 
+<p>W Pythonie 2 funkcja input() próbuje interpretować wprowadzone dane
+i z tego powodu jest powolna i raczej niebezpieczna. 
+Lepiej wczytać dane jako string za pomocą 
 funkcji raw_input(), a następnie rzutować na potrzebny typ.
 W razie potrzeby możemy się zabezpieczyć przez try/except.
 
 <p>W Pythonie 3 istnieje tylko funkcja input(), która działa tak
-jak raw_input() w Pythonie 2.
+jak raw_input() w Pythonie 2 i zwraca string.
 
 <hr><pre>
 # Składnia.
-# raw_input([prompt]) - zwraca string, Py2
+# raw_input([prompt]) - zwraca string (Py2)
 
-# input([prompt]) - zwraca wartość, Py2
+# input([prompt]) - zwraca wartość (Py2)
 # równoważne eval(raw_input(prompt))
 
 word = raw_input(prompt)

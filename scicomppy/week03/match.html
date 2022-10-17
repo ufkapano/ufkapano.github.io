@@ -1,0 +1,43 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>match statements</h1>
+
+<p>https://docs.python.org/3/tutorial/controlflow.html#match-statements
+
+<p>https://docs.python.org/3/reference/compound_stmts.html#match
+
+<p>PEP 634 - Structural Pattern Matching: Specification
+
+<p>PEP 636 - Structural Pattern Matching: Tutorial
+
+<h3>INTRODUCTION</h3>
+
+<p>A 'match' statement takes an expression and compares its value 
+to successive patterns given as one or more case blocks.
+This statement was introduced in Python 3.10.
+
+<hr><pre>
+# The simplest form of a 'match' statement.
+
+def http_error(status, flag=False):
+    match status:   # header line
+        case 400:
+            return "Bad request"
+        case 401 | 403 | 404:   # several literals can be combined using |
+            return "Not allowed"
+        case 404:
+            return "Not found"
+        case 418 if flag:   # using a guard
+            return "I'm a teapot"
+        case _:   # optional, never fails to match
+            return "Something's wrong with the internet"
+</pre><hr>
+
+</body>
+</html>

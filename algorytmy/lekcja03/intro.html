@@ -8,6 +8,10 @@
 
 <h1>Sterowanie</h1>
 
+<p>https://docs.python.org/3/reference/simple_stmts.html
+
+<p>https://docs.python.org/3/reference/compound_stmts.html
+
 <h3>STRUKTURA PROGRAMU W PYTHONIE</h3>
 
 <ul>
@@ -25,140 +29,45 @@ Ale możemy to zmienić poprzez wprowadzenie warunkowego
 wykonania kodu (instrukcja warunkowa), albo poprzez 
 wielokrotne wykonywanie jednej instrukcji (pętle).
 
-<p>Przy instrukcjach blokowych ważne jest stosowanie prawidłowej
+<p>Instrukcje Pythona dzielą się na 
+instrukcje proste (ang. simple statements) 
+i instrukcje złożone (ang. compound statements).
+Instrukcje proste mieszczą się w jednym logicznym wierszu.
+Instrukcje złożone typowo mają postać wielu wierszy logicznych
+(if, match, while, for, try, with, def, class).
+
+<p>Przy instrukcjach złożonych ważne jest stosowanie prawidłowej
 konwencji zapisu, która nie będzie wprowadzała w błąd czytelnika.
 
-<h3>INSTRUKCJE PRZYPISANIA</h3>
+<h3>ANALIZA LEKSYKALNA</h3>
 
-<p>Instrukcje przypisania tworzą referencje do obiektów.
+<p>https://docs.python.org/3/reference/lexical_analysis.html
 
-<p>Zmienne tworzone są przy pierwszym przypisaniu.
-
-<p>Przed odniesieniem się do zmiennych trzeba je najpierw przypisać.
+<p>Program pythonowy składa się z wielu wierszy logicznych.
 
 <hr><pre>
-word = "qwerty"               # forma podstawowa
-x, y = 23, 45                 # przypisanie krotki (pozycyjne)
-[x, y] = ["ab", "cd"]         # przypisanie listy (pozycyjne)
-x, y, z = "abc"               # przypisanie sekwencji
-[x, y, z] = (1, 2, 3)         # przypisanie sekwencji
-x = y = z = 0                 # przypisanie z wieloma celami
-# x = (y = (z = 0))           # SyntaxError, to nie działa jak w C/C++!
-x += 5                        # przypisane rozszerzone (x = x + 5)
-L += 5                        # odpowiada L.append(5), IN PLACE
-L += sequence                 # odpowiada L.extend(sequence), IN PLACE
-</pre><hr><pre>
-L = [1, 2, 3, 4]
-front, L = L[0], L[1:]        # odcięcie początku
-
-# Python 3, rozszerzona składnia rozpakowania.
-# M to sekwencja (string, lista, krotka).
-# Gdy zabraknie elementów, to L może być pustą listą!
-front, *L = M          # M[0], M[1:]
-first, *L, last = M    # M[0], M[1:-1], M[-1]
+Python 3 source code
+|
+| (Unicode code points)
+o
+Lexical analyzer
+|
+| (a stream of tokens)
+o
+Parser [SyntaxError possible]
+|
+|
+o
+Compiler [differences for CPython, IronPython, Jython, ...]
+|
+| (bytecode) [.pyc files for modules]
+o
+Python Virtual Machine (interpreter) [CPython VM, .Net runtime (CLR), Java VM]
+|
+| (machine code)
+o
+Executing on CPU [runtime exceptions possible]
 </pre><hr>
-
-<h3>WYRAŻENIA PRZYPISANIA</h3>
-
-<p>PEP 572 - Assignment Expressions (walrus operator)
-
-<p>W Pythonie 3.8 pojawiły się wyrażenia przypisania i nowa składnia ':=',
-która przypisuje wartości do zmiennych jako część większego wyrażenia.
-W wielu przypadkach nowa składnia pozwala stworzyć krótszy kod,
-uniknąć dwukrotnego obliczania tego samego wyrażenia,
-uniknąć głębokiego zagnieżdżania kodu, itp.
-Na ogół wymagane są nawiasy otaczające wyrażenie przypisania.
-
-<p>Warto pamiętać, że ':=' tworzy wyrażenie (expression), a '=' tworzy
-instrukcję (statement), przez co ich dozwolone zakresy występowania
-tylko częściowo się pokrywają.
-
-<hr><pre>
-# The assignment expression helps avoid calling len() twice.
-if (n := len(a)) &gt; 10:
-    print("List is too long ({} elements, expected &lt;= {})".format(n, 10))
-</pre><hr><pre>
-# Handle a matched regex.
-if (match := pattern.search(data)) is not None:
-    process(match)
-</pre><hr><pre>
-# Loop over fixed length blocks.
-while (block := f.read(256)) != '':
-    process(block)   # 'block' is needed twice
-</pre><hr><pre>
-# Reuse a value that's expensive to compute.
-[y := f(x), y**2, y**3]
-# zamiast [f(x), f(x)**2, f(x)**3]
-</pre><hr><pre>
-# Share a subexpression between a comprehension filter clause and its output.
-filtered_data = [y for x in data if (y := f(x)) is not None]
-# zamiast [f(x) for x in data if f(x) is not None]
-</pre><hr>
-
-<h3>INSTRUKCJE WYRAŻEŃ</h3>
-
-<p>Wyrażenia można użyć jako instrukcji, ale ma to sens
-jedynie wtedy, gdy efekt uboczny działania wyrażenia
-będzie przydatny.
-W trybie interaktywnym możemy zobaczyć wartość wyrażenia.
-
-<p>Instrukcje nie mogą być używane jako wyrażenia.
-
-<hr><pre>
-2 + 5                         # wyrażenie arytmetyczne lub logiczne
-L[idx]                        # dla listy, krotki, słownika
-[x for x in iterable]         # list|dict|set comprehension
-some_function()               # wywołanie funkcji
-some_object.method()          # wywołanie metody
-name                          # zmienna
-#print word                    # instrukcja w Pythonie 2!
-print(word)                   # funkcja w Pythonie 3
-yield x ** 2                  # zwracanie wyniku częściowego (generator)
-lambda x: x ** 2              # funkcja anonimowa
-</pre><hr>
-
-<h3>WYRAŻENIE PUSTE (PASS)</h3>
-
-<p>Wyrażenie <em>pass</em> nie robi nic.
-Jest wykorzystywane tam, gdzie syntaktycznie powinno być
-jakieś wyrażenie.
-Czasem przy tworzeniu programu tymczasowo można wstawić
-<em>pass</em> w miejsce brakującego kodu,
-który będzie napisany później.
-
-<hr><pre>
-while True:
-    pass        # czekamy na przerwanie z klawiatury
-</pre><hr><pre>
-def dummy_function():
-    pass        # kod do uzupełnienia w przyszłości
-</pre><hr><pre>
-class EmptyClass:
-    pass       # kod do uzupełnienia w przyszłości
-</pre><hr><pre>
-# https://stackoverflow.com/questions/13886168/how-to-use-the-pass-statement
-# Ignorowanie pewnych typów wyjątków.
-try:
-    self.version = "Expat %d.%d.%d" % expat.version_info
-except AttributeError:
-    pass       # unknown
-
-# Definiowanie wyjątków bez nowego zachowania.
-# Nazwa wyjątku niesie informację o zdarzeniu.
-class CompileError(Exception):
-    pass
-</pre><hr>
-
-<h3>INSTRUKCJA DEL</h3>
-
-<p>Podstawowe zastosowanie instrukcji <em>del</em>
-to usuwanie zmiennej (dokładniej: usunięcie referencji do obiektu). 
-Po usunięciu zmiennej próba odczytania zmiennej prowadzi do błędu 
-(aż nastąpi nowe przypisanie wartości do tej zmiennej).
-
-<p>Drugim częstym zastosowaniem instrukcji <em>del</em>
-jest usuwanie elementu o danym indeksie z listy 
-lub usuwanie wycinka z listy.
 
 </body>
 </html>

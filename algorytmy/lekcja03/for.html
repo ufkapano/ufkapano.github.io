@@ -8,12 +8,15 @@
 
 <h1>Pętla for</h1>
 
+<p>https://docs.python.org/3/tutorial/controlflow.html
+
 <h3>WPROWADZENIE</h3>
 
-<p>Pętla for jest uniwersalnym iteratorem po sekwencjach.
+<p>Pętla for jest uniwersalnym iteratorem po sekwencjach
+lub innych obiektach iterowalnych.
 Jeżeli chcemy wykonać pętlę po ciągu liczb całkowitych, 
 to pomocna jest funkcja <em>range()</em> lub wersja
-z generatorem <em>xrange()</em> (Python 2).
+z generatorem <em>xrange()</em> (Py2).
 Można stosować <em>break</em> (natychmiastowe wyjście z pętli)
 i <em>continue</em> (kontynuacja pętli) jak w języku C.
 
@@ -36,28 +39,28 @@ else:               # opcjonalne
 </pre><hr><pre>
 word = "praca"
 for char in word:             # pętla po stringu
-    print char,               # przecinek daje wydruk w jednym wierszu, Py2
-    #print(char, end=" ")      # wydruk w jednym wierszu, Py3
-print ("")                    # na koniec przechodzimy do nowej linii
+    #print char,               # przecinek daje wydruk w jednym wierszu (Py2)
+    print(char, end=" ")      # wydruk w jednym wierszu (Py3)
+print("")                    # na koniec przechodzimy do nowej linii
 </pre><hr><pre>
-# Pętla po liście liczb z funkcji range().
-for i in range(6):            # lista liczb od 0 do 5
-    print ( i )
+# Pętla po liczbach z funkcji range().
+for i in range(6):            # liczby od 0 do 5
+    print(i)
 # Indeks pętli żyje poza nią.
-print ( i )                   # wynik to 5
+print(i)                   # wynik to 5
 </pre><hr><pre>
 # Pętla po liście składającej się z elementów różnych typów.
 for item in [4, "s", [2, 3], 3.14159]:
-    print ( item )
+    print(item)
 
 # Pętla po krotce różnych elementów.
 for item in (6, "abc", 1.2):
-    print ( item )
+    print(item)
 
 # Pętla po liście składającej się z krotek.
 # Następuje pozycyjne przypisanie zmiennych.
 for (a, b) in [(2, "i"), (3.14, "f"), ("a", "s")]:
-    print ( "{} {} {} {}".format("pierwszy, a, "drugi", b) )
+    print("{} {} {} {}".format("pierwszy, a, "drugi", b))
 </pre><hr><pre>
 # Wydłużanie listy w trakcie działania pętli for.
 # Zachować ostrożność!
@@ -71,17 +74,15 @@ for i in L:
 # Wynik: 0 1 2 3 4 2 6
 
 # Bezpieczniejszy wariant z kopią listy.
-for item in L[:]:
-    process(item)
-for item in list(L):
+for item in L[:]:   # albo list(L)
     process(item)
 </pre><hr><pre>
 # Pętla for w konteście słowników.
 D = {"a": 1, "b": 2, "c": 3}
 for key in D:                 # pętla po kluczach
-    print ( "{} {}".format(key, D[key]) )
+    print("{} {}".format(key, D[key]))
 for (key, value) in D.items():
-    print ( "{} {}".format(key, value) )
+    print("{} {}".format(key, value))
 </pre><hr>
 
 <h3>GENEROWANIE WARTOŚCI PRZESUNIĘCIA I ELEMENTÓW</h3>
@@ -91,16 +92,16 @@ fruits = ["apple", "pear", "plum"]
 
 # Pętla for po liście stringów.
 for fruit in fruits:
-    print ( "Bardzo lubię " + fruit + "!" )
+    print("Bardzo lubię " + fruit + "!")
 
 # Pętla po liście stringów z wykorzystaniem indeksów.
 # Tak można robić, gdy potrzebujemy wykorzystać numer elementu.
 for i in range(len(fruits)):
-    print ( "{} {}".format(i, fruits[i]) )
+    print("{} {}".format(i, fruits[i]))
 
 # Obecnie wygodniej jest zastosować iterator enumerate().
 for (i, item) in enumerate(fruits):
-    print ( "{} {}".format(i, item) )
+    print("{} {}".format(i, item))
 
 list(enumerate(fruits))   # [(0, 'apple'), (1, 'pear'), (2, 'plum')]
 [c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
@@ -117,7 +118,7 @@ alist = []
 for item in seq1:
     if item in seq2:   # mało wydajne
         alist.append(item)
-print ( alist )               # ["i","e","o","n","k","a"]
+print(alist)               # ["i","e","o","n","k","a"]
 # Inny sposób polega na zastosowaniu zbiorów.
 </pre><hr>
 
@@ -139,16 +140,14 @@ lines = [line.replace("\t", ";") for line in open("words.txt")]
 # Składnia Py2.
 # zip(seq1 [, seq2 [...]]) zwraca listę krotek [(seq1[0], seq2[0] ...), (...)].
 # Lista ma długość najkrótszej sekwencji.
-#
-# Składnia Py3.
-# zip(iter1 [,iter2 [...]]) zwraca 'zip object' (iterator).
-</pre><hr><pre>
+# W Py3 zip() zwraca 'zip object' (iterator).
+
 L = [1, 2, 3, 4]
 M = [5, 6, 7, 8]
 for (x, y) in zip(L, M):
-    print ( "{} {} {}".format(x, y, x+y) )
+    print("{} {} {}".format(x, y, x+y))
 for (x, y) in zip("abcdef", "qwerty"):
-    print ( "{} {} {}".format(x, y, x+y) )
+    print("{} {} {}".format(x, y, x+y))
 list(zip("ab", "1234"))   # [('a', '1'), ('b', '2')]
 </pre><hr>
 
@@ -209,20 +208,22 @@ L = [1, 2, 4, 5]
 # Sprawdzamy, czy wszystkie liczby są parzyste.
 
 # Zastosowanie klauzuli else w pętli for.
+
 for x in L:
     if x % 2 != 0:
         break
 else:
-    print ( "Wszystkie parzyste" )
+    print("Wszystkie parzyste")
 
 # Zastosowanie all().
+
 if all(x % 2 == 0 for x in L):
-    print ( "Wszystkie parzyste" )
+    print("Wszystkie parzyste")
 
 # Sprawdzamy, czy choć jedna liczba jest parzysta.
 
 if any(x % 2 == 0 for x in L):
-    print ( "Jest liczba parzysta na liście" )
+    print("Jest liczba parzysta na liście")
 </pre><hr>
 
 </body>

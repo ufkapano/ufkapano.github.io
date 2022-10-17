@@ -8,6 +8,8 @@
 
 <h1>Pętla while</h1>
 
+<p>https://docs.python.org/3/reference/compound_stmts.html#while
+
 <h3>WPROWADZENIE</h3>
 
 <p>Wewnątrz pętli <em>while</em> można stosować instrukcje
@@ -27,55 +29,62 @@ else:               # opcjonalne
 # Część else będzie wykonana również wtedy, gdy ciało pętli
 # nigdy nie zostanie wykonane.
 </pre><hr><pre>
-# Odliczanie.
+# Odliczanie do zera.
+
 n = 8
 while n &gt; 0:
-    print ( n )
+    print(n)
     n = n - 1
 </pre><hr><pre>
 # To zadanie bardziej elegancko wykona pętla for.
+
 line = "zdanie"
 i = 0
 while i &lt; len(line):
-    print ( "{} {}".format(i, line[i]) )
+    print("{} {}".format(i, line[i]))
     i = i + 1
 </pre><hr><pre>
 while True:                   # pętla nieskończona
-    print ( "Napisz Ctrl+C ..." )
+    print("Napisz Ctrl+C ...")
 </pre><hr><pre>
 word = "qwerty"
 while word:                   # póki word niepuste
-    print ( word )
+    print(word)
     word = word[1:]           # odcinamy pierwszy znak
 </pre><hr><pre>
 # Obsługa błędów za pomocą sprawdzania danych wejściowych.
+
 while True:
-    reply = raw_input("Wpisz tekst:")   # Python 2
+    #reply = raw_input("Wpisz tekst:")   # Py2
+    reply = input("Wpisz tekst:")   # Py3
     if reply == "stop":
         break
-    print ( reply.upper() )
+    print(reply.upper())
 </pre><hr><pre>
 while True:
-    reply = raw_input("Wpisz tekst:")   # Python 2
+    #reply = raw_input("Wpisz tekst:")   # Py2
+    reply = input("Wpisz tekst:")   # Py3
     if reply == "stop":
         break
     elif not reply.isdigit():
-        print ( "To nie jest liczba!" )
+        print("To nie jest liczba!")
     else:
-        print ( int(reply) ** 2 )
+        print(int(reply) ** 2)
 </pre><hr><pre>
 # Obsługa błędów za pomocą instrukcji try (przechwytywanie wyjątków).
 # Łatwiej można sobie radzić z niezwykłymi przypadkami.
+
 while True:
-    reply = raw_input("Wpisz tekst:")   # Python 2
+    #reply = raw_input("Wpisz tekst:")   # Py2
+    reply = input("Wpisz tekst:")   # Py3
     if reply == "stop":
         break
     try:
         number = int(reply)
     except ValueError:        # kod obsługujący błędy
-        print ( "To nie jest liczba!" )
+        print("To nie jest liczba!")
     else:                     # jeśli nie było zgłoszenia wyjątku
-        print ( number ** 2 )
+        print(number ** 2)
 </pre><hr>
 
 </body>

@@ -1,0 +1,56 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Instrukcja match</h1>
+
+<p>https://docs.python.org/3/tutorial/controlflow.html#match-statements
+
+<p>https://docs.python.org/3/reference/compound_stmts.html#match
+
+<p>PEP 634 - Structural Pattern Matching: Specification
+
+<p>PEP 636 - Structural Pattern Matching: Tutorial
+
+<h3>WPROWADZENIE</h3>
+
+<p>W Pythonie 3.10 pojawiła się instrukcja 'match', która pobiera
+wyrażenie i porównuje jego wartość z sekwencją wzorców podanych
+w blokach 'case'.
+
+<h3>INSTRUKCJA MATCH</h3>
+
+<hr><pre>
+# Najprostsza forma instrukcji 'match'.
+
+def http_error(status, flag=False):
+    match status:   # wiersz nagłówkowy z dwukropkiem
+        case 400:   # blok 'case'
+            return "Bad request"
+        case 401 | 403 | 404:   # można łączyć kilka wzorców (or)
+            return "Not allowed"
+        case 404:
+            return "Not found"
+        case 418 if flag:   # użycie strażnika (ang. guard)
+            return "I'm a teapot"
+        case _:   # opcjonalny przypadek domyślny, zawsze pasuje
+            return "Something's wrong with the internet"
+</pre><hr>
+
+<p>W bardziej złożonych przypadkach w blokach 'case' może występować
+podstawienie rozpakowujące (ang. unpacking assignment) powołujące do życia
+zmienne, które można następnie wykorzystać w bloku.
+Mogą pojawić się wyrażenia przypominające konstruktor klasy.
+
+<p>W Pythonie 3.10 pojawiły się 'miękkie słowa kluczowe' (ang. soft keywords),
+takie jak 'match', 'case', '_'. Te identyfikatory stają się słowami
+kluczowymi w kontekście instrukcji 'match', natomiast nie są słowami
+kluczowymi poza tym kontekstem. Chodzi o zachowanie kompatybilności
+z istniejącym kodem.
+
+</body>
+</html>

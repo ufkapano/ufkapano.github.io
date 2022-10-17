@@ -31,8 +31,11 @@ a plikami binarnymi.
 Zawartość pliku tekstowego może być podzielona na wiersze. 
 Każdy wiersz, ewentualnie oprócz ostatniego, 
 kończy się znakiem końca wiersza (zwykle "\n", newline).
-W Py3 pliki otwarte w trybie tekstowym zwracają zawartość jako string,
-gdzie bajty są dekodowane do code points z użyciem encoding.
+
+
+<p>W Pythonie 3 pliki otwarte w trybie tekstowym zwracają zawartość jako string,
+gdzie bajty są dekodowane do 'code points' z użyciem ustawionego 
+kodowania (encoding).
 
 <p>Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
@@ -72,13 +75,13 @@ S = infile.read(5)      # przeczytanie 5 code points w Py3
 # Pusta linia to napis równy "\n".
 
 S = infile.readline()
-# Czyta jedną linię razem z \n.
+# Czyta jedną linię razem ze znakiem '\n'.
 
 L = infile.readlines()
-# Czyta wszystkie linie i przechowuje je jako listę stringów z \n na końcu.
+# Czyta wszystkie linie i przechowuje je jako listę stringów z '\n' na końcu.
 
 L = infile.readlines(50)
-# Czyta 50 bajtów (code points w Py3) lub więcej, aby była pełna linia!
+# Czyta 50 bajtów w Py2 (code points w Py3) lub więcej, aby była pełna linia!
 # To jest przydatne przy czytaniu dużych plików, aby nie wczytywać
 # całości do pamięci.
 # Taką listę stringów można zapisać do pliku przez outfile.writelines(L).
@@ -128,9 +131,9 @@ afile.write("0123456789abcdefgh")
 # whence=2, offset &lt; 0, bo od końca pliku
 
 afile.seek(5)                 # idź do 6-tego bajtu
-N = afile.tell()              # aktualna pozycja w pliku (int lub long)
+N = afile.tell()              # aktualna pozycja w pliku (int lub long w Py2)
 S = afile.read(1)             # czytaj 1 bajt
-afile.seek(-3,2)              # idź do 3-go bajtu od końca, tylko Py2
+afile.seek(-3,2)              # idź do 3-go bajtu od końca (Py2)
 </pre><hr>
 
 <h3>PRZYKŁAD</h3>
@@ -168,19 +171,19 @@ def print_file(file_name):
     """Wypisywanie zawartości pliku na stdout."""
     afile = open(file_name, "r")
     for line in afile:
-        #print line,   # line zawiera \n, Py2
-        print(line, end="")   # line zawiera \n, Py3
+        #print line,   # line zawiera '\n' (Py2)
+        print(line, end="")   # line zawiera '\n' (Py3)
     afile.close()
 </pre><hr>
 
 <h3>UŻYCIE MENEDŻERA KONTEKSTU (ZALECANE)</h3>
 
 <hr><pre>
-with open('book.txt', 'r') as infile:   # infile zostanie zamknięte
+with open('book.txt', 'r') as infile:   # infile zostanie zawsze zamknięte
     text = infile.read()
     # for line in infile: ...
 </pre><hr><pre>
-with open('results.txt', 'w') as outfile:   # outfile zostanie zamknięte
+with open('results.txt', 'w') as outfile:   # outfile zostanie zawsze zamknięte
     outfile.write(text)
 </pre><hr>
 

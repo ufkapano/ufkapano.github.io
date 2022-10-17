@@ -8,11 +8,14 @@
 
 <h1>Instrukcja warunkowa</h1>
 
+<p>https://docs.python.org/3/tutorial/controlflow.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>W Pythonie nie ma instrukcji switch czy case, ponieważ
 można je łatwo zastąpić serią testów if i elif.
 Można również wykorzystać słownik do symulacji wyborów.
+Python 3.10 wprowadził nową instrukcję 'match'.
 
 <hr><pre>
 # Porównanie C i Pythona.
@@ -68,11 +71,11 @@ else:                         # opcjonalne (jeden raz), jeśli nic nie pasuje
 </pre><hr><pre>
 # Niech n będzie pewną liczbą całkowitą.
 if n &lt; 0:
-    print ( "liczba ujemna!" )
+    print("liczba ujemna!")
 elif n % 2 == 0:              # sprawdzamy inną możliwość
-    print ( "{} {}".format(n, "liczba parzysta") )
+    print("{} {}".format(n, "liczba parzysta"))
 else:                         # to jest sekcja opcjonalna
-    print ( "{} {}".format(n, "liczba nieparzysta") )
+    print("{} {}".format(n, "liczba nieparzysta"))
 </pre><hr><pre>
 # Porównanie C i Pythona.
 # W C else należy do ostatniego (najbliższego) if, ale generalnie
@@ -114,7 +117,6 @@ max_ab = b if a &lt; b else a
 value = D.get("x", 0)                   # klasycznie
 value = D["x"] if "x" in D else 0       # if-else
 </pre><hr>
-
 
 </body>
 </html>
