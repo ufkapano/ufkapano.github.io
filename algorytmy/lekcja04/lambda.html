@@ -8,6 +8,8 @@
 
 <h1>Funkcje anonimowe</h1>
 
+<p>https://docs.python.org/3/reference/expressions.html#lambda
+
 <h3>WPROWADZENIE</h3>
 
 <p>Lambda jest wyrażeniem (lambda expression), a nie instrukcją, 
@@ -23,7 +25,7 @@ Przykładowo lambda nie może zawierać print [Py2], bo to jest instrukcja
 # Do lambda można przyporządkować nazwę.
 
 func1 = lambda x, y, z: x + y + z
-print ( func1(2, 3, 4) )
+print(func1(2, 3, 4))
 
 def func1(x, y, z):            # równoważna funkcja
     return x + y + z
@@ -31,7 +33,7 @@ def func1(x, y, z):            # równoważna funkcja
 # W argumentach lambda można używać argumentów domyślnych.
 
 func2 = (lambda x=0, y=0, z=0: x + y + z)
-print ( func2(4, 5) )
+print(func2(4, 5))
 </pre><hr><pre>
 # Lambda można stosować w funkcji map().
 
@@ -45,7 +47,7 @@ action = {
 "dwa": lambda x: x**2,
 "trzy": lambda x: x**3
 }
-print ( action["dwa"](10) )     # pow(10, 2) = 100
+print(action["dwa"](10))   # pow(10, 2) = 100
 
 powers = [
 lambda x : 1,
@@ -53,7 +55,7 @@ lambda x: x,
 lambda x: pow(x, 2), 
 lambda x: pow(x, 3)
 ]
-print ( powers[2](3) )     # pow(3, 2) = 9
+print(powers[2](3))   # pow(3, 2) = 9
 </pre><hr><pre>
 # Zastosowanie logiki wyboru.
 

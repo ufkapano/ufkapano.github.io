@@ -8,15 +8,16 @@
 
 <h1>Algorytm Hornera</h1>
 
+<p>https://en.wikipedia.org/wiki/Horner%27s_method
+
 <h3>WPROWADZENIE</h3>
 
-<p>Algorytm Hornera (Horner scheme) to sposób obliczania wartości 
-wielomianu dla nadej wartości argumentu wykorzystujący minimalną 
-liczbę mnożeń. Jest to również algorytm dzielenia wielomianu W(x) 
-przez dwumian (x-c).
+<p>Algorytm Hornera (Horner's scheme, Horner's method) to sposób obliczania 
+wartości wielomianu dla nadej wartości argumentu wykorzystujący minimalną 
+liczbę mnożeń. 
+Jest to również algorytm dzielenia wielomianu W(x) przez dwumian (x-c).
 Schemat ten wiązany jest z nazwiskiem Hornera, był jednak już znany 
 Newtonowi, Ruffiniemu i matematykom chińskim w XII wieku.
-
 
 <p>Dla wielomianu stopnia n należy wykonać n mnożeń
 i n dodawań. Schemat Hornera jest optymalny pod względem liczby
@@ -61,8 +62,8 @@ def horner2(x, *arguments):
 y = 1
 L = [1, 2, 3, 4]
 a0, a1, a2, a3 = L
-print ( horner2(y, a3, a2, a1, a0) )
-print ( horner2(y, *reversed(L)) )   # rozpakowanie listy argumentów
+print(horner2(y, a3, a2, a1, a0))
+print(horner2(y, *reversed(L)))   # rozpakowanie listy argumentów
 </pre><hr><pre>
 # Wydaje się, że zgrabniejsza będzie funkcja przyjmująca
 # rosnące współczynniki wielomianu.
@@ -76,8 +77,8 @@ def horner3(x, *arguments):
 y = 1
 L = [1, 2, 3, 4]   # 1+2x+3x^2+4x^3
 a0, a1, a2, a3 = L
-print ( horner3(y, a0, a1, a2, a3) )
-print ( horner3(y, *L) )     # rozpakowanie listy argumentów
+print(horner3(y, a0, a1, a2, a3))
+print(horner3(y, *L))   # rozpakowanie listy argumentów
 </pre><hr><pre>
 # Zastosowanie reduce().
 def horner4(x, *arguments):
@@ -86,7 +87,7 @@ def horner4(x, *arguments):
 
 y = 1
 L = [1, 2, 3, 4]   # 1+2x+3x^2+4x^3
-print ( horner4(y, *L) )     # rozpakowanie listy argumentów
+print(horner4(y, *L))   # rozpakowanie listy argumentów
 </pre><hr>
 
 </body>

@@ -8,9 +8,15 @@
 
 <h1>Zakresy</h1>
 
+<p>PEP 3104 - Access to Names in Outer Scopes.
+The specification for the nonlocal statement.
+
+<p>https://realpython.com/python-namespaces-scope/
+<br>Namespaces and Scope in Python
+
 <h3>WPROWADZENIE</h3>
 
-<p>Każda zmienna żyje w określonej przestrzeni nazw.
+<p>Każda zmienna żyje w określonej przestrzeni nazw (namespace).
 Kiedy mówimy o szukaniu wartości nazwy w odniesieniu do kodu,
 do przestrzeni nazw odnosi się zakres (scope).
 Funkcje definiują zakres lokalny, a moduły zakres globalny.
@@ -38,35 +44,35 @@ wprowadzonym w błąd.
 X = 99                        # zmienna globalna (automatycznie)
 
 def func():
-    #print ( X )          # NameError, X będzie lokalne
+    #print(X)          # NameError, X będzie lokalne
     X = 88                # zmienna lokalna
-    print ( X )           # 88, odwołanie do lokalnego X
+    print(X)           # 88, odwołanie do lokalnego X
 
 func()
-print ( X )               # 99, globalne X
+print(X)               # 99, globalne X
 </pre><hr><pre>
 X = 99                        # zmienna globalna
 
 def func():
     global Z              # deklaracja przypisania zmiennej globalnej
-    print ( X )           # odwołanie do zmiennej globalnej (odczyt)
+    print(X)           # odwołanie do zmiennej globalnej (odczyt)
     Y = 88                # zmienna lokalna
     Z = 77
 
 X = 55
 func()              # 55, rozwiązywanie nazw następuje w czasie wykonania!
-#print ( Y )        # NameError, Y nie istnieje
-print ( Z )         # 77, Z jest globalne
+#print(Y)        # NameError, Y nie istnieje
+print(Z)         # 77, Z jest globalne
 </pre><hr><pre>
 X = 99                        # zmienna globalna
 
 def func():
     global X              # deklaracja przestrzeni nazw
-    print ( X )           # dozwolone
+    print(X)           # dozwolone
     X = 88                # zmiana zmiennej globalnej
 
 func()                        # 99
-print ( X )                   # 88
+print(X)                   # 88
 </pre><hr><pre>
 # https://www.python.org/dev/peps/pep-0227/
 # PEP 227 - Statically Nested Scopes
@@ -78,11 +84,11 @@ def outer():
     import math    # dozwolone
     x = 2
     def inner():
-        print ( x )
+        print(x)
     inner()
 
 outer()   # wypisze 2 z zagnieżdżonego zakresu
-#print ( math.sin(1) )   # NameError: name 'math' is not defined
+#print(math.sin(1))   # NameError: name 'math' is not defined
 
 # Funkcja inner() widzi zmienną x z zakresu zagnieżdżonego wewnątrz
 # funkcji outer(), a nie z zakresu globalnego, jak było w Py2.1.

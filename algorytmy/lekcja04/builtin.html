@@ -8,25 +8,29 @@
 
 <h1>Funkcje wbudowane</h1>
 
+<p>https://docs.python.org/3/library/functions.html
+
+<p>https://docs.python.org/3/library/builtins.html
+
 <h3>WPROWADZENIE</h3>
 
 <hr><pre>
-# Sprawdzenie listy obiektów wbudowanych 
-# (wyjątki i inne klasy, funkcje).
+# Sprawdzenie listy obiektów wbudowanych (wyjątki i inne klasy, funkcje).
 import __builtin__            # Py2
 dir(__builtin__)
 zip                           # funkcja wbudowana
 zip = "qwerty"                # zmieniamy referencję zip
 __builtin__.zip               # dostęp do oryginalnego zip
 __builtin__.zip = "qwerty"    # HORROR! Py2
+</pre><hr><pre>
+import builtins               # Py3
+builtins.zip                   # dostęp do oryginalnego zip
 </pre><hr>
-
-<p>W Pythonie 3 występuje moduł <em>builtins</em>.
 
 <p>Nazwy typów: 
 basestring(), bool(), complex(), dict(), float(),
 frozenset(), int(), list(), long() [Py2], set(), str(),
-tuple(), unicode().
+tuple(), unicode() [Py2].
 
 <p>Funkcje matematyczne i narzędziowe:
 abs(), all(), any(), chr(), divmod(), hex(), 
@@ -52,7 +56,7 @@ reduce() [Py2], reload(), slice(), type(), vars().
 
 <ul>
 <li>zip(seq1 [, seq2, ...]) - zwraca jedną listę krotek [Py2] 
-lub generator krotek [Py].
+lub generator krotek [Py3].
 
 <li>map(func, sequence) - funkcja 'func' przetworzy po kolei każdy element listy
 i zwróci listę wyników [Py2] lub iterator wyników [Py3].
