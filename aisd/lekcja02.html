@@ -14,7 +14,8 @@
 <p>OBOWIĄZKOWE DO PRZESŁANIA: 
 Implementacja dwóch algorytmów sortowania w C++, w tym co najmniej 
 jednego zaawansowanego.
-Funkcje sortujące muszą mieć podany interfejs tablicowy lub z iteratorami,
+Funkcje sortujące muszą być szablonami,
+muszą mieć podany interfejs tablicowy lub z iteratorami,
 wystarczy użyć standardowego porównywania (operator&lt;).
 Proszę przesłać archiwum ZIP katalogu z programem, 
 który zawiera Makefile i pliki źródłowe.
@@ -64,6 +65,7 @@ void qsort( void *ptr, size_t count, size_t size,
     int (*comp)(const void *, const void *) );
 // Sortowanie tablicy ptr w porządku niemalejącym.
 // Funkcja porównująca zwraca -1/0/+1.
+// Funkcja porównująca nie może modyfikować porównywanych elementów.
 // count - liczba elementów tablicy
 // size - rozmiar jednego elementu w bajtach
 

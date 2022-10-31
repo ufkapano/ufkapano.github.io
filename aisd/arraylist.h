@@ -23,9 +23,9 @@ public:
     ArrayList(ArrayList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   ArrayList<int> list2(std::move(list1));
     ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
-    // usage:   list2 = list1; NIEOBOWIAZKOWE
+    // usage:   list2 = list1;
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
-    // usage:   list2 = std::move(list1);
+    // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
     bool empty() const { return last == 0; } // checks if the container has no elements
     bool full() const { return last == msize; } // checks if the container is full
     int size() const { return last; } // liczba elementow na liscie
@@ -46,8 +46,8 @@ public:
     // Operacje z indeksami. NIEOBOWIAZKOWE
     // https://en.cppreference.com/w/cpp/language/operators
     // Array subscript operator
-    T& operator[](int pos); // podstawienie L[pos]=item
-    const T& operator[](int pos) const; // odczyt L[pos]
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](int pos) const; // dostep do obiektu const
     void erase(int pos); // usuniecie elementu na pozycji pos
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
     void insert(int pos, const T& item); // inserts item before pos
