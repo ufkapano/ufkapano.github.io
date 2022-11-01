@@ -22,14 +22,19 @@ class SingleList {
 public:
     SingleList() : head(nullptr), tail(nullptr) {}
     ~SingleList(); // tu trzeba wyczyscic wezly
+
     SingleList(const SingleList& other); // copy constructor
     // usage:   SingleList<int> list2(list1);
+
     SingleList(SingleList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   SingleList<int> list2(std::move(list1));
+
     SingleList& operator=(const SingleList& other); // copy assignment operator, return *this
     // usage:   list2 = list1;
+
     SingleList& operator=(SingleList&& other); // move assignment operator, return *this
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
+
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1), L.push_front(item)
@@ -43,9 +48,10 @@ public:
     void clear(); // czyszczenie listy z elementow O(n)
     void display(); // O(n)
     void reverse(); // O(n)
+
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    T& operator[](int pos); // podstawienie L[pos]=item
-    const T& operator[](int pos) const; // odczyt L[pos]
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](int pos) const; // dostep do obiektu const
     void erase(int pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
     void insert(int pos, const T& item); // inserts item before pos,

@@ -17,15 +17,20 @@ public:
         tab = new T[s];
         assert( tab != nullptr );
     } // default constructor
-    ~ArrayList() { delete [] tab; }
+    ~ArrayList() { delete [] tab; } // destruktor
+
     ArrayList(const ArrayList& other); // copy constructor
     // usage:   ArrayList<int> list2(list1);
+
     ArrayList(ArrayList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   ArrayList<int> list2(std::move(list1));
+
     ArrayList& operator=(const ArrayList& other); // copy assignment operator, return *this
     // usage:   list2 = list1;
+
     ArrayList& operator=(ArrayList&& other); // move assignment operator, return *this
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
+
     bool empty() const { return last == 0; } // checks if the container has no elements
     bool full() const { return last == msize; } // checks if the container is full
     int size() const { return last; } // liczba elementow na liscie
@@ -43,6 +48,7 @@ public:
     void reverse(); // odwracanie kolejnosci
     void sort(); // sortowanie listy
     void merge(ArrayList& other); //  merges two sorted lists into one
+
     // Operacje z indeksami. NIEOBOWIAZKOWE
     // https://en.cppreference.com/w/cpp/language/operators
     // Array subscript operator
@@ -54,6 +60,7 @@ public:
     void insert(int pos, T&& item); // inserts item before pos
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
+
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
         for (int i=0; i < L.last; ++i) { // odwolanie L.last
             os << L.tab[i] << " ";   // odwolanie L.tab

@@ -25,14 +25,19 @@ class DoubleList {
 public:
     DoubleList() : head(nullptr), tail(nullptr) {}
     ~DoubleList(); // tu trzeba wyczyscic wezly
+
     DoubleList(const DoubleList& other); // copy constructor
     // usage:   DoubleList<int> list2(list1);
+
     DoubleList(DoubleList&& other); // move constructor NIEOBOWIAZKOWE
     // usage:   DoubleList<int> list2(std::move(list1));
+
     DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
     // usage:   list2 = list1;
+
     DoubleList& operator=(DoubleList&& other); // move assignment operator, return *this
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
+
     bool empty() const { return head == nullptr; }
     int size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1)
@@ -46,9 +51,10 @@ public:
     void clear(); // czyszczenie listy z elementow O(n)
     void display(); // O(n)
     void display_reversed(); // O(n)
+
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    T& operator[](int pos); // podstawienie L[pos]=item
-    const T& operator[](int pos) const; // odczyt L[pos]
+    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](int pos) const; // dostep do obiektu const
     void erase(int pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
     void insert(int pos, const T& item); // inserts item before pos,
