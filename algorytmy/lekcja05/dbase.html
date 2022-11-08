@@ -8,6 +8,12 @@
 
 <h1>Moduły bazodanowe</h1>
 
+<p>https://docs.python.org/3/library/pickle.html
+
+<p>https://docs.python.org/3/library/shelve.html
+
+<p>https://docs.python.org/3/library/dbm.html
+
 <h3>MODUŁ pickle</h3>
 
 <p>W Pythonie 3, przy korzystaniu z modułu pickle,
@@ -76,13 +82,13 @@ bfile.close()
 to przed przywróceniem słownika trzeba sprawdzić, czy istnieje
 definicja klasy X.
 
-<h3>MODUŁ anydbm</h3>
+<h3>MODUŁ anydbm (Py2) i dbm (Py3)</h3>
 
 <p>Moduł implementuje system plików dostępu wg klucza, służący
 do przechowywania łańcuchów znaków.
 
 <hr><pre>
-import anydbm
+import anydbm   # Py2
 
 # anydbm - Generic interface to all dbm clones.
 
@@ -166,96 +172,6 @@ print ( "alist" in db )  # należenie do bazy
 # Zamknięcie bazy.
 db.close()
 </pre><hr>
-
-<h3>MODUŁ json</h3>
-
-<p>JSON (JavaScript Object Notation) to lekki format wymiany danych 
-komputerowych, bazujący na podzbiorze języka JavaScript.
-Typ MIME dla formatu JSON to application/json. 
-Format został opisany w dokumencie RFC 4627 i nowszym RFC 7159.
-Moduł json pojawił się w Pythonie 2.6.
-Format JSON może być użyty do serializacji (encoding) i rekonstukcji
-(decoding) danych.
-Format JSON, w przeciwieństwie do pickle i marshal, nie pozwala 
-na serializację więcej niż jednego obiektu do pliku, bo wtedy
-plik JSON będzie niepoprawny.
-
-<p>Plik JSON nie pozwala na zapisywanie w nim komentarzy.
-
-
-<hr><pre>
-import json     # Python 2.6+
-
-# Serializacja obiektu obj do pliku tekstowego outfile (opened for writing).
-# obj to najczęściej zagnieżdżona lista lub słownik.
-with open(file_name, mode='w') as outfile:
-    json.dump(obj, outfile)
-    #json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
-
-# Serializacja podstawowych obiektów Pythona (zapis do stringu).
-# Tak możemy sprawdzić stringową reprezentację obiektu w formacie JSON.
-word = json.dumps(obj)
-
-# Compact encoding. Nie wstawia spacji.
-# Opcja separators=(item_separator, key_separator).
-# Domyślne ustawienie to separators=(', ',': ').
-word = json.dumps(obj, separators=(',',':'))
-
-# Pretty printing.
-word = json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
-
-# Deserializacja danych z infile (opened for reading) do obiektu Pythona.
-with open(file_name) as infile:
-    obj = json.load(infile)
-
-# Decoding from JSON string.
-obj = json.loads(word)
-</pre><hr><pre>
-Decoder
-+---------------+------------------------+
-| JSON          | Python                 |
-+===============+========================+
-| object        | dict                   |
-+---------------+------------------------+
-| array         | list                   |
-+---------------+------------------------+
-| string        | unicode[Py2], str[Py3] |
-+---------------+------------------------+
-| number (int)  | int, long              |
-+---------------+------------------------+
-| number (real) | float                  |
-+---------------+------------------------+
-| true          | True                   |
-+---------------+------------------------+
-| false         | False                  |
-+---------------+------------------------+
-| null          | None                   |
-+---------------+------------------------+
-
-Encoder
-+-------------------+---------------+
-| Python            | JSON          |
-+===================+===============+
-| dict              | object        |
-+-------------------+---------------+
-| list, tuple       | array         |
-+-------------------+---------------+
-| str, unicode      | string        |
-+-------------------+---------------+
-| int, long, float  | number        |
-+-------------------+---------------+
-| True              | true          |
-+-------------------+---------------+
-| False             | false         |
-+-------------------+---------------+
-| None              | null          |
-+-------------------+---------------+
-</pre><hr>
-
-<p>Istnieje modul simplejson o podobnych możliwościach 
-(pip install simplejson).
-
-<p>https://pypi.org/project/simplejson/
 
 </body>
 </html>

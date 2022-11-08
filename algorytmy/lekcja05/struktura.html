@@ -36,12 +36,19 @@ jest ustawiany na nazwę modułu w formie znanej przez klienta.
 opcja trybu użycia, pozwalając na wykorzystanie kodu zarówno
 w postaci biblioteki i jak i skryptu najwyższego poziomu.
 
+<hr><pre>
+Nazwa pliku: 'starwars.py'
+Nazwa modułu: 'starwars'
+__name__ == '__main__' jeżeli moduł działa jako program najwyższego poziomu,
+__name__ == 'starwars' jezeli moduł był importowany.
+</pre><hr>
+
 <h3>STRUKTURA MODUŁU</h3>
 
 <hr><pre>
 #!/usr/bin/python
 
-module_docstring              # opcjonalnie
+module_docstring   # opcjonalnie
 
 # imports
 import sys
@@ -56,7 +63,7 @@ import sys
 
 # internal functions and classes
 
-def tester():                 # funkcja testująca moduł
+def tester():   # funkcja testująca moduł
     instructions
 
 if __name__ == "__main__":
@@ -84,7 +91,7 @@ korzystając z innych form importowania, takich jak instrukcja
 </ul>
 
 <hr><pre>
-__all__ = ["MyError", "encode", "decode"] # eksportuje tylko te zmienne
+__all__ = ["MyError", "encode", "decode"]   # eksportuje tylko te zmienne
 </pre><hr>
 
 <p>Python najpierw szuka w module listy <em>__all__</em>,

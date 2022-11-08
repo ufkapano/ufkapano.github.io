@@ -8,6 +8,11 @@
 
 <h1>Pakiety modułów</h1>
 
+<p>https://docs.python.org/3/reference/import.html
+
+<p>PEP 420 - Implicit Namespace Packages 
+[a regular package (with an __init__.py) vs a namespace package]
+
 <h3>WPROWADZENIE</h3>
 
 <p>Tworzenie pakietów jest opcją Pythona bardziej zaawansowaną
@@ -16,10 +21,14 @@ Przy większej liczbie modułów korzystne jest umieszczanie ich
 w osobnych katalogach, co tworzy kolejne przestrzenie nazw
 zapobiegające konfliktom nazw.
 
-<h3>PODSTAWY IMPORTOWANIA PAKIETÓW</h3>
+<p>Python 3 definiuje dwa rodzaje pakietów:
+pakiety regularne (regular packages)
+i pakiety przestrzeni nazw (namespace packages).
+
+<h3>PAKIETY REGULARNE</h3>
 
 <hr><pre>
-# Załóżmy, że w katalogu bieżącym mamy moduł główny (main.py) i moduły:
+# Załóżmy, że w katalogu bieżącym mamy moduł główny 'main.py' i moduły:
 # main.py
 # __init__.py            (obowiązkowy plik)
 # dir1/__init__.py            (obowiązkowy plik)
@@ -31,7 +40,7 @@ zapobiegające konfliktom nazw.
 import dir1.module1           # ścieżka rozdzielona kropką
 import dir1.dir2.module2
 </pre><hr><pre>
-# Postać importu z instrukcją from.
+# Postać importu z instrukcją 'from'.
 
 from dir1.module1 import name1
 from dir1.dir2.module2 import *
@@ -41,7 +50,7 @@ from dir1.dir2.module2 import *
 ale mogą też pozostać puste.
 Są one obecne jako deklaracje dla Pythona.
 
-<h3>STRUKTURA PRZYKŁADOWEGO PAKIETU</h3>
+<h3>STRUKTURA PRZYKŁADOWEGO PAKIETU REGULARNEGO</h3>
 
 <p>Fragment struktury przykładowego pakietu SymPy.
 Wszystko działa, jeżeli katalog "sympy" znajduje się
@@ -49,36 +58,36 @@ w zmiennej PYTHONPATH.
 
 <hr><pre>
 sympy/          # główny katalog
-sympy/__init__.py       # obowiązkowy
+sympy/__init__.py   # obowiązkowy
 
 sympy/core/
-sympy/core/__init__.py       # obowiązkowy
+sympy/core/__init__.py   # obowiązkowy
 sympy/core/basic.py
 
 sympy/core/tests/
-sympy/core/tests/__init__.py       # obowiązkowy
+sympy/core/tests/__init__.py   # obowiązkowy
 sympy/core/tests/test_basic.py
 # from sympy.core.basic import *
 #
-#def test_structure():  # to nie są testy z unittest!
+#def test_structure():   # testy dla pytest
 #    assert b21.args == (b2, b1)
 
 sympy/combinatorics/
-sympy/combinatorics/__init__.py       # obowiązkowy
+sympy/combinatorics/__init__.py   # obowiązkowy
 sympy/combinatorics/permutations.py
 # from sympy.core.basic import *
 
 sympy/combinatorics/tests/
-sympy/combinatorics/tests/__init__.py       # obowiązkowy
+sympy/combinatorics/tests/__init__.py   # obowiązkowy
 sympy/combinatorics/tests/test_permutations.py
 # from sympy.combinatorics.permutations import *
 # from sympy.utilities.pytest import raises
 
 sympy/utilities/
-sympy/utilities/__init__.py       # obowiązkowy
+sympy/utilities/__init__.py   # obowiązkowy
 </pre><hr>
 
-<h3>NAMESPACE PACKAGES</h3>
+<h3>PAKIETY PRZESTRZENI NAZW</h3>
 
 <p>Od Pythona 3.3 pojawiły się <em>pakiety przestrzeni nazw</em> 
 (ang. namespace packages) [PEP 420].
@@ -100,7 +109,7 @@ ma ustawiony atrybut __name__ na "__main__".
 Moduł może dzięki temu sprawdzić jak został uruchomiony.
 
 <p>W przypadku pakietu ten sam efekt można osiągnąć przez dołączenie
-pliku __main__.py w głównym katalogu modułu [Python 3].
+pliku __main__.py w głównym katalogu modułu [Py3].
 Podobnie można uruchamiać archiwum ZIP z kodem pythonowym,
 jeżeli wewnątrz archiwum jest plik __main__.py.
 

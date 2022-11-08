@@ -1,0 +1,85 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>MODUŁ os</h1>
+
+<p>https://docs.python.org/3/library/os.html
+
+<p>https://docs.python.org/3/library/os.path.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'os' dostarcza funkcji do interakcji z systemem operacyjnym.
+Użycie tego modułu zwiększa przenośność programów na inne platformy.
+
+<hr><pre>
+import os
+
+os.system("date")                       # wywołanie polecenia powłoki
+var = os.environ.get("SHELL")           # pobranie zawartości zmiennej powłoki
+print ( var )
+print ( os.uname() )                    # krotka z informacją o systemie
+print ( os.name )                       # "posix" lub "nt" lub "mac" lub ...
+print ( os.sep )   # separator ścieżek, '/' w Linuksie, '\\' w Windows
+
+# current working directory 
+current = os.getcwd()   # '/home/andrzej'
+
+# os.path is posixpath or ntpath
+# Creating platform-independent directory names with join()
+directory = os.path.join('main_dir', 'sub_dir')   # sklejenie z os.sep
+full_file_name = os.path.join(directory, 'example.json')
+
+print ( os.path.abspath(".") )   # "/home/andrzej"
+path = '/home/andrzej/Pobrane'
+print ( os.path.basename(path) )   # 'Pobrane'
+print ( os.path.dirname(path) )   # '/home/andrzej'
+print ( os.path.exists(path) )   # True
+print ( os.path.isabs(path) )   # True
+print ( os.path.isdir(path) )   # True
+print ( os.path.isfile(path) )   # False
+
+print ( os.path.split(path) )   # ('/home/andrzej', 'Pobrane')
+# Split a pathname.  Returns tuple "(head, tail)" where "tail" is
+# everything after the final slash.  Either part may be empty.
+
+os.mkdir(dirname)   # tworzenie nowego katalogu
+os.rename(old_name, new_name)
+os.rmdir(dirname)   # usuwanie 'pustego' katalogu
+
+# Tworzenie katalogu i pośrednich katalogów, jeżeli nie istnieją.
+dirname = "A/B/C"
+if not os.path.exists(dirname):
+    os.makedirs(dirname)
+</pre><hr><pre>
+# Narzędzia do plików.
+
+os.chmod(path, mode)   # change the access permissions of a file
+os.chmod('spam.txt', 0777)   # enabled all accesses (octal 0777 means bits 111 111 111)
+os.chown(path, uid, gid)   # hange the owner and group id of path to the numeric uid and gid
+os.remove(path)   # remove a file
+os.rename(old_name, new_name)   # rename a file or directory
+os.listdir(path)   # return a list containing the names of the files
+</pre><hr><pre>
+# os.path.walk(top, func, arg)   # directory tree walk with callback function.
+# Przykład: zliczanie plików PDF w drzewie podkatalogów.
+
+n_pdf = 0   # the number of PDF files
+for root, dirs, files in os.walk(top):   # walking top-down
+    # 'root' is a string, the path to the directory
+    # 'dirs' is a list of the names of the subdirectories in 'root'
+    # 'files' is a list of the names of the non-directory files in 'root'
+    for name in files:
+        if name.endswith(".pdf"):
+            n_pdf += 1
+
+print("The number of PDF files in {} directory is {}".format(top, n_pdf))
+</pre><hr>
+
+</body>
+</html>

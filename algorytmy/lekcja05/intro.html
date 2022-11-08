@@ -30,6 +30,7 @@ po zaimportowaniu przestrzenią nazw atrybutów obiektu modułu.
 
 <ul>
 <li>ponowne wykorzystanie kodu (kod zapisany jest w pliku),
+<li>ograniczenie rdzenia języka Python do rozsądnego rozmiaru,
 <li>dzielenie przestrzeni nazw systemu (zapobieganie konfliktom nazw),
 <li>implementowanie współdzielonych usług oraz danych
 (moduł jest współdzielony przez inne komponenty systemu).
@@ -41,10 +42,13 @@ po zaimportowaniu przestrzenią nazw atrybutów obiektu modułu.
 poziomu (moduł główny) wraz z zero lub większą liczbą plików
 modułów dodatkowych.
 
-<p>Instrukcje związane z modułami to <em>import</em> oraz <em>from</em>. 
+<p>Podstawowe instrukcje związane z modułami to <em>import</em> oraz <em>from</em>. 
 Funkcja związana z modułami to <em>reload()</em>.
 Zwyczajowo instrukcje <em>import</em> umieszcza się na początku modułu.
 Zalecane jest umieszczanie każdego importu w osobnej linii.
+
+<p>W Pythonie 3 pojawiły się dodatkowe mechanizmy związane z importowaniem
+modułów, zawarte w bibliotece <em>importlib</em>.
 
 <p><em>Kod modułu jest wykonywany tylko raz podczas pierwszego importu.</em>
 Python wykonuje instrukcje modułu jedna po drugiej,
@@ -57,29 +61,29 @@ Importowany moduł może z kolei importować inne moduły.
 import module1                # zaleca się pojedyńcze zapisy
 import module2, module3       # import kilku modułów
 
-print ( module1.name1 )       # kwalifikacja zmiennej z modułu
+print(module1.name1)          # kwalifikacja zmiennej z modułu
 other_name = module1          # przypisanie obiektu modułu
-print ( other_name.name1 )
+print(other_name.name1)
 module1.name1 = new_value     # zwykle dozwolone, ale ostrożnie!
-print ( module1.name2() )     # kwalifikacja funkcji z modułu
-print ( module1.__doc__ )     # dostęp do łańcucha dokumentacyjnego
+print(module1.name2())        # kwalifikacja funkcji z modułu
+print(module1.__doc__)        # dostęp do łańcucha dokumentacyjnego
 help(module1)                 # NAME, FILE, FUNCTIONS, DATA
 dir(module1)                  # przestrzeń nazw
 module1.__dict__.keys()       # przestrzeń nazw
 </pre><hr><pre>
-# Zastosowanie instrukcji from.
-from module1 import name1, name2        # ładowanie wybranych nazw
+# Zastosowanie instrukcji 'from'.
+from module1 import name1, name2   # ładowanie wybranych nazw
 # Równoważne instrukcje są następujące:
 # import module1
 # name1 = module1.name1
 # name2 = module1.name2
 # del module1
 
-from module2 import *                   # ładowanie wszystkich nazw
+from module2 import *   # ładowanie wszystkich nazw
 
-print ( "{} {}".format(name1, name2()) )   # nie ma kwalifikacji
+print("{} {}".format(name1, name2()))   # nie ma kwalifikacji
 </pre><hr><pre>
-import module1 as module2      # import modułu pod inną nazwą
+import module1 as module2   # import modułu pod inną nazwą
 # Równoważne instrukcje są następujące:
 # import module1
 # module2 = module1
@@ -89,9 +93,14 @@ import Tkinter as tk   # Py2
 import tkinter as tk   # Py3
 import pygame as pg
 </pre><hr><pre>
-from module3 import name1 as name2     # zmiana nazw atrybutów
+from module3 import name1 as name2   # zmiana nazw atrybutów
 </pre><hr><pre>
-reload(module1)   # ponowne ładowanie modułu
+# Ponowne ładowanie modułu.
+
+#reload(module1)   # Py2
+
+from importlib import reload   # Py3.4+
+reload(module1)
 </pre><hr>
 
 <p>Instrukcja <em>from</em> niszczy podział przestrzeni nazw,
@@ -131,8 +140,8 @@ przez niego obiektów.
 <hr><pre>
 import sys
 
-print ( sys.modules.keys() )  # nazwy importowanych modułów
-print ( sys.path )            # ścieżka wyszukiwania
+print(sys.modules.keys())   # nazwy importowanych modułów
+print(sys.path)             # ścieżka wyszukiwania
 </pre><hr>
 
 <h3>ŚCIEŻKA WYSZUKIWANIA MODUŁÓW</h3>
@@ -146,7 +155,7 @@ print ( sys.path )            # ścieżka wyszukiwania
 </ol>
 
 <p>Zestawienie tych czterech komponentów staje się <em>sys.path</em>
-(lista nazw katalogów).
+(lista nazw katalogów, lista stringów).
 
 <h3>PRZEŁADOWYWANIE MODUŁÓW</h3>
 

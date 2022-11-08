@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduł json</h1>
+
+<p>https://en.wikipedia.org/wiki/JSON
+
+<p>https://docs.python.org/3/library/json.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>JSON (JavaScript Object Notation) to lekki format wymiany danych 
+komputerowych, bazujący na podzbiorze języka JavaScript.
+Typ MIME dla formatu JSON to application/json. 
+Format został opisany w dokumencie RFC 4627 i nowszym RFC 7159.
+Moduł 'json' pojawił się w Pythonie 2.6.
+Format JSON może być użyty do serializacji (encoding) i rekonstukcji
+(decoding) danych.
+
+<p>Format JSON, w przeciwieństwie do pickle i marshal, nie pozwala 
+na serializację więcej niż jednego obiektu do pliku, bo wtedy
+plik JSON będzie niepoprawny.
+
+<p>Format JSON jest niezależny od języka programowania.
+
+<p>Plik JSON nie pozwala na zapisywanie w nim komentarzy.
+
+<hr><pre>
+import json     # Py2.6+, Py3
+
+# Serializacja obiektu obj do pliku tekstowego outfile (opened for writing).
+# obj to najczęściej zagnieżdżona lista lub słownik.
+# separators=(item_separator, key_separator)
+# separators=(', ',': ') domyślnie
+# separators=(',', ':') zwarty zapis
+# encoding : the character encoding for str instances, default is UTF-8
+# sort_keys : bool, default is False;
+#     if True then the output of dictionaries will be sorted by key
+
+with open(file_name, mode='w') as outfile:
+    json.dump(obj, outfile)
+    #json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
+
+# Serializacja podstawowych obiektów Pythona (zapis do stringu).
+# Tak możemy sprawdzić stringową reprezentację obiektu w formacie JSON.
+
+word = json.dumps(obj)
+word = json.dumps('żółw')   # "\u017c\u00f3\u0142w", użyto utf-8
+
+# Compact encoding. Nie wstawia spacji.
+# Opcja separators=(item_separator, key_separator).
+# Domyślne ustawienie to separators=(', ',': ').
+word = json.dumps(obj, separators=(',',':'))
+
+# Pretty printing.
+word = json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
+</pre><hr><pre>
+# Deserializacja danych z infile (opened for reading) do obiektu Pythona.
+with open(file_name) as infile:
+    obj = json.load(infile)
+
+# Decoding from JSON string.
+obj = json.loads(word)
+</pre><hr><pre>
+Decoder
++---------------+------------------------+
+| JSON          | Python                 |
++===============+========================+
+| object        | dict                   |
++---------------+------------------------+
+| array         | list                   |
++---------------+------------------------+
+| string        | unicode[Py2], str[Py3] |
++---------------+------------------------+
+| number (int)  | int, long              |
++---------------+------------------------+
+| number (real) | float                  |
++---------------+------------------------+
+| true          | True                   |
++---------------+------------------------+
+| false         | False                  |
++---------------+------------------------+
+| null          | None                   |
++---------------+------------------------+
+
+Encoder
++-------------------+---------------+
+| Python            | JSON          |
++===================+===============+
+| dict              | object        |
++-------------------+---------------+
+| list, tuple       | array         |
++-------------------+---------------+
+| str, unicode      | string        |
++-------------------+---------------+
+| int, long, float  | number        |
++-------------------+---------------+
+| True              | true          |
++-------------------+---------------+
+| False             | false         |
++-------------------+---------------+
+| None              | null          |
++-------------------+---------------+
+</pre><hr>
+
+<h3>SIMPLEJSON</h3>
+
+<p>https://pypi.org/project/simplejson/
+<br>Instalacja: pip install simplejson
+
+<p>Istnieje modul 'simplejson' z dodatkowymi możliwościami,
+np. wsparciem dla modułu 'decimal'.
+
+<hr><pre>
+import simplejson as json
+
+# Użycie Decimal zamiast float.
+from decimal import Decimal
+json.loads('1.1', use_decimal=True) == Decimal('1.1')   # True
+</pre><hr>
+
+</body>
+</html>

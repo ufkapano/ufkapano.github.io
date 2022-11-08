@@ -8,6 +8,14 @@
 
 <h1>Moduły matematyczne</h1>
 
+<p>https://docs.python.org/3/library/math.html
+
+<p>https://docs.python.org/3/library/random.html
+
+<p>https://docs.python.org/3/library/decimal.html
+
+<p>https://docs.python.org/3/library/fractions.html
+
 <h3>MODUŁ math</h3>
 
 <p>Moduł jest otoczką dla biblioteki <em>math</em> z języka C.
@@ -22,16 +30,16 @@ import math
 # Zaokrąglanie.
 # math.ceil(x) - the smallest integer value greater than or equal to x.
 # math.floor(x) - the largest integer value less than or equal to x.
-# math.trunc(x) - int bliżej zera (Python 2.6+).
+# math.trunc(x) - int bliżej zera (Py2.6+).
 # Python 2: ceil() and floor() return float
 # Python 3: ceil() and floor() return int
 
 # Potęgi i logarytmy.
 # math.exp(x) - inaczej e ** x
 # math.log(x) - logarytm naturalny ln(x).
-# math.log(x, base) - inaczej math.log(x)/math.log(base) (Python 2.3+)
+# math.log(x, base) - inaczej math.log(x)/math.log(base) (Py2.3+)
 # math.log1p(x) - oznacza math.log(1 + x),
-# lepsze dla małych x (Python 2.6+)
+# lepsze dla małych x (Py2.6+)
 # math.log10(x) - dokładniajsze niż math.log(x, 10).
 # math.pow(x, y) - oznacza x ** y
 # math.sqrt(x) - pierwiastek kwadratowy.
@@ -40,7 +48,7 @@ import math
 # math.sin(x), math.cos(x), math.tan(x),
 # math.asin(x), math.acos(x), math.atan(x),
 # math.sinh(x), math.cosh(x), math.tanh(x),
-# math.asinh(x), math.acosh(x), math.atanh(x), (Python 2.6)
+# math.asinh(x), math.acosh(x), math.atanh(x), (Py2.6)
 
 # math.hypot(x, y) - oznacza math.sqrt(x*x + y*y), norma euklidesowa.
 # math.fabs(x) - wartość bezwzględna float.
@@ -54,13 +62,13 @@ print ( math.hypot(3, 4) )    # 5.0 float
 # Nowe funkcje z Pythona 2.6.
 # math.factorial(x) - silnia.
 # math.fsum(iterable) - suma float bez (dużej) utraty precyzji.
-# Nieskończoności: float("inf"), float("-inf"), math.inf [Python 3.5+]
+# Nieskończoności: float("inf"), float("-inf"), math.inf [Py3.5+]
 # A floating-point "not a number" (NaN) value:
-# float("nan"), math.nan [Python 3.5+]
+# float("nan"), math.nan [Py3.5+]
 # math.isinf(x) - Check if the float x is positive or negative infinity.
 # math.isnan(x) - Check if the float x is a NaN (not a number).
 
-math.factorial(16)            # 20922789888000L
+math.factorial(16)   # 20922789888000L
 
 sum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
 # 0.99999999999999989   gubimy precyzję
@@ -111,7 +119,7 @@ print ( random.choice(["jeden", "dwa", "trzy"]) )
 # w wynikowej liście. Elementy nie muszą być hashable.
 # population może być generatorem, będzie to wydajne.
 # random.sample(population, k)
-print ( random.sample(xrange(1000), 100) )
+print ( random.sample(range(1000), 100) )
 </pre><hr>
 
 <h3>MODUŁ decimal</h3>

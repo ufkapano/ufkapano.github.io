@@ -1,0 +1,163 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduły systemowe</h1>
+
+<h3>MODUŁ __builtin__ (Py2)</h3>
+
+<p>Moduł umożliwia sprawdzenie listy obiektów wbudowanych 
+
+<h3>MODUŁ __future__ (Py2)</h3>
+
+<p>Udostępnianie właściwości języka niezgodnych z wcześniejszym
+zachowaniem jest możliwe poprzez import z modułu __future__.
+Ważne, że to nie jest normalny import, to jest zmiana sposobu
+interpretowania kodu przez Pythona.
+Takie wiersze muszą być na samej górze pliku.
+
+<hr><pre>
+# PEP 236 -- Back to the __future__
+from __future__ import feature_name
+from __future__ import nested_scopes    # Py2.1, PEP 227 (LGB na LEGB)
+from __future__ import division         # Py2.2
+from __future__ import generators       # Py2.2
+from __future__ import print_function   # Py2.6
+from __future__ import braces
+# SyntaxError: not a chance
+# To jest dowcip: nigdy nie będzie wprowadzone oznaczanie bloku
+# instrukcji przez nawiasy jak w C/C++.
+# The Python developers have a well-developed sense of humour!
+</pre><hr><pre>
+# W sesji interaktywnej można sprawdzić zawartość modułu.
+&gt;&gt;&gt; import __future__
+&gt;&gt;&gt; help(__future__)
+&gt;&gt;&gt; __future__.all_feature_names     # Py2.7.3
+['nested_scopes', 'generators', 'division', 'absolute_import', 
+'with_statement', 'print_function', 'unicode_literals']
+&gt;&gt;&gt; import __hello__   # dowcip
+Hello world...
+&gt;&gt;&gt; import antigravity   # Py2.7, Py3
+# Dowcip. Otwiera komiks w przeglądarce.
+&gt;&gt;&gt; from __future__ import barry_as_FLUFL   # Py3.1
+# Dowcip. Nie działa a != b, tylko a &lt;&gt; b.
+&gt;&gt;&gt; 
+</pre><hr>
+
+<h3>MODUŁ io</h3>
+
+<p>https://docs.python.org/3/library/io.html
+
+<p>Moduł 'io' dostarcza środków do obsługi różnych typów I/O.
+Są trzy główne typy I/O: text I/O, binary I/O, raw I/O.
+Obiekt należący do jednej z tych kategorii to 'obiekt pliku' (file object),
+to mogą być prawdziwe pliki, gniazda (sockets), potoki (pipes).
+
+<hr><pre>
+import io
+
+# Text I/O spodziewa się i tworzy stringi, czyli w Py3 potrzebne jest kodowanie.
+f = open("myfile.txt", "r", encoding="utf-8")
+f = io.StringIO("some initial text data")   # in-memory text stream
+
+# Binary I/O spodziewa się 'bytes-like objects' i tworzy obiekty 'bytes'
+f = open("myfile.jpg", "rb")
+f = io.BytesIO(b"some initial binary data: \x00\x01")   # in-memory binary stream
+
+# Raw I/O jest zwykle używane jako niskopoziomowy element budujący
+# dla pozostałych dwóch strunieni.
+</pre><hr>
+
+<h3>MODUŁ copy</h3>
+
+<hr><pre>
+import copy
+
+# Są tylko dwie metody.
+x = "dowolny obiekt"
+y = copy.copy(x)              # płytka kopia x
+z = copy.deepcopy(x)          # głęboka kopia x
+
+# Głęboka kopia niesie ze soba dwa problemy.
+# 1. Obiekty rekurencyjne mogą powodować zapętlenie.
+# 2. Głęboka kopia może skopiować aż za dużo elementów.
+# Rozwiązaniem jest słownik "memo" obiektów już skopiowanych
+# i kopiowanie określone przez użytkownika.
+
+# Od Pythona 2.5 kopiowane są funkcje.
+
+# Klasy mogą używać tego samego interfejsu do kontroli kopiowania
+# co w przypadku modułu pickle.
+# W klasach można zdefiniować metody specjalne __copy__ i __deepcopy__,
+# które opisują płytką i głęboką kopię instancji tej klasy.
+
+# http://stackoverflow.com/questions/1500718/
+# what-is-the-right-way-to-override-the-copy-deepcopy-operations-on-an-object-in-p
+
+class MyClass(object):
+    def __init__(self): ...
+    def __copy__(self): ...
+    def __deepcopy__(self, memo): ...
+</pre><hr>
+
+<h3>MODUŁ collections (Py2.4+)</h3>
+
+<p>Moduł dostarcza specjalistyczne kontenerowe typy danych.
+
+<ul>
+<li>namedtuple() - (Py2.6+) factory function for creating tuple subclasses with named fields
+<li>deque - (Py2.4+) list-like container with fast appends and pops on either end (kolejka dwukierunkowa)
+<li>Counter - (Py2.7) dict subclass for counting hashable objects
+[domyślnie brakujące klucze mają wartość 0, nie pojawia się KeyError]
+<li>OrderedDict - (Py2.7) dict subclass that remembers the order 
+entries were added [PEP 372]
+<li>defaultdict - (Py2.5+) dict subclass that calls a factory function to supply missing values
+</ul>
+
+<p>W Pythonie 2.6 dodano abstrakcyjne klasy bazowe (ABCs, PEP 3119)
+[w nawiasach pokazane dziedziczenie]:
+
+<ul>
+<li>Container, 
+<li>Hashable, 
+<li>Iterable, 
+<li>Iterator (Iterable), 
+<li>Sized, 
+<li>Callable,
+<li>Sequence (Sized, Iterable, Container), 
+<li>MutableSequence (Sequence), 
+<li>Set (Sized, Iterable, Container), 
+<li>MutableSet (Set), 
+<li>Mapping (Sized, Iterable, Container), 
+<li>MutableMapping (Mapping),
+<li>MappingView (Sized), 
+<li>ItemsView (MappingView, Set), 
+<li>KeysView (MappingView, Set), 
+<li>ValuesView (MappingView).
+</ul>
+
+<p>Dzięki ABCs możemy pytać, czy klasy lub instancje posiadają
+pewną funkcjonalność.
+
+<hr><pre>
+import collections
+
+size = None
+if isinstance(my_variable, collections.Sized):   # istnieje __len__
+    size = len(my_variable)
+</pre><hr>
+
+<h3>MODUŁ argparse (Py2.7, Py3.2+)</h3>
+
+<p>Moduły getopt, optparse, argparse [PEP 389] służą do parsowania
+argumentów podanych w wierszu poleceń.
+Moduł getopt przypomina getopt() z biblioteki języka C, przez co
+przydaje się do pisania prototypów, które będą przepisywane do C.
+Do nowych skryptów Pythona zaleca się używanie najnowszego modułu argparse.
+
+</body>
+</html>

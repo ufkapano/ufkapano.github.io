@@ -51,14 +51,12 @@ a[1, 2] = 3         # {(1, 2): 3}
 
 <hr><pre>
 # Dodawanie a + b = c.
-# c to macierz zerowa.
-c = [[0]*n for i in range(n)]
+c = [[0]*n for i in range(n)]   # macierz zerowa
 for i in range(n):
     for j in range(n):
         c[i][j] = a[i][j] + b[i][j]
 </pre><hr><pre>
-# c to macierz zerowa.
-c = dict()
+c = dict()   # macierz zerowa
 for pair in a:
     c[pair] = c.get(pair, 0) + a[pair]
 # prościej c = dict(a)
@@ -70,14 +68,12 @@ for pair in b:
 
 <hr><pre>
 # Dodawanie a - b = c.
-# c to macierz zerowa.
-c = [[0]*n for i in range(n)]
+c = [[0]*n for i in range(n)]   # macierz zerowa
 for i in range(n):
     for j in range(n):
         c[i][j] = a[i][j] - b[i][j]
 </pre><hr><pre>
-# c to macierz zerowa.
-c = dict()
+c = dict()   # macierz zerowa
 for pair in a:
     c[pair] = c.get(pair, 0) + a[pair]
 # prościej c = dict(a)
@@ -89,14 +85,12 @@ for pair in b:
 
 <hr><pre>
 # Otrzymujemy a_tr.
-# a_tr to macierz zerowa.
-a_tr = [[0]*n for i in range(n)]
+a_tr = [[0]*n for i in range(n)]   # macierz zerowa
 for i in range(n):
     for j in range(n):
         a_tr[j][i] = a[i][j]
 </pre><hr><pre>
-# a_tr to macierz zerowa.
-a_tr = dict()
+a_tr = dict()   # macierz zerowa
 for (row, col) in a:
     a_tr[col, row] = a[row, col]
 </pre><hr>
@@ -105,8 +99,7 @@ for (row, col) in a:
 
 <hr><pre>
 # Mnożenie a * b = c.
-# c to macierz zerowa.
-c = [[0]*n for i in range(n)]
+c = [[0]*n for i in range(n)]   # macierz zerowa
 for i in range(n):
     for j in range(n):
         for k in range(n):
@@ -120,14 +113,12 @@ for i in range(n):
                 if k == s:
                     c[i][j] = c[i][j] + a[i][k] * b[s][j]
 </pre><hr><pre>
-# c to macierz zerowa.
-c = dict()
+c = dict()   # macierz zerowa
 for (row1, col1) in a:
     for (row2, col2) in b:
         if col1 == row2:
             c[row1, col2] = c.get((row1, col2), 0) + a[row1, col1] * b[row2, col2]
 </pre><hr>
-
 
 </body>
 </html>
