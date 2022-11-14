@@ -8,6 +8,8 @@
 
 <h1>Tworzenie klas</h1>
 
+<p>https://docs.python.org/3/tutorial/classes.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>W matematyce punkt na płaszczyźnie można zapisać za pomocą
@@ -35,18 +37,18 @@ atrybuty instancji (a nie klasy).
 <hr><pre>
 # Składnia.
 class NazwaKlasy:
-    class_docstring       # opcjonalnie
+    class_docstring   # opcjonalnie
     instrukcje
 
 class NazwaKlasy(lista_klas_nadrzędnych):
-    class_docstring       # opcjonalnie
+    class_docstring   # opcjonalnie
     instrukcje
 </pre><hr><pre>
-class Point:                  # instrukcja tworząca obiekt klasy
+class Point:   # instrukcja tworząca obiekt klasy
     """Klasa odpowiadająca punktom na płaszczyźnie."""
-    pass                  # wymagana jakaś instrukcja
+    pass   # wymagana jakaś instrukcja
 
-point = Point()               # tworzenie obiektu instancji klasy
+point = Point()   # tworzenie instancji klasy
 # Uwaga: nawiasy pokazują, że jest to wywołanie klasy.
 
 # Do punktu (instancji) przypisujemy atrybuty korzystając z notacji z kropką.
@@ -56,21 +58,21 @@ x = 7.8
 
 # Zmienne x i point.x to dwie różne wartości.
 # Instancja point jest osobną przestrzenią nazw.
-print ( "{} {}".format(x, point.x) )     # 7.8 3.4
-print ( point )                  # heksadecymalne info
+print("{} {}".format(x, point.x))   # 7.8 3.4
+print(point)                  # heksadecymalne info
 
 # Obiekt może być parametrem funkcji w zwykły sposób.
-# Nazwa point wewnątrz funkcji jest lokalna i nie koliduje
+# Nazwa 'point' wewnątrz funkcji jest lokalna i nie koliduje
 # z globalną zmienną point.
 
 def print_point(point):
     """Wypisz punkt."""
-    print ("({}, {})".format(point.x, point.y))
+    print("({}, {})".format(point.x, point.y))
 
 # Wywołujemy funkcję dla punktu. Do funkcji przekazujemy wartość
-# zmiennej point, czyli referencję do obiektu.
+# zmiennej 'point', czyli referencję do obiektu.
 
-print_point(point)            # (3.4, 5.6)
+print_point(point)   # (3.4, 5.6)
 </pre><hr>
 
 <h3>PORÓWNYWANIE OBIEKTÓW</h3>
@@ -79,17 +81,17 @@ print_point(point)            # (3.4, 5.6)
 dwa obiekty są "te same" czy "takie same".
 
 <hr><pre>
-point1 = Point()              # pierwszy punkt
+point1 = Point()   # pierwszy punkt
 point1.x = 3
 point1.y = 4
 
-point2 = Point()              # drugi punkt
+point2 = Point()   # drugi punkt
 point2.x = 3
 point2.y = 4
 
-print ( point1 == point2 )    # False, to nie są te same obiekty, inne id
-point3 = point1               # kopiujemy referencję
-print ( point1 == point3 )    # True,  to jest porównywanie referencji
+point1 == point2   # False, to nie są te same obiekty, inne id
+point3 = point1    # kopiujemy referencję
+point1 == point3   # True,  to jest porównywanie referencji
 
 # Taki typ równości nazywa się shallow equality (płytka, powierzchowna równość).
 # Aby porównać zawartość obiektów (deep equality, głęboka równość),
@@ -99,8 +101,8 @@ def same_point(point1, point2):
     """Porównaj punkty."""
     return (point1.x == point2.x) and (point1.y == point2.y)
 
-print ( same_point(point1, point2) )    # True, te same wartości x i y
-print ( same_point(point1, point3) )    # True, oczywiste
+same_point(point1, point2)   # True, te same wartości x i y
+same_point(point1, point3)   # True, oczywiste
 </pre><hr>
 
 <h3>KOMPOZYCJA</h3>
@@ -122,8 +124,8 @@ class Rectangle:
 box = Rectangle()
 box.width = 100.0
 box.height = 200.0
-box.corner = Point()          # obiekt Point jest zagnieżdżony w obiekcie Rectangle
-box.corner.x = 0.0            # określamy atrybuty punktu
+box.corner = Point()   # obiekt Point jest zagnieżdżony w obiekcie Rectangle
+box.corner.x = 0.0     # określamy atrybuty punktu
 box.corner.y = 0.0
 
 # Nowe instancje klas mogą powstawać wewnątrz funkcji.
@@ -136,12 +138,12 @@ def find_center(rect):        # zwraca instancję punktu
     return point          # referencja do nowego obiektu
 
 center = find_center(box)
-print_point(center)           # (50.0, 100.0)
+print_point(center)   # (50.0, 100.0)
 
 # Możemy zmieniać stan obiektu przez podstawienia jego atrybutów.
 # Zapiszemy to wewnątrz funkcji, która pozwala na powiększanie prostokąta.
 
-def grow_rect(rect, dw, dh):            # funkcja zmienia oryginał
+def grow_rect(rect, dw, dh):   # funkcja zmienia oryginał
     """Powiększ prostokąt."""
     rect.width = rect.width + dw
     rect.height = rect.height + dh
@@ -160,8 +162,8 @@ point1 = Point()
 point1.x = 3
 point1.y = 4
 point2 = copy.copy(point1)
-print ( point1 == point2 )             # False, inne referencje
-print ( same_point(point1, point2) )   # True, te same wartości x i y
+point1 == point2             # False, inne referencje
+same_point(point1, point2)   # True, te same wartości x i y
 </pre><hr>
 
 <p>Dla obiektów prostych jak Point, które nie mają zagnieżdzonych innych
@@ -177,7 +179,7 @@ przepisania funkcji <em>grow_rect()</em> tak, aby zwracała nowy obiekt
 klasy Rectangle, który jest w tym samym położeniu, ale ma nowe wymiary.
 
 <hr><pre>
-def grow_rect2(rect, dw, dh):          # zwraca nowy obiekt
+def grow_rect2(rect, dw, dh):   # zwraca nowy obiekt
     """Zwróć powiększony prostokąt."""
     import copy
     rect2 = copy.deepcopy(rect)
@@ -185,7 +187,6 @@ def grow_rect2(rect, dw, dh):          # zwraca nowy obiekt
     rect2.height = rect2.height + dh
     return rect2
 </pre><hr>
-
 
 </body>
 </html>

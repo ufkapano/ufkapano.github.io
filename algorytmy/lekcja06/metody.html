@@ -29,7 +29,7 @@ def set_point(point, x, y):
 
 def print_point(point):
     """Wypisz punkt."""
-    print ( "({}, {})".format(point.x, point.y) )
+    print("({}, {})".format(point.x, point.y))
 
 def same_point(point1, point2):
     """Porównaj punkty."""
@@ -78,43 +78,43 @@ licząc od lewej, kiedy metoda wykonuje pewne operacje
 związane z dwoma różnymi instancjami, np. dodawanie, porównywanie.
 
 <hr><pre>
-class Point:                            # definicja obiektu klasy
-    """Klasa dla punktów."""            # łańcuch dokumentacyjny
+class Point:                   # definicja obiektu klasy
+    """Klasa dla punktów."""   # łańcuch dokumentacyjny
 
-    def set_point(self, x, y):          # definicja metody klasy
+    def set_point(self, x, y):   # definicja metody klasy
         """Ustaw punkt."""
-        self.x = x            # przypisanie atrybutu do instancji
+        self.x = x   # przypisanie atrybutu do instancji
         self.y = y
 
     def print_point(self):
         """Wypisz punkt."""
-        print ( "({}, {})",format(self.x, self.y) )
+        print("({}, {})",format(self.x, self.y))
 
     def same_point(self, other):
         """Porównaj punkty."""
         return (self.x == other.x) and (self.y == other.y)
 
 pt1 = Point()
-pt1.set_point(3.4, 5.6)       # odpowiada Point.set_point(pt1, 3.4, 5.6)
-pt1.print_point()             # odpowiada Point.print_point(pt1)
+pt1.set_point(3.4, 5.6)   # odpowiada Point.set_point(pt1, 3.4, 5.6)
+pt1.print_point()         # odpowiada Point.print_point(pt1)
 pt2 = Point()
 pt2.set_point(3.4, 5.6)
 pt2.print_point()
-print ( "porównanie {}".format(pt1.same_point(pt2)) )
-print ( "porównanie {}".format(Point.same_point(pt1, pt2)) )   # równoważne
+
+pt1.same_point(pt2))
+Point.same_point(pt1, pt2))   # równoważne
 
 # Metodę można utworzyć poza klasą, a następnie trzeba powiązać
-# ją z klasą (na tym etapie nazwa self jest istotna).
-def show_point(self):         # tworzymy funkcję
+# ją z klasą (na tym etapie nazwa 'self' jest istotna).
+def show_point(self):   # tworzymy funkcję
     """Wypisz punkt."""
-    print ( "x = {}".format(self.x) )
-    print ( "y = {}".format(self.y) )
+    print("x = {}".format(self.x))
+    print("y = {}".format(self.y))
 
-Point.show = show_point       # funkcja staje się metodą klasy
-pt1.show()                    # wywołanie metody
-Point.show(pt1)               # równoważne wywołanie
+Point.show = show_point   # funkcja staje się metodą klasy
+pt1.show()                # wywołanie metody
+Point.show(pt1)           # równoważne wywołanie
 </pre><hr>
-
 
 </body>
 </html>

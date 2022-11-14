@@ -8,18 +8,14 @@
 
 <h1>Metody specjalne</h1>
 
+<p>https://docs.python.org/3/reference/datamodel.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>W Pythonie nie ma przeciążania funkcji, bo nazwa funkcji jest
 referencją do obiektu. W C++ mogą być funkcje o tej samej nazwie,
 które różnią się typami argumentów (ale nie zwracanych wartości).
 W Pythonie przeciążanie operatorów robi się za pomocą metod specjalnych.
-
-<hr><pre>
-A Guide to Python's Magic Methods [Python 2]
-
-https://rszalski.github.io/magicmethods/
-</pre><hr>
 
 <h3>PRZECIĄŻANIE OPERATORÓW</h3>
 
@@ -49,8 +45,8 @@ __init__  konstruktor
 
 __del__  destruktor (finalizer), działa gdy licznik referencji zejdzie do zera
     i zaczyna pracować garbage collection;
-    wyrażenie del x tylko zmniejsza licznik referencji o 1;
-    wyrażenie del x _nie_ przekłada się na x.__del__();
+    wyrażenie 'del x' tylko zmniejsza licznik referencji o 1;
+    wyrażenie 'del x' _nie_ przekłada się na x.__del__();
 
 __str__  zamiana na "nieformalny" string, wywoływane przez str(x);
     metoda działa, jeżeli obiekt jest dostępny bezpośrednio;
@@ -122,7 +118,7 @@ __imod__
 # Przykład.
 alist = [2]
 alist += [5]   # zmiana obiektu!
-print ( alist )   # [2, 5]
+print(alist)   # [2, 5]
 # To jest równoważne działaniom:
 result = alist.__iadd__([5])   # potrzebne return self
 alist = result
@@ -155,13 +151,13 @@ __long__  implementacja long(x)
 __float__  implementacja float(x)
 </pre><hr><pre>
 # Porównywanie.
-__cmp__  porównywanie (Python 2), zwraca -1|0|+1
+__cmp__  porównywanie (Py2), zwraca -1|0|+1
 __len__  długość kontenera, len(x)
-__nonzero__  test prawdziwości (Python 2), jeżeli obiekt nie jest kontenerem
-__bool__  test prawdziwości (Python 3), bool(x)
-__bool__ = __nonzero__        # kod dla zachowania kompatybilności Pythona 2 i 3
+__nonzero__  test prawdziwości (Py2), jeżeli obiekt nie jest kontenerem
+__bool__  test prawdziwości (Py3), bool(x)
+__bool__ = __nonzero__   # kod dla zachowania kompatybilności Pythona 2 i 3
 
-# Tak zwane "rich comparison" methods (Python 2.6+).
+# Tak zwane "rich comparison" methods (Py2.6+).
 # Jeżeli nie są zdefiniowane, wywoływane jest __cmp__
 __lt__  mniejsze, x &lt; y
 __gt__  większe, x &gt; y
@@ -218,7 +214,7 @@ def __getitem__(self, key): pass  # kod dla X[key]
 
 __setitem__  przypisanie indeksu i wycinka, 
 X[key] = value, X[i:j] = sequence
-def __setitem__(self, key, value): pass     # kod dla X[key] = value
+def __setitem__(self, key, value): pass   # kod dla X[key] = value
 
 __delitem__  usuwanie indeksu i wycinka,
 del X[key], del X[i:j]
@@ -254,9 +250,9 @@ class Printer:
         print ( "Wywołanie: {} {}".format(arguments, keywords) )
 
 X = Printer()
-X(1, 2)                       # Wywołanie: (1, 2) {}
-X(1, 2, x=3, y=4)             # Wywołanie: (1, 2) {"x":3, "y":4}
-print ( X.counter )           # odczyt licznika wywołań funkcji
+X(1, 2)             # Wywołanie: (1, 2) {}
+X(1, 2, x=3, y=4)   # Wywołanie: (1, 2) {"x":3, "y":4}
+print(X.counter)    # odczyt licznika wywołań funkcji
 </pre><hr>
 
 <h3>ATRYBUTY KLASY</h3>
@@ -283,7 +279,7 @@ class Point:
         self.y = y
         # counter += 1   # nie działa!
         Point.counter += 1   # potrzebna kwalifikacja
-        print ("init: counter = {}".format(Point.counter))
+        print("init: counter={}".format(Point.counter))
 
     def __str__(self):
         """Postać napisowa punktu."""
@@ -300,22 +296,22 @@ class Point:
     def __del__(self):
         """Destruktor punktu."""
         Point.counter -= 1
-        print ("del: counter = {}".format(Point.counter))
+        print("del: counter={}".format(Point.counter))
 
-print ( "counter = {}".format(Point.counter) )   # na starcie counter=0
+print("counter={}".format(Point.counter))   # na starcie counter=0
 pt1 = Point(3.4, 5.6)                   # counter=1
 pt2 = Point(4.5, 2.1)                   # counter=2
-print ( "metoda __str__ {} {}".format(pt1, pt2) )
-print ( "metoda __add__ {}".format(pt1 + pt2) )   # counter wzrasta do 3 i od razu wraca do 2
+print("metoda __str__ {} {}".format(pt1, pt2))
+print("metoda __add__ {}".format(pt1 + pt2))   # counter wzrasta do 3 i od razu wraca do 2
 
 # Każda instancja ma łącze do swojej klasy.
-print ( pt1.__class__ )
-print ( pt1.__dict__.keys() )           # przestrzeń nazw instancji
+print(pt1.__class__)
+print(pt1.__dict__.keys())   # przestrzeń nazw instancji
 
-del pt1                                 # counter=1
-del pt2                                 # counter=0
-print ( dir(Point) )                    # przestrzeń nazw klasy
-print ( Point.__dict__.keys() )         # przestrzeń nazw klasy
+del pt1                 # counter=1
+del pt2                 # counter=0
+dir(Point)              # przestrzeń nazw klasy
+Point.__dict__.keys()   # przestrzeń nazw klasy
 </pre><hr>
 
 <p>Każda klasa czy instancja ma atrybut <em>__dict__</em>, 
@@ -352,10 +348,12 @@ from functools import total_ordering
 
 @total_ordering
 class Student:
-    # Mamy atrybuty firstname i lastname.
+    # Zakładamy, że w klasie Student mamy atrybuty 'firstname' i 'lastname'.
+
     def __eq__(self, other):
         return ((self.lastname.lower(), self.firstname.lower()) ==
             (other.lastname.lower(), other.firstname.lower()))
+
     def __lt__(self, other):
         return ((self.lastname.lower(), self.firstname.lower()) &lt;
             (other.lastname.lower(), other.firstname.lower()))

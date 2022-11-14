@@ -66,7 +66,7 @@ public:
     T& front() const { return head->value; } // zwraca początek, nie usuwa
     T& back() const { return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa początek O(1)
-    void pop_back(); // usuwa koniec O(n)
+    void pop_back(); // usuwa koniec O(1)
     void clear(); // czyszczenie listy z elementów O(n)
     void display(); // O(n)
     void display_reversed(); // O(n)

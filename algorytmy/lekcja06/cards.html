@@ -61,6 +61,8 @@ class Card:
         if self.rank &lt; other.rank:
             return -1
         return 0      # remis
+        # Krótka wersja (Py2).
+        #return cmp((self.suit, self.rank), (other.suit, other.rank))
 </pre><hr><pre>
 class Deck:
     """Klasa reprezentująca talię."""
@@ -154,7 +156,7 @@ class CardGame:
     def print_hands(self):
         """Wypisz ręce graczy."""
         for hand in self.hands:
-            print ( hand )
+            print(hand)
 </pre><hr><pre>
 class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
 
@@ -169,8 +171,8 @@ class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
             if match in self.cards:
                 self.cards.remove(card)
                 self.cards.remove(match)
-                print ( "Ręka {}: {} tworzy parę z {}".format(self.name, card, match) )
-                count = count + 1
+                print("Ręka {}: {} tworzy parę z {}".format(self.name, card, match))
+                count += 1
         return count
 </pre><hr><pre>
 class OldMaidGame(CardGame):         # tworzymy naszą grę
@@ -183,33 +185,34 @@ class OldMaidGame(CardGame):         # tworzymy naszą grę
             self.hands.append(OldMaidHand(name))
         # Rozdajemy karty do rąk.
         self.deck.deal(self.hands)
-        print ( "---- Rozdano karty" )
+        print("---- Rozdano karty")
         self.print_hands()
         # Usuwamy początkowe pary.
         matches = self.remove_all_matches()
-        print ( "---- Pary usunięte, początek gry" )
+        print("---- Pary usunięte, początek gry")
         self.print_hands()
         # Gramy dopóki nie będzie sparowanych 50 kart.
         turn = 0
         n_hands = len(self.hands)
         while matches &lt; 25:         # 25 par to 50 kart
-            matches = matches + self.play_one_turn(turn)
+            matches += self.play_one_turn(turn)
             turn = (turn + 1) % n_hands
-        print ( "---- Koniec gry" )
+        print("---- Koniec gry")
         self.print_hands()
 
     def remove_all_matches(self):
         count = 0
         for hand in self.hands:
-            count = count + hand.remove_matches()
+            count += hand.remove_matches()
         return count
 
     def play_one_turn(self, i):
-        if self.hands[i].is_empty(): return 0
+        if self.hands[i].is_empty():
+            return 0
         neighbor = self.find_neighbor(i)
         picked_card = self.hands[neighbor].pop_card()
         self.hands[i].add_card(picked_card)
-        print ( "Ręka {} pobiera {}".format(self.hands[i].name, picked_card) )
+        print("Ręka {} pobiera {}".format(self.hands[i].name, picked_card))
         count = self.hands[i].remove_matches()
         self.hands[i].shuffle()
         return count
@@ -224,7 +227,6 @@ class OldMaidGame(CardGame):         # tworzymy naszą grę
 game = OldMaidGame()
 game.play(["Adam", "Bogdan", "Cezary"])
 </pre><hr>
-
 
 </body>
 </html>

@@ -47,7 +47,7 @@ public:
     void display(); // lepiej zdefiniowac operator<<
     void reverse(); // odwracanie kolejnosci
     void sort(); // sortowanie listy
-    void merge(ArrayList& other); //  merges two sorted lists into one
+    void merge(ArrayList& other); //  merges two sorted lists into one NIEOBOWIAZKOWE
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
     // https://en.cppreference.com/w/cpp/language/operators

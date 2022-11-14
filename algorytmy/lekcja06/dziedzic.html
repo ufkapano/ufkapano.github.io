@@ -8,6 +8,10 @@
 
 <h1>Dziedziczenie</h1>
 
+<p>PEP 367 - New Super (Py2.6)
+
+<p>PEP 3135 - New Super (Py3)
+
 <h3>WPROWADZENIE</h3>
 
 <p>Klasy służą jako fabryki generujące wiele obiektów instancji,
@@ -23,17 +27,14 @@ instrukcji <em>class</em>.
 Instancje klasy podrzędnej dziedziczą atrybuty po wszystkich
 klasach nadrzędnych.
 
-
-
-
 <hr><pre>
-class C1:                     # nowy obiekt klasy
+class C1:   # nowy obiekt klasy
     pass
 
-class C2:                     # nowy obiekt klasy
-    message = "GvR"           # atrybut klasy C2
+class C2:   # nowy obiekt klasy
+    message = "GvR"   # atrybut klasy C2
 
-class C3(C1, C2):             # dziedziczenie wielokrotne
+class C3(C1, C2):   # dziedziczenie wielokrotne
 
     def __init__(self, who):
         """Konstruktor instancji klasy C3."""
@@ -42,21 +43,21 @@ class C3(C1, C2):             # dziedziczenie wielokrotne
 # C3 to klasa podrzędna.
 # C1 i C2 to klasy nadrzędne.
 
-I1 = C3("Adam")               # instancja klasy C3
-I2 = C3("Bogdan")             # instancja klasy C3
+I1 = C3("Adam")     # instancja klasy C3
+I2 = C3("Bogdan")   # instancja klasy C3
 
-print ( I1.name )             # kolejność przeszukiwania: I1, C3, C1, C2
+print(I1.name)   # kolejność przeszukiwania: I1, C3, C1, C2
 # Tu przeszukiwanie zakończy się na I1,
-# ponieważ name jest atrybutem instancji.
+# ponieważ 'name' jest atrybutem instancji.
 
-print ( I1.message )          # kolejność przeszukiwania: I1, C3, C1, C2
+print(I1.message)   # kolejność przeszukiwania: I1, C3, C1, C2
 # Tu przeszukiwanie dotrze aż do klasy C2.
-I1.message = "Python"         # atrybut tylko instancji I1
-print ( I1.message )          # Python, odczyt atrybutu instancji I1
-print ( I2.message )          # GvR, dochodzimy do atrybutu klasy C2
-print ( C2.message )          # GvR, odczytanie wprost atrybutu klasy
+I1.message = "Python"   # atrybut tylko instancji I1
+print(I1.message)       # Python, odczyt atrybutu instancji I1
+print(I2.message)       # GvR, dochodzimy do atrybutu klasy C2
+print(C2.message)       # GvR, odczytanie wprost atrybutu klasy
 
-print ( C3.__bases__ )        # krotka klas nadrzędnych
+print(C3.__bases__)   # krotka klas nadrzędnych
 </pre><hr>
 
 <p>Jeżeli obiekt pochodzi z instrukcji class,
@@ -83,7 +84,7 @@ class SecondClass(FirstClass):
         """Konstruktor instancji klasy SecondClass."""
         # Wywołanie kostruktora klasy nadrzędnej.
         FirstClass.__init__(self, x)
-        #super().__init__(x)   # Py3, nie musimy znać nazwy FirstClass.
+        #super().__init__(x)   # nie musimy znać nazwy FirstClass (Py3)
         # Nie musimy zmieniać kodu __init__ po zmianie FirstClass na NextClass.
         instrukcje            # nowe działania inicjalizacyjne
 </pre><hr>
@@ -95,7 +96,7 @@ Nazwa klasy jest zmienną przechowującą referencję do obiektu klasy.
 
 <hr><pre>
 # Moduł persons.py
-"""Moduł z narzędziami do opisu osób."""     # docstring
+"""Moduł z narzędziami do opisu osób."""   # docstring modułu
 
 class Person:
     """Klasa reprezentująca osoby."""
@@ -109,15 +110,15 @@ value = 2012
 # Kod testujący moduł.
 if __name__ == "__main__":
     adam = Person("Adam")
-    print ( adam.name )
+    print(adam.name)
 </pre><hr><pre>
 # Moduł główny
 
-import persons                          # import modułu
+import persons   # import modułu 'persons'
 
-student = persons.Person("Anna")        # tworzenie instancji
-print ( student.name )                  # Anna, atrybut instancji
-print ( persons.value )                 # 2012, potrzebna kwalifikacja
+student = persons.Person("Anna")   # tworzenie instancji
+print(student.name)    # Anna, atrybut instancji
+print(persons.value)   # 2012, potrzebna kwalifikacja
 </pre><hr>
 
 <h3>INTROSPEKCJA W PYTHONIE</h3>
@@ -150,32 +151,32 @@ class Cat(Pet):
     """Klasa dla kotów."""
 
     def speak(self):
-        print ( "miau!" )
+        print("miau!")
 
 class Dog(Pet):
     """Klasa dla psów."""
 
     def speak(self):
-        print ( "hau!" )
+        print("hau!")
 
 # Klasa nie wywiedziona z Pet.
 class Person:
     """Klasa dla osób."""
 
     def speak(self):
-        print ( "witam!" )
+        print("witam!")
 
     def drive(self):
-        print ( "piii!" )
+        print("piii!")
 
 # Zwykła funkcja, a nie metoda.
 def command(pet):
     pet.speak()
 
-pets = [Cat(), Dog(), Person()]   # konstruktory
+pets = [Cat(), Dog(), Person()]   # działają konstruktory klas
 
 # Przykład polimorfizmu Pythona.
-# Funkcja oczekuje określonego interfejsu (metody speak),
+# Funkcja oczekuje określonego interfejsu (metody 'speak'),
 # a nie określonego typu argumentu.
 for pet in pets:
     command(pet)
