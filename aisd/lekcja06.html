@@ -67,12 +67,12 @@ public:
     void display();
     // Operacje z indeksami.
     T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
-    const T& operator[](int pos) const; // dostep do obiektu const
+    const T& operator[](int pos) const; // dostęp do obiektu const
     void erase(int pos);
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
+    int index(const T& item); // jaki index na liście (-1 gdy nie ma)
     void insert(int pos, const T& item); // inserts item before pos
     void insert(int pos, T&amp;&amp; item); // inserts item before pos
-    // Jeżeli pos=0, to wstawiamy na poczatek.
+    // Jeżeli pos=0, to wstawiamy na początek.
     // Jeżeli pos=size(), to wstawiamy na koniec.
 };
 </pre><hr>
@@ -118,28 +118,28 @@ public:
     } // default constructor
     ~MyDeque() { delete [] tab; }
     MyDeque(const MyDeque& other); // copy constructor
-    MyDeque(MyDeque&amp;&amp; other); // move constructor
+    MyDeque(MyDeque&amp;&amp; other); // move constructor NIEOBOWIĄZKOWE
     MyDeque& operator=(const MyDeque& other); // copy assignment operator, return *this
-    MyDeque& operator=(MyDeque&amp;&amp; other); // move assignment operator, return *this
+    MyDeque& operator=(MyDeque&amp;&amp; other); // move assignment operator, return *this NIEOBOWIĄZKOWE
     bool empty() const { return head == tail; }
     bool full() const { return (tail + 1) % msize == head; }
     int size() const { return (tail - head + msize) % msize; }
     int max_size() const { return msize-1; }
     void push_front(const T& item); // dodanie na początek O(1)
-    void push_front(T&amp;&amp; item); // dodanie na początek O(1)
+    void push_front(T&amp;&amp; item); // dodanie na początek O(1) NIEOBOWIĄZKOWE
     void push_back(const T& item); // dodanie na koniec O(1)
-    void push_back(T&amp;&amp; item); // dodanie na koniec O(1)
+    void push_back(T&amp;&amp; item); // dodanie na koniec O(1) NIEOBOWIĄZKOWE
     T& front() { return tab[head]; } // zwraca poczatek
     T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
     void pop_front(); // usuwa początek kolejki O(1)
     void pop_back(); // usuwa koniec kolejki O(1)
     void clear(); // czyszczenie listy z elementow
     void display();
-    // Operacje z indeksami.
+    // Operacje z indeksami. NIEOBOWIĄZKOWE
     T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](int pos) const; // dostęp do obiektu const
     void erase(int pos);
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
+    int index(const T& item); // jaki index na liście (-1 gdy nie ma)
     void insert(int pos, const T& item); // inserts item before pos
     void insert(int pos, T&amp;&amp; item); // inserts item before pos
 };
