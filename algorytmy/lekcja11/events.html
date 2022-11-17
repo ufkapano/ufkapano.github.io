@@ -124,10 +124,14 @@ root.mainloop()
 funkcji. Jeśli przycisk zostanie naciśnięty, wtedy uruchamiana jest funkcja.
 
 <hr><pre>
+# +---+---+---+
+# | - | 0 | + |
+# +---+---+---+
 # event2.py
 import tkinter as tk
 
 # Funkcje do zmiany tekstu wyświetlanego przez etykietę.
+# Funkcje korzystają ze zmiennej globalnej 'label'.
 def increase():
     value = int(label["text"])
     label["text"] = "{}".format(value + 1)
@@ -144,12 +148,14 @@ root.columnconfigure(1, minsize=100, weight=1)
 root.columnconfigure(2, minsize=100, weight=1)
 
 button_decrease = tk.Button(root, text="-", command=decrease)
+# command=lambda: label.config(text=str(int(label["text"])-1)))
 button_decrease.grid(row=0, column=0, sticky=tk.NSEW)
 
 label = tk.Label(root, text="0")
 label.grid(row=0, column=1)
 
 button_increase = tk.Button(root, text="+", command=increase)
+# command=lambda: label.config(text=str(int(label["text"])+1)))
 button_increase.grid(row=0, column=2, sticky=tk.NSEW)
 
 root.mainloop()   # run the tkinter event loop

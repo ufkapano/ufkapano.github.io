@@ -12,11 +12,11 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Button widgets are used to display 'clickable buttons'. 
+<p>'Button' widgets are used to display 'clickable buttons'. 
 They can be configured to call a function whenever they’re clicked.
 
-<p>Many keyword arguments from the Label widget will work for
-the Button widget.
+<p>Many keyword arguments from the 'Label' widget will work for
+the 'Button' widget.
 
 <hr><pre>
 # button1.py
@@ -37,7 +37,7 @@ button = tk.Button(root,
     fg="yellow",
     command=callback,
 )
-button.pack()
+button.grid()
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -62,13 +62,12 @@ import tkinter as tk
 root = tk.Tk()
 
 label = tk.Label(root, text="Press any button")
-label.pack(side=tk.TOP)
+button1 = tk.Button(root, text="Hello", command=lambda: print("Hello!"))
+button2 = tk.Button(root, text="Quit", command=root.quit)
 
-button = tk.Button(root, text="Hello", command=lambda: print("Hello!"))
-button.pack(side=tk.LEFT)
-
-button = tk.Button(root, text="Quit", command=root.quit)
-button.pack(side=tk.RIGHT)
+label.grid(row=0, column=0, columnspan=2)
+button1.grid(row=1, column=0)
+button2.grid(row=1, column=1)
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr>

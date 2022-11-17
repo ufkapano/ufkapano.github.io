@@ -10,7 +10,7 @@
 
 <p>https://realpython.com/python-gui-tkinter/
 
-<h3>INTRODUCTION</h3>
+<h3>WPROWADZENIE</h3>
 
 <p>Widżet 'Frame' (ramka) jest używany
 do organizowania ułożenia innych widżetów w aplikacji.
@@ -18,7 +18,6 @@ Najlepiej myśleć o ramkach jak o kontenerach dla innych widżetów.
 
 <hr><pre>
 import tkinter as tk   # Py3
-from tkinter import ttk
 
 root = tk.Tk()
 
@@ -31,7 +30,7 @@ label_a.grid()
 label_b = tk.Label(frame_b, text="In Frame B")
 label_b.grid()
 
-# Ordering of frames is determined here.
+# Tutaj jest określona kolejność ramek.
 frame_a.grid()
 frame_b.grid()
 
@@ -53,9 +52,11 @@ border_effects = {
 }
 root = tk.Tk()
 
+c = 0
 for relief_name, relief_obj in border_effects.items():
     frame = tk.Frame(root, relief=relief_obj, borderwidth=5)
-    frame.grid()
+    frame.grid(row=0, column=c)
+    c += 1
     label = tk.Label(frame, text=relief_name)
     label.grid()
 

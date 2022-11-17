@@ -1,0 +1,59 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Radiobutton</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>The 'Radiobutton' widget is used to create a single-choice interface.
+Pressing one widget in a group automatically deselects the one pressed last.
+Widgets in a group are associated with the same variable and
+a 'value' attribute is used when the button is selected.
+
+<hr><pre>
+# radio1.py
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+# The same variable for several radiobuttons is used.
+var = tk.IntVar()   # a global variable is recommended
+var.set(1)   # initializing the choice, i.e. Python
+
+label = tk.Label(root, text="Choose a language:")
+label.grid()
+
+radio1 = tk.Radiobutton(root, text="Python", variable=var, value=1,
+    command=lambda: print(var.get()))
+radio1.grid(sticky=tk.W)
+
+radio2 = tk.Radiobutton(root, text="Perl", variable=var, value=2,
+    command=lambda: print(var.get()))
+radio2.grid(sticky=tk.W)
+
+radio3 = tk.Radiobutton(root, text="Java", variable=var, value=3,
+    command=lambda: print(var.get()))
+radio3.grid(sticky=tk.W)
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Radiobutton()
+
+master=root     # the first argument
+text="text label"
+width=50   # in text units
+variable=var
+command=lambda: print(var.get())
+value=val
+padx=20
+indicatoron=1   # (*) and the label (default)
+indicatoron=0   # rectangle button with the label
+</pre><hr>
+
+</body>
+</html>

@@ -69,13 +69,15 @@ root.title("first")   # opcjonalny tytuł okna, domyślny tytuł to "tk"
 #root.geometry("200x100")   # optional, the same
 #root.geometry("{}x{}".format(width, height)
 #root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
+#root.resizable(width=False, height=False)   # nie można zmieniać rozmiarów okna
 
 # Tutaj dodajemy widżety.
 
 #label = tk.Label(root, text="Hello")
-label = ttk.Label(root, text="Hello")
+label = ttk.Label(root, text="Hello")   # themed widgets
 
 label.grid()   # użycie menedżera geometrii
+#label.grid(row=0, column=0)   # jawnie podane położenie na siatce (lewy górny róg)
 
 root.mainloop()   # uruchomienie pętli zdarzeń tkinter
 </pre><hr>

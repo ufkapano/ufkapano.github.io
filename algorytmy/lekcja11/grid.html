@@ -10,7 +10,7 @@
 
 <p>https://realpython.com/python-gui-tkinter/
 
-<h3>INTRODUCTION</h3>
+<h3>WPROWADZENIE</h3>
 
 <p>'.grid()' works by splitting a window or Frame into rows and columns. 
 You specify the location of a widget by calling .grid() and passing 
@@ -21,6 +21,9 @@ respectively. Both row and column indices start at 0.
 within the grid cell.
 
 <hr><pre>
+columnspan=2   # widget ma zająć dwie kolumny na siatce
+rowspan=2   # widget ma zająć dwia wiersze na siatce
+
 sticky=tk.N   # "n" or "N"
 sticky=tk.E   # "e" or "E"
 sticky=tk.S   # "s" or "S"
@@ -59,7 +62,7 @@ for i in range(3):
         )
         frame.grid(row=i, column=j)
         label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
-        label.pack()
+        label.grid()
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -83,7 +86,7 @@ for i in range(3):
         )
         frame.grid(row=i, column=j, padx=5, pady=5)   # external padding in pixels
         label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
-        label.pack(padx=5, pady=5)   # internal padding in pixels
+        label.grid(padx=5, pady=5)   # internal padding in pixels
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>

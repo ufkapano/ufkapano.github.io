@@ -85,9 +85,10 @@ root.mainloop()   # run the tkinter event loop
 # Modifiers.
 "&lt;Motion&gt;" and "&lt;B1-Motion&gt;" (moving the mouse with the left button pressed)
 "&lt;KeyPress&gt;" and "&lt;KeyPress-a&gt;" (pressing the "a" key only)
-
+</pre><hr><pre>
 # Synonyms.
 "&lt;ButtonPress-1&gt;", "&lt;Button-1&gt;", "&lt;1&gt;"
+"&lt;Double-ButtonPress-1&gt;", "&lt;Double-1&gt;"
 "&lt;KeyPress-a&gt;", "&lt;Key-a&gt;"
 </pre><hr>
 
@@ -101,12 +102,12 @@ to a function. Whenever the button is pressed, the function is executed.
 import tkinter as tk
 
 def increase():
-    value = int(label_value["text"])
-    label_value["text"] = "{}".format(value + 1)
+    value = int(label["text"])
+    label["text"] = "{}".format(value + 1)
 
 def decrease():
-    value = int(label_value["text"])
-    label_value["text"] = "{}".format(value - 1)
+    value = int(label["text"])
+    label["text"] = "{}".format(value - 1)
 
 root = tk.Tk()
 
@@ -116,12 +117,14 @@ root.columnconfigure(1, minsize=100, weight=1)
 root.columnconfigure(2, minsize=100, weight=1)
 
 button_decrease = tk.Button(root, text="-", command=decrease)
+# command=lambda: label.config(text=str(int(label["text"])-1)))
 button_decrease.grid(row=0, column=0, sticky=tk.NSEW)
 
-label_value = tk.Label(root, text="0")
-label_value.grid(row=0, column=1)
+label = tk.Label(root, text="0")
+label.grid(row=0, column=1)
 
 button_increase = tk.Button(root, text="+", command=increase)
+# command=lambda: label.config(text=str(int(label["text"])+1)))
 button_increase.grid(row=0, column=2, sticky=tk.NSEW)
 
 root.mainloop()   # run the tkinter event loop

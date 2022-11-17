@@ -25,7 +25,9 @@ interfering with other windows in the interface.
 and they are called 'standard dialogs' od 'common dialogs'.
 
 <hr><pre>
+# dialog1.py
 import tkinter as tk   # Py3
+from tkinter import messagebox
 
 root = tk.Tk()
 
@@ -36,11 +38,11 @@ def callback():
         messagebox.showinfo("No", "Quit has been cancelled")
 
 button1 = tk.Button(root, text="Quit", command=callback)
-button1.pack(fill=tk.X)
+button1.grid(sticky=tk.EW)
 
 button2 = tk.Button(root, text="Spam", command=lambda:
     messagebox.showerror("Error", "Error message"))
-button2.pack(fill=tk.X)
+button2.grid(sticky=tk.EW)
 
 root.mainloop() 
 </pre><hr><pre>

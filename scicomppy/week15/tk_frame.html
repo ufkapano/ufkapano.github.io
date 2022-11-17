@@ -12,7 +12,7 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Frame widgets are used for organizing the layout of other widgets 
+<p>'Frame' widgets are used for organizing the layout of other widgets 
 in an application.
 Frames are best thought of as 'containers' for other widgets.
 
@@ -25,14 +25,14 @@ frame_a = tk.Frame(root)
 frame_b = tk.Frame(root)
 
 label_a = tk.Label(frame_a, text="In Frame A")
-label_a.pack()
+label_a.grid()
 
 label_b = tk.Label(frame_b, text="In Frame B")
-label_b.pack()
+label_b.grid()
 
 # Ordering of frames is determined here.
-frame_a.pack()
-frame_b.pack()
+frame_a.grid()
+frame_b.grid()
 
 root.mainloop()   # run the tkinter event loop
 #       root
@@ -52,11 +52,13 @@ border_effects = {
 }
 root = tk.Tk()
 
+c = 0
 for relief_name, relief_obj in border_effects.items():
     frame = tk.Frame(root, relief=relief_obj, borderwidth=5)
-    frame.pack(side=tk.LEFT)
+    frame.grid(row=0, column=c)
+    c += 1
     label = tk.Label(frame, text=relief_name)
-    label.pack()
+    label.grid()
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -66,7 +68,7 @@ master=root   # the first argument
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in pixels
 height=30   # in pixels
-relief="..."   # border decoration
+relief="flat" # border decoration ("flat", "sunken", "raised", "groove", "ridge")
 bd=5   # 'borderwidth' or 'bd'
 </pre><hr>
 

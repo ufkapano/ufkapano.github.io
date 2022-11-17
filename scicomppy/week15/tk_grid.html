@@ -17,19 +17,25 @@ You specify the location of a widget by calling .grid() and passing
 the row and column indices to the row and column keyword arguments, 
 respectively. Both row and column indices start at 0.
 
+<p>The 'sticky' option to grid describes how the widget should line up 
+within the grid cell.
+
 <hr><pre>
+columnspan=2   # the widged will span two columns
+rowspan=2   # the widged will span two rows
+
 sticky=tk.N   # "n" or "N"
 sticky=tk.E   # "e" or "E"
 sticky=tk.S   # "s" or "S"
 sticky=tk.W   # "w" or "W"
-sticky=tk.NE   # "ne"
-sticky=tk.NW   # "nw"
-sticky=tk.SE   # "se"
-sticky=tk.SW   # "sw"
+sticky=tk.NE   # "ne" or (tk.N, tk.E)
+sticky=tk.NW   # "nw" or (tk.N, tk.W)
+sticky=tk.SE   # "se" or (tk.S, tk.E)
+sticky=tk.SW   # "sw" or (tk.S, tk.W)
 
-sticky=tk.EW   # "ew"
-sticky=tk.NS   # "ns"
-sticky=tk.NSEW   # "nsew"
+sticky=tk.EW   # "ew" or (tk.E, tk.W)
+sticky=tk.NS   # "ns" or (tk.N, tk.S)
+sticky=tk.NSEW   # "nsew" or (tk.N, tk.S, tk.E, tk.W)
 
 +----------------+--------------+
 | .grid()        | .pack()      |
@@ -56,7 +62,7 @@ for i in range(3):
         )
         frame.grid(row=i, column=j)
         label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
-        label.pack()
+        label.grid()
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -80,7 +86,7 @@ for i in range(3):
         )
         frame.grid(row=i, column=j, padx=5, pady=5)   # external padding in pixels
         label = tk.Label(frame, text="Row {}\nColumn {}".format(i, j))
-        label.pack(padx=5, pady=5)   # internal padding in pixels
+        label.grid(padx=5, pady=5)   # internal padding in pixels
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>

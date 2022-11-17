@@ -79,13 +79,15 @@ root = tk.Tk()   # this is the root widget
 #root.geometry("200x100")   # optional, the same
 #root.geometry("{}x{}".format(width, height)
 #root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
+#root.resizable(width=False, height=False)   # the window size is fixed
 
 root.title("first")   # optional, the default title is "tk"
 
 # Widgets are added here.
 
 label = tk.Label(root, text="Hello", bg="red")   # a label widget
-label.pack()   # using a geometry manager
+label.grid()   # using a geometry manager
+#label.grid(row=0, column=0)   # the position on the grid, top left corner
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>

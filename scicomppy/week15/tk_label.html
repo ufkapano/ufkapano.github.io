@@ -12,8 +12,8 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Label widgets are used to display text or images. 
-The text displayed by a Label widget can’t be edited by the user. 
+<p>'Label' widgets are used to display text or images. 
+The text displayed by a 'Label' widget can’t be edited by the user. 
 
 <hr><pre>
 # label1.py
@@ -26,7 +26,7 @@ root = tk.Tk()   # root widget
 label = tk.Label(root, text="A label with a very long text")
 #label = tk.Label(root, text="Hello", bg="red")
 
-label.pack()   # using a geometry manager
+label.grid()   # using a geometry manager
 
 root.mainloop()
 </pre><hr><pre>
@@ -34,7 +34,7 @@ root.mainloop()
 # We can use this form if the widget is never again referenced.
 # The widget is not garbage collected because it is used internally.
 
-tk.Label(root, text="Hello").pack()   # None is returned here!
+tk.Label(root, text="Hello").grid()   # None is returned here!
 </pre><hr><pre>
 Selected keyword arguments in Label()
 
@@ -45,6 +45,8 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
 height=10   # in text units
 font="Times 10 bold"
+justify=tk.LEFT
+padx=20
 cursor="pencil"   # set the appearance of the mouse pointer when it moves
    # over the widget ('gumby', 'watch', 'pencil', 'cross', 'hand2')
 </pre><hr><pre>
@@ -84,7 +86,7 @@ The available font styles are 'normal', 'bold', 'roman', 'italic', 'underline',
 
 <h3>IMAGES</h3>
 
-<p>The PhotoImage class is used to display images (either grayscale
+<p>The 'PhotoImage' class is used to display images (either grayscale
 or true color images) in labels, buttons, canvases, and text widgets.
 
 <p>If the 'compound' option is set to tk.BOTTOM, tk.LEFT, tk.RIGHT,
@@ -110,7 +112,7 @@ label = tk.Label(root,
 )
 label.image = logo   # keep a reference! (from effbot.org)
 
-label.pack()
+label.grid()
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr>

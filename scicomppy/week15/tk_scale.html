@@ -1,0 +1,81 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Scale</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Scales (Sliders) are used to select among a range of numeric values.
+
+<hr><pre>
+# scale1.py
+import tkinter as tk
+
+def show_values():
+    print("{} {}".format(scale1.get(), scale2.get()))   # using get() method
+
+root = tk.Tk()   # root widget
+
+scale1 = tk.Scale(root, from_=0, to=50, label="Power",
+    tickinterval=10, resolution=5, length=200)
+scale1.set(10)   # initial value
+scale1.grid()
+
+scale2 = tk.Scale(root, from_=0, to=200, orient=tk.HORIZONTAL,
+    resolution=10, label="Velocity")
+scale2.grid()
+
+button = tk.Button(root, text='Show', command=show_values)
+button.grid()
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Scale()
+
+master=root     # the first argument
+from_=0   # minimum value ('from_' because 'from' is a keyword)
+to=50   # maximum value
+variable=var
+command=lambda value: print(value)
+tickinterval=10   # the number of units between marks (default no marks)
+resolution=5   # the number of units thats the scale's value jumps (default 1)
+showvalue=tk.NO   # or tk.YES (default); show the scale's current value
+orient=tk.HORIZONTAL   # or tk.VERTICAL (default)
+length=200   # in points
+</pre><hr><pre>
+# scale2.py (using 'variable' and 'command')
+# Note that different scales may share the same variable and then
+# they are synchronized.
+import tkinter as tk
+
+def show_values():
+    print ( "{} {}".format(var1.get(), var2.get()) )   # variables!
+
+root = tk.Tk()   # root widget
+
+var1 = tk.DoubleVar()
+var1.set(10)   # initial value for the variable
+var2 = tk.DoubleVar()
+
+scale1 = tk.Scale(root, from_=0, to=50, variable=var1,
+    tickinterval=10, showvalue=tk.NO, length=200,
+    command=lambda value: print(value))
+scale1.grid()
+
+scale2 = tk.Scale(root, from_=0, to=1, orient=tk.HORIZONTAL, variable=var2,
+    resolution=0.1, command=lambda value: print(value))
+scale2.grid()
+
+button = tk.Button(root, text='Show', command=show_values)
+button.grid()
+
+root.mainloop()
+</pre><hr>
+
+</body>
+</html>

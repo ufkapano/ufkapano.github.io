@@ -1,0 +1,67 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Checkbutton</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>The 'Checkbutton' widget is used to create a multiple-choice
+interface by assigning each button a variable of its own.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+def var_states():
+    # values are 0 (unchecked) or 1 (checked)
+    print("male: {}, female: {}".format(var1.get(), var2.get()))
+
+var1 = tk.IntVar()
+button1 = tk.Checkbutton(root, text="male", variable=var1,
+   command=lambda: print("male changed"))
+button1.grid(row=0, column=0)
+
+var2 = tk.IntVar()
+button2 = tk.Checkbutton(root, text="female", variable=var2,
+   command=lambda: print("female changed"))
+button2.grid(row=0, column=1)
+
+button3 = tk.Button(root, text='Show', command=var_states)
+button3.grid(row=0, column=2)
+
+button4 = tk.Button(root, text='Quit', command=root.quit)
+button4.grid(row=0, column=3)
+
+root.mainloop()
+</pre><hr><pre>
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+states = []
+
+for c in range(10):
+    var = tk.IntVar()
+    button = tk.Checkbutton(root, text=str(c), variable=var,
+        command=lambda: print([var.get() for var in states]))
+    button.grid(row=0, column=c)
+    states.append(var)   # keep reference
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Checkbutton()
+
+master=root     # the first argument
+text="text label"
+variable=var
+command=lambda: print("message")
+</pre><hr>
+
+</body>
+</html>

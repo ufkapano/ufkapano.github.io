@@ -10,7 +10,7 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Entry widgets are used to get a 'single line' of text from a user, 
+<p>'Entry' widgets are used to get a 'single line' of text from a user, 
 like a name or an email address.
 
 <hr><pre>
@@ -18,13 +18,22 @@ import tkinter as tk   # Py3
 
 root = tk.Tk()
 
-label = tk.Label(root, text="Name")
+label = tk.Label(root, text="Name", bg="red")
 entry = tk.Entry(root, width=40)
-button = tk.Button(root, text="Print", command=lambda: print(entry.get()))
+button1 = tk.Button(root, text="Print", command=lambda: print(entry.get()))
+button2 = tk.Button(root, text="Clear", command=lambda: entry.delete(0, tk.END))
 
-label.pack()
-entry.pack()
-button.pack()
+label.grid()
+entry.grid()
+button1.grid()
+button2.grid()
+
+entry.focus()   # save a click
+# The cursor will start in the entry field, so users don't have to click
+# on it before starting to type.
+
+entry.bind('&lt;Return&gt;', (lambda event: print(entry.get())))
+# lambda is used to ignore the 'event' argument
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -34,6 +43,8 @@ master=root     # the first argument
 fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units (no height argument)
+show='*'   # for passwords
+state='disabled'   # set the widget readonly
 </pre><hr><pre>
 Operations
 
