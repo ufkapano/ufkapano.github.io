@@ -8,6 +8,12 @@
 
 <h1>Menedżery kontekstu</h1>
 
+<p>PEP 343 - The “with” statement
+
+<p>https://docs.python.org/3/library/stdtypes.html#context-manager-types
+
+<p>https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers
+
 <h3>WPROWADZENIE</h3>
 
 <p>W Pythonie 2.6 i 3.x pojawiła się nowa instrukcja związana z wyjątkami
@@ -84,19 +90,19 @@ class ContextManager:
         pass
 
     def message(self, argument):
-        print ( "wykonywanie {}".format(argument) )
+        print("wykonywanie {}".format(argument))
 
     def __enter__(self):
-        print ( "rozpoczęcie bloku with" )
+        print("rozpoczęcie bloku with")
         return self   # czasem może być inny obiekt
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
         # typ, wartość, ślad wyjątku
         if exception_type is None:   # brak wyjątku
-            print ( "normalne wyjście" )
+            print("normalne wyjście")
             return True
         else:
-            print ( "zgłoszenie wyjątku {}".format(exception_type) )
+            print("zgłoszenie wyjątku {}".format(exception_type))
             return False    # przekazanie wyjątku
             # return True   # porzucenie wyjątku
 
@@ -104,12 +110,12 @@ class ContextManager:
 
 with ContextManager() as context:
     context.message("test 1")
-    print ( "wiersz osiągnięty" )
+    print("wiersz osiągnięty")
 
 with ContextManager() as context:
     context.message("test 2")
     raise TypeError
-    print ( "wiersz nie zostanie osiągnięty" )
+    print("wiersz nie zostanie osiągnięty")
 </pre><hr>
 
 <p>Menedżery kontekstu są zaawansowanymi narzędziami, przeznaczonymi
@@ -142,7 +148,7 @@ self.assertTrue("NoneType" in str(context.exception))
 
 <p>W Pythonie 3.4 pojawił się menedżer kontekstu subTest(), który
 pomaga tworzyć testy o bardziej czytelnych komunikatach.
-Zwykle używa się subTest() gdy mamy wiele mało różniących się testów,
+Zwykle używa się subTest(), gdy mamy wiele mało różniących się testów,
 np. zmieniają się tylko parametry wywołania danej funkcji.
 
 <hr><pre>
@@ -159,7 +165,7 @@ class NumbersTest(unittest.TestCase):
         Test that numbers between 0 and 5 are all even.
         """
         for i in range(0, 6):
-            with self.subTest(i=i):   # Python 3
+            with self.subTest(i=i):   # Py3
                 self.assertEqual(i % 2, 0)
                 # self.assertTrue(is_even(i))   # wersja z funkcją
 
@@ -173,25 +179,26 @@ przetwarzania, które zostaną wykonane niezależnie od wystąpienia wyjątków.
 W ramach jednego modułu można wykorzystać try/except/finally
 lub menedżera kontekstu with.
 
-<p>Jeżeli pewne działania mają być wykonane przy zakończeniu działania
+<p>Jeżeli pewne działania mają być wykonane przy normalnym zakończeniu działania
 interpretera, dawny sposób polegał na rejestrowaniu jednej funkcji
 bezparametrowej func() w funkcji systemowej sys.exitfunc(func).
-Obecnie zalecanym sposobem działania jest korzystanie z modułu atexit,
+Obecnie zalecanym sposobem działania jest korzystanie z modułu 'atexit',
 dzięki któremu można rejestrować wiele funkcji wykonujących
-prace czyszczące. Moduł atexit jest obecny w Pythonie 2 i 3.
+prace czyszczące. Moduł 'atexit' jest obecny w Pythonie 2 i 3.
 
 <hr><pre>
+# https://docs.python.org/3/library/atexit.html
 # https://pymotw.com/2/atexit/
 
 import atexit
 
 def my_cleanup(name):
-    print ( 'my_cleanup({})'.format(name) )
+    print('my_cleanup({})'.format(name))
 
 atexit.register(my_cleanup, 'first')
 atexit.register(my_cleanup, 'second')
 atexit.register(my_cleanup, 'third')
-# Komunikaty po zakończeniu pracy interpretera Pythona:
+# Komunikaty po normalnym zakończeniu pracy interpretera Pythona:
 # my_cleanup(third)   # działają od końca, jak stos
 # my_cleanup(second)
 # my_cleanup(first)

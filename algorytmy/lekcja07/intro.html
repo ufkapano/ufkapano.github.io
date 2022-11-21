@@ -8,6 +8,10 @@
 
 <h1>Podstawy wyjątków</h1>
 
+<p>https://docs.python.org/3/library/exceptions.html
+
+<p>https://docs.python.org/3/reference/executionmodel.html#exceptions
+
 <h3>WPROWADZENIE</h3>
 
 <p>Przy próbie uruchomienia kodu Pythona mogą pojawić się
@@ -25,13 +29,13 @@ Mała strzałka pokazuje token <em>przed którym wykryto błąd</em>.
 <hr><pre>
 >>> if True print ( "word" )
   File "&lt;stdin&gt;", line 1
-    if True print ( "word" )      # brak średnika PRZED print
+    if True print("word")   # brak dwukropka PRZED print
                 ^
 SyntaxError: invalid syntax
 </pre><hr>
 
 <p>Jeżeli instrukcja jest poprawna składniowo, to w dalszym ciągu
-mogą się pojawić błędy przy próbie jej uruchomienia.
+mogą się pojawić błędy przy próbie jej uruchomienia (runtime errors).
 Takie błędy są nazywane wyjątkami i niekoniecznie muszą
 oznaczać katastrofę.
 
@@ -42,7 +46,8 @@ przebieg sterowania w programów.
 W Pythonie wyjątki wywoływane są automatycznie w momencie 
 wystąpienia błędów i mogą być wywoływane oraz przechwytywane
 przez nasz kod.
-Wyjątki pozwalają nam wyskoczyć z dowolnie dużych części
+
+<p>Wyjątki pozwalają nam wyskoczyć z dowolnie dużych części
 programu do kodu z programu obsługi wyjątku.
 Jest to spójny sposób reagowania na niezwykłe zdarzenia,
 narzędzie sterowania wysokiego poziomu.
@@ -60,7 +65,7 @@ oczyszczające.
 <p>Najważniejsze powody wykorzystywania wyjątków:
 
 <ul>
-<li>obsługa błędów,
+<li>zgłaszanie błędów i ostrzeżeń,
 <li>powiadomienia o zdarzeniach (nie każdy wyjątek to błąd),
 <li>obsługa przypadków specjalnych,
 <li>działania końcowe (try/finally),
@@ -78,15 +83,15 @@ funkcji aktywnych w momencie, kiedy nastąpił wyjątek.
 <hr><pre>
 # Przykłady poleceń powodujących wyjątki.
 # Dzielenie przez zero - ZeroDivisionError.
-print ( 23/0 )
+print(23/0)
 
 # Odwołanie się do nieistniejącego elementu listy - IndexError.
 alist = []                        # pusta lista
-print ( alist[5] )
+print(alist[5])
 
 # Odwołanie się do nieistniejącego klucza w słowniku - KeyError.
 adict = {}                        # pusty słownik
-print ( adict["key"] )
+print(adict["key"])
 
 # Otwarcie do czytania nieistniejącego pliku - IOError.
 afile = open("nie_istnieje.txt", "r")
@@ -109,20 +114,20 @@ w jednej instukcji <em>try</em>.
 L = []
 # L = [1, 2, 3]
 try:
-    print ( L[1] )
+    print(L[1])
 except IndexError:            # przechwycenie wyjątku
-    print ( "mam wyjątek" )   # nasz program obsługi
+    print("mam wyjątek")   # nasz program obsługi
 else:
-    print ( "nie było wyjątku" )
-print ( "kontynuuję" )
+    print("nie było wyjątku")
+print("kontynuuję")
 </pre><hr><pre>
 L = []
 # L = [1, 2, 3]
 try:
-    print ( L[1] )
+    print(L[1])
 finally:                      # działania końcowe
-    print ( "zawsze wykonane" )
-print ( "kontynuuję" )
+    print("zawsze wykonane")
+print("kontynuuję")
 </pre><hr>
 
 <p>Jeżeli podczas wykonywania bloku <em>try</em> nie wystapił
@@ -149,14 +154,14 @@ można wykonać przy pomocy wyjątków.
 
 <hr><pre>
 # Bezpieczna obsługa pliku.
-filename = raw_input("Podaj nazwę pliku: ")   # Py2
-#filename = input("Podaj nazwę pliku: ")   # Py3
+#filename = raw_input("Podaj nazwę pliku: ")   # Py2
+filename = input("Podaj nazwę pliku: ")   # Py3
 try:                          # pierwszy blok
     afile = open(filename, "r")
 except Exception:             # drugi blok (w razie wyjątku)
-    print ( "Nie ma pliku o nazwie {}".format(filename) )
+    print("Nie ma pliku o nazwie {}".format(filename))
 else:                         # trzeci blok opcjonalny (nie było wyjątku)
-    print ( "Plik został otwarty" )
+    print("Plik został otwarty")
 </pre><hr>
 
 <p>Można zamknąć taką funkcjonalność wewnątrz funkcji.
@@ -179,20 +184,20 @@ choć musi pojawić się przynajmniej jeden.
 <hr><pre>
 # Składnia.
 try:
-    instrukcje                 # podstawowe działanie instrukcji
-except ExceptionClass1:                 # przechwytuje wskazany wyjątek
+    instrukcje            # podstawowe działanie instrukcji
+except ExceptionClass1:   # przechwytuje wskazany wyjątek
     instrukcje
-except (ExceptionClass2, ExceptionClass3):   # przechwytuje wymienione wyjątki
+except (ExceptionClass2, ExceptionClass3): # przechwytuje wymienione wyjątki
     instrukcje
-except ExceptionClass4 as exception1:   # przechwytuje wyjątek i jego instancję
+except ExceptionClass4 as exception1: # przechwytuje wyjątek i jego instancję
     instrukcje
 except (ExceptionClass4, ExceptionClass5) as exception2: # przechwytuje wyjątki i instancję
     instrukcje
-except:                            # przechwytuje wszystkie (pozostałe) wyjątki
+except:                  # przechwytuje wszystkie (pozostałe) wyjątki
     instrukcje
-else:                              # działania przy braku zgłoszenia wyjątku
+else:                    # działania przy braku zgłoszenia wyjątku
     instrukcje
-finally:                           # działania końcowe
+finally:                 # działania końcowe
     instrukcje
 </pre><hr>
 
@@ -214,8 +219,8 @@ nie został zgłoszony, czy wystąpił i został obsłużony.
 try:
     raise IndexError
 except IndexError:            # przechwycenie wyjątku
-    print ( "mam wyjątek" )   # nasz program obsługi
-print ( "kontynuuję" )
+    print("mam wyjątek")   # nasz program obsługi
+print("kontynuuję")
 </pre><hr><pre>
 &gt;&gt;&gt; raise IndexError
 Traceback (most recent call last):
@@ -227,7 +232,7 @@ Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 IndexError: message
 </pre><hr><pre>
-&gt;&gt;&gt; raise IndexError("message")  # nowa składnia
+&gt;&gt;&gt; raise IndexError("message")   # nowa składnia
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 IndexError: message

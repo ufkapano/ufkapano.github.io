@@ -8,6 +8,8 @@
 
 <h1>Wyjątki jako klasy</h1>
 
+<p>https://docs.python.org/3/library/exceptions.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>Zalety wyjątków opartych na klasach.
@@ -15,34 +17,31 @@
 <ul>
 <li>Można je organizować w kategorie.
 <li>Dołączają informacje o stanie.
-<li>Obsługują dziedziczenie.
+<li>Obsługują dziedziczenie. Instrukcja try/except przechwyci dany
+wyjątek i wszystkie inne klasy potomne.
 </ul>
 
 
 <hr><pre>
-# Dawne podejście - wyjątek to string.
-MyError = "MyError"
-
-raise MyError, "message"      # wywołanie wyjątku
-</pre><hr><pre>
-# Nowe podejście - wyjątek to klasa wywiedziona z Exception.
+# Nowe podejście - wyjątek to klasa wywiedziona z klasy Exception.
 # Do nazwy dajemy suffix "Error", o ile wyjątek to błąd.
+# Dla ostrzeżeń w nazwie dodajemy "Warning".
 class MyError(Exception):
     """Warto stworzyć wiersz dokumentujący."""
     pass
 
-raise MyError("message")                # wywołanie wyjątku
-exception = MyError("a", "b")           # instancja wyjątku
+raise MyError("message")        # wywołanie wyjątku
+exception = MyError("a", "b")   # instancja wyjątku
 # W atrybucie args znajduje się krotka argumentów konstruktora domyślnego.
-print ( exception.args )                # ('a', 'b')
+print(exception.args)   # ('a', 'b')
 # Domyślnie str() wyświetla zawartość atrybutu args.
-print ( exception )                     # ('a', 'b')
+print(exception)   # ('a', 'b')
 </pre><hr><pre>
 try:
-    raise MyError()       # instancja
+    raise MyError()   # instancja
 except MyError:
 #except MyError as exception:
-    print ( "przechwycenie MyError" )
+    print("przechwycenie MyError")
 </pre><hr>
 
 <p>Jeżeli wyjątek został wyzwolony z argumentami, to w instancji
@@ -57,24 +56,24 @@ Podobnie można określić własny sposób wyświetlania wyjątku (__str__).
 <hr><pre>
 class MyError(Exception):
 
-    def __init__(self, value):      # nasz konstruktor wyjątku
+    def __init__(self, value):   # nasz konstruktor wyjątku
         self.value = value
 
-    def __str__(self):              # zmiana sposobu wyświetlania wyjątku
+    def __str__(self):   # zmiana sposobu wyświetlania wyjątku
         return repr(self.value)
 
 try:
-    raise MyError(2*2)    # instancja
+    raise MyError(2*2)    # instancja wyjątku
 except MyError as exception:  # Py2.6+, Py3
 # except MyError, exception:   # Py2.6-
 # Python 3 interpretuje przecinek jako oznaczający krotkę.
 # Obiekt exception jest to zgłoszona instancja klasy MyError.
-    print ( "mam wyjątek, value {}".format(exception.value) )
-    print ( "mam wyjątek, value {}".format(exception) ) # jw, bo jest __str__
+    print("mam wyjątek, value {}".format(exception.value))
+    print("mam wyjątek, value {}".format(exception))   # jw, bo jest __str__
 
 import sys
 
-print ( "Zgłoszono wyjątek {}".format(sys.exc_info()) )
+print("Zgłoszono wyjątek {}".format(sys.exc_info()))
 </pre><hr>
 
 <p>Ostatnio zgłoszony i przechwycony wyjątek jest dostępny ogólnie, 
@@ -94,13 +93,14 @@ Jeżeli żaden wyjątek nie jest obsługiwany, to zwracana krotka ma postać
 raise IndexError()
 raise IndexError("Nasz komunikat")
 
-# Utworzenie i zgłoszenie instancji klasy.
+# Zgłoszenie obiektu klasy - instancja klasy zostanie utworzona automatycznie.
 # raise klasa_wyjątku
 raise IndexError
+
 # Ponowne zgłoszenie ostatniego wyjątku.
 raise
 
-# Zgłoszenie nowego wyjątku z wykorzystaniem kontekstu starego wyjątku
+# Zgłoszenie nowego wyjątku z wykorzystaniem kontekstu starego wyjątku.
 raise new_exception from old_exception   # Py3
 raise new_exception from None
 
@@ -158,6 +158,20 @@ AssertionError: x have to be zero
 przechwytuje instancje tej klasy, a także instancje wszystkich
 jej klas podrzędnych.
 
+<p>Warto korzystać z wyjątków wbudowanych i rzucać je w sytuacjach podobnych
+do tych, w jakich robi to interpreter.
+Nie ma jednak mechanizmów zabezpieczających przed rzuceniem 
+nieodpowiedniego wyjątku przez kod użytkownika.
+Można dziedziczyć z wyjątków wbudowanych, ale należy unikać
+dziedziczenia wielobazowego ze względu na specyficzne zarządzanie
+pamięcią w wyjątkach i możliwe konflikty.
+
+<p>W Pythonie 3.11 pojawiły się 'grupy wyjątków' (exception groups),
+które są używane kiedy trzeba jednocześnie rzucić wiele niepowiązanych 
+ze sobą wyjątków.
+Do stworzenia grupy wyjatków wykorzystuje się dziedziczenie
+z klasy 'ExceptionGroup'.
+
 <hr><pre>
 &gt;&gt;&gt; import exceptions   # Py2.6+
 &gt;&gt;&gt; help(exceptions)   # drzewo klas
@@ -166,10 +180,11 @@ jej klas podrzędnych.
 &gt;&gt;&gt; help(builtins)
 </pre><hr><pre>
 BaseException
-    +-- SystemExit
-    +-- KeyboardInterrupt
-    +-- GeneratorExit
-    +-- Exception   # all other current built-in exceptions
+    +-- BaseExceptionGroup (Py3.11)
+    +-- SystemExit   # rzucany przez sys.exit()
+    +-- KeyboardInterrupt   # rzucany po naciśnięciu Ctrl+C lub Delete
+    +-- GeneratorExit   # rzucany przez generator.close() i coroutine.close()
+    +-- Exception   # klasa bazowa dla wyjątków wbudowanych i wyjątków użytkownika
         +-- StopIteration
         +-- StandardError
         |    +-- ArithmeticError
@@ -190,9 +205,10 @@ BaseException
         |    +-- LookupError
         |        +-- IndexError
         |        +-- KeyError
+        |    +-- ExceptionGroup [BaseExceptionGroup] (Py3.11)
         |    +-- ...
         +-- Warning
-            +-- DeprecationWarning
+            +-- DeprecationWarning [PEP 387]
             +-- UserWarning
             +-- SyntaxWarning
             +-- RuntimeWarning
@@ -219,6 +235,10 @@ Powstaje kiedy słownik (ogólnie mapping) nie posiada żądanego klucza.
 <li><strong>LookupError</strong>.
 Wspólna klasa bazowa dla IndexError i KeyError.
 
+<li><strong>MemoryError</strong>.
+Powstaje wtedy, kiedy brakuje pamięci, ale można się ratować 
+przez usunięcie pewnych obiektów.
+
 <li><strong>NameError</strong>.
 Powstaje kiedy lokalna lub globalna nazwa zmiennej nie zostaje znaleziona.
 
@@ -238,7 +258,6 @@ właściwego typu, ale mający niewłaściwą wartość.
 Chodzi o sytuację podobną do tej opisywanej przez IndexError.
 
 </ul>
-
 
 </body>
 </html>

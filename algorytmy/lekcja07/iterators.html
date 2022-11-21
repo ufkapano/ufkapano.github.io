@@ -1,0 +1,119 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Iteratory</h1>
+
+<p>https://docs.python.org/3/glossary.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Warto zestawić trzy ważne pojęcia:
+<br>(1) 'iterable' to cokolwiek, po czym można iterować,
+[funkcja iter() potrafi zbudować iterator],
+<br>(2) 'iterator' to rzecz, która realizuje iterowanie
+[metody __iter__() i __next__() powinny być obecne],
+<br>(3) 'generator' to jeden z prostszych sposobów zbudowania własnego 
+iteratora ['generator expressions' i 'generator functions'].
+
+<p>Iterator jest obiektem reprezentującym strumień danych.
+Kolejne wywołania funkcji next() zwracają kolejne elementy ze strumienia danych.
+Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania next()
+wyzwalają wyjątek StopIteration.
+
+<p>Kolejna wymagana metoda iteratorów to __iter__(), która zwraca sam
+obiekt iteratora. Po każdym iteratorze można iterować (jest iterable). 
+Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
+od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
+iterator (dla list dostaniemy świeży iterator idący od początku listy).
+Kiedy iterator zostanie wyczerpany, nie można go użyć ponownie ani zresetować.
+
+<hr><pre>
+# Przykłady iterowania.
+
+for item in iterable:
+    print(item)
+L = list(iterable)
+result = sum(iterable)
+high = max(iterable)
+low = min(iterable)
+</pre><hr>
+
+<h3>ITERATORY SKOŃCZONE</h3>
+
+<hr><pre>
+# Dla przypomnienia: istnieje funkcja wbudowana do iteracji po sekwencji od końca.
+reversed(sequence)   # reversed object
+</pre><hr><pre>
+# Generator expression.
+sequence = "word"
+gen = (sequence[i] for i in range(len(sequence),-1,-1))   # generator object
+# Można użyć dir(gen) lub help(gen), aby sprawdzić dostępne metody.
+</pre><hr><pre>
+# Generator function.
+def Reverse(sequence):
+    """Iterator odwrotny na bazie sekwencji."""
+    i = len(sequence)
+    while i &gt; 0:
+        i = i-1
+        yield sequence[i]
+</pre><hr><pre>
+class Reverse:
+    """Iterator odwrotny na bazie sekwencji."""
+
+    def __init__(self, sequence):
+        self.sequence = sequence
+        self.idx = len(sequence)
+
+    def __iter__(self):   # typowa postać
+        #self.idx = len(self.sequence)   # iter() może odświeżyć iterator
+        # Chyba się tego nie stosuje, nie odświeża się wyczerpanego iteratora.
+        return self
+
+    def __next__(self):
+        if self.idx == 0:
+            raise StopIteration
+        self.idx = self.idx - 1
+        return self.sequence[self.idx]
+
+    next = __next__   # kompatybilność Py2 z Py3
+        # W Py2 mamy metodę X.next().
+        # W Py3 mamy metodę X.__next__().
+        # W Py3 i Py2.6+ mamy funkcję wbudowaną next().
+</pre><hr><pre>
+# Zastosowanie.
+for char in Reverse("spam"):
+    print(char)   # m, a, p, s
+
+print(list(Reverse("spam")))   # ['m', 'a', 'p', 's']
+
+for item in Reverse([1, 2, 3, 4]):
+    print(item)   # 4, 3, 2, 1
+</pre><hr><pre>
+# https://www.programiz.com/python-programming/iterator
+
+for element in iterable:
+    # do something with element
+
+# Działanie takiej pętli for można opisać następująco.
+
+# create an iterator object from that iterable
+iter_obj = iter(iterable)
+
+# infinite loop
+while True:
+    try:
+        # get the next item
+        element = next(iter_obj)
+        # do something with element
+    except StopIteration:
+        # if StopIteration is raised, break from loop
+        break
+</pre><hr>
+
+</body>
+</html>

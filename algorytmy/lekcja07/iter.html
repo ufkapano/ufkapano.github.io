@@ -6,115 +6,69 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Iteratory</h1>
+<h1>Funkcja iter()</h1>
 
 <p>https://docs.python.org/3/library/functions.html#iter
 
 <h3>WPROWADZENIE</h3>
 
-<p>Warto zestawić trzy ważne pojęcia:
-<br>(1) 'iterable' to cokolwiek, po czym można iterować,
-[funkcja iter() potrafi zbudować iterator],
-<br>(2) 'iterator' to rzecz, która realizuje iterowanie
-[metody __iter__() i __next__() powinny być obecne],
-<br>(3) 'generator' to jeden z prostszych sposobów zbudowania własnego 
-iteratora ['generator expressions' i 'generator functions'].
-
-<p>Iterator jest obiektem reprezentującym strumień danych.
-Kolejne wywołania funkcji next() zwracają kolejne elementy ze strumienia danych.
-Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania next()
-wyzwalają wyjątek StopIteration.
-
-<p>Kolejna wymagana metoda iteratorów to __iter__(), która zwraca sam
-obiekt iteratora. Po każdym iteratorze można iterować (jest iterable). 
-Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
-od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
-iterator (dla list dostaniemy świeży iterator idący od początku listy).
-Kiedy iterator zostanie wyczerpany, nie można go użyć ponownie ani zresetować.
-
-<hr><pre>
-# Przykłady iterowania.
-
-for item in iterable:
-    print(item)
-L = list(iterable)
-result = sum(iterable)
-high = max(iterable)
-low = min(iterable)
-</pre><hr>
-
-<h3>ITERATORY SKOŃCZONE</h3>
-
-<hr><pre>
-def Reverse(sequence):
-    """Iterator odwrotny na bazie sekwencji."""
-    i = len(sequence)
-    while i &gt; 0:
-        i = i-1
-        yield sequence[i]
-</pre><hr><pre>
-class Reverse:
-    """Iterator odwrotny na bazie sekwencji."""
-
-    def __init__(self, sequence):
-        self.sequence = sequence
-        self.idx = len(sequence)
-
-    def __iter__(self):   # typowa postać
-        #self.idx = len(self.sequence)   # iter() może odświeżyć iterator
-        # Chyba się tego nie stosuje, nie odświeża się wyczerpanego iteratora.
-        return self
-
-    def __next__(self):
-        if self.idx == 0:
-            raise StopIteration
-        self.idx = self.idx - 1
-        return self.sequence[self.idx]
-
-    next = __next__   # kompatybilność Py2 z Py3
-        # W Py2 mamy metodę X.next().
-        # W Py3 mamy metodę X.__next__().
-        # W Py3 i Py2.6+ mamy funkcję wbudowaną next().
-</pre><hr><pre>
-# Zastosowanie.
-for char in Reverse("spam"):
-    print ( char )   # m, a, p, s
-
-print ( list(Reverse("spam")) )   # ['m', 'a', 'p', 's']
-
-for item in Reverse([1, 2, 3, 4]):
-    print ( item )   # 4, 3, 2, 1
-</pre><hr><pre>
-# https://www.programiz.com/python-programming/iterator
-
-for element in iterable:
-    # do something with element
-
-# Działanie takiej pętli for można opisać następująco.
-
-# create an iterator object from that iterable
-iter_obj = iter(iterable)
-
-# infinite loop
-while True:
-    try:
-        # get the next item
-        element = next(iter_obj)
-        # do something with element
-    except StopIteration:
-        # if StopIteration is raised, break from loop
-        break
-</pre><hr>
-
-<h3>FUNKCJA iter()</h3>
-
 <p>Funkcja iter(X) zwraca obiekt iteratora, utworzony na bazie obiektu X.
-Obiekt X musi wspierać protokół iteracji (metoda __iter__)
+Obiekt X musi wspierać protokół iteracji 
+(metoda __iter__, obiekt dostarcza swój iterator)
 lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
 
+<p>Druga wersja wywołania funkcji iter() zwraca iterator zbudowany
+na bazie obiektu wywoływalnego i strażnika (wartość kończąca iterację).
 
 <hr><pre>
+# Składnia.
+# iter(iterable) zwraca iterator
+# iter(callable, sentinel) zwraca iterator
+
+# Iterator bazujący na sekwencji.
+it1 = iter([1, 2])   # list_iterator object in Py3 (lists have __iter__)
+it2 = iter("abcd")   # str_iterator object in Py3 (strings have __iter__)
+it3 = iter(it2)   # all iterators are also iterables
+assert it3 is it2
+
+# Kiedy mamy iterator, to jedyne co możemy zrobić, to pobierać kolejne elementy
+# aż do wyczerpania iteratora, a wtedy pojawi się wyjątek StopIteration.
+print(next(it1))   # 1
+print(next(it1))   # 2
+print(next(it1))   # StopIteration
+</pre><hr><pre>
+# Przykład obiektu wspierającego protokół sekwencji.
+
+class Dumb:
+
+    def __init__(self, sequence):
+        self.data = sequence
+
+    def __getitem__(self, n):
+        return self.data[n]
+
+x = Dumb("word")
+
+#print(dir(x))   # nie ma __iter__, __next__
+print(x[1])   # zwraca 'o'
+#print(x[10])   # IndexError: string index out of range
+#len(x)   # AttributeError: Dumb instance has no attribute '__len__'
+
+for item in x:   # można iterować po x
+    print(item)
+
+y = iter(x)         # można jawnie utworzyć iterator
+
+#print(dir(y))   # pojawia się __iter__, __next__ (Py3.7)
+print(next(y))   # w
+print(next(y))   # o
+print(next(y))   # r
+print(next(y))   # d
+print(next(y))   # StopIteration
+</pre><hr><pre>
 # Przygotowanie iteratora na bazie obiektu wywoływalnego.
+# Obiekt wywoływalny to zwykle coś więcej niż funkcja,
+# bo posiada/utrzymuje swój stan pomiędzy wywołaniami.
 
 class MyInt:
     """Klasa do tworzenia obiektów wywoływalnych, zwracających kolejne int."""
@@ -127,26 +81,35 @@ class MyInt:
         return self.n
 
 x = MyInt()   # x to MyInt instance, obiekt wywoływalny
-print ( x() )   # 1
-print ( x() )   # 2
+print(x())   # 1
+print(x())   # 2
 </pre><hr><pre>
 # Przygotowanie iteratora, który zakończy pracę, jeżeli x zwróci 10.
 y = iter(x, 10)     # y to callable-iterator object
 
-for i in y:         # zwroci 3,4,5,6,7,8,9 (bez 10)
-    print ( i )
+for i in y:         # zwróci 3,4,5,6,7,8,9 (bez 10)
+    print(i)
+# 1 i 2 było wykorzystane wcześniej przez print(),
 # 10 wykorzystane na zatrzymanie iteratora
-#print ( next(y) )   # wyzwala StopIteration
-print ( x() )   # 11
-</pre><hr><pre>
-# Iteratory nieskończone.
+#print(next(y))   # wyzwala StopIteration
+print(x())   # 11, obiekt wywoływalny jest aktywny
+</pre><hr>
 
+<h3>ITERATORY NIESKOŃCZONE</h3>
+
+<hr><pre>
 import itertools
 
-iter_zeros1 = iter(int, 1)   # int() gives 0
-iter_zeros2 = iter((lambda: 0), 1)
+iter_zeros1 = iter(int, 1)   # int() zwraca 0
+iter_zeros2 = iter((lambda: 0), 1)   # funkcja bez argumentów to obiekt wywoływalny
 iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
 iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
+</pre><hr><pre>
+import random
+
+it = iter(MyInt(), 0)   # zwraca 1,2,3,... z obiektu wywoływalnego
+it = (random.choice(range(7)) for _ in iter(int, 1))   # przypadkowy dzień tygodnia
+it = iter(lambda: random.choice(range(7)), -1)   # jw
 </pre><hr>
 
 </body>
