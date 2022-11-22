@@ -27,7 +27,7 @@ W efekcie otrzymujemy komunikat z numerem linii z błędem i jej treścią.
 Mała strzałka pokazuje token <em>przed którym wykryto błąd</em>.
 
 <hr><pre>
->>> if True print ( "word" )
+>>> if True print("word")
   File "&lt;stdin&gt;", line 1
     if True print("word")   # brak dwukropka PRZED print
                 ^
@@ -191,7 +191,7 @@ except (ExceptionClass2, ExceptionClass3): # przechwytuje wymienione wyjątki
     instrukcje
 except ExceptionClass4 as exception1: # przechwytuje wyjątek i jego instancję
     instrukcje
-except (ExceptionClass4, ExceptionClass5) as exception2: # przechwytuje wyjątki i instancję
+except (ExceptionClass5, ExceptionClass6) as exception2: # przechwytuje wyjątki i instancję
     instrukcje
 except:                  # przechwytuje wszystkie (pozostałe) wyjątki
     instrukcje

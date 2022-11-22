@@ -51,7 +51,7 @@ reversed(sequence)   # reversed object
 </pre><hr><pre>
 # Generator expression.
 sequence = "word"
-gen = (sequence[i] for i in range(len(sequence),-1,-1))   # generator object
+gen = (sequence[i] for i in range(len(sequence)-1,-1,-1))   # generator object
 # Można użyć dir(gen) lub help(gen), aby sprawdzić dostępne metody.
 </pre><hr><pre>
 # Generator function.

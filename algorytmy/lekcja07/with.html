@@ -16,7 +16,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W Pythonie 2.6 i 3.x pojawiła się nowa instrukcja związana z wyjątkami
+<p>W Pythonie 2.6 i 3 pojawiła się nowa instrukcja związana z wyjątkami
 - <em>with</em> z opcjonalnym <em>as</em> [PEP 343].
 Instrukcja została zaprojektowana do pracy z obiektami menedżerów
 kontekstu obsługującymi protokół oparty na metodach.
@@ -49,13 +49,13 @@ def filter(text, infile_name, outfile_name):
                     line = line[0:len(text)] + ' - Truly a great person!\n'
                 outfile.write(line)
 
-# W Pythonie 2.7 i 3.1+ można użyć wielokrotnie open(),
+# W Py2.7 i Py3.1+ można użyć wielokrotnie open(),
 # co jest równoważne zagnieżdżaniu with.
 # http://docs.python.org/reference/compound_stmts.html#the-with-statement
 
 with open(outfile_name, 'w') as outfile, \
     open(infile_name, 'r', encoding='utf-8') as infile:
-        pass
+        instrukcje
 </pre><hr>
 
 <h3>PROTOKÓŁ ZARZĄDZANIA KONTEKSTEM</h3>
@@ -72,7 +72,7 @@ jest przypisywana do zmiennej w części <em>as</em>, jeśli jest ona obecna.
 <li>Wykonywany jest kod w bloku with.
 
 <li>Jeżeli blok with zwraca wyjątek, to zostaje wywołana metoda __exit__
-z argumentami zawierającymi szczegóły wyjątku..
+z argumentami zawierającymi szczegóły wyjątku.
 Jeżeli metoda zwraca wartość będącą fałszem (typowe działanie),
 to wyjątek jest zgłaszany ponownie.
 
@@ -132,7 +132,7 @@ Warto prześledzić przykłady z dokumentacji [25.3 unittest].
 
 <hr><pre>
 with self.assertRaises(SomeException) as context:
-    do_something()
+    instrukcje
 
 # Sprawdzenie pewnego kodu błędu (na zewnątrz instrukcji with).
 self.assertEqual(context.exception.error_code, 3)

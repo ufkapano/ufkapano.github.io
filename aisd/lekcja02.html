@@ -113,11 +113,12 @@ void sort( RandomIt first, RandomIt last, Compare comp );
 // If the allocation fails, the less efficient algorithm is chosen. 
 
 std::vector&lt;int&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
-std::array&lt;int, 10&gt; v = { { 9,4,7,3,6,8,2,1,5,0 } };
+//std::array&lt;int, 10&gt; v{ { 9,4,7,3,6,8,2,1,5,0 } }; // bez '=' mamy {{}}
+std::array&lt;int, 10&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
 int v[] = { 9,4,7,3,6,8,2,1,5,0 }; // zwykła tablica
 
 std::sort(v.begin(), v.end()); // vector, array
-std::sort(std::begin(v), std::end(v)); // zwykła tablica
+std::sort(std::begin(v), std::end(v)); // zwykła tablica, vector, array
 std::sort(v, v + (sizeof(v) / sizeof(*v))); // zwykła tablica
 </pre><hr><pre>
 // Szablon przykładowej funkcji sortującej.
@@ -214,6 +215,7 @@ clean :
 <h3>ZADANIE 2.5 (mergesort)</h3>
 
 <p>Zaimplementować algorytm sortowania przez scalanie.
+Można wykorzystać funkcję std::inplace_merge().
 
 <h3>ZADANIE 2.6 (heapsort)</h3>
 
