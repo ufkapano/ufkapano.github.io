@@ -1,0 +1,109 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Metody statyczne i metody klasy</h1>
+
+<p>https://docs.python.org/3/library/functions.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Metody statyczne są opcją dodaną w Pythonie 2.2.
+Pozwalają one zapisywać w kodzie klasy funkcje nieoczekujące podania 
+obiektów instancji w pierwszym argumencie.
+Takie metody mogą działać jak proste funkcje bez instancji,
+ich nazwy są lokalne dla klas, w których są zapisane.
+Metody statyczne mogą być wykorzystane do zarządzania
+danymi klas.
+
+<p>Do tych zadań można byłoby wykorzystać zwykłe funkcje zdefiniowane
+poza klasą, które mają dostęp do atrybutów klasy za pośrednictwem
+nazwy klasy.
+Jednak dzięki powiązaniu z klasą można lepiej podzielić kod programu
+oraz można korzystać z dziedziczenia.
+
+<p>Metody klasy jako pierwszy argument mają obiekt klasy (cls),
+a nie obiekt instancji (self). Metodę klasy można użyć do budowy
+dodatkowego konstruktora.
+
+<hr><pre>
+class Methods:
+
+    def imeth(self, x):   # zwykła metoda instancji
+        # Pierwszy argument to zwyczajowo self.
+        print("{} {}".format(self, x))
+
+    def smeth(x):         # metoda statyczna
+        # Pierwszy argument to nie jest self.
+        print(x)
+
+    def cmeth(cls, x):    # metoda klasy
+        # Pierwszy argument tradycyjnie to cls, a nie self.
+        print("{} {}".format(cls, x))
+
+    smeth = staticmethod(smeth)   # przekształcanie
+    cmeth = classmethod(cmeth)    # przekształcanie
+
+# Zastosowanie.
+item = Methods()
+item.imeth(1)                 # &lt;__main__.Methods instance at 0xb739546c&gt; 1
+Methods.imeth(item, 2)        # &lt;__main__.Methods instance at 0xb739546c&gt; 2
+
+# Przy metodach statycznych i metodach klas nie musi istnieć instancja klasy.
+Methods.smeth(3)              # 3
+item.smeth(4)                 # 4
+
+Methods.cmeth(5)              # __main__.Methods 5
+item.cmeth(6)                 # __main__.Methods 6
+</pre><hr>
+
+<p>Do utworzenia metod statycznych i metod klasy można użyć dekoratorów metod.
+
+<hr><pre>
+class Methods:
+
+    @staticmethod   # składnia dekoratora
+    def smeth(x): pass
+
+    @classmethod   # składnia dekoratora
+    def cmeth(cls, x): pass
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+class Frac:
+
+    @staticmethod
+    def gcd(m, n):   # algorytm Euklidesa
+        if m % n == 0:
+            return n
+        else:
+            return Frac.gcd(n, m % n)
+
+assert Frac.gcd(6, 4) == 2
+</pre><hr><pre>
+class Poly:
+
+    def __init__(self, coefficient=0, n=0):
+        # Na bazie Sedgewicka - tworzymy wielomian c*(x**n).
+        self.size = n + 1   # rozmiar tablicy
+        self.data = self.size * [0]
+        self.data[self.size - 1] = coefficient
+
+    @classmethod
+    def from_iterable(cls, iterable):   # dodatkowy konstruktor
+        new_poly = cls()   # działa zwykły konstruktor
+        new_poly.data = list(iterable)
+        new_poly.size = len(new_poly.data)
+        return new_poly
+
+assert Poly.from_iterable([0, 3, 5]) == Poly(3, 1) + Poly(5, 2)
+</pre><hr>
+
+</body>
+</html>

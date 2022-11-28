@@ -8,23 +8,17 @@
 
 <h1>Klasy w nowym stylu</h1>
 
-<h3>REFERENCJE</h3>
-
-<ul>
-
-<li>Guido van Rossum, Unifying types and classes in Python 2.2
+<p>Guido van Rossum, Unifying types and classes in Python 2.2
 [Chodzi o zniesienie różnic pomiędzy typami wbudowanymi,
 a klasami stworzonymi przez użytkownika.]
 
-<li>http://python-history.blogspot.com/2010/06/inside-story-on-new-style-classes.html
+<p>http://python-history.blogspot.com/2010/06/inside-story-on-new-style-classes.html
 
-<li>https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
+<p>https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
 
-<li>http://stackoverflow.com/questions/222877/how-to-use-super-in-python
+<p>http://stackoverflow.com/questions/222877/how-to-use-super-in-python
 
-<li>https://docs.python.org/2/howto/descriptor.html
-
-</ul>
+<p>https://docs.python.org/2/howto/descriptor.html
 
 <h3>WPROWADZENIE</h3>
 
@@ -35,8 +29,6 @@ Główne różnice pomiędzy tymi dwoma stylami klas dotyczą algorytmu
 wyszukiwania nazw w tzw. diamentowym wzorcu dziedziczenia 
 ("najpierw poziomo od lewej do prawej, potem pionowo"), 
 oraz mechanizmu wyszukiwania metod specjalnych dla operacji wbudowanych.
-
-
 
 <p>Klasy w nowym stylu dziedziczą z <em>object</em>.
 W Pythonie 3 wszystkie klasy są tworzone w nowym stylu.
@@ -49,7 +41,7 @@ stare nie mogą [a generalized way to customize attribute access].
 
 <p>Klasy w nowym stylu mogą używać metod statycznych i metod klasy.
 
-<p>Klasy w nowym stylu mogą używać dekoratorów (Python 2.4+).
+<p>Klasy w nowym stylu mogą używać dekoratorów (Py2.4+).
 
 <p>Klasy w nowym stylu mogą używać funkcji <em>super</em>
 [super(SomeClass, object-or-type). Delegowanie wywołania metody 
@@ -67,6 +59,11 @@ class OldStyle1: pass
 class OldStyle2(OldStyle1): pass
 
 # Przeszukiwanie (karo).
+#     Old1
+#    /   \
+# Old2   Old3
+#    \   /
+#     Old4
 class Old1: pass
 
 class Old2(Old1): pass
@@ -91,66 +88,6 @@ class New3(New1): pass
 class New4(New2, New3): pass
 
 # Teraz MRO: New4, New2, New3, New1, object.
-</pre><hr>
-
-
-<h3>METODY STATYCZNE I METODY KLASY</h3>
-
-<p>Metody statyczne są opcją dodaną w Pythonie 2.2.
-Pozwalają one zapisywać w kodzie klasy funkcje nieoczekujące podania 
-obiektów instancji w pierwszym argumencie.
-Takie metody mogą działać jak proste funkcje bez instancji,
-ich nazwy są lokalne dla klas, w których są zapisane.
-Metody statyczne mogą być wykorzystane do zarządzania
-danymi klas.
-
-<p>Do tych zadań można byłoby wykorzystać zwykłe funkcje zdefiniowane
-poza klasą, które mają dostęp do atrybutów klasy za pośrednictwem
-nazwy klasy.
-Jednak dzięki powiązaniu z klasą można lepiej podzielić kod programu
-oraz można korzystać z dziedziczenia.
-
-<hr><pre>
-class Methods:
-
-    def imeth(self, x):   # zwykła metoda instancji
-        # Pierwszy argument to zwyczajowo self.
-        print ( "{} {}".format(self, x) )
-
-    def smeth(x):         # metoda statyczna
-        # Pierwszy argument to nie jest self.
-        print ( x )
-
-    def cmeth(cls, x):    # metoda klasy
-        # Pierwszy argument tradycyjnie to cls, a nie self.
-        print ( "{} {}".format(cls, x) )
-
-    smeth = staticmethod(smeth)   # przekształcanie
-    cmeth = classmethod(cmeth)    # przekształcanie
-
-# Zastosowanie.
-item = Methods()
-item.imeth(1)                 # &lt;__main__.Methods instance at 0xb739546c&gt; 1
-Methods.imeth(item, 2)        # &lt;__main__.Methods instance at 0xb739546c&gt; 2
-
-# Przy metodach statycznych i metodach klas nie musi istnieć instancja klasy.
-Methods.smeth(3)              # 3
-item.smeth(4)                 # 4
-
-Methods.cmeth(5)              # __main__.Methods 5
-item.cmeth(6)                 # __main__.Methods 6
-</pre><hr>
-
-<p>Do utworzenia metod statycznych i metod klasy można użyć dekoratorów metod.
-
-<hr><pre>
-class Methods:
-
-    @staticmethod         # składnia dekoratora
-    def smeth(x): pass
-
-    @classmethod         # składnia dekoratora
-    def cmeth(cls, x): pass
 </pre><hr>
 
 </body>

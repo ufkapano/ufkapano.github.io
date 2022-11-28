@@ -6,21 +6,15 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Metaklasy</h1>
+<h1>Metaklasy i ABCs</h1>
 
-<h3>REFERENCJE</h3>
+<p>https://docs.python.org/3/reference/datamodel.html
 
-<ul>
+<p>PEP 3115 - Metaclasses in Python 3000
 
-<li>PEP 3115 - Metaclasses in Python 3000
+<p>https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/
 
-<li>https://blog.ionelmc.ro/2015/02/09/understanding-python-metaclasses/
-
-<li>http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python
-
-<li>http://ivansmirnov.io/python-metaclasses/
-
-</ul>
+<p>http://stackoverflow.com/questions/100003/what-is-a-metaclass-in-python
 
 <h3>WPROWADZENIE</h3>
 
@@ -31,7 +25,27 @@ obiekt klasy jest instacją obiektu metaklasy.
 
 <p>Funkcjonalność metaklas częściowo pokrywa się z funkcjonalnością
 dekoratorów klas.
-A metaclass is most commonly used as a class-factory. 
+Metaklasy są typowo używane jako fabryki klas (class-factory),
+ale badano różne inne zastosowania. Wg dokumentacji Pythona:
+<br><em>Some ideas that have been explored include enum, logging, 
+interface checking, automatic delegation, automatic property creation, 
+proxies, frameworks, and automatic resource locking/synchronization.</em>
+
+<p>Kiedy wykonywana jest instrukcja 'class', wykonywane są następujące kroki:
+
+<ul>
+
+<li>Badane jest MRO (Method Resolution Order), hierarchia klas.
+
+<li>Określana jest właściwa metaklasa [type() lub coś innego].
+
+<li>Przygotowywana jest przestrzeń nazw klasy [powstaje słownik].
+
+<li>Wykonywane jest ciało klasy.
+
+<li>Tworzony jest obiekt klasy.
+
+</ul>
 
 <h3>TWORZENIE METAKLASY</h3>
 
@@ -54,7 +68,7 @@ class MyClass(BaseClass):
     attribute = 42
 </pre><hr><pre>
 # Metaklasy najczęściej implementują dwie metody.
-class Meta(type):        # dziedziczenie z 'type' w klasach w nowym stylu
+class Meta(type):   # dziedziczenie z 'type' w klasach w nowym stylu
     def __init__ ...   # opcjonalne
     def __new__(mcls, name, bases, clsdict):
         clsdict['foo'] = 'Meta was here'
@@ -62,47 +76,100 @@ class Meta(type):        # dziedziczenie z 'type' w klasach w nowym stylu
         # zanim zostanie utworzona nowa klasa.
         return type.__new__(mcls, name, bases, clsdict)
 
-class C(object):   # klasy w nowym stylu
-    __metaclass__ = Meta   # składnia Py2.6+
-    # Teraz zamiast type(name, bases, clsdict)
-    # do budowy klasy będzie użyte Meta.
+#class C(object):   # klasy w nowym stylu
+#    __metaclass__ = Meta   # składnia Py2.6+
+# Teraz zamiast type(name, bases, clsdict)
+# do budowy klasy będzie użyte Meta.
 
-# class C(metaclass=Meta): pass   # składnia Py3 (PEP 3115)
+class C(metaclass=Meta):
+    pass   # składnia Py3 (PEP 3115)
 
-print ( dir(C) )   # znajdziemy klucz 'foo'
+print(dir(C))   # znajdziemy klucz 'foo'
 </pre><hr>
 
 <h3>ABSTRACT BASE CLASSES</h3>
 
-<p>PEP 3119 - Introducing Abstract Base Classes [Py3]
+<p>https://docs.python.org/3/library/abc.html
 
-<p>PEP 3141 - A Type Hierarchy for Numbers 
-[Number (the root of the numeric hierarchy), 
-Complex (real, imag, conversions to complex and bool), 
-Real (conversion to float, comparisons), 
-Rational (numerator, denominator, conversion to float), 
-Integral (conversion to int)]
+<p>https://docs.python.org/3/library/collections.abc.html
 
-<p>W Pythonie 2.6+ moduł collections dostarcza abstrakcyjne klasy bazowe (ABC),
-dzięki którym możemy testować, czy obiekty mają pewną funkcjonalność.
-Abstrakcyjne klasy bazowe mają zestaw metod abstrakcyjnych.
+<p>https://www.geeksforgeeks.org/abstract-base-class-abc-in-python/
+<br>Abstract Base Class (abc) in Python.
+
+<p>https://realpython.com/python-interface/
+<br>Implementing an Interface in Python.
+
+<p>PEP 3119 - Introducing Abstract Base Classes (Py3)
+
+<p>PEP 3141 - A Type Hierarchy for Numbers.
+<br>Number (the root of the numeric hierarchy), 
+<br>Complex (real, imag, conversions to complex and bool), 
+<br>Real (conversion to float, comparisons), 
+<br>Rational (numerator, denominator, conversion to float), 
+<br>Integral (conversion to int).
+
+<p>Abstrakcyjne klasy bazowe (ABC) dostarczają standardowego sposobu
+sprawdzania, czy obiekt spełnia daną specyfikację.
+Próba utworzenia podklasy bez nadpisania przygotowanych metod z klasy bazowej
+nie uda się.
+
+<p>Moduł 'abc' dostarcza infrastrukturę do definiowania ABCs.
+W module 'collections' znajdują się pewne konkretne klasy wyprowadzone z ABCs.
+W podmodule 'collections.abc' znajdują się pewne ABCs, które można użyć 
+do testowania interfejsów.
+
+
+
+
+
+<p>Abstrakcyjne klasy bazowe mają zestaw metod abstrakcyjnych.
 
 <hr><pre>
 from abc import ABCMeta
 
 class MyABC(object):   # tworzenie abstrakcyjnej klasy bazowej
     __metaclass__ = ABCMeta   # Py2.7
+    instrukcje
+</pre><hr><pre>
+from abc import ABCMeta
+
+class MyABC(metaclass=ABCMeta):   # Py3.4+
+    instrukcje
+</pre><hr><pre>
+# Klasa pomocnicza 'ABC' ma 'ABCMeta' jako metaklasę.
+# Klasę wprowadzono, aby uniknąć niezręcznej składni metaklas.
+# Teraz można zrobić zwykłe dziedziczenie po 'ABC'.
+
+from abc import ABC   # Py3.4+
+from abc import abstractmethod   # dekorator wskazujący na metodę abstrakcyjną
+
+class MyABC(ABC):   # tworzenie abstrakcyjnej klasy bazowej
 
     @abstractmethod
-    def my_abstract_method(self, ...):
-        # Tu może być jakaś implementacja.
-        pass
+    def my_abstract_method(self, arg1):
+        instrukcje
 
-    @abstractproperty
+    @classmethod    # ważna jest kolejność dekoratorów
+    @abstractmethod
+    def my_abstract_classmethod(cls, arg2):
+        instrukcje
+
+    @staticmethod
+    @abstractmethod
+    def my_abstract_staticmethod(arg3):
+        instrukcje
+
+    @property
+    @abstractmethod
     def my_abstract_property(self):
-        pass
+        instrukcje
 
-# Przyłączamy do naszej ABC wbudowaną klasę tuple.
+    @my_abstract_property.setter
+    @abstractmethod
+    def my_abstract_property(self, val):
+        instrukcje
+</pre><hr><pre>
+# Przyłączamy do naszej abstrakcyjne klasy bazowej wbudowaną klasę tuple.
 # register(subclass)
 # Register subclass as a "virtual subclass" of this ABC.
 
@@ -111,11 +178,56 @@ MyABC.register(tuple)
 assert issubclass(tuple, MyABC)
 assert isinstance((), MyABC)
 </pre><hr><pre>
+# Tworzenie nowej klasy przez bezpośrednie dziedziczenie 
+# po abstrakcyjne klasie bazowej.
+
+from collections.abc import Sequence
+
+class C(Sequence):   # bezpośrednie dziedziczenie
+    def __init__(self):   # dodatkowa metoda nie wymagana przez ABC
+        instrukcje
+    def __getitem__(self, index):   # wymagana metoda abstrakcyjna
+        instrukcje
+    def __len__(self):   # wymagana metoda abstrakcyjna
+        instrukcje
+    def count(self, value):   # mixin method (opcjonalnie nadpisana)
+        instrukcje
+    def index(self, value):   # mixin method (opcjonalnie nadpisana)
+        instrukcje
+
+assert issubclass(C, Sequence)
+assert isinstance(C(), Sequence)
+</pre><hr><pre>
+# Rejestracja istniejącej klasy jako 'wirtualnej podklasy'
+# pewnej abstrakcyjnej klasy bazowej.
+
+from collections.abc import Sequence
+
+class D:
+    def __init__(self):   # dodatkowa metoda nie wymagana przez ABC
+        instrukcje
+    def __getitem__(self, index):   # metoda abstrakcyjna
+        instrukcje
+    def __len__(self):   # metoda abstrakcyjna
+        instrukcje
+    def count(self, value):   # mixin method
+        instrukcje
+    def index(self, value):   # mixin method
+        instrukcje
+
+Sequence.register(D)   # rejestracja zamiast dziedziczenia
+
+assert issubclass(D, Sequence)
+assert isinstance(D(), Sequence)
+</pre><hr><pre>
+# Możemy pytać klasę lub instancję o pewną funkcjonalność.
+
 import collections
 
 size = None
-if isinstance(my_variable, collections.Sized):   # istnieje __len__
-    size = len(my_variable)
+#if isinstance(my_variable, collections.Sized):   # Py2.7
+if isinstance(my_variable, collections.abc.Sized):   # Py3.3+
+    size = len(my_variable)   # wiemy, że istnieje __len__
 </pre><hr>
 
 </body>

@@ -1,0 +1,247 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Moduł pytest</h1>
+
+<p>https://docs.pytest.org/
+
+<p>https://pypi.org/project/pytest/
+
+<p>https://www.python-course.eu/python3_pytest.php
+
+<h3>INSTALALACJA</h3>
+
+<p>'pytest' nie należy do biblioteki standardowej, więc trzeba go 
+dodatkowo zainstalować.
+
+<hr><pre>
+PIP (konto użytkownika lub środowisko wirtualne)
+python3 -m pip install pytest
+
+APT
+Debian packages: python-pytest (Py2.7), python3-pytest (Py3), oraz zależności.
+</pre><hr>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Framework 'pytest' (Py3.6+) ułatwia pisanie krótkich testów, 
+ale również dobrze się skaluje i wspiera testowanie dużych aplikacji
+i bibliotek.
+
+<p>Pliki z testami powinny mieć odpowiednie nazwy 
+(spam.py to moduł do testowania): test_spam.py lub spam_test.py.
+
+<hr><pre>
+# Zawartość pliku test_sample.py
+
+def inc(x):
+    return x + 1
+
+def test_answer():
+    assert inc(3) == 5   # celowy błąd, używamy 'assert'
+</pre><hr><pre>
+# Uruchamianie testów:
+
+$ pytest
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
+rootdir: .../week12/pytest1, inifile:
+collected 1 item                                                               
+
+test_sample.py F                                                         [100%]
+
+=================================== FAILURES ===================================
+_________________________________ test_answer __________________________________
+
+    def test_answer():
+>       assert inc(3) == 5
+E       assert 4 == 5
+E        +  where 4 = inc(3)
+
+test_sample.py:8: AssertionError
+=========================== 1 failed in 0.02 seconds ===========================
+</pre><hr><pre>
+# Testy po poprawieniu błłedów.
+
+$ pytest
+============================= test session starts ==============================
+platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
+rootdir: .../week12/pytest1, inifile:
+collected 1 item                                                               
+
+test_sample.py .                                                         [100%]
+
+=========================== 1 passed in 0.01 seconds ===========================
+
+# In Debian 10, 'python3 -m pytest' will use Python 3.7.
+</pre><hr>
+
+<p>Raport zwracany przez 'pytest' pokazuje:
+<br>(1) stan systemu,
+<br>(2) katalog do przeszukiwania i pliki z testami,
+<br>(3) liczbę wykrytych testów (funkcji testujących).
+
+<p>Na wyjściu dostajemy status każdego testu w postaci podobnej do 'unittest':
+<br>(1) kropka (.) oznacza sukces testu,
+<br>(2) litera 'F' oznacza porażkę testu,
+<br>(3) litera 'E' oznacza pojawienie się niespodziewanego wyjątku podczas testu.
+
+<h3>IMPORT PYTEST</h3>
+
+<hr><pre>
+# Zawartość pliku test_set.py
+
+import pytest
+
+def test_union():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA | setB == set([1, 2, 3, 5])
+    assert setA.union(setB) == set([1, 2, 3, 5])
+
+def test_intersection():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA & setB == set([3])
+    assert setA.intersection(setB) == set([3])
+
+def test_difference():
+    setA = set([1, 3, 5])
+    setB = set([2, 3])
+    assert setA - setB == set([1, 5])
+    assert setA.difference(setB) == set([1, 5])
+
+if __name__ == "__main__":
+    pytest.main()
+</pre><hr><pre>
+# Uruchomienie testów:
+
+$ python test_set.py
+</pre><hr>
+
+<h3>FIXTURES</h3>
+
+<p>Można myśleć o testach, że składają się z czterech kroków:
+<br>(1) <strong>Arrange</strong> - przygotowanie wszystkiego do testów.
+<br>(2) <strong>Act</strong> - uruchomienie działań, które chcemy testować.
+<br>(3) <strong>Assert</strong> - sprawdzenie wyników.
+<br>(4) <strong>Cleanup</strong> - czyszczenie po testach.
+
+<p>'Fixtures' to działania dla kroku 'Arrange'.
+
+<hr><pre>
+@pytest.fixture   # dekorator
+def setA():
+    return set([1, 3, 5])
+
+@pytest.fixture
+def setB():
+    return set([2, 3])
+
+def test_union(setA, setB):
+    assert setA | setB == set([1, 2, 3, 5])
+    assert setA.union(setB) == set([1, 2, 3, 5])
+
+def test_intersection(setA, setB):
+    assert setA & setB == set([3])
+    assert setA.intersection(setB) == set([3])
+
+def test_difference(setA, setB):
+    assert setA - setB == set([1, 5])
+    assert setA.difference(setB) == set([1, 5])
+</pre><hr>
+
+<h3>MARKERY</h3>
+
+<p>Funkcje testujące mogą być udekorowane przez 'pytest.mark'.
+Można również tworzyć własne markery, które muszą być rejestrowane.
+
+<hr><pre>
+$ pytest --markers   # lista istniejących markerów
+@pytest.mark.filterwarnings(warning): add a warning filter to the given test. 
+see https://docs.pytest.org/en/latest/warnings.html#pytest-mark-filterwarnings 
+
+@pytest.mark.skip(reason=None): skip the given test function with an optional reason. 
+Example: skip(reason="no way of currently testing this") skips the test.
+...
+</pre><hr><pre>
+# Przykładowe markery.
+
+@pytest.mark.skip("no way of currently testing this")
+
+@pytest.mark.skipif('sys.platform == "win32"')
+
+@pytest.mark.xfail()
+@pytest.mark.xfail(raises=IndexError)   # powód porażki testu
+
+@pytest.mark.parametrize(argnames, argvalues)
+
+@pytest.mark.tryfirst
+
+@pytest.mark.trylast
+</pre><hr><pre>
+# Zawartość pliku fib2.py
+
+def fibonacci(n):
+    old, new = 0, 1
+    for _ in range(n):
+        old, new = new, old + new
+    return old
+</pre><hr><pre>
+# Zawartość pliku test_fib2.py
+
+import pytest
+from fib2 import fibonacci
+
+@pytest.mark.parametrize('n, res',
+    [(0, 0), (1, 1), (2, 1), (3, 2), (4, 3), (5, 5), (6, 8)])
+def test_fibonacci(n, res):
+    assert fibonacci(n) == res
+</pre><hr>
+
+<h3>TESTY W KLASACH</h3>
+
+<p>Grupowanie testów w klasach może być pożyteczne z kilku powodów:
+<br>(1) lepsza organizacja testów,
+<br>(2) dzielenie fixtures dla testów tylko w danej klasie,
+<br>(3) stosowanie markerów na poziomie klas i domyślne ich stosowanie
+dla wszystkich testów w klasie.
+
+<p>Każdy test otrzymuje osobną instancję klasy.
+
+<hr><pre>
+import pytest
+
+class TestSets:   # 'Test' prefix jest ważny
+
+# scope: zakres dzielony przez daną 'fixture';
+# "function" (default), "class", "module", "package", "session"
+
+    @pytest.fixture(scope="class")
+    def setA(self):   # 'self' is the first argument in methods
+        return set([1, 3, 5])
+
+    @pytest.fixture(scope="class")
+    def setB(self):
+        return set([2, 3])
+
+    def test_union(self, setA, setB):
+        assert setA | setB == set([1, 2, 3, 5])
+        assert setA.union(setB) == set([1, 2, 3, 5])
+
+    def test_intersection(self, setA, setB):
+        assert setA & setB == set([3])
+        assert setA.intersection(setB) == set([3])
+
+    def test_difference(self, setA, setB):
+        assert setA - setB == set([1, 5])
+        assert setA.difference(setB) == set([1, 5])
+</pre><hr>
+
+</body>
+</html>

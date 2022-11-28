@@ -133,7 +133,7 @@ public:
     T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
     void pop_front(); // usuwa początek kolejki O(1)
     void pop_back(); // usuwa koniec kolejki O(1)
-    void clear(); // czyszczenie listy z elementow
+    void clear(); // czyszczenie listy z elementów
     void display();
     // Operacje z indeksami. NIEOBOWIĄZKOWE
     T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]

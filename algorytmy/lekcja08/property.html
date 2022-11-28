@@ -1,0 +1,173 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dekorator @property</h1>
+
+<p>https://docs.python.org/3/library/functions.html#property
+
+<h3>WPROWADZENIE</h3>
+
+<p>Typowe zastosowanie dekoratora @property to utworzenie
+zarządzalnego atrybutu. Użytkownik używa składni takiej samej jak dla
+zwykłego atrybutu (odczyt, podstawienie), a jednocześnie w niewidoczny
+sposób mogą być wykonywane inne operacje.
+
+<hr><pre>
+class C(object):
+    """Klasa C."""
+
+    def __init__(self):
+        self.x = None
+
+c = C()
+# dir(c)   # widać 'x'
+c.x = 20
+print(c.__doc__)   # Klasa C.
+print(c.x)   # 20
+del c.x
+print(c.x)   # AttributeError: 'C' object has no attribute 'x'
+</pre><hr><pre>
+class C(object):
+    """Klasa C."""
+
+    def __init__(self):
+        self._x = None
+        self.threshold = 10
+
+    def getx(self):   # getting an attribute value
+        return self._x
+
+    def setx(self, value):   # setting an attribute value
+        if value &lt; self.threshold:
+            raise ValueError("x can't be lesser than {}".format(self.threshold))
+        else:
+            self._x = value
+
+    def delx(self):   # deleting an attribute value
+        del self._x   # chyba lepiej self._x = None (?)
+
+    x = property(getx, setx, delx, "I'm the 'x' property.")
+
+c = C()
+# dir(c)   # widać 'x' i '_x'
+c.x = 20   # działa setx, to samo co c.setx(20)
+#c.x = 5   # ValueError: x can't be lesser than 10
+print(c.__doc__)   # Klasa C.
+# W trybie interaktywnym help(c) lub help(C) ujawnia dla x string "I'm the 'x' property."
+print(c.x)   # działa getx, to samo co dla c.getx()
+del c.x   # działa delx, to samo co c.delx()
+print(c.x)   # AttributeError: 'C' object has no attribute '_x'
+</pre><hr><pre>
+# Od Py2.6 można użyć metod obiektu property: getter, setter, deleter.
+# Trzeba użyć tej samej nazwy (tu x i _x).
+# Tu jest użycie property jako dekoratora.
+
+class C(object):
+    """Klasa C."""
+
+    def __init__(self):
+        self._x = None
+        self.threshold = 10
+
+    @property
+    def x(self):   # getting an attribute value
+        """I'm the 'x' property."""
+        return self._x
+
+    @x.setter
+    def x(self, value):   # setting an attribute value
+        if value &lt; self.threshold:
+            raise ValueError("x can't be lesser than {}".format(self.threshold))
+        else:
+            self._x = value
+
+    @x.deleter
+    def x(self):   # deleting an attribute value
+        del self._x   # chyba lepiej self._x = None (?)
+
+c = C()
+# dir(c)   # widać 'x' i '_x'
+c.x = 20
+print(c.x)   # 20
+#c.x = 5   # ValueError: x can't be lesser than 10
+del c.x
+</pre><hr>
+
+<h3>DEKORATORY KLAS</h3>
+
+<hr><pre>
+# Składnia dekoratorów klas ma następującą postać.
+
+@decorator2
+@decorator1
+class C(object):
+    pass
+
+# ... co jest równoważne ...
+
+class C(object):
+    pass
+
+C = decorator2(decorator1(C))
+</pre><hr><pre>
+# Dekorator klasy.
+def class_decorator(cls): pass
+
+@class_decorator   # zastosowanie
+class C(object):
+    pass
+
+# lub inaczej
+
+class C(object):
+    pass
+
+C = class_decorator(C)
+</pre><hr><pre>
+# https://stackoverflow.com/questions/392160/what-are-some-concrete-use-cases-for-metaclasses
+# Zastosowanie dekoratora klasy do rejestracji klas.
+
+models = {}
+
+def model(cls):
+    models[cls.__name__] = cls
+    return cls
+
+@model
+class A(object):
+    pass
+
+class B(A):
+    pass
+# Klasa B nie będzie rejestrowana, chyba że jawnie użyjemy znowu @model.
+# Lepsze rozwiązanie wykorzystuje metaklasy.
+</pre><hr><pre>
+models = {}
+
+class ModelMetaclass(type):
+    def __new__(meta, name, bases, clsdict):
+        models[name] = cls = type.__new__(meta, name, bases, clsdict)
+        return cls
+
+#class Model(object):
+#    __metaclass__ = ModelMetaclass   # Py2
+
+class Model(metaclass=ModelMetaclass):   # Py3
+    pass
+
+class A(Model):
+    pass
+
+class B(A):   # teraz klasa B będzie zarejestrowana w models
+    pass
+
+print(list(models))   # ['A', 'Model', 'B']
+</pre><hr>
+
+</body>
+</html>
