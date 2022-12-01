@@ -18,6 +18,16 @@ miejsca listy (właściwie powstaje lista cykliczna).
 Wartownik nie przechowuje żadnych istotnych danych w atrybucie data.
 
 <hr><pre>
+|       nil       |     nil  +----------------------------+ |
+|        |        |      |   |                            | |
+|        o        |      o   o                            | |
+|    +-+---+-+    |    +-+---+-+               +-+---+-+  | |
+| +--+ | ? | +--+ | +--+ | ? | +--o+-+---+-+o--+ | B | +--+ |
+| |  +-+---+-+  | | |  +-+---+-+o--+ | A | +--o+-+---+-+    |
+| |     o o     | | |              +-+---+-+       o        |
+| |     | |     | | |                              |        |
+| +-----+ +-----+ | +------------------------------+        |
+</pre><hr><pre>
 class Node:
     """Klasa reprezentująca węzeł listy dwukierunkowej."""
 

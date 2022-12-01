@@ -40,21 +40,29 @@ class Node:
 pair = [None, None]
 # [], pusta lista
 
-pair[0] = pair[1] = Node("first")
-# ["first"], jeden element na liście
+pair[0] = pair[1] = Node("A")
+# ["A"], jeden element na liście
 
-node = Node("second")  # nowy tail
+node = Node("B")  # nowy tail
 node.prev = pair[0]
 pair[0].next = node   # łącze w head trzeba uaktualnić
 pair[1] = node
-# ["first", "second"], są dwa elementy
+# ["A", "B"], są dwa elementy
 
-node = Node("middle") # head i tail bez zmian
+node = Node("C") # head i tail bez zmian
 node.prev = pair[0]
 node.next = pair[1]
 pair[0].next = node   # łącze w head trzeba uaktualnić
 pair[1].prev = node   # łącze w tail trzeba uaktualnić
-# ["first", "middle", "second"], są trzy elementy
+# ["A", "C", "B"], są trzy elementy
+</pre><hr><pre>
+|       head                    tail            |
+|        |                       |              |
+|        o                       o              |
+|    +-+---+-+               +-+---+-+    puste |
+| |--+ | A | +--o+-+---+-+o--+ | B | +--| łącze |
+|    +-+---+-+o--+ | C | +--o+-+---+-+          |
+|                +-+---+-+                      |
 </pre><hr>
 
 <h3>PRZECHODZENIE PRZEZ LISTĘ DWUKIERUNKOWĄ</h3>
@@ -81,9 +89,9 @@ def traverse_backward(pair, visit):
 # Przykład przechodzenia od początku do końca listy.
 def print_dlist(pair):
     node = pair[0]   # head
-    print ( "Double list elements:" )
+    print("Double list elements:")
     while node:
-        print ( node )
+        print(node)
         node = node.next
 </pre><hr><pre>
 def count_dlist(pair):        # algorytm klasy O(n)
@@ -113,7 +121,7 @@ def insert_tail(pair, node):
     else:   # lista była pusta
         pair[0] = pair[1] = node
 </pre><hr><pre>
-def remove_head(pair):        # zwraca node
+def remove_head(pair):   # zwraca node
     if pair[0] is None:
         raise Exception("pusta lista")
     elif pair[0] is pair[1]:   # jeden element na liście
@@ -126,7 +134,7 @@ def remove_head(pair):        # zwraca node
         pair[0].prev = None   # czyszczenie łącza
         return node
 </pre><hr><pre>
-def remove_tail(pair):        # zwraca node
+def remove_tail(pair):   # zwraca node
     if pair[0] is None:
         raise Exception("pusta lista")
     elif pair[0] is pair[1]:  # jeden na liście

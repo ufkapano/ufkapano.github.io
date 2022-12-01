@@ -71,7 +71,7 @@ class SingleList:
             self.head = self.tail = node
         self.length += 1
 
-    def remove_head(self):          # klasy O(1)
+    def remove_head(self):   # klasy O(1)
         if self.is_empty():
             raise ValueError("pusta lista")
         node = self.head
@@ -85,13 +85,13 @@ class SingleList:
 </pre><hr><pre>
 # Zastosowanie.
 alist = SingleList()
-alist.insert_head(Node(11))         # [11]
-alist.insert_head(Node(22))         # [22, 11]
-alist.insert_tail(Node(33))         # [22, 11, 33]
-print ( "length {}".format(alist.length) ) # odczyt atrybutu
-print ( "length {}".format(alist.count()) ) # wykorzystujemy interfejs
+alist.insert_head(Node(11))   # [11]
+alist.insert_head(Node(22))   # [22, 11]
+alist.insert_tail(Node(33))   # [22, 11, 33]
+print("length {}".format(alist.length))   # odczyt atrybutu
+print("length {}".format(alist.count()))   # wykorzystujemy interfejs
 while not alist.is_empty():   # kolejność 22, 11, 33
-    print ( "remove head {}".format(alist.remove_head()) )
+    print("remove head {}".format(alist.remove_head()))
 </pre><hr>
 
 <h3>LISTA POWIĄZANA Z ITERATOREM</h3>
@@ -113,7 +113,7 @@ class SingleList:
     # ... inne metody ...
 
     def __iter__(self):
-        # Przy tworzeniu iteratora trzeba mieć zmiennć, która będzie pamiętać stan.
+        # Przy tworzeniu iteratora trzeba mieć zmienną, która będzie pamiętać stan.
         # Przy kolejnym tworzeniu iteratora będzie ustawianie na początek.
         self.current = self.head
         return self
@@ -130,11 +130,11 @@ class SingleList:
 </pre><hr><pre>
 # Zastosowanie.
 alist = SingleList()
-alist.insert_head(Node(11))         # [11]
-alist.insert_head(Node(22))         # [22, 11]
-alist.insert_tail(Node(33))         # [22, 11, 33]
+alist.insert_head(Node(11))   # [11]
+alist.insert_head(Node(22))   # [22, 11]
+alist.insert_tail(Node(33))   # [22, 11, 33]
 for item in alist:   # kolejność 22, 11, 33
-    print ( item )
+    print(item)
 </pre><hr>
 
 </body>

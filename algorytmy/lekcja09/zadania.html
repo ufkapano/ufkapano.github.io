@@ -9,7 +9,7 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: dwa zadania z zestawu
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie z zestawu
 
 <p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
 
@@ -29,33 +29,33 @@ class SingleList:
         # Węzły z listy other są przepinane do listy self na jej koniec.
         # Po zakończeniu operacji lista other ma być pusta.
 
-    def clear(self): pass     # czyszczenie listy
+    def clear(self): pass   # czyszczenie listy
 </pre><hr><pre>
 POCZĄTEK JOIN
-A1 &lt;- self.head
+A1 o-- self.head
 |
-A2 &lt;- self.tail
+A2 o-- self.tail
 |
 None
 
-B1 &lt;- other.head
+B1 o-- other.head
 |
-B2 &lt;- other.tail
+B2 o-- other.tail
 |
 None
 
 KONIEC JOIN
-A1 &lt;- self.head
+A1 o-- self.head
 |
 A2
 |
 B1
 |
-B2 &lt;- self.tail
+B2 o-- self.tail
 |
 None
 
-None &lt;- other.head=other.tail
+None o-- other.head = other.tail
 </pre><hr>
 
 <h3>ZADANIE 9.2 (SINGLELIST)</h3>
@@ -95,7 +95,7 @@ class DoubleList:
     def remove(self, node): pass
         # Usuwa wskazany węzeł z listy (węzeł należy do listy).
 
-    def clear(self): pass     # czyszczenie listy
+    def clear(self): pass   # czyszczenie listy
 </pre>
 
 <h3>ZADANIE 9.4 (SORTEDLIST)</h3>
@@ -125,7 +125,7 @@ class SortedList:
         # Scalanie dwóch list posortowanych.
         # Po tej operacji lista other ma być pusta.
 
-    def clear(self): pass     # czyszczenie listy
+    def clear(self): pass   # czyszczenie listy
 </pre><hr>
 
 <h3>ZADANIE 9.5 (CYCLICLIST)</h3>
@@ -139,7 +139,7 @@ przez tail rozumiemy węzeł bezpośrednio poprzedzający head.
 class CyclicList:
 
     def __init__(self):
-        self.head = None     # łącze do dowolnego węzła listy
+        self.head = None   # łącze do dowolnego węzła listy
         # nie potrzeba mieć self.tail
 
     def is_empty(self):
@@ -155,7 +155,7 @@ class CyclicList:
 
     def join(self, other): pass   # scalanie dwóch list cyklicznych w czasie O(1)
 
-    def clear(self): pass     # czyszczenie listy
+    def clear(self): pass   # czyszczenie listy
 </pre><hr>
 
 </body>

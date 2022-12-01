@@ -40,14 +40,14 @@ class Node:
         self.next = next
 
     def __str__(self):
-        return str(self.data)   # bardzo ogolnie
+        return str(self.data)   # bardzo ogólnie
 
 N = int(sys.argv[1])
 m = int(sys.argv[2])
 
 # Pierwszy węzeł na liście.
 head = Node(1)
-head.next = head                        # lista cykliczna
+head.next = head   # lista cykliczna
 
 # Wstawiamy następne liczby za head.
 node = head
@@ -59,8 +59,18 @@ for i in range(2, N+1):
 while node != node.next:
     for i in range(m-1):
         node = node.next
-    node.next = node.next.next      # wyrzucam node.next
-print ( "zostaje {}".format(node) )
+    node.next = node.next.next   # wyrzucam node.next
+print("zostaje {}".format(node))
+</pre><hr><pre>
+|  head      |  head                |  head                          |
+|   |        |   |                  |   |                            |
+|   o        |   o                  |   o                            |
+| +---+-+    | +---+-+   +---+-+    | +---+-+   +---+-+   +---+-+    |
+| | 1 | +--+ | | 1 | +--o| 2 | +--+ | | 1 | +--o| 2 | +--o| 3 | +--+ |
+| +---+-+  | | +---+-+   +---+-+  | | +---+-+   +---+-+   +---+-+  | |
+|   o      | |   o                | |   o                          | |
+|   |      | |   |                | |   |                          | |
+|   +------+ |   +----------------+ |   +--------------------------+ |
 </pre><hr>
 
 <p>Podczas budowania listy program używa dwa razy więcej przypisań

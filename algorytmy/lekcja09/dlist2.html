@@ -44,8 +44,8 @@ class DoubleList:
     def insert_head(self, node):
         if self.head:
             node.next = self.head
-            self.head.prev = node     # stary head
-            self.head = node          # nowy head
+            self.head.prev = node   # stary head
+            self.head = node        # nowy head
         else:         # pusta lista
             self.head = node
             self.tail = node
@@ -54,8 +54,8 @@ class DoubleList:
     def insert_tail(self, node):
         if self.tail:
             node.prev = self.tail
-            self.tail.next = node     # stary tail
-            self.tail = node          # nowy tail
+            self.tail.next = node   # stary tail
+            self.tail = node        # nowy tail
         else:         # pusta lista
             self.head = node
             self.tail = node

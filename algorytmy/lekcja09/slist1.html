@@ -44,17 +44,22 @@ class Node:
     def __str__(self):
         return str(self.data)   # bardzo ogólnie
 </pre><hr><pre>
-head = None
-# pusta lista
+head = None   # pusta lista
 
-head = Node("front")
-# lista jednoelementowa
+head = Node("front")   # lista jednoelementowa
 
 # Ręczne budowanie dłuższej listy.
 head = None                   # [], pusta lista
 head = Node(3, head)          # [3]
 head = Node(2, head)          # [2, 3]
 head = Node(4, head)          # [4, 2, 3]
+</pre><hr><pre>
+|  head                                |
+|   |                                  |
+|   o                                  |
+| +---+-+   +---+-+   +---+-+    puste |
+| | 4 | +--o| 2 | +--o| 3 | +--| łącze |
+| +---+-+   +---+-+   +---+-+          |
 </pre><hr>
 
 <h3>PRZECHODZENIE PRZEZ LISTĘ JEDNOKIERUNKOWĄ</h3>
@@ -85,20 +90,20 @@ listy. Rozważmy przykładowo wypisanie zawartości całej listy.
 def print_list(node):
     """Iteracyjne wypisanie listy jednokierunkowej."""
     while node:
-        print ( node )
+        print(node)
         node = node.next
 </pre><hr><pre>
 def print_forward(node):
     """Rekurencyjne wypisanie listy jednokierunkowej."""
     if node:
-        print ( node )
+        print(node)
         print_forward(node.next)
 </pre><hr><pre>
 def print_backward(node):
     """Rekurencyjne wypisanie listy wstecz."""
     if node:
         print_backward(node.next)
-        print ( node )
+        print(node)
 </pre><hr><pre>
 def count_list(node):
     """Obliczanie liczby węzłów na liście w czasie O(n)."""
@@ -145,9 +150,9 @@ def insert_tail(node, new_node):   # algorytm klasy O(n)
     while node:   # O(n)
         last = node
         node = node.next
-    if last is None:      # lista była pusta
+    if last is None:   # lista była pusta
         return new_node
-    else:                 # last jest ostatni
+    else:              # last jest ostatni
         last.next = new_node
         return head   # head się nie zmienił
 
@@ -246,7 +251,7 @@ def floyd_detect_cycle(node):
         tortoise = tortoise.next
         hare = hare.next.next
         if tortoise == hare:
-            print ( "cycle detected" )
+            print("cycle detected")
             return True
     return False
 </pre><hr>

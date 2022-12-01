@@ -94,7 +94,7 @@ def insert_sorted(pair, node):
         node.prev = pair[1]
         pair[1].next = node
         pair[1] = node
-    elif after is pair[0]:     # wstawiamy na początek listy
+    elif after is pair[0]:   # wstawiamy na początek listy
         node.next = pair[0]
         pair[0].prev = node
         pair[0] = node
@@ -112,7 +112,6 @@ Funkcja zwraca nową listę.
 <hr><pre>
 def merge(pair1, pair2): pass
 </pre><hr>
-
 
 </body>
 </html>
