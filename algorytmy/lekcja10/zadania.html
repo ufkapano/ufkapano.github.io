@@ -9,8 +9,8 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie ze stosem (10.2, 10.3),
-jedno z kolejką (10.4 - 10.7), zadanie z kolejką przypadkową (10.8)
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie ze stosem lub kolejką (10.2 - 10.7), 
+zadanie z kolejką przypadkową (10.8)
 
 <p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
 
@@ -51,9 +51,9 @@ class Matrix:
 
 # Zastosowanie.
 m = Matrix(3, 4)
-m[1, 2] = 12                  # metoda __setitem__
-print ( m[1, 2] )             # metoda __getitem__
-print ( m )                   # metoda __str__
+m[1, 2] = 12     # metoda __setitem__
+print(m[1, 2])   # metoda __getitem__
+print(m)         # metoda __str__
 </pre><hr>
 
 <h3>ZADANIE 10.2 (STACK)</h3>
@@ -141,15 +141,15 @@ class RandomQueue:
 
     def __init__(self): pass
 
-    def insert(self, item): pass
+    def insert(self, item): pass   # wstawia element w czasie O(1)
 
-    def remove(self): pass   # zwraca losowy element
+    def remove(self): pass   # zwraca losowy element w czasie O(1)
 
     def is_empty(self): pass
 
     def is_full(self): pass
 
-    def clear(self): pass     # czyszczenie listy
+    def clear(self): pass   # czyszczenie listy
 </pre><hr>
 
 </body>
