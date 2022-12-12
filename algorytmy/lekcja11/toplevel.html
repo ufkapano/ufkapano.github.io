@@ -1,0 +1,42 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter Toplevel</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>'Tk' jest to absolutny korzeń aplikacji, pierwszy widżet, który musi
+powstać. Jeżeli to okno zostanie zamknięte, to całe GUI jest zamykane.
+
+<p>'Toplevel' jest to okno aplikacji, którego zamknięcie niszczy wszystkie
+potomne widżety tego okna, ale nie zamyka całego programu.
+Można utworzyć wiele okien 'Toplevel', ale nie są one niezależnymi procesami.
+Zamknięcie programu usuwa wszystkie okna 'Toplevel'.
+
+<hr><pre>
+import tkinter as tk
+
+root = tk.Tk()   # zaczynamy od utworzenia okna 'root' (Tk)
+root.title("root")
+
+# Tworzenie zawartości okna 'root'...
+# W widżecie Button, command=root.quit zamyka wszystkie okna.
+
+top = tk.Toplevel()
+#top = tk.Toplevel(root)   # jawne użycie rodzica
+top.title("top")
+
+# Tworzenie zawartości okna 'top'...
+# W widżecie Button, command=top.destroy zamyka tylko bieżące okno 'top'.
+
+root.mainloop()
+#top.mainloop()   # też działa
+</pre><hr>
+
+</body>
+</html>

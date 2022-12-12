@@ -45,8 +45,9 @@ command=lambda value: print(value)
 tickinterval=10   # the number of units between marks (default no marks)
 resolution=5   # the number of units thats the scale's value jumps (default 1)
 showvalue=tk.NO   # or tk.YES (default); show the scale's current value
-orient=tk.HORIZONTAL   # or tk.VERTICAL (default)
-length=200   # in points
+orient=tk.VERTICAL   # default
+orient=tk.HORIZONTAL
+length=200   # in points (pixels)
 </pre><hr><pre>
 # scale2.py (using 'variable' and 'command')
 # Note that different scales may share the same variable and then

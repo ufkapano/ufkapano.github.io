@@ -45,6 +45,7 @@ Selected keyword arguments in Button()
 
 master=root     # the first argument
 text="Click"
+textvariable=strvar   # a variable linked to the button
 fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
@@ -52,7 +53,7 @@ height=10   # in text units
 font="Times 10 bold"
 command=callback   # an action to call when the widget's event occurs
 command=sys.exit   # it shuts down the calling program
-command=(lambda: print("message in the command line"))
+command=lambda: print("message in the command line")
 command=root.quit   # it ends the current mainloop event loop call
 command=top.destroy   # it kills the current top-level window
 </pre><hr><pre>

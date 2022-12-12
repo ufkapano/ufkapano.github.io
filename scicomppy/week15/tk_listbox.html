@@ -1,0 +1,78 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Listbox</h1>
+
+<p>https://stackoverflow.com/questions/14362116/python-tkinter-multiple-selection-listbox
+
+<h3>INTRODUCTION</h3>
+
+<p>Listboxes are used to select from a group of textual items.
+Depending on how the listbox is configured, the user can select
+one or many items from that list.
+
+<hr><pre>
+# listbox1.py
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+listbox = tk.Listbox(root, selectmode=tk.MULTIPLE) # empty listbox
+listbox.grid()
+
+listbox.insert(tk.END, "a list entry")   # adding the first entry
+
+for item in ["one", "two", "three", "four"]:
+    listbox.insert(tk.END, item)
+
+button = tk.Button(root, text="Choices", command=lambda:
+    print([listbox.get(i) for i in listbox.curselection()]))
+button.grid()
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Listbox()
+
+master=root     # the first argument
+selectmode=tk.BROWSE   # the user can select only a single item (default)
+selectmode=tk.MULTIPLE   # other: tk.SINGLE, tk.EXTENDED
+width=20   # the width of the widget in characters (default is 20)
+height=10   # number of lines shown in the listbox (default is 10)
+relief=tk.SUNKEN   # default
+listvariable=listvar   # a variable that holds the list of items contained in the listbox
+yscrollcommand   # used to connect the listbox to a scrollbar's "set" method
+</pre><hr><pre>
+Methods in Listbox()
+
+listbox.insert(pos, item)   # pos can be number or tk.END (first available) or tk.ACTIVE
+listbox.get(pos)
+listbox.delete(pos)
+listbox.delete(0, tk.END)   # delete range
+listbox.curselection()   # return a tuple with selections
+
+listbox.selection_set(pos)   # then use see(pos)
+listbox.see(pos)
+</pre><hr><pre>
+# Using listvariable.
+
+# Items for listbox.
+days = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
+
+listvar = tk.StringVar(value=days)
+
+listbox = tk.Listbox(root, listvariable=listvar)
+listbox.grid()
+
+# Changing items.
+days.remove("Monday")
+days.append("Monday")
+listvar.set(days)
+</pre><hr>
+
+</body>
+</html>

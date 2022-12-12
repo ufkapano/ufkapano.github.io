@@ -1,0 +1,79 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Scrollbar</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>A scrollbar widget helps users see all parts of another widget, 
+whose content is typically much larger than what can be shown 
+in the available screen space.
+Scrollbars are used with Text, Listbox, ...
+
+<p>Scrollbars are not a part of another widget but are a separate widget 
+altogether. Instead, scrollbars communicate with the 'scrolled widget' 
+by calling methods on the scrolled widget; 
+the scrolled widget also needs to call methods on the scrollbar.
+
+<p>Every widget that can be scrolled vertically includes a method named 'yview', 
+while those that can be scrolled horizontally have a method named 'xview'.
+
+<p>The scrolled widget also needs to communicate back to the scrollbar, 
+telling it what percentage of the entire content area is now visible. 
+Every scrollable widget also has a 'yscrollcommand' and/or 'xscrollcommand' 
+configuration option. This is used to specify a method call, 
+which must be the scrollbar's 'set' method.
+
+<hr><pre>
+# +---------+-----------+
+# | Listbox | Scrollbar |
+# +---------+-----------+
+# |       Button        |
+# +---------------------+
+# scrollbar1.py
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+
+root.rowconfigure(0, weight=1)
+# row 1 will not expand (button)
+root.columnconfigure(0, weight=1)
+# column 1 will not expand (scrollbar)
+
+listbox = tk.Listbox(root, selectmode=tk.BROWSE)
+listbox.grid(row=0, column=0, sticky=tk.NSEW)
+
+for item in ["one", "two", "three", "four", "five",
+    "six", "seven", "eight", "nine", "ten"]:
+    listbox.insert(tk.END, item)
+
+yscroll = tk.Scrollbar(root, orient=tk.VERTICAL)
+yscroll.grid(row=0, column=1, sticky=tk.NS)
+
+yscroll.config(command=listbox.yview)
+listbox.config(yscrollcommand=yscroll.set)
+
+button = tk.Button(root, text="Choices", command=lambda:
+    print ([listbox.get(i) for i in listbox.curselection()]))
+button.grid(row=1, column=0, columnspan=2)
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Scrollbar()
+
+master=root     # the first argument
+orient=tk.VERTICAL   # default
+orient=tk.HORIZONTAL
+command=listbox.yview   # for Listbox widget
+command=textbox.yview   # for Text widget
+</pre><hr><pre>
+
+</pre><hr>
+
+</body>
+</html>

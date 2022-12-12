@@ -39,7 +39,7 @@ button = tk.Button(root,
     width=25,
     height=5,
     bg="blue",   # zmiana koloru w obecności wskaźnika
-    fg="yellow",
+    fg="yellow",   # zmiana koloru w obecności wskaźnika
     command=callback,
 )
 button.grid()
@@ -50,6 +50,7 @@ Wybrane 'keyword arguments' dla Button()
 
 master=root     # pierwszy argument
 text="Click"
+textvariable=strvar   # a variable linked to the button
 fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
@@ -57,7 +58,7 @@ height=10   # in text units
 font="Times 10 bold"
 command=callback   # funkcja wywoływana po kliknięciu przycisku
 command=sys.exit   # zakończenie programu
-command=(lambda: print("message in the command line"))
+command=lambda: print("message in the command line")
 command=root.quit   # zakończenie działania pętli zdarzeń
 command=top.destroy   # zamknięcie okna top-level
 </pre><hr><pre>

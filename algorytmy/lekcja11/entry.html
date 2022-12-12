@@ -21,15 +21,18 @@ root = tk.Tk()
 
 label = tk.Label(root, text="Name", bg="red")
 entry = tk.Entry(root, width=40)
-button = tk.Button(root, text="Print", command=lambda: print(entry.get()))
+button1 = tk.Button(root, text="Print", command=lambda: print(entry.get()))
+button2 = tk.Button(root, text="Clear", command=lambda: entry.delete(0, tk.END))
 
 label.grid()
 entry.grid()
-button.grid()
+button1.grid()
+button2.grid()
 
 entry.focus()   # save a click
 entry.bind('&lt;Return&gt;', (lambda event: print(entry.get())))
 # lambda is used to ignore the 'event' argument
+#root.bind('&lt;Return&gt;', (lambda event: print("message from root")))
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -41,6 +44,7 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units (no height argument)
 show='*'   # for passwords
 state='disabled'   # set the widget readonly
+textvariable=strvar   # a variable linked to the entry
 </pre><hr><pre>
 Operacje
 

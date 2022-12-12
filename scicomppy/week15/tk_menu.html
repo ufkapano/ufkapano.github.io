@@ -1,0 +1,76 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Menu</h1>
+
+<h3>INTRODUCTION</h3>
+
+<p>Menus are implemented as widgets in Tk, just like buttons and entries. 
+Each menu widget consists of a number of different items in the menu. 
+
+<p>Menus are arranged in a hierarchy.
+The menubar is itself a menu widget.
+It has several submenus with additional items.
+Menubars are associated with individual windows; 
+each toplevel window can have at most one menubar.
+
+<p>The 'add_cascade' method adds a menu item, which itself is a menu (a submenu).
+
+<p>Regular menu items are called 'command' items in Tk.
+
+<p>A third type of menu item is the 'separator', which produces the dividing 
+line you often see between different menu items.
+
+<hr><pre>
+# menu1.py
+import tkinter as tk
+
+root = tk.Tk()   # root widget
+root.option_add('*tearOff', tk.FALSE)   # remove a dashed line from submenus
+
+# create a menubar for the root window
+menubar = tk.Menu(root)
+root.config(menu=menubar)
+
+# first submenu
+file_menu = tk.Menu(menubar)
+menubar.add_cascade(label="File", menu=file_menu)
+
+file_menu.add_command(label="New", command=lambda: print("New"))
+file_menu.add_command(label="Open...", command=lambda: print("Open..."))
+file_menu.add_command(label="Save", command=lambda: print("Save"))
+file_menu.add_separator()   # adds a separator line
+file_menu.add_command(label="Exit", command=lambda: print("Exit"))
+
+# second submenu
+edit_menu = tk.Menu(menubar)
+menubar.add_cascade(label="Edit", menu=edit_menu)
+
+edit_menu.add_command(label="Copy", command=lambda: print("Copy"))
+edit_menu.add_command(label="Paste", command=lambda: print("Paste"))
+edit_menu.add_separator()   # adds a separator line
+edit_menu.add_command(label="Find...", command=lambda: print("Find..."))
+edit_menu.add_command(label="Replace...", command=lambda: print("Replace..."))
+
+# submenu
+tools_menu = tk.Menu(menubar)
+menubar.add_cascade(label="Tools", menu=tools_menu)
+
+tools_menu.add_command(label="Scripts", command=lambda: print("Scripts"))
+
+# submenu
+help_menu = tk.Menu(menubar)
+menubar.add_cascade(label="Help", menu=help_menu)
+
+help_menu.add_command(label="About...", command=lambda: print("About..."))
+
+root.mainloop()
+</pre><hr>
+
+</body>
+</html>
