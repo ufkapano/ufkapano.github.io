@@ -165,7 +165,7 @@ for item in [5, 10, 20, 1, 25, 22, 9]:
     aheap.insert(item)
 # Zdejmowanie elementów ze sterty od największego do najmniejszego.
 while not aheap.is_empty():
-    print ( aheap.remove() )
+    print(aheap.remove())
 </pre><hr>
 
 <p>Jeżeli na stercie jest N elementów, to ścieżka od korzenia
@@ -242,31 +242,42 @@ sortowania przez kopcowanie po wybraniu z kopca k elementów.
 import heapq
 import random
 
-H = []                     # creates an empty heap
+H = []   # creates an empty heap
 for item in [0, 2, 6, 5, 1, 4, 3]:
-    heapq.heappush(H, item)    # pushes a new item on the heap
+    heapq.heappush(H, item)   # pushes a new item on the heap
 
-# item = heapq.heappop(H)    # pops the smallest item from the heap
+# item = heapq.heappop(H)   # pops the smallest item from the heap
 
-# item = H[0]          # smallest item on the heap without popping it
+# item = H[0]   # smallest item on the heap without popping it
 
 # item1 = heapq.heapreplace(H, item2) 
 # pops and returns smallest item1, and adds new item2;
 # the heap size is unchanged
 
-# Mozna wystartowac z niepustej listy.
+# Można wystartować z niepustej listy.
 L = list(range(7))
 random.shuffle(L)
-heapq.heapify(L)    # linear time, in-place
+heapq.heapify(L)   # linear time, in-place
 # Ciekawe, ze po L.sort() jest poprawna sterta.
 
-# heapq.merge(*iterables) - zwraca generator
-# list(heapq.merge([1,3,5,7], [0,2,4,8], [5,10,15,20], [], [25]))
+# heapq.merge(*iterables, key=None, reverse=False) - zwraca generator
+# Łączenie posortowanych list (iterables) w jedną listę.
+
+list(heapq.merge([1,3,5,7], [0,2,4,8], [5,10,15,20], [], [25]))
 # [0, 1, 2, 3, 4, 5, 5, 7, 8, 10, 15, 20, 25]
 
+list(heapq.merge(['dog', 'horse'], ['cat', 'fish', 'kangaroo'], key=len))
+# ['dog', 'cat', 'fish', 'horse', 'kangaroo']
+
 # heapq.nlargest(n, iterable, key=None)
+# Znajduje n największych elementów w iterable.
+# Równoważne:
+# sorted(iterable, key=key, reverse=True)[:n]
 
 # heapq.nsmallest(n, iterable, key=None)
+# Znajduje n najmniejszych elementów w iterable.
+# Równoważne:
+# sorted(iterable, key=key)[:n]
 </pre><hr>
 
 </body>

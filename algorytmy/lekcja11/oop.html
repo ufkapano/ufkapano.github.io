@@ -36,7 +36,7 @@ if __name__ == "__main__":
     root = tk.Tk()
     app = Application(root)
     #print(app.label["text"])   # Hello
-    root.mainloop()   # or app.mainloop()
+    root.mainloop()   # lub app.mainloop()
 
 # root
 #  |
@@ -50,7 +50,7 @@ root = tk.Tk()
 app1 = Application(root, title="root")
 top = tk.Toplevel(root)
 app2 = Application(top, title="top")
-app1.mainloop()
+root.mainloop()
 
 #       root
 #      /    \
