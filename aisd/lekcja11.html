@@ -62,6 +62,8 @@ public:
         }
         return nullptr;
     }
+    T* find_min();
+    T* find_max();
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
@@ -244,16 +246,24 @@ Węzły powinny posiadać łącze do rodzica.
 
 <h3>ZADANIE 11.4</h3>
 
-<p>Zaimplementować algorytm DSW.
-
-<h3>ZADANIE 11.5</h3>
-
 <p>Napisać funkcję sprawdzającą, czy drzewo binarne jest drzewem BST.
 Nie wystarczy sprawdzić dla każdego węzła, czy zachodzi 
 node-&gt;left-&gt;value &lt;= node-&gt;value, oraz 
 node-&gt;value &lt;= node-&gt;right-&gt;value. 
 Musimy do węzła przekazać informację od rodzica o ograniczeniach 
 na wartość przechowywaną w węźle.
+
+<hr><pre>
+|       5          Przykład drzewa binarnego, które nie jest drzewem BST.
+|     /   \        Wartość 6 jest większa od 3, ale nie jest mniejsza od 5.
+|   3       8
+|  / \     / \
+| 1   6   7   9
+</pre><hr>
+
+<h3>ZADANIE 11.5</h3>
+
+<p>Zaimplementować algorytm DSW.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

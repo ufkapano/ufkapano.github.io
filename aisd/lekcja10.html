@@ -76,6 +76,8 @@ public:
         auto ptr = search(root, item);
         return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
     }
+    T* find_min();
+    T* find_max();
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
@@ -248,6 +250,7 @@ Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 <p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
 najmniejszą i największą w drzewie binarnym.
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
 
 <h3>ZADANIE 10.4</h3>
 
