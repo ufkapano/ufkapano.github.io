@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Font</h1>
+
+<p>https://www.pygame.org/docs/ref/font.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'font' służy do ładowania i renderowania fontów.
+
+<hr><pre>
+# Create a new Font object from a file.
+# 'size' to wysokość fontu w pikselach.
+font = pygame.font.Font(filename, size)   # return Font
+font = pygame.font.Font(None, size)   # load the pygame default font
+
+# Create a Font object from the system fonts.
+font = pygame.font.SysFont(name, size, bold=False, italic=False) 
+font = pygame.font.SysFont("comicsansms", size) 
+
+text = "sample text"   # tylko jeden wiersz tekstu
+
+# Determine the amount of space needed to render text.
+font.size(text)   # return (text_width, text_height)
+
+# Draw text on a new Surface.
+text_surf = font.render(text, antialias, color, background=None)   # return Surface
+text_surf = font.render(text, True, white)
+
+text_width = text_surf.get_width()   # return int
+text_height = text_surf.get_height()   # return int
+
+# Zakładamy, że 'display Surface' ma rozmiary (width, height).
+text_rect = text_surf.get_rect(center=(width // 2, height // 2))
+
+surface.blit(text_surf, text_rect)
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+import sys
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # to zawsze na starcie
+size = (width, height) = (400, 300)
+screen = pygame.display.set_mode(size)   # display Surface
+pygame.display.set_caption('Fonts')
+
+# CLOCK
+FPS = 60   # frames per second setting
+clock = pygame.time.Clock()
+
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+
+# LOAD IMAGES
+font = pygame.font.Font(None, 50)
+counter = 0
+
+# MAIN GAME LOOP
+while True:
+    counter += 1
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event, pygame.locals.QUIT
+            pygame.quit()   # deactivates the Pygame library
+            sys.exit(0)
+
+    # DRAWING
+    screen.fill(black)   # na nowo czarny ekran
+    text = "counter {}".format(counter // FPS)
+    text_surf = font.render(text, True, white)
+    text_rect = text_surf.get_rect(center=(width // 2, height // 2))
+    screen.blit(text_surf, text_rect)
+
+    pygame.display.flip()
+    clock.tick(FPS)
+</pre><hr>
+
+</body>
+</html>

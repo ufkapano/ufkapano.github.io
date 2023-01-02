@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Wprowadzenie do pygame</h1>
+
+<p>http://www.pygame.org/
+
+<p>https://pypi.org/project/pygame/
+
+<p>http://www.libsdl.org/
+
+<h3>INSTALACJA</h3>
+
+<p>Biblioteka 'pygame' nie należy do biblioteki standardowej Pythona,
+więc trzeba ją osobno instalować.
+
+<hr><pre>
+PIP (konto użytkownika lub środowisko wirtualne)
+python3 -m pip install pygame
+
+APT (dla całego komputera)
+Pakiety Debiana: python-pygame (Py2.7), python3-pygame (Py3), oraz zależności.
+Debian 10 ma pygame 1.9.4, w PyPI jest wersja 2.1.2.
+</pre><hr>
+
+<h3>START</h3>
+
+<p>Pygame jest to darmowy zbiór modułów przeznaczonych do pisania gier video.
+Działa prawie na każdej platformie i systemie operacyjnym (przenośność).
+Pygame bazuje na bibliotece SDL (Simple DirectMedia Layer).
+
+<p>Autorami Pygame są Pete Shinners i inni deweloperzy.
+Pygame jest projektem społecznościowym od roku 2000, wydanym na licencji
+'GNU Lesser General Public License'.
+W roku 2020 wydano Pygame 2.0, z zachowaniem w dużym stopniu
+kompatybilności wstecz (backwards compatibility).
+
+
+<hr><pre>
+# Struktura programu z pygame (1).
+# hello.py
+import sys
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # inicjalizacja pygame, to zawsze na starcie
+size = (width, height) = (400, 300)   # rozmiary okna w pikselach
+screen = pygame.display.set_mode(size)   # stworzenie 'display surface'
+pygame.display.set_caption('Hello')   # napis w pasku tytułu
+
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS (należy usuwać zdarzenia z kolejki zdarzeń)
+    for event in pygame.event.get():   # pętla po liście zdarzeń (event list)
+        if event.type == pygame.QUIT:   # QUIT Event
+            pygame.quit()   # deaktywacja pygame
+            sys.exit(0)
+    # DRAWING
+    # Rysowanie różnych obiektów, sprawdzanie przekrywania, itp.
+    pygame.display.flip()   # przerysowanie całego okna z bufora na ekran
+    # Współczesne komputery zwykle nie mają problemu z przerysowaniem całego ekranu.
+</pre><hr><pre>
+# Struktura programu z pygame (2).
+# hello2.py
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # inicjalizacja pygame, to zawsze na starcie
+size = (width, height) = (400, 300)   # rozmiary okna w pikselach
+screen = pygame.display.set_mode(size)   # stworzenie display Surface
+pygame.display.set_caption('Hello')   # napis w pasku tytułu
+
+# MAIN GAME LOOP
+done = False   # flaga do wykrycia zakończenia while
+while not done:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event
+            done = True   # chcemy zakończyć pętlę while;
+            # samo 'break' nie wystarczy, bo mamy zagnieżdżoną pętlę
+    # DRAWING
+    # Rysowanie różnych obiektów, sprawdzanie przekrywania, itp.
+    pygame.display.flip()   # przerysowanie całego okna z bufora na ekran
+
+pygame.quit()   # deaktywacja pygame
+# dalsze instrukcje programu bez pygame
+</pre><hr><pre>
+# Numeracja pikseli jak kwadratów w curses, (x, y).
+#     X
+#     0 1 2 3
+# Y 0 . . . .
+#   1 . . . .
+#   2 . . . .
+#   3 . . . .
+</pre><hr>
+
+
+</body>
+</html>

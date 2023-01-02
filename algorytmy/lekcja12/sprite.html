@@ -1,0 +1,232 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Sprite</h1>
+
+<p>https://www.pygame.org/docs/ref/sprite.html
+
+<p>https://www.geeksforgeeks.org/pygame-creating-sprites/
+
+<p>https://coderslegacy.com/python/python-pygame-tutorial/
+
+<p>https://coderslegacy.com/python/pygame-sprite-collision-detection/
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'sprite' zawiera klasę Sprite i klasę Group, która zawiera sprites.
+W module są jeszcze inne specjalistyczne klasy oraz funkcje
+do wykrywania kolizji sprites.
+Użycie tych klas jest opcjonalne, ale są one przydatne w typowych grach.
+
+<p>Wykrywanie kolizji ciał poprzez sprawdzanie nakrywających się 
+pikseli na ogół jest zbyt powolne, jak na potrzeby gier wideo.
+Lepiej jest stworzyć obiekty Rect trochę mniejsze od poruszających się ciał,
+a następnie użyć obiekty Rect do wykrycia kolizji.
+
+<h3>KLASA SPRITE</h3>
+
+<p>Klasa Sprite jest pomyślana jako klasa bazowa dla różnych rodzajów
+obiektów w grze.
+Ważne jest nadpisanie atrybutów 'image' oraz 'rect'.
+Przydaje się nadpisanie metody update() do sterowania zachowaniem sptite,
+domyślna metoda nie robi nic.
+
+<hr><pre>
+class Block(pygame.sprite.Sprite):
+
+    def __init__(self, color, width, height):
+        #pygame.sprite.Sprite.__init__(self)
+        super().__init__()
+        self.image = pygame.Surface([width, height])   # powstaje surface
+        # Można załadować obrazek z dysku.
+        self.image.fill(color)   # nie mamy obrazka, to będzie kolor
+        self.rect = self.image.get_rect()   # powstaje rect
+</pre><hr><pre>
+Metody klasy Sprite
+
+sprite.add(*groups)   # dodanie sprite do grup
+sprite.remove(*groups)   # usunięcie sprite z grup
+sprite.kill()   # usunięcie sprite ze wszystkich grup; sprite żyje dalej
+sprite.alive()   # return bool; czy sprite należy do jakiejś grupy
+sprite.groups()   # return group_list; lista grup, do których należy sprite
+</pre><hr>
+
+<h3>KLASA GROUP</h3>
+
+<p>Klasa Group jest zaprojektowana do przechowywania sprites,
+a w grze można tworzyć specjalizowane klasy potomne.
+Dodawanie i usuwanie sprites z grupy jest wydajne, podobnie jak
+sprawdzenie, czy sprite nateży do grupy.
+Jeden sprite może należeć jednocześnie do wielu grup.
+Lepiej korzystać z grup niż dodawać nowe atrubuty do klasy Sprite,
+bo to ułatwia wyszukiwanie w grze.
+
+<p>Metody Group.draw() i Group.clear() wymagają, aby każdy sprite miał 
+atrybuty Surface.image oraz Surface.rect.
+
+<p>Metoda Group.update() wywołuje Sprite.update() dla wszystkich sprites
+należących do grupy.
+
+<p>Wykrywanie kolizji sprites wymaga, aby sprites posiadały atrybut 
+Surface.rect.
+
+<hr><pre>
+group = pygame.sprite.Group()
+group = pygame.sprite.Group(*sprites)
+</pre><hr><pre>
+Standardowe operacje Pythona
+
+sprite in group   # test przynależności
+len(group)   # liczebność grupy
+bool(group)   # True, jeżeli len(group) != 0
+for sprite in group: pass   # iteracja po grupie
+# Nie można iterować po grupie i jednocześnie jej modyfikować!
+</pre><hr><pre>
+Metody klasy Group
+
+group.sprites()   # return sprite_list
+group2 = group1.copy()
+
+group.add(*sprites)   # dodawanie podanych sprites do grupy
+group1.add(group2)   # wstawiamy do group1 sprites należące do group2
+
+group.remove(*sprites)   # usuwanie podanych sprites z grupy
+group1.remove(group2)   # usuwamy z group1 sprites należące do group2
+
+group.empty()   # usuwanie wszystkich sprites z grupy
+
+group.has(*sprites)   # return bool; True, jeżeli wszystkie sprites należą
+all(sprite in group for sprite in sprites)   # jw
+
+# Wg dokumentacji dla add(), remove(), has():
+# Each sprite argument can also be a iterator containing Sprites.
+
+group.update(*arguments, **keywords)
+# for sprite in group: sprite.update(*arguments, **keywords)
+
+group.draw(Surface)   # blit the Sprite images
+
+group.clear(Surface_dest, background)   # draw a background over the Sprites;
+# Zamazuje pozycje sprites używając 'background'.
+# Korzysta z pozycji (Rect) z ostatniego wywołania Group.draw().
+# 'background' to jest zwykle Surface o taki rozmiarze jak Surface_dest.
+# Może też być 'callback function' typu clear_callback(surface, rect).
+</pre><hr>
+
+<h3>WYKRYWANIE KOLIZJI</h3>
+
+<hr><pre>
+# Wykrywanie kolizji sprite1 i sprite2.
+
+sprite1.rect.colliderect(sprite2.rect)   # return bool
+
+pygame.sprite.collide_rect(sprite1, sprite2)   # return bool
+# wewnętrznie używane są atrybuty 'rect'.
+</pre><hr><pre>
+# Wykrywanie kolizji sprite z grupą innych sprites.
+# Zwraca None, jeżeli nie ma kolizji.
+# Zwraca pewien sprite2 z group, z którym jest przecięcie.
+# Ta funkcja jest szybsza od spritecollide().
+
+pygame.sprite.spritecollideany(sprite, group)   # return sprite2 lub None
+</pre><hr><pre>
+# W wynikowej liście są wszystkie przecinane sprites z group.
+# Jeżeli dokill=True, to te sprites są usuwane z group.
+# Wewnętrznie do znalezienia przecięć używane są atrybuty 'rect'.
+
+pygame.sprite.spritecollide(sprite, group, dokill)   # return sprite_list
+</pre><hr><pre>
+# Wykrywanie kolizji między grupami sprites.
+# W wynikowym słowniku sprites z group1 są kluczami, a wartościami
+# są listy przecinanych sprites z group2.
+# Jeżeli dokill1=True, to sprites są usuwane z group1.
+# Jeżeli dokill2=True, to sprites są usuwane z group2.
+
+pygame.sprite.groupcollide(group1, group2)   # return dict
+
+pygame.sprite.groupcollide(group1, group2, dokill1, dokill2)   # return dict
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+import sys
+import pygame
+
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+
+class Block(pygame.sprite.Sprite):
+
+    def __init__(self, color, width, height):
+        super().__init__()
+        self.image = pygame.Surface([width, height])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+
+# INITIALIZE THE GAME
+pygame.init()   # to zawsze na starcie
+size = (width, height) = (500, 500)
+screen = pygame.display.set_mode(size)   # display Surface
+pygame.display.set_caption('Creating Sprite')
+
+# CLOCK
+FPS = 60   # frames per second setting
+clock = pygame.time.Clock()
+
+sprite_group = pygame.sprite.Group()
+
+sprite_red = Block(red, 50, 100)
+sprite_red.rect.x = 200
+sprite_red.rect.y = 300
+sprite_group.add(sprite_red)
+
+sprite_blue = Block(blue, 100, 100)
+sprite_blue.rect.x = 100
+sprite_blue.rect.y = 100
+sprite_group.add(sprite_blue)
+
+sprite_green = Block(green, 100, 50)
+sprite_green.rect.x = 150
+sprite_green.rect.y = 100
+sprite_group.add(sprite_green)
+
+# MAIN GAME LOOP
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event, pygame.locals.QUIT
+            pygame.quit()   # deactivates the Pygame library
+            sys.exit(0)
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_t:
+                print("test kolizji sprite_red i sprite_blue")
+                print(pygame.sprite.collide_rect(sprite_red, sprite_blue))
+
+                print("test kolizji sprite_blue i sprite_green")
+                print(sprite_blue.rect.colliderect(sprite_green.rect))
+        elif event.type == pygame.MOUSEBUTTONDOWN:
+            for sprite in sprite_group:   # iteracja po grupie
+                if sprite.rect.collidepoint(event.pos):
+                    print("trafiony")
+
+    sprite_group.update()   # wywołuje update() dla sprites
+    screen.fill(black)
+    sprite_group.draw(screen)
+
+    pygame.display.flip()   # tak chyba dla prostych sytuacji
+    clock.tick(FPS)   # na początku lub na końcu pętli while
+</pre><hr>
+
+</body>
+</html>

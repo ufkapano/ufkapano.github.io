@@ -1,0 +1,126 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Key</h1>
+
+<p>https://www.pygame.org/docs/ref/key.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'key' służy do obsługi klawiatury.
+
+<p>Po naciśnięciu i zwolnieniu klawisza klawiatury kolejka zdarzeń pygame.event
+otrzymuje odpowiednio zdarzenia typu pygame.KEYDOWN i pygame.KEYUP.
+Oba zdarzenia mają atrybuty 'key' (ID klawisza, liczba int)
+oraz 'mod' (maska bitowa klawiszy modyfikujących).
+
+<p>Faktycznie mamy dwa sposoby na sprawdzenie, co robi urządzenie wejściowe
+(input device).
+<br>(1) Bezpośrednie sprawdzenie stanu urządzenia, np. przez
+pygame.key.get_pressed() lub pygame.mouse.get_pos().
+Otrzymamy stan urządzenia 'w chwili wywołania funkcji'.
+Problemem może być "zgubienie" jakiegoś zdarzenia.
+<br>(2) Sprawdzenie atrybutów zdarzenia pobranego z kolejki zdarzeń.
+Tutaj analizujemy zdarzenie, które nastąpiło w przeszłości, 
+mniej lub bardziej odległej od chwili obecnej.
+Zaletą jest pewność, ze zdarzenia będą czekały w kolejce na przetworzenie.
+Pojawia się problem ze stwierdzeniem, czy dwa klawisze są wciśnięte 
+jednocześnie, czy nie (trzeba pamiętać, że jeden klawisz jest wciśnięty,
+ale jeszcze nie zwolniony).
+<br>Wnioski: należy wybrać takie podejście, które najlepiej spełni
+nasze oczekiwania. Przy (1) mamy szybką reakcję, przy (2) mamy pewność, 
+że nie zgubimy żadnego naciśnięcia klawisza.
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+import sys
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # to zawsze na starcie
+size = width, height = (400, 400)
+screen = pygame.display.set_mode(size)   # display Surface
+pygame.display.set_caption('Box')
+
+# CLOCK
+FPS = 60   # frames per second setting
+clock = pygame.time.Clock()
+
+# COLORS
+black = (0, 0, 0)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
+# LOAD IMAGES
+box = pygame.Rect(10, 10, 180, 180)   # Rect object
+box_color = white   # początkowy kolor kwadratu
+
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event
+            pygame.quit()
+            sys.exit(0)
+        # Wykrywanie wciśnięcia i puszczenia klawisza.
+        elif event.type == pygame.KEYDOWN:
+            # print("event down dict {}".format(event.__dict__))
+            # atrybuty key, mod, unicode, scancode
+            if event.key == pygame.K_ESCAPE:
+                print("Właśnie wciśnięto ESC")
+            elif event.key == pygame.K_r:
+                print("Właśnie wciśnięto R")
+            elif event.key == pygame.K_g:
+                print("Właśnie wciśnięto G")
+            elif event.key == pygame.K_b:
+                print("Właśnie wciśnięto B")
+        elif event.type == pygame.KEYUP:
+            # print("event up dict {}".format(event.__dict__))
+            # atrybuty key, mod, scancode
+            if event.key == pygame.K_ESCAPE:
+                print("Właśnie puszczono ESC")
+
+    # CHECKING INPUTS
+    keys = pygame.key.get_pressed()   # tablica/tuple 0/1
+    # Tablica dostarcza informacji, że klawisz jest trzymany wciśnięty.
+    # Do indeksowania tablicy używa się ID klawiszy.
+    # UWAGA Tej metody nie należy używać do pobierania tekstu od usera
+    # (można zgubić klawisze).
+    #print(keys)
+    # Nie używamy elif, bo klawisze mogą być jednocześnie wciśnięte.
+    if keys[pygame.K_LEFT]:   # klawisze kursorów
+        box.x = 10
+    if keys[pygame.K_RIGHT]:
+        box.x = 210
+    if keys[pygame.K_UP]:
+        box.y = 10
+    if keys[pygame.K_DOWN]:
+        box.y = 210
+    if keys[pygame.K_r]:
+        box_color = red
+    if keys[pygame.K_g]:
+        box_color = green
+    if keys[pygame.K_b]:
+        box_color = blue
+    if keys[pygame.K_q]:
+        pygame.quit()
+        sys.exit(0)
+
+    # DRAWING
+    screen.fill(black)   # na nowo czarny ekran
+    pygame.draw.rect(screen, box_color, box)
+
+    pygame.display.flip()
+    clock.tick(FPS)
+</pre><hr>
+
+</body>
+</html>

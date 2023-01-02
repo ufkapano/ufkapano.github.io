@@ -1,0 +1,94 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Image</h1>
+
+<p>https://www.pygame.org/docs/ref/image.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'image' zawiera funkcje do ładowania i zapisywania obrazów,
+a także do tranferu obrazów. Obrazy są przechowywane jako obiekty Surface.
+
+<p>W typowej instalacji Pygame można wczytywać obrazy w formatach
+BMP, GIF (non-animated), JPEG, LBM (and PBM, PGM, PPM), PCX, PNG, PNM,
+SVG (limited support, using Nano SVG), TGA (uncompressed), TIFF, WEBP, XPM.
+Zapis obrazów jest możliwy dla formatów BMP, JPEG, PNG, TGA.
+
+<hr><pre>
+# Ładowanie obrazu z pliku.
+
+surface = pygame.image.load(filename)   # return Surface
+surface = pygame.image.load(os.path.join('img', 'picture.png'))
+# surface = surface.convert()   # przyspieszenie wyświetlania obrazu (kopia)
+# surface = surface.convert_alpha()   # fast alpha blitting (kopia)
+
+surface_rect = surface.get_rect()   # return Rect
+# surface.get_rect(**keywords)
+# Można przekazać słowa kluczowe, które będą wykorzytane do ustawienia
+# atrybutów obiektu Rect, np.
+surface_rect = surface.get_rect(center=(width // 2, height // 2)
+</pre><hr><pre>
+# Zapis obrazu do pliku.
+
+pygame.image.save(Surface, filename)   # domyślne rozszerzenie to TGA
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+import sys
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # to zawsze na starcie
+size = (width, height) = (400, 300)
+screen = pygame.display.set_mode(size)   # return Surface
+pygame.display.set_caption('Ball')
+
+# CLOCK
+FPS = 60   # frames per second setting
+clock = pygame.time.Clock()
+
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
+# LOAD IMAGES
+speed = [5, 5]   # prędkość piłki (v_x, v_y), czyli przesunięcie na ramkę
+ball_surf = pygame.image.load("ball.gif")   # return Surface
+ball_rect = ball_surf.get_rect()     # return Rect
+
+# MAIN GAME LOOP
+while True:
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:
+            pygame.quit()   # deactivates the Pygame library
+            sys.exit(0)
+
+    ball_rect = ball_rect.move(speed)   # nowa pozycja prostokąta dla piłki
+    if ball_rect.left &lt; 0 or ball_rect.right &gt; width:
+        speed[0] = -speed[0]
+    if ball_rect.top &lt; 0 or ball_rect.bottom &gt; height:
+        speed[1] = -speed[1]
+
+    # DRAWING
+    screen.fill(black)   # na nowo czarny ekran
+    screen.blit(ball_surf, ball_rect)   # only for Surface objects
+    # screen.blit(surface_object, position_rect) # rysowanie piłki w nowym miejscu
+
+    pygame.display.flip()
+    clock.tick(FPS)
+</pre><hr>
+
+</body>
+</html>

@@ -1,0 +1,198 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Draw</h1>
+
+<p>https://www.pygame.org/docs/ref/draw.html
+
+<p>https://www.pygame.org/docs/ref/color.html
+
+<p>https://www.pygame.org/docs/ref/rect.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'draw' służy do rysowania prostych kształtów na ekranie.
+Funkcje rysujące zwykle przyjmują jako argumenty powierzchnię do rysowania
+(obiekt Surface), kolor, prostokąt dla kształtu (obiekt Rect).
+Funkcje zwracają prostokąt ograniczający zmienione piksele (bounding box).
+
+<h3>KOLORY</h3>
+
+<p>Kolor można definiować jako obiekt klasy pygame.Color,
+3-tuple (RGB), 4-tuple (RGBA), oraz liczbę int, która będzie odwzorowana
+na kolor za pomocą mapy kolorów.
+
+<hr><pre>
+# Najprostsze definicje kolorów RGB, liczby int w zakresie 0-255.
+
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+</pre><hr><pre>
+# Wykorzystanie modułu pygame.Color dla RGB.
+# pygame.Color(r, g, b)
+# pygame.Color(r, g, b, a=255)
+# pygame.Color(color_value)
+# Instancja klasy Color ma szereg atrybutów, które można odczytywać
+# lub ustawiać (r, g, b, a, cmy).
+
+black = pygame.Color(0, 0, 0)
+gray = pygame.Color(128, 128, 128)
+white = pygame.Color(255, 255, 255)
+red = pygame.Color(255, 0, 0)
+green = pygame.Color(0, 255, 0)
+blue = pygame.Color(0, 0, 255)
+</pre><hr>
+
+<h3>OBIEKT RECT</h3>
+
+<p>Obiekt pygame.Rect służy do przechowywania i manipulowania współrzędnymi
+prostokątnych obszarów na ekranie.
+Wiele funkcji wymagających Rect akceptuje również podanie takich
+argumentów, jakie można użyć do utworzenia Rect.
+Do prostokąta nie należy prawy i dolny ciąg pikseli, co jest istotne
+przy wykrywaniu kolizji prostokątów.
+
+<p>Obiekt Rect posiada szereg wirtualnych atrybutów, które można użyć
+do zmiany rozmiaru lub przesunięcia oryginalnego obiektu.
+Metody Rect zwracają nowy zmieniony Rect lub działają 'in place', 
+czyli zmieniają oryginalny obiekt.
+
+<hr><pre>
+# Tworzenie obiektu Rect.
+# pygame.Rect(left, top, width, height)   # argumenty w pikselach (int)
+# pygame.Rect((left, top), (width, height))   # topleft, size (2-tuple)
+# pygame.Rect(object)   # inny Rect lub obiekt z atrybutem 'rect'
+</pre><hr><pre>
+# Wirtualne atrybuty obiektu Rect.
+# x, y, top, left, bottom, right,
+# topleft, bottomleft, topright, bottomright,
+# midtop, midleft, midbottom, midright,
+# center, centerx, centery,
+# size, width, height, w, h    # możliwa zmiana rozmiaru
+
+rect1.right = 10
+rect2.center = (20, 30)
+# Jeżeli rect1.bottom = rect2.top lub rect1.right = rect2.left,
+# to wtedy nie ma kolizji, prostokąty nie nakrywają się.
+
+rect3 = pygame.Rect(0, 1, 2, 3)
+assert rect3 == (0, 1, 2, 3)   # działa porównanie z krotką
+x, y, w, h = rect3   # obiekty Rect są iterowalne (iterable)
+</pre><hr><pre>
+# Wybrane metody obiektu Rect.
+rect2 = rect1.copy()   # kopiowanie
+rect2 = rect1.move(x, y)   # przesunięcie
+rect2 = rect1.move((x, y))   # krotka jako argument
+rect1.move_ip(x, y)   # przesunięcie 'in place'
+rect1.move_ip((x, y))   # krotka jako argument
+
+rect1.contains(rect2)   # return bool
+
+rect1.collidepoint(x, y)   # return bool, test czy punkt jest wewnątrz rect
+rect1.collidepoint((x, y))   # krotka jako argument
+
+rect1.colliderect(rect2)   # return bool, test na kolizję
+</pre><hr>
+
+<h3>KSZTAŁTY</h3>
+
+<hr><pre>
+# Funkcje zwracają obiekt Rect.
+# Argumenty w postaci słów kluczowych można podawać dopiero w Pygame 2.
+
+pygame.draw.rect(surface, color, rect, width=0)
+pygame.draw.rect(screen, green, rect)   # wypełniony prostokąt
+
+pygame.draw.polygon(surface, color, points, width=0)
+pygame.draw.polygon(screen, red, [(x1, y1), (x2, y2), (x3, y3)])   # trójkąt wypełniony
+
+pygame.draw.circle(surface, color, center, radius, width=0)
+pygame.draw.circle(screen, blue, (x, y), radius)   # pełne koło
+
+pygame.draw.ellipse(surface, color, rect, width=0)
+pygame.draw.ellipse(screen, red, rect)   # elipsa wypełniona
+
+pygame.draw.line(surface, color, start_pos, end_pos, width=1)
+pygame.draw.line(screen, green, (x1, y1), (x2, y2))   # odcinek
+
+# Rysowanie ciągu prostych odcinków tworzących łamaną (closed=False) lub
+# wielokąt (closed=True, dodatkowy odcinek łączy pierwszy i ostatni punkt).
+
+pygame.draw.lines(surface, color, closed, points, width=1)
+pygame.draw.lines(screen, red, True, [(x1, y1), (x2, y2), (x3, y3)])   # trójkąt (brzeg)
+
+# Rysowanie kąta eliptycznego (counterclockwise direction), fragmentu łuku.
+
+pygame.draw.arc(surface, color, rect, start_angle, stop_angle, width=1)
+pygame.draw.arc(screen, red, rect, 0, 0.5 * math.pi, width)
+pygame.draw.arc(screen, green, rect, 0.5 * math.pi, math.pi, width)
+pygame.draw.arc(screen, blue, rect, math.pi, 1.5 * math.pi, width)
+pygame.draw.arc(screen, white, rect, 1.5*math.pi, 2 * math.pi, width)
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+import sys
+import pygame
+
+# INITIALIZE THE GAME
+pygame.init()   # to zawsze na starcie
+size = width, height = (400, 300)
+screen = pygame.display.set_mode(size)   # return Surface
+pygame.display.set_caption('Box')
+
+# CLOCK
+FPS = 60   # frames per second setting
+clock = pygame.time.Clock()
+
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
+# LOAD IMAGES
+speed = [1, 1]   # liczba pikseli przesunięcia w kierunkach x i y w jednym kroku
+box = pygame.Rect(10, 20, 50, 60)   # obiekt Rect
+
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event
+            pygame.quit()   # deaktywacja pygame
+            sys.exit(0)
+
+    # INPUT
+    # W każdej pętli box przesuwa się po przekątnej w prawo w dół.
+    box = box.move(speed)   # zwraca nowy obiekt Rect
+    # Można też zmieniać oryginalny obiekt Rect.
+    # box.x += speed[0]
+    # box.y += speed[1]
+
+    # DRAWING
+    screen.fill(black)   # na nowo rysujemy pusty czarny ekran
+    # pygame.draw.rect(screen, red, box)
+    # pygame.draw.rect(screen, green, box)
+    pygame.draw.rect(screen, blue, box)
+
+    pygame.display.flip()
+    # Ograniczamy pętlę while do max FPS przebiegów na sekundę.
+    # Bez tej instrukcji pętla biegnie zgodnie z wydajnością CPU.
+    clock.tick(FPS)   # na początku lub na końcu pętli while
+</pre><hr>
+
+</body>
+</html>

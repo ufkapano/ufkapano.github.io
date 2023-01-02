@@ -1,0 +1,66 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame Mouse</h1>
+
+<p>https://www.pygame.org/docs/ref/mouse.html
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł 'mouse' służy do obsługi myszy.
+
+<p>Przyciski myszy po naciśnięciu i zwolnieniu generują odpowiednio
+zdarzenia pygame.MOUSEBUTTONDOWN i pygame.MOUSEBUTTONUP.
+Oba zdarzenia mają atrybut 'button', reprezentujący odpowiedni przycisk.
+Liczby int 1 (lewy przycisk), 2 (środkowy przycisk), 3 (prawy przycisk) 
+odpowiadają trzem przyciskom,
+4 odpowiada kręceniu kółka w górę,
+5 odpowiada kręceniu kółka w dół.
+Oba zdarzenia mają także atrybut 'pos' zawierający krotkę (x, y).
+
+<p>Przesuwanie myszy generuje zdarzenia pygame.MOUSEMOTION.
+Ruch myszy jest podzielony ma małe i precyzyjne zdarzenia ruchu,
+które są wstawiane do kolejki zdarzeń.
+Atrybuty zdarzenia to 'pos' (krotka (x, y)), 
+'rel' (względne przesunięcie od ostatniego zdarzenia ruchu),
+'buttons' (3-tuple bool ze stanem klawiszy podczas przesuwania).
+
+<p>Jeżeli kolejka zdarzeń nie jest prawidłowo czyszczona, to zdarzenia ruchu
+mogą ją przepełnić, a wtedy nowe zdarzenia są ignorowane bez ostrzeżenia.
+
+<p>W Pygame 2 pojawiły się zdarzenia pygame.MOUSEWHEEL
+do właściwej obsługi kółka myszy (atrybuty: x, y, flipped, which).
+
+<h3>PRZYKŁAD</h3>
+
+<hr><pre>
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.MOUSEBUTTONDOWN:
+            print("event down dict {}".format(event.__dict__))   # atrybuty button, pos
+
+            button_number = event.button   # liczba 1-5
+            button_position = event.pos   # (x, y)
+
+            position = pygame.mouse.get_pos()   # return (x, y),
+            # pozycja kursora względem lewego górnego rogu display
+
+            button_seq = pygame.mouse.get_pressed()
+            # return (button1, button2, button3), sekwencja wartości bool,
+            # która reprezentuje stan wszystkich przycisków myszy (True to naciśnięty)
+
+        elif event.type == pygame.MOUSEBUTTONUP:
+            print("event up dict {}".format(event.__dict__))   # atrybuty button, pos
+        elif event.type == pygame.MOUSEMOTION:
+            print("event motion dict {}".format(event.__dict__))   # atrybuty pos, rel, buttons
+</pre><hr>
+
+</body>
+</html>

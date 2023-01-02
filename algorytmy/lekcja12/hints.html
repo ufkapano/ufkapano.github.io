@@ -1,0 +1,39 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pygame hints</h1>
+
+<p>https://blubberquark.tumblr.com/post/630054903238262784/why-pygame-is-slow
+
+<h3>WPROWADZENIE</h3>
+
+<p>Pygame to biblioteka, a nie silnik gry. 
+Użytkownik ma swobodę projektowania pętli gry (game loop), 
+rysowania na ekranie, korzystania z własnych algorytmów i struktur danych.
+Samemu należy np. wykrywać kolizje obiektów.
+Można przypadkowo zaimplementowac coś mało wydajnie.
+
+<p>Generalnie nie należy za wcześnie zabierać się za optymalizację kodu.
+Najpierw należy się upewnić, co jest faktyczną przyczyną powolnej pracy.
+Czasem problem tkwi w niewłaściwych strukturach danych, niewłaściwych
+algorytmach użytych w grze.
+
+<p>Jeżeli kod działa stabilnie dla 60 FPS, to nie ma sensu zajmować się
+optymalizacją.
+
+<p>Można przyspieszyć odświeżanie pikseli na ekranie.
+Zamiast użyć pygame.display.flip(), które przerysowuje cały ekran,
+można przekazać do odświeżenia tylko te prostokąty ekranu, 
+w których piksele rzeczywiście się zmieniły.
+Używa się pygame.display.update(dirty_rects) z listą obiektów Rect.
+
+<p>Jednym z powodów spowolnienia gry może być ładowanie plików
+w każdym obiegu pętli while.
+
+</body>
+</html>
