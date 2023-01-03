@@ -218,7 +218,7 @@ while True:
         elif event.type == pygame.MOUSEBUTTONDOWN:
             for sprite in sprite_group:   # iteracja po grupie
                 if sprite.rect.collidepoint(event.pos):
-                    print("trafiony")
+                    print("trafiony {}".format(event.pos))
 
     sprite_group.update()   # wywołuje update() dla sprites
     screen.fill(black)
