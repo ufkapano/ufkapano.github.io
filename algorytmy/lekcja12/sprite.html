@@ -188,18 +188,15 @@ clock = pygame.time.Clock()
 sprite_group = pygame.sprite.Group()
 
 sprite_red = Block(red, 50, 100)
-sprite_red.rect.x = 200
-sprite_red.rect.y = 300
+sprite_red.rect.topleft = (200, 300)
 sprite_group.add(sprite_red)
 
 sprite_blue = Block(blue, 100, 100)
-sprite_blue.rect.x = 100
-sprite_blue.rect.y = 100
+sprite_blue.rect.topleft = (100, 100)
 sprite_group.add(sprite_blue)
 
 sprite_green = Block(green, 100, 50)
-sprite_green.rect.x = 150
-sprite_green.rect.y = 100
+sprite_green.rect.topleft = (150, 100)
 sprite_group.add(sprite_green)
 
 # MAIN GAME LOOP
