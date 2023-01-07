@@ -23,18 +23,21 @@ Makefile z -Wall -std=c++11].
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
 porównywanie (operator==, operator!=), wyświetlanie.
+Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
 Klasa Term przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
 Klasa Poly przechowuje łącze do posortowanej listy powiązanej wyrazów
 i implementuje działania.
-<!--
-Konstruktor Poly(T c, int n) może tworzyć jednomian c*x^n [Sedgewick].
--->
+Przydają się funkcje clear(), is_zero(), operator[]
+(odczyt współczynnika przy danej potędze x).
 
 <li>Implementacja wielomianów na bazie tablic (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
-mnożenie (operator*), sprzężenie,
+mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
 porównywanie (operator==, operator!=), wyświetlanie.
+Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
 Klasa Poly przechowuje tablicę współczynników i implementuje działania.
+Przydają się funkcje clear(), is_zero(), operator[]
+(odczyt współczynnika przy danej potędze x).
 
 <li>Implementacja kwaternionów podobnie do std::complex
 [https://en.wikipedia.org/wiki/Quaternion].

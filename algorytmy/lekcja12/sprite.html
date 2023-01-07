@@ -33,14 +33,14 @@ a następnie użyć obiekty Rect do wykrycia kolizji.
 <p>Klasa Sprite jest pomyślana jako klasa bazowa dla różnych rodzajów
 obiektów w grze.
 Ważne jest nadpisanie atrybutów 'image' oraz 'rect'.
-Przydaje się nadpisanie metody update() do sterowania zachowaniem sptite,
+Przydaje się nadpisanie metody update() do sterowania zachowaniem sprite,
 domyślna metoda nie robi nic.
 
 <hr><pre>
 class Block(pygame.sprite.Sprite):
 
     def __init__(self, color, width, height):
-        #pygame.sprite.Sprite.__init__(self)
+        #pygame.sprite.Sprite.__init__(self)   # działa konstruktor z klasy bazowej
         super().__init__()
         self.image = pygame.Surface([width, height])   # powstaje surface
         # Można załadować obrazek z dysku.
@@ -67,13 +67,12 @@ Lepiej korzystać z grup niż dodawać nowe atrubuty do klasy Sprite,
 bo to ułatwia wyszukiwanie w grze.
 
 <p>Metody Group.draw() i Group.clear() wymagają, aby każdy sprite miał 
-atrybuty Surface.image oraz Surface.rect.
+atrybuty 'image' oraz 'rect'.
 
 <p>Metoda Group.update() wywołuje Sprite.update() dla wszystkich sprites
 należących do grupy.
 
-<p>Wykrywanie kolizji sprites wymaga, aby sprites posiadały atrybut 
-Surface.rect.
+<p>Wykrywanie kolizji sprites wymaga, aby sprites posiadały atrybut 'rect'.
 
 <hr><pre>
 group = pygame.sprite.Group()
@@ -221,8 +220,8 @@ while True:
     screen.fill(black)
     sprite_group.draw(screen)
 
-    pygame.display.flip()   # tak chyba dla prostych sytuacji
-    clock.tick(FPS)   # na początku lub na końcu pętli while
+    pygame.display.flip()
+    clock.tick(FPS)
 </pre><hr>
 
 </body>
