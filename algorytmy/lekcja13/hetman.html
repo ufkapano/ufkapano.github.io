@@ -30,7 +30,7 @@ liczności. Problem jest NP-trudny.
 
 def rysuj():
     for w in range(N):
-        print ( " ".join(("H" if x[k] == w else ".") for k in range(N)) )
+        print(" ".join(("H" if x[k] == w else ".") for k in range(N)))
 
 def dopuszczalny(w, k):
     return a[w] and b[w+k] and c[w-k]
@@ -78,10 +78,10 @@ b = (2*N-1) * [True]
 c = (2*N-1) * [True]
 
 if probuj(0):
-    print ( "Mamy rozwiązanie" )
+    print("Mamy rozwiązanie")
     rysuj()
 else:
-    print ( "Nie istnieje rozwiązanie" )
+    print("Nie istnieje rozwiązanie")
 </pre><hr><pre>
 # Problem ośmiu hetmanów.
 # Znajdowanie wszystkich rozwiązań.

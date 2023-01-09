@@ -75,6 +75,15 @@ Są 3 rozwiązania tego problemu.
 | A A C |  | A B B |  | A B C |
 | B B C |  | A C C |  | A B C |
 +-------+  +-------+  +-------+
+</pre><hr><pre>
+Ciekawostka. Układanie parkietu klockami 2x1 można zapisać jako problem
+znajdowania skojarzenia doskonałego w pewnym grafie.
+Tutaj dostajemy graf dwudzielny postaci
+11---12---13
+|    |    |
+21---22---23
+Istnieją algorytmy działające w czasie wielomianowym, znajdujące skojarzenie
+doskonałe w grafach ogólnych i dwudzielnych.
 </pre><hr>
 
 <p>Podobnie możemy analizować różne puzzle i układanki, np.
@@ -142,9 +151,7 @@ A2 = [(1, "C"), (1, "E"), (1, "F"),
 czy jest już pokryta (True), czy nie (False).
 
 <hr><pre>
-covered_cols = {}
-for (r, c) in A:
-    covered_cols[c] = False
+covered_cols = dict((c, False) for (r, c) in A)
 </pre><hr>
 
 <p>Rozwiązania będziemy szukali za pomocą rekurencyjnej funkcji
@@ -157,7 +164,7 @@ B = {}
 
 def print_solution():
     for k in B:
-        print ( " ".join(str(node[1]) for node in B[k]) )
+        print(" ".join(str(node[1]) for node in B[k]))
 </pre><hr>
 
 <p>Na każdym poziomie wywołania funkcji search(k)
@@ -176,22 +183,18 @@ obsługujemy w funkcji search() [to jest ślepy zaułek, ale nie generujemy
 wyjątku, tylko funkcja oddaje sterowanie wyżej].
 
 <hr><pre>
-class CoverError(Exception):
-    """Błąd w problemie pokrycia."""
-    pass
-
 def choose_col1():
     # Wybieramy pierwszą niepokrytą kolumnę.
     for c in covered_cols:
         if not covered_cols[c]:
             return c
-    raise CoverError("Wszystkie kolumny pokryte")
+    raise ValueError("Wszystkie kolumny pokryte")
 
 def choose_col2():
     # Wybieramy ostatnią niepokrytą kolumnę.
     cols = [c for c in covered_cols if not covered_cols[c]]
     if not cols:
-        raise CoverError("Wszystkie kolumny pokryte")
+        raise ValueError("Wszystkie kolumny pokryte")
     #return cols[0]      # można wybrać pierwszą
     return cols[-1]      # wybieram ostatnią
 
@@ -200,10 +203,10 @@ def choose_col3():
     # Najpierw szukamy niepokrytych kolumn.
     cols = [c for c in covered_cols if not covered_cols[c]]
     if not cols:
-        raise CoverError("Wszystkie kolumny pokryte")
+        raise ValueError("Wszystkie kolumny pokryte")
     # Dla kolumn niepokrytych szukam liczby wierszy.
     # Mogą się trafić kolumny bez wierszy, więc trzeba inicjalizować zerem.
-    tmp = dict([(c, 0) for c in cols])
+    tmp = dict((c, 0) for c in cols)
     for (r, c) in A:
         if c in cols:
             tmp[c] = tmp[c] + 1
@@ -291,7 +294,7 @@ def read_table(file_name):
     table = []
     row = 0
     for line in afile:
-        row = row + 1
+        row += 1
         for col in line.split():
             table.append((row, col))
     afile.close()
