@@ -232,7 +232,7 @@ template&lt;typename F, typename S&gt;
 void HashTable&lt;F,S&gt;::display() const {
     for (int i = 0; i &lt; BUCKET; i++) {
         std::cout &lt;&lt; i;
-        for (const auto &amp;p : table[i])
+        for (const auto&amp; p : table[i])
             std::cout &lt;&lt; " --&gt; " &lt;&lt; p;
         std::cout &lt;&lt; std::endl;
     }
@@ -242,10 +242,9 @@ template&lt;typename F, typename S&gt;
 S& HashTable&lt;F,S&gt;::operator[](const F&amp; key) {
     int index = hash(key);
     // find the key
-    for (auto it = table[index].begin();
-        it != table[index].end(); it++) {
-        if (it->first == key) {
-            return it->second;
+    for (auto&amp; p : table[index]) {
+        if (p.first == key) {
+            return p.second;
         }
     }
     table[index].push_back(std::make_pair(key, S()));

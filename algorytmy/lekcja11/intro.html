@@ -59,6 +59,8 @@ przez co zmienił się sposób importu.
 
 <hr><pre>
 import tkinter as tk   # Py3
+from tkinter import filedialog   # Py3, okna dialogowe
+from tkinter import messagebox   # Py3
 from tkinter import ttk   # themed widgets
 
 root = tk.Tk()   # ustawienie głównego okna aplikacji
@@ -67,8 +69,8 @@ root.title("first")   # opcjonalny tytuł okna, domyślny tytuł to "tk"
 
 #root.configure(width=200, height=100)   # optional
 #root.geometry("200x100")   # optional, the same
-#root.geometry("{}x{}".format(width, height)
-#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y)
+#root.geometry("{}x{}".format(width, height))
+#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
 #root.resizable(width=False, height=False)   # nie można zmieniać rozmiarów okna
 
 # Tutaj dodajemy widżety.
