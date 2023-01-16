@@ -93,10 +93,13 @@ class Graph:
     def add_edge(self, edge): pass      # wstawienie krawędzi
 
     def has_edge(self, edge): pass      # bool
+    #def has_edge(self, source, target): pass   # bool
 
     def del_edge(self, edge): pass      # usunięcie krawędzi
+    #def del_edge(self, source, target): pass   # usunięcie krawędzi
 
     def weight(self, edge): pass        # zwraca wagę krawędzi
+    #def weight(self, source, target): pass   # zwraca wagę krawędzi
 
     def iternodes(self): pass           # iterator po wierzchołkach
 
@@ -109,19 +112,14 @@ class Graph:
     def iteredges(self): pass           # iterator po krawędziach
 
     def copy(self): pass                # zwraca kopię grafu
-
-    def transpose(self): pass           # zwraca graf transponowany
-
-    def complement(self): pass          # zwraca dopełnienie grafu
-
-    def subgraph(self, nodes): pass     # zwraca podgraf indukowany
 </pre><hr>
 
 <h3>PROSTY ADT DLA GRAFÓW DO WYKŁADU</h3>
 
-<p>Mogą być implementacje dict+list (graf bez wag)
-lub dict+dict (graf ważony).
-Krawędź to będzie 2-krotka (source, target) lub 3-krotka z wagą
+<p>Mogą być implementacje dict+list (graf bez wag),
+dict+set (graf bez wag (graf ważony).
+
+<p>Krawędź to będzie 2-krotka (source, target) lub 3-krotka z wagą
 (source, target, weight).
 
 <hr><pre>
@@ -134,16 +132,16 @@ len(graph)    # liczba wierzchołków grafu
 len(graph[node])   # stopień wierzchołka (graf nieskierowany)
 
 for node in graph:   # iterator po wierzchołkach
-    print ( "wierzchołek {}".format(node) )
+    print("wierzchołek {}".format(node))
 
 for target in graph[source]:   # iterator po sąsiadach
-    print ( "{} sąsiaduje z {}".format(source, target) )
+    print("{} sąsiaduje z {}".format(source, target))
 
 target in graph[source]   # bool, czy jest sąsiadem
 
 for source in graph:   # iteracja po krawędziach bez wag
     for target in graph[source]:
-        print ( "krawędź {} {}".format(source, target) )
+        print("krawędź {} {}".format(source, target))
 
 sum(len(graph[node]) for node in graph)
 # liczba krawędzi dla grafu skierowanego

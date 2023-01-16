@@ -8,6 +8,8 @@
 
 <h1>Wyznaczanie ścieżek</h1>
 
+<p>https://en.wikipedia.org/wiki/Shortest_path_problem
+
 <h3>WPROWADZENIE</h3>
 
 <p>Napiszmy funkcję wyznaczającą śieżkę pomiędzy dwoma wierzchołkami
@@ -17,11 +19,11 @@ Funkcja zwraca listę różnych wierzchołków (bez cykli)
 łącznie z początkowym i końcowym.
 Jeżeli funkcja nie może znaleźć ścieżki, wtedy zwraca None.
 Algorytm wykorzystuje technikę algorytmów z powrotami (backtracking):
-sprawdza każdą możliwość aż znajdzie rozwiązanie.
+sprawdza każdą możliwość, aż znajdzie rozwiązanie.
 
 <hr><pre>
 def find_path(graph, start, end, path=[]):
-    path = path + [start]       # powstaje nowa lista!
+    path = path + [start]   # powstaje nowa lista!
     if start == end:
         return path
     for node in graph[start]:
@@ -37,7 +39,7 @@ listę wszystkich ścieżek bez cykli pomiędzy dwoma wierzchołkami.
 
 <hr><pre>
 def find_all_paths(graph, start, end, path=[]):
-    path = path + [start]       # powstaje nowa lista!
+    path = path + [start]   # powstaje nowa lista!
     if start == end:
         return [path]
     paths = []
@@ -54,7 +56,7 @@ def find_all_paths(graph, start, end, path=[]):
 
 <hr><pre>
 def find_shortest_path(graph, start, end, path=[]):
-    path = path + [start]       # powstaje nowa lista!
+    path = path + [start]   # powstaje nowa lista!
     if start == end:
         return path
     shortest = None

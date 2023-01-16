@@ -8,6 +8,8 @@
 
 <h1>Kolorowanie grafów</h1>
 
+<p>https://en.wikipedia.org/wiki/Graph_coloring
+
 <h3>WPROWADZENIE</h3>
 
 <p>Kolorowanie grafu (ang. graph coloring)
@@ -186,13 +188,13 @@ czyli problem poprawnego pokolorowania wierzchołków grafu
 z wykorzystaniem co najwyżej m kolorów.
 
 <hr><pre>
-# 0 --- 1 --- 2 nie jest dwudzielny, bo sa trojkaty
+# 0 --- 1 --- 2   graf nie jest dwudzielny, bo są trójkąty
 # |   / |   / |
 # |  /  |  /  |
 # | /   | /   |
 # 3 --- 4 --- 5
 
-N = 6           # number of nodes
+N = 6   # liczba wierzchołków
 
 import sys
 recursionlimit = sys.getrecursionlimit()
@@ -208,28 +210,28 @@ node_list = list(graph)
 color = dict((node, None) for node in graph)
 
 def is_safe(source, c):
-    """Czy kolor moze byc uzyty dla wierzcholka?"""
-    for target in graph[source]:   # petla po sasiadach
+    """Czy kolor może być użyty dla wierzchołka?"""
+    for target in graph[source]:   # pętla po sąsiadach
         if color[target] == c:
             return False
     return True
 
-def graph_color(k, k_colors):   # szukanie wszystkich rozwiazan
+def graph_color(k, k_colors):   # szukanie wszystkich rozwiązań
     """Node coloring with k colors using backtracking."""
     node = node_list[k]
     for c in range(k_colors):
         if is_safe(node, c):
-            color[node] = c   # zapisuje
+            color[node] = c   # zapisuję
             if k+1 &lt; N:
                 graph_color(k+1, k_colors)
             else:
-                print ( color )   # rysuj rozwiazanie
-            color[node] = None   # wymazuje
+                print(color)   # rysuj rozwiązanie
+            color[node] = None   # wymazuję
 
-# Znajduje wszystkie rozwiazania.
-#graph_color(0, k_colors=4)   # duzo rozwiazan
-graph_color(0, k_colors=3)   # 6 rozwiazan
-#graph_color(0, k_colors=2)   # nie ma rozwiazan
+# Znajduje wszystkie rozwiązania.
+#graph_color(0, k_colors=4)   # dużo rozwiązań
+graph_color(0, k_colors=3)   # 6 rozwiązań
+#graph_color(0, k_colors=2)   # nie ma rozwiązań
 </pre><hr>
 
 </body>

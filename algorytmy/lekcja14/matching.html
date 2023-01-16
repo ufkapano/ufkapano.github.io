@@ -8,6 +8,10 @@
 
 <h1>Skojarzenia</h1>
 
+<p>https://en.wikipedia.org/wiki/Matching_(graph_theory)
+
+<p>https://en.wikipedia.org/wiki/Blossom_algorithm
+
 <h3>WPROWADZENIE</h3>
 
 <p><em>Skojarzenie</em> (ang. matching) w grafie nieskierowanym
@@ -25,6 +29,10 @@ kiedy każdy wierzchołek grafu jest końcem pewnej krawędzi
 należącej do tego skojarzenia. Skojarzenie doskonałe może
 istnieć tylko dla grafu o parzystej liczbie wierzchołków.
 Skojarzenie doskonałe jest maksymalne i największe.
+
+<p>Skojarzenie największe w grafach dwudzialnych może być znalezione 
+algorytmem Hopcrofta-Karpa w czasie O(sqrt(V)E).
+W ogólnych grafach można użyć algorytmu kwiatowego Edmondsa.
 
 <p>W grafach ważonych rozważa się problem skojarzenia
 o najmniejszej wadze.
@@ -61,6 +69,32 @@ class TestMatching(unittest.TestCase):
                 self.assertEqual(mate[target], source)
 </pre><hr>
 
+<h3>SKOJARZENIE DOSKONAŁE JAKO PROBLEM DOKŁADNEGO POKRYCIA ZBIORU</h3>
+
+<p>Znajdowanie skojarzenia doskonałego w grafie można zapisać jako
+problem znajdowania dokładnego pokrycia zbioru.
+Należy jednak pamiętać, że istnieją algorytmy znajdujące skojarzenie
+doskonałe w czasie wielomianowym, natomiast problem znajdowania
+dokładnego pokrycia jest w ogólności NP-zupełny.
+
+<hr><pre>
+# Przykładowy graf
+# A---B---C---D
+#   \ |   |
+#     E---F
+# Krawędzie skojarzenia doskonałego: AB, CD, EF
++------------+-------------+
+| Kolumna    | A B C D E F |
++------------+-------------+
+| Krawędź AB | 1 1 0 0 0 0 |
+| Krawędź AE | 1 0 0 0 1 0 |
+| Krawędź BC | 0 1 1 0 0 0 |
+| Krawędź BE | 0 1 0 0 1 0 |
+| Krawędź CD | 0 0 1 1 0 0 |
+| Krawędź CF | 0 0 1 0 0 1 |
+| Krawędź EF | 0 0 0 0 1 1 |
++------------+-------------+
+</pre><hr>
 
 
 </body>

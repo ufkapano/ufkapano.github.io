@@ -8,6 +8,8 @@
 
 <h1>Przeszukiwanie grafów</h1>
 
+<p>https://en.wikipedia.org/wiki/Graph_traversal
+
 <h3>WPROWADZENIE</h3>
 
 <p>Wiele własności grafów można poznać, sprawdzając systematycznie
@@ -32,18 +34,18 @@ tworzy drzewo rozpinające grafu.
 
 <hr><pre>
 def visit(node):     # pewna operacja na wierzchołku
-    print ( "odwiedzamy {}".format(node) )
+    print("odwiedzamy {}".format(node))
 
 def traverse_dfs(graph, start, visit, visited=None):
     # Przy pierwszym wywołaniu funkcji traverse_dfs
     # tworzymy pustą listę węzłów odwiedzonych.
     if visited is None:
-        visited = []
+        visited = []   # lepiej set()
     # Odwiedzamy wszystkie węzły dołączone do węzła start.
     visit(start)
     visited.append(start)
     for node in graph[start]:
-        if node not in visited:
+        if node not in visited:   # wyszukiwanie
             traverse_dfs(graph, node, visit, visited)
 </pre><hr>
 
@@ -62,11 +64,11 @@ podobnie jak przy przechodzeniu przez drzewo binarne metodą preorder.
 def traverse_stack(graph, start, visit):
     # Przechodzenie w głąb z jawnym stosem.
     stack = []   # lista jako stos
-    visited = []
+    visited = []   # lepiej set()
     stack.append(start)
     while stack:
         start = stack.pop()
-        if start not in visited:
+        if start not in visited:   # wyszukiwanie
             visit(start)
             visited.append(start)
             for node in graph[start]:
@@ -96,7 +98,7 @@ def traverse_dfs(graph, source, parent=None, pre_action=None, post_action=None):
     if pre_action:
         pre_action(source)
     for target in graph[source]:
-        if target not in parent:
+        if target not in parent:   # wyszukiwanie O(1)
             parent[target] = source
             traverse_dfs(graph, target, parent, pre_action, post_action)
     if post_action:
@@ -125,11 +127,11 @@ import collections
 
 def traverse_bfs(graph, start, visit):
     queue = collections.deque()   # deque jako kolejka
-    visited = []
+    visited = []   # lepiej set()
     queue.append(start)
     while queue:
         start = queue.popleft()
-        if start not in visited:
+        if start not in visited:   # wyszukiwanie
             visit(start)
             visited.append(start)
             for node in graph[start]:
@@ -157,7 +159,7 @@ def traverse_bfs(graph, source, pre_action=None, post_action=None):
     while queue:
         source = queue.popleft()
         for target in graph[source]:
-            if target not in parent:
+            if target not in parent:   # wyszukiwanie O(1)
                 parent[target] = source
                 queue.append(target)
                 if pre_action:

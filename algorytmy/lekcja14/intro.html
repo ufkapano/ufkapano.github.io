@@ -135,7 +135,7 @@ symetryczna i chyba jest to trochę mylące.
 możemy rozważyć jego wersję nieskierowaną.
 Wtedy z krawędzi "usuwamy skierowanie", a jeżeli początkowo istnieją
 dwie krawędzie skierowane (a,b) i (b,a), to stapiają się w jedną
-krawędź nieskierowana (a,b)==(b,a).
+krawędź nieskierowaną (a,b)==(b,a).
 
 </ul>
 
@@ -144,7 +144,7 @@ krawędź nieskierowana (a,b)==(b,a).
 
 <ul>
 <li>Cormen na str. 1193 nie dopuszcza pętli (a,a)
-dla grafu nieskierowanego. Może to wynikać z tego, ze krawędzie
+dla grafu nieskierowanego. Może to wynikać z tego, że krawędzie
 są zdefiniowane jako zbiory dwóch różnych wierzchołków
 (zbiory, aby nie było uporządkowania wierzchołków).
 
@@ -171,7 +171,7 @@ dwoma krawędziami skierowanymi (a,b) i (b,a).
 <h3>ŚCIEŻKI I CYKLE</h3>
 
 <ul>
-<li>Ścieżka lub droga (ang. path) długości k w grafie G=(V,E)
+<li>Ścieżka (ang. path) długości k w grafie G=(V,E)
 jest to ciąg (zwykle różnych) wierzchołków (v_0,v_1,...,v_k)
 takich, że krawędzie (v_{i-1},v_i) należą do E dla i=1,2,...,k.
 Jest to ścieżka z wierzchołka v_0 do wierzchołka v_k.
@@ -187,14 +187,14 @@ wierzchołek b jest osiągalny z wierzchołka a po ścieżce P.
 <li>Podścieżka ścieżki P jest ciągiem jej kolejnych wierzchołków.
 
 <li>Ścieżka prosta (ang. simple path) to ścieżka, 
-w której nie ma powtarzających się wierzchołków 
-(wszystkie wierzchołki są różne).
+w której nie ma powtarzających się wierzchołków i krawędzi.
 
 <li>Cykl (ang. cycle) jest to ścieżka (v_0,v_1,...,v_k), w której pierwszy
 i ostatni wierzchołek są takie same, v_0=v_k [notacja a-a, a-b-c-a].
 Cykl nazywamy prostym, jeżeli wierzchołki v_1,...,v_k są różne.
 
-<li>Ścieżka cykliczna (cyclic path) to cykl [Wikipedia].
+<li>Cykl prosty jest to cykl, w którym wszystkie wierzchołki są różne, 
+z wyjątkiem ostatniego, który jest równy pierwszemu.
 
 <li>Dwie ścieżki są rozłączne (ang. disjoint), jeżeli nie posiadają
 żadnych wspólnych wierzchołków (ewentualnie poza wierzchołkami
