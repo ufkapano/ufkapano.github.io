@@ -34,7 +34,7 @@ class Group(set):
 
     # __contains__ dziedziczone z set
 
-    order = set.__len__            # rzad grupy
+    order = set.__len__   # rząd grupy
 
     def insert(self, perm):
         """Wstawianie permutacji do grupy."""
@@ -44,9 +44,9 @@ class Group(set):
             return
         old_order = self.order()
         self.add(perm)
-        perms_added = set()               # dodawane perms
+        perms_added = set()   # dodawane perms
         perms_added.add(perm)
-        perms_generated = set()               # nowo powstale perms
+        perms_generated = set()   # nowo powstałe perms
         new_order = self.order()
         while new_order > old_order:
             old_order = new_order
@@ -61,7 +61,7 @@ class Group(set):
             new_order = self.order()
 
     def listperms(self):
-        """Zwraca liste permutacji z grupy."""
+        """Zwraca listę permutacji z grupy."""
         return list(self)
 
     def iterperms(self):
@@ -85,13 +85,13 @@ R2 = Perm(N, [3, 2, 1, 0])   # oś obrotu pozioma
 G.insert(R1)
 G.insert(R2)
 # Wygeneruje się obrót o 180 stopni, permutacja [2, 3, 0, 1].
-print ( G )                                # dziedziczone po słownikach
-print ( "order {}".format(G.order()) )                # 4, rząd grupy D_2
-print ( "contains {}".format(Perm(N) in G) )          # True
-print ( "contains {}".format(Perm(N, [1, 0, 2, 3]) in G) )   # False
-print ( "listperms {}".format(G.listperms()) )
+print(G)   # dziedziczone po słownikach
+print("order {}".format(G.order()))   # 4, rząd grupy D_2
+print("contains {}".format(Perm(N) in G))   # True
+print("contains {}".format(Perm(N, [1, 0, 2, 3]) in G))   # False
+print("listperms {}".format(G.listperms()))
 for perm in G.iterperms():
-    print ( "{} {}".format(perm, perm.label()) )
+    print("{} {}".format(perm, perm.label()))
 </pre><hr>
 
 </body>

@@ -27,7 +27,7 @@ class Perm:
         if data:
             if self.size != len(data):
                 raise ValueError("different size and len(data)")
-            self.data = data
+            self.data = list(data)
         else:
             self.data = list(range(self.size))
 
@@ -83,7 +83,7 @@ class Perm:
 
     def min(self):
         """Return the lowest element moved by the perm."""
-        j_min = 0     # zero bedzie tez dla identycznosci
+        j_min = 0     # zero będzie też dla identyczności
         for j in range(self.size):
             if self.data[j] != j:
                 j_min = j
@@ -103,7 +103,6 @@ class TestPerm(unittest.TestCase):
 
     def test_init(self):
         self.assertEqual(self.H, Perm(self.N, data=[1, 3, 0, 2]))
-        # assertRaises(exception, callable, ...)
         self.assertRaises(ValueError, lambda: Perm(2, data=[0, 1, 2]))
 
     def test_repr(self):
@@ -122,7 +121,6 @@ class TestPerm(unittest.TestCase):
         self.assertEqual(self.E * self.E, self.E)
         self.assertEqual(self.E * self.H, self.H)
         self.assertNotEqual(self.H * self.H, self.H)
-        # assertRaises(exception, callable, ...)
         self.assertRaises(ValueError, lambda: Perm(2) * Perm(1))
 
     def test_invert(self):
@@ -157,11 +155,11 @@ class TestPerm(unittest.TestCase):
 N = 4                         # permutacje liczb od 0 do 3
 E = Perm(N)                   # identyczność
 H = Perm(N, [1, 3, 0, 2])
-print ( "identity {} {}".format(E.is_identity(), H.is_identity()) )   # True, False
-print ( "str {} {}".format(E, H) )                      # [0, 1, 2, 3] [1, 3, 0, 2]
-print ( "label {} {}".format(E.label(), H.label()) )    # 0123, 1302
-print ( "invert {} {} {}".format(H, ~H, H*(~H)) )
-print ( "cmp {}".format(H &lt; H*H) )                 # True
+print("identity {} {}".format(E.is_identity(), H.is_identity()))   # True, False
+print("str {} {}".format(E, H))   # [0, 1, 2, 3] [1, 3, 0, 2]
+print("label {} {}".format(E.label(), H.label()))   # 0123, 1302
+print("invert {} {} {}".format(H, ~H, H*(~H)))
+print("cmp {}".format(H &lt; H*H))   # True
 </pre><hr>
 
 </body>

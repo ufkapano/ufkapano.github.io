@@ -28,14 +28,14 @@ class Group:
 
     def __init__(self, size):
         """Load up a Group instance."""
-        self.size = size        # rozmiar permutacji w grupie
+        self.size = size   # rozmiar permutacji w grupie
         # Inicjalizacja struktur.
         self.Sigma = [(k+1) * [None] for k in range(self.size)]
-        # Lista Sigma[k] zawiera co najmniej identycznosc.
+        # Lista Sigma[k] zawiera co najmniej identyczność.
         for k in range(self.size):
-            self.Sigma[k][k] = Perm(self.size)   # identycznosc sigma_kk
+            self.Sigma[k][k] = Perm(self.size)   # identyczność sigma_kk
         # Silne generatory.
-        self.all_Sigma = [Perm(self.size)]   # E tez dodam raz
+        self.all_Sigma = [Perm(self.size)]   # E też dodam raz
         self.all_T = []
 
     def __str__(self):
@@ -52,7 +52,7 @@ class Group:
 
     def __contains__(self, perm):
         """ Test if the perm belongs to the group."""
-        k = self.size - 1         # start od samej gory
+        k = self.size - 1   # start od samej góry
         while k &gt; 0:
             j = perm.data[k]
             if self.Sigma[k][j] is None:
@@ -75,12 +75,12 @@ class Group:
         j = perm.data[k]
         if self.Sigma[k][j] is not None:
             perm2 = ~self.Sigma[k][j] * perm
-            # Trzeba sie upewnic, jakiego rzedu jest perm.
+            # Trzeba się upewnić, jakiego rzędu jest perm.
             self.alg_A(perm2.max(), perm2)
             return
         self.all_T.append(perm)
         for item in self.all_Sigma:
-            # Trzeba sie upewnic, jakiego rzedu jest perm.
+            # Trzeba się upewnić, jakiego rzędu jest perm.
             perm2 = perm * item
             self.alg_B(perm2.max(), perm2)
 
@@ -93,7 +93,7 @@ class Group:
             self.Sigma[k][j] = perm
             self.all_Sigma.append(perm)
             for item in self.all_T:
-                # Trzeba sie upewnic, jakiego rzedu jest perm.
+                # Trzeba się upewnić, jakiego rzędu jest perm.
                 perm2 = item * perm
                 k_max = perm2.max()
                 if k_max != k:
@@ -102,7 +102,7 @@ class Group:
                     self.alg_B(k_max, perm2)
             return
         item = ~self.Sigma[k][j] * perm
-        # Trzeba sie upewnic, jakiego rzedu jest perm.
+        # Trzeba się upewnić, jakiego rzędu jest perm.
         # Tu na pewno k_max &lt; k.
         self.alg_A(item.max(), item)
 
@@ -118,11 +118,11 @@ class Group:
                 yield perm
             # M3. Przygotowanie do dodania jedynki.
             j = self.size - 1
-            # M4. Przeniesienie, jesli trzeba.
+            # M4. Przeniesienie, jeśli trzeba.
             while a[j] == j and j &gt;= 0:
                 a[j] = 0
                 j = j - 1
-            # M5. Zwiekszenie, o ile nie koniec.
+            # M5. Zwiększenie, o ile nie koniec.
             if j &lt; 0:
                 break
             else:
