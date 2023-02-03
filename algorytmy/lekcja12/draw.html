@@ -145,6 +145,14 @@ pygame.draw.arc(screen, white, rect, 1.5*math.pi, 2 * math.pi, width)
 import sys
 import pygame
 
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+
 # INITIALIZE THE GAME
 pygame.init()   # to zawsze na starcie
 size = width, height = (400, 300)
@@ -154,14 +162,6 @@ pygame.display.set_caption('Box')
 # CLOCK
 FPS = 60   # frames per second setting
 clock = pygame.time.Clock()
-
-# COLORS
-black = (0, 0, 0)
-gray = (128, 128, 128)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
 
 # LOAD IMAGES
 speed = [1, 1]   # liczba pikseli przesunięcia w kierunkach x i y w jednym kroku

@@ -48,6 +48,15 @@ surface.blit(text_surf, text_rect)
 import sys
 import pygame
 
+# COLORS
+black = (0, 0, 0)
+gray = (128, 128, 128)
+white = (255, 255, 255)
+red = (255, 0, 0)
+green = (0, 255, 0)
+blue = (0, 0, 255)
+yellow = (255, 255, 0)
+
 # INITIALIZE THE GAME
 pygame.init()   # to zawsze na starcie
 size = (width, height) = (400, 300)
@@ -57,15 +66,6 @@ pygame.display.set_caption('Fonts')
 # CLOCK
 FPS = 60   # frames per second setting
 clock = pygame.time.Clock()
-
-# COLORS
-black = (0, 0, 0)
-gray = (128, 128, 128)
-white = (255, 255, 255)
-red = (255, 0, 0)
-green = (0, 255, 0)
-blue = (0, 0, 255)
-yellow = (255, 255, 0)
 
 # LOAD IMAGES
 font = pygame.font.Font(None, 50)

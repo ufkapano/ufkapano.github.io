@@ -1,0 +1,125 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Tkinter - Canvas</h1>
+
+<p>https://python-course.eu/tkinter/canvas-widgets-in-tkinter.php
+
+<h3>INTRODUCTION</h3>
+
+<p>The 'Canvas' widget supplies graphics facilities for Tkinter.
+
+<hr><pre>
+# canvas1.py
+import tkinter as tk
+
+root = tk.Tk()
+
+canvas_width, canvas_height = 400, 300
+canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
+canvas.grid()
+
+# adding items ...
+y = canvas_height // 2
+canvas.create_line(0, y, canvas_width, y, fill="red", width=5)
+
+root.mainloop()
+</pre><hr><pre>
+Selected keyword arguments in Canvas()
+
+master=root   # the first argument
+width=canvas_width
+height=canvas_height
+</pre><hr><pre>
+Selected methods
+
+# item_id = canvas.create_line(xy, **options)
+# xy : x1, y1, x2, y2   # 4 positional arguments
+# or (x1, y1, x2, y2)   # 4-tuple
+# or ((x1, y1), (x2, y2))   # 2 pairs
+# options : fill="red", dash=(4, 4), width=3
+
+# item_id = canvas.create_rectangle(xy, **options)
+# xy : top left, bottom right
+# options : fill="blue", outline="red", width=2
+
+# item_id = canvas.create_arc(xy, **options)
+
+# item_id = canvas.create_oval(xy, **options)
+# xy : top left, bottom right (the bounding box)
+# options : fill="yellow", outline="red", width=3
+
+# item_id = canvas.create_polygon(xy, **options)
+# xy : minimum 3 points (3 pairs or 6 numbers)
+# options : fill="yellow", outline="red", width=3
+
+# item_id = canvas.create_text(xy, **options)
+canvas.create_text(x1, y1, text="Python", font="Times 20 bold")
+
+canvas.coords(item_id, new_xy)   # change coordinates
+canvas.itemconfig(item_id, fill="blue")   # change color
+canvas.delete(item_id)   # remove item
+canvas.delete(tk.ALL)   # remove all items
+</pre><hr><pre>
+def create_circle(canvas, x, y, r):
+   item_id = canvas.create_oval(x-r, y-r, x+r, y+r)
+   return item_id
+</pre><hr>
+
+<h3>INTERACTIVE PAINTING</h3>
+
+<hr><pre>
+# canvas2.py
+import tkinter as tk
+
+def paint(event):
+    radius = 2
+    x1, y1 = (event.x - radius), (event.y - radius)
+    x2, y2 = (event.x + radius), (event.y + radius)
+    canvas.create_oval(x1, y1, x2, y2, fill="green")
+
+root = tk.Tk()   # root widget
+
+canvas_width, canvas_height = 400, 300
+canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
+canvas.grid()
+canvas.bind("&lt;B1-Motion&gt;", paint)
+
+message = tk.Label(root, text="Press and Drag the mouse to draw")
+message.grid()
+
+root.mainloop()
+</pre><hr>
+
+<h3>IMAGES</h3>
+
+<hr><pre>
+import tkinter as tk
+from PIL import Image, ImageTk
+
+root = tk.Tk()   # root widget
+
+canvas_width, canvas_height = 600, 300
+canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
+canvas.grid()
+
+logo = tk.PhotoImage(file="img/python_logo.png")
+#logo = tk.PhotoImage(file="img/python_logo.gif")
+
+#logo = tk.PhotoImage(file="img/python_logo.jpg")   # _tkinter.TclError, we need PIL
+
+#im = Image.open("img/python_logo.jpg")
+#logo = ImageTk.PhotoImage(im)
+
+canvas.create_image(20, 20, anchor=tk.NW, image=logo)
+
+root.mainloop()
+</pre><hr>
+
+</body>
+</html>

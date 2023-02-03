@@ -253,16 +253,22 @@ należenie punktu do wielokąta O(log n)
 Wystarczy jeden typ obiektów w jednej tabeli.
 Baza powinna być zapisywana do pliku (txt, CSV, JSON).
 Operacje na bazie: wstawianie, usuwanie, wyszukiwanie, listowanie.
-Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite
-(moduł 'sqlite3').
+Nie należy używać serwerów dużych baz danych, 
+można użyć biblioteki SQLite (moduł 'sqlite3')
+[https://docs.python.org/3/library/sqlite3.html].
 
-<li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim.
+<li>Generowanie labiryntu i jego zapis do pliku, 
+np. Wilson, Aldous-Broder, Kruskal, Prim.
 
 <li>Wyszukiwanie wzorca w tekście algorytmem KMP.
+Funkcja 'pattern_matching(text, pattern)' powinna zwracać indeks i 
+id którego nastąpiło dopasowanie wzorca.
 
 <li>Wybrany algorytm przetwarzania tekstu.
 
-<li>Algorytm Kadane dla tablicy 1D i 2D
+<li>Algorytm Kadane dla tablicy 1D i 2D.
+Funkcje kadane1d(arr) i kadane2d(arr) powinny zwracać sumę elementów 
+podmacierzy i odpowiednie zakresy indeksów podmacierzy
 [https://en.wikipedia.org/wiki/Maximum_subarray_problem].
 
 <li>Problem plecakowy (ang. knapsack problem).
@@ -271,10 +277,17 @@ Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLi
 
 <li>Badanie perkolacji [https://en.wikipedia.org/wiki/Percolation_theory].
 
-<li>Gra w statki.
+<li>Gra w statki na konsoli lub z GUI.
+Należy m.in. dostarczyć funkcję generującą przypadkowe rozmieszczenie
+statków na planszy.
 
 <li>Algorytm min-max w zastosowaniu do gry w kółko i krzyżyk
-[https://en.wikipedia.org/wiki/Minimax].
+[https://en.wikipedia.org/wiki/Minimax,
+https://en.wikipedia.org/wiki/Tic-tac-toe].
+
+<li>Algorytm min-max w zastosowaniu do gry w Connect Four
+[https://en.wikipedia.org/wiki/Minimax,
+https://en.wikipedia.org/wiki/Connect_Four].
 
 <li>Wybrany algorytm kompresji danych.
 
@@ -295,8 +308,20 @@ komórkowych do łatwiejszego pisania tekstów za pomocą klawiatury 3x4.
 <li>Obliczanie wielomianu szachowego
 [https://en.wikipedia.org/wiki/Rook_polynomial].
 
-<li>Listy z przeskokami i obliczanie mediany kroczącej (ang. running median)
-[https://en.wikipedia.org/wiki/Skip_list]
+<li>Implementacja list z przeskokami 
+[https://en.wikipedia.org/wiki/Skip_list].
+
+<li>Obliczanie mediany kroczącej (ang. running median) 
+dla strumienia danych (iterable)
+[https://en.wikipedia.org/wiki/Moving_average#Moving_median].
+
+<!--
+Podejście z dwoma kopcami, chyba bierze się pod uwagę wszystkie dane.
+Chyba coś jest źle, bo jak przyjdą dane uporządkowane,
+to trzeba by przerzucać dane między kopcami, a tego nie ma.
+
+https://www.geeksforgeeks.org/median-of-stream-of-integers-running-integers/
+-->
 
 </ul>
 
