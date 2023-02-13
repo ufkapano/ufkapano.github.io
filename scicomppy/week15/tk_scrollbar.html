@@ -72,7 +72,47 @@ orient=tk.HORIZONTAL
 command=listbox.yview   # for Listbox widget
 command=textbox.yview   # for Text widget
 </pre><hr><pre>
+# +---------+---------+
+# | textbox | yscroll |
+# +---------+---------+
+# | xscroll | (empty) |
+# +---------+---------+
+# textbox3.py
+import tkinter as tk
 
+root = tk.Tk()   # empty window
+
+root.columnconfigure(0, weight=1)
+root.rowconfigure(0, weight=1)
+
+textbox = tk.Text(root, height=4, width=20, wrap=tk.NONE)
+textbox.grid(row=0, column=0, sticky=tk.NSEW)
+
+yscroll = tk.Scrollbar(root, orient=tk.VERTICAL)
+yscroll.grid(row=0, column=1, sticky=tk.NS)
+
+xscroll = tk.Scrollbar(root, orient=tk.HORIZONTAL)
+xscroll.grid(row=1, column=0, sticky=tk.EW)
+
+yscroll.config(command=textbox.yview)
+textbox.config(yscrollcommand=yscroll.set)
+
+xscroll.config(command=textbox.xview)
+textbox.config(xscrollcommand=xscroll.set)
+
+quote = """HAMLET: To be, or not to be--that is the question:
+Whether 'tis nobler in the mind to suffer
+The slings and arrows of outrageous fortune
+Or to take arms against a sea of troubles
+And by opposing end them. To die, to sleep--
+No more--and by a sleep to say we end
+The heartache, and the thousand natural shocks
+That flesh is heir to. 'Tis a consummation
+Devoutly to be wished."""
+
+textbox.insert(tk.END, quote)
+
+root.mainloop()   # run the tkinter event loop
 </pre><hr>
 
 </body>
