@@ -97,7 +97,10 @@ list(range(5, 2, -1))     # [5, 4, 3]
 list(range(1, 0))         # [], empty range, start &gt;= stop
 list(range(0))            # [], empty range, start == stop
 
-range(0, 3, 2) == range(0, 4, 2)   # True, note that 'stop' differs
+assert range(0, 3, 2) == range(0, 4, 2)   # note that 'stop' differs
+r1 = range(5)   # list(r1) == [0, 1, 2, 3, 4]
+r2 = range(4,-1,-1)   # list(r2) == [4, 3, 2, 1, 0]
+assert r1 != r2   # ordering is important!
 </pre><hr><pre>
 import sys
 

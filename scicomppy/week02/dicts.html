@@ -32,8 +32,8 @@ There is currently only one standard mapping type, the 'dictionary'.
 | D2 = dict(D1)              | shallow copy              |
 | D2 = D1.copy()             | shallow copy              |
 | D2 = {**D1}                | copy (Py3)                |
-| key in D                   | containing                |
-| key not in D               | containing                |
+| key in D                   | containing O(1)           |
+| key not in D               | containing O(1)           |
 | D.has_key(key)             | containing (Py2)          |
 | for key in D: pass         | iteration                 |
 | max(D), min(D)             | the largest|smallest key  |
@@ -52,6 +52,7 @@ D = {}
 D[k1] = v1 ; D[k2] = v2 ; D[k3] = v3
 
 D = {k1: v1, k2: v2, k3: v3}
+D = {k1: v1, k2: v2, k3: v3, }   # last comma is ignored
 
 D = dict(pair_list)
 D = dict([(k1, v1), (k2, v2), (k3, v3)])
@@ -65,7 +66,7 @@ D.items()        # [(k1, v1), (k2, v2), (k3, v3)] Py2
 
 D.keys()         # return a view of keys, Py3
 D.values()       # return a view of values, Py3
-D.items()        # return a view of items ((key, value) pairs), Py3
+D.items()        # return a view of items, (key, value) pairs, Py3
 
 list(D)   # [k1, k2, k3]
 # iter(D) is a shortcut for iter(D.keys()).
