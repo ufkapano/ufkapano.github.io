@@ -46,11 +46,11 @@ if condition: simple_statement
 </pre><hr><pre>
 assert isinstance(n, int)
 if n &lt; 0:
-    print ( "negative number" )
+    print("negative number")
 elif n % 2 == 0:
-    print ( "{} {}".format(n, "is even") )
+    print("{} {}".format(n, "is even"))
 else:
-    print ( "{} {}".format(n, "is odd") )
+    print("{} {}".format(n, "is odd"))
 </pre><hr>
 
 <h3>CONDITIONAL EXPRESSION</h3>
@@ -68,12 +68,12 @@ A = X if condition else Y
 A = ((X) if (condition) else (Y))   # for more complex expressions
 
 # In C/C++:
-# A = ( (condition) ? (X) : (Y) )
+# A = ((condition) ? (X) : (Y))
 </pre><hr><pre>
 a, b = 25, 30
-pos_a = (-a) if a &lt; 0 else a   # abs(a) is better
-max_ab = b if a &lt; b else a   # max(a, b) is better
-min_ab = a if a &lt; b else b   # min(a, b) is better
+pos_a = ((-a) if a &lt; 0 else a)   # abs(a) is better
+max_ab = (b if a &lt; b else a)   # max(a, b) is better
+min_ab = (a if a &lt; b else b)   # min(a, b) is better
 </pre><hr>
 
 </body>

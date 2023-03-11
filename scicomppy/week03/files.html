@@ -54,7 +54,7 @@ S = infile.read(3)   # read 3 code points
 #S = infile.read()   # read all, problems with large files!
 #S = infile.readline()   # read a line with '\n'
 
-print ( S )   # print() adds '\n'
+print(S)   # print() adds '\n'
 infile.close()
 </pre><hr><pre>
 infile = open("book.txt", "r")   # default text mode
@@ -62,7 +62,7 @@ infile = open("book.txt", "r")   # default text mode
 #L = infile.readlines()   # list of lines with '\n'
 L = infile.readlines(50)   # list of lines, 50 or more code points
 
-print ( L )
+print(L)
 infile.close()
 </pre><hr><pre>
 infile = open("book.txt", "r")   # default text mode
@@ -99,7 +99,12 @@ outfile = open('results.txt', 'w')   # default text mode, Py2 an Py3
 n = 53
 word = "żarówka"   # 7 code points ('bulb' in English)
 
-outfile.write( "{}\n{}\n".format(n, word) )   # 2 lines
+outfile.write("{}\n{}\n".format(n, word))   # 2 lines
+
+# outfile.write(str(n))
+# outfile.write("\n")
+# outfile.write(word)
+# outfile.write("\n")
 
 outfile.close()
 </pre><hr><pre>
@@ -120,7 +125,7 @@ n = 53
 word = "żarówka"   # 7 code points ('bulb' in English)
 
 with open('results.txt', 'w') as outfile:   # outfile will be closed
-    outfile.write( "{}\n{}\n".format(n, word) )   # 2 lines
+    outfile.write("{}\n{}\n".format(n, word))   # 2 lines
 </pre><hr>
 
 

@@ -26,6 +26,12 @@ for item in iterable:
     statements
 else:               # optional, terminate the loop
     statements      # executed if 'break' was not used, even for an empty iterable
+
+# Warning: the name 'item' is created only if 'iterable' is not empty!
+
+# Range-based for loop in C++ (since C++11)
+# for (auto item : container) statement
+# for (auto&amp; item : container) statement
 </pre><hr><pre>
 word = "Python"
 for char in word:   # use decriptive names
@@ -43,15 +49,20 @@ assert fruit == "apricot"
 
 # What if we need an index?
 for i in range(len(fruits)):   # C style
-    print ( "{} {}".format(i, fruits[i]) )
+    print("{} {}".format(i, fruits[i]))
 
-for (i, fruit) in enumerate(fruits):
-    print ( "{} {}".format(i, fruit) )
+for (i, fruit) in enumerate(fruits):   # recommended
+    print("{} {}".format(i, fruit))
 
 [c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
 </pre><hr><pre>
-for (a, b) in [(1. "one"), (2, "two"), (3, "three")]:   # unpacking
-    print ( "first {} second {}".format(a, b) )
+# loop over pairs
+for t in [(1. "one"), (2, "two"), (3, "three")]:
+    print("first {} second {}".format(t[0], t[1]))
+
+# better version with unpacking
+for (a, b) in [(1. "one"), (2, "two"), (3, "three")]:
+    print("first {} second {}".format(a, b))
 </pre><hr><pre>
 # Code that modifies a collection while iterating over that same collection
 # can be tricky to get right.
@@ -59,7 +70,7 @@ for (a, b) in [(1. "one"), (2, "two"), (3, "three")]:   # unpacking
 # It is not safe to add or remove an item in the middle of the list.
 L = [0, 1, 2, 3, 4, 5]
 for i in L:
-    print ( i )
+    print(i)
     if (i % 2) == 1:      # if i is odd then extend the list
         L.append(2 * i)   # adding two even numbers
         L.append(4 * i)
@@ -87,8 +98,8 @@ for char in sorted("qwerty"):   # ['e', 'q', 'r', 't', 'w', 'y']
 
 letters = ["a", "b", "c", "d"]
 numbers = [10, 20, 30, 40]
-for letter, number in zip(letters, numbers):
-    print ( "{} {}".format(letter, number) )
+for (letter, number) in zip(letters, numbers):
+    print("{} {}".format(letter, number))
 </pre><hr><pre>
 # Eliminating duplicate elements.
 
@@ -100,10 +111,10 @@ for char in set("abracadabra"):   # 'a', 'c', 'd', 'b', 'r'
 L = [1, 2, 4, 5]
 
 if all(x % 2 == 0 for x in L):
-    print ( "all numbers are even" )
+    print("all numbers are even")
 
 if any(x % 2 == 0 for x in L):
-    print ( "there is an even number on the list" )
+    print("there is an even number on the list")
 </pre><hr>
 
 </body>

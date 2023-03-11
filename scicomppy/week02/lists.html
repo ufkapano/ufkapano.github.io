@@ -119,11 +119,11 @@ L.extend("qwerty")
 # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
 </pre><hr><pre>
 lists = [[]] * 3   # [[], [], []]
-lists[0].append(3)   # [[3], [3], [3]] surprise!
+lists[0].append(7)   # [[7], [7], [7]] surprise!
 # three references to the same empty list
 
-# proper way
-lists = [[] for i in range(3)]   # three different empty lists
+# proper way, three different empty lists
+lists = [[] for i in range(3)]   # [[], [], []]
 lists[0].append(3)   # [[3], [], []]
 lists[1].append(5)   # [[3], [5], []]
 </pre><hr>
