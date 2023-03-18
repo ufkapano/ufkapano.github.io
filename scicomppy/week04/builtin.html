@@ -46,7 +46,17 @@ setattr(), staticmethod(), super(), type().
 <h3>FUNCTIONS FOR ITERABLES</h3>
 
 <hr><pre>
-# map(function, iterable, ...) returns  map object (iterator) in Py3
+# zip(*iterables) return a zip object
+# zip(*iterables, strict=False) in Py3.10
+# The strict=True is used to test if the lengths of iterables are identical.
+# Iterate over several iterables in parallel, producing tuples with an item from each one.
+# By default, zip() stops when the shortest iterable is exhausted.
+
+list(zip([1, 2, 3], 'abc'))   # [(1, 'a'), (2, 'b'), (3, 'c')]
+
+list(zip([1, 2], 'abcd'))   # [(1, 'a'), (2, 'b')], different lengths
+</pre><hr><pre>
+# map(function, iterable, ...) return a map object (iterator) in Py3
 
 def cube(x):
     return x * x * x
@@ -54,11 +64,16 @@ def cube(x):
 list(map(cube, range(10)))   # map object
 list(cube(x) for x in range(10))   # generator object
 # [0, 1, 8, 27, 64, 125, 216, 343, 512, 729]
-
+</pre><hr><pre>
 L = [(1, 2), (3, 4, 5)]
 list(map(sum, L))   # [3, 12] map object
 list(sum(t) for t in L)   # [3, 12] generator object
-
+</pre><hr><pre>
+L = [1, 2, 3]
+M = [4, 5, 6]
+list(map(sum, zip(L, M)))   # [5, 7, 9]
+list(sum(t) for t in zip(L, M))
+</pre><hr><pre>
 def calc(x, y):   # two arguments and two iterables in map()
     return 2 * x + y
 
@@ -67,7 +82,7 @@ list(map(calc, R, R))
 list(calc(x, y) for (x, y) in zip(R, R))
 # [0, 3, 6, 9, 12, 15, 18, 21, 24, 27]
 </pre><hr><pre>
-# filter(function or None, iterable) returns filter object (iterator) in Py3
+# filter(function or None, iterable) return a filter object (iterator) in Py3
 
 def check(x):
     return x % 2 != 0 and x % 3 != 0

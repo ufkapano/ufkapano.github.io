@@ -56,6 +56,7 @@ in the scope that contains the function definition.
 <hr><pre>
 # Syntax.
 
+@decorator   # optional
 def function_name(argument_list):
     docstring   # optional
     statements
@@ -82,7 +83,7 @@ func()              # call (expression)
 other_name = func   # assignment
 other_name()        # call
 func.atrr = value   # defining an attribute for func
-dir(func)           # the list of attributes
+dir(func)           # the list of attributes, see dir(len)
 func.__name__       # string
 func.__doc__        # docstring
 func(x, y)          # two arguments

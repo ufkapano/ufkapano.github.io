@@ -29,46 +29,46 @@ are the object names and the values are the objects themselves.
 <br>(4) Builtin
 
 <hr><pre>
-def my_len(sequence):              # sequence is local
+def my_len(sequence):         # sequence is local
     """Return the length of a sequence."""
-    length = 0                     # length is local
-    for item in sequence:          # item is local
+    length = 0                # length is local
+    for item in sequence:     # item is local
         length += 1
     return length
 </pre><hr><pre>
 X = 99   # global name
 
 def func():   # local namespace
-    #print ( X )          # UnboundLocalError, X will be local
-    X = 88                # local name
-    print ( X )           # 88, reference to the local X
+    #print(X)       # UnboundLocalError, X will be local
+    X = 88          # local name
+    print(X)        # 88, reference to the local X
 
-func()                    # 88
-print ( X )               # 99, X is global here
+func()              # 88
+print(X)            # 99, X is global here
 </pre><hr><pre>
 X = 99   # global name
 
 def func():
-    global Z              # global statement (declaration)
-    print ( X )           # reading global name
-    Y = 88                # local name
-    Z = 77                # Z is created
+    global Z        # global statement (declaration)
+    print(X)        # reading global name
+    Y = 88          # local name
+    Z = 77          # Z is created
 
-#print( Z )         # NameError, Z is not defined
+#print(Z)           # NameError, Z is not defined
 X = 55              # global X changed
 func()              # 55, here the function body is executed
-#print ( Y )        # NameError, Y is not defined
-print ( Z )         # 77, Z is global
+#print(Y)           # NameError, Y is not defined
+print(Z)            # 77, Z is global
 </pre><hr><pre>
-X = 99                        # global name
+X = 99              # global name
 
 def func():
-    global X              # global statement
-    print ( X )           # OK
-    X = 88                # global X changed
+    global X        # global statement
+    print(X)        # OK
+    X = 88          # global X changed
 
-func()                        # 99
-print ( X )                   # 88
+func()              # 99
+print(X)            # 88
 </pre><hr><pre>
 # PEP 227 - Statically Nested Scopes
 
@@ -78,11 +78,11 @@ def outer():
     import math    # possible
     x = 2
     def inner():   # nested scope
-        print ( x )
+        print(x)
     inner()
 
 outer()   # print 2 from nested scope, not 1 from global scope
-#print ( math.sin(1) )   # NameError: name 'math' is not defined
+#print(math.sin(1))   # NameError: name 'math' is not defined
 </pre><hr><pre>
 def make_score(score=0):
     for i in [1, 2, 3, 4]:
@@ -100,7 +100,6 @@ def make_score(score=0):
 
 make_score()   # 1 3 6 10
 </pre><hr>
-
 
 </body>
 </html>

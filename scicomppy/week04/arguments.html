@@ -19,7 +19,7 @@ is used for each call.
 <hr><pre>
 def print_word(word, n=1):
     for i in range(n):
-        print ( "{} {}".format(i, word) )
+        print("{} {}".format(i, word))
 
 print_word("spam")   # default n=1
 print_word("spam", 3)   # n=3
@@ -29,13 +29,13 @@ print_word(n=4, word="spam")   # using keywords 'n' and 'word'
 
 def tester1(x, L=[]):   # L is created once
     L.append(x)
-    print ( "tester1 {}".format(L) )
+    print("tester1 {}".format(L))
 
 def tester2(x, L=None):
     if L is None:   # explicit test for None
         L = []
     L.append(x)
-    print ( "tester2 {}".format(L) )
+    print("tester2 {}".format(L))
 
 tester1(1)   # [1]
 tester1(2)   # [1, 2]
@@ -43,6 +43,10 @@ tester1(3)   # [1, 2, 3]
 tester2(1)   # [1]
 tester2(2)   # [2]
 tester2(3)   # [3]
+# Using an external list.
+M = []
+tester1(5, M)   # M == [5]
+tester2(6, M)   # M == [5, 6]
 </pre><hr>
 
 <h3>EXCESS POSITIONAL ARGUMENTS</h3>
@@ -67,7 +71,7 @@ unique_letters("abc", "cde", "efg")   # set(['a', 'e', 'f', 'b', 'c', 'g', 'd'])
 
 def university(**keywords):
     for key in sorted(keywords):   # keywords is a dict
-        print ( "{} : {}".format(key, keywords[key]) )
+        print("{} : {}".format(key, keywords[key]))
 
 university(rektor="Jacek Popiel", kanclerz="Monika Harpula")
 # kanclerz : Monika Harpula
@@ -84,6 +88,9 @@ def f(a1, a2=v2, *a3, **a4): pass
 # a2=x2, positional argument (default value will not be used)
 # a3=(x3, x4), excess positional arguments
 # a4={"b1":x5, "b2":x6}, excess keyword arguments
+
+# The most general form is
+def g(*arguments, **keywords): pass
 </pre><hr>
 
 <h3>UNPACKING ARGUMENTS</h3>
@@ -93,7 +100,7 @@ args = (1, 5)
 range(*args)   # range(1, 5)
 </pre><hr><pre>
 def describe(name, age=0, position=None):
-    print ( "{} age {} position {}".format(name, age, position) )
+    print("{} age {} position {}".format(name, age, position))
 
 person = {"name": "Bogdan", "age": 30, "position": "teacher"}
 
@@ -101,6 +108,7 @@ describe("Adam", 20, "student")
 # Adam age 20 position student
 
 describe(**person)
+#describe(name="Bogdan", age=30, position="teacher")   # the same
 # Bogdan age 30 position teacher
 </pre><hr>
 
@@ -113,7 +121,10 @@ def func_pos_only(arg, /): pass   # func_pos_only(25)
 
 def func_kwd_only(*, arg): pass   # func_kwd_only(arg=34)
 
-# Exercise: help(sorted), help(abs).
+# Exercise: help(sorted)
+sorted(iterable, /, *, key=None, reverse=False)
+# Exercise: help(abs)
+abs(x, /)
 </pre><hr>
 
 </body>
