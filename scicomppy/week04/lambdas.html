@@ -28,7 +28,7 @@ def &lt;lambda&gt;(arguments):
     return expression
 </pre><hr><pre>
 sum_items = lambda x, y, z: x + y + z
-print ( sum_items(2, 3, 4) )   # 9
+print(sum_items(2, 3, 4))   # 9
 
 def sum_items(x, y, z):   # the same result
     return x + y + z
@@ -36,15 +36,22 @@ def sum_items(x, y, z):   # the same result
 # Default arguments.
 
 sum_items = lambda x=0, y=0, z=0: x + y + z
-print ( sum_items() )   # 0
-print ( sum_items(6, 7) )   # 13
+print(sum_items())   # 0
+print(sum_items(6, 7))   # 13
+</pre><hr><pre>
+# C++ vs Python.
+auto pr = [] (int&amp; n) { std::cout &lt;&lt; n &lt;&lt; ' '; };
+for(auto&amp; n : {0,1,2,3,4}) { pr(n); }
+
+pr = lambda n: print(n, '', end='')
+for n in range(5): pr(n)
 </pre><hr>
 
 <h3>CUSTOM SORTING</h3>
 
 <hr><pre>
 number_list.sort(reverse=True)
-number_list.sort(key=lambda x: -x)
+number_list.sort(key=lambda x: -x)   # the same
 </pre><hr><pre>
 L = [(2, "gamma"), (-7, "alpha"), (4, "beta"), (4, "delta")]   # a list of records
 
@@ -62,11 +69,11 @@ L.sort(key=lambda t: (t[1], abs(t[0])))
 <hr><pre>
 def show_sequence(sequence, action=None):
     for item in sequence:
-        print ( item )
+        print(item)
         if action:
             action(item)
 
-show_sequence([1, 2, 3, 4], action=lambda x: print(x*x)) # Python 3
+show_sequence([1, 2, 3, 4], action=lambda x: print(x*x))   # Py3
 
 M = []
 show_sequence([1, 2, 3, 4], action=lambda x: M.append(x*x))
