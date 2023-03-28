@@ -30,13 +30,12 @@ i pakiety przestrzeni nazw (namespace packages).
 <hr><pre>
 # Załóżmy, że w katalogu bieżącym mamy moduł główny 'main.py' i moduły:
 # main.py
-# __init__.py            (obowiązkowy plik)
-# dir1/__init__.py            (obowiązkowy plik)
+# dir1/__init__.py            (obowiązkowy plik, dir1 to pakiet)
 # dir1/module1.py
-# dir1/dir2/__init__.py       (obowiązkowy plik)
+# dir1/dir2/__init__.py       (obowiązkowy plik, dir2 to podpakiet)
 # dir1/dir2/module2.py
 
-# Instrukcje w module głównym.
+# Instrukcje w module głównym main.py.
 import dir1.module1           # ścieżka rozdzielona kropką
 import dir1.dir2.module2
 </pre><hr><pre>

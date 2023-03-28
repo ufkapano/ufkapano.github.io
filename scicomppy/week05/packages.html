@@ -43,10 +43,9 @@ to the module when it is imported.
 # Files in the current directory.
 
 script.py      # the main module
-__init__.py       # required
-dir1/__init__.py       # required
+dir1/__init__.py       # required, dir1 is a package
 dir1/module1.py
-dir1/dir2/__init__.py   # required
+dir1/dir2/__init__.py   # required, dir2 is a subpackage
 dir1/dir2/module2.py
 </pre><hr><pre>
 # Possible statements in script.py
@@ -57,6 +56,11 @@ import dir1.dir2.module2
 
 from dir1.module1 import name1
 from dir1.dir2.module2 import *
+</pre><hr><pre>
+# Possible statements in module1.py
+
+import dir2.module2
+from dir2.module2 import name2
 </pre><hr>
 
 <h3>NAMESPACE PACKAGES</h3>
