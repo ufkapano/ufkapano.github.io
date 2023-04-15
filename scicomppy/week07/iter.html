@@ -26,7 +26,7 @@
 
 <hr><pre>
 for item in iterable:   # iteration
-    print ( item )
+    print(item)
 L = list(iterable)
 result = sum(iterable)
 high = max(iterable)
@@ -36,7 +36,16 @@ low = min(iterable)
 <h3>FINITE ITERATORS</h3>
 
 <hr><pre>
-# The first version based on a generator function.
+# Builtin function.
+
+reversed(sequence)   # reversed object
+</pre><hr><pre>
+# Generator expression.
+
+sequence = "word"
+gen = (sequence[i] for i in range(len(sequence)-1,-1,-1))   # generator object
+</pre><hr><pre>
+# Generator function.
 
 def Reverse(sequence):   # a generator iterator is returned
     """A reverse iterator based on a sequence."""
@@ -45,7 +54,7 @@ def Reverse(sequence):   # a generator iterator is returned
         idx = idx-1
         yield sequence[idx]
 </pre><hr><pre>
-# The second version based on a class.
+# The other version based on a class.
 
 class Reverse:   # an instance of this class is an iterator
     """A reverse iterator based on a sequence."""
@@ -71,10 +80,10 @@ class Reverse:   # an instance of this class is an iterator
 # Usage (for both versions).
 
 for char in Reverse("spam"):
-    print ( char )   # m, a, p, s
+    print(char)   # m, a, p, s
 
 for item in Reverse([1, 2, 3, 4]):
-    print ( item )   # 4, 3, 2, 1
+    print(item)   # 4, 3, 2, 1
 </pre><hr>
 
 <h3>ITER</h3>
@@ -92,9 +101,9 @@ assert it3 is it2
 # Once you have an iterator, the only thing you can do with it is get
 # its next item. And you’ll get a stop iteration exception if you ask
 # for the next item but there aren’t anymore items.
-print ( next(it1) )   # 1
-print ( next(it1) )   # 2
-print ( next(it1) )   # StopIteration
+print(next(it1))   # 1
+print(next(it1))   # 2
+print(next(it1))   # StopIteration
 </pre><hr><pre>
 class Dumb:
 
@@ -110,15 +119,15 @@ print(x[1])   # o
 #len(x)   # AttributeError: Dumb instance has no attribute '__len__'
 
 for item in x:   # iteration
-    print ( item )
+    print(item)
 
 # manual iteration
 y = iter(x)         # make an iterator, iter() use the sequence protocol (__getitem__)
-print ( next(y) )   # w
-print ( next(y) )   # o
-print ( next(y) )   # r
-print ( next(y) )   # d
-print ( next(y) )   # StopIteration, the iterator is exhausted
+print(next(y))   # w
+print(next(y))   # o
+print(next(y))   # r
+print(next(y))   # d
+print(next(y))   # StopIteration, the iterator is exhausted
 </pre><hr><pre>
 # Chunking list by two using an iterator.
 
@@ -165,17 +174,17 @@ class MyInt:
         return self.n
 
 x = MyInt()   # x is a MyInt instance, a callable object
-print ( x() )   # returns 0
-print ( x() )   # returns 1
-print ( x() )   # returns 2
+print(x())   # returns 0
+print(x())   # returns 1
+print(x())   # returns 2
 </pre><hr><pre>
 # Preparing an iterator 'y'.
 # If the callable returns 5 then y stops.
 y = iter(MyInt(), 5)   # y is a callable-iterator object
 for i in y:         # returns 0, 1, 2, 3, 4 (without 5)
-    print ( i )
+    print(i)
 # 5 was used to stop the iterator y.
-print ( next(y) )   # StopIteration is raised, y is exhausted
+print(next(y))   # StopIteration is raised, y is exhausted
 </pre><hr><pre>
 # Infinite iterators.
 

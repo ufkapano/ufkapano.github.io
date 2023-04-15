@@ -60,20 +60,20 @@ class ContextManager:
         pass
 
     def message(self, argument):
-        print ( "processing {}".format(argument) )
+        print("processing {}".format(argument))
 
     def __enter__(self):
-        print ( "start with" )
+        print("start with")
         return self   # or something else;
         # the return value will be assigned to 'target'
 
     def __exit__(self, exception_type, exception_value, exception_traceback):
         if exception_type is None:   # (None, None, None) is supplied to __exit__
-            print ( "normal exit" )   # no exception
+            print("normal exit")   # no exception
             # put cleanup code here
             return True
         else:   # the exception type, value, traceback are supplied to __exit__
-            print ( "exception raised is {}".format(exception_type) )
+            print("exception raised is {}".format(exception_type))
             # put cleanup code here
             return False    # exception is reraised
             # return True   # exception is suppressed
@@ -82,12 +82,12 @@ class ContextManager:
 
 with ContextManager() as context:
     context.message("test 1")
-    print ( "point reached" )
+    print("point reached")
 
 with ContextManager() as context:
     context.message("test 2")
     raise TypeError
-    print ( "point not reached" )
+    print("point not reached")
 
 print("after with statements")
 
