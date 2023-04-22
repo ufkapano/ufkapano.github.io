@@ -47,6 +47,13 @@ dt_complex = np.dtype(complex)
 
 dt_object = np.dtype(object)   # Python object
 </pre><hr><pre>
+# Sized aliases to dtypes (useful for Numba).
+
+np.int8, np.int16, np.int32, np.int64,
+np.uint8, np.uint16, np.uint32, np.uint64,
+np.float16, np.float32, np.float64,
+np.complex64, np.complex128
+</pre><hr><pre>
 np.sqrt(np.array([-1, 0, 1]))   # default dtype=float
 # RuntimeWarning: invalid value encountered in sqrt
 # array([nan,  0.,  1.])
@@ -72,10 +79,10 @@ dt_rgb = np.dtype({'names': ('r','g','b'), 'formats': ('u1','u1','u1')})
 # Converting data types.
 
 a = np.array([1.1, 0, 3.1])   # array([1.1, 0., 3.1])
-print ( a.dtype )   # dtype('float64')
+print(a.dtype)   # dtype('float64')
 
 b = a.astype(int)   # array([1, 0, 3]), copy
-print ( b.dtype )   # dtype('int32')
+print(b.dtype)   # dtype('int32')
 
 np.may_share_memory(a, b)   # False
 
@@ -85,7 +92,6 @@ c = a.astype(bool)   # array([ True, False, True])
 <h3>EXERCISES</h3>
 
 <p>Conversion from string to int: ["1","2"], ["a","2"] (ValueError).
-
 
 </body>
 </html>

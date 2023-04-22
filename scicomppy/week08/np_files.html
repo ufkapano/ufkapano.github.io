@@ -31,7 +31,7 @@ Each row in the text file must have the same number of values.
 # usecols=(1, 4, 5) will extract the 2nd, 5th and 6th columns.
 
 data = np.loadtxt("two_columns.txt")   # points in the plane; positions in time
-print ( data.shape )   # (100, 2)
+print(data.shape)   # (100, 2)
 t = data[:,0]   # first column
 x = data[:,1]   # second column
 </pre><hr><pre>
@@ -40,7 +40,7 @@ import io   # StringIO behaves like a file object
 fname = io.StringIO(u"1, 2, 3\n4, 5, 6")   # Py2 and Py3
 data = np.loadtxt(fname, delimiter =', ', usecols =(0, 1, 2))   # dtype=float
 #data = np.loadtxt(fname, dtype=int, delimiter =', ', usecols =(0, 1, 2))
-print ( data.shape )   # (2, 3)
+print(data.shape)   # (2, 3)
 x = data[:,0]
 y = data[:,1]
 z = data[:,2]
@@ -51,14 +51,14 @@ fname = io.StringIO(u"M 21 72\nF 35 58")
 # Structured type
 dtype1 = np.dtype([('gender','S1'), ('age','i4'), ('weight','f4')])
 data = np.loadtxt(fname, dtype=dtype1)
-print ( data.shape )   # (2,) two rows only
-print ( data )
+print(data.shape)   # (2,) two rows only
+print(data)
 # [(b'M', 21, 72.) (b'F', 35, 58.)] Py3
 # [('M', 21, 72.) ('F', 35, 58.)] Py2
 
 male = data['gender'] == b'M'
-print ( male )   # [ True False ]
-print ( data["age"][male] )   # [21] selecting items
+print(male)   # [ True False ]
+print(data["age"][male] )   # [21] selecting items
 male_av = data['weight'][male].mean()
 female_av = data['weight'][~male].mean()
 </pre><hr>

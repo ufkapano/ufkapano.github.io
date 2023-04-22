@@ -55,6 +55,7 @@ a   # array([ 40,  62,  84, 106]) 'a' changed!
 a = np.array([20, 30, 40, 50])
 b = np.array([0, 1, 2, 3])
 a == b   # array([False, False, False, False]), dtype('bool'), itemsize 1
+np.ones(1) == 1   # array([ True]), broadcasting
 a &gt; b   # array([ True,  True,  True,  True])
 a &lt; 35   # array([ True,  True, False, False])
 np.array_equal(a, b)   # False (bool)
@@ -66,8 +67,10 @@ np.any(a &lt; 35)   # True (numpy.bool_, not bool)
 
 c = np.array([ [True, True], [False, False]])
 d = np.array([ [True, False], [True, False]])
-np.logical_or(c, d)   # array([[ True,  True], [ True, False]])
-np.logical_and(c, d)   # array([[ True, False], [False, False]])
+np.logical_or(c, d)   # array([[True, True], [True, False]])
+np.logical_and(c, d)   # array([[True, False], [False, False]])
+np.logical_xor(c, d)   # array([[False, True], [True, False]])
+np.logical_not(c)   # array([[False, False], [True, True]])
 </pre><hr><pre>
 # numpy.where(condition[, x, y])
 # Return elements chosen from x or y depending on condition.
@@ -176,9 +179,9 @@ a = np.arange(15).reshape(3, 5)   # array object, note that 3 * 5 = 15
 a = np.array([1, 2, 3])
 #for item in a:   # it works
 for i in np.nditer(a):   # over all items
-    print ( item )
+    print(item)
 for idx, item in np.ndenumerate(a):
-    print ( "{} {}".format(idx, item) )
+    print("{} {}".format(idx, item))
 # (0,) 1
 # (1,) 2
 # (2,) 3
@@ -186,13 +189,13 @@ for idx, item in np.ndenumerate(a):
 a = np.arange(12).reshape(2,6)
 for row in a:   # over first dimension
     for item in row:   # over second dimension
-        print ( item )
+        print(item)
 for item in np.nditer(a):   # over all items
-    print ( item )
+    print(item)
 #for item in a.reshape(-1):   # over all items
-#    print ( item )
+#    print(item)
 for idx, item in np.ndenumerate(a):
-    print ( "{} {}".format(idx, item) )
+    print("{} {}".format(idx, item))
 # (0, 0) 0
 # (0, 1) 1
 # (0, 2) 2

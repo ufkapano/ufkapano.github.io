@@ -20,12 +20,13 @@ A static method does not receive an implicit first argument (self).
 
 class C:
     @staticmethod
-    def f(arg1, arg2, ...): ...
+    def f(arg1, arg2, ...):   # no 'self'
+        statements
 
 # Calling: C.f() or C().f()
 </pre><hr><pre>
-def regular_function():
-    pass
+def regular_function(argument_list):
+    statements
 
 class C:
     method = staticmethod(regular_function)

@@ -66,7 +66,7 @@ In NumPy dimensions are called 'axes'.
 <hr><pre>
 import numpy as np   # typical import under the 'np' alias
 
-print ( np.__version__ )   # 1.16.2 for Debian 10
+print(np.__version__)   # 1.16.2 for Debian 10
 # also help(np) at the end
 
 a = np.arange(15).reshape(3, 5)   # array object 
@@ -75,18 +75,18 @@ a = np.arange(15).reshape(3, 5)   # array object
 # np.arange( 10, 30, 5, dtype=float )
 # np.arange( 0, 2, 0.3 )   # it accepts float arguments
 
-print ( a )
+print(a)
 # [[ 0  1  2  3  4]
 #  [ 5  6  7  8  9]
 #  [10 11 12 13 14]]
 # The shape of an array is the number of elements in each dimension.
 
-print ( a.shape )   # (3, 5), tuple, np.shape(a)
-print ( a.ndim )   # 2
-print ( a.dtype )   # dtype('int64'), deduced from the sequence
-print ( a.itemsize )   # 8, size of bytes of each element of the array
-print ( a.size )   # 15, the number of items
-print ( a.nbytes )   # 120
+print(a.shape)   # (3, 5), tuple, np.shape(a)
+print(a.ndim)   # 2
+print(a.dtype)   # dtype('int64'), deduced from the sequence
+print(a.itemsize)   # 8, size of bytes of each element of the array
+print(a.size)   # 15, the number of items
+print(a.nbytes)   # 120
 assert a.nbytes == a.size * a.itemsize
 </pre><hr>
 
@@ -122,26 +122,26 @@ arr = np.array([24, 12, 57])
 import sys
 import numpy as np
 
-print( sys.getsizeof([]) )           # 64, empty list
-print( sys.getsizeof(np.array([])) )   # 96, empty array
+print(sys.getsizeof([]))           # 64, empty list
+print(sys.getsizeof(np.array([])))   # 96, empty array
 
 lst = [24, 12, 57]
-print( sys.getsizeof(lst) )   # 88 = 64 + 3 * 8, list object
-print( sys.getsizeof(lst[0]) )   # 28, int
+print(sys.getsizeof(lst))   # 88 = 64 + 3 * 8, list object
+print(sys.getsizeof(lst[0]))   # 28, int
 # This is a minimum estimation, as Python integers can use more than 28 bytes.
 
 arr = np.array([24, 12, 57])
-print( arr.dtype )            # dtype('int64')
-print( sys.getsizeof(arr) )   # 120 = 96 + 3 * 8
+print(arr.dtype)            # dtype('int64')
+print(sys.getsizeof(arr))   # 120 = 96 + 3 * 8
 
 arr = np.array([24, 12, 57], dtype="int8")   # numbers from -127 to 127
-print( sys.getsizeof(arr) )   # 99 = 96 + 3 * 1
+print(sys.getsizeof(arr))   # 99 = 96 + 3 * 1
 
 lst[0] = "alpha"
-print( sys.getsizeof("") )       # 49
-print( sys.getsizeof(lst) )   # 88, the same
-print( sys.getsizeof(lst[0]) )   # 54 = 49 + 5, str
-print( sys.getsizeof(lst[1]) )   # 28, int
+print(sys.getsizeof(""))       # 49
+print(sys.getsizeof(lst))   # 88, the same
+print(sys.getsizeof(lst[0]))   # 54 = 49 + 5, str
+print(sys.getsizeof(lst[1]))   # 28, int
 </pre><hr><pre>
 # Numpy arrays can be like Python lists.
 
@@ -167,17 +167,17 @@ y1 = list(range(N))
 x2 = np.arange(N)
 y2 = np.arange(N)
 
-print ( "Testing list comprehension ..." )
+print("Testing list comprehension ...")
 t1 = timeit.Timer(lambda: [x1[i] + y1[i] for i in range(N)])
-print ( t1.timeit(1) )           # single run
+print(t1.timeit(1))   # single run
 
-print ( "Testing zip ..." )
+print("Testing zip ...")
 t1 = timeit.Timer(lambda: [a+b for (a,b) in zip(x1,y1)])
-print ( t1.timeit(1) )           # single run
+print(t1.timeit(1))   # single run
 
-print ( "Testing numpy ..." )
+print("Testing numpy ...")
 t1 = timeit.Timer(lambda: x2 + y2)
-print ( t1.timeit(1) )           # single run
+print(t1.timeit(1))   # single run
 
 # Results:
 # Testing list comprehension ...

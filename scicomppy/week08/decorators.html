@@ -22,17 +22,16 @@ in the scope that contains the function definition.
 @decorator2(arg)
 @decorator1
 def func(argument_list):
-    pass
+    statements
 
 # This is equivalent to
 
 def func(argument_list):
-    pass
+    statements
 
-func = decorator2(arg)(decorator1(func))
+func = decorator1(func)
+func = decorator2(arg)(func)
 </pre><hr>
-
-
 
 </body>
 </html>
