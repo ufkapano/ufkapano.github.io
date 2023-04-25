@@ -14,25 +14,26 @@
 
 <hr><pre>
 age = np.array(35)   # zero-dimensional array
-print ( age )   # 35
-print ( age.shape )   # (), empty tuple
-print ( age.ndim )   # 0
+print(age)   # 35
+print(age.shape)   # (), empty tuple
+print(age.ndim)   # 0
 </pre><hr><pre>
 a = np.array( [2, 3, 4] )   # from a regular Python list or tuple
 # a = np.array( [2, 3, 4], dtype=int )   # explicite
-print ( a.ndim )   # 1, one-dimensional array
-print ( a.shape )   # (3,)
+print(a.ndim)   # 1, one-dimensional array
+print(a.shape)   # (3,)
+print(b.dtype)   # dtype('int64'), deduced
 </pre><hr><pre>
 b = np.array( [(1.5, 2, 3), [4, 5, 6]] )   # note mix of tuple and list
 # b = np.array( [(1.5, 2, 3), [4, 5, 6]], dtype=float )   # explicite
-print ( b.ndim )   # 2, two-dimensional array
-print ( b.shape )   # (2, 3)
-print ( b.dtype )   # dtype('float64'), deduced
+print(b.ndim)   # 2, two-dimensional array
+print(b.shape)   # (2, 3)
+print(b.dtype)   # dtype('float64'), deduced
 </pre><hr><pre>
 c = np.array( [[1, 2], [3, 4], [5, 6]], dtype=complex )
-print ( c.ndim )   # 2, two-dimensional array
-print ( c.shape )   # (3, 2)
-print ( c.dtype )   # dtype('complex128')
+print(c.ndim)   # 2, two-dimensional array
+print(c.shape)   # (3, 2)
+print(c.dtype)   # dtype('complex128')
 </pre><hr><pre>
 # numpy.zeros(shape, dtype=float, order='C')
 
@@ -81,8 +82,8 @@ from pyquats.quats import Quat
 
 a = np.array([Quat(1, 2, 3, 4), Quat(5, 6, 7, 8)])   # general objects
 # array([Quat(1.0, 2.0, 3.0, 4.0), Quat(5.0, 6.0, 7.0, 8.0)], dtype=object)
-print ( a.itemsize )   # 4 (32-bit system) or 8 (64-bit system)
-print ( a.sum() )   # Quat(6.0, 8.0, 10.0, 12.0)
+print(a.itemsize)   # 4 (32-bit system) or 8 (64-bit system)
+print(a.sum())   # Quat(6.0, 8.0, 10.0, 12.0)
 
 b = np.empty((10, 20), dtype=object)
 </pre><hr><pre>
@@ -90,12 +91,12 @@ s = np.array(["alpha", "beta", "gamma"])
 # array(['alpha', 'beta', 'gamma'], dtype='|S5') # Py2
 # array(['alpha', 'beta', 'gamma'], dtype='&lt;U5') # Py3
 # 5 is the length of the longest string in the given array object.
-print ( s.itemsize )   # 5 for python2, 20 for python3
+print(s.itemsize )   # 5 for python2, 20 for python3
 s[0] = "abcdefghij"   # there is the limitation to the length
 # array(['abcde', 'beta', 'gamma'], dtype='|S5') # python2
 # Solution:
 s = np.array(["alpha", "beta", "gamma"], dtype=object)
-print ( s.itemsize )   # 4 or 8
+print(s.itemsize)   # 4 or 8
 
 np.array(["ab","żółw"])
 # array(['ab', '\xc5\xbc\xc3\xb3\xc5\x82w'], dtype='|S7')   # Py2
@@ -137,9 +138,9 @@ x = np.arange(9).reshape((3,3))
 #        [3, 4, 5],
 #        [6, 7, 8]])
 
-np.diag(x)       # array([0, 4, 8])   extration
-np.diag(x, k=1)   # array([1, 5])   extration
-np.diag(x, k=-1)   # array([3, 7])   extration
+np.diag(x)       # array([0, 4, 8])   extraction
+np.diag(x, k=1)   # array([1, 5])   extraction
+np.diag(x, k=-1)   # array([3, 7])   extraction
 </pre><hr>
 
 </body>
