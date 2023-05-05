@@ -53,7 +53,7 @@ plt.axis('tight')   # set limits just large enough to show all data
 
 plt.xticks(np.arange(4), ('X1', 'X2', 'X3', 'X4'))
 plt.yticks(np.arange(0, 81, 10))
-yticks([])   # disable yticks
+plt.yticks([])   # disable yticks
 </pre><hr>
 
 <h3>SCALES</h3>
@@ -106,6 +106,7 @@ plt.grid(color='grey', which='major', axis='y', linestyle=':')
 # Plot vertical lines at each x from ymin to ymax.
 
 plt.hlines([1,2,4,7], 0, 10, colors=['r','g','r','g'], label='red/green')
+#plt.hlines([1,2,4,7], [0,1,2,3], [7,8,9,10], color='r', label='red')
 plt.vlines([1,2,4,7], 0, 10, colors='b', label='blue')   # the same color
 </pre><hr>
 
