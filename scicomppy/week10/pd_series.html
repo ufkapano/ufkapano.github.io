@@ -106,9 +106,9 @@ assert s1.equals(s2)
 # c    True
 # dtype: bool
 
-print ( s1['a'] )   # 10
-print ( s1.a )   # 10, only if labels are proper Python identifiers
-print ( s1 + s2 )   # creating new series (elementwise addition)
+print(s1['a'])   # 10
+print(s1.a)   # 10, only if labels are proper Python identifiers
+print(s1 + s2)   # creating new series (elementwise addition)
 # a    20
 # b    40
 # c    60
@@ -116,14 +116,14 @@ print ( s1 + s2 )   # creating new series (elementwise addition)
 
 s3 = pd.Series(data=[1, 2, 4], index=list("abd"))
 
-print ( s2 + s3 )   # "c" and "d" do not match, s2.add(s3)
+print(s2 + s3)   # "c" and "d" do not match, s2.add(s3)
 # a    11.0
 # b    22.0
 # c     NaN
 # d     NaN
 # dtype: float64   # not int64!
 
-print ( s2.add(s3, fill_value=0) )
+print(s2.add(s3, fill_value=0))
 # a    11.0
 # b    22.0
 # c    30.0

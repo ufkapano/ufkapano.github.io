@@ -63,7 +63,7 @@ import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt   # for plots
 
-print( pd.__version__ )   # 0.23.3 in Debian 10
+print(pd.__version__)   # 0.23.3 in Debian 10
 </pre><hr><pre>
 # pd.DataFrame
 #         pd.Series
@@ -87,24 +87,24 @@ population = pd.Series([852469, 1015785, 485199])   # numbers (int)
 
 # Constructing DataFrame from a dictionary.
 df1 = pd.DataFrame({'City name': city_names, 'Population': population})
-print ( df1 )
+print(df1)
 #        City name  Population     # column names are shown
 # 0  San Francisco      852469     # row indexes are default (0,1,...)
 # 1       San Jose     1015785
 # 2     Sacramento      485199
 
 # Access to Series using Python dict/list operations.
-print ( df1['City name'] )
-print ( df1['Population'] )
-print ( df1.Population )   # only if labels are proper Python identifiers
-print ( df1['Population'][1] )   # 1015785
-print ( df1.Population[1] )   # 1015785
+print(df1['City name'])
+print(df1['Population'])
+print(df1.Population)   # only if labels are proper Python identifiers
+print(df1['Population'][1])   # 1015785
+print(df1.Population[1])   # 1015785
 
 # New colums can be added (with new labels).
 df1['Area square miles'] = pd.Series([46.87, 176.53, 97.92])
 
 # Calculations with numpy.
-print ( np.log(population) )   # return new series
+print(np.log(population))   # return new series
 # 0    13.655892
 # 1    13.831172
 # 2    13.092314
@@ -112,14 +112,14 @@ print ( np.log(population) )   # return new series
 
 # Transforming series.
 # population.apply(lambda item: item > 1000000)   # return new boolean series
-print ( population > 1000000 )   # numpy style (elementwise)
+print(population > 1000000)   # numpy style (elementwise)
 # 0    False
 # 1     True
 # 2    False
 # dtype: bool
 
 # Indexes.
-print ( df1.index )   # RangeIndex(start=0, stop=3, step=1)
+print(df1.index)   # RangeIndex(start=0, stop=3, step=1)
 # df1a = df1.reindex([2, 0, 1])   # changing order of rows
 # df1b = df1.reindex(np.random.permutation(df1.index))   # random order of rows
 </pre><hr>
