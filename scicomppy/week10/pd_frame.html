@@ -41,18 +41,24 @@ df1.dtypes
 # dtype: object
 
 df1.index   # RangeIndex(start=0, stop=2, step=1)
-#df1.index = ['first', 'second']   # changing index
+#df1.index = ['row1', 'row2']   # changing index
+df1.index.values   # array([0, 1])
 
 df1.columns   # Index(['col1', 'col2'], dtype='object')
 #df1.columns = ['A', 'B']   # changing columns
+df1.columns.values   # array(['col1', 'col2'], dtype=object)
 
 df1.values   # array([[1, 3], [2, 4]])
+
+df1.shape   # (2, 2), (nrows, ncols)
+
+df1.size   # 4, nrows * ncols
 </pre><hr><pre>
 # Constructing DataFrame from numpy ndarray.
 
 df2 = pd.DataFrame(np.array([[1, 2, 3], [4, 5, 6], [7, 8, 9]]),
-    columns=list('abc'))
-#    a  b  c
+    columns=list('ABC'))
+#    A  B  C
 # 0  1  2  3
 # 1  4  5  6
 # 2  7  8  9
