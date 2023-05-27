@@ -11,10 +11,12 @@
 <h3>INTRODUCTION</h3>
 
 <hr><pre>
-Unknown function  u(x,y,t)
-u_t = D * (u_xx + u_yy), parabolic differential equation
-Initial condition  u(x,y,0) = f(x,y)
-Boundary condition  u(boundary,t) = g(boundary,t)
+Unknown function u(x,y,t), x in [0,L], y in [0,L], t in [0,T],
+
+heat equation u_t = D * (u_xx + u_yy).
+
+Initial condition u(x,y,0) = f(x,y).
+Boundary condition u(boundary,t) = g(boundary,t).
 
 x = i*dx, i = 0..Nx (Nx+1 points), Nx*dx = L,
 y = j*dy, j = 0..Ny (Ny+1 points), Ny*dy = L, dx=dy, Nx=Ny,
@@ -24,7 +26,7 @@ u_t = [ u(i,j,k+1) - u(i,j,k) ] / dt   # forward difference O(dt)
 u_xx = [ u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k) ] / (dx*dx)   # central difference O(dx^2)
 u_yy = [ u(i,j-1,k) -2*u(i,j,k) + u(i,j+1,k) ] / (dy*dy)   # central difference O(dy^2)
 
-r = D*dt / (dx*dx), formula is stable if r &lt;= 0.25 (?)
+r = D*dt / (dx*dx), formula is stable if r &le; 0.25 (?)
 
 u(i,j,k+1) - u(i,j,k) = r * [
 u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k)

@@ -24,8 +24,10 @@ not used during the classes. Send the script and the figure.
 <p>Solve the 1D wave equation with initial and bondary conditions
 not used during the classes. Send the script and the figure.
 
-<p>Note that u(x,0) (the position of the strig) should be continous 
+<p>Note that u[:,0] (the initial position of the strig) should be continous 
 and consistent with boundary conditions.
+In the case of Dirichlet conditions the string ends are fixed,
+u[0,:] = 0 and u[Nx,:] = 0.
 
 </body>
 </html>

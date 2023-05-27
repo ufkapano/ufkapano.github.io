@@ -38,6 +38,27 @@ pandas.Timestamp()   # numpy.datetime64 inside
 pandas.Timedelta()
 pandas.DatetimeIndex()   # array of numpy.datetime64 inside
 pandas.TimedeltaIndex()
+</pre><hr><pre>
+pd.Timestamp('2017-01-01T12')   # a datetime-like string
+# Timestamp('2017-01-01 12:00:00')
+
+pd.Timestamp(1513393355.5, unit='s')   # a float representing a Unix epoch in units of seconds
+# Timestamp('2017-12-16 03:02:35.500000')
+
+pd.Timestamp(1513393355.5)   # nanoseconds
+Timestamp('1970-01-01 00:00:01.513393355')
+
+pd.Timestamp(2017, 1, 15, 12)   # the API for datetime.datetime
+# Timestamp('2017-01-15 12:00:00')
+
+pd.Timestamp(year=2017, month=1, day=15, hour=12)   # the same
+# Timestamp('2017-01-15 12:00:00')
+</pre><hr><pre>
+pd.Timestamp.now()   # Timestamp('2023-05-27 11:34:55.950145')
+pd.Timestamp.now().isoformat()   # '2023-05-27T11:34:55.950145'
+pd.Timestamp.now().isoformat(sep=' ')   # '2023-05-27 11:34:55.950145'
+pd.Timestamp.now().floor('D')   # Timestamp('2023-05-27 00:00:00')
+pd.Timestamp.now().ceil('D')   # Timestamp('2023-05-28 00:00:00')
 </pre><hr>
 
 <h3>DATETIME</h3>

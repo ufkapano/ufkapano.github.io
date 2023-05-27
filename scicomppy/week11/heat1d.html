@@ -10,6 +10,8 @@
 
 <p>https://en.wikipedia.org/wiki/Diffusion_equation
 
+<p>https://en.wikipedia.org/wiki/Heat_equation
+
 <h3>INTRODUCTION</h3>
 
 <p>The diffusion equation is a parabolic partial differential equation.
@@ -19,13 +21,22 @@ of the particles.
 In mathematics, it is related to Markov processes, such as random walks, 
 and applied in many other fields.
 
+<p>If the diffusion coefficient is constant then the diffusion equation
+is identical to the heat equation.
+
 <hr><pre>
-Unknown function  u(x,t), x in [0,L], t in [0,T],
-u_t = D * u_xx, D is the diffusion coefficient.
-[u_t is time derivative, u_xx is double spatial derivative.]
-If D is constant we get the heat equation.
-Initial condition  u(x,0) = f(x).
-Boundary condition  u(0,t) = g1(t) and u(L,t) = g2(t).
+Unknown function u(x,t), x in [0,L], t in [0,T],
+u(x,t) is the density of the diffusing material (isotropic diffusion)
+or the temperature at the point x and time t,
+
+heat equation u_t = D * u_xx, 
+
+D is a positive coefficient called the diffusion coefficient 
+or the thermal diffusivity of the medium.
+u_t is time derivative, 
+u_xx is double spatial derivative.
+Initial condition u(x,0) = f(x).
+Boundary condition u(0,t) = g1(t) and u(L,t) = g2(t).
 
 #          j  u(0,t)=g1(t),   t increasing --&gt;
 #  x=0  +--+--+--+--

@@ -24,9 +24,14 @@ differential equation.
 <h3>FIXED BOUNDARIES (DIRICHLET)</h3>
 
 <hr><pre>
-Unknown function  u(x,t)
-u_tt = c^2 u_xx, x in [0,L], t in [0,T].
-c is the constant wave velocity of the medium.
+Unknown function u(x,t), x in [0,L], t in [0,T],
+u is the factor representing a displacement from the rest situation,
+
+wave equation u_tt = c^2 u_xx,
+
+c is the constant wave velocity of the medium,
+u_tt is double time derivative, 
+u_xx is double spatial derivative.
 
 Homogeneous Dirichlet conditions in 1D.
 u(x,0) = f(x), x in [0,L], (initial string shape)
@@ -51,7 +56,7 @@ u(x,t) = ( f(x-ct) + f(x+ct) )/2.
 # x=L  +--+--+--+--
 #         j  u(L,t)=0
 </pre><hr><pre>
-Waves on string, wave1D_u0.py
+Waves on string.
 The initial condition f(x) typically has a triangular shape for a picked guitar string.
 A peak is at x_0 in [0,L], f(x) = 
 [ x/x_0 for x &lt; x_0,
