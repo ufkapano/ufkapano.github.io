@@ -22,11 +22,11 @@ która jest działem matematyki.
 <p>Niech G będzie zbiorem niepustym, a * działaniem w G.
 Parę (G,*) nazywamy grupą, jeżeli spełnione są warunki:
 <br>(i) działanie * jest łączne, czyli 
-dla każdego a, b, c z G mamy (a*b)*c = a*(b*c)
+dla każdego a, b, c &in; G mamy (a*b)*c = a*(b*c)
 [można więc pisać a*b*c].
-<br>(ii) istnieje element neutralny (jednostkowy) e w G taki, że
-dla każdego a z G mamy e*a = a*e = a.
-<br>(iii) dla każdego a z G istnieje element odwrotny ~a taki, że
+<br>(ii) istnieje element neutralny (jednostkowy) e &in; G taki, że
+dla każdego a &in; G mamy e*a = a*e = a.
+<br>(iii) dla każdego a &in; G istnieje element odwrotny ~a taki, że
 a*(~a) = (~a)*a = e.
 
 <p>Jeżeli działanie * jest przemienne (a*b = b*a),
@@ -35,11 +35,17 @@ Często działanie w grupie abelowej oznacza się znakiem plus,
 a samą grupę przez (G,+).
 
 <p>Twierdzenie. Niech (G,*) będzie grupą. Wtedy zachodzi:
-<br>(i) dla każdego a z G mamy ~(~a) = a.
-<br>(ii) dla każdego a, b z G mamy ~(a*b) = (~b)*(~a).
+<br>(i) dla każdego a &in; G mamy ~(~a) = a.
+<br>(ii) dla każdego a, b &in; G mamy ~(a*b) = (~b)*(~a).
 
-<p>Rząd grupy G jest to liczba elementów w grupie.
-Oznaczenie: g lub |G|.
+<p>Rząd grupy G jest to liczba elementów w grupie. Oznaczenie |G|.
+<br>Rząd ord(a) elementu a &in; G jest to najmniejsza liczba naturalna k
+taka, że a^k = e.
+<br>Dla każdego a &in; G zachodzi a^|G| = e, oraz ord(a) jest dzielnikiem |G|.
+
+<p>Jeżeli grupa G zawiera element g taki, że ord(g) = |G| = n,
+to taką grupę nazywamy 'grupą cykliczną' (oznaczenie C_n).
+Element g nazywa się 'generatorem' grupy cyklicznej.
 
 <p>Podgrupa (subgroup) H grupy G jest to para (H,*),
 gdzie H jest podzbiorem G, * to działanie w G,
@@ -49,7 +55,7 @@ H jest podgrupą właściwą, jeżeli 1 &lt; |H| &lt; |G|.
 <h3>HOMOMORFIZM</h3>
 
 <p>Homomorfizm dwóch grup (group homomorphism)
-[f: G w G'; f(a*b) = f(a)*f(b) dla każdego a, b z G].
+[f: G &rarr; G'; f(a*b) = f(a)*f(b) dla każdego a, b &in; G].
 Jądro homomorfizmu [Ker(f) = f^{-1}({e'})].
 
 <p>Izomorfizm = homomorfizm + bijekcja.
@@ -61,9 +67,9 @@ grupy symetrycznej S_n.
 <h3>WARSTWY (COSETS)</h3>
 
 <p>Niech G to grupa, a A i B zbiory zawarte w G. Określamy
-<br>AB := {ab : a należy do A, b należy do B},
-<br>~A := {~a : a należy do A}.
-<br>Jeżeli b należy do G, to
+<br>AB := {ab : a &in; A, b &in; B},
+<br>~A := {~a : a &in; A}.
+<br>Jeżeli b &in; G, to
 <br>bA := {b}A,
 <br>Ab := A{b}.
 
@@ -73,12 +79,12 @@ grupy symetrycznej S_n.
 <br>(iii) eA = Ae = A.
 
 <p>Niech H podgrupa G. Można zdefiniować relację równoważności:
-<br>a~~b wtw a(~b) należy do H.
+<br>a~~b wtw, gdy a(~b) &in; H.
 <br>Stąd dostaniemy klasy równoważności 
-<br>[a] = [b: b~~a] = [b: b(~a) należy do H] = [b: b należy do Ha] = Ha 
+<br>[a] = [b: b~~a] = [b: b(~a) &in; H] = [b: b &in; Ha] = Ha 
 (warstwa prawostronna; zbiór).
 <br>Podobnie można zdefiniować inną relację równoważności
-<br>a~~b wtw (~a)b należy do H.
+<br>a~~b wtw, gdy (~a)b &in; H.
 <br>Stąd dostaniemy klasy równoważności [a] = aH (warstwa lewostronna).
 Można rozłożyć G na rozłączne warstwy o <em>równej długości</em>
 G = H + aH + bH + ... + pH (dla grupy G skończonej).
@@ -91,9 +97,9 @@ Rząd podgrupy H jest podzielnikiem rzędu grupy G.
 
 <p>Podgrupa H grupy G jest podgrupą niezmienniczą 
 (dzielnikiem normalnym, normal subgroup), 
-jeżeli aH = Ha dla każdego a należącego do G
+jeżeli aH = Ha dla każdego a &in; G 
 [równość w sensie zbiorów!].
-Jeżeli H jest dzielnikiem normalnym, to dla każdego a z G zachodzi
+<br>Jeżeli H jest dzielnikiem normalnym, to dla każdego a &in; G zachodzi
 aH(~a) = H [tak można sprawdzać, że K jest dzielnikiem normalnym].
 
 <p>W zbiorze warstw można wprowadzić działanie [a]*[b] = [ab].
@@ -105,7 +111,7 @@ a jej rząd to |G|/|H|.
 <ul>
 <li>W grupie G określamy relację równoważności 
 (przydaje się przy reprezentacjach):
-<br>a~~b wtw istnieje c z G takie, że cb(~c) = a (a jest sprzężone do b).
+<br>a~~b wtw, gdy istnieje c &in; G takie, że cb(~c) = a (a jest sprzężone do b).
 <br>Możemy podzielić grupę G na rozłączne klasy równoważności
 (zwykle o różnej liczności).
 

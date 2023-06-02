@@ -29,11 +29,15 @@ systemów algebry symbolicznej obliczających grupy.
 
 <li>Permutacje są obecne w fizyce.
 
+<li>Teoria permutacji była kluczowa dla złamania szyfru Enigmy.
+<br>https://www.impan.pl/Great/Rejewski/article.html
+
 <li>W teorii grafów istnieją grafy permutacji, których wierzchołki
 odpowiadają elementom permutacji. Dwa wierzchołki są połączone krawędzią,
-jeżeli permutacja zmienia kolejność odpowiednich elementów.
-<br>Przykład. Permutacja [3, 1, 2] odpowiada grafowi G = (V, E), gdzie
-zbiór wierzchołków V = {1, 2, 3}, a zbiór krawędzi E = {(1, 3), (2, 3)}.
+jeżeli permutacja zmienia kolejność odpowiednich elementów (powstaje inwersja).
+<br>Przykład. Permutacja [3 1 2] odpowiada grafowi G = (V, E), gdzie
+zbiór wierzchołków V = {1, 2, 3}, a zbiór krawędzi E = {(1, 3), (2, 3)}
+(te dwie pary liczb tworzą inwersję w permutacji).
 
 </ul>
 
@@ -42,7 +46,7 @@ zbiór wierzchołków V = {1, 2, 3}, a zbiór krawędzi E = {(1, 3), (2, 3)}.
 
 <p>Definicja.
 Permutacją (bez powtórzeń) zbioru n-elementowego X
-nazywamy dowolną bijekcję p: X w X.
+nazywamy dowolną bijekcję p: X &rarr; X.
 Zwykle X to zbiór liczb naturalnych od 1 do n,
 choć w implementacjach komputerowych czasem 
 X to zbiór liczb całkowitych od 0 do n-1.
@@ -58,18 +62,19 @@ Inny zapis permutacji to dolny wiersz macierzy (tu kolejność kolumn ma znaczen
 
 <p>Dla permutacji określamy mnożenie *, które rozumiemy
 jako składanie funkcji, (p*q)(i) = p(q(i)).
+<br>Permutacja tożsamościowa id(i) = i dla każdego i = 0, 1, ... n-1.
 <br>UWAGA W literaturze można spotkać inną konwencję dla mnożenia permutacji.
 
 <p>Permutacje zbioru n-elementowego X tworzą grupę symetryczną 
 Sym(X), oznaczaną też S_n.
-Rząd grupy S_n wynosi |S_n| = n!
+<br>Rząd grupy S_n wynosi |S_n| = n!
 
 <p>Każdą podgrupę grupy symetrycznej nazywamy <em>grupą permutacji</em>.
 
 <p>Podgrupa alternująca Alt(X) [A_n], zawiera permutacje parzyste 
 z grupy Sym(X) [S_n]. Dla n większego lub równego 5, grupa A_n jest 
 prosta i jest to jedyna podgrupa niezmiennicza S_n.
-Rząd grupy alternującej wynosi |A_n| = n!/2.
+<br>Rząd grupy alternującej wynosi |A_n| = n! / 2.
 
 <p><strong>Twierdzenie Cayley'a.</strong> 
 Każda grupa G rzędu n jest izomorficzna 
@@ -79,66 +84,76 @@ z pewną podgrupą grupy symetrycznej S_n.
 <h3>CYKLE</h3>
 
 <p>Każdą permutację można zapisać jako iloczyn cykli rozłącznych.
+Kolejność cykli rozłącznych w rozkładzie nie ma znaczenia.
 
 <hr><pre>
 Przykład. Cykl długości 3 (i, j, k) to permutacja
 (tylko elementy i, j, k są przenoszone przez permutację)
-[i j k s t ...]
+[i j k s t ...] = (i, j, k) = (j, k, i) = (k, i, j)
 [j k i s t ...]
+</pre><hr><pre>
+[0 1 2 3 4 5 6] = (0, 2, 5) (1, 3, 4, 6)
+[2 3 5 4 6 0 1]
 </pre><hr>
 
 <p>Cykl długości 0 () to permutacja tożsamościowa.
-Nie ma cykli długości 1.
 
-<p>Cykl długości 2 (i, j) to transpozycja.
+<p>Cykl długości 1 (i) to właściwie permutacja tożsamościowa.
+
+<p>Cykl długości 2 (i, j) = (j, i) to transpozycja (i != j).
+
+<p>Cykl długości k &gt; 2 jest złożeniem k-1 transpozycji.
+
+<hr><pre>
+[c[0] c[1] ... c[k-1]] = (c[0], c[1], c[2], .... c[k-1]) = c
+[c[1] c[2] ... c[0]  ]
+
+c = (c[0], c[k-1]) (c[0], c[k-2]) ... (c[0], c[2]) (c[0], c[1])
+
+(i, j, k) = (i, k) (i, j)
+</pre><hr>
 
 <p>Każda transpozycja może być wyrażona jako iloczyn transpozycji
 liczb sąsiednich (adjacent transpositions) poprzez formułę
 rekurencyjną<br>
-(i, i+v) = (i+1, i+v) * (i, i+1) * (i+1, i+v).
+(i, i+v) = (i+1, i+v) (i, i+1) (i+1, i+v).
 <br>Sprawdzenie, transpozycje działają kolejno od prawej do lewej.
-<br>i+v --&gt; i+1 --&gt; i.
-<br>i --&gt; i+1 --&gt; i+v.
-<br>i+1 --&gt; i+v --&gt; i+v (bez zmiany).
-<br>Przykład. (1, 4) = (2, 4) * (1, 2) * (2, 4) = 
-(3, 4) * (2, 3) * (3, 4) * (1, 2) * (3, 4) * (2, 3) * (3, 4).
+<br>i+v &rarr; i+1 &rarr; i.
+<br>i &rarr; i+1 &rarr; i+v.
+<br>i+1 &rarr; i+v &rarr; i+v (bez zmiany).
+<br>Przykład. (1, 4) = (2, 4) (1, 2) (2, 4) = 
+(3, 4) (2, 3) (3, 4) (1, 2) (3, 4) (2, 3) (3, 4).
 
-<p>Znak permutacji to liczba (-1)^n, gdzie n jest liczbą transpozycji,
-na którą rozkłada się dana permutacja.
-Cykl długości k ma parzystość (-1)^(k+1).
+<hr>
+
+<p>Znak permutacji p to liczba sgn(p) = (-1)^r, gdzie r jest liczbą 
+transpozycji, na którą rozkłada się dana permutacja.
+<br>Cykl długości k ma parzystość (-1)^(k+1).
+<br>sgn(id) = 1.
+<br>sgn(p * q) = sgn(p) * sgn(q).
+<br>sgn(p^{-1}) = sgn(p).
 
 
 <h3>GRUPA S_2</h3>
 
-<ul>
-<li>S_2 = {(), (0,1)}, grupa cykliczna rzędu 2.
-</ul>
+<p>S_2 = {(), (0,1)}, grupa cykliczna rzędu 2.
 
 <h3>GRUPA S_3</h3>
 
-<ul>
+<p>S_3 = {(), (0,1), (0,2), (1,2), (0,1,2), (0,2,1)}.
+Rząd grupy wynosi |S_3| = 3! = 6.
 
-<li>S_3 = {(), (0,1), (0,2), (1,2), (0,1,2), (0,2,1)}.
+<p>Grupa S_3 jest izomorficzna z C_3v i D_3.
 
-<li>Rząd grupy wynosi |S_3| = 3! = 6.
-
-<li>Grupa S_3 jest izomorficzna z C_3v i D_3.
-
-<li>Podział S_3 na klasy elementów sprzężonych
+<p>Podział S_3 na klasy elementów sprzężonych
 (Byron ładnie robi przekształcenia na cyklach):
 <br>Cl_1 = {()},
 <br>Cl_2 = {(0,1,2), (0,2,1)} - cykle potrójne (parzyste permutacje),
 <br>Cl_3 = {(0,1), (0,2), (1,2)} - cykle podwójne (nieparzyste permutacje).
 
-<li>Podgrupa cykliczna rzędu 3 to 
-<br>A_3 = Cl_1 + Cl_2 = {(), (0,1,2), (0,2,1)}.
+<p>Podgrupa cykliczna rzędu 3 to 
+A_3 = Cl_1 + Cl_2 = {(), (0,1,2), (0,2,1)}.
 <br>A_3 jest to dzielnik normalny, zawiera pełne klasy elementów sprzężonych.
-
-</ul>
-
-
-
-
 
 </body>
 </html>
