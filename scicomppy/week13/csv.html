@@ -149,13 +149,11 @@ iris = pd.read_csv('iris.data', names=['sepal_length', 'sepal_width',
 #print(iris.head())
 
 # create color dictionary
-colors = {'Iris-setosa':'r', 'Iris-versicolor':'g', 'Iris-virginica':'b'}
+color_dict = {'Iris-setosa':'r', 'Iris-versicolor':'g', 'Iris-virginica':'b'}
+colors = [color_dict[c] for c in iris['class']]
 
-# plot each data-point
-for i in range(len(iris['sepal_length'])):
-    plt.scatter(iris['sepal_length'][i],
-        iris['sepal_width'][i],
-        color=colors[iris['class'][i]])
+# plot points
+plt.scatter(iris['sepal_length'], iris['sepal_width'], c=colors)
 
 # set a title and labels
 plt.title('Iris Dataset')
@@ -165,6 +163,8 @@ plt.show()
 </pre><hr>
 
 <p><img src="img/iris1.png" alt="[ iris1.png ]">
+
+<p><img src="img/iris2.png" alt="[ iris2.png ]">
 
 </body>
 </html>

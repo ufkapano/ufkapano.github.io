@@ -46,31 +46,31 @@ H(S) = -J \sum_ij S_i S_j,
 where the sum is over pairs of adjacent spins (nearest neighbors),
 S_i is a spin configuration at a site i,
 J is an interaction [J has dimensions of energy],
-\beta = 1 / (k_B T) [k_B T has dimensions of energy],
+&beta; = 1 / (k_B T) [k_B T has dimensions of energy],
 k_B is the Boltzmann constant.
 
 If J &gt; 0 then the interaction is called 'ferromagnetic'.
 If J &lt; 0 then the interaction is called 'antiferromagnetic'.
 If J = 0 then the spins are 'noninteracting'.
 
-Z(\beta) = \sum_S exp(-\beta H(S)) is the partition function.
+Z(&beta;) = \sum_S exp(-&beta; H(S)) is the partition function.
 
 The configuration probability is given by the Boltzmann distribution
 
-P_{\beta}(S) = exp(-\beta H(S)) / Z(\beta).
+P_&beta;(S) = exp(-&beta; H(S)) / Z(&beta;).
 
 The expectation (mean) value of a function F of the spins is
 
-&lt;F&gt;_{\beta} = \sum_S F(S) P_{\beta}(S).
+&lt;F&gt;_&beta; = \sum_S F(S) P_&beta;(S).
 
-The mean energy is &lt;H&gt;_{\beta}.
+The mean energy is &lt;H&gt;_&beta;.
 
 Magnetization M(S) = \sum_i S_i.
 
-The mean magnetization is &lt;M&gt;_{\beta}.
+The mean magnetization is &lt;M&gt;_&beta;.
 </pre><hr><pre>
 Problem: for a 10x10 lattice there is 2^100 ~ 10^30 possible configurations.
-We are not able to calculate Z(\beta), P_{\beta}(S), and mean values.
+We are not able to calculate Z(&beta;), P_&beta;(S), and mean values.
 
 This motivates the reason for the Ising model to be simulated using MC methods.
 </pre><hr>
