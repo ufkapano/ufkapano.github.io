@@ -58,10 +58,8 @@ jakie możemy spotkać w rzeczywistości.
 <p>Grafem G nazywamy parę (V,E), 
 gdzie V to niepusty i skończony zbiór wierzchołków, 
 a E to skończony zbiór krawędzi, czyli par wierzchołków z VxV.
-Symbolem |V| będziemy oznaczać liczbę wierzchołków,
-a symbolem |E| liczbę krawędzi.
-W zapisie z O() będziemy pomijać linie pionowe,
-czyli zamiast O(|V|+|E|) zapiszemy O(V+E).
+Symbolem n=|V| będziemy oznaczać liczbę wierzchołków,
+a symbolem m=|E| liczbę krawędzi.
 Wyróżnia się dwa główne typy grafów:
 
 <ul>
@@ -210,19 +208,19 @@ końcowymi).
 
 <ul>
 <li>Graf pusty lub graf zerowy N_n (ang. null graph) to graf, 
-którego zbiór krawędzi jest pusty, |V|=n, |E|=0.
+którego zbiór krawędzi jest pusty, m=0.
 W implementacji grafów można przyjąć, 
 że pusty graf to para składająca się z pustego zbioru
 wierzchołków i pustego zbioru krawędzi.
 W teorii zwykle nie zezwala się na istnienie pustych grafów, 
 tzn. zakłada się, że przynajmniej zbiór wierzchołków musi być niepusty.
 
-<li>Graf regularny stopnia n (graf n-regularny) to graf nieskierowany, 
-w którym każdy wierzchołek ma taki sam stopień n.
+<li>Graf regularny stopnia k (graf k-regularny) to graf nieskierowany, 
+w którym każdy wierzchołek ma taki sam stopień k.
 
 <li>Graf pełny K_n (ang. complete graph) to graf prosty NIESKIEROWANY, 
 w którym dla każdej pary wierzchołków istnieje krawędź je łącząca. 
-Jeżeli graf pełny ma |V|=n wierzchołków, to posiada |E|=n(n-1)/2 krawędzi.
+Jeżeli graf pełny ma n wierzchołków, to posiada m=n(n-1)/2 krawędzi.
 Graf pełny jest grafem regularnym stopnia n-1.
 Dopełnienie (ang. complement) grafu G to graf pełny z takim samym
 zbiorem wierzchołków jak G, lecz z którego usunięto wszystkie 
@@ -235,7 +233,7 @@ składowych (ang. connected components), z których każda jest maksymalnym
 podgrafem spójnym.
 
 <br>Można pokazać, że dla grafu nieskierowanego spójnego G=(V,E) 
-zachodzi zależność |E| &gt;= |V|-1.
+zachodzi zależność m &gt;= n-1.
 
 <li>Graf SKIEROWANY jest silnie spójny (ang. strongly connected) [Cormen],
 jeżeli każde dwa wierzchołki są osiągalne jeden z drugiego.
@@ -271,16 +269,14 @@ Graf nieskierowany acykliczny to drzewo lub las (suma drzew).
 DAG (ang. directed acyclic graph) to graf skierowany acykliczny.
 
 <li>Graf cykliczny C_n (ang. cycle graph) to graf spójny, 
-regularny stopnia 2, zawierający n wierzchołków (|V|=|E|=n).
+regularny stopnia 2, zawierający n wierzchołków (m=n).
 Liczba chromatyczna 2 (n parzyste) lub 3 (n nieparzyste).
 
 <li>Graf liniowy P_n (ang. path graph, linear graph) to graf otrzymany
-z grafu cyklicznego C_n przez usunięcie jednej krawędzi,
-|V|=n, |E|=n-1.
+z grafu cyklicznego C_n przez usunięcie jednej krawędzi, m=n-1.
 
 <li>Graf koło W_n (ang. wheel graph) to graf powstający z grafu C_{n-1}
-przez połączenie każdego wierzchołka z nowym wierzchołkiem v.
-|V|=n, |E|=2n-2.
+przez połączenie każdego wierzchołka z nowym wierzchołkiem v, m=2n-2.
 
 </ul>
 
@@ -291,12 +287,12 @@ Drzewo rozpinające (spanning tree) grafu spójnego jest podgrafem,
 który zawiera wszystkie wierzchołki grafu i jest jednocześnie
 pojedyńczym drzewem.
 
-<p>Graf G o |V| wierzchołkach jest drzewem wtedy i tylko wtedy,
+<p>Graf G o n wierzchołkach jest drzewem wtedy i tylko wtedy,
 gdy spełnia któryś z czterech poniższych warunków:
 
 <ul>
-<li>G posiada |V|-1 krawędzi i nie zawiera cykli.
-<li>G posiada |V|-1 krawędzi i jest spójny.
+<li>G posiada n-1 krawędzi i nie zawiera cykli.
+<li>G posiada n-1 krawędzi i jest spójny.
 <li>Dokładnie jedna ścieżka prosta łączy każdą parę różnych
 wierzchołków należących do G.
 <li>G jest spójny, ale usunięcie jakiejkolwiek krawędzi rozspaja go.
@@ -306,12 +302,11 @@ wierzchołków należących do G.
 
 <p>Dla grafu nieskierowanego zachodzi lemat [Cormen str. 1197]:
 
-<br>\sum_{v \in V} degree(v) = 2 * |E|.
+<br>\sum_{v &in; V} degree(v) = 2 * m.
 
 <p>Dla grafu skierowanego zachodzi lemat:
 
-<br>\sum_{v \in V} indegree(v) = |E| = \sum_{v \in V} outdegree(v).
-
+<br>\sum_{v &in; V} indegree(v) = m = \sum_{v &in; V} outdegree(v).
 
 </body>
 </html>
