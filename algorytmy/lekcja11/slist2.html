@@ -39,6 +39,12 @@ class Node:
 
     def __str__(self):
         return str(self.data)   # bardzo ogólnie
+
+    def __eq__(self, other):
+        return self.data == other.data
+
+    def __ne__(self, other):
+            return not self == other
 </pre><hr><pre>
 class SingleList:
     """Klasa reprezentująca całą listę jednokierunkową."""
@@ -100,7 +106,7 @@ while not alist.is_empty():   # kolejność 22, 11, 33
 w możliwość iteracji po elementach listy.
 
 <hr><pre>
-class SingleList:
+class SingleList:   # lista zwróci iterator po sobie
     # ... inne metody ...
 
     def __iter__(self):   # wykorzystanie funkcji generatora
@@ -109,12 +115,13 @@ class SingleList:
             yield node.data
             node = node.next
 </pre><hr><pre>
-class SingleList: 
+class SingleList:    # lista jest jednocześnie iteratorem
     # ... inne metody ...
 
     def __iter__(self):
         # Przy tworzeniu iteratora trzeba mieć zmienną, która będzie pamiętać stan.
         # Przy kolejnym tworzeniu iteratora będzie ustawianie na początek.
+        # Iterator będzie odświeżony do nowej iteracji po liście.
         self.current = self.head
         return self
 

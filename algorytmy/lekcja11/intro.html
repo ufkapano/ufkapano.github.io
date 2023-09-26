@@ -6,89 +6,117 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<p><a href="../index.html">Python (index)</a>
-<hr>
+<h1>Podstawy struktur danych</h1>
 
-<h1>Wprowadzenie do tkinter</h1>
+<h3>WPROWADZENIE</h3>
 
-<p>https://docs.python.org/3/library/tkinter.html
+<p>Typ danych to zbiór wartości oraz operacji, jakie można na nich wykonać. 
+Struktura danych to mechanizm organizacji informacji zapewniający wygodne 
+i efektywne sposoby dostępu do nich i ich przetwarzanie. 
+Klasyczne struktury danych to
 
-<p>https://realpython.com/python-gui-tkinter/
+<ul>
+<li>tablice
+<li>ciągi znaków 
+<li>listy połączone (listy powiązane)
+<li>drzewa
+</ul>
 
-<p>https://tkdocs.com/
+<h3>TABLICE</h3>
 
-<h3>INSTALACJA</h3>
+<p><em>Tablice</em> są sztywnym zbiorem danych tego samego typu, 
+zapisanych w jednym ciągu w pamięci i dostępnych za pośrednictwem indeksu. 
+Do i-tego elementu tablicy A można się odwołać za pomocą konstrukcji A[i]. 
+Dostęp do każdego elementu tablicy jest tak samo szybki.
+Dozwolone indeksy zwykle zaczynają się od zera (C/C++, Python)
+lub od jedynki (Pascal).
 
-<p>Biblioteka 'tkinter' jest dostarczana z Pythonem 3, więc zwykle nie trzeba
-jej osobno instalować. Jednak czasami, szczególnie pod Windows,
-biblioteka może być przypadkowo usunięta z listy instalowanych 
-elementów Pythona.
+<h3>CIĄGI ZNAKÓW</h3>
 
-<hr><pre>
-PIP (konto użytkownika lub środowisko wirtualne)
-pip install tk
+<p>W języku C mianem <em>ciągu znaków</em> (łańcucha znaków, napisu, stringu) 
+określa się tablicę znaków o zmiennej długości. 
+Koniec napisu zaznacza się za pomocą specjalnego znaku końca ciągu ('\0'). 
+W Pythonie typ string jest typem wbudowanym, a napisy są niezmienne
+i mają określone pewne działania.
+W innych językach mogą występować inne implementacje. 
+Typowe operacje na stringach: wyznaczanie długości stringu, 
+kopiowanie stringu, porównywanie leksykograficzne, sklejanie stringów. 
+Stringi są użyteczne, ponieważ wiele aplikacji przetwarza dane tekstowe, 
+a ponadto stringi są zwykle efektywnie realizowane w systemach komputerowych.
 
-APT (dla całego komputera)
-Pakiety Debiana: python-tk, python3-tk, oraz zależności.
-</pre><hr>
+<h3>LISTY POŁĄCZONE</h3>
 
-<h3>START</h3>
+<p><em>Lista połączona</em> jest to zbiór elementów, z których każdy jest 
+zawarty w węźle, zawierającym dodatkowo łącze do innego węzła. 
+Jedynym sposobem dostania się do konkretnego elementu listy 
+jest przejście przez listę od jej samego początku. 
+Ostatni węzeł listy możemy oznaczyć za pomocą pustego łącza, 
+węzła-atrapy, węzła wskazującego pierwszy element listy 
+(lista cykliczna), itp. 
+Węzły listy (wszystkie na liście jednocześnie) mogą posiadać więcej 
+niż jedno łącze. W listach połączonych podwójnie każdy węzeł posiada 
+łącza do elementu poprzedniego i następnego.
 
-<p>Pakiet 'tkinter' jest standardowym interfejsem Pythona do Tcl/Tk GUI toolkit.
-Tk i tkinter są dostępne na większości platform Uniksowych i na Windows.
-Samo Tk nie jest częścią Pythona, jest rozwijane w firmie ActiveState.
+<h3>DRZEWA</h3>
 
-<hr><pre>
-# Podane polecenie powinno otworzyć okno ukazujące interfejs Tk.
+<p><em>Drzewo</em> jest niepustym zbiorem węzłów i krawędzi, 
+spełniającym pewne wymagania. 
+Wierzchołek (węzeł) jest obiektem prostym, który może przechowywać
+pewne dane.
+Krawędź to element łączący dwa wierzchołki.
+Ścieżka jest listą różnych wierzchołków, w której kolejne wierzchołki 
+są połączone krawędziami.
+W drzewie dwa dowolne węzły łączy dokładnie jedna ścieżka.
+W przeciwnym razie mamy do czynienia z grafem, który nie jest drzewem.
 
-$ python2 -m Tkinter     # Py2, version 8.6 in Debian 10
-$ python3 -m tkinter    # Py3, version 8.6 in Debian 10
-</pre><hr><pre>
-# Sprawdzenie wersji tkinter w trybie interaktywnym Pythona.
+<p><em>Drzewo z korzeniem</em> to takie drzewo, w którym jeden z węzłów
+oznacza się jako korzeń. 
+W informatyce termin drzewo zwykle oznacza drzewo z korzeniem.
+Zwykle drzewa z korzeniem rysuje się tak,
+aby korzeń znajdował się najwyżej. Nad każdym węzłem (oprócz korzenia)
+znajduje się dokładnie jeden węzeł, zwany ojcem (rodzicem).
+Węzły znajdujące się bezpośrednio pod danym węzłem nazywamy dziećmi
+(potomkami). Węzły, które nie mają potomków, nazywane są
+liśćmi lub węzłami końcowymi. 
 
-#import Tkinter as tk   # Py2
-import tkinter as tk   # Py3 lub Py2 w Debianie
-tk._test()   # otwarcie okna
-</pre><hr>
+<p>W <em>drzewie uporządkowanym</em> (z korzeniem) 
+kolejność potomków każdego węzła jest ściśle określona. 
+Drzewo, w którym każdy węzeł musi mieć określoną liczbę 
+potomków uporządkowanych w określony sposób, nazywane jest m-drzewem. 
+Przykłady: drzewa binarne, drzewa trójkowe.
+W dalszych rozważaniach skupimy się na drzewach binarnych.
 
-<p>Tkinter jest lekki i wieloplatformowy (Windows, MacOS, Linux). 
-Jest to faktycznie standardowy GUI framework dla Pythona,
-choć czasem jest krytykowany za przestarzały wygląd.
-Przy przejściu z Py2 do Py3 pewne moduły tkinter zmieniły nazwy,
-przez co zmienił się sposób importu.
+<p>Zastosowania struktur drzewiastych: 
 
-<hr><pre>
-import tkinter as tk   # Py3
-from tkinter import filedialog   # Py3, okna dialogowe
-from tkinter import messagebox   # Py3
-from tkinter import ttk   # themed widgets
+<ul>
+<li>drzewo genealogiczne,
+<li>organizacja zawodów sportowych,
+<li>schemat organizacyjny dużego przedsiębiorstwa,
+<li>organizacja systemów plików.
+</ul>
 
-root = tk.Tk()   # ustawienie głównego okna aplikacji
+<p>Przykładowe drzewa:
 
-root.title("first")   # opcjonalny tytuł okna, domyślny tytuł to "tk"
+<ul>
+<li>drzewo BST (binarne drzewo poszukiwań)
+<li>drzewo AVL (Adelson-Velski, Landis, 1962)
+<li>drzewo czerwono-czarne (Bayer, 1972)
+<li>drzewo splay (Sleator, Trajan, 1985)
+</ul>
 
-#root.configure(width=200, height=100)   # optional
-#root.geometry("200x100")   # optional, the same
-#root.geometry("{}x{}".format(width, height))
-#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
-#root.resizable(width=False, height=False)   # nie można zmieniać rozmiarów okna
+<p>Algorytm DSW (Day, Stout, Warren, 1986) jest to
+algorytm równoważący BST [Wikipedia].
 
-# Tutaj dodajemy widżety.
+<h3>WIKIPEDIA</h3>
 
-#label = tk.Label(root, text="Hello")
-label = ttk.Label(root, text="Hello")   # themed widgets
-
-label.grid()   # użycie menedżera geometrii
-#label.grid(row=0, column=0)   # jawnie podane położenie na siatce (lewy górny róg)
-
-root.mainloop()   # uruchomienie pętli zdarzeń tkinter
-</pre><hr>
-
-<p>Instrukcja 'root.mainloop()' poleca Pythonowi uruchomić 
-'pętlę zdarzeń' tkinter. Wtedy rozpoczyna się nasłuchiwanie zdarzeń,
-takich jak naciśnięcia przycisków lub klawiszy klawiatury.
-Kod następujący po tej instrukcji jest blokowany aż do chwili,
-kiedy wywołane okno zostaje zamknięte.
+<ul>
+<li>https://en.wikipedia.org/wiki/List_of_data_structures
+<li>https://en.wikipedia.org/wiki/Linked_list
+<li>https://en.wikipedia.org/wiki/Skip_list
+<li>https://en.wikipedia.org/wiki/Tree_(data_structure)
+<li>https://en.wikipedia.org/wiki/Heap_(data_structure)
+<li>https://en.wikipedia.org/wiki/Hash_table
+</ul>
 
 </body>
 </html>

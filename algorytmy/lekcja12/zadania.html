@@ -9,56 +9,149 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie ze stosem lub kolejką (10.2 - 10.7), 
+zadanie z kolejką przypadkową (10.8)
 
-<h3>ZADANIE 12.1 (PADAJĄCY ŚNIEG)</h3>
+<p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
 
-<p>Zaimplementować prostą grę o topieniu padającego śniegu.
-Przy górnej krawędzi ekranu pojawiają się losowo płatki śniegu,
-które spadają w dół ruchem jednostajnym.
-Zadaniem gracza jest topienie płatków śniegu przez klikanie na nie myszą.
-Celem gry jest niedopuszczenie, aby jakiś płatek śniegu dotarł
-do dolnej krawędzi ekranu.
+<h3>ZADANIE 10.1 (MATRIX)</h3>
 
-<p>Można rozważyć wariant gry, w którym tworzą się zaspy śniegu,
-a gra kończy się, gdy zaspa urośnie do górnej krawędzi ekranu.
+<p>W pliku <em>matrix.py</em> zdefiniować klasę <em>Matrix</em>
+reprezentującą macierz prostokątną.
+Wykorzystać wyjątek <em>ValueError</em> do obsługi błędów, np.
+przy dodawaniu macierzy liczby wierszy i kolumn obu macierzy
+powinny być zgodne; indeksy wierszy i kolumn muszą być w określonych
+przedziałach (Python wykryje tylko przekroczenie zakresu listy).
+Poprawić metodę do wyświetlania macierzy.
 
-<h3>ZADANIE 12.2 (PING PONG)</h3>
+<hr><pre>
+class Matrix:
 
-<p>https://www.gry.pl/gra/atari-pong
+    def __init__(self, rows=1, cols=1):
+        self.rows = rows
+        self.cols = cols
+        self.data = [0] * rows * cols
 
-<p>Zaimplementować swoją wersję gry Atari Pong (1972).
-Celem gry jest zdobycie 11 punktów.
-Można grać przeciwko drugiemu graczowi lub komputerowi.
+    def __str__(self):
+        return str(self.data)
 
-<h3>ZADANIE 12.3 (SNAKE)</h3>
+    def __getitem__(self, pair):   # odczyt m[i,j]
+        i, j = pair
+        return self.data[i * self.cols + j]
 
-<p>Zaimplementować uproszczoną wersję gry Snake.
-Wąż ma rozmiar jednego kwadratu, porusza się ruchem jednostajnym
-w kierunku poziomym lub pionowm, zmiana kierunku (skręt) następuje
-po naciśnięciu kursora. Zabroniony jest ruch wstecz (koniec gry).
-Zakładamy, że plansza ma periodyczne warunki brzegowe.
+    def __setitem__(self, pair, value):   # m[i,j] = value
+        i, j = pair
+        self.data[i * self.cols + j] = value
 
-<p>Zadaniem gracza jest poruszanie wężem i zjadanie pożywnych owoców, 
-które pojawiają się losowo na planszy i żyją określony czas.
-W każdym momencie na planszy może być obecny najwyżej jeden owoc.
-Gra kończy się po określonym czasie lub po niedozwolonym ruchu.
-Wynik gry to stan licznika owoców.
+    def __add__(self, other): pass   # dodawanie macierzy
 
-<p>Można wprowadzić dwa rodzaje owoców, o różnych kolorach:
-owoce pożywne i owoce zatrute. Po zjedzeniu zatrutego owocu można
-karać gracza odjęciem punktów lub zakończyć grę.
+    def __sub__(self, other): pass   # odejmowanie macierzy
 
-<p>Można wprowadzić okresowe zwiększanie prędkości węża.
+    def __mul__(self, other): pass   # mnożenie macierzy
 
-<p>Można wprowadzić wydłużanie węża po zjedzeniu pożywnego owocu,
-a skracanie po zjędzeniu owocu zatrutego.
+# Zastosowanie.
+m = Matrix(3, 4)
+m[1, 2] = 12     # metoda __setitem__
+print(m[1, 2])   # metoda __getitem__
+print(m)         # metoda __str__
+</pre><hr>
 
-<h3>ZADANIE 12.4 (TETRIS)</h3>
+<h3>ZADANIE 10.2 (STACK)</h3>
 
-<p>https://onlygames.io/gry/tetris/tetris.html
+<p>Poprawić implementację tablicową stosu tak, aby korzystała
+z wyjątków w przypadku pojawienia się błędu.
+Metoda pop() ma zgłaszać błąd w przypadku pustego stosu.
+Metoda push() ma zgłaszać błąd w przypadku przepełnienia stosu.
+Napisać kod testujący stos.
 
-<p>Zaimplementować swoją wersję gry Tetris.
+<pre>
+</pre>
+
+
+<h3>ZADANIE 10.3 (STACK)</h3>
+
+<p>Stworzyć implementację tablicową stosu do przechowywania 
+bez powtórzeń liczb całkowitych od 0 do size-1. 
+Powtarzająca się liczba ma być ignorowana bez żadnej akcji
+(inne podejście to wyzwolenie wyjątku).
+Wskazówka: stworzyć drugą tablicę, w której 0 lub 1 na pozycji i 
+oznacza odpowiednio brak lub istnienie liczby i na stosie. 
+
+<pre>
+</pre>
+
+<h3>ZADANIE 10.4 (QUEUE)</h3>
+
+<p>Poprawić metodę get(), 
+aby w przypadku pustej kolejki zwracała wyjątek.
+Poprawić metodę put() w tablicowej implementacji kolejki, 
+aby w przypadku przepełnienia kolejki zwracała wyjątek.
+Napisać kod testujący kolejkę.
+
+<h3>ZADANIE 10.5 (PRIORITYQUEUE)</h3>
+
+<p>Poprawić metodę remove() w pythonowej implementacji kolejki
+priorytetowej tak, aby uniknąć kosztownego pobierania elementu
+ze środka listy.
+
+<p>Poprawić metodę remove() w tablicowej implementacji kolejki
+priorytetowej, aby w przypadku pustej kolejki generowała wyjątek.
+
+<p>Poprawić metodę insert() w tablicowej implementacji kolejki
+priorytetowej, aby w przypadku przepełnienia kolejki
+generowała wyjątek.
+
+<pre>
+</pre>
+
+<h3>ZADANIE 10.6 (PRIORITYQUEUE)</h3>
+
+<p>Załóżmy, że w kolejce priorytetowej będą przechowywane elementy,
+których priorytet można zmienić za pomocą metody increase(value).
+Dodać kolejce metodę increase(value), która pozwoli na zmianę
+priorytetów wszystkich elementów w kolejce o wartość value.
+Taka kolejka może symulować działanie systemu operacyjnego,
+który zwiększa priorytet zadaniom czekającym w kolejce do wykonania.
+Cykliczne zwiększanie priorytetów zapobiega długiemu przebywaniu
+w kolejce zadań o niskim początkowym priorytecie.
+
+<h3>ZADANIE 10.7 (PRIORITYQUEUE)</h3>
+
+<p>W pythonowej implementacji kolejki priorytetowej
+dodać możliwość ustawiania sposobu porównywania elementów
+znajdujących się w kolejce.
+
+<hr><pre>
+class PriorityQueue:
+
+    def __init__(self, cmpfunc=cmp):
+        self.items = []
+        self.cmpfunc = cmpfunc
+</pre><hr>
+
+<h3>ZADANIE 10.8 (RANDOMQUEUE)</h3>
+
+<p>Stworzyć ADT w postaci kolejki losowej, z której elementy
+będą pobierane w losowej kolejności.
+Zadbać o to, aby każda operacja była wykonywana w stałym czasie,
+niezależnie od liczby elementów w kolejce.
+
+<hr><pre>
+class RandomQueue:
+
+    def __init__(self): pass
+    #def __init__(self, size=10): pass   # wersja z ograniczeniem na rozmiar
+
+    def insert(self, item): pass   # wstawia element w czasie O(1)
+
+    def remove(self): pass   # zwraca losowy element w czasie O(1)
+
+    def is_empty(self): pass
+
+    def is_full(self): pass
+
+    def clear(self): pass   # czyszczenie listy
+</pre><hr>
 
 </body>
 </html>

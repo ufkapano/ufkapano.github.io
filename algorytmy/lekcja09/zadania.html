@@ -9,154 +9,56 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie z zestawu
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
-<p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
+<h3>ZADANIE 12.1 (PADAJĄCY ŚNIEG)</h3>
 
-<h3>ZADANIE 9.1 (SINGLELIST)</h3>
+<p>Zaimplementować prostą grę o topieniu padającego śniegu.
+Przy górnej krawędzi ekranu pojawiają się losowo płatki śniegu,
+które spadają w dół ruchem jednostajnym.
+Zadaniem gracza jest topienie płatków śniegu przez klikanie na nie myszą.
+Celem gry jest niedopuszczenie, aby jakiś płatek śniegu dotarł
+do dolnej krawędzi ekranu.
 
-<p>Do klasy SingleList dodać nowe metody.
+<p>Można rozważyć wariant gry, w którym tworzą się zaspy śniegu,
+a gra kończy się, gdy zaspa urośnie do górnej krawędzi ekranu.
 
-<hr><pre>
-class SingleList:
-# ... inne metody ...
+<h3>ZADANIE 12.2 (PING PONG)</h3>
 
-    def remove_tail(self): pass   # klasy O(n)
-        # Zwraca cały węzeł, skraca listę.
-        # Dla pustej listy rzuca wyjątek ValueError.
+<p>https://www.gry.pl/gra/atari-pong
 
-    def join(self, other): pass   # klasy O(1)
-        # Węzły z listy other są przepinane do listy self na jej koniec.
-        # Po zakończeniu operacji lista other ma być pusta.
+<p>Zaimplementować swoją wersję gry Atari Pong (1972).
+Celem gry jest zdobycie 11 punktów.
+Można grać przeciwko drugiemu graczowi lub komputerowi.
 
-    def clear(self): pass   # czyszczenie listy
-</pre><hr><pre>
-POCZĄTEK JOIN
-A1 o-- self.head
-|
-A2 o-- self.tail
-|
-None
+<h3>ZADANIE 12.3 (SNAKE)</h3>
 
-B1 o-- other.head
-|
-B2 o-- other.tail
-|
-None
+<p>Zaimplementować uproszczoną wersję gry Snake.
+Wąż ma rozmiar jednego kwadratu, porusza się ruchem jednostajnym
+w kierunku poziomym lub pionowm, zmiana kierunku (skręt) następuje
+po naciśnięciu kursora. Zabroniony jest ruch wstecz (koniec gry).
+Zakładamy, że plansza ma periodyczne warunki brzegowe.
 
-KONIEC JOIN
-A1 o-- self.head
-|
-A2
-|
-B1
-|
-B2 o-- self.tail
-|
-None
+<p>Zadaniem gracza jest poruszanie wężem i zjadanie pożywnych owoców, 
+które pojawiają się losowo na planszy i żyją określony czas.
+W każdym momencie na planszy może być obecny najwyżej jeden owoc.
+Gra kończy się po określonym czasie lub po niedozwolonym ruchu.
+Wynik gry to stan licznika owoców.
 
-None o-- other.head = other.tail
-</pre><hr>
+<p>Można wprowadzić dwa rodzaje owoców, o różnych kolorach:
+owoce pożywne i owoce zatrute. Po zjedzeniu zatrutego owocu można
+karać gracza odjęciem punktów lub zakończyć grę.
 
-<h3>ZADANIE 9.2 (SINGLELIST)</h3>
+<p>Można wprowadzić okresowe zwiększanie prędkości węża.
 
-<p>Do klasy SingleList dodać nowe metody.
+<p>Można wprowadzić wydłużanie węża po zjedzeniu pożywnego owocu,
+a skracanie po zjędzeniu owocu zatrutego.
 
-<hr><pre>
-class SingleList:
-# ... inne metody ...
+<h3>ZADANIE 12.4 (TETRIS)</h3>
 
-    def search(self, data): pass   # klasy O(n)
-        # Zwraca łącze do węzła o podanym kluczu lub None.
+<p>https://onlygames.io/gry/tetris/tetris.html
 
-    def find_min(self): pass   # klasy O(n)
-        # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
-
-    def find_max(self): pass   # klasy O(n)
-        # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
-
-    def reverse(self): pass   # klasy O(n)
-        # Odwracanie kolejności węzłów na liście.
-</pre><hr>
-
-<h3>ZADANIE 9.3 (DOUBLELIST)</h3>
-
-<p>Do klasy DoubleList dopisać nowe metody.
-
-<pre>
-class DoubleList:
-
-    def find_max(self): pass
-        # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
-
-    def find_min(self): pass
-        # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
-
-    def remove(self, node): pass
-        # Usuwa wskazany węzeł z listy (węzeł należy do listy).
-
-    def clear(self): pass   # czyszczenie listy
-</pre>
-
-<h3>ZADANIE 9.4 (SORTEDLIST)</h3>
-
-<p>Na bazie list powiązanych pojedynczo lub podwójnie
-stworzyć klasę SortedList, która przechowuje listę stale
-posortowaną. Największy element jest na początku listy (head).
-
-<hr><pre>
-class SortedList:
-
-    def __init__(self):
-        self.head = None
-        self.length = 0
-
-    def is_empty(self):
-        return self.head is None
-
-    def insert(self, node): pass
-        # L = SortedList() ; L.insert(Node(3))
-
-    def remove(self): pass
-        # Zwraca node z elementem największym, czyli head.
-        # Długość listy zmniejsza się o jeden węzeł.
-
-    def merge(self, other): pass
-        # Scalanie dwóch list posortowanych.
-        # Po tej operacji lista other ma być pusta.
-
-    def clear(self): pass   # czyszczenie listy
-</pre><hr>
-
-<h3>ZADANIE 9.5 (CYCLICLIST)</h3>
-
-<p>Na bazie list powiązanych pojedynczo lub podwójnie (to jest wygodniejsze)
-stworzyć klasę CyclicList, która przechowuje listę cykliczną.
-Atrybut head może wskazywać na dowolny węzeł listy cyklicznej, natomiast
-przez tail rozumiemy węzeł bezpośrednio poprzedzający head.
-
-<hr><pre>
-class CyclicList:
-
-    def __init__(self):
-        self.head = None   # łącze do dowolnego węzła listy
-        # nie potrzeba mieć self.tail
-
-    def is_empty(self):
-        return self.head is None
-
-    def insert_head(self, node): pass
-
-    def insert_tail(self, node): pass
-
-    def search(self, data):   # zwraca node lub None
-
-    def remove(self, node): pass
-
-    def join(self, other): pass   # scalanie dwóch list cyklicznych w czasie O(1)
-
-    def clear(self): pass   # czyszczenie listy
-</pre><hr>
+<p>Zaimplementować swoją wersję gry Tetris.
 
 </body>
 </html>

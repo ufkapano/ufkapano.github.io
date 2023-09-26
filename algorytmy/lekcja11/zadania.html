@@ -9,22 +9,154 @@
 <h1>Zadania</h1>
 
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie z zestawu
 
-<h3>ZADANIE 11.1</h3>
+<p>W rozwiązaniach należy umieścić kod testujący przygotowane funkcje.
 
-<p>Napisać program z GUI, który symuluje rzut kostką sześcienną.
-Program powinien mieć przycisk uruchamiający rzut kostką
-i etykietę wyświetlającą wynik (liczba od 1 do 6 lub odpowiedni obrazek).
+<h3>ZADANIE 9.1 (SINGLELIST)</h3>
 
-<h3>ZADANIE 11.2</h3>
+<p>Do klasy SingleList dodać nowe metody.
 
-<p>Napisać program z GUI, który realizuje grę Papier-Kamień-Nożyce
-użytkownika z komputerem.
-Wybór komputera jest losowany.
-Program może zawierać trzy przyciski dla każdego wyboru użytkownika
-(P, K, N) oraz etykietę wyświetlającą wybór komputera i wynik gry.
+<hr><pre>
+class SingleList:
+# ... inne metody ...
 
+    def remove_tail(self): pass   # klasy O(n)
+        # Zwraca cały węzeł, skraca listę.
+        # Dla pustej listy rzuca wyjątek ValueError.
+
+    def join(self, other): pass   # klasy O(1)
+        # Węzły z listy other są przepinane do listy self na jej koniec.
+        # Po zakończeniu operacji lista other ma być pusta.
+
+    def clear(self): pass   # czyszczenie listy
+</pre><hr><pre>
+POCZĄTEK JOIN
+A1 o-- self.head
+|
+A2 o-- self.tail
+|
+None
+
+B1 o-- other.head
+|
+B2 o-- other.tail
+|
+None
+
+KONIEC JOIN
+A1 o-- self.head
+|
+A2
+|
+B1
+|
+B2 o-- self.tail
+|
+None
+
+None o-- other.head = other.tail
+</pre><hr>
+
+<h3>ZADANIE 9.2 (SINGLELIST)</h3>
+
+<p>Do klasy SingleList dodać nowe metody.
+
+<hr><pre>
+class SingleList:
+# ... inne metody ...
+
+    def search(self, data): pass   # klasy O(n)
+        # Zwraca łącze do węzła o podanym kluczu lub None.
+
+    def find_min(self): pass   # klasy O(n)
+        # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
+
+    def find_max(self): pass   # klasy O(n)
+        # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
+
+    def reverse(self): pass   # klasy O(n)
+        # Odwracanie kolejności węzłów na liście.
+</pre><hr>
+
+<h3>ZADANIE 9.3 (DOUBLELIST)</h3>
+
+<p>Do klasy DoubleList dopisać nowe metody.
+
+<pre>
+class DoubleList:
+
+    def find_max(self): pass
+        # Zwraca łącze do węzła z największym kluczem lub None dla pustej listy.
+
+    def find_min(self): pass
+        # Zwraca łącze do węzła z najmniejszym kluczem lub None dla pustej listy.
+
+    def remove(self, node): pass
+        # Usuwa wskazany węzeł z listy (węzeł należy do listy).
+
+    def clear(self): pass   # czyszczenie listy
+</pre>
+
+<h3>ZADANIE 9.4 (SORTEDLIST)</h3>
+
+<p>Na bazie list powiązanych pojedynczo lub podwójnie
+stworzyć klasę SortedList, która przechowuje listę stale
+posortowaną. Największy element jest na początku listy (head).
+
+<hr><pre>
+class SortedList:
+
+    def __init__(self):
+        self.head = None
+        self.length = 0
+
+    def is_empty(self):
+        return self.head is None
+
+    def insert(self, node): pass
+        # L = SortedList() ; L.insert(Node(3))
+
+    def remove(self): pass
+        # Zwraca node z elementem największym, czyli head.
+        # Długość listy zmniejsza się o jeden węzeł.
+
+    def merge(self, other): pass
+        # Scalanie dwóch list posortowanych.
+        # Po tej operacji lista other ma być pusta.
+
+    def clear(self): pass   # czyszczenie listy
+</pre><hr>
+
+<h3>ZADANIE 9.5 (CYCLICLIST)</h3>
+
+<p>Na bazie list powiązanych pojedynczo lub podwójnie (to jest wygodniejsze)
+stworzyć klasę CyclicList, która przechowuje listę cykliczną.
+Atrybut head może wskazywać na dowolny węzeł listy cyklicznej, natomiast
+przez tail rozumiemy węzeł bezpośrednio poprzedzający head.
+
+<hr><pre>
+class CyclicList:
+
+    def __init__(self):
+        self.head = None   # łącze do dowolnego węzła listy
+        # nie potrzeba mieć self.tail
+
+    def is_empty(self):
+        return self.head is None
+
+    def insert_head(self, node): pass
+
+    def insert_tail(self, node): pass
+
+    def search(self, data):   # zwraca node lub None
+
+    def remove(self, node): pass
+
+    def join(self, other): pass   # scalanie dwóch list cyklicznych w czasie O(1)
+
+    def clear(self): pass   # czyszczenie listy
+</pre><hr>
 
 </body>
 </html>

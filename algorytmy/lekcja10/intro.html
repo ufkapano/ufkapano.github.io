@@ -6,72 +6,89 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Podstawy ADT</h1>
+<p><a href="../index.html">Python (index)</a>
+<hr>
 
-<h3>WPROWADZENIE</h3>
+<h1>Wprowadzenie do tkinter</h1>
 
-<p>Abstrakcyjny typ danych (ang. <em>abstract data type</em>, ADT)
-jest typem danych, który jest dostępny 
-tylko za pośrednictwem odpowiedniego interfejsu. 
-Program korzystający z abstrakcyjnego typu danych nazywamy klientem, 
-a program określający typ danych - implementacją. 
-Dzięki abstrakcyjnym typom danych możemy oddzielić wykonywane 
-przez programy pojęciowe przekształcenia danych od wszelkich 
-konkretnych reprezentacji struktur danych i implementacji algorytmów. 
-Przy analizie wydajności programów musimy być świadomi kosztów operacji 
-podstawowych.
+<p>https://docs.python.org/3/library/tkinter.html
 
-<p>Dla zbiorów obiektów abstrakcyjnych zwykle potrzebujemy 
-następujących operacji:
+<p>https://realpython.com/python-gui-tkinter/
 
-<ul>
-<li>inicjalizacja zbioru obiektów (konstruktor)
-<li>umieszczenie nowego obiektu w zbiorze (insert, push, put)
-<li>usuwanie obiektu ze zbioru (remove, pop, get)
-<li>niszczenie zbioru obiektów (destruktor, zwolnienie zasobów)
-<li>kopiowanie zbioru obiektów (konstruktor kopiujący, podstawienie kopiujące)
-</ul>
+<p>https://tkdocs.com/
 
-<p>Najważniejsze abstrakcyjne typy danych:
+<h3>INSTALACJA</h3>
 
-<ul>
-<li>lista (list)
-<li>stos (LIFO, stack)
-<li>kolejka (FIFO, queue)
-<li>double-ended queue (dequeue, deque)
-<li>kolejka z priorytetami (priority queue)
-<li>sterta/kopiec (heap)
-<li>graf (graph)
-<li>struktura zbiorów rozłącznych (disjoint-set data structure)
-<li>zbiór (set)
-<li>tablica asocjacyjna (associative array)
-</ul>
+<p>Biblioteka 'tkinter' jest dostarczana z Pythonem 3, więc zwykle nie trzeba
+jej osobno instalować. Jednak czasami, szczególnie pod Windows,
+biblioteka może być przypadkowo usunięta z listy instalowanych 
+elementów Pythona.
 
-<h3>ZALETY UŻYWANIA ADT</h3>
+<hr><pre>
+PIP (konto użytkownika lub środowisko wirtualne)
+pip install tk
 
-<ul>
-<li>Enkapsulacja. Użytkownik nie musi znać szczegółów implementacji.
-<li>Lokalizacja zmian. Nie trzeba zmieniać kodu użytkownika
-po zmianie implementacji ADT.
-<li>Elastyczność. Różne implementacje danego ADT o tych samych właściwościach
-mogą być używane zamiennie. Daje to możliwość poprawienia ogólnej wydajności
-w szczególnych sytuacjach.
-</ul>
+APT (dla całego komputera)
+Pakiety Debiana: python-tk, python3-tk, oraz zależności.
+</pre><hr>
 
-<h3>WIKIPEDIA</h3>
+<h3>START</h3>
 
-<ul>
-<li>https://en.wikipedia.org/wiki/Abstract_data_type
-<li>https://en.wikipedia.org/wiki/List_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Collection_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Stack_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Queue_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Double-ended_queue
-<li>https://en.wikipedia.org/wiki/Priority_queue
-<li>https://en.wikipedia.org/wiki/Graph_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Set_(abstract_data_type)
-<li>https://en.wikipedia.org/wiki/Associative_array
-</ul>
+<p>Pakiet 'tkinter' jest standardowym interfejsem Pythona do Tcl/Tk GUI toolkit.
+Tk i tkinter są dostępne na większości platform Uniksowych i na Windows.
+Samo Tk nie jest częścią Pythona, jest rozwijane w firmie ActiveState.
+
+<hr><pre>
+# Podane polecenie powinno otworzyć okno ukazujące interfejs Tk.
+
+$ python2 -m Tkinter     # Py2, version 8.6 in Debian 10
+$ python3 -m tkinter    # Py3, version 8.6 in Debian 10
+</pre><hr><pre>
+# Sprawdzenie wersji tkinter w trybie interaktywnym Pythona.
+
+#import Tkinter as tk   # Py2
+import tkinter as tk   # Py3 lub Py2 w Debianie
+tk._test()   # otwarcie okna
+</pre><hr>
+
+<p>Tkinter jest lekki i wieloplatformowy (Windows, MacOS, Linux). 
+Jest to faktycznie standardowy GUI framework dla Pythona,
+choć czasem jest krytykowany za przestarzały wygląd.
+Przy przejściu z Py2 do Py3 pewne moduły tkinter zmieniły nazwy,
+przez co zmienił się sposób importu.
+
+<hr><pre>
+import tkinter as tk   # Py3
+from tkinter import filedialog   # Py3, okna dialogowe
+from tkinter import messagebox   # Py3
+from tkinter import ttk   # themed widgets
+
+root = tk.Tk()   # ustawienie głównego okna aplikacji
+
+root.title("first")   # opcjonalny tytuł okna, domyślny tytuł to "tk"
+
+#root.configure(width=200, height=100)   # optional
+#root.geometry("200x100")   # optional, the same
+#root.geometry("{}x{}".format(width, height))
+#root.geometry("{}x{}+{}+{}".format(width, height, pos_x, pos_y))
+#root.resizable(width=False, height=False)   # nie można zmieniać rozmiarów okna
+
+# Tutaj dodajemy widżety.
+
+#label = tk.Label(root, text="Hello")
+label = ttk.Label(root, text="Hello")   # themed widgets
+
+label.grid()   # użycie menedżera geometrii
+#label.grid(row=0, column=0)   # jawnie podane położenie na siatce (lewy górny róg)
+
+root.mainloop()   # uruchomienie pętli zdarzeń tkinter
+</pre><hr>
+
+<p>Instrukcja 'root.mainloop()' poleca Pythonowi uruchomić 
+'pętlę zdarzeń' tkinter. Wtedy rozpoczyna się nasłuchiwanie zdarzeń,
+takich jak naciśnięcia przycisków lub klawiszy klawiatury.
+Kod następujący po tej instrukcji jest blokowany aż do chwili,
+kiedy wywołane okno zostaje zamknięte.
 
 </body>
 </html>

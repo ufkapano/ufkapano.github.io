@@ -6,117 +6,99 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Podstawy struktur danych</h1>
+<h1>Wprowadzenie do pygame</h1>
 
-<h3>WPROWADZENIE</h3>
+<p>http://www.pygame.org/
 
-<p>Typ danych to zbiór wartości oraz operacji, jakie można na nich wykonać. 
-Struktura danych to mechanizm organizacji informacji zapewniający wygodne 
-i efektywne sposoby dostępu do nich i ich przetwarzanie. 
-Klasyczne struktury danych to
+<p>https://pypi.org/project/pygame/
 
-<ul>
-<li>tablice
-<li>ciągi znaków 
-<li>listy połączone (listy powiązane)
-<li>drzewa
-</ul>
+<p>http://www.libsdl.org/
 
-<h3>TABLICE</h3>
+<h3>INSTALACJA</h3>
 
-<p><em>Tablice</em> są sztywnym zbiorem danych tego samego typu, 
-zapisanych w jednym ciągu w pamięci i dostępnych za pośrednictwem indeksu. 
-Do i-tego elementu tablicy A można się odwołać za pomocą konstrukcji A[i]. 
-Dostęp do każdego elementu tablicy jest tak samo szybki.
-Dozwolone indeksy zwykle zaczynają się od zera (C/C++, Python)
-lub od jedynki (Pascal).
+<p>Biblioteka 'pygame' nie należy do biblioteki standardowej Pythona,
+więc trzeba ją osobno instalować.
 
-<h3>CIĄGI ZNAKÓW</h3>
+<hr><pre>
+PIP (konto użytkownika lub środowisko wirtualne)
+python3 -m pip install pygame
 
-<p>W języku C mianem <em>ciągu znaków</em> (łańcucha znaków, napisu, stringu) 
-określa się tablicę znaków o zmiennej długości. 
-Koniec napisu zaznacza się za pomocą specjalnego znaku końca ciągu ('\0'). 
-W Pythonie typ string jest typem wbudowanym, a napisy są niezmienne
-i mają określone pewne działania.
-W innych językach mogą występować inne implementacje. 
-Typowe operacje na stringach: wyznaczanie długości stringu, 
-kopiowanie stringu, porównywanie leksykograficzne, sklejanie stringów. 
-Stringi są użyteczne, ponieważ wiele aplikacji przetwarza dane tekstowe, 
-a ponadto stringi są zwykle efektywnie realizowane w systemach komputerowych.
+APT (dla całego komputera)
+Pakiety Debiana: python-pygame (Py2.7), python3-pygame (Py3), oraz zależności.
+Debian 10 ma pygame 1.9.4, w PyPI jest wersja 2.1.2.
+</pre><hr>
 
-<h3>LISTY POŁĄCZONE</h3>
+<h3>START</h3>
 
-<p><em>Lista połączona</em> jest to zbiór elementów, z których każdy jest 
-zawarty w węźle, zawierającym dodatkowo łącze do innego węzła. 
-Jedynym sposobem dostania się do konkretnego elementu listy 
-jest przejście przez listę od jej samego początku. 
-Ostatni węzeł listy możemy oznaczyć za pomocą pustego łącza, 
-węzła-atrapy, węzła wskazującego pierwszy element listy 
-(lista cykliczna), itp. 
-Węzły listy (wszystkie na liście jednocześnie) mogą posiadać więcej 
-niż jedno łącze. W listach połączonych podwójnie każdy węzeł posiada 
-łącza do elementu poprzedniego i następnego.
+<p>Pygame jest to darmowy zbiór modułów przeznaczonych do pisania gier video.
+Działa prawie na każdej platformie i systemie operacyjnym (przenośność).
+Pygame bazuje na bibliotece SDL (Simple DirectMedia Layer).
 
-<h3>DRZEWA</h3>
+<p>Autorami Pygame są Pete Shinners i inni deweloperzy.
+Pygame jest projektem społecznościowym od roku 2000, wydanym na licencji
+'GNU Lesser General Public License'.
+W roku 2020 wydano Pygame 2.0, z zachowaniem w dużym stopniu
+kompatybilności wstecz (backwards compatibility).
 
-<p><em>Drzewo</em> jest niepustym zbiorem węzłów i krawędzi, 
-spełniającym pewne wymagania. 
-Wierzchołek (węzeł) jest obiektem prostym, który może przechowywać
-pewne dane.
-Krawędź to element łączący dwa wierzchołki.
-Ścieżka jest listą różnych wierzchołków, w której kolejne wierzchołki 
-są połączone krawędziami.
-W drzewie dwa dowolne węzły łączy dokładnie jedna ścieżka.
-W przeciwnym razie mamy do czynienia z grafem, który nie jest drzewem.
 
-<p><em>Drzewo z korzeniem</em> to takie drzewo, w którym jeden z węzłów
-oznacza się jako korzeń. 
-W informatyce termin drzewo zwykle oznacza drzewo z korzeniem.
-Zwykle drzewa z korzeniem rysuje się tak,
-aby korzeń znajdował się najwyżej. Nad każdym węzłem (oprócz korzenia)
-znajduje się dokładnie jeden węzeł, zwany ojcem (rodzicem).
-Węzły znajdujące się bezpośrednio pod danym węzłem nazywamy dziećmi
-(potomkami). Węzły, które nie mają potomków, nazywane są
-liśćmi lub węzłami końcowymi. 
+<hr><pre>
+# Struktura programu z pygame (1).
+# hello.py
+import sys
+import pygame
 
-<p>W <em>drzewie uporządkowanym</em> (z korzeniem) 
-kolejność potomków każdego węzła jest ściśle określona. 
-Drzewo, w którym każdy węzeł musi mieć określoną liczbę 
-potomków uporządkowanych w określony sposób, nazywane jest m-drzewem. 
-Przykłady: drzewa binarne, drzewa trójkowe.
-W dalszych rozważaniach skupimy się na drzewach binarnych.
+# INITIALIZE THE GAME
+pygame.init()   # inicjalizacja pygame, to zawsze na starcie
+size = (width, height) = (400, 300)   # rozmiary okna w pikselach
+screen = pygame.display.set_mode(size)   # stworzenie 'display surface'
+pygame.display.set_caption('Hello')   # napis w pasku tytułu
 
-<p>Zastosowania struktur drzewiastych: 
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS (należy usuwać zdarzenia z kolejki zdarzeń)
+    for event in pygame.event.get():   # pętla po liście zdarzeń (event list)
+        if event.type == pygame.QUIT:   # QUIT Event
+            pygame.quit()   # deaktywacja pygame
+            sys.exit(0)
+    # DRAWING
+    # Rysowanie różnych obiektów, sprawdzanie przekrywania, itp.
+    pygame.display.flip()   # przerysowanie całego okna z bufora na ekran
+    # Współczesne komputery zwykle nie mają problemu z przerysowaniem całego ekranu.
+</pre><hr><pre>
+# Struktura programu z pygame (2).
+# hello2.py
+import pygame
 
-<ul>
-<li>drzewo genealogiczne,
-<li>organizacja zawodów sportowych,
-<li>schemat organizacyjny dużego przedsiębiorstwa,
-<li>organizacja systemów plików.
-</ul>
+# INITIALIZE THE GAME
+pygame.init()   # inicjalizacja pygame, to zawsze na starcie
+size = (width, height) = (400, 300)   # rozmiary okna w pikselach
+screen = pygame.display.set_mode(size)   # stworzenie display Surface
+pygame.display.set_caption('Hello')   # napis w pasku tytułu
 
-<p>Przykładowe drzewa:
+# MAIN GAME LOOP
+done = False   # flaga do wykrycia zakończenia while
+while not done:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event
+            done = True   # chcemy zakończyć pętlę while;
+            # samo 'break' nie wystarczy, bo mamy zagnieżdżoną pętlę
+    # DRAWING
+    # Rysowanie różnych obiektów, sprawdzanie przekrywania, itp.
+    pygame.display.flip()   # przerysowanie całego okna z bufora na ekran
 
-<ul>
-<li>drzewo BST (binarne drzewo poszukiwań)
-<li>drzewo AVL (Adelson-Velski, Landis, 1962)
-<li>drzewo czerwono-czarne (Bayer, 1972)
-<li>drzewo splay (Sleator, Trajan, 1985)
-</ul>
+pygame.quit()   # deaktywacja pygame
+# dalsze instrukcje programu bez pygame
+</pre><hr><pre>
+# Numeracja pikseli jak kwadratów w curses, (x, y).
+#     X
+#     0 1 2 3
+# Y 0 . . . .
+#   1 . . . .
+#   2 . . . .
+#   3 . . . .
+</pre><hr>
 
-<p>Algorytm DSW (Day, Stout, Warren, 1986) jest to
-algorytm równoważący BST [Wikipedia].
-
-<h3>WIKIPEDIA</h3>
-
-<ul>
-<li>https://en.wikipedia.org/wiki/List_of_data_structures
-<li>https://en.wikipedia.org/wiki/Linked_list
-<li>https://en.wikipedia.org/wiki/Skip_list
-<li>https://en.wikipedia.org/wiki/Tree_(data_structure)
-<li>https://en.wikipedia.org/wiki/Heap_(data_structure)
-<li>https://en.wikipedia.org/wiki/Hash_table
-</ul>
 
 </body>
 </html>
