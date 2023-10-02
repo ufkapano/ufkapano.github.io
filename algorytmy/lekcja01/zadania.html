@@ -23,9 +23,6 @@ pakiety instalacyjne Pythona dla Linuksa i Windows.
 <p>Odnaleźć 
 <a href="http://www.python.org/dev/peps/">Python Enhancement Proposals (PEPs)</a>.
 
-<p>Przeczytać tekst opisujący różnicę między
-<a href="http://wiki.python.org/moin/Python2orPython3/">Pythonem 2 i 3</a>.
-
 <p>Przeczytać esej 
 <a href="http://www.python.org/about/success/esr/">Why Python?</a>
 (Eric S. Raymond).
@@ -112,7 +109,7 @@ $
 <p>W katalogu <em>python</em> utworzyć plik <em>hello.py</em> postaci:
 
 <hr><pre>
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding=utf-8
 #
 # hello.py
@@ -133,6 +130,7 @@ print ( "Hello, world!" )   # działa dla Pythona 2 i 3
 # -*- coding: iso-8859-2 -*-
 </pre><hr><pre>
 # Ustawienie ścieżki do Pythona w środowisku wirtualnym i nie tylko.
+#!/usr/bin/python       # NIE UWZGLĘDNIA ŚRODOWISKA!
 #!/usr/bin/env python
 #!/usr/bin/env python2
 #!/usr/bin/env python3

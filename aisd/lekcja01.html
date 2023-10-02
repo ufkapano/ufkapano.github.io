@@ -26,20 +26,22 @@ Nature 610, 47-53 (2022).
 
 <p>Złożoność czasowa i pamięciowa.
 
-<p>Rozmiar danych wejściowych (ang. input size).
+<p>Rozmiar danych wejściowych (ang. <em>input size</em>).
 
 <hr>
 
 <p>Przykład. Dla wyszukiwania sekwencyjnego w ciągu n liczb
 rozmiar danych wejściowych to n*b, gdzie b to liczba bitów
 wykorzystywana na przechowywanie jednej liczby.
+Zwykle liczbę b pomija się jako stałą i złożoność obliczeniową
+wyszukiwania sekwencyjnego określa się jako O(n).
 
 <hr>
 
 <p>Przykład. Obliczanie n-tego wyrazu ciągu Fibonacciego.
 Miarą danych wejściowych jest liczba bitów użyta to zakodowania
 wartości n, czyli |_lg(n)_|+1. Dla n=13=1101_2 mamy 4 bity
-[w pythonie math.log(13,2)=3.7].
+[w Pythonie math.log(13,2)=3.7].
 
 <hr>
 
@@ -53,13 +55,13 @@ należących do otoczki wypukłej.
 <br>(2) algorytmy parametryzowalne, np. w teorii grafów wyraża się
 złożoność obliczeniową algorytmów nie tylko przez 
 n, m (liczba wierzchołków i krawędzi grafu), ale również przez
-Delta (największy stopień wierzchołka),
+&Delta; (największy stopień wierzchołka),
 w (treewidth, szerokość drzewowa).
 
-<p>Notacja z thetą, dużym O, omegą, małym o.
-<br>Asymptotyczne ograniczenie górne: g(n) należy do O(f(n)) wtw, gdy
-istnieje c &gt; 0, istnieje N &gt; 0, dla każdego n &gt;= N 
-zachodzi g(n) &lt;= c*f(n).
+<p>Notacja z &Theta;, dużym O, &omega;, małym o.
+<br>Asymptotyczne ograniczenie górne:
+<br>g(n) należy do O(f(n)) wtw, gdy istnieje c &gt; 0, istnieje N &gt; 0, 
+dla każdego n &ge; N zachodzi g(n) &le; c*f(n).
 
 <p>Przykładowe kategorie złożoności: 
 O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n).
@@ -101,18 +103,18 @@ Udowodnić, że t[n]=n*lg(n) (quicksort, mergesort).
 
 <p>Homogeniczna rekurencja liniowa z różnymi pierwiastkami.
 
-<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=0, k, a[] są stałe.
+<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=0, k, a[i] są stałe.
 
 <p>Równanie charakterystyczne
 
 <p>a[0]*r^k+a[1]*r^(k-1)+...+a[k-1]*r^1+a[k]*r^0=0.
 
-<p>Jeżeli to równanie posiada k różnych pierwiastków r[], 
+<p>Jeżeli to równanie posiada k różnych pierwiastków r[i], 
 to jedynym rozwiązaniem rekurencji jest
 
 <p>t[n]=c[1]*r[1]^n+c[2]*r[2]^n+...+c[k]*r[k]^n.
 
-<p>Współczynniki c[] wyznacza się z k warunków początkowych.
+<p>Współczynniki c[i] wyznacza się z k warunków początkowych.
 
 <hr>
 
@@ -169,10 +171,10 @@ równanie charakterystyczne r^3-7r^2+15r-9=0, (r-1)(r-3)^2=0, jest pierwiastek p
 
 <p>Niehomogeniczna rekurencja liniowa.
 
-<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=f(n), k, a[] są stałe.
+<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=f(n), k, a[i] są stałe.
 
 <p>f(n) jest niezerową funkcją. Będziemy rozważać tylko funkcje postaci
-f(n)=b^n*p(n), gdzie b to stała, p(n) wielomian stopnia d.
+f(n) = b^n*p(n), gdzie b to stała, p(n) wielomian stopnia d.
 
 <p>Równanie charakterystyczne
 
@@ -181,6 +183,11 @@ f(n)=b^n*p(n), gdzie b to stała, p(n) wielomian stopnia d.
 <p>Zauważmy, że ogólne rozwiązanie będzie zawierało wyrazy pochodzące
 od części homogenicznej pierwotnego równania plus wyrazy pochodzące
 z części niehomogenicznej (może być kilka części niehomogenicznych).
+
+<p>Przykłady.
+<br>f(n) = c = 1^n*c, d = 0, mnożnik (r-1)^1.
+<br>f(n) = c^n, d = 0, mnożnik (r-c)^1.
+<br>f(n) = c*n^2 = 1^n*c*n^2, d = 2, mnożnik (r-1)^3.
 
 <p>Rozwiązać rekurencje:
 
@@ -191,7 +198,8 @@ z części niehomogenicznej (może być kilka części niehomogenicznych).
 (UWAGA dwie części niehomogeniczne!).
 <li>(d) t[n]=2*t[n-1]-t[n-2]+n^2+5^n dla n &gt; 1, t[0]=0, t[1]=1
 (UWAGA dwie części niehomogeniczne!).
-<li>(e) t[n]=6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n &gt; 1, t[0]=0, t[1]=1.
+<li>(e) t[n]=6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n &gt; 1, t[0]=0, t[1]=1
+(UWAGA duże współczynniki liczbowe).
 </ul>
 
 <hr>
