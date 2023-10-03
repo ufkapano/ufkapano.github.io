@@ -40,8 +40,8 @@ wyszukiwania sekwencyjnego określa się jako O(n).
 
 <p>Przykład. Obliczanie n-tego wyrazu ciągu Fibonacciego.
 Miarą danych wejściowych jest liczba bitów użyta to zakodowania
-wartości n, czyli |_lg(n)_|+1. Dla n=13=1101_2 mamy 4 bity
-[w Pythonie math.log(13,2)=3.7].
+wartości n, czyli |_lg(n)_| + 1. Dla n = 13 = 1101_2 mamy 4 bity
+[w Pythonie math.log(13,2) = 3.7].
 
 <hr>
 
@@ -58,13 +58,13 @@ n, m (liczba wierzchołków i krawędzi grafu), ale również przez
 &Delta; (największy stopień wierzchołka),
 w (treewidth, szerokość drzewowa).
 
-<p>Notacja z &Theta;, dużym O, &omega;, małym o.
+<p>Notacja z &Theta;(f(n)), dużym O(f(n)), &Omega;(f(n)), małym o(f(n)).
 <br>Asymptotyczne ograniczenie górne:
-<br>g(n) należy do O(f(n)) wtw, gdy istnieje c &gt; 0, istnieje N &gt; 0, 
+<br>g(n) &in; O(f(n)) wtw, gdy istnieje c &gt; 0, istnieje N &gt; 0, 
 dla każdego n &ge; N zachodzi g(n) &le; c*f(n).
 
 <p>Przykładowe kategorie złożoności: 
-O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n).
+O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n), O(n!).
 
 
 <p>Pomoce: [Neapolitan, Naimipour]
@@ -75,21 +75,56 @@ O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n).
 lg(x) to logarytm przy podstawie 2.
 
 <ul>
-<li>(a) t[0]=0, t[n]=t[n-1]+1 dla n &gt; 0. Udowodnić, że t[n]=n
+<li>(a) t[0] = 0, t[n]=t[n-1]+1 dla n &gt; 0. 
+Udowodnić, że t[n] = n
 (wyszukiwanie sekwencyjne w ciągu nieuporządkowanym; obliczanie silni).
-<li>(b) t[1]=1, t[n]=t[n/2]+1 dla n &gt; 1, n=2^k. 
-Udowodnić, że t[n]=lg(n)+1 (wyszukiwanie binarne w ciągu posortowanym).
-<li>(c) t[1]=1, t[n]=7*t[n/2] dla n &gt; 1, n=2^k. Udowodnić, że t[n]=n^lg(7)
-[algorytm Strassena mnożenia macierzy, 7^lg(n)=n^lg(7)].
-<li>(d) t[1]=1, t[n]=2*t[n-1]+1 dla n &gt; 1. 
+<li>(b) t[1] = 1, t[n] = t[n/2]+1 dla n &gt; 1, n = 2^k. 
+Udowodnić, że t[n] = lg(n)+1 (wyszukiwanie binarne w ciągu posortowanym).
+<li>(c) t[1] = 1, t[n] = 7*t[n/2] dla n &gt; 1, n = 2^k. 
+Udowodnić, że t[n]=n^lg(7)
+[algorytm Strassena mnożenia macierzy, 7^lg(n) = n^lg(7)].
+<li>(d) t[1] = 1, t[n] = 2*t[n-1]+1 dla n &gt; 1. 
 Udowodnić, że t[n]=2^n-1 (wieże Hanoi).
-<li>(e) t[1]=0, t[n]=2*t[n/2]+n dla n &gt; 1, n=2^k. 
-Udowodnić, że t[n]=n*lg(n) (quicksort, mergesort).
+<li>(e) t[1] = 0, t[n] = 2*t[n/2]+n dla n &gt; 1, n = 2^k. 
+Udowodnić, że t[n] = n*lg(n) (quicksort, mergesort).
+<li>(f) t[0] = 1, t[n] = t[n-1]+n. Udowodnić, że t[n] = 1+n*(n+1)/2 
+(na ile maksymalnie części można podzielić płaszczyznę przy pomocy n prostych).
 </ul>
 
 <hr>
 
-<p>Przykład. t[2^k] = 2^k+2*t[2^(k-1)] 
+<p>Przykład (a)+(d). t[n] = b*t[n-1]+c, t[0] = a, t[1] = ba+c.
+(niehomogeniczna rekurencja liniowa).
+<br>Jeżeli b = 1, to t[1] = a+c, t[2] = a+2*c, t[n] = a+n*c (ciąg arytmetyczny).
+<br>Jeżeli b != 0, to t[1] = ba+c, t[2] = b^2*a+bc+c, t[3] = b^3*a+b^2*c+bc+c,...
+<br>t[n] = b^n*a+c*(1+b+b^2+...+b^{n-1}) = b^n*a+c*(1-b^n)/(1-b).
+
+<p>Drugi sposób to zdefiniowanie nowego ciągu s[n] = t[n+1]-t[n], s[0] = ba+c-a.
+<br>s[n] = b*t[n]-b*t[n-1] = b*s[n-1] = b^n*s[0].
+<br>Zapisujemy kolejne równania t[n+1] = t[n]+s[n], dodajemy stronami, dostajemy
+<br>t[n] = t[0]+s[0]*(1+b+b^2+...+b^{n-1}) = t[0]+s[0]*(1-b^n)/(1-b).
+
+<p>Trzeci sposób to usunięcie niehomogeniczności,
+<br>t[n+1]-b*t[n] = t[n]-b*t[n-1].
+
+<p>Czwarty sposób to zdefiniowanie przesuniętego ciągu t[n] = s[n]+e, s[0] = a-e.
+<br>s[n]+e = b*s[n-1]+b*e+c, e*(b-1)+c = 0, e = c/(1-b).
+<br>s[n] = b*s[n-1] = b^n*s[0] = b^n*(a-e).
+<br>t[n] = b^n*a-b^n*e+e = b^n*a+e*(1-b^n) = b^n*a+c*(1-b^n)/(1-b).
+
+<p>Piąty sposób to zastosowanie funkcji tworzącej 
+G(x) = \sum_{n=0}^{+\infty} t[n] x^n.
+<br>G(x) = t[0] + \sum_{n=1}^{+\infty} (b*t[n-1]+c) x^n,
+<br>G(x) = a+b*x*G(x)+c*x/(1-x),
+<br>G(x)*(1-b*x) = a+c*x/(1-x),
+<br>G(x) = (a-a*x+c*x)/((1-x)*(1-b*x)) = A/(1-x) + B/(1-b*x),
+<br>G(x) = c/((1-b)*(1-x)) + (a-c/(1-b))/(1-b*x),
+<br>G(x) = c/(1-b) \sum x^n + (a-c/(1-b)) \sum b^n*x^n,
+<br>t[n] = c/(1-b) + (a-c/(1-b))*b^n.
+
+<hr>
+
+<p>Przykład (e). t[2^k] = 2^k+2*t[2^(k-1)] 
 <br>= 2^k+2*(2^(k-1)+2*t[2^(k-2)])
 <br>= 2^k+2^k+2^2*t[2^(k-2)]
 <br>= 2^k+2^k+2^2*(2^(k-2)+2*t[2^(k-3)])
@@ -103,28 +138,28 @@ Udowodnić, że t[n]=n*lg(n) (quicksort, mergesort).
 
 <p>Homogeniczna rekurencja liniowa z różnymi pierwiastkami.
 
-<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=0, k, a[i] są stałe.
+<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k] = 0, k, a[i] są stałe.
 
 <p>Równanie charakterystyczne
 
-<p>a[0]*r^k+a[1]*r^(k-1)+...+a[k-1]*r^1+a[k]*r^0=0.
+<p>a[0]*r^k+a[1]*r^(k-1)+...+a[k-1]*r^1+a[k]*r^0 = 0.
 
 <p>Jeżeli to równanie posiada k różnych pierwiastków r[i], 
 to jedynym rozwiązaniem rekurencji jest
 
-<p>t[n]=c[1]*r[1]^n+c[2]*r[2]^n+...+c[k]*r[k]^n.
+<p>t[n] = c[1]*r[1]^n+c[2]*r[2]^n+...+c[k]*r[k]^n.
 
 <p>Współczynniki c[i] wyznacza się z k warunków początkowych.
 
 <hr>
 
-<p>Przykład: ciąg Fibonacciego. t[n]-t[n-1]-t[n-2]=0, t[0]=0, t[1]=1.
-<br>Postulujemy t[n]=r^n,
-równanie charakterystyczne r^2-r-1=0.
-<br>Rozwiązania r[1]=(1+sqrt(5))/2, r[2]=(1-sqrt(5))/2,
-t[n]=c[1]*r[1]^n+c[2]*r[2]^n.
-<br>Warunki początkowe 0=c[1]+c[2], 1=c[1]*r[1]+c[2]*r[2],
-c[1]=1/sqrt(5)=-c[2].
+<p>Przykład: ciąg Fibonacciego. t[n]-t[n-1]-t[n-2] = 0, t[0] = 0, t[1] = 1.
+<br>Postulujemy t[n] = r^n,
+równanie charakterystyczne r^2-r-1 = 0.
+<br>Rozwiązania r[1] = (1+sqrt(5))/2, r[2] = (1-sqrt(5))/2,
+t[n] = c[1]*r[1]^n+c[2]*r[2]^n.
+<br>Warunki początkowe 0 = c[1]+c[2], 1 = c[1]*r[1]+c[2]*r[2],
+c[1] = 1/sqrt(5) = -c[2].
 <br>Dostajemy zwarty wzór na n-ty wyraz ciągu Fibonacciego!
 
 <hr>
@@ -132,10 +167,10 @@ c[1]=1/sqrt(5)=-c[2].
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>(a) t[n]-5*t[n-1]+6*t[n-2]=0 dla n &gt; 1, t[0]=0, t[1]=1.
-<li>(b) t[n]-3*t[n-1]-4*t[n-2]=0 dla n &gt; 1, t[0]=0, t[1]=1.
-<li>(c) t[n]=t[n-1]+t[n-2] dla n &gt; 1, t[0]=0, t[1]=1 (ciąg Fibonacciego).
-<li>(d) t[n]=4*t[n-1]-3*t[n-2] dla n &gt; 1, t[0]=0, t[1]=1.
+<li>(a) t[n]-5*t[n-1]+6*t[n-2] = 0 dla n &gt; 1, t[0] = 0, t[1] = 1.
+<li>(b) t[n]-3*t[n-1]-4*t[n-2] = 0 dla n &gt; 1, t[0] = 0, t[1] = 1.
+<li>(c) t[n] = t[n-1]+t[n-2] dla n &gt; 1, t[0] = 0, t[1] = 1 (ciąg Fibonacciego).
+<li>(d) t[n] = 4*t[n-1]-3*t[n-2] dla n &gt; 1, t[0] = 0, t[1] = 1.
 </ul>
 
 <h3>ZADANIE 1.3</h3>
@@ -146,24 +181,24 @@ c[1]=1/sqrt(5)=-c[2].
 wielokrotności m, to w rozwiązaniu rekurencji dla tego pierwiastka
 nateży brać następujące wyrazy:
 
-<p>t[n]=c[1]*r^n+c[2]*n*r^n+c[3]*n^2*r^n+...+c[m]*n^(m-1)*r^n+dalsze pierwiastki.
+<p>t[n] = c[1]*r^n+c[2]*n*r^n+c[3]*n^2*r^n+...+c[m]*n^(m-1)*r^n+dalsze pierwiastki.
 
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>(a) t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3]=0 dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
-<li>(b) t[n]=6*t[n-1]-9*t[n-2] dla n &gt; 1, t[0]=0, t[1]=1.
-<li>(c) t[n]=5*t[n-1]-8*t[n-2]+4*t[n-3] dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
+<li>(a) t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3] = 0 dla n &gt; 2, t[0] = 0, t[1] = 1, t[2] = 2.
+<li>(b) t[n] = 6*t[n-1]-9*t[n-2] dla n &gt; 1, t[0] = 0, t[1] = 1.
+<li>(c) t[n] = 5*t[n-1]-8*t[n-2]+4*t[n-3] dla n &gt; 2, t[0] = 0, t[1] = 1, t[2] = 2.
 </ul>
 
 <hr>
 
-<p>Przykład (a). t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3]=0 dla n &gt; 2, t[0]=0, t[1]=1, t[2]=2.
-<br>Postulujemy t[n]=r^n,
-równanie charakterystyczne r^3-7r^2+15r-9=0, (r-1)(r-3)^2=0, jest pierwiastek podwójny.
-<br>Rozwiązanie t[n]=c[1]*(1)^n+c[2]*3^n+c[3]*n*3^n.
-<br>Warunki początkowe 0=c[1]+c[2], 1=c[1]+3*c[2]+3*c[3], 2=c[1]+9*c[2]+18*c[3].
-<br>Rozwiązanie c[1]=-1, c[2]=1, c[3]=-1/3, t[n]=(-1)*1^n+(1)*3^n+(-1/3)*n*3^n.
+<p>Przykład (a). t[n]-7*t[n-1]+15*t[n-2]-9*t[n-3] = 0 dla n &gt; 2, t[0] = 0, t[1] = 1, t[2] = 2.
+<br>Postulujemy t[n] = r^n,
+równanie charakterystyczne r^3-7r^2+15r-9 = 0, (r-1)(r-3)^2 = 0, jest pierwiastek podwójny.
+<br>Rozwiązanie t[n] = c[1]*(1)^n+c[2]*3^n+c[3]*n*3^n.
+<br>Warunki początkowe 0 = c[1]+c[2], 1 = c[1]+3*c[2]+3*c[3], 2 = c[1]+9*c[2]+18*c[3].
+<br>Rozwiązanie c[1] = -1, c[2] = 1, c[3] = -1/3, t[n] = (-1)*1^n+(1)*3^n+(-1/3)*n*3^n.
 
 <hr>
 
@@ -171,14 +206,14 @@ równanie charakterystyczne r^3-7r^2+15r-9=0, (r-1)(r-3)^2=0, jest pierwiastek p
 
 <p>Niehomogeniczna rekurencja liniowa.
 
-<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k]=f(n), k, a[i] są stałe.
+<p>a[0]*t[n]+a[1]*t[n-1]+...+a[k]*t[n-k] = f(n), k, a[i] są stałe.
 
 <p>f(n) jest niezerową funkcją. Będziemy rozważać tylko funkcje postaci
-f(n) = b^n*p(n), gdzie b to stała, p(n) wielomian stopnia d.
+f(n)  =  b^n*p(n), gdzie b to stała, p(n) wielomian stopnia d.
 
 <p>Równanie charakterystyczne
 
-<p>(a[0]*r^k+a[1]*r^(k-1)+...+a[k-1]*r^1+a[k]*r^0) * (r-b)^(d+1)=0.
+<p>(a[0]*r^k+a[1]*r^(k-1)+...+a[k-1]*r^1+a[k]*r^0) * (r-b)^(d+1) = 0.
 
 <p>Zauważmy, że ogólne rozwiązanie będzie zawierało wyrazy pochodzące
 od części homogenicznej pierwotnego równania plus wyrazy pochodzące
@@ -192,37 +227,37 @@ z części niehomogenicznej (może być kilka części niehomogenicznych).
 <p>Rozwiązać rekurencje:
 
 <ul>
-<li>(a) t[n]-3*t[n-1]=4^n*(2*n+1) dla n &gt; 1, t[0]=0, t[1]=12.
-<li>(b) t[n]-t[n-1]=n-1 dla n &gt; 0, t[0]=0.
-<li>(c) t[n]-2*t[n-1]=n+2^n dla n &gt; 1, t[0]=0 
+<li>(a) t[n]-3*t[n-1] = 4^n*(2*n+1) dla n &gt; 1, t[0] = 0, t[1] = 12.
+<li>(b) t[n]-t[n-1] = n-1 dla n &gt; 0, t[0] = 0.
+<li>(c) t[n]-2*t[n-1] = n+2^n dla n &gt; 1, t[0] = 0 
 (UWAGA dwie części niehomogeniczne!).
-<li>(d) t[n]=2*t[n-1]-t[n-2]+n^2+5^n dla n &gt; 1, t[0]=0, t[1]=1
+<li>(d) t[n] = 2*t[n-1]-t[n-2]+n^2+5^n dla n &gt; 1, t[0] = 0, t[1] = 1
 (UWAGA dwie części niehomogeniczne!).
-<li>(e) t[n]=6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n &gt; 1, t[0]=0, t[1]=1
+<li>(e) t[n] = 6*t[n-1]-9*t[n-2]+(n^2-5*n)*7^n dla n &gt; 1, t[0] = 0, t[1] = 1
 (UWAGA duże współczynniki liczbowe).
 </ul>
 
 <hr>
 
-<p>Przykład (a). t[n]-3*t[n-1]=4^n*(2*n+1) dla n &gt; 1, t[0]=0, t[1]=12.
-<br>Równanie homogeniczne t[n]-3*t[n-1]=0,
-równanie charakterystyczne (r-3)=0.
-<br>Część niehomogeniczna b=4, d=1, (r-b)^(d+1)=(r-4)^2.
-<br>Pełne równanie charakterystyczne (r-3)(r-4)^2=0, jest pierwiastek podwójny.
-<br>Rozwiązanie t[n]=c[1]*3^n+c[2]*4^n+c[3]*n*4^n.
-<br>Są 3 stałe, a 2 warunki, trzeba obliczyć t[2]-3*t[1]=4^2*(2*2+1), t[2]=116.
-<br>Warunki początkowe 0=c[1]+c[2], 12=3*c[1]+4*c[2]+4*c[3], 116=9*c[1]+16*c[2]+32*c[3].
-<br>Rozwiązanie c[1]=20, c[2]=-20, c[3]=8, t[n]=(20)*3^n+(-20)*4^n+(8)*n*4^n.
+<p>Przykład (a). t[n]-3*t[n-1] = 4^n*(2*n+1) dla n &gt; 1, t[0] = 0, t[1] = 12.
+<br>Równanie homogeniczne t[n]-3*t[n-1] = 0,
+równanie charakterystyczne (r-3) = 0.
+<br>Część niehomogeniczna b = 4, d = 1, (r-b)^(d+1) = (r-4)^2.
+<br>Pełne równanie charakterystyczne (r-3)(r-4)^2 = 0, jest pierwiastek podwójny.
+<br>Rozwiązanie t[n] = c[1]*3^n+c[2]*4^n+c[3]*n*4^n.
+<br>Są 3 stałe, a 2 warunki, trzeba obliczyć t[2]-3*t[1] = 4^2*(2*2+1), t[2] = 116.
+<br>Warunki początkowe 0 = c[1]+c[2], 12 = 3*c[1]+4*c[2]+4*c[3], 116 = 9*c[1]+16*c[2]+32*c[3].
+<br>Rozwiązanie c[1] = 20, c[2] = -20, c[3] = 8, t[n] = (20)*3^n+(-20)*4^n+(8)*n*4^n.
 
 <hr>
 
 <p>Przykład. Ciąg Fibonacciego definiujemy następująco:
-f(0)=0, f(1)=1, f(n)=f(n-1)+f(n-2).
+f(0) = 0, f(1) = 1, f(n) = f(n-1)+f(n-2).
 <br>Niech t[n] oznacza liczbę wywołań funkcji f() potrzebnych
 do obliczenia f(n). 
-<br>Wtedy t[0]=1, t[1]=1, t[n]=1+t[n-1]+t[n-2]
+<br>Wtedy t[0] = 1, t[1] = 1, t[n] = 1+t[n-1]+t[n-2]
 (niehomogeniczna rekurencja liniowa).
-<br>Można pokazać, że t[n]=2*f(n+1)-1.
+<br>Można pokazać, że t[n] = 2*f(n+1)-1.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
