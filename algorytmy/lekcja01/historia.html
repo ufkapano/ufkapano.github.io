@@ -9,8 +9,12 @@
 <h1>Historia Pythona</h1>
 
 <p>https://www.python.org/
+<br>Python Website
 
 <p>https://en.wikipedia.org/wiki/Python_(programming_language)
+
+<p>https://github.com/python
+<br>Repositories related to the Python Programming language
 
 <h3>POCZĄTKI</h3>
 
@@ -22,9 +26,11 @@ Nazwa języka pochodzi od serialu BBC
 <em>Latający Cyrk Monty Pythona</em>.
 
 <li>Twórcą Pythona jest holender Guido van Rossum (ur. 1960).
-Społeczność Pythona nazywa go BDFL (Benevolent Dictator For Life),
+Społeczność Pythona nazywa go BDFL 
+(Benevolent Dictator For Life, dobrotliwy dożywotni dyktator),
 tytuł pochodzi ze skeczu Monty Python.
-GvR przeniósł się do USA w 1995, do 2003 mieszkał blisko
+GvR zrezygnował z tytułu BDFL w roku 2018 (chciał odpocząć).
+GvR przeniósł się z Holandii do USA w 1995, do 2003 mieszkał blisko
 Waszyngtonu. Od 2005 do 2013 pracował dla Google, potem dla Dropbox.
 W roku 2019 przeszedł na emeryturę, ale powrócił z niej w roku 2020
 i dołączył do Microsoftu.
@@ -46,6 +52,8 @@ przetłumaczony na Pythona 3.
 Istnieje narzędzie 2to3 stworzone do tego celu.
 Inne narzędzie to 3to2, które wykonuje konwersję w drugą stronę.
 
+<li>Kod źródłowy CPythona jest przechowywany w publicznym repozytorium GitHub.
+
 <li>Wydania Pythona oznaczane są wg konwencji X.Y.Z, gdzie:
 <br>X to gałąź bazowa ("trzęsienie ziemi"), obecnie X=3;
 <br>Y to wydanie główne (nowe funkcjonalności), obecnie Y=10;
@@ -59,9 +67,10 @@ Inne narzędzie to 3to2, które wykonuje konwersję w drugą stronę.
 <p>https://www.python.org/download/alternatives/
 
 <ul>
+<li>CPython (reference implementation)
 <li>IronPython (Python running on .NET)
 <li>Jython (Python running on the Java Virtual Machine)
-<li>PyPy (A fast python implementation with a JIT compiler)
+<li>PyPy (A fast Python implementation with a JIT compiler)
 <li>Stackless Python (Branch of CPython supporting microthreads)
 <li>MicroPython (Python running on micro controllers)
 </ul>
@@ -107,6 +116,9 @@ Po osiągnięciu konsensusu, propozycje są przyjmowane lub odrzucane.
 LL(1) (left-to-right, leftmost derivation) 
 [PEP 617 - New PEG parser for CPython].
 Jest możliwość powrotu do starego parsera.
+<br>In type annotations you can now use built-in collection types such 
+as 'list' and 'dict' as generic types instead of importing the corresponding 
+capitalized types (e.g. 'List' or 'Dict') from 'typing'.
 
 <li><strong>Python 3.10</strong> (wydany 2021-10-04) PEP 619
 <br>Usunięcie starego parsera LL(1).
@@ -114,7 +126,12 @@ Jest możliwość powrotu do starego parsera.
 <li><strong>Python 3.11</strong> (wydany 2022-10-24) PEP 664
 <br>Python 3.11 is up to 10-60% faster than Python 3.10.
 <br>PEP 657 - Include Fine-Grained Error Locations in Tracebacks.
-<br>Typing and typing language changes (zmiany w module 'typing').
+<br>Typing and typing language changes (changes in 'typing').
+
+<li><strong>Python 3.12</strong> (wydany 2023-10-02) PEP 693
+<br>Improved error messages. 'unittest' cleanup. 'distutils' removed.
+More flexible f-string parsing (PEP 701).
+sum() now uses Neumaier summation.
 
 </ul>
 

@@ -9,7 +9,7 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (1) - złożoność obliczeniowa</h1>
+<h1>AiSD (1) - złożoność obliczeniowa i rekurencja</h1>
 
 <p>OBOWIĄZKOWE DO NAPISANIA NA KARTCE:
 po jednym przykładzie z zadań 1.2, 1.3, 1.4.
@@ -26,7 +26,7 @@ Nature 610, 47-53 (2022).
 
 <p>Złożoność czasowa i pamięciowa.
 
-<p>Rozmiar danych wejściowych (ang. <em>input size</em>).
+<p>Rozmiar danych wejściowych (ang. <em>input size</em>) wyrażony w bitach.
 
 <hr>
 
@@ -58,7 +58,7 @@ n, m (liczba wierzchołków i krawędzi grafu), ale również przez
 &Delta; (największy stopień wierzchołka),
 w (treewidth, szerokość drzewowa).
 
-<p>Notacja z &Theta;(f(n)), dużym O(f(n)), &Omega;(f(n)), małym o(f(n)).
+<p>Notacja z dużym O(f(n)), &Omega;(f(n)), &Theta;(f(n)), małym o(f(n)).
 <br>Asymptotyczne ograniczenie górne:
 <br>g(n) &in; O(f(n)) wtw, gdy istnieje c &gt; 0, istnieje N &gt; 0, 
 dla każdego n &ge; N zachodzi g(n) &le; c*f(n).
@@ -96,7 +96,7 @@ Udowodnić, że t[n] = n*lg(n) (quicksort, mergesort).
 <p>Przykład (a)+(d). t[n] = b*t[n-1]+c, t[0] = a, t[1] = ba+c.
 (niehomogeniczna rekurencja liniowa).
 <br>Jeżeli b = 1, to t[1] = a+c, t[2] = a+2*c, t[n] = a+n*c (ciąg arytmetyczny).
-<br>Jeżeli b != 0, to t[1] = ba+c, t[2] = b^2*a+bc+c, t[3] = b^3*a+b^2*c+bc+c,...
+<br>Jeżeli b &ne; 1, to t[1] = ba+c, t[2] = b^2*a+bc+c, t[3] = b^3*a+b^2*c+bc+c,...
 <br>t[n] = b^n*a+c*(1+b+b^2+...+b^{n-1}) = b^n*a+c*(1-b^n)/(1-b).
 
 <p>Drugi sposób to zdefiniowanie nowego ciągu s[n] = t[n+1]-t[n], s[0] = ba+c-a.
