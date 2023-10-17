@@ -125,13 +125,13 @@ L4 = list(L1)       # jeszcze prościej
 
 alist = ["auto", "Ala", "bocian", "Barbara"]
 alist.sort()        # sortowanie listy napisów (duże litery najpierw)
-print ( alist )     # ['Ala', 'Barbara', 'auto', 'bocian']
+print(alist)   # ['Ala', 'Barbara', 'auto', 'bocian']
 
 # Potrzebujemy case-insensitive sort.
 # Stary sposób - określamy funkcję porównującą dwa obiekty.
 # Bazujemy na wbudowanej funkcji porównującej cmp().
 alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
-print ( alist )     # ['Ala', 'auto', 'Barbara', 'bocian']
+print(alist)   # ['Ala', 'auto', 'Barbara', 'bocian']
 
 # Nowy sposób (Py2.4+) - podajemy klucz, czyli jakby sposób 
 # patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
@@ -140,7 +140,7 @@ alist.sort(key=str.lower)
 
 # Sortowanie pod względem długości napisów.
 alist.sort(key=len)
-print ( alist )     # ['Ala', 'auto', 'bocian', 'Barbara']
+print(alist)   # ['Ala', 'auto', 'bocian', 'Barbara']
 </pre><hr>
 
 <p>Prosty sposób sortowania to wykorzystanie wbudowanej funkcji
@@ -196,26 +196,26 @@ L = ["a", "a", "a", "b", "b"]
 L.count("a")        # 3, liczba wystąpień "a" na liście
 
 L.append("c")       # dołączenie "c" na koniec listy
-print ( L )         # ['a', 'a', 'a', 'b', 'b', 'c']
+print(L)         # ['a', 'a', 'a', 'b', 'b', 'c']
 
 L.insert(1, "x")    # dołączenie przed indeksem 1
-print ( L )         # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
+print(L)         # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
 
 L.remove("a")       # usuwanie wskazanego elementu - pierwsze wystąpienie
-print ( L )         # ['x', 'a', 'a', 'b', 'b', 'c']
+print(L)         # ['x', 'a', 'a', 'b', 'b', 'c']
 
 L.pop()             # "c", usuwanie od końca (błąd dla pustej listy)
 L.pop(2)            # "a", usuwanie elementu nr 2 - zwraca element
-print ( L )         # ['x', 'a', 'b', 'b']
+print(L)         # ['x', 'a', 'b', 'b']
 
 L.reverse()         #  odwracanie listy IN PLACE
-print ( L )         # ['b', 'b', 'a', 'x']
+print(L)         # ['b', 'b', 'a', 'x']
 
 # L.index(x[, i[, j]])   # indeks x od i, a przed j
 L.index("a")        # 2, jaki indeks ma "a"
 
 L.extend("qwerty")  # L.extend(iterable), dołączyć nowe elementy
-print ( L )         # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
+print(L)         # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
 </pre><hr>
 
 <h3>LISTY SKŁADANE</h3>

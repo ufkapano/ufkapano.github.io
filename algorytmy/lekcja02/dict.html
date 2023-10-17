@@ -88,7 +88,7 @@ D = dict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
 
 # Ciekawa pętla po parach - items().
 for (char, number) in D.items():
-    print ( "key: {} value: {}".format(char, number) )
+    print("key: {} value: {}".format(char, number))
 </pre><hr>
 
 <p>Sortowanie kluczy dla słowników.
@@ -99,7 +99,7 @@ chars = {}                    # inicjalizacja pustego słownika
 # chars.get(char, 0) zwraca chars[char] lub 0.
 for char in "abrakadabra":
     chars[char] = chars.get(char, 0) + 1
-print ( chars )
+print(chars)
 
 # Sortowanie par (key, value).
 items = chars.items()        # dostaję listę krotek (Py2)
@@ -113,7 +113,7 @@ keys.sort()
 # Python 2.5 zawiera wbudowaną funkcję sorted(), która dla obiektu
 # iterowalnego zwraca posortowaną listę.
 for key in sorted(chars):
-    print ( "{} {}".format(key, chars[key]) )
+    print("{} {}".format(key, chars[key]))
 </pre><hr>
 
 <p>Wybrane metody dla słowników.
@@ -126,9 +126,9 @@ D = dict(zip([k1, k2], [v1, v2]))  # z dwóch list
 D = dict(name1=v1, name2=v2)       # {'name1':v1, 'name2':v2}
 
 if D != {}:         # porównywanie z pustym słownikiem
-    print ( "słownik nie jest pusty" )
+    print("słownik nie jest pusty")
 if D:               # pusty słownik oznacza False
-    print ( "słownik nie jest pusty" )   # jw
+    print("słownik nie jest pusty")   # jw
 
 D.clear()                     # wyczyszczenie słownika
 E = D.copy()                  # kopia słownika

@@ -66,7 +66,7 @@ W Pythonie koduje się pod kątem interfejsów obiektów
 Mamy tu związek z koncepcją polimorfizmu
 [polimorfizm = znaczenie operacji uzależnione jest
 od typu obiektów, na których się te operację wykonuje.
-jest to przydatna właściwość Pythona.
+Jest to przydatna właściwość Pythona.
 Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.].
 
 <hr><pre>
@@ -74,21 +74,21 @@ Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.].
 # isinstance(object, class-or-type-or-tuple) -&gt; bool
 
 if isinstance(x, float):
-    print ( "to jest liczba zmiennoprzecinkowa" )
+    print("to jest liczba zmiennoprzecinkowa")
 
 if isinstance(x, (int, long)):   # Py2 (Py3 nie ma typu long)
-    print ( "to jest liczba całkowita" )
+    print("to jest liczba całkowita")
 
 if isinstance(S, (set, frozenset)):
-    print ( "to jest zbiór" )
+    print("to jest zbiór")
 
 # Dawny, odradzany sposób.
 # Funkcja type() zwraca obiekt typu - są różnice między Py2 i Py3.
-if type(x) is type(1) or type(x) is type(1L):   # Py2 (Py3 nie ma long)
-    print ( "liczba całkowita" )
+if type(x) is type(1) or type(x) is type(1.0):
+    print("to jest liczba")
 
-if type(x) is int or type(x) is long:   # Py2 (Py3 nie ma long)
-    print ( "liczba całkowita" )
+if type(x) is int or type(x) is float:
+    print("to jest liczba")
 
 # Moduł types zawiera nazwy dla innych typów.
 import types
