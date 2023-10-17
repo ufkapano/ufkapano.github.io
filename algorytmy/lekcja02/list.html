@@ -249,8 +249,8 @@ Więcej wyjaśnień zostanie podanych przy funkcjach.
 [chr(x) for x in range(97, 110)]
 "".join([chr(x) for x in range(97, 110)])    # sklejamy listę
 
-sum([x * x for x in range(100)])        # pełne listy
-sum(x * x for x in xrange(100))         # generatory
+sum([x * x for x in range(100)])        # pełna lista
+sum(x * x for x in range(100))         # generator
 sum(len(x) for x in ["a", "bb", "ccc"]) # generator
 max(ord(x) for x in "qwerty")           # największy numer
 max("qwerty", key=ord)                  # znak o największym numerze

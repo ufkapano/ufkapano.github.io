@@ -64,10 +64,28 @@ std::deque (sekwencja indywidualnie alokowanych tablic o stałym rozmiarze).
 
 It2 copy( It1 first, It1 last, It2 d_first );
 
+// Przykład, kopiowanie w obrębie jednej tablicy a.
+// +--+--+--+--+--+--+--+--+--+--+
+// |a0|a1|a2|a3|a4|a5|a6|a7|a8|a9| stan początkowy
+// +--+--+--+--+--+--+--+--+--+--+
+// std::copy(a+5, a+9, a+3); // kopiowanie 4 elementów, a5, a6, a7, a8
+// +--+--+--+--+--+--+--+--+--+--+
+// |a0|a1|a2|a5|a6|a7|a8|a7|a8|a9| stan końcowy
+// +--+--+--+--+--+--+--+--+--+--+
+</pre><hr><pre>
 // https://en.cppreference.com/w/cpp/algorithm/copy_backward
 // To jest dobre przy kopiowaniu w prawo przy nakładaniu się zakresów.
 
 It2 copy_backward( It1 first, It1 last, It2 d_last );
+
+// Przykład, kopiowanie w obrębie jednej tablicy a.
+// +--+--+--+--+--+--+--+--+--+--+
+// |a0|a1|a2|a3|a4|a5|a6|a7|a8|a9| stan początkowy
+// +--+--+--+--+--+--+--+--+--+--+
+// std::copy_backward(a+2, a+6, a+7); // kopiowanie 4 elementów, a5, a4, a3, a2
+// +--+--+--+--+--+--+--+--+--+--+
+// |a0|a1|a2|a3|a2|a3|a4|a5|a8|a9| stan końcowy
+// +--+--+--+--+--+--+--+--+--+--+
 </pre><hr>
 
 <h3>ZADANIE 3.1</h3>
