@@ -31,15 +31,15 @@ czyli przejściu do nowej linii.
 # Konstrukcja podobna do C z procentem i krotką.
 # Składnia:
 # %[(nazwa)][opcje][szerokość][.precyzja]kod_typu
-print ( "int %d float %f str %s" % (5, 3.14159, "napis") )
+print("int %d float %f str %s" % (5, 3.14159, "napis"))
 
 # Format z %s jest uniwersalny - korzysta z funkcji str().
-print ( "int %s float %s str %s" % (5, 3.14159, "napis") )
+print("int %s float %s str %s" % (5, 3.14159, "napis"))
 
-print ( "%-10s|%10s" % ("napis1", "napis2") )
-print ( "pi = %8.2f" % 3.14159 )          # po procencie jest krotka
-print ( "pi = %8.2f" % (3.14159,) )       # bardziej precyzyjnie
-print ( "a %10.1f b %3d" % (1.23456, 2) ) # dwie lub więcej pozycji
+print("%-10s|%10s" % ("napis1", "napis2"))
+print("pi = %8.2f" % 3.14159)            # po procencie jest krotka
+print("pi = %8.2f" % (3.14159,))         # bardziej precyzyjnie
+print("a %10.1f b %3d" % (1.23456, 2))   # dwie lub więcej pozycji
 </pre><hr><pre>
 # Wyprowadzanie danych do pliku:
 afile = open("data.txt", "w")
@@ -53,33 +53,34 @@ afile.close()
 # Obiekt sys.stdout jest typu file, mode "w".
 
 import sys
-print ( X )
+print(X)
 sys.stdout.write(str(X) + "\n")  # jw, równoważne
 sys.stdout.write("%s\n" % X)     # jw, ale będzie problem dla X tuple
-print ( "{} {}".format("alpha", "beta") )   # zalecane
+print("{} {}".format("alpha", "beta"))   # zalecane
 sys.stdout.write("%s %s\n" % ("alpha", "beta"))  # jw
+sys.stdout.write("{} {}\n".format("alpha", "beta"))   # jw
 </pre><hr><pre>
 # Można na chwilę zmienić stdout:
 import sys
 tmp = sys.stdout
 sys.stdout = open("log.txt", "a")
-print ( "napis" )          # idzie do pliku
+print("napis")          # komunikat idzie do pliku
 sys.stdout.close()
 sys.stdout = tmp
 </pre><hr><pre>
 # Korzystanie ze słownika przy formatowaniu stringu.
 phones = {"Adam": 1234, "Bogdan": 3456, "Czarek": 5678}
-print ( "Telefony: Adam: %(Adam)s, Bogdan: %(Bogdan)s." % phones )
+print("Telefony: Adam: %(Adam)s, Bogdan: %(Bogdan)s." % phones)
 
 # Można wykorzystać funkcję systemową zwracającą słownik.
 name = "elektron"
 mass = 0.511034    # MeV
-print ( "%(name)s, masa %(mass)s MeV" % locals() )
+print("%(name)s, masa %(mass)s MeV" % locals())
 </pre><hr><pre>
 # Zapis wywołań print działający w Py2 i Py3.
-print ( "napis" )   # jeden obiekt
-print ( "%s %s %s" % (item1, item2, item3) )
-print ( "{} {} {}".format(item1, item2, item3) )   # zalecane
+print("napis")   # jeden obiekt
+print("%s %s %s" % (item1, item2, item3))
+print("{} {} {}".format(item1, item2, item3))   # zalecane
 </pre><hr><pre>
 # Emulacja funkcji print() z Py3 w Py2.
 # print(value, ..., sep=' ', end='\n', file=sys.stdout, flush=False)
@@ -114,9 +115,10 @@ from __future__ import print_function
 # S.format(*arguments, **keywords)
 
 # Argumenty pozycyjne.
-print ( "{0} albo {1}".format("prawda", "fałsz") ) # prawda albo fałsz
-print ( "{} albo {}".format("prawda", "fałsz") ) # prawda albo fałsz (Py2.7, Py3)
-print ( "{1} albo {0}".format("prawda", "fałsz") ) # fałsz albo prawda
+print("{0} albo {1}".format("prawda", "fałsz"))   # prawda albo fałsz
+print("{} albo {}".format("prawda", "fałsz"))   # prawda albo fałsz (Py2.7, Py3)
+print("{1} albo {0}".format("prawda", "fałsz"))   # fałsz albo prawda
+
 # Formatowanie {position:format_spec}.
 # {position:10} typ str, szerokość minimum 10 znaków;
 # {position:4d} typ int, szerokość minimum 4 znaki;
@@ -126,14 +128,15 @@ for x in range(1, 11):
     print ( "{0:2d} {1:3d}".format(x, x*x) )
 </pre><hr><pre>
 # Argumenty w postaci słów kluczowych.
-print ( "{person} jest {description}".format(
-    person="Adam", description="okropny") )
+print("{person} jest {description}".format(
+    person="Adam", description="okropny"))
+
 # Formatowanie {key:format_spec}.
 # {key:d} key wskazuje na typ int;
 
 # Argumenty pozycyjne i słowa kluczowe można używać łącznie.
-print ( "Kali liczyć: {0}, {1}, {2}, {last}.".format(
-    "jeden", "dwa", "trzy", last="mnóstwo") )
+print("Kali liczyć: {0}, {1}, {2}, {last}.".format(
+    "jeden", "dwa", "trzy", last="mnóstwo"))
 # Kali liczyć: jeden, dwa, trzy, mnóstwo.
 </pre><hr><pre>
 # Formatowania {position!conversion:format_spec} oraz
@@ -142,13 +145,14 @@ print ( "Kali liczyć: {0}, {1}, {2}, {last}.".format(
 # {position!r} wymusza formatowanie obiektu przez repr().
 # {position!a} wymusza formatowanie obiektu przez ascii() (Py3).
 # Podobnie {key!s}, {key!r}, {key!a} (Py3).
+
 import math
-print ( "PI wynosi {0} {0!s} {0!r}".format(math.pi) )
+print("PI wynosi {0} {0!s} {0!r}".format(math.pi))
 # 'PI wynosi 3.14159265359 3.14159265359 3.1415926535897931'
 </pre><hr><pre>
 # Zastosowanie słownika ze słowami kluczowymi.
 table = {"Adam":1234, "Bogdan":5678}
-print ( "Adam {Adam:d}; Bogdan {Bogdan:d}".format(**table) )
+print("Adam {Adam:d}; Bogdan {Bogdan:d}".format(**table))
 # Adam 1234; Bogdan 5678
 </pre><hr><pre>
 # Using alignment options in format_spec.
@@ -201,12 +205,12 @@ c = 2-4j
 # Rozpoczynają się od prefiksu 'f' lub 'F', w klamrach {} są wyrażenia lub zmienne.
 name = "Adam"
 age = 18
-print ( f"Hello, {name}. You are {age}." )
-print ( f'{2 * 37}' )   # "74"
-print ( f"{{18}}" )   # wynik to "{18}"
-print ( f"""{function_name(argument)} is funny.""" )
-print ( f'''{instance.method()} is fast.''' ) 
-print ( f"{variable!r}" )  # używa repr(), a nie str()
+print(f"Hello, {name}. You are {age}.")
+print(f'{2 * 37}')   # "74"
+print(f"{{18}}")   # wynik to "{18}"
+print(f"""{function_name(argument)} is funny.""")
+print(f'''{instance.method()} is fast.''') 
+print(f"{variable!r}")  # używa repr(), a nie str()
 
 message = (
     f"First part {variable1}. "

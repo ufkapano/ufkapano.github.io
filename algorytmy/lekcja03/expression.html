@@ -29,6 +29,7 @@ x = y = z = 0                 # przypisanie z wieloma celami
 x += 5                        # przypisane rozszerzone (x = x + 5)
 L += 5                        # odpowiada L.append(5), IN PLACE
 L += sequence                 # odpowiada L.extend(sequence), IN PLACE
+L += [sequence]               # dołączenie sekwencji w całości, L.append(sequence)
 </pre><hr><pre>
 L = [1, 2, 3, 4]
 front, L = L[0], L[1:]        # odcięcie początku
@@ -88,11 +89,11 @@ W trybie interaktywnym możemy zobaczyć wartość wyrażenia.
 <hr><pre>
 2 + 5                         # wyrażenie arytmetyczne lub logiczne
 L[idx]                        # dla listy, krotki, słownika
-[x for x in iterable]         # list|dict|set comprehension
+[f(x) for x in iterable]      # list|dict|set comprehension
 some_function()               # wywołanie funkcji
 some_object.method()          # wywołanie metody
 name                          # zmienna
-#print word                    # instrukcja w Pythonie 2!
+#print word                    # instrukcja prosta w Pythonie 2!
 print(word)                   # funkcja w Pythonie 3
 yield x ** 2                  # zwracanie wyniku częściowego (generator)
 lambda x: x ** 2              # funkcja anonimowa
