@@ -49,17 +49,12 @@ są wytwarzane w locie (on the fly).
 x = [i*i for i in range(100)]   # lista w całości
 
 # Wyrażenie generatora (generator expression) to wyrażenie, które zwraca iterator.
-# xrange() jest generatorem [Py2], więc dobrze tu pasuje.
-x = (i*i for i in xrange(100))          # generator object [Py2]
+x = (i*i for i in range(100))          # generator object
 
-# W praktyce xrange() nie jest szybsze niż range().
-# Przydaje się przy bardzo długich listach, gdy brakuje pamięci.
-
-# Tworzenie list w różnych wersjach Pythona.
-L = range(8)                  # Py2
-L = list(xrange(8))           # Py2
-L = list(range(8))            # Py3, range() to generator
-L = list(range(8))            # UNIWERSALNE
+# Tworzenie listy liczb w różnych wersjach Pythona.
+L = range(100)                  # Py2
+L = list(xrange(100))           # Py2, xrange to generator
+L = list(range(100))            # UNIWERSALNE
 </pre><hr><pre>
 # Funkcja generatora (generator function) to funkcja, która zwraca iterator.
 
@@ -73,9 +68,9 @@ def my_generator(stop):
 # Sposób 1 korzystania z generatora.
 # Mamy ukryty w tle protokół iteracji.
 for i in my_generator(10):
-    print ( i )
+    print(i)
 # Po zakończeniu pętli tracimy dostęp do generatora,
-# ale i tak jest on już zakończony.
+# ale i tak jest on już wyczerpany.
 
 # Sposób 2 korzystania z generatora.
 # Jawne korzystanie z protokołu iteracji.
@@ -178,7 +173,6 @@ for i in x:
 0 81
 # Generator y wyczerpał się po jednym przebiegu (x=0).
 </pre><hr><pre>
-# xrange to jest osobna klasa, więc zwraca nowe instancje.
 # Rozwiązaniem są dwa niezależne generatory, które powstają w pętli.
 for i in (i*i for i in range(10)):
     for j in (i*i for i in range(10)):

@@ -27,7 +27,7 @@ Przykładowo lambda nie może zawierać print [Py2], bo to jest instrukcja
 func1 = lambda x, y, z: x + y + z
 print(func1(2, 3, 4))
 
-def func1(x, y, z):            # równoważna funkcja
+def func1(x, y, z):   # równoważna funkcja
     return x + y + z
 </pre><hr><pre>
 # W argumentach lambda można używać argumentów domyślnych.
@@ -38,22 +38,22 @@ print(func2(4, 5))
 # Lambda można stosować w funkcji map().
 
 map(lambda x: 2*x+1, range(9))
-[2*x+1 for x in range(9)]     # lista składana
+[2*x+1 for x in range(9)]   # lista składana
 </pre><hr><pre>
 # Z lambda można budować listę lub słownik.
 
-action = {
-"jeden": lambda x: x,
-"dwa": lambda x: x**2,
-"trzy": lambda x: x**3
+action = {   # wcięcia dla czytelności
+    "jeden": lambda x: x,
+    "dwa": lambda x: x**2,
+    "trzy": lambda x: x**3,
 }
 print(action["dwa"](10))   # pow(10, 2) = 100
 
-powers = [
-lambda x : 1,
-lambda x: x, 
-lambda x: pow(x, 2), 
-lambda x: pow(x, 3)
+powers = [   # wcięcia dla czytelności
+    lambda x : 1,
+    lambda x: x, 
+    lambda x: pow(x, 2), 
+    lambda x: pow(x, 3),
 ]
 print(powers[2](3))   # pow(3, 2) = 9
 </pre><hr><pre>
@@ -67,8 +67,12 @@ lambda_max = lambda x, y: x if x &gt; y else y
 
 number_list.sort(reverse=True)
 number_list.sort(key=lambda x: -x)
+
 pair_list.sort(key=lambda t: abs(t[0]) + abs(t[1]))   # metryka taksówkowa
-pair_list.sort(key=lambda t: (-t[0], t[1]))   # malejąco ze względu na t[0]
+
+pair_list.sort(key=lambda t: (-t[0], t[1]))
+# Sortujemy malejąco ze względu na t[0].
+# Jeżeli t[0] są równe, to sortujemy rosnąco ze względu na t[1].
 </pre><hr>
 
 </body>

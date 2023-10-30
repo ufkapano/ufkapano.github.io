@@ -29,9 +29,9 @@ Instrukcje i wyrażenia związane z funkcjami
 | def, return | def func(x, y=1):             |
 |             |     return x + y              |
 | global      | def changer():                |
-|             |     global x; x = "nowy"      |
+|             |     global x ; x = "nowy"     |
 | nonlocal    | def changer(): # Py3 PEP 3104 |
-|             |     nonlocal x; x = "nowy"    |
+|             |     nonlocal x ; x = "nowy"   |
 | yield       | generatory                    |
 | lambda      | funkcje anonimowe             |
 +-------------+-------------------------------+
@@ -45,7 +45,7 @@ implementacja jest różna.
 
 <hr><pre>
 # Składnia funkcji.
-def nazwa_funkcji(lista_argumentów_funkcji):
+def nazwa_funkcji(argumenty_funkcji):   # wiersz nagłówkowy
     docstring                       # opcjonalnie
     instrukcje
     return obiekt_wynikowy          # opcjonalne
@@ -72,8 +72,8 @@ func.atrr = value        # dołączenie atrybutu do obiektu funkcji
 dir(func)                # lista atrybutów obiektu funkcji
 print(func.__name__)     # wypisze nazwę funkcji
 print(func.__doc__)      # wypisze docstring
-func(x, y)               # dwa argumenty
-func((x, y))             # jeden argument (tuple)
+func(x, y)               # dwa argumenty pozycyjne
+func((x, y))             # jeden argument pozycyjny (tuple)
 </pre><hr>
 
 <p>Instrukcja <em>def</em> jest kodem  wykonywalnym.

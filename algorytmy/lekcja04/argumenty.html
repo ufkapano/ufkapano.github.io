@@ -156,6 +156,9 @@ def func_pos_only(arg, /): pass   # func_pos_only(25)
 
 def func_kwd_only(*, arg): pass   # func_kwd_only(arg=34)
 
+#def func(/, arg): pass   # SyntaxError
+#def func(arg, *): pass   # SyntaxError
+
 # sorted(iterable, /, *, key=None, reverse=False)
 # abs(x, /)
 </pre><hr>
