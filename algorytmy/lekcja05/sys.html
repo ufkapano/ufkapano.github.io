@@ -20,39 +20,39 @@ import sys
 # dir(sys)   # można sprawdzić udostępniane symbole
 
 # Wybrane obiekty statyczne.
-print ( "sys.prefix: {}".format(sys.prefix) )         # "/usr"
-print ( "sys.executable: {}".format(sys.executable) ) # "/usr/bin/python"
-print ( "sys.maxint: {}".format(sys.maxint) )         # 2147483647
-print ( "sys.version: {}".format(sys.version) )
-print ( "sys.platform: {}".format(sys.platform) )
-print ( "sys.byteorder: {}".format(sys.byteorder) )
+print("sys.prefix: {}".format(sys.prefix))         # "/usr"
+print("sys.executable: {}".format(sys.executable)) # "/usr/bin/python"
+print("sys.maxint: {}".format(sys.maxint))         # 2147483647
+print("sys.version: {}".format(sys.version))
+print("sys.platform: {}".format(sys.platform))
+print("sys.byteorder: {}".format(sys.byteorder))
 </pre><hr><pre>
 # Wybrane obiekty dynamiczne.
 # Znaki zachęty są określone tylko w trybie interaktywnym.
-# print ( "{} {}".format(sys.ps1, sys.ps2) )
+# print("{} {}".format(sys.ps1, sys.ps2))
 
 # Nazwy strumieni: sys.stdin, sys.stdout, sys.stderr
 
-print ( "sys.path: {}".format(sys.path) )   
+print("sys.path: {}".format(sys.path))   
 # ścieżki wyszukiwania modułów (lista stringów)
 path_to_folder = os.path.abspath("/destination/folder")
 sys.path.insert(0, path_to_folder)   # dodanie folderu do ścieżki
 
-print ( "długość sys.argv: {} {}".format(len(sys.argv), type(sys.argv)) )
+print("długość sys.argv: {} {}".format(len(sys.argv), type(sys.argv)))
 for i in range(len(sys.argv)):
-    print ( "{} {}".format(i, sys.argv[i]) )
+    print("{} {}".format(i, sys.argv[i]))
 </pre><hr><pre>
 # Wybrane funkcje.
 # sys.exit()                  # domyślnie zwróci 0 - sukces
 # sys.exit(1)                 # zwraca 1 - niepowodzenie
 
 # Sprawdzanie licznika referencji.
-print ( "sys.getrefcount {}".format(sys.getrefcount(1)) )
-print ( "sys.getrefcount {}".format(sys.getrefcount("a")) )
+print("sys.getrefcount {}".format(sys.getrefcount(1)))
+print("sys.getrefcount {}".format(sys.getrefcount("a")))
 
 # Bieżąca wartość limitu rekurencji, czyli maksymalna głębokość
 # stosu interpretera Pythona.
-print ( "limit rekurencji {}".format(sys.getrecursionlimit()) )   # 1000
+print("limit rekurencji {}".format(sys.getrecursionlimit()))   # 1000
 
 # Zmiana limitu rekurencji Pythona.
 # Największa możliwa wartość zależy od platformy.

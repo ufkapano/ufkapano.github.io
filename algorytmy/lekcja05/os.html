@@ -22,10 +22,10 @@ import os
 
 os.system("date")                       # wywołanie polecenia powłoki
 var = os.environ.get("SHELL")           # pobranie zawartości zmiennej powłoki
-print ( var )
-print ( os.uname() )                    # krotka z informacją o systemie
-print ( os.name )                       # "posix" lub "nt" lub "mac" lub ...
-print ( os.sep )   # separator ścieżek, '/' w Linuksie, '\\' w Windows
+print(var)
+print(os.uname())                    # krotka z informacją o systemie
+print(os.name)                       # "posix" lub "nt" lub "mac" lub ...
+print(os.sep)   # separator ścieżek, '/' w Linuksie, '\\' w Windows
 
 # current working directory 
 current = os.getcwd()   # '/home/andrzej'
@@ -35,16 +35,16 @@ current = os.getcwd()   # '/home/andrzej'
 directory = os.path.join('main_dir', 'sub_dir')   # sklejenie z os.sep
 full_file_name = os.path.join(directory, 'example.json')
 
-print ( os.path.abspath(".") )   # "/home/andrzej"
+print(os.path.abspath("."))   # "/home/andrzej"
 path = '/home/andrzej/Pobrane'
-print ( os.path.basename(path) )   # 'Pobrane'
-print ( os.path.dirname(path) )   # '/home/andrzej'
-print ( os.path.exists(path) )   # True
-print ( os.path.isabs(path) )   # True
-print ( os.path.isdir(path) )   # True
-print ( os.path.isfile(path) )   # False
+print(os.path.basename(path))   # 'Pobrane'
+print(os.path.dirname(path))   # '/home/andrzej'
+print(os.path.exists(path))   # True
+print(os.path.isabs(path))   # True
+print(os.path.isdir(path))   # True
+print(os.path.isfile(path))   # False
 
-print ( os.path.split(path) )   # ('/home/andrzej', 'Pobrane')
+print(os.path.split(path))   # ('/home/andrzej', 'Pobrane')
 # Split a pathname.  Returns tuple "(head, tail)" where "tail" is
 # everything after the final slash.  Either part may be empty.
 
@@ -70,7 +70,7 @@ os.listdir(path)   # return a list containing the names of the files
 # Przykład: zliczanie plików PDF w drzewie podkatalogów.
 
 n_pdf = 0   # the number of PDF files
-for root, dirs, files in os.walk(top):   # walking top-down
+for root, dirs, files in os.walk(top):   # walking top-down (default)
     # 'root' is a string, the path to the directory
     # 'dirs' is a list of the names of the subdirectories in 'root'
     # 'files' is a list of the names of the non-directory files in 'root'
@@ -79,6 +79,16 @@ for root, dirs, files in os.walk(top):   # walking top-down
             n_pdf += 1
 
 print("The number of PDF files in {} directory is {}".format(top, n_pdf))
+</pre><hr><pre>
+# Przykład: usuwanie wszystkiego w katalogu 'top' (niebezpieczne!).
+# Zakładamy brak linków symbolicznych.
+# Takie zadanie w powłoce bash wykonuje polecenie 'rm -rf top/*'.
+
+for root, dirs, files in os.walk(top, topdown=False):   # walking bottom-up
+    for name in files:
+        os.remove(os.path.join(root, name))
+    for name in dirs:
+        os.rmdir(os.path.join(root, name))
 </pre><hr>
 
 </body>

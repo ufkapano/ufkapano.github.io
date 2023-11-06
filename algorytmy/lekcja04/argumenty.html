@@ -15,8 +15,8 @@ Istnieją trzy sposoby, które mogą być ze sobą łączone:
 
 <ul>
 <li>domyślne wartości argumentów,
-<li>dowolna lista argumentów,
-<li>argumenty w postaci słów kluczowych.
+<li>dowolna lista argumentów (*identifier),
+<li>argumenty w postaci słów kluczowych (**identifier).
 </ul>
 
 <h3>DOMYŚLNE WARTOŚCI ARGUMENTÓW</h3>
@@ -132,6 +132,7 @@ describe("Adam", 20, "student")
 # Adam age 20 position student
 
 describe("Bogdan", 30, "teacher")
+# Bogdan age 30 position teacher
 
 # Pobieranie danych ze słownika.
 describe(person["name"], person["age"], person["position"])
@@ -141,7 +142,6 @@ describe(name=person["name"], age=person["age"], position=person["position"])
 
 # Rozpakowanie słownika.
 describe(**person)
-# Bogdan age 30 position teacher
 </pre><hr>
 
 <p>W Pythonie 2 istnieje funkcja <em>apply()</em> o podobnym

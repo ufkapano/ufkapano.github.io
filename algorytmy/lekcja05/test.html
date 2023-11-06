@@ -47,15 +47,16 @@ doctest.testfile("example.txt")
 <p>Moduł 'pytest' należy do biblioteki standardowej od Pythona 3.6.
 
 <hr><pre>
-# Przykładowy plik z testami test_sample.py
+# Przykładowy plik z testami test_sample.py ('test' w nazwie pliku).
 
 def inc(x):
     return x + 1
 
-def test_answer():
+def test_answer():   # 'test' w nazwie funkcji
     assert inc(3) == 5   # intentional error, 'assert' is used
 
-# Testy uruchamiamy w powłoce systemu oeracyjnego poleceniem 'pytest'.
+# Testy uruchamiamy w powłoce systemu operacyjnego poleceniem 'pytest',
+# tak działa 'discovery mode'.
 </pre><hr>
 
 <h3>MODUŁ timeit</h3>
@@ -78,10 +79,10 @@ import timeit
 # Często przydaje się średnik do rozdzielania poleceń.
 t1 = timeit.Timer(stmt="t=a ; a=b ; b=t", setup="a=1 ; b=2")
 t2 = timeit.Timer(stmt="(a,b) = (b,a)", setup="a=1 ; b=2")
-print ( t1.timeit() )         # domyślnie milion wykonań
-print ( t2.timeit() )
-print ( t2.repeat(5) )        # zwraca listę 5 wyników
-print ( min(t2.repeat(10)) )  # to jest zwykle miarodajne, a nie średnia
+print(t1.timeit())         # domyślnie milion wykonań
+print(t2.timeit())
+print(t2.repeat(5))        # zwraca listę 5 wyników
+print(min(t2.repeat(10)))  # to jest zwykle miarodajne, a nie średnia
 </pre><hr><pre>
 import timeit
 
@@ -91,7 +92,7 @@ pierwszy wiersz
 drugi wiersz
 """
 t = timeit.Timer(stmt=s)
-print ( t.timeit() )
+print(t.timeit())
 </pre><hr><pre>
 import random
 import timeit
@@ -105,7 +106,7 @@ random.shuffle(lista)
 t1 = timeit.Timer(stmt="mysort(lista, 0, len(lista)-1)", 
                   setup="from __main__ import mysort, lista")
 
-print ( t1.timeit(1) )        # pojedyncze wykonanie
+print(t1.timeit(1))        # pojedyncze wykonanie
 </pre><hr><pre>
 # Od Pythona 2.6 można przekazywać obiekty callable bez argumentów.
 
@@ -120,7 +121,7 @@ random.shuffle(lista)
 
 t1 = timeit.Timer(lambda: mysort(lista, 0, len(lista)-1))
 
-print ( t1.timeit(1) )        # pojedyncze wykonanie
+print(t1.timeit(1))        # pojedyncze wykonanie
 </pre><hr>
 
 <h3>MODUŁ enum</h3>
