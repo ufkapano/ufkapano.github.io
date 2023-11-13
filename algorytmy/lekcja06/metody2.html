@@ -66,6 +66,8 @@ __hash__   wywoływane przez hash(x), zwraca int;
     It is advised to mix together the hash values of the components 
     of the object that also play a part in comparison of objects by packing 
     them into a tuple and hashing the tuple.
+    Jeżeli klasa nie definiuje __eq__, to nie powinna definiować __hash__.
+    Dla obiektów mutowalnych nie należy definiować __hash__.
 
 __bytes__   wywoływane przez bytes(x), zwraca obiekt bytes;
 </pre><hr><pre>
@@ -79,9 +81,10 @@ __pow__  potęgowanie, pow(x, y) lub x ** y; powinien być opcjonalny
     trzeci argument, jeżeli ma być wspierane pow(x, y, z)]
 </pre><hr><pre>
 # Definiowanie operatora dzielenia /.
-__div__  dzielenie klasyczne (x/y)
-__floordiv__  dzielenie całkowite, x // y
-__truediv__ działa w Py2, jeżeli jest aktywne __future__.division
+__div__  dzielenie klasyczne, x / y (Py2)
+__floordiv__  dzielenie całkowite, x // y (Py2 i Py3)
+__truediv__  dzielenie prawdziwe, x / y (Py3),
+    działa w Py2, jeżeli jest aktywne __future__.division
 </pre><hr><pre>
 # Reflected arithmetic operators.
 # Wersje prawe operatorów, które wywoływane są wtedy, gdy obiekt
@@ -100,7 +103,7 @@ __rsub__  right sub
 __rmul__  right mul
 __rdiv__  right div
 __rtruediv__  right truediv
-__rfloordiv__  right
+__rfloordiv__  right floordiv
 __rmod__  reszta z dzielenia
 __rdivmod__  zwraca tuple
 __rpow__  potęgowanie
@@ -117,11 +120,10 @@ __imod__
 </pre><hr><pre>
 # Przykład.
 alist = [2]
-alist += [5]   # zmiana obiektu!
-print(alist)   # [2, 5]
+alist += [5, 6]   # zmiana obiektu! odpowiada alist.extend([5, 6])
+print(alist)   # [2, 5, 6]
 # To jest równoważne działaniom:
-result = alist.__iadd__([5])   # potrzebne return self
-alist = result
+alist = alist.__iadd__([5, 6])   # potrzebne return self
 
 # Jeżeli klasa nie ma metody __iadd__, operacja A += B zamieniana jest
 # na A = A + B, co działa też dla obiektów niezmiennych (str, tuple).
@@ -149,6 +151,7 @@ __complex__  implementacja complex(x)
 __int__  implementacja int(x)
 __long__  implementacja long(x)
 __float__  implementacja float(x)
+__complex__  implementacja complex(x)
 </pre><hr><pre>
 # Porównywanie.
 __cmp__  porównywanie (Py2), zwraca -1|0|+1
@@ -157,7 +160,7 @@ __nonzero__  test prawdziwości (Py2), jeżeli obiekt nie jest kontenerem
 __bool__  test prawdziwości (Py3), bool(x)
 __bool__ = __nonzero__   # kod dla zachowania kompatybilności Pythona 2 i 3
 
-# Tak zwane "rich comparison" methods (Py2.6+).
+# Tak zwane "rich comparison" methods (Py2.6+, Py3).
 # Jeżeli nie są zdefiniowane, wywoływane jest __cmp__
 __lt__  mniejsze, x &lt; y
 __gt__  większe, x &gt; y
@@ -167,7 +170,7 @@ __ge__  większe lub równe, x &gt;= y
 __ne__  różne, x != y, dawniej też x &lt;&gt; y
 assert (x &lt; y) == (y &gt; x)   # jedno można obliczyć z drugiego
 assert (x &lt;= y) == (y &gt;= x)   # jedno można obliczyć z drugiego
-assert (x == y) == not (x != y)   # nie zawsze tak musi być!
+assert (x == y) == not (x != y)   # jedno można obliczyć z drugiego
 # PEP 207
 # min() and list.sort() operations only use the &lt; operator (less).
 # max() only use the &gt; operator.
@@ -247,7 +250,7 @@ class Printer:
     def __call__(self, *arguments, **keywords):
         """Obsługa wywołania."""
         self.counter += 1
-        print ( "Wywołanie: {} {}".format(arguments, keywords) )
+        print("Wywołanie: {} {}".format(arguments, keywords))
 
 X = Printer()
 X(1, 2)             # Wywołanie: (1, 2) {}

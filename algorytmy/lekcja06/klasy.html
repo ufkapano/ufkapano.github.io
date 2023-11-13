@@ -40,7 +40,7 @@ class NazwaKlasy:
     class_docstring   # opcjonalnie
     instrukcje
 
-class NazwaKlasy(lista_klas_nadrzędnych):
+class NazwaKlasy(lista_klas_nadrzędnych):   # dziedziczenie
     class_docstring   # opcjonalnie
     instrukcje
 </pre><hr><pre>
@@ -59,7 +59,7 @@ x = 7.8
 # Zmienne x i point.x to dwie różne wartości.
 # Instancja point jest osobną przestrzenią nazw.
 print("{} {}".format(x, point.x))   # 7.8 3.4
-print(point)                  # heksadecymalne info
+print(point)   # heksadecymalne info
 
 # Obiekt może być parametrem funkcji w zwykły sposób.
 # Nazwa 'point' wewnątrz funkcji jest lokalna i nie koliduje
@@ -130,12 +130,12 @@ box.corner.y = 0.0
 
 # Nowe instancje klas mogą powstawać wewnątrz funkcji.
 
-def find_center(rect):        # zwraca instancję punktu
+def find_center(rect):   # zwraca instancję punktu
     """Znajdź środek prostokąta."""
     point = Point()
     point.x = rect.corner.x + rect.width / 2.0
     point.y = rect.corner.y + rect.height / 2.0
-    return point          # referencja do nowego obiektu
+    return point   # referencja do nowego obiektu
 
 center = find_center(box)
 print_point(center)   # (50.0, 100.0)
