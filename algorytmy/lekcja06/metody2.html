@@ -164,13 +164,15 @@ __bool__ = __nonzero__   # kod dla zachowania kompatybilności Pythona 2 i 3
 # Jeżeli nie są zdefiniowane, wywoływane jest __cmp__
 __lt__  mniejsze, x &lt; y
 __gt__  większe, x &gt; y
-__eq__  równe, x == y
+__eq__  równe, x == y [bez tego działa id(x) == id(y)]
 __le__  mniejsze lub równe, x &lt;= y
-__ge__  większe lub równe, x &gt;= y
-__ne__  różne, x != y, dawniej też x &lt;&gt; y
+__ge__  większe lub równe, x &gt;= y 
+__ne__  różne, x != y, dawniej też x &lt;&gt;
 assert (x &lt; y) == (y &gt; x)   # jedno można obliczyć z drugiego
 assert (x &lt;= y) == (y &gt;= x)   # jedno można obliczyć z drugiego
 assert (x == y) == not (x != y)   # jedno można obliczyć z drugiego
+# Jeżeli brak __ne__, to dla klas użytkownika działa not (x == y).
+# Dla klas dziedziczonych z klas wbudowanych nie musi tak być.
 # PEP 207
 # min() and list.sort() operations only use the &lt; operator (less).
 # max() only use the &gt; operator.

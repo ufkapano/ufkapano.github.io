@@ -88,6 +88,8 @@ class TestTime(unittest.TestCase):
 
     def test_cmp(self):
         # Trzeba sprawdzać ==, !=, &gt;, &gt;=, &lt;, &lt;=.
+        #self.assertEqual(a, b) robi test a == b.
+        #self.assertNotEqual(a, b) robi test a != b.
         self.assertTrue(Time(2) == Time(2))
         self.assertFalse(Time(2) == Time(3))
         self.assertTrue(Time(2) != Time(3))

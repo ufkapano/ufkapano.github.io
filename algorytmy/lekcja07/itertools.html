@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/library/itertools.html
 
+<p>https://realpython.com/how-to-split-a-python-list-into-chunks/
+
 <h3>WPROWADZENIE</h3>
 
 <p>Moduł 'itertools' (Py2.3+) zawiera funkcje tworzące iteratory 
@@ -31,7 +33,7 @@ zip(itertools.count(start=0), iterable)   # emulacja bez pętli for
 
 # itertools.cycle(iterable)
 itertools.cycle('ABCD')   # yield A B C D A B C D ...
-itertools.cycle(range(1, 4))   # yield 1 2 3 1 2 3 1 2 3
+itertools.cycle(range(1, 4))   # yield 1 2 3 1 2 3 1 2 3 ...
 
 # itertools.repeat(item [,n])
 itertools.repeat(10)   # yield 10 10 10 10 ...
@@ -47,7 +49,17 @@ itertools.chain('ABC', 'DEF')   # yield A B C D E F
 
 # itertools.chain.from_iterable(iterable)   # alternatywny konstruktor dla chain()
 itertools.chain.from_iterable(['ABC', 'DEF'])   # yield A B C D E F
+
+matrix = [[11, 12], [21, 22]]
+[x for row in matrix for x in row]   # [11, 12, 21, 22]
+list(x for row in matrix for x in row)   # jw
+list(itertools.chain.from_iterable(matrix))   # jw
 </pre><hr><pre>
+# itertools.batched(iterable, n)   # Py3.12
+list(itertools.batched('ABCDEFG', 3))
+# [('A', 'B', 'C'), ('D', 'E', 'F'), ('G',)]
+</pre><hr><pre>
+# Tworzenie iteratora pobierającego z 'iterable' wybrane elementy.
 # itertools.islice(iterable, stop)
 # itertools.islice(iterable, start, stop [, step])
 # Jeżeli 'stop' jest None, wtedy iteracja trwa aż iterator się wyczerpie,
@@ -116,6 +128,8 @@ list(itertools.combinations_with_replacement([1, 2, 3, 4], 3))
 <hr><pre>
 # Mamy daną listę wartości 'inputs' i dodatnią liczbę całkowitą n.
 # Napisać funkcję, która dzieli 'inputs' na grupy długości n.
+# W Pythonie 3.12 mamy itertools.batched(inputs, n),
+# ale ostatnia paczka może być krótsza od pozostałych.
 
 def naive_grouper(inputs, n):
     num_groups = len(inputs) // n
@@ -134,6 +148,18 @@ def best_grouper(inputs, n, fillvalue=None):
     iters = [iter(inputs)] * n
     return itertools.zip_longest(*iters, fillvalue=fillvalue)
     # Działa nawet jeżeli n nie dzieli len(inputs).
+
+# Przykładowa implementacja batched() (Raymond Hettinger).
+def batched(iterable, n):
+#def batched(iterable, n, fillvalue=None):
+    "Batch data into lists of length n. The last batch may be shorter."
+    # batched('ABCDEFG', 3) --&gt; ABC DEF G
+    if n &lt; 1:
+        raise ValueError('n must be &gt;= 1')
+    it = iter(iterable)
+    while (batch := tuple(itertools.islice(it, n))):   # Py3.8+ wyrażenie przypisania
+        yield batch
+        #yield batch + (fillvalue,) * (n - len(batch))
 </pre><hr>
 
 </body>

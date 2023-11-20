@@ -13,7 +13,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Warto zestawić trzy ważne pojęcia:
-<br>(1) 'iterable' to cokolwiek, po czym można iterować,
+<br>(1) 'iterable' to cokolwiek, po czym można iterować
 [funkcja iter() potrafi zbudować iterator],
 <br>(2) 'iterator' to rzecz, która realizuje iterowanie
 [metody __iter__() i __next__() powinny być obecne],
@@ -62,6 +62,7 @@ def Reverse(sequence):
         i = i-1
         yield sequence[i]
 </pre><hr><pre>
+# Klasa do tworzenia iteratora.
 class Reverse:
     """Iterator odwrotny na bazie sekwencji."""
 
@@ -97,7 +98,7 @@ for item in Reverse([1, 2, 3, 4]):
 # https://www.programiz.com/python-programming/iterator
 
 for element in iterable:
-    # do something with element
+    process(element)   # do something with element
 
 # Działanie takiej pętli for można opisać następująco.
 
@@ -109,7 +110,7 @@ while True:
     try:
         # get the next item
         element = next(iter_obj)
-        # do something with element
+        process(element)   # do something with element
     except StopIteration:
         # if StopIteration is raised, break from loop
         break

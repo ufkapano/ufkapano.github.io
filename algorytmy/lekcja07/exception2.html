@@ -38,10 +38,11 @@ print(exception.args)   # ('a', 'b')
 print(exception)   # ('a', 'b')
 </pre><hr><pre>
 try:
-    raise MyError()   # instancja
-except MyError:
-#except MyError as exception:
+    raise MyError("message")   # instancja
+#except MyError:
+except MyError as exception:
     print("przechwycenie MyError")
+    print(exception.args)
 </pre><hr>
 
 <p>Jeżeli wyjątek został wyzwolony z argumentami, to w instancji
