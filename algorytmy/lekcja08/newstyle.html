@@ -54,9 +54,9 @@ bazowe od lewej do prawej, stosując rekurencję, co czasem
 prowadzi do niejednoznaczności (wielokrotne przeszukiwanie).
 
 <hr><pre>
-class OldStyle1: pass
+class OldStyle1: pass   # tylko Py2
 
-class OldStyle2(OldStyle1): pass
+class OldStyle2(OldStyle1): pass   # dziedziczenie
 
 # Przeszukiwanie (karo).
 #     Old1
@@ -74,9 +74,10 @@ class Old4(Old2, Old3): pass
 
 # Teraz MRO: Old4, Old2, Old1, Old3, Old1 [powtórnie].
 </pre><hr><pre>
-class NewStyle1(object): pass
+#class NewStyle1(object): pass   # Py2 i Py3
+class NewStyle1: pass   # tylko Py3
 
-class NewStyle2(NewStyle1): pass
+class NewStyle2(NewStyle1): pass   # dziedziczenie
 
 # Przeszukiwanie (karo).
 class New1(object): pass

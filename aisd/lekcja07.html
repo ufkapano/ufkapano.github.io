@@ -89,6 +89,9 @@ Zapis w ONP:   2 3 + 6 *
 Zapis konwencjonalny:   6/2   // wynik 3
 Zapis w ONP:   6 2 /
 
+Zapis konwencjonalny:   +4-(-2)   // wynik 6
+Zapis w ONP:   +4 -2 -
+
 Pseudokod algorytmu obliczania wartości wyrażenia w ONP:
 
 S = Stack()
@@ -118,11 +121,11 @@ Zakładamy, że na wejściu będą liczby całkowite i cztery możliwe działani
 "+", "-", "*", "/". Algorytm może mieć postać funkcji:
 
 <hr><pre>
-int rpn(std::vector&lt;std::string&gt; input);
+int rpn(const std::vector&lt;std::string&gt;&amp; input);
+// for (auto w : input) { /* sprawdzanie w */ }
 
 // std::vector&lt;std::string&gt; input { "-6", "2", "/" };
-// int result = rpn(input);
-// assert( result == -3 );
+// assert( rpn(input) == -3 );
 </pre><hr>
 
 <h3>ZADANIE 7.2</h3>

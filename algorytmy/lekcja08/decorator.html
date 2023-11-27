@@ -57,59 +57,76 @@ func = decorator_maker(argA, argB, ...)(func)
 </pre><hr><pre>
 # Dekorator jako funkcja z zagnieżdżoną funkcją.
 
+from functools import wraps
+
 def mytracer(func):
+    @wraps(func)
     def wrapper(*arguments, **keywords):
-        print ( "mytracer working ..." )   # dodatkowy komunikat
+        print("mytracer working ...")   # dodatkowy komunikat
         return func(*arguments, **keywords)   # func zaszyte w wrapper
+    #wrapper.__name__ = func.__name__   # w przybliżeniu
+    #wrapper.__doc__ = func.__doc__   # w przyblizeniu
     return wrapper
 
 @mytracer
 def spam(a, b, c):
-    print ( "{} {} {}".format(a, b, c) )
+#def spam(a: "arg1", b: "arg2", c: "arg3") -&gt; "summation":   # adnotacje
+    """To jest funkcja spam."""
+    print("{} {} {}".format(a, b, c))
     return a + b + c
 
-print ( spam(1, 2, 3) )
-print ( spam("a", "b", "c") )
-print ( spam(c=1, b=2, a=3) )
+print(spam(1, 2, 3))
+print(spam("a", "b", "c"))
+print(spam(c=1, b=2, a=3))
+print(spam.__name__)   # bez @wraps() jest 'wrapper'
+print(spam.__doc__)   # bez @wraps() jest None
+print(spam.__annotations__)   # bez @wraps() jest {}
 </pre><hr><pre>
 # Tworzymy własny dekorator funkcji będący klasą (jeden ze sposobów).
 # Ten sposób nie zadziała dla metod w klasach.
 
 class Tracer:
+    """To jest klasa Tracer."""
 
     def __init__(self, func):
         self.calls = 0
         self.func = func
+        self.__name__ = func.__name__   # bez tego AttributeError
+        self.__doc__ = func.__doc__   # bez tego docstring klasy Tracer
 
     def __call__(self, *arguments, **keywords):
         self.calls += 1
-        print ( "call {} to {}".format(self.calls, self.func.__name__) )
+        print("call {} to {}".format(self.calls, self.func.__name__))
         return self.func(*arguments, **keywords)
 
 # Do funkcji spam() dodajemy warstwę logiki.
 # spam = Tracer(spam)
 @Tracer
 def spam(a, b, c):
-    print ( "{} {} {}".format(a, b, c) )
+    """To jest funkcja spam."""
+    print("{} {} {}".format(a, b, c))
     return a + b + c
 
-print ( spam(1, 2, 3) )         # call 1 to spam
-print ( spam("a", "b", "c") )   # call 2 to spam
-print ( spam(c=1, b=2, a=3) )   # call 3 to spam
+print(spam(1, 2, 3))         # call 1 to spam
+print(spam("a", "b", "c"))   # call 2 to spam
+print(spam(c=1, b=2, a=3))   # call 3 to spam
+print(spam.__name__)   # AttributeError: 'Tracer' object has no attribute '__name__'
+print(spam.__doc__)
 </pre><hr><pre>
 # https://www.geeksforgeeks.org/class-as-decorator-in-python/
 import time
 
-class Tracer1:
+class Tracer:
 
-    def __init__(self, func):   # tu lapiemy funkcje do przetworzenia
+    def __init__(self, func):   # tu łapiemy funkcje do przetworzenia
         self.func = func
+        self.__name__ = func.__name__   # bez tego AttributeError
 
     def __call__(self, *arguments, **keywords):
         start_time = time.time()
         reply = self.func(*arguments, **keywords)
         end_time = time.time()
-        print ( "Execution took {} seconds".format(end_time - start_time) )
+        print("Execution took {} seconds".format(end_time - start_time))
         return reply
 </pre><hr><pre>
 # Tutaj instancja klasy będzie dekoratorem.
@@ -118,29 +135,32 @@ class Tracer1:
 from functools import wraps
 # Decorator factory to apply update_wrapper() to a wrapper function.
 
-class Tracer2:
+class Tracer:
 
     def __init__(self):   # tu mogą być parametry dekoratora
         self.calls = 0
 
     def __call__(self, func):   # tu łapiemy funkcję do przetworzenia
         @wraps(func)
-        def func_wrapper(*arguments, **keywords):
+        def wrapper(*arguments, **keywords):
             self.calls += 1
-            print ( "call {} to {}".format(self.calls, func.__name__) )
+            print("call {} to {}".format(self.calls, func.__name__))
             return func(*arguments, **keywords)
-        return func_wrapper
+        return wrapper
 
-# Do funkcji spam2() dodajemy warstwę logiki.
-# spam2 = Tracer()(spam2)
-@Tracer2()
-def spam2(a, b, c):
-    print ( "{} {} {}".format(a, b, c) )
+# Do funkcji spam() dodajemy warstwę logiki.
+# spam = Tracer()(spam)
+@Tracer()
+def spam(a, b, c):
+    """To jest funkcja spam."""
+    print("{} {} {}".format(a, b, c))
     return a + b + c
 
-print ( spam2(1, 2, 3) )         # call 1 to spam2
-print ( spam2("a", "b", "c") )   # call 2 to spam2
-print ( spam2(c=1, b=2, a=3) )   # call 3 to spam2
+print(spam(1, 2, 3))         # call 1 to spam
+print(spam("a", "b", "c"))   # call 2 to spam
+print(spam(c=1, b=2, a=3))   # call 3 to spam
+print(spam.__name__)   # bez @wraps() będzie string 'wrapper'
+print(spam.__doc__)
 </pre><hr>
 
 </body>

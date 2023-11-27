@@ -63,7 +63,8 @@ std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmp) &gt; pq(cmp);
 // Wstawianie do kolejki par (priority, item) [jak w Pythonie].
 auto cmp = [] (std::pair&lt;int,float&gt; left, std::pair&lt;int,float&gt; right) {
     return left.first &lt; right.first; };
-std::priority_queue&lt; std::pair&lt;int,float&gt;, std::vector&lt; std::pair&lt;int,float&gt; &gt;,
+std::priority_queue&lt; std::pair&lt;int,float&gt;,
+    std::vector&lt; std::pair&lt;int,float&gt; &gt;,
     decltype(cmp) &gt; pq(cmp);
 </pre><hr><pre>
 assert( pq.empty() );

@@ -65,6 +65,7 @@ public:
     void pop_back(); // usuwa koniec kolejki O(1)
     void clear(); // czyszczenie listy z elementów
     void display();
+    void display_reversed();
     // Operacje z indeksami.
     T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](int pos) const; // dostęp do obiektu const
@@ -135,6 +136,7 @@ public:
     void pop_back(); // usuwa koniec kolejki O(1)
     void clear(); // czyszczenie listy z elementów
     void display();
+    void display_reversed();
     // Operacje z indeksami. NIEOBOWIĄZKOWE
     T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](int pos) const; // dostęp do obiektu const
@@ -146,12 +148,14 @@ public:
 </pre><hr><pre>
 template &lt;typename T&gt;
 void MyDeque&lt;T&gt;::push_front(const T& item) {
+    assert(!full());
     head = (head + msize -1) % msize;
     tab[head] = item;
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
 void MyDeque&lt;T&gt;::push_back(const T& item) {
+    assert(!full());
     tab[tail] = item;
     tail = (tail + 1) % msize;
 }

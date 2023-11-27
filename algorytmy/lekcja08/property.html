@@ -40,15 +40,18 @@ class C(object):
         self.threshold = 10
 
     def getx(self):   # getting an attribute value
+        # instrukcje ...
         return self._x
 
     def setx(self, value):   # setting an attribute value
+        # instrukcje ...
         if value &lt; self.threshold:
             raise ValueError("x can't be lesser than {}".format(self.threshold))
         else:
             self._x = value
 
     def delx(self):   # deleting an attribute value
+        # instrukcje ...
         del self._x   # chyba lepiej self._x = None (?)
 
     x = property(getx, setx, delx, "I'm the 'x' property.")
@@ -77,10 +80,12 @@ class C(object):
     @property
     def x(self):   # getting an attribute value
         """I'm the 'x' property."""
+        # instrukcje ...
         return self._x
 
     @x.setter
     def x(self, value):   # setting an attribute value
+        # instrukcje ...
         if value &lt; self.threshold:
             raise ValueError("x can't be lesser than {}".format(self.threshold))
         else:
@@ -88,6 +93,7 @@ class C(object):
 
     @x.deleter
     def x(self):   # deleting an attribute value
+        # instrukcje ...
         del self._x   # chyba lepiej self._x = None (?)
 
 c = C()

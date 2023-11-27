@@ -34,7 +34,7 @@ dodatkowego konstruktora.
 class Methods:
 
     def imeth(self, x):   # zwykła metoda instancji
-        # Pierwszy argument to zwyczajowo self.
+        # Pierwszy argument to zwyczajowo self (bieżąca instancja).
         print("{} {}".format(self, x))
 
     def smeth(x):         # metoda statyczna
@@ -42,7 +42,8 @@ class Methods:
         print(x)
 
     def cmeth(cls, x):    # metoda klasy
-        # Pierwszy argument tradycyjnie to cls, a nie self.
+        # Pierwszy argument tradycyjnie nazywamy cls, a nie self.
+        # cls to obiekt klasy (tutaj to klasa Methods).
         print("{} {}".format(cls, x))
 
     smeth = staticmethod(smeth)   # przekształcanie
