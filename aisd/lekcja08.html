@@ -43,7 +43,7 @@ Typowe operacje dla ADT QUEUE są następujące:
 std::queue&lt;int&gt; Q;   // domyślnie std::deque
 assert( Q.empty() );
 for (auto item : {1, 2, 3, 5, 7})
-    Q.push(item);   // wstawienie do kolejki
+    Q.push(item);   // wstawienie do kolejki (na koniec)
 assert( Q.front() == 1 );   // odczyt
 assert( Q.back() == 7 );   // odczyt
 assert( Q.size() == 5 );
@@ -53,7 +53,7 @@ assert( Q.front() == 11 );
 assert( Q.back() == 77 );
 while(!Q.empty()) {
     std::cout &lt;&lt; Q.front() &lt;&lt; std::endl; // odczyt
-    Q.pop();   // usuwa z kolejki
+    Q.pop();   // usuwa z kolejki (z początku) 11, 2, 3, 5, 77
 }
 </pre><hr><pre>
 // Interfejs kolejki.
@@ -118,26 +118,6 @@ public:
     void clear(); // czyszczenie listy z elementów
     void display();
 };
-</pre><hr><pre>
-template &lt;typename T&gt;
-void MyQueue&lt;T&gt;::push(const T& item) {
-    tab[tail] = item;
-    tail = (tail + 1) % msize;
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-void MyQueue&lt;T&gt;::push(T&amp;&amp; item) {
-    tab[tail] = std::move(item);
-    tail = (tail + 1) % msize;
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-void MyQueue&lt;T&gt;::display() {
-    for (int i = head; i != tail; i=(i+1) % msize) {
-        std::cout &lt;&lt; tab[i] &lt;&lt; " ";
-    }
-    std::cout &lt;&lt; std::endl;
-}
 </pre><hr>
 
 <h3>ZADANIE 8.2</h3>
