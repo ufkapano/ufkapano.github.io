@@ -176,7 +176,7 @@ class MyABC(ABC):   # tworzenie abstrakcyjnej klasy bazowej
 MyABC.register(tuple)
 
 assert issubclass(tuple, MyABC)
-assert isinstance((), MyABC)
+assert isinstance(tuple(), MyABC)
 </pre><hr><pre>
 # Tworzenie nowej klasy przez bezpośrednie dziedziczenie 
 # po abstrakcyjne klasie bazowej.

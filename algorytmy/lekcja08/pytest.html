@@ -14,6 +14,8 @@
 
 <p>https://www.python-course.eu/python3_pytest.php
 
+<p>https://bulldogjob.pl/readme/pytest-vs-unittest-porownanie-frameworkow-do-automatyzacji-testow-w-pythonie
+
 <h3>INSTALALACJA</h3>
 
 <p>'pytest' nie należy do biblioteki standardowej, więc trzeba go 
@@ -36,13 +38,17 @@ i bibliotek.
 <p>Pliki z testami powinny mieć odpowiednie nazwy 
 (spam.py to moduł do testowania): test_spam.py lub spam_test.py.
 
+<p>Można przygotować środowisko do testów z 'pytest' za pomocą
+plików konfiguracyjnych w różnych formatach
+(pytest.ini, pyproject.toml, tox.ini, setup.cfg, conftest.py).
+
 <hr><pre>
 # Zawartość pliku test_sample.py
 
 def inc(x):
     return x + 1
 
-def test_answer():
+def test_answer():   # wymagana nazwa test_*
     assert inc(3) == 5   # celowy błąd, używamy 'assert'
 </pre><hr><pre>
 # Uruchamianie testów:
@@ -155,6 +161,15 @@ def test_difference(setA, setB):
     assert setA - setB == set([1, 5])
     assert setA.difference(setB) == set([1, 5])
 </pre><hr><pre>
+# Testowanie występowania wyjątków.
+
+def test_exceptions():
+    pytest.raises(TypeError, len, 10)
+    pytest.raises(TypeError, abs, "word")
+    pytest.raises(ZeroDivisionError, lambda: 1/0)
+    pytest.raises(IndexError, lambda: list()[1])
+    pytest.raises(KeyError, lambda: dict()["key"])
+</pre><hr><pre>
 # Do tworzenia testów dotyczących wyzwalanych wyjątków
 # można użyć pytest.raises() jako menedżera kontekstu.
 
@@ -174,6 +189,32 @@ def test_recursion_depth():
 # excinfo to instancja 'ExceptionInfo', jest to wrapper dla bieżącego wyjątku.
 # Najbardziej interesujące atrybuty to
 # excinfo.type, excinfo.value, and excinfo.traceback.
+</pre><hr><pre>
+# Jednoczesne testowanie klasy wyjątku i komunikatu z użyciem 'match'.
+
+def test_recursion_depth():
+    with pytest.raises(RuntimeError, match="maximum recursion"):
+        def f():
+            f()
+
+        f()
+
+def test_values():
+    with pytest.raises(ValueError, match='must be 0 or None'):
+        raise ValueError('value must be 0 or None')
+    with pytest.raises(ValueError, match=r'must be \d+$'):   # regular expression
+        raise ValueError('value must be 42')
+</pre><hr><pre>
+# Użycie czynności przygotowawczych i czyszczących.
+
+@pytest.fixture(scope="function")
+def connector():
+    conn = Connector("login", "passwd")
+    yield conn   # przejście do testu
+    del conn   # czynności czyszczące
+
+def test_connection(connector):
+    assert connector.send_msg("Hello")
 </pre><hr>
 
 <h3>MARKERY</h3>

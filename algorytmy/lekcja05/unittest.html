@@ -61,7 +61,7 @@ def average(values):
 # W każdej metodzie kluczowe jest zastosowanie funkcji:
 
 # assertEqual(first, second, msg=None)
-# - sprawdzanie wyniku,
+# - sprawdzanie wyniku (test first == second),
 # msg to komunikat do wypisania przy wystąpieniu błędu;
 # assertEqual(expression_to_test, expected_result)   # typowa kolejność
 
@@ -69,7 +69,7 @@ def average(values):
 # - sprawdzanie wyniku typu float z domyślną dokładnością 7 cyfr;
 
 # assertNotEqual(first, second, msg=None)
-# - sprawdzanie wyniku;
+# - sprawdzanie wyniku (test first != second);
 
 # assertNotAlmostEqual(first, second, places=7, msg=None)
 # - sprawdzanie wyniku;
@@ -88,7 +88,10 @@ def average(values):
 
 class TestStatisticalFunctions(unittest.TestCase):
 
-    # Można określić czynności przygotowawcze.
+    # Czynności przygotowawcze dla test suit (cała klasa).
+    def setUpClass(self): pass
+
+    # Czynności przygotowawcze dla test case (metody test_*).
     def setUp(self): pass
 
     # Dla poprawnych danych wejściowych nie ma prawa pojawić się wyjątek.
@@ -103,8 +106,11 @@ class TestStatisticalFunctions(unittest.TestCase):
         self.assertRaises(ZeroDivisionError, average, [])
         self.assertRaises(TypeError, average, 20, 30, 70)
 
-    # Końcowe czynności czyszczące.
+    # Czynności czyszczące dla test case.
     def tearDown(self): pass
+
+    # Czynności czyszczące dla test suit.
+    def tearDownClass(self): pass
 
 # Załóżmy, że mamy w danym module zdefiniowane inne funkcje.
 # Przygotowujemy nową klasę do testowania tych funkcji.
@@ -173,6 +179,49 @@ Marka Pilgrima <em>Dive Into Python</em>,
 dostępną za darmo pod adresem
 <em>http://www.diveintopython.net/</em>.
 
+<h3>POMIJANIE TESTÓW</h3>
+
+<p>Moduł 'unittest' dostarcza kilka dekoratorów używanych do pomijania testów
+(skip, skipIf, skipUnless, expectedFailure) oraz jedną metodę
+(TestCase.skipTest).
+Można pominąć pojedynczy test lub klasę z testami.
+Dla pominiętych testów nie działają setUp() i tearDown().
+Dla pominiętych klas nie działają setUpClass() i tearDownClass().
+
+<hr><pre>
+class MyTestCase(unittest.TestCase):
+
+    @unittest.skip("demonstrating skipping")
+    def test_nothing(self):
+        self.fail("shouldn't happen")
+
+    @unittest.skipIf(mylib.__version__ &lt; (1, 3),
+                     "not supported in this library version")
+    def test_format(self):
+        # Tests that work for only a certain version of the library.
+        pass
+
+    @unittest.skipUnless(sys.platform.startswith("win"), "requires Windows")
+    def test_windows_support(self):
+        # windows specific testing code
+        pass
+
+    def test_maybe_skipped(self):
+        if not external_resource_available():
+            self.skipTest("external resource not available") # metoda
+        # test code that depends on the external resource
+        pass
+
+    @unittest.expectedFailure
+    def test_fail(self):
+        self.assertEqual(1, 0, "broken")
+
+
+@unittest.skip("showing class skipping")
+class MySkippedTestCase(unittest.TestCase):
+
+    def test_not_run(self): pass
+</pre><hr>
 
 </body>
 </html>
