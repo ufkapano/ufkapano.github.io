@@ -121,6 +121,7 @@ class Tracer:
     def __init__(self, func):   # tu łapiemy funkcje do przetworzenia
         self.func = func
         self.__name__ = func.__name__   # bez tego AttributeError
+        self.__doc__ = func.__doc__   # bez tego docstring klasy Tracer
 
     def __call__(self, *arguments, **keywords):
         start_time = time.time()

@@ -104,8 +104,10 @@ public:
     ~MyQueue() { delete [] tab; }
     MyQueue(const MyQueue& other); // copy constructor
     MyQueue(MyQueue&amp;&amp; other); // move constructor
+    // UWAGA Po przeniesieniu other.msize = 1, other.head = other.tail = 0.
     MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
     MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
+    // UWAGA Po przeniesieniu other.msize = 1, other.head = other.tail = 0.
     bool empty() const { return head == tail; }
     bool full() const { return (head + msize -1) % msize == tail; }
     int size() const { return (tail - head + msize) % msize; }

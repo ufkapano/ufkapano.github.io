@@ -142,6 +142,7 @@ pygame.draw.arc(screen, white, rect, 1.5*math.pi, 2 * math.pi, width)
 <h3>PRZYKŁAD</h3>
 
 <hr><pre>
+# box1.py
 import sys
 import pygame
 
@@ -178,9 +179,7 @@ while True:
     # INPUT
     # W każdej pętli box przesuwa się po przekątnej w prawo w dół.
     box = box.move(speed)   # zwraca nowy obiekt Rect
-    # Można też zmieniać oryginalny obiekt: box.move_ip(speed) lub
-    # box.x += speed[0]
-    # box.y += speed[1]
+    #box.move_ip(speed)   # zmiana oryginalnego obiektu
 
     # DRAWING
     screen.fill(black)   # na nowo rysujemy pusty czarny ekran

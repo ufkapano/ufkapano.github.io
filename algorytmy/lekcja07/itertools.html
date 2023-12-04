@@ -154,6 +154,7 @@ def batched(iterable, n):
 #def batched(iterable, n, fillvalue=None):
     "Batch data into lists of length n. The last batch may be shorter."
     # batched('ABCDEFG', 3) --&gt; ABC DEF G
+    # batched('ABCDEFG', 3, 'X') --&gt; ABC DEF GXX   # wersja z fillvalue
     if n &lt; 1:
         raise ValueError('n must be &gt;= 1')
     it = iter(iterable)
