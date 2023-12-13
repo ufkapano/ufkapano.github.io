@@ -189,13 +189,14 @@ Wykorzystać wyjątek <em>ValueError</em> do obsługi błędów.
 Napisać kod testujący moduł <em>rectangles</em>.
 
 <hr><pre>
+
 from points import Point
 
 class Rectangle:
     """Klasa reprezentująca prostokąty na płaszczyźnie."""
 
     def __init__(self, x1, y1, x2, y2):
-    # Chcemy, aby x1 &lt; x2, y1 &lt; y2.
+        # Chcemy, aby x1 &lt; x2, y1 &lt; y2.
         self.pt1 = Point(x1, y1)
         self.pt2 = Point(x2, y2)
 
@@ -257,6 +258,8 @@ class Triangle:
     def __repr__(self): pass        # "Triangle(x1, y1, x2, y2, x3, y3)"
 
     def __eq__(self, other): pass   # obsługa tr1 == tr2
+        # Trójkąty powinny być równe, jeżeli mają ten sam zbiór wierzchołków,
+        # niezależnie od kolejności pt1, pt2, pt3.
 
     def __ne__(self, other):        # obsługa tr1 != tr2
         return not self == other

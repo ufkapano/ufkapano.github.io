@@ -49,8 +49,8 @@ class Block(pygame.sprite.Sprite):
 </pre><hr><pre>
 Metody klasy Sprite
 
-sprite.add(*groups)   # dodanie sprite do grup
-sprite.remove(*groups)   # usunięcie sprite z grup
+sprite.add(*groups)   # dodanie sprite do podanych grup
+sprite.remove(*groups)   # usunięcie sprite z podanych grup
 sprite.kill()   # usunięcie sprite ze wszystkich grup; sprite żyje dalej
 sprite.alive()   # return bool; czy sprite należy do jakiejś grupy
 sprite.groups()   # return group_list; lista grup, do których należy sprite
@@ -93,22 +93,31 @@ group2 = group1.copy()
 
 group.add(*sprites)   # dodawanie podanych sprites do grupy
 group1.add(group2)   # wstawiamy do group1 sprites należące do group2
+group1.add(group2, group3, sprite4, sprite5)   # można łączyć
 
 group.remove(*sprites)   # usuwanie podanych sprites z grupy
 group1.remove(group2)   # usuwamy z group1 sprites należące do group2
+group1.remove(group2, group3, sprite4, sprite5)   # można łączyć
 
-group.empty()   # usuwanie wszystkich sprites z grupy
+group.empty()   # usuwanie wszystkich sprites z tej grupy
 
 group.has(*sprites)   # return bool; True, jeżeli wszystkie sprites należą
-all(sprite in group for sprite in sprites)   # jw
+group1.has(group2, group3, sprite4, sprite5)   # można łączyć
+# Równoważny (prawie) kod:
+# all(sprite in group for sprite in sprites)
 
 # Wg dokumentacji dla add(), remove(), has():
 # Each sprite argument can also be a iterator containing Sprites.
 
 group.update(*arguments, **keywords)
-# for sprite in group: sprite.update(*arguments, **keywords)
+# Równoważny kod:
+# for sprite in group:
+#     sprite.update(*arguments, **keywords)
 
 group.draw(Surface)   # blit the Sprite images
+# Równoważny (prawie) kod:
+# for sprite in group:
+#     Surface.blit(sprite.image, sprite.rect)
 
 group.clear(Surface_dest, background)   # draw a background over the Sprites;
 # Zamazuje pozycje sprites używając 'background'.

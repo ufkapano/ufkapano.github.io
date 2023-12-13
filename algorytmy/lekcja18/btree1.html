@@ -131,7 +131,8 @@ Odpowiada to przechodzeniu przez graf wszerz (BFS),
 zaczynając od korzenia.
 
 <hr><pre>
-from Queue import Queue
+#from Queue import Queue   # Py2
+from queue import Queue   # Py3
 
 def traverse_queue(top, visit):
     if top is None:
