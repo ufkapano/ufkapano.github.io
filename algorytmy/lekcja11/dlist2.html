@@ -102,6 +102,38 @@ class DoubleList:
             return node
 </pre><hr>
 
+<h3>LISTA POWIĄZANA PODWÓJNIE Z ITERATORAMI</h3>
+
+<p>Listę powiązaną podwójnie można wydajnie przechodzić w obu kierunkach.
+Warto stworzyć odpowiednie iteratory.
+Nie należy zmieniać zawartości listy podczas iterowania po niej.
+
+<hr><pre>
+class DoubleList:
+    # ... inne metody ...
+
+    def __iter__(self):   # wykorzystanie funkcji generatora
+        node = self.head
+        while node:
+            yield node.data
+            node = node.next
+
+    def __reversed__(self):   # wykorzystanie funkcji generatora
+        node = self.tail
+        while node:
+            yield node.data
+            node = node.prev
+</pre><hr><pre>
+# Zastosowanie.
+alist = DoubleList()
+alist.insert_head(Node(11))   # [11]
+alist.insert_head(Node(22))   # [22, 11]
+alist.insert_tail(Node(33))   # [22, 11, 33]
+for item in alist:   # kolejność 22, 11, 33
+    print(item)
+for item in reversed(alist):   # kolejność 33, 11, 22
+    print(item)
+</pre><hr>
 
 </body>
 </html>

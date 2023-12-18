@@ -15,7 +15,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Definicja rekurencyjna drzewa.
+<p>Definicja rekurencyjna drzewa z korzeniem.
 
 <ul>
 <li>Pusta struktura jest drzewem.
@@ -161,7 +161,7 @@ void RandomBinaryTree&lt;T&gt;::bfs() {
         Q.pop();        // usuwamy z kolejki
         visit(node); // tu jest właściwe przetworzenie węzła
         if (node->left != nullptr)
-            Q.push(node->left);
+            Q.push(node->left); // pierwsze wyjdzie lewe, potem prawe
         if (node->right != nullptr)
             Q.push(node->right);
     }
