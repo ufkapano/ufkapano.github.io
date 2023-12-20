@@ -133,22 +133,22 @@ template &lt;typename T&gt;
 BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_right(BSTNode&lt;T&gt; *node) {
     if (node->left == nullptr)
         return node; // bez zmian
-    BSTNode&lt;T&gt; *top = node;
-    node = top->left;
-    top->left = node->right;
-    node->right = top;
-    return node; // zwraca najwyższy węzeł
+    BSTNode&lt;T&gt; *top = node; // węzeł X
+    node = top->left; // węzeł Y
+    top->left = node->right; // przepinamy węzeł B
+    node->right = top; // przepinamy węzeł X
+    return node; // zwracamy węzeł Y
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
 BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node) {
     if (node->right == nullptr)
         return node; // bez zmian
-    BSTNode&lt;T&gt; *top = node;
-    node = top->right;
-    top->right = node->left;
-    node->left = top;
-    return node; // zwraca najwyższy węzeł
+    BSTNode&lt;T&gt; *top = node; // węzeł Y
+    node = top->right; // węzeł X
+    top->right = node->left; // przepinamy węzeł B
+    node->left = top; // przepinamy węzeł Y
+    return node; // zwracamy węzeł X
 }
 </pre><hr>
 
@@ -157,7 +157,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node
 <hr><pre>
 template &lt;typename T&gt;
 void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez złączanie
-    // Najpierw znajdujemy wezel i jego rodzica.
+    // Najpierw znajdujemy węzeł i jego rodzica.
     BSTNode&lt;T&gt; *node = root;
     BSTNode&lt;T&gt; *prev = nullptr;
     while (node != nullptr) {
