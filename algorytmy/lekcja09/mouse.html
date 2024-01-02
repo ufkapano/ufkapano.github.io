@@ -45,11 +45,13 @@ while True:
     # HANDLE EVENTS
     for event in pygame.event.get():
         if event.type == pygame.MOUSEBUTTONDOWN:
+            # SPOSÓB I - badanie zdarzeń.
             print("event down dict {}".format(event.__dict__))   # atrybuty button, pos
 
             button_number = event.button   # liczba 1-5
             button_position = event.pos   # (x, y)
 
+            # SPOSÓB II - badanie stanu urządzenia (pygame.mouse).
             position = pygame.mouse.get_pos()   # return (x, y),
             # pozycja kursora względem lewego górnego rogu display
 

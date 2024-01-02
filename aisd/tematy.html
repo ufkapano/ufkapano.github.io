@@ -39,7 +39,8 @@ Klasa Term przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
 Klasa Poly przechowuje łącze do posortowanej listy powiązanej wyrazów
 i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x).
+(odczyt współczynnika przy danej potędze x),
+degree() (stopień wielomianu).
 
 <li>Implementacja wielomianów na bazie tablic (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
@@ -48,7 +49,8 @@ porównywanie (operator==, operator!=), wyświetlanie.
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
 Klasa Poly przechowuje tablicę współczynników i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x).
+(odczyt współczynnika przy danej potędze x),
+degree() (stopień wielomianu).
 
 <li>Implementacja kwaternionów podobnie do std::complex
 [https://en.wikipedia.org/wiki/Quaternion].
@@ -59,7 +61,7 @@ porównywanie (operator==, operator!=), wyświetlanie.
 <li>Obliczanie wielomianu szachowego
 [https://en.wikipedia.org/wiki/Rook_polynomial].
 
-<li>Implementacja list z przeskokami
+<li>Implementacja list z przeskokami (szablon, elementy na liście typu T)
 [https://en.wikipedia.org/wiki/Skip_list].
 
 <li>Drzewa AVL.
@@ -90,7 +92,7 @@ int heap_right(int n) { return (3 * n + 3); }
 <li>Implementacja drzewa czwórkowego
 [https://en.wikipedia.org/wiki/Quadtree].
 
-<li>Program do obsługi biblioteki.
+<li>Program do obsługi biblioteki (użytkownicy, książki, wypożyczanie).
 
 <li>Program symulujący konta w banku.
 Operacje: zakładanie i usuwanie konta, wpłata, wypłata, przelew,
@@ -105,6 +107,10 @@ Operacje: dodawanie, usuwanie, wyszukiwanie rekordu,
 wypisywanie zawartości bazy, zapis i odczyt bazy z pliku.
 
 <li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim.
+Labirynt rozumiemy jako drzewo rozpinające dla pewnej sieci 
+kwadratowej n &times; m [https://en.wikipedia.org/wiki/Lattice_graph].
+Labirynt należy na końcu wyświetlić na ekranie w formie przyjaznej dla
+użytkownika lub zapisać do pliku, najlepiej graficznego.
 
 <li>Obliczanie mediany kroczącej (ang. running median)
 [https://en.wikipedia.org/wiki/Moving_average#Moving_median].

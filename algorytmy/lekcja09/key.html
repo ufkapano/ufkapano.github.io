@@ -72,6 +72,7 @@ while True:
             pygame.quit()
             sys.exit(0)
         # Wykrywanie wciśnięcia i puszczenia klawisza.
+        # SPOSÓB I - badanie zdarzeń.
         elif event.type == pygame.KEYDOWN:
             # print("event down dict {}".format(event.__dict__))
             # atrybuty key, mod, unicode, scancode
@@ -90,6 +91,7 @@ while True:
                 print("Właśnie puszczono ESC")
 
     # CHECKING INPUTS
+    # SPOSÓB II - badanie stanu urządzenia (pygame.key).
     keys = pygame.key.get_pressed()   # tablica/tuple 0/1
     # Tablica dostarcza informacji, że klawisz jest trzymany wciśnięty.
     # Do indeksowania tablicy używa się ID klawiszy.

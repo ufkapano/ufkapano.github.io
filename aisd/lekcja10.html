@@ -112,6 +112,18 @@ void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T&gt; *node, int level) {
     display(node->left, level + 1);
 }
 </pre><hr><pre>
+// Druga wersja display() z rysowaniem krawędzi drzewa (Maksymilian Brzozowski).
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T> *node, int level) {
+    if (node == nullptr) return;
+    display(node-&gt;right, level + 1);
+    for (int i = 0; i &lt; level; i++) {
+        std::cout &lt;&lt; "   |";
+    }
+    std::cout &lt;&lt; "---" &lt;&lt; node-&gt;value &lt;&lt; std::endl;
+    display(node-&gt;left, level + 1);
+}
+</pre><hr><pre>
 #include &lt;cstdlib&gt;   // std::rand(), RAND_MAX, std::srand()
 
 template &lt;typename T&gt;
@@ -124,7 +136,7 @@ BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, con
     } else {
         node->right = insert(node->right, item);
     }
-    return node; // zwraca nowy korzen
+    return node; // zwraca nowy korzeń
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
@@ -236,7 +248,7 @@ void RandomBinaryTree&lt;T&gt;::iter_preorder() {
 
 <h3>ZADANIE 10.1</h3>
 
-<p>Napisać funkcję calc_leafs(), która zlicza liście drzewa binarnego.
+<p>Napisać funkcję calc_leaves(), która zlicza liście drzewa binarnego.
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 10.2</h3>

@@ -87,6 +87,9 @@ L = infile.readlines(50)
 # Taką listę stringów można zapisać do pliku przez outfile.writelines(L).
 </pre><hr>
 
+<p>Jeżeli plik został otwarty w trybie binarnym (mode "rb"), to funkcja
+read() zwróci obiekt typu 'bytes'.
+
 <p>Zapisywanie danych do otwartego pliku tekstowego (mode "w").
 
 <hr><pre>
@@ -125,15 +128,16 @@ outfile.flush()
 afile.write("0123456789abcdefgh")
 
 # afile.seek(offset[, whence])
+# Funkcja ustawia nową pozycję w pliku i zwraca pozycję po zmianie.
 # offset - ku końcowi (dodatni) lub początkowi (ujemny, tylko Py2)
 # whence=0 (domyślnie), offset &gt; 0, bo od początku pliku
-# whence=1, offset różny, bo liczymy od bieżącego położenia w pliku
+# whence=1, offset dodatni lub ujemny, bo liczymy od bieżącego położenia w pliku
 # whence=2, offset &lt; 0, bo od końca pliku
 
 afile.seek(5)                 # idź do 6-tego bajtu
-N = afile.tell()              # aktualna pozycja w pliku (int lub long w Py2)
+N = afile.tell()              # zwraca aktualną pozycję w pliku (int lub long w Py2)
 S = afile.read(1)             # czytaj 1 bajt
-afile.seek(-3,2)              # idź do 3-go bajtu od końca (Py2)
+afile.seek(-3,2)              # idź do 3-go bajtu od końca (tylko Py2)
 </pre><hr>
 
 <h3>PRZYKŁAD</h3>

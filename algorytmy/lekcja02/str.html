@@ -82,6 +82,12 @@ Code point 257 odpowiada u'\u0101',
 Code point 8364 (znak euro) odpowiada u'\u20ac',
 (1110).0010.(10)00.0010.(10)10.1100, trzy bajty w UTF-8, '\xe2\x82\xac'.
 </pre><hr><pre>
+p = 8364     # code point dla znaku Euro (int)
+hex(p)       # '0x20ac'
+char = chr(p)   # znak Euro jako string (str)
+ascii(char)       # '\u20ac' (str), znak zapisany przez cyfry szesnastkowe
+utf = char.encode('utf-8')   # b'\xe2\x82\xac' (bytes), znak zakodowany
+</pre><hr><pre>
 # Zwykłe stringi. W Pythonie 3 zawierają znaki Unikodu.
 "pierwszy", 'drugi', "trzeci'x", 'czwarty"y'
 "raz"  'dwa'                  # napisy obok siebie będą sklejone
@@ -215,12 +221,12 @@ zwracają nowy łańcuch.
 
 <hr><pre>
 dir(str)                 # lista metod stringów
-print ( ord("a") )       # 97, kod ASCII znaku
-print ( ord(u"ą) )       # 261, ord() działa też dla unikodu w Py2
-print ( chr(98) )        # "b", znak dla danego kodu ASCII
+print(ord("a"))       # 97, kod ASCII znaku
+print(ord(u"ą))       # 261, ord() działa też dla unikodu w Py2
+print(chr(98))        # "b", znak dla danego kodu ASCII
 
 word = "".join(["a","b","c","d","e","f"])   # sklejanie listy znaków lub stringów
-print ( word )           # "abcdef"
+print(word)           # "abcdef"
 word.find("cd")     # 2, odnalezienie przesunięcia podłańcucha
 word.replace("bc", "xyz")     # zastąpienie wystąpień podłańcucha
 
