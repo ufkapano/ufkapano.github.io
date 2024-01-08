@@ -38,7 +38,7 @@ Szczególnie dobrym sposobem zapisu stert jest zapisywanie ich
 w ciągłej tablicy.
 Przy założeniu, że tablica jest indeksowana od zera,
 rodzic elementu z pozycji i znajduje się na pozycji
-[(i-1)/2], gdzie [] oznacza część całkowitą.
+|_(i-1)/2_|, gdzie |_ _| oznacza część całkowitą.
 Lewe i prawe dziecko danego węzła znajdują się w miejscach
 (2i+1) i (2i+2).
 Jest to ważne przy naszej implementacji stert.
@@ -198,11 +198,11 @@ Wykorzystujemy wcześniej zdefiniowane funkcje.
 def heapsort(L):
     """Sortowanie listy przez kopcowanie."""
     n = len(L)
-    # Najpierw budujmy pierwotną stertę.
+    # Najpierw budujmy pierwotny kopiec.
     for k in range(heap_parent(n-1),-1,-1):
         fix_down(L, k, n)
-    while n &gt; 1:
-        swap(L, 0, n-1)
+    while n &gt; 1:   # pobieranie danych z kopca
+        L[0], L[n-1] = L[n-1], L[0]   # swap(L, 0, n-1)
         n = n - 1
         fix_down(L, 0, n)
 </pre><hr>
@@ -215,10 +215,28 @@ i jeden kopiec o rozmiarze 7.
 Maksymalna liczba promocji (porównań jest dwa razy więcej)
 wynosi 2*1+1*2=4.
 
+<hr><pre>
+|       0
+|     /   \
+|   1      2
+|  / \    / \
+| 3   4  5   6
+</pre><hr>
+
 <p>Dla kopca o rozmiarze 15=2^4-1 mamy 4 kopce o rozmiarze 3,
 dwa kopce o rozmiarze 7 i jeden kopiec o rozmiarze 15. 
 Maksymalna liczba promocji (porównań jest dwa razy więcej)
 4*1+2*2+1*3=11.
+
+<hr><pre>
+|              0
+|          /       \
+|      1               2
+|    /   \           /   \
+|  3       4       5       6
+| / \     / \     / \     / \
+|7   8   9   10  11  12  13  14
+</pre><hr>
 
 <p>Dla kopca o rozmiarze N=2^m-1 mamy oszacowanie liczby promocji<br>
 sum_{s=1}^{m-1} s*pow(2,m-1-s) = 2^m-m-1 &lt; N.
@@ -278,6 +296,13 @@ list(heapq.merge(['dog', 'horse'], ['cat', 'fish', 'kangaroo'], key=len))
 # Znajduje n najmniejszych elementów w iterable.
 # Równoważne:
 # sorted(iterable, key=key)[:n]
+</pre><hr><pre>
+def heapsort(L):
+    heapq.heapify(L)   # mamy kopiec
+    M = []
+    while L:   # pobieranie danych z kopca
+        M.append(heapq.heappop(L))
+    return M
 </pre><hr>
 
 </body>

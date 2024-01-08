@@ -11,16 +11,19 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Kolejka priorytetowa to ADT zawierający elementy z kluczami 
-(priorytetami), która pozwala na przeprowadzenie następujących operacji:
+(priorytetami), która pozwala na przeprowadzenie co najmniej
+czterech pierwszych operacji:
 
 <ul>
 <li>Inicjalizacja pustej kolejki (konstruktor).
-<li>Umieszczenie w kolejce nowego elementu (insert).
-<li>Usunięcie z kolejki elementu o największej wartości klucza (remove).
 <li>Sprawdzenie, czy kolejka jest pusta (is_empty).
+<li>Umieszczenie w kolejce nowego elementu (insert, push).
+<li>Usunięcie z kolejki elementu o największym priorytecie (remove, pop).
+<li>Odczytanie elementu o największym priorytecie bez usuwania go z kolejki (top).
 <li>Zmiana priorytetu arbitralnie wskazanego elementu.
 <li>Usunięcie arbitralnie wskazanego elementu.
 <li>Połączenie dwóch kolejek priorytetowych w jedną.
+<li>Czyszczenie kolejki (clear).
 </ul>
 
 <p>Kolejka priorytetowa jest uogólnieniem stosu i kolejki, 
