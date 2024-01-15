@@ -205,7 +205,7 @@ public:
     AVLTree() : root(nullptr) {}
     ~AVLTree() { clear(); } // trzeba wyczyscic
     bool empty() const { return root == nullptr; }
-    T& top() { assert(root != nullptr); return root->value; } // podglad korzenia
+    T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     bool insert(const T& item);
     void remove(const T& item);
     T* search(const T& item) const {
@@ -233,7 +233,8 @@ private:
 <p>https://rosettacode.org/wiki/AVL_tree#C.2B.2B
 
 <p>Zapoznać się z implementacją drzewa AVL z serwisu <em>rosettacode.org</em>.
-Poprawić kod czyszczący drzewo AVL.
+Sprawdzić poprawność destruktora drzewa AVL.
+Dostosować kod do standardu C++11 (zamiana NULL na nullptr).
 Dodać pozostałe funkcje zdefinowane dla drzew BST.
 Funkcja display() powinna wyświetlać dodatkowo współczynnik wyważenia.
 

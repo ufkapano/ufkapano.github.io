@@ -24,7 +24,7 @@ w grafie nieskierowanym.
 Okazuje się, problem znalezienia drogi skoczka szachowego
 jest taką instancją ogólnego problemu, która ma rozwiązanie wielomianowe.
 Istnieją algorytmy działające w czasie liniowym względem liczby
-pól szachownicy O(n^2) [n to bok planszy kwadratowej], 
+pól szachownicy O(n^2) [n to bok planszy kwadratowej n &times; n], 
 które znajdują rozwiązanie problemu.
 
 <p>Otwarta ścieżka Hamiltona istnieje dla każdego n większego lub równego 5.
@@ -43,7 +43,7 @@ przy pomocy sztucznej sieci neuronowej (Takefuji, Lee, 1992).
 
 def rysuj():
     for i in range(N):
-        print ( " ".join("{0:2d}".format(plansza[i,j]) for j in range(N)) )
+        print(" ".join("{0:2d}".format(plansza[i,j]) for j in range(N)))
 
 def dopuszczalny(x, y):
     return 0 &lt;= x &lt; N and 0 &lt;= y &lt; N and plansza[x, y] == 0
@@ -102,7 +102,7 @@ else:
     print("Nie istnieje rozwiązanie")
 </pre><hr>
 
-<p>Przykładowe rozwiązania problemu dla planszy 5x5.
+<p>Przykładowe rozwiązania problemu dla planszy 5 &times; 5.
 
 <hr><pre>
  1  6 15 10 21  Start (0, 0).
