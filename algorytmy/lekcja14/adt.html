@@ -66,7 +66,7 @@ class Edge:
         """Krawędzie są hashowalne."""
         return hash((self.source, self.target, self.weight))
 
-    def __invert__(self):
+    def __invert__(self):   # przydatne dla grafu nieskierowanego
         """Zwraca krawędź o przeciwnym kierunku (~edge)."""
         return Edge(self.target, self.source, self.weight)
 </pre><hr><pre>
@@ -88,7 +88,7 @@ class Graph:
 
     def has_node(self, node): pass      # bool
 
-    def del_node(self, node): pass      # usuwa wierzchołek
+    def del_node(self, node): pass      # usuwa wierzchołek z krawędziami incydentnymi
 
     def add_edge(self, edge): pass      # wstawienie krawędzi
 
@@ -110,6 +110,7 @@ class Graph:
     def iterinedges(self, node): pass   # iterator po krawędziach przychodzących
 
     def iteredges(self): pass           # iterator po krawędziach
+    # w grafie nieskierowanym można przyjąć, że edge.source &lt; edge.target
 
     def copy(self): pass                # zwraca kopię grafu
 </pre><hr>

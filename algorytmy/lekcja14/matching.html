@@ -31,7 +31,7 @@ istnieć tylko dla grafu o parzystej liczbie wierzchołków.
 Skojarzenie doskonałe jest maksymalne i największe.
 
 <p>Skojarzenie największe w grafach dwudzialnych może być znalezione 
-algorytmem Hopcrofta-Karpa w czasie O(sqrt(V)E).
+algorytmem Hopcrofta-Karpa w czasie O(sqrt(n)*m).
 W ogólnych grafach można użyć algorytmu kwiatowego Edmondsa.
 
 <p>W grafach ważonych rozważa się problem skojarzenia
@@ -86,13 +86,13 @@ dokładnego pokrycia jest w ogólności NP-zupełny.
 +------------+-------------+
 | Kolumna    | A B C D E F |
 +------------+-------------+
-| Krawędź AB | 1 1 0 0 0 0 |
+| Krawędź AB | 1 1 0 0 0 0 | *
 | Krawędź AE | 1 0 0 0 1 0 |
 | Krawędź BC | 0 1 1 0 0 0 |
 | Krawędź BE | 0 1 0 0 1 0 |
-| Krawędź CD | 0 0 1 1 0 0 |
+| Krawędź CD | 0 0 1 1 0 0 | *
 | Krawędź CF | 0 0 1 0 0 1 |
-| Krawędź EF | 0 0 0 0 1 1 |
+| Krawędź EF | 0 0 0 0 1 1 | *
 +------------+-------------+
 </pre><hr>
 

@@ -8,10 +8,12 @@
 
 <h1>Grafy bez wag w Pythonie (dict+list)</h1>
 
+<p>http://www.python.org/doc/essays/graphs/
+
 <h3>WPROWADZENIE</h3>
 
 <p>W języku Python grafy możemy wygodnie przedstawić za pomocą
-słowników i list [GvR, http://www.python.org/doc/essays/graphs/]. 
+słowników i list. 
 Graf będzie słownikiem, w którym kluczami
 będą wierzchołki (liczby, napisy, itp.).
 Każdemu kluczowi będzie odpowiadać lista zawierająca wierzchołki
@@ -52,7 +54,7 @@ def add_node(graph, node):
 <p>Dodawanie krawędzi do grafu skierowanego bez duplikatów.
 Na początku próbujemy uzupełniać brakujące wierzchołki. 
 Następnie uzupełniamy listę sąsiedztwa.
-Krawędź grafu przedstawiamy jako krotkę dwuelementową.
+Krawędź grafu przedstawiamy jako 2-krotkę.
 
 <hr><pre>
 def add_edge_directed(graph, edge):
@@ -85,20 +87,25 @@ def add_edge_undirected(graph, edge):
         graph[target].append(source)
 </pre><hr>
 
-<p>Listowanie wierzchołków i krawędzi.
+<p>Iterowanie po wierzchołkach, krawędziach i sąsiadach.
 
 <hr><pre>
-def list_nodes(graph):
-    """Zwraca listę wierzchołków grafu."""
-    return graph.keys()
+def iternodes(graph):
+    """Zwraca iterator po wierzchołkach grafu."""
+    return iter(graph)
 
-def list_edges(graph):
-    """Zwraca listę krawędzi (2-krotek) grafu skierowanego bez wag."""
-    L = []
+def iteredges(graph):
+    """Zwraca iterator po krawędziach (2-krotki) grafu skierowanego bez wag.
+    Dla grafu nieskierowanego należy zwrócić tylko jedną krawędź z pary
+    dwóch krawędzi skierowanych, np. edge.source &lt; edge.target.
+    """
     for source in graph:
         for target in graph[source]:
-            L.append((source, target))
-    return L
+            yield (source, target)
+
+def iteradjacent(graph, source):
+    """Zwraca iterator po sąsiadach danego wierzchołka w grafie bez wag."""
+    return iter(graph[source])
 
 def print_graph(graph):
     """Wypisuje postać grafu skierowanego bez wag na ekranie."""

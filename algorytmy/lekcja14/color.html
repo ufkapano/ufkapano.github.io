@@ -50,9 +50,9 @@ złożoność czasową, dlatego używa się go jedynie dla małych
 grafów (kilkanaście wierzchołków).
 
 <p>Najprostszy algorytm zachłanny nie przydzieli wierzchołkom
-więcej niż D+1 kolorów (D to największy stopień wierzchołka w grafie).
+więcej niż &Delta;+1 kolorów (&Delta; to największy stopień wierzchołka w grafie).
 Twierdzenie mówi, że jeżeli odrzucimy grafy pełne
-i grafy cykliczne, to powinno wystarczyć D kolorów (Brooks, 1941).
+i grafy cykliczne, to powinno wystarczyć &Delta; kolorów (Brooks, 1941).
 Często jednak wystarczy o wiele mniej kolorów.
 Każdy graf planarny jest 4-kolorowalny wierzchołkowo (Appel, Haken, 1976).
 
@@ -139,14 +139,15 @@ ale np. dla grafów dwudzielnych istnieją algorytmy wielomianowe
 znajdujące optymalne kolorowanie.
 
 <p>Twierdzenie Visinga (1964) mówi, że indeks chromatyczny
-dowolnego grafu prostego wynosi D lub D+1.
-Przykładowo dla grafu dwudzielnego indeks chromatyczny wynosi D.
+dowolnego grafu prostego wynosi &Delta; lub &Delta;+1.
+Stąd grafy dzieli się na dwie klasy.
+Przykładowo dla grafu dwudzielnego indeks chromatyczny wynosi &Delta;.
 
 <p>Kolorowanie krawędzi można zapisać w formie kolorowania
 wierzchołków <em>grafu krawędziowego</em>, ale zwykle lepiej
 jest pozostać przy oryginalnym sformułowaniu problemu.
 Algorytmy przybliżone rozwiązujące problem kolorowania krawędzi
-mają przydzielić krawędziom co najwyżej D+1 kolorów.
+mają przydzielić krawędziom co najwyżej &Delta;+1 kolorów.
 
 <hr><pre>
 # Testowanie kolorowania krawędzi.

@@ -74,7 +74,16 @@ ostream& operator&lt;&lt;(ostream& os, const std::pair&lt;F,S&gt; p) {
 }
 }
 </pre><hr><pre>
+// https://en.cppreference.com/w/cpp/container/unordered_map
+// Internally, the elements are not sorted in any particular order, but organized into buckets. 
+// Search, insertion, and removal of elements have average constant-time complexity.
+
+#include &lt;unordered_map&gt;
+</pre><hr><pre>
 // https://en.cppreference.com/w/cpp/container/map
+// Keys are sorted by using the comparison function (default std::less).
+// Maps are usually implemented as Red-black trees.
+// Search, removal, and insertion operations have logarithmic complexity. 
 
 #include &lt;map&gt;
 
@@ -93,7 +102,7 @@ assert( m.count(7) == 0 );   // dozwolone 0 lub 1 dla map
 for (auto it = m.begin(); it != m.end(); ++it) {
     std::cout &lt;&lt; it->first &lt;&lt; " " &lt;&lt; it->second &lt;&lt; std::endl;
 }
-for (auto p : m) { // pętla zakresowa
+for (auto p&amp; : m) { // pętla zakresowa
     std::cout &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second &lt;&lt; std::endl;
 }
 auto it = m.find(3);   // szukam klucza 3

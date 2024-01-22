@@ -27,12 +27,13 @@ krawędziach (A, B, 1), (A, C, 2), (B, C, 3), (B, D, 4), (C, D, 5),
 Możemy go zapisać jako słownik.
 
 <hr><pre>
-graph = {"A": [("B", 1), ("C", 2)], 
-"B": [("C", 3), ("D", 4)], 
-"C": [("D", 5)], 
-"D": [("C", 6)], 
-"E": [("C", 7)], 
-"F": []}
+graph = {
+    "A": [("B", 1), ("C", 2)], 
+    "B": [("C", 3), ("D", 4)], 
+    "C": [("D", 5)], 
+    "D": [("C", 6)], 
+    "E": [("C", 7)], 
+    "F": []}
 </pre><hr>
 
 <h3>POMOCNICZE FUNKCJE</h3>
@@ -57,7 +58,7 @@ def add_node(graph, node):
 <p>Dodawanie krawędzi do grafu skierowanego bez duplikatów.
 Na początku próbujemy uzupełniać brakujące wierzchołki. 
 Następnie uzupełniamy listę sąsiedztwa.
-Krawędź grafu przedstawiamy jako krotkę trzyelementową.
+Krawędź grafu przedstawiamy jako 3-krotkę.
 
 <hr><pre>
 def add_edge_directed(graph, edge):
@@ -90,20 +91,24 @@ def add_edge_undirected(graph, edge):
         graph[target].append((source, weight))
 </pre><hr>
 
-<p>Listowanie wierzchołków i krawędzi.
+<p>Iteracja po wierzchołkach, krawędziach i sąsiadach.
 
 <hr><pre>
-def list_nodes(graph):
-    """Zwraca listę wierzchołków grafu."""
-    return graph.keys()
+def iternodes(graph):
+    """Zwraca iterator po wierzchołkach grafu."""
+    #return graph.keys()   # Py3 widok na wierzchołki grafu
+    return iter(graph)
 
-def list_edges(graph):
-    """Zwraca listę krawędzi (3-krotek) grafu skierowanego ważonego."""
-    L = []
+def iteredges(graph):
+    """Zwraca iterator po krawędziach (3-krotki) grafu skierowanego ważonego."""
     for source in graph:
         for (target, weight) in graph[source]:
-            L.append((source, target, weight))
-    return L
+            yield (source, target, weight)
+
+def iteradjacent(graph, source):
+    """Zwraca iterator po sąsiadach danego wierzchołka w grafie ważonym."""
+    for (target, weight) in graph[source]:
+        yield target
 
 def print_graph(graph):
     """Wypisuje postać grafu skierowanego ważonego na ekranie."""

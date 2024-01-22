@@ -16,6 +16,13 @@ analizowaniu algorytmów grafowych.
 Z drugiej strony, do reprezentacji grafu można wykorzystać
 różne struktury danych, takie jak macierz sąsiedztwa,
 lista sąsiedztwa, lista krawędzi.
+Pewne rodziny grafów mają inne wydajne reprezentacje
+(grafy przedziałowe, grafy permutacji).
+
+<p>Jeżeli graf prosty nieskierowany ma n wierzchołków, to liczba możliwych 
+krawędzi wynosi 2^{n(n-1)/2}. Stąd każda reprezentacja grafu musi
+używać co najmniej n(n-1)/2 bitów w najgorszym i średnim przypadku,
+O(n^2) bitów.
 
 <pre>
 Graf skierowany
@@ -32,31 +39,37 @@ o   / o
 <li><em>Macierz sąsiedztwa (adjacency-matrix)</em>. 
 Graf przedstawiamy jako tablicę kwadratową A,
 gdzie wiersze i kolumny są numerowane wierzchołkami.
-Jeżeli istnieje krawędź (a,b), to A[a,b] wynosi 1 (True).
-W przeciwnym wypadku A[a,b] wynosi 0 (False).
+Jeżeli istnieje krawędź (u,v), to A[u,v] wynosi 1 (True).
+W przeciwnym wypadku A[u,v] wynosi 0 (False).
 Reprezentacja ta jest wydajna dla grafów gęstych z dużą liczbą krawędzi.
-Wykorzystanie pamięci jest rzędu O(V^2).
+Wykorzystanie pamięci jest rzędu O(n^2) [liczba bitów dla grafu bez wag].
 Do takiej tablicy łatwo można wpisywać wagi dla każdej krawędzi.
 Reprezentacja jest też przydatna w sytuacji, gdy chcemy szybko
 sprawdzić istnienie krawędzi między dwoma wierzchołkami [Cormen].
 
-<pre>
+<hr><pre>
 graph = [
 [0, 1, 0, 0],
 [0, 0, 1, 0],
 [1, 0, 0, 1],
 [0, 1, 0, 0]]   # wagi (lub bity 0/1)
-</pre>
+</pre><hr>
 
 <li><em>Listy sąsiedztwa (adjacency-list)</em>. 
-Każdemu wierzchołkowi a przyporządkowujemy
-listę wierzchołków, do których można dojść z wierzchołka a.
+Każdemu wierzchołkowi v przyporządkowujemy
+listę wierzchołków, do których można dojść z wierzchołka v.
 Reprezentacja ta jest wydajna dla rzadkich grafów z małą liczbą krawędzi.
-Wykorzystanie pamięci jest rzędu O(V+E).
-W przypadku grafów z wagami, na liście sąsiedztwa można przechowywać
+Wierzchołki zwykle oznaczami liczbami, a liczba bitów potrzebna do zapisania
+liczby to O(log n).
+Dla grafu skierowanego mamy m elementów na listach sąsiedztwa,
+a dla grafu nieskierowanego 2m elementów.
+Wykorzystanie pamięci jest rzędu O(m log n) bitów.
+Dla rzadkich grafów dostajemy O(n log n) bitów, 
+ale dla gęstych O(n^2 log n) bitów pamięci.
+<br>W przypadku grafów z wagami, na liście sąsiedztwa można przechowywać
 wierzchołek końcowy łącznie z wagą krawędzi, która do niego prowadzi.
 
-<pre>
+<hr><pre>
 graph = [[1], [2], [0, 3], [1]]   # bez wag (styl C++)
 graph = {0: [1], 1: [2], 2: [0, 3], 3: [1]}   # bez wag (styl GvR)
 graph = {0: set([1]), 1: set([2]), 2: set([0, 3]), 3: set([1])}   # bez wag (zbiory)
@@ -69,18 +82,19 @@ graph = {0: {1: {'weight': 1}},
 1: {2: {'weight': 1}}, 
 2: {0: {'weight': 1}, 3: {'weight': 1}}, 
 3: {1: {'weight': 1}}} # wagi w NetworkX
-</pre>
+</pre><hr>
 
 <li><em>Lista krawędzi</em>. 
 Zapamiętujemy listę krawędzi grafu.
-Wykorzystanie pamięci jest rzędu O(E).
+Wykorzystanie pamięci jest rzędu O(m log n) bitów, bo mamy m par liczb
+dla grafu bez wag.
 W tym podejściu nie zapiszemy pustych wierzchołków.
 
-<pre>
+<hr><pre>
 graph = [(0, 1), (1, 2), (2, 0), (2, 3), (3, 1)]   # bez wag
 graph = [(0, 1, 1), (1, 2, 1), (2, 0, 1), (2, 3, 1), (3, 1, 1)] # wagi
 graph = [Edge(0, 1, 1), Edge(1, 2, 1), Edge(2, 0, 1), Edge(2, 3, 1), Edge(3, 1, 1)] # wagi
-</pre>
+</pre><hr>
 
 <li><em>Macierz incydencji</em>. 
 Graf przedstawiamy jako tablicę prostokątną M,
@@ -90,16 +104,16 @@ W kolumnie odpowiadającej danej krawędzi -1 oznacza
 wierzchołek początkowy, a +1 wierzchołek końcowy.
 Dla grafu nieskierowanego oba końce krawędzi oznacza się przez 1.
 Pętlę można zaznaczyć przez 2 w danym wierzchołku.
-Wykorzystanie pamięci jest rzędu O(V*E).
+Wykorzystanie pamięci jest rzędu O(n m) bitów.
 
-<pre>
+<hr><pre>
 graph = [
 [-1, 0, 1, 0, 0],
 [ 1,-1, 0, 0, 1],
 [ 0, 1,-1,-1, 0],
 [ 0, 0, 0, 1,-1]]   # bez wag
 # Chyba wygodniej byłoby mieć macierz transponowaną.
-</pre>
+</pre><hr>
 
 </ul>
 
