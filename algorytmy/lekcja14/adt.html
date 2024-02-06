@@ -133,10 +133,10 @@ len(graph)    # liczba wierzchołków grafu
 
 len(graph[node])   # stopień wierzchołka (graf nieskierowany)
 
-for node in graph:   # iterator po wierzchołkach
+for node in graph:   # iteracja po wierzchołkach
     print("wierzchołek {}".format(node))
 
-for target in graph[source]:   # iterator po sąsiadach
+for target in graph[source]:   # iteracja po sąsiadach wierzchołka source
     print("{} sąsiaduje z {}".format(source, target))
 
 target in graph[source]   # bool, czy jest sąsiadem

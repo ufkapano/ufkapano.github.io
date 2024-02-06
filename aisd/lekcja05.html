@@ -85,11 +85,22 @@ sprawdzające działanie interfejsu list.
 
 <p>Zmienić klasę DoubleList przez wprowadzenie wartownika, czyli
 sztucznego węzła łączącego głowę i ogon listy powiązanej podwójnie.
+Wartownik nie przechowuje żadnych istotnych danych w polu value.
 W ten sposób powstaje lista cykliczna, co upraszcza wstawianie
 i usuwanie węzłów.
 W klasie DoubleList wystarczy przechowywać tylko łącze do wartownika.
 
 <hr><pre>
+|       nil       |     nil  +----------------------------+ |
+|        |        |      |   |                            | |
+|        o        |      o   o                            | |
+|    +-+---+-+    |    +-+---+-+               +-+---+-+  | |
+| +--+ | ? | +--+ | +--+ | ? | +--o+-+---+-+o--+ | B | +--+ |
+| |  +-+---+-+  | | |  +-+---+-+o--+ | A | +--o+-+---+-+    |
+| |     o o     | | |              +-+---+-+       o        |
+| |     | |     | | |                              |        |
+| +-----+ +-----+ | +------------------------------+        |
+</pre><hr><pre>
 // Szablon dla listy powiązanej podwójnie z wartownikiem.
 template &lt;typename T&gt;
 class DoubleList {

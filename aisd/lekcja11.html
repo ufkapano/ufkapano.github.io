@@ -40,7 +40,8 @@ class BinarySearchTree {
     BSTNode&lt;T&gt; *root;
 public:
     BinarySearchTree() : root(nullptr) {} // konstruktor domyślny
-    ~BinarySearchTree() { clear(); } // trzeba wyczyscic
+    ~BinarySearchTree() { delete root; } // trzeba wyczyścić
+    void clear() { delete root; root = nullptr; }
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     void insert(const T& item) { root = insert(root, item); }
@@ -71,12 +72,10 @@ public:
     void iter_inorder(); // trudne
     void iter_postorder(); // trudne
     void bfs(); // przejście poziomami (wszerz)
-    void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
 
     // Metody bezpośrednio odwołujące się do node.
     // Mogą działać na poddrzewie.
-    void clear(BSTNode&lt;T&gt; *node);
     BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
     BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const; // zwraca węzeł
     BSTNode&lt;T&gt; * remove(BSTNode&lt;T&gt; *node); // zwraca nowy korzeń poddrzewa

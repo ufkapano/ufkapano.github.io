@@ -91,7 +91,7 @@ std::map&lt;int, float&gt; m;   // mapa
 assert( m.empty() );
 m.insert( std::make_pair(1, 1.1) ); // zwraca std::pair&lt;iterator,bool&gt;
 m[2];   // wstawienie pary (2, 0.0)
-assert( m[2] == 0 );
+assert( m[2] == 0.0 );
 m[3] = 3.3;
 m.emplace( std::make_pair(4, 4.4) ); // insert a new element in-place
 m.insert( {5, 5.5} );
@@ -102,11 +102,11 @@ assert( m.count(7) == 0 );   // dozwolone 0 lub 1 dla map
 for (auto it = m.begin(); it != m.end(); ++it) {
     std::cout &lt;&lt; it->first &lt;&lt; " " &lt;&lt; it->second &lt;&lt; std::endl;
 }
-for (auto p&amp; : m) { // pętla zakresowa
+for (auto&amp; p : m) { // pętla zakresowa
     std::cout &lt;&lt; p.first &lt;&lt; " " &lt;&lt; p.second &lt;&lt; std::endl;
 }
 auto it = m.find(3);   // szukam klucza 3
-assert( it != m.end() );   // wiem ze jest ten klucz
+assert( it != m.end() );   // wiemy, że jest ten klucz
 assert( m.find(8) == m.end() );   // brak klucza
 
 m.erase(it); // remove at position

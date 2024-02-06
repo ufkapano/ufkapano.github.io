@@ -57,7 +57,7 @@ struct BSTNode {
     BSTNode() : value(T()), left(nullptr), right(nullptr) {}
     // konstruktor zwykły
     BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
-    ~BSTNode() {} // destruktor
+    ~BSTNode() { delete left; delete right; } // destruktor rekurencyjny
 };
 </pre><hr><pre>
 // Szablon dla przypadkowego drzewa binarnego.
@@ -66,7 +66,8 @@ class RandomBinaryTree {
     BSTNode&lt;T&gt; *root;
 public:
     RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
-    ~RandomBinaryTree() { clear(); } // trzeba wyczyścić
+    ~RandomBinaryTree() { delete root; } // trzeba wyczyścić (rekurencyjnie)
+    void clear() { delete root; root = nullptr; }
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     void insert(const T& item) { root = insert(root, item); }
@@ -85,12 +86,10 @@ public:
     void iter_inorder(); // trudne
     void iter_postorder(); // trudne
     void bfs(); // przejście poziomami (wszerz)
-    void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
 
     // Metody bezpośrednio odwołujące się do node.
     // Mogą działać na poddrzewie.
-    void clear(BSTNode&lt;T&gt; *node);
     BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
     BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const;
     void preorder(BSTNode&lt;T&gt; *node);

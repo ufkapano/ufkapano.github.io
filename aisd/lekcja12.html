@@ -195,7 +195,7 @@ struct AVLNode {
         left(nullptr), right(nullptr), parent(nullptr) {}
     AVLNode(const T& item, AVLNode *p) : value(item), balance(0),
         left(nullptr), right(nullptr), parent(p) {}
-    ~AVLNode() {} // destruktor
+    ~AVLNode() { delete left; delete right; } // destruktor
 };
 </pre><hr><pre>
 /* AVL tree */
@@ -203,7 +203,8 @@ template &lt;typename T&gt;
 class AVLTree {
 public:
     AVLTree() : root(nullptr) {}
-    ~AVLTree() { clear(); } // trzeba wyczyscic
+    ~AVLTree() { delete root; } // trzeba wyczyścić
+    void clear() { delete root; root = nullptr; }
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     bool insert(const T& item);
@@ -215,10 +216,9 @@ public:
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
-    void bfs(); // przejscie poziomami (wszerz)
+    void bfs(); // przejście poziomami (wszerz)
     T* find_max();
     T* find_min();
-    void clear() { clear(root); root = nullptr; }
     void display() { display(root, 0); }
     virtual void visit(AVLNode&lt;T&gt; *node) {
         assert(node != nullptr);
@@ -233,7 +233,6 @@ private:
 <p>https://rosettacode.org/wiki/AVL_tree#C.2B.2B
 
 <p>Zapoznać się z implementacją drzewa AVL z serwisu <em>rosettacode.org</em>.
-Sprawdzić poprawność destruktora drzewa AVL.
 Dostosować kod do standardu C++11 (zamiana NULL na nullptr).
 Dodać pozostałe funkcje zdefinowane dla drzew BST.
 Funkcja display() powinna wyświetlać dodatkowo współczynnik wyważenia.

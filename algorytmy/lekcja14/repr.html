@@ -20,7 +20,7 @@ Pewne rodziny grafów mają inne wydajne reprezentacje
 (grafy przedziałowe, grafy permutacji).
 
 <p>Jeżeli graf prosty nieskierowany ma n wierzchołków, to liczba możliwych 
-krawędzi wynosi 2^{n(n-1)/2}. Stąd każda reprezentacja grafu musi
+zbiorów krawędzi wynosi 2^{n(n-1)/2}. Stąd każda reprezentacja grafu musi
 używać co najmniej n(n-1)/2 bitów w najgorszym i średnim przypadku,
 O(n^2) bitów.
 
@@ -60,7 +60,7 @@ Każdemu wierzchołkowi v przyporządkowujemy
 listę wierzchołków, do których można dojść z wierzchołka v.
 Reprezentacja ta jest wydajna dla rzadkich grafów z małą liczbą krawędzi.
 Wierzchołki zwykle oznaczami liczbami, a liczba bitów potrzebna do zapisania
-liczby to O(log n).
+liczby n to O(log n).
 Dla grafu skierowanego mamy m elementów na listach sąsiedztwa,
 a dla grafu nieskierowanego 2m elementów.
 Wykorzystanie pamięci jest rzędu O(m log n) bitów.
@@ -73,6 +73,7 @@ wierzchołek końcowy łącznie z wagą krawędzi, która do niego prowadzi.
 graph = [[1], [2], [0, 3], [1]]   # bez wag (styl C++)
 graph = {0: [1], 1: [2], 2: [0, 3], 3: [1]}   # bez wag (styl GvR)
 graph = {0: set([1]), 1: set([2]), 2: set([0, 3]), 3: set([1])}   # bez wag (zbiory)
+graph = {0: [(1,1)], 1: [(2,1)], 2: [(0,1), (3,1)], 3: [(1,1)]}   # wagi (dict+list)
 graph = {0: {1: 1}, 1: {2: 1}, 2: {0: 1, 3: 1}, 3: {1: 1}} # wagi (dict+dict)
 graph = {0: {1: Edge(0, 1, 1)}, 
 1: {2: Edge(1, 2, 1)}, 
