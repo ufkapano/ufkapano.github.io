@@ -129,7 +129,7 @@ dselect, aptitude, apt-get, apt.
 <p>Create a file 'hello.py'. Run the script.
 
 <hr><pre>
-#!/usr/bin/python
+#!/usr/bin/env python
 # coding: utf-8
 #
 # Your first program in Python (2 or 3).
@@ -147,7 +147,7 @@ else:
     r = float(sys.argv[1])
 
 s = math.sin(r)
-print ( "Hello, sin({}) = {}".format(r, s) )
+print("Hello, sin({}) = {}".format(r, s))
 
 #input("Press any key ...")   # on Windows
 </pre><hr><pre>
@@ -159,7 +159,6 @@ $ chmod a+x hello.py     # add ('+') the 'x' (execute) mode bit to all users ('a
 $ ./hello.py
 Hello, sin(1.0) = 0.841470984808
 </pre><hr>
-
 
 </body>
 </html>
