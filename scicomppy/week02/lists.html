@@ -15,38 +15,38 @@
 <p>Lists are mutable heterogeneous sequences.
 
 <pre>
-+-----------------------+---------------------------------+
-| Operation             | Meaning                         |
-+-----------------------+---------------------------------+
-| L = [] ; L = list()   | empty lists                     |
-| L = [5, 1.2, "a"]     | a list with three items         |
-| L = list(iterable)    | make a list from iterable       |
-| [x for x in iterable] | list comprehension              |
-| len(L)                | the length                      |
-| L1 + L2               | concatenation                   |
-| L * n ; n * L         | repetition                      |
-| L[i]                  | get item at index               |
-| L[i:j]                | slice of L (new list)           |
-| L[i:j:k]              | slice of L (new list)           |
-| L[i] = item           | assignment                      |
-| L1[i:j] = L2          | assignment                      |
-| L1[i:j:k] = L2        | assignment, len(slice)==len(L2) |
-| L2 = L1[:]            | shallow copy                    |
-| L2 = list(L1)         | shallow copy                    |
-| L2 = L1.copy()        | shallow copy (Py3.3+)           |
-| for item in L: pass   | iteration                       |
-| item in L             | containing (linear-time)        |
-| item not in L         | containing (linear-time)        |
-| L.index(item)         | first occurrence                |
-| L.count(item)         | number of occurrences           |
-| max(L), min(L)        | largest|smallest item of L      |
-| del L[i]              | remove item                     |
-| del L[i:j]            | remove slice                    |
-| del L[i:j:k]          | remove items                    |
-| del L[:]              | remove all items                |
-| L.clear()             | remove all items (Py3.3+)       |
-| del L                 | remove the name L               |
-+-----------------------+---------------------------------+
++------------------------+---------------------------------+
+| Operation              | Meaning                         |
++------------------------+---------------------------------+
+| L = [] ; L = list()    | empty lists                     |
+| L = [5, 1.2, "a"]      | a list with three items         |
+| L = list(iterable)     | make a list from iterable       |
+|[f(x) for x in iterable]| list comprehension              |
+| len(L)                 | the length                      |
+| L1 + L2                | concatenation                   |
+| L * n ; n * L          | repetition                      |
+| L[i]                   | get item at index               |
+| L[i:j]                 | slice of L (new list)           |
+| L[i:j:k]               | slice of L (new list)           |
+| L[i] = item            | assignment                      |
+| L1[i:j] = L2           | assignment                      |
+| L1[i:j:k] = L2         | assignment, len(slice)==len(L2) |
+| L2 = L1[:]             | shallow copy                    |
+| L2 = list(L1)          | shallow copy                    |
+| L2 = L1.copy()         | shallow copy (Py3.3+)           |
+| for item in L: pass    | iteration                       |
+| item in L              | containing (linear-time)        |
+| item not in L          | containing (linear-time)        |
+| L.index(item)          | first occurrence                |
+| L.count(item)          | number of occurrences           |
+| max(L), min(L)         | largest|smallest item of L      |
+| del L[i]               | remove item                     |
+| del L[i:j]             | remove slice                    |
+| del L[i:j:k]           | remove items                    |
+| del L[:]               | remove all items                |
+| L.clear()              | remove all items (Py3.3+)       |
+| del L                  | remove the name L               |
++------------------------+---------------------------------+
 </pre>
 
 <hr><pre>
@@ -131,7 +131,7 @@ lists[1].append(5)   # [[3], [5], []]
 <h3>LIST COMPREHENSION</h3>
 
 <hr><pre>
-[x for x in "qwerty"]                   # ['q', 'w', 'e', 'r', 't', 'y']
+[x + x for x in "qwerty"]               # ['qq', 'ww', 'ee', 'rr', 'tt', 'yy']
 [x * x for x in range(6)]               # [0, 1, 4, 9, 16, 25]
 [3 * x for x in range(6) if x &lt; 4]      # [0, 3, 6, 9], filtering
 [2 ** x for x in range(5)]              # [1, 2, 4, 8, 16]

@@ -8,8 +8,12 @@
 
 <h1>NetworkX - start</h1>
 
+<p>https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg
+
 <p>https://networkx.github.io/
 <br>NetworkX. Software for complex networks.
+
+<p>https://networkx.org/documentation/stable/reference/drawing.html
 
 <h3>INSTALLING NETWORKX</h3>
 
@@ -29,6 +33,8 @@ and study of the structure, dynamics, and functions of complex networks.
 <hr><pre>
 import networkx as nx
 
+print(nx.__version__)   # 2.2 in Debian 10
+
 G = nx.Graph()   # an empty undirected graph
 
 # https://mathworld.wolfram.com/LollipopGraph.html
@@ -36,10 +42,12 @@ G = nx.Graph()   # an empty undirected graph
 # | /
 # 3---4
 
-for node in (1, 2, 3, 4):
+vlist = [1, 2, 3, 4]
+elist = [(1, 2), (1, 3), (2, 3), (3, 4)]
+for v in vlist:
     G.add_node(node)
-for (a, b) in [(1, 2), (1, 3), (2, 3), (3, 4)]:
-    G.add_edge(a, b)
+for (u, v) in elist:
+    G.add_edge(u, v)
 
 G.number_of_nodes()   # 4
 G.number_of_edges()   # 4
@@ -74,6 +82,11 @@ import matplotlib.pyplot as plt
 
 nx.draw(G)
 #nx.draw(G, with_labels=True, font_weight='bold')
+#nx.draw_circular(G)
+#nx.draw_planar(G)
+#nx.draw_random(G)
+#nx.draw_spring(G)
+#nx.draw_shell(G)
 
 # Selected keywords:
 # with_labels=True - draw labels on the nodes
@@ -95,6 +108,37 @@ plt.show()
 
 <p><img src="img/lollipop.png" alt="[ lollipop.png ]" width="320" height="240">
 
+<hr><pre>
+# path graph  1--2--3--4
+G = nx.Graph()
+vlist = [(1, 0, 0), (2, 1, 1), (3, 2, 2), (4, 3, 3)]
+elist = [(1, 2, 1.5), (2, 3, 2.5), (3, 4, 3.5)]
+for (v, x, y) in vlist:
+    G.add_node(v, pos=(x,y))
+for (u, v, w) in elist:
+    G.add_edge(u, v, weight=w)
+    #G.add_edge(u, v, weight=w, color=('green' if w &lt; 3 else 'red'))
+#G.add_weighted_edges_from(elist)   # for weights
+
+pos = nx.get_node_attributes(G, 'pos')
+#{1: (0, 0), 2: (1, 1), 3: (2, 2), 4: (3, 3)}
+# pos = nx.circular_layout(G)
+# pos = nx.planar_layout(G)
+# pos = nx.random_layout(G)
+# pos = nx.spring_layout(G)
+# pos = nx.shell_layout(G)
+
+weight = nx.get_edge_attributes(G, 'weight')
+#{(1, 2): 1.5, (2, 3): 2.5, (3, 4): 3.5}
+
+#color = nx.get_edge_attributes(G, 'color')
+# now we can use option edge_color=color.values()
+
+nx.draw(G, pos, with_labels=True, font_weight='bold', width=list(weight.values()))
+
+plt.show()
+</pre><hr>
+
 <h3>GRAPH GENERATORS</h3>
 
 <p>https://networkx.org/documentation/stable/reference/generators.html
@@ -104,10 +148,12 @@ P_6 = nx.path_graph(6)
 C_7 = nx.cycle_graph(7)
 K_5 = nx.complete_graph(5)
 K_3_5 = nx.complete_bipartite_graph(3, 5)
+W_5 = nx.wheel_graph(5)
 barbell = nx.barbell_graph(10, 10)
 lollipop = nx.lollipop_graph(10, 20)
 gnm = nx.gnm_random_graph(n=10, m=20) # n nodes, m edges
 regular = nx.random_regular_graph(d=5, n=10) # random d-regular graph on n nodes
+ergraph = nx.erdos_renyi_graph(n=10, p=0.5) # p - probability for edge creation
 
 petersen = nx.petersen_graph()
 tutte = nx.tutte_graph()

@@ -79,10 +79,10 @@ difference, and symmetric difference.
 # Creation
 
 # Using a comma-separated list of elements within braces.
-{'one', 'two', 'three'}
-# set(['three', 'two', 'one']) in Py2
+{'one', 'two', 'three'}   # Py2.7, Py3
 
 # Using the type constructor.
+set(['three', 'two', 'one'])   # known from old Py2
 set('abracadabra')   # {'a', 'c', 'b', 'r', 'd'}, different chars
 frozenset([1, 2, 1, 2, 3])   # frozenset({1, 2, 3})
 
@@ -101,6 +101,21 @@ set('ab') | frozenset('bc')   # {'a', 'c', 'b'}
 
 # Warning: sets only define partial ordering (subset relationships).
 set_list.sort()   # result undefined!
+</pre><hr>
+
+<h3>EXERCISE</h3>
+
+<p>https://stackoverflow.com/questions/9792664/converting-a-list-to-a-set-changes-element-order
+
+<hr><pre>
+Problem.
+Remove duplicates from a sequence and preserve the order.
+Solution 1.
+seen = set()
+new_seq = [x for x in old_seq if not (x in seen or seen.add(x))]
+Solution 2 (Py3.7+ preserves the insertion order in dict).
+D = dict((key, None) for key in old_seq)
+new_seq = list(D)
 </pre><hr>
 
 </body>

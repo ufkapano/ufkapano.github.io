@@ -8,6 +8,10 @@
 
 <h1>NetworkX - Graph</h1>
 
+<p>https://networkx.org/documentation/stable/reference/classes/index.html
+
+<p>https://networkx.org/documentation/stable/reference/classes/graph.html
+
 <h3>GRAPH</h3>
 
 <hr><pre>
@@ -17,8 +21,8 @@ G = nx.Graph(other_graph)   # a copy
 G = nx.Graph(name="My graph")   # 'name' is a graph attribute
 G.graph["name"] = "Small graph"   # changing 'name'
 G.graph["day"] = "Monday"
-print ( G )   # Small graph
-print ( G.graph )   # {'name': 'Small graph', 'day': 'Monday'}
+print(G)   # Small graph
+print(G.graph)   # {'name': 'Small graph', 'day': 'Monday'}
 # G.graph is a dict with graph attributes
 </pre><hr>
 
@@ -56,8 +60,23 @@ list(G.nodes)   # a list of nodes
 G.nodes.data()   # NodeDataView(...)
 list(G.nodes.data())   # a list of 2-tuples (node, node_attribute_dict)
 
-for source in G.nodes:   # iteration over nodes
-    G.nodes[source]['size'] = None
+for node in G.nodes:   # iteration over nodes
+    G.nodes[node]['size'] = None
+</pre><hr><pre>
+# Using attributes.
+
+D = nx.get_node_attributes(G, "attr")   # {node1: value1, node2; value2, ...}
+# Returns a dictionary of attributes keyed by node.
+# Nodes without this attribute are not included in the returned dict.
+
+#D = nx.get_node_attributes(G, "color", default="white") # networkx version 3
+# Default value of the node attribute if there is no value set
+# for that node in graph. 
+
+nx.set_node_attributes(G, {node1: value1, node2; value2, ...}, "attr")
+
+# A dictionary of dictionaries can be used as the second argument.
+nx.set_node_attributes(G, {node1: {"attr1": value1}, node2: {"attr2": value2}, ...})
 </pre><hr>
 
 <h3>EDGES</h3>
@@ -102,8 +121,19 @@ for (source, target) in G.edges:   # iteration over edges
     G[source][target]['length'] = None
     #G.edges[source,target]['length'] = None
 
-for e in G.edges:   # e is 2-tuple
-    G.edges[e]['color'] = 'black'
+for edge in G.edges:   # edge is 2-tuple
+    G.edges[edge]['color'] = 'black'
+</pre><hr><pre>
+# Using attributes.
+
+D = nx.get_edge_attributes(G, "attr")   # {(node1, node2): value1, ...}
+# Returns a dictionary of attributes keyed by edge (2-tuple).
+
+#D = nx.get_edge_attributes(G, "color", default="white") # networkx version 3
+
+nx.set_edge_attributes(G, {edge1: value1, edge2; value2, ...}, "attr")
+
+nx.set_edge_attributes(G, {edge1: {"attr1": value1}, edge2: {"attr": value2}, ...})
 </pre><hr>
 
 <h3>NEIGHBORS</h3>
@@ -113,7 +143,7 @@ G[source]   # AtlasView(...)
 list(G[source])   # a list of neighbors for source
 
 for target in G[source]:   # read-only
-    print ( "edge from {} to {}".format(source, target) )
+    print("edge from {} to {}".format(source, target))
 </pre><hr>
 
 <h3>REMOVING ELEMENTS</h3>
@@ -148,11 +178,10 @@ def trivial_node_coloring(graph):
 def trivial_edge_coloring(graph):
     """Trivial edge coloring."""
     counter = 0
-    for (source, target) in graph.edges:
-        graph[source][target]['color'] = counter
+    for edge in graph.edges:
+        graph.edges[edge]['color'] = counter
         counter += 1
 </pre><hr>
-
 
 </body>
 </html>

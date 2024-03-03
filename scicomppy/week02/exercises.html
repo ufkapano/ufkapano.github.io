@@ -22,18 +22,19 @@ Hint: change the number to a string.
 <hr><pre>
 # Explain the results.
 x = 5
-x == 5 and 3                  # 3
-x == 4 and 3                  # False
-3 and x == 5                  # True
-3 and x == 4                  # False
+x == 5 and 3 + 8   # 11
+x == 4 and 3 + 8   # False
+3 + 8 and x == 5   # True
+3 + 8 and x == 4   # False
 
-isinstance(True, int)         # True
-isinstance(True, bool)        # True
+isinstance(True, int)    # True
+isinstance(True, bool)   # True
 </pre><hr>
 
 <h3>EXERCISE 2.3 (NUMBERS)</h3>
 
-<p>Find the sum 1*1 + 3*3 + 5*5 + ... + 2021*2021 [hint: use sum()].
+<p>Find the sum 1*1 + 3*3 + 5*5 + ... + 2021*2021 
+[hint: use sum() and range()].
 
 <h3>EXERCISE 2.4 (STR)</h3>
 
@@ -51,6 +52,9 @@ Use pt to print a table (3 right + 20 left + 6 center + 10 right)
 |  2|Helium              |  He  |         4|
 |   | ...                |      |          |
 +---+--------------------+------+----------+
+Hint: use the for loop:
+for (n, name, symbol, weight) in pt:
+    # use variables (n, name, symbol, weight) to create a proper line
 </pre><hr>
 
 <h3>EXERCISE 2.5 (LIST)</h3>
