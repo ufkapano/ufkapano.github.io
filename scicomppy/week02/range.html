@@ -71,7 +71,8 @@ assert R[:j] == R[slice(None, j, None)]   # or slice(j)
 assert R[::-1] == R[slice(None, None, -1)]
 
 s = slice(0, 5)
-assert s.indices(10) == (0, 5, 1)
+assert s.indices(10) == (0, 5, 1)   # 10 is an assumed length of a sequence
+assert s.indices(4) == (0, 4, 1)
 assert isinstance(s, slice)   # 'slice' is a class
 </pre><hr>
 
