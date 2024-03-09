@@ -21,6 +21,7 @@ for item in iterable:
     statements      # item is processed
     if condition1:
         break       # optional, terminate the loop without executing 'else'
+    statements
     if condition2:
         continue    # optional, go to the next item from iterable
     statements
@@ -51,17 +52,20 @@ assert fruit == "apricot"
 for i in range(len(fruits)):   # C style
     print("{} {}".format(i, fruits[i]))
 
+# enumerate(iterable, start=0), return an enumerate object (iterator)
 for (i, fruit) in enumerate(fruits):   # recommended
     print("{} {}".format(i, fruit))
 
 [c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
+[c*i for (i, c) in enumerate("abcd", start=1)]   # ["a", "bb", "ccc", "dddd"]
 </pre><hr><pre>
 # loop over pairs
-for t in [(1. "one"), (2, "two"), (3, "three")]:
+for t in [(1, "one"), (2, "two"), (3, "three")]:
     print("first {} second {}".format(t[0], t[1]))
+    #print("first {0[0]} second {0[1]}".format(t))
 
 # better version with unpacking
-for (a, b) in [(1. "one"), (2, "two"), (3, "three")]:
+for (a, b) in [(1, "one"), (2, "two"), (3, "three")]:
     print("first {} second {}".format(a, b))
 </pre><hr><pre>
 # Code that modifies a collection while iterating over that same collection

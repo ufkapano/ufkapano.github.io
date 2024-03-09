@@ -13,15 +13,25 @@
 <ul>
 
 <li>Wielomiany gęste na bazie list Pythona.
+Należy zaimplementować następujące działania na wielomianach:
+dodawanie, odejmowanie, mnożenie, obliczanie wartości (Horner),
+porównywanie (==,!=), wyświetlanie, użycie nawiasów []
+(odczyt współczynnika przy danej potędze x).
+Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
+Przydatne funkcje: is_zero(), degree() (stopień wielomianu).
 
-<li>Wielomiany rzadkie na bazie słowników.
+<li>Wielomiany rzadkie na bazie słowników Pythona.
 Każdy wyraz wielomianu jest przechowywany w słowniku jako para
 (stopień, współczynnik).
+Należy zaimplementować działania i funkcje na wielomianach takie jak 
+dla wielomianów gęstych.
 
 <li>Wielomiany na bazie list powiązanych pojedynczo i posortowanych.
 Jeden węzeł listy reprezentuje jeden wyraz wielomianu
-i przechowuje atrybuty 'degree' oraz 'coefficient'.
-Węzły są sortowane względem atrybutu 'degree'.
+i przechowuje współczynnik i stopień wyrazu wielomianu.
+Węzły na liście są posortowane względem stopnia wyrazu wielomianu.
+Należy zaimplementować działania i funkcje na wielomianach takie jak 
+dla wielomianów gęstych.
 
 <li>Wielomiany w reprezentacji wykorzystującej wartości
 wielomianu w wybranych punktach.
@@ -33,7 +43,13 @@ Cormen str. 923.
 
 <ul>
 
-<li>Macierze gęste na bazie list.
+<li>Macierze gęste na bazie list Pythona.
+Elementy macierzy są zapisywane wierszami na liście.
+Należy zaimplementować następujące działania na macierzach:
+porównywanie, dodawanie, odejmowanie, mnożenie, transpozycja, zmiana wymiarów
+(reshape, np. 3x4 na 1x12, 2x6).
+Dla macierzy kwadratowych dodatkowo należy zaimplementować obliczanie
+śladu (suma elementów diagonalnych) i wyznacznika.
 
 <hr><pre>
 class Matrix(object):
@@ -51,10 +67,21 @@ class Matrix(object):
         self.data[i * self.cols + j] = value
 </pre><hr>
 
-<li>Macierze rzadkie na bazie słowników.
+<li>Macierze rzadkie na bazie słowników Pythona.
+Zapisywane są jedynie niezerowe elementy macierzy.
+Można przyjąć, że macierze są kwadratowe i mają elastyczny rozmiar.
+Należy zaimplementować działania na macierzach takie, jak dla macierzy gęstych.
 
 <hr><pre>
-class Matrix(dict): pass
+class Matrix(dict):
+    def __init__(self):
+        self.data = dict()
+    def __str__(self):
+        return str(self.data)
+    def __getitem__(self, pair):   # odczyt m[i, j]
+        return self.data[pair]
+    def __setitem__(self, pair, value):   # m[i, j] = value
+        self.data[pair] = value
 </pre><hr>
 
 </ul>
