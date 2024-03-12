@@ -89,7 +89,14 @@ str(z, 'utf-8')   # 'żółw', from bytes
 # are escaped by using '\x', '\u' or '\U'.
 
 word = 'żółw'
-ascii(word)   # '\u017c\xf3\u0142w', code points
+ascii(word)   # "'\\u017c\\xf3\\u0142w'", string for print()
+print(ascii(word))   # '\u017c\xf3\u0142w', code points
+
+# Numeric entry of Unicode characters is possible in most Unix
+# or Unix-like OSs by typing:
+# [Ctrl]+[Shift]+[U], the hex number, the space bar or enter key.
+# For the no entry sign &#x26D4; ('\u26d4'):
+# [Ctrl]+[Shift]+[U], [2], [6], [D], [4], [Enter].
 </pre><hr><pre>
 # S.join(iterable), S is a separator
 
@@ -123,13 +130,14 @@ word.strip(".")               # "abc"
 
 word = "rAz dWa tRzY"
 word.lower()                  # "raz dwa trzy"
+word.casefold()               # "raz dwa trzy", more aggressive than lower() Py3.3
 word.upper()                  # "RAZ DWA TRZY"
 word.capitalize()             # "Raz dwa trzy"
 word.title()                  # "Raz Dwa Trzy"
 word.swapcase()               # "RaZ DwA TrZy"
 word.startswith("abc")        # check prefix
 word.endswith("abc")          # check suffix
-.
+
 line = "a\tb c\nd"
 line.split()                  # ['a', 'b', 'c', 'd'], at whitespace
 line.split("\t")              # ["a", "b c\nd"]
