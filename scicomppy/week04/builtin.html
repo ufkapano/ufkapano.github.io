@@ -93,8 +93,28 @@ list(x for x in range(30) if check(x))   # generator object, equivalent
 
 list(filter(None, [-2,-1,0,1,2]))   # [-2, -1, 1, 2] filter object
 list(x for x in [-2,-1,0,1,2] if x)   # generator object, equivalent
-</pre><hr>
+</pre><hr><pre>
+# Testing speed.
 
+import random
+import timeit
+
+L = [random.random() for x in range(1000000)]
+
+func = (lambda x: x &lt; 0.5)
+
+t1 = timeit.Timer(lambda: sum(x for x in L if x &lt; 0.5))
+print(t1.timeit(1))   # 0.028795670999897993 best
+
+t2 = timeit.Timer(lambda: sum(x for x in L if func(x)))
+print(t2.timeit(1))   # 0.06057641600000352
+
+t3 = timeit.Timer(lambda: sum(filter((lambda x: x &lt; 0.5), L)))
+print(t3.timeit(1))   # 0.049515714000108346
+
+t4 = timeit.Timer(lambda: sum(filter(func, L)))
+print(t4.timeit(1))   # 0.0439489059999687
+</pre><hr>
 
 </body>
 </html>

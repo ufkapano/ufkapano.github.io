@@ -23,19 +23,19 @@
 <p>It lowers the cost for development and maintenance of the software.
 
 <pre>
-+-------------+----------------------------+
-| Statements  | Examples                   |
-+-------------+----------------------------+
-| Calls       | my_func(12, word="alpha")  |
-| def, return | def func(x, y=1):          |
-|             |     return x + y           |
-| global      | def changer():             |
-|             |     global x; x = "beta"   |
-| nonlocal    | def changer(): # Python 3  | PEP 3104
-|             |     nonlocal x; x = "beta" |
-| yield       | generators                 |
-| lambda      | anonymous functions        |
-+-------------+----------------------------+
++----------------+-----------------------------+
+| Statements     | Examples                    |
++----------------+-----------------------------+
+| Calls          | my_func(12, word="alpha")   |
+| def, return    | def func(x, y=1):           |
+|                |     return x + y            |
+| global         | def changer():              |
+|                |     global x ; x = "beta"   |
+| nonlocal (Py3) | def changer(): # PEP 3104   |
+|                |     nonlocal x ; x = "beta" |
+| yield          | generators                  |
+| lambda         | anonymous functions         |
++----------------+-----------------------------+
 </pre>
 
 <h3>CREATING FUNCTIONS</h3>

@@ -45,8 +45,10 @@ tester2(2)   # [2]
 tester2(3)   # [3]
 # Using an external list.
 M = []
-tester1(5, M)   # M == [5]
-tester2(6, M)   # M == [5, 6]
+tester1(5, M)
+assert M == [5]
+tester2(6, M)
+assert M == [5, 6]
 </pre><hr>
 
 <h3>EXCESS POSITIONAL ARGUMENTS</h3>
