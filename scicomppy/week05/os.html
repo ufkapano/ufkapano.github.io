@@ -28,44 +28,63 @@ current = os.getcwd()   # '/home/andrzej' in Linux Debian
 
 # Using join().
 # parent directory 
-print ( os.pardir )   # ".." in UNIX
+print(os.pardir)   # ".." in UNIX
 parent = os.path.join(current, os.pardir)   # '/home/andrzej/..'
 # Join two or more pathname components, inserting os.sep as needed.
 
-print ( current + os.sep + os.pardir )   # the same
-print ( os.path.abspath(parent) )   # '/home', the absolute path
-print ( os.path.relpath(parent) )   # '..' the relative path
+print(current + os.sep + os.pardir)   # the same
+print(os.path.abspath(parent))   # '/home', the absolute path
+print(os.path.relpath(parent))   # '..' the relative path
 </pre><hr><pre>
 # Using split().
 
 path = '/home/andrzej/Pobrane'
-print ( os.path.exists(path) )   # True
-print ( os.path.isabs(path) )   # True, it is the absolute path
-print ( os.path.isfile(path) )   # False
-print ( os.path.isdir(path) )   # True
-print ( os.path.getsize(path) )   # the number of bytes
+print(os.path.exists(path))   # True
+print(os.path.isabs(path))   # True, it is the absolute path
+print(os.path.isfile(path))   # False
+print(os.path.isdir(path))   # True
+print(os.path.getsize(path))   # the number of bytes
 
-print ( os.path.split(path) )   # ('/home/andrzej', 'Pobrane')
+print(os.path.split(path))   # ('/home/andrzej', 'Pobrane')
 # Split a pathname.  Returns tuple "(head, tail)" where "tail" is
 # everything after the final slash.  Either part may be empty.
 
-print ( os.path.basename(path) )   # 'Pobrane'
-print ( os.path.dirname(path) )   # '/home/andrzej'
+print(os.path.basename(path))   # 'Pobrane'
+print(os.path.dirname(path))   # '/home/andrzej'
 </pre><hr><pre>
 # Create a directory.
 
 dirname = "MyWork"
-print ( os.path.isdir(dirname) )   # False
+print(os.path.isdir(dirname))   # False
 os.mkdir(dirname)
-# os.rename(old_name, new_name)
-print ( os.path.isdir(dirname) )   # True
-print ( os.path.abspath(dirname) )   # '/home/andrzej/MyWork'
+print(os.path.isdir(dirname))   # True
+print(os.path.abspath(dirname))   # '/home/andrzej/MyWork'
 os.rmdir(dirname)   # a directory have to be empty
+os.listdir(dirname)   # return a list containing the names of the files in the directory
 
 # Create directory and all intermediate directories if don't exists.
 dirname = "A/B/C"
 if not os.path.exists(dirname):
     os.makedirs(dirname)
+</pre><hr><pre>
+# File tools.
+
+os.chmod(path, mode)   # change the access permissions of a file
+os.chmod('spam.txt', 0777)   # enabled all accesses (octal 0777 means bits 111 111 111)
+os.chown(path, uid, gid)   # hange the owner and group id of path to the numeric uid and gid
+os.remove(path)   # remove a file
+os.rename(old_name, new_name)   # rename a file or directory
+os.listdir(path)   # return a list containing the names of the files
+</pre><hr><pre>
+os.popen(cmd)
+# It runs a shell command string and give us a file object
+# from which we can read the command's output.
+# 'cmd' is a platform-specific command.
+
+os.popen('ls').readlines()   # ['Dokumenty\n', 'Mail\n', 'Muzyka\n', 'Obrazy\n', 'Pobrane\n']
+os.popen('ls *.html').readlines()
+
+os.system(cmd)   # execute the command in a subshell
 </pre><hr>
 
 <h3>EXAMPLES</h3>
@@ -114,7 +133,6 @@ for root, dirs, files in os.walk(top):   # walking top-down (default)
 
 print("The number of PDF files in {} directory is {}".format(top, n_pdf))
 </pre><hr>
-
 
 </body>
 </html>

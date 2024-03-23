@@ -19,6 +19,8 @@ into a byte stream, and 'unpickling' is the inverse operation,
 whereby a byte stream is converted back into an object hierarchy.
 
 <p>Warning: The pickle module is not secure. Only unpickle data you trust.
+Safer serialization formats such as json may be more appropriate 
+if you are processing untrusted data.
 
 <hr><pre>
 # pickle.dump(obj, file, protocol=None, *, fix_imports=True, buffer_callback=None)
@@ -38,7 +40,8 @@ whereby a byte stream is converted back into an object hierarchy.
 </pre><hr><pre>
 import pickle
 
-adict = {"a": "piękny", "b": "książka"}
+# prepare a collection of objects
+adict = {"a": "piękny", "b": [1, 2.0, 3+4j], "c": {None, True, False}}
 
 word = pickle.dumps(adict)   # pickling adict to bytes (b'...')
 
@@ -48,7 +51,8 @@ assert adict == bdict
 </pre><hr><pre>
 import pickle
 
-adict = {"a": "piękny", "b": "książka"}
+# prepare a collection of objects
+adict = {"a": "piękny", "b": [1, 2.0, 3+4j], "c": {None, True, False}}
 
 with open('data.pickle', 'wb') as outfile:   # a binary file
     pickle.dump(adict, outfile)   # pickling
