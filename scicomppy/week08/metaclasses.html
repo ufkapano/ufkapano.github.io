@@ -43,7 +43,8 @@ class Meta(type):   # inheritence from 'type'
         namespace['foo'] = 'Meta was here'
         # 'foo' is added to the class namespace,
         # before the class 'name' is created
-        return type.__new__(mcls, name, bases, namespace)
+        cls = type.__new__(mcls, name, bases, namespace)
+        return cls
 
 class C(metaclass=Meta):
     pass
@@ -70,7 +71,7 @@ class A(Model):
 class B(A):
     pass
 
-print ( list(models) )   # ['Model', 'A', 'B']
+print(list(models))   # ['Model', 'A', 'B']
 </pre><hr>
 
 </body>

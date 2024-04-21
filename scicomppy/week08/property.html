@@ -23,8 +23,8 @@ class Engine:
         self.temperature = None
 
 e = Engine()
-assert e.temperature == None
-e.temperature = 100
+assert e.temperature == None    # like getT() in C++
+e.temperature = 100             # like setT(value) in C++
 assert e.temperature == 100
 del e.temperature
 #print(e.temperature)   # AttributeError
@@ -51,7 +51,7 @@ class Engine:         # Py3
 
     @temperature.deleter
     def temperature(self):
-        del self._t
+        del self._t   # better self._t = None (?)
 
 
 e = Engine()

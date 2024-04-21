@@ -110,5 +110,22 @@ plt.hlines([1,2,4,7], 0, 10, colors=['r','g','r','g'], label='red/green')
 plt.vlines([1,2,4,7], 0, 10, colors='b', label='blue')   # the same color
 </pre><hr>
 
+<h3>MISC</h3>
+
+<hr><pre>
+plt.gray()   # set the colormap to "gray"
+
+# Available colormaps.
+cmaps = plt.cm.datad.keys()   # dict_keys(['Blues', 'BrBG', ..., 'tab20c_r'])
+</pre><hr><pre>
+img = plt.imread('photo.png')   # PNG files only
+# Read an image from a file into an array.
+# Returns the image data as numpy.array.
+# The returned array has shape
+#    - (M, N) for grayscale images.
+#    - (M, N, 3) for RGB images.
+#    - (M, N, 4) for RGBA images.
+</pre><hr>
+
 </body>
 </html>
