@@ -20,11 +20,11 @@
 class Engine:
 
     def __init__(self):
-        self.temperature = None
+        self.temperature = 0
 
 e = Engine()
-assert e.temperature == None    # like getT() in C++
-e.temperature = 100             # like setT(value) in C++
+assert e.temperature == 0   # like getT() in C++
+e.temperature = 100         # like setT(value) in C++
 assert e.temperature == 100
 del e.temperature
 #print(e.temperature)   # AttributeError
@@ -36,7 +36,7 @@ del e.temperature
 class Engine:         # Py3
 
     def __init__(self):
-        self._t = None   # the private variable
+        self._t = 0   # the private variable
 
     @property
     def temperature(self):
@@ -51,11 +51,11 @@ class Engine:         # Py3
 
     @temperature.deleter
     def temperature(self):
-        del self._t   # better self._t = None (?)
+        del self._t   # better self._t = 0 (?)
 
 
 e = Engine()
-assert e.temperature == None
+assert e.temperature == 0
 e.temperature = 100
 assert e.temperature == 100
 #e.temperature = -1   # ValueError: temperature less then zero
