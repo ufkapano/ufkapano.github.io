@@ -62,7 +62,7 @@ y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
 fig = plt.figure()
 ax = fig.add_axes((0.1, 0.1, 0.8, 0.8), facecolor="white")
 
-ax.plot(x, y)
+ax.plot(x, y)   # ax.plot(x, y, fmt)
 ax.set_title("f(x)")
 ax.set_xlabel("x")
 ax.set_ylabel("y")
@@ -102,6 +102,25 @@ ax4 = plt.subplot(224)
 # +---+---+
 # |ax3|ax4|
 # +---+---+
+</pre><hr>
+
+<h3>CLEARING A PLOT</h3>
+
+<p>https://stackoverflow.com/questions/8213522/when-to-use-cla-clf-or-close-for-clearing-a-plot
+
+<hr><pre>
+plt.cla() clears an axis, i.e. the currently active axis in the current figure. 
+It leaves the other axes untouched.
+
+plt.clf() clears the entire current figure with all its axes, but leaves 
+the window opened, such that it may be reused for other plots.
+
+plt.close() closes a window, which will be the current window, 
+if not specified otherwise.
+
+Save a plot and delete its memory.
+plt.savefig(filename)
+plt.close(plt.gcf())
 </pre><hr>
 
 </body>

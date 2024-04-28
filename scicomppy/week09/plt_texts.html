@@ -122,7 +122,7 @@ mu, sigma = 100, 15
 x = mu + sigma * np.random.randn(10000)
 
 # the histogram of the data
-n, bins, patches = plt.hist(x, 50, density=1, facecolor='g', alpha=0.75)
+n, bins, patches = plt.hist(x, 50, density=True, facecolor='g', alpha=0.75)
 
 #plt.xlabel('Smarts')
 plt.xlabel('Smarts', fontsize=14, color='red')
@@ -144,8 +144,8 @@ import matplotlib.pyplot as plt
 
 x = np.arange(-1, 1, .01)
 
-for i in range(1, 5):
-    plt.plot(x, i*x, 'k-', lw=i, label='y(x)={}*x'.format(i))
+for a in range(1, 5):
+    plt.plot(x, a*x, 'k-', lw=a, label='y(x)={}*x'.format(a))
 
 plt.legend(ncol=2, loc=2)
 plt.show()
