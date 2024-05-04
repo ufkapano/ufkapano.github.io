@@ -8,6 +8,10 @@
 
 <h1>Matplotlib - Figure and Axes</h1>
 
+<p>https://matplotlib.org/stable/api/figure_api.html
+
+<p>https://matplotlib.org/stable/api/axes_api.html
+
 <h3>INTRODUCTION</h3>
 
 <p><img src="img/plot2.png" alt="[ plot2.png ]">
@@ -61,6 +65,7 @@ y = x**2 * np.exp(-a*x) * np.sin(np.pi*x)   # numpy functions!
 # Solution IV.
 fig = plt.figure()
 ax = fig.add_axes((0.1, 0.1, 0.8, 0.8), facecolor="white")
+#ax = fig.add_axes(rect=(left, bottom, width, height))
 
 ax.plot(x, y)   # ax.plot(x, y, fmt)
 ax.set_title("f(x)")
