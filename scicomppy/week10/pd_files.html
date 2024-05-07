@@ -18,6 +18,10 @@
 
 <p>https://pandas.pydata.org/docs/reference/api/pandas.Series.to_json.html
 
+<p>https://pandas.pydata.org/docs/reference/api/pandas.read_excel.html
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.to_excel.html
+
 <h3>INTRODUCTION</h3>
 
 <p>Pandas supports the integration with many file formats or data sources 
@@ -140,7 +144,7 @@ df.to_json(orient='values')
 </pre><hr><pre>
 # Read JSON and make DataFrame.
 #
-# read_json(path_or_buf=None, orient=None, typ='frame', dtype=True,
+# pandas.read_json(path_or_buf=None, orient=None, typ='frame', dtype=True,
 #     convert_axes=True, convert_dates=True, keep_default_dates=True,
 #     numpy=False, precise_float=False, date_unit=None, encoding=None,
 #     lines=False, chunksize=None, compression='infer')
@@ -154,13 +158,13 @@ df.to_json(orient='values')
 # df = pd.read_json(file_name)
 # df = pd.read_json(json_string)
 
-df1 = pd.read_json('[10,20,30]')   # default typ='frame'
+df1 = pd.read_json('[10,20,30]')   # default type='frame'
 #     0
 # 0  10
 # 1  20
 # 2  30
 
-series1 = pd.read_json('[10,20,30]', typ='series')
+series1 = pd.read_json('[10,20,30]', type='series')
 # 0    10
 # 1    20
 # 2    30
@@ -170,6 +174,34 @@ df2 = pd.read_json('[[11,12],[21,22]]')
 #     0   1
 # 0  11  12
 # 1  21  22
+</pre><hr>
+
+<h3>USING EXCEL FILES</h3>
+
+<hr><pre>
+# pandas.read_excel(io, sheet_name=0, *, header=0, names=None, index_col=None,
+#     usecols=None, dtype=None, engine=None, converters=None, true_values=None,
+#     false_values=None, skiprows=None, nrows=None, na_values=None,
+#     keep_default_na=True, na_filter=True, verbose=False, parse_dates=False,
+#     date_parser=_NoDefault.no_default, date_format=None, thousands=None,
+#     decimal='.', comment=None, skipfooter=0, storage_options=None,
+#     dtype_backend=_NoDefault.no_default, engine_kwargs=None)
+#
+# Read an Excel file into a pandas DataFrame.
+
+df = pd.read_excel('data1.xlsx', sheet_name='Sheet1')
+</pre><hr><pre>
+# DataFrame.to_excel(excel_writer, sheet_name='Sheet1', na_rep='',
+#     float_format=None, columns=None, header=True, index=True, index_label=None,
+#     startrow=0, startcol=0, engine=None, merge_cells=True, inf_rep='inf',
+#     freeze_panes=None, storage_options=None, engine_kwargs=None)
+#
+# Write object to an Excel sheet.
+
+df = pd.DataFrame([['a', 'b'], ['c', 'd']],
+    index=['row1', 'row2'], columns=['col1', 'col2'])
+#df.to_excel("output.xlsx")
+df.to_excel("output2.xlsx", sheet_name='Sheet_name_1')
 </pre><hr>
 
 </body>
