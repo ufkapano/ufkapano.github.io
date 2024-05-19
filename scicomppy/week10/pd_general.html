@@ -1,0 +1,65 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Pandas - general functions</h1>
+
+<p>https://pandas.pydata.org/docs/reference/general_functions.html
+
+<h3>CONCAT</h3>
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.concat.html
+
+<hr><pre>
+# pandas.concat(objs, *, axis=0, join='outer', ignore_index=False, keys=None,
+#     levels=None, names=None, verify_integrity=False, sort=False, copy=None)
+#
+# Concatenate pandas objects along a particular axis.
+
+# Combine two Series.
+s1 = pd.Series(['a', 'b'])
+s2 = pd.Series(['c', 'd'])
+s3 = pd.concat([s1, s2], ignore_index=True)   # pd.Series(['a', 'b', 'c', 'd'])
+# 0    a
+# 1    b
+# 2    c
+# 3    d
+# dtype: object
+
+# Combine two DataFrame objects with identical columns.
+df1 = pd.DataFrame([['a', 1], ['b', 2]], columns=['letter', 'number'])
+df2 = pd.DataFrame([['c', 3], ['d', 4]], columns=['letter', 'number'])
+df3 = pd.concat([df1, df2], ignore_index=True)
+#   letter  number
+# 0      a       1
+# 1      b       2
+# 2      c       3
+# 3      d       4
+
+# Combine DataFrame objects horizontally along the x axis by passing in axis=1.
+df4 = pd.DataFrame([['bird', 'polly'], ['monkey', 'george']],
+    columns=['animal', 'name'])
+df5 = pd.concat([df1, df4], axis=1)
+  letter  number  animal    name
+0      a       1    bird   polly
+1      b       2  monkey  george
+</pre><hr>
+
+<h3>MERGE</h3>
+
+<p>https://pandas.pydata.org/docs/reference/api/pandas.merge.html
+
+<hr><pre>
+# pandas.merge(left, right, how='inner', on=None, left_on=None, right_on=None,
+#     left_index=False, right_index=False, sort=False, suffixes=('_x', '_y'),
+#     copy=None, indicator=False, validate=None)
+#
+# Merge DataFrame or named Series objects with a database-style join.
+</pre><hr>
+
+</body>
+</html>

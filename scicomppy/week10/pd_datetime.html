@@ -54,11 +54,15 @@ pd.Timestamp(2017, 1, 15, 12)   # the API for datetime.datetime
 pd.Timestamp(year=2017, month=1, day=15, hour=12)   # the same
 # Timestamp('2017-01-15 12:00:00')
 </pre><hr><pre>
-pd.Timestamp.now()   # Timestamp('2023-05-27 11:34:55.950145')
-pd.Timestamp.now().isoformat()   # '2023-05-27T11:34:55.950145'
-pd.Timestamp.now().isoformat(sep=' ')   # '2023-05-27 11:34:55.950145'
-pd.Timestamp.now().floor('D')   # Timestamp('2023-05-27 00:00:00')
-pd.Timestamp.now().ceil('D')   # Timestamp('2023-05-28 00:00:00')
+t = pd.Timestamp.now()   # Timestamp('2023-05-27 11:34:55.950145')
+t.isoformat()   # '2023-05-27T11:34:55.950145'
+t.isoformat(sep=' ')   # '2023-05-27 11:34:55.950145'
+t.floor('D')   # Timestamp('2023-05-27 00:00:00')
+t.ceil('D')   # Timestamp('2023-05-28 00:00:00')
+t.days_in_month   # 31
+t.day_name()   # 'Saturday'
+t.month_name()   # 'May'
+t.date()   # datetime.date(2023, 5, 27)
 </pre><hr>
 
 <h3>DATETIME</h3>
@@ -121,9 +125,10 @@ pd.to_datetime(df)   # return pd.Series
 pd.to_datetime(1234567890)   # interpreted as nanoseconds
 # Timestamp('1970-01-01 00:00:01.234567890')
 
-pd.to_datetime('20210203')
-#pd.to_datetime('2021-02-03')   # the same for ISO string
-# Timestamp('2021-02-03 00:00:00')
+pd.to_datetime('2021-02-15')   # Timestamp('2021-02-15 00:00:00')
+pd.to_datetime('20210215')   # Timestamp('2021-02-15 00:00:00')
+
+pd.to_datetime('today')   # Timestamp('2024-05-18 12:08:56.026342')
 </pre><hr>
 
 <h3>DATE RANGE</h3>

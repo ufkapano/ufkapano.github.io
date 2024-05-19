@@ -42,15 +42,19 @@ test_spam.py or spam_test.py.
 <hr><pre>
 # Content of the file test_sample.py
 
+import pytest
+
 def inc(x):
     return x + 1
 
-def test_answer():
+def test_answer():   # a function name with 'test'
     assert inc(3) == 5   # intentional error, 'assert' is used
+    assert pytest.approx(inc(10.1), abs=0.1) == 11.0
+    assert pytest.approx(inc(10.1), rel=0.01) == 11.0   # default rel=1e-6
 </pre><hr><pre>
 # To execute tests:
 
-$ pytest
+$ pytest   # discovery mode
 ============================= test session starts ==============================
 platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
 rootdir: .../week12/pytest1, inifile:
@@ -71,7 +75,7 @@ test_sample.py:8: AssertionError
 </pre><hr><pre>
 # Errors were corrected.
 
-$ pytest
+$ pytest   # discovery mode
 ============================= test session starts ==============================
 platform linux2 -- Python 2.7.16, pytest-3.10.1, py-1.7.0, pluggy-0.8.0
 rootdir: .../week12/pytest1, inifile:
@@ -125,7 +129,7 @@ if __name__ == "__main__":
 </pre><hr><pre>
 # To execute tests:
 
-$ python test_set.py
+$ python test_set.py   # using pytest.main()
 </pre><hr>
 
 <h3>FIXTURES</h3>
@@ -160,6 +164,49 @@ def test_intersection(setA, setB):
 def test_difference(setA, setB):
     assert setA - setB == set([1, 5])
     assert setA.difference(setB) == set([1, 5])
+</pre><hr><pre>
+# Testing exceptions.
+
+def test_exceptions():
+    pytest.raises(TypeError, len, 10)
+    pytest.raises(TypeError, abs, "word")
+    pytest.raises(ZeroDivisionError, lambda: 1/0)
+    pytest.raises(IndexError, lambda: list()[1])
+    pytest.raises(KeyError, lambda: dict()["key"])
+</pre><hr><pre>
+# In order to write assertions about raised exceptions,
+# we can use pytest.raises() as a context manager.
+
+def test_zero_division():
+    with pytest.raises(ZeroDivisionError):
+        1 / 0
+
+def test_recursion_depth():
+    with pytest.raises(RuntimeError) as excinfo:
+        def f():
+            f()
+
+        f()
+    assert "maximum recursion" in str(excinfo.value)
+
+# excinfo is an ExceptionInfo instance, which is a wrapper around
+# the actual exception raised. The main attributes of interest are
+# excinfo.type, excinfo.value, and excinfo.traceback.
+</pre><hr><pre>
+# Testing the exception type and the error message with 'match'.
+
+def test_recursion_depth():
+    with pytest.raises(RuntimeError, match="maximum recursion"):
+        def f():
+            f()
+
+        f()
+
+def test_values():
+    with pytest.raises(ValueError, match='must be 0 or None'):
+        raise ValueError('value must be 0 or None')
+    with pytest.raises(ValueError, match=r'must be \d+$'):   # regular expression
+        raise ValueError('value must be 42')
 </pre><hr>
 
 <h3>MARKERS</h3>

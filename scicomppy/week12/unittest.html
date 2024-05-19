@@ -79,6 +79,7 @@ class TestFibonacci(unittest.TestCase):   # the class name starts with 'Test'
         self.assertRaises(ValueError, fibonacci, -1)
         with self.assertRaises(ValueError):   # context manager
             fibonacci(-2)
+        # compare (2 + 3) vs int.__add__(2, 3)
 
     def tearDown(self): pass
 
@@ -151,7 +152,6 @@ class TestSets(unittest.TestCase):
 
     def tearDown(self):
         print("cleaning")
-        pass
 </pre><hr><pre>
 $ python test_set5.py -v
 test_difference (__main__.TestSets) ... make setA and setB

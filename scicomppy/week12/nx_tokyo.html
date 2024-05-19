@@ -50,7 +50,7 @@ for (node1, node2) in G.edges():
 
 # Colors for all nodes from the same metro line.
 # node[0] gives the metro line.
-colors = [D[node[0].upper()]["color"] for node in G.nodes()]
+colors = [D[node[0]]["color"] for node in G.nodes()]   # a list
 
 nx.draw(G, with_labels=True, node_color=colors)
 plt.show()
