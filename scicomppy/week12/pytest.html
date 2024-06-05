@@ -51,6 +51,10 @@ def test_answer():   # a function name with 'test'
     assert inc(3) == 5   # intentional error, 'assert' is used
     assert pytest.approx(inc(10.1), abs=0.1) == 11.0
     assert pytest.approx(inc(10.1), rel=0.01) == 11.0   # default rel=1e-6
+    # ordered sequences of numbers can be compared
+    assert (0.1 + 0.2, 0.2 + 0.4) == pytest.approx((0.3, 0.6))
+    # dictionary values can be compared
+    assert {'a': 0.1 + 0.2, 'b': 0.2 + 0.4} == pytest.approx({'a': 0.3, 'b': 0.6})
 </pre><hr><pre>
 # To execute tests:
 

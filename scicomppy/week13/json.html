@@ -150,32 +150,32 @@ import pandas as pd
 
 # Read JSON and make Series or DataFrame.
 
-df1 = pd.read_json('[10,20,30]')   # default typ='frame'
+df1 = pd.read_json('[10,20,30]')   # default type='frame'
 #     0
 # 0  10
 # 1  20
 # 2  30
 
-series1 = pd.read_json('[10,20,30]', typ='series')
+series1 = pd.read_json('[10,20,30]', type='series')
 # 0    10
 # 1    20
 # 2    30
 # dtype: int64
 
-df2 = pd.read_json('[[11,12],[21,22]]')   # default typ='frame'
+df2 = pd.read_json('[[11,12],[21,22]]')   # default type='frame'
 #     0   1
 # 0  11  12
 # 1  21  22
 
-series2 = pd.read_json('{"a":10,"b":20,"c":30}', typ='series')
+series2 = pd.read_json('{"a":10,"b":20,"c":30}', type='series')
 # a    10
 # b    20
 # c    30
 # dtype: int64
 
-#series3 = pd.read_json("['x','y','z']", typ='series')
+#series3 = pd.read_json("['x','y','z']", type='series')
 # ValueError: Expected object or value
-series3 = pd.read_json('["x","y","z"]', typ='series') # "" inside, '' outside
+series3 = pd.read_json('["x","y","z"]', type='series') # "" inside, '' outside
 # 0    x
 # 1    y
 # 2    z
