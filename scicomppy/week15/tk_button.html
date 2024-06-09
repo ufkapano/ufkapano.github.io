@@ -27,7 +27,7 @@ root = tk.Tk()
 def callback():
     print("called the callback!")
 
-#button = tk.Button(root, text="Click")
+#button = tk.Button(root, text="Click", command=callback)
 
 button = tk.Button(root,
     text="Click",
@@ -46,6 +46,7 @@ Selected keyword arguments in Button()
 master=root     # the first argument
 text="Click"
 textvariable=strvar   # a variable linked to the button
+image=logo
 fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units

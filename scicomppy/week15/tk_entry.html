@@ -34,7 +34,7 @@ entry.focus()   # save a click
 
 entry.bind('&lt;Return&gt;', (lambda event: print(entry.get())))
 # lambda is used to ignore the 'event' argument
-#root.bind('&lt;Return&gt;', (lambda event: print("message from root")))
+root.bind('&lt;Return&gt;', (lambda event: print("message from root")))
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
@@ -45,14 +45,14 @@ fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units (no height argument)
 show='*'   # for passwords
-state='disabled'   # set the widget readonly
+state='disabled'   # set the widget readonly (default 'normal')
 textvariable=strvar   # a variable linked to the entry
 </pre><hr><pre>
 Operations
 
 name = entry.get()   # get a string
 entry.delete(pos)   # remove a char at pos
-entry.delete(first, last)   # remove a range [first:last]
+entry.delete(first, last)   # remove a range [first:last] ('last' not included)
 entry.delete(first, tk.END)
 entry.insert(pos, "text")   # insert text
 entry.insert(0, "What is your name?")   # info for the user
