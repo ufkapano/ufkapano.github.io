@@ -27,16 +27,16 @@ pakiety instalacyjne Pythona dla Linuksa i Windows.
 <a href="http://www.python.org/about/success/esr/">Why Python?</a>
 (Eric S. Raymond).
 
-<h3>ZADANIE 1.2 (PYTHON I DEBIAN)</h3>
+<h3>ZADANIE 1.2 (PYTHON I DEBIAN LINUX)</h3>
 
-<p>Na stronie linuksa 
+<p>Na stronie Linuksa 
 <a href="http://www.debian.org/">Debian</a>
 znaleźć listę pakietów związanych z językiem Python (dystrybucja stabilna).
 
 <p>https://packages.debian.org/stable/python/
 
 <p>Pakiet <em>python</em> jest zależny od domyślnej wersji Pythona 
-w Debianie (Debian 10 Buster ma Pythona 2.7).
+w Debianie (Debian 10 - Py2.7, Debian 11 - Py3.9, Debian 12 - Py3.11).
 
 <p>Sprawdzić wersję Pythona zainstalowaną we własnym systemie operacyjnym.
 W razie potrzeby zainstalować najnowszą wersję Pythona.
@@ -48,35 +48,35 @@ Zwrócić uwagę na zmianę postaci znaku zachęty przy poleceniach
 wielowierszowych.
 
 <hr><pre>
-$ python                      # uruchamiamy pythona interaktywnie
-&gt;&gt;&gt; 23 + 34                    # komentarz jest ignorowany
+$ python                      # uruchamiamy Pythona interaktywnie
+&gt;&gt;&gt; 23 + 34                   # komentarz jest ignorowany
 57
-&gt;&gt;&gt; _ + 12                     # znak _ (podkreślenie) to ostatni wynik
+&gt;&gt;&gt; _ + 12                    # znak _ (podkreślenie) to ostatni wynik
 69                            # (należy tą zmienną traktować jako read-only)
-&gt;&gt;&gt; a = 2 ; b = 5              # średnik separuje dwa polecenia
+&gt;&gt;&gt; a = 2 ; b = 5             # średnik separuje dwa polecenia
 # Znak równości (=) przypisuje wartość do zmiennej.
 # Wynik podstawienia nie jest wypisywany.
 &gt;&gt;&gt; a * b
 10
-&gt;&gt;&gt; 1 + 2 + \                  # w razie potrzeby można linię złamać
+&gt;&gt;&gt; 1 + 2 + \                 # w razie potrzeby można wiersz złamać
 ... 4 - 3                     # i kontynuować w następnej (użyty backslash)
 4
-&gt;&gt;&gt; (10 + 12 +                # otwarty nawias "(" lub "[" lub "{" pozwala
-... 13)                     # również kontynuować w następnej linii
+&gt;&gt;&gt; (10 + 12 +              # otwarty nawias "(" lub "[" lub "{" pozwala
+... 13)                     # również kontynuować w następnym wierszu
 35
-&gt;&gt;&gt; [Ctrl]+[d]                 # lub quit() koniec pracy z pythonem interaktywnie
+&gt;&gt;&gt; [Ctrl]+[d]                 # lub quit() koniec pracy z Pythonem interaktywnie
 $
 </pre><hr>
 
-<p>Korzystanie ze znaku backslash (\) do łamania linii jest odradzane, 
+<p>Korzystanie ze znaku backslash (\) do łamania wiersza jest odradzane, 
 ponieważ łatwo go przeoczyć czytając kod, 
 co może spowodować jego złe rozumienie.
 
 <p>Zwyczajowo każde polecenie umieszczamy w osobnym wierszu.
 
 <p>W sesji interaktywnej nie ma potrzeby stosowania wyrażenia
-<em>print</em>, ponieważ wyniki wyrażeń są automatycznie
-wyświetlane przez interpreter.
+<em>print</em> [funkcji <em>print()</em> w Pythonie 3], 
+ponieważ wyniki wyrażeń są automatycznie wyświetlane przez interpreter.
 
 <p>Należy zwracać uwagę na zmianę znaku zachęty w instrukcjach 
 złożonych. W interfejsie IDLE kolejne wiersze instrukcji
@@ -90,7 +90,7 @@ pustym wierszem.
 <p>Zapoznać się z funkcjami matematycznymi Pythona.
 
 <hr><pre>
-$ python                      # uruchamiamy pythona
+$ python                      # uruchamiamy Pythona interaktywnie
 &gt;&gt;&gt; import math      # wczytanie modułu matematycznego
 &gt;&gt;&gt; help(math)       # wyjście z pomocy przez [q]
 &gt;&gt;&gt; help(math.sin)
@@ -115,17 +115,18 @@ $
 # hello.py
 #
 # Pierwszy program w Pythonie.
-# W pierwszej linii mamy ścieżkę dostępu do interpretera.
-# W drugiej linii informacja o kodowaniu znaków w pliku.
+# W pierwszym wierszu mamy ścieżkę dostępu do interpretera.
+# W drugim wierszu informacja o kodowaniu znaków w pliku.
+# W Pythonie 3 domyślnie ustawione jest kodowanie UTF-8.
 # Dzięki temu można w pliku stosować polskie znaki w napisach.
-# Po znaku '#' mamy komentarz do końca linii.
+# Po znaku '#' mamy komentarz do końca wiersza.
 
-print ( "Hello, world!" )   # działa dla Pythona 2 i 3
+print("Hello, world!")   # działa dla Pythona 2 i Pythona 3
 </pre><hr><pre>
 # Ustawienie kodowania UTF-8.
 # -*- coding: utf-8 -*-   # styl edytora Emacs
-# coding: utf-8         # to wystarczy
-# coding=utf-8          # to wystarczy
+# coding: utf-8           # to wystarczy
+# coding=utf-8            # to wystarczy
 # Ustawienie kodowania ISO dla języka polskiego.
 # -*- coding: iso-8859-2 -*-
 </pre><hr><pre>
@@ -152,7 +153,7 @@ Hello, world!
 <p>Sprawdzić pracę różnych edytorów tekstu z podświetlaniem składni:
 mcedit (związany z Midnight Commander), nano, gedit (GNOME), kate (KDE).
 
-<p>Sprawdzić możliwości dużych IDE: PyCharm, Eclipse.
+<p>Sprawdzić możliwości dużych IDE: PyCharm, Visual Studio Code, Eclipse.
 
 </body>
 </html>
