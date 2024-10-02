@@ -76,30 +76,32 @@ lg(x) to logarytm przy podstawie 2.
 
 <ul>
 <li>(a) t[0] = 0, t[n] = t[n-1] + 1 dla n &gt; 0. 
-Udowodnić, że t[n] = n
+<br>Udowodnić, że t[n] = n
 (wyszukiwanie sekwencyjne w ciągu nieuporządkowanym; obliczanie silni).
 <li>(b) t[1] = 1, t[n] = t[n/2] + 1 dla n &gt; 1, n = 2^k. 
-Udowodnić, że t[n] = lg(n) + 1 (wyszukiwanie binarne w ciągu posortowanym).
+<br>Udowodnić, że t[n] = lg(n) + 1 (wyszukiwanie binarne w ciągu posortowanym).
 <li>(c) t[1] = 1, t[n] = 7*t[n/2] dla n &gt; 1, n = 2^k. 
-Udowodnić, że t[n] = n^lg(7)
+<br>Udowodnić, że t[n] = n^lg(7)
 [algorytm Strassena mnożenia macierzy, 7^lg(n) = n^lg(7)].
 <li>(d) t[1] = 1, t[n] = 2*t[n-1] + 1 dla n &gt; 1. 
-Udowodnić, że t[n] = 2^n -1 (wieże Hanoi).
+<br>Udowodnić, że t[n] = 2^n -1 (wieże Hanoi).
 <li>(e) t[1] = 0, t[n] = 2*t[n/2] + n dla n &gt; 1, n = 2^k. 
-Udowodnić, że t[n] = n*lg(n) (quicksort, mergesort).
-<li>(f) t[0] = 1, t[n] = t[n-1] + n. Udowodnić, że t[n] = 1 + n*(n+1)/2 
+<br>Udowodnić, że t[n] = n*lg(n) (quicksort, mergesort).
+<li>(f) t[0] = 1, t[n] = t[n-1] + n. 
+<br>Udowodnić, że t[n] = 1 + n*(n+1)/2 
 (na ile maksymalnie części można podzielić płaszczyznę przy pomocy n prostych).
 </ul>
 
 <hr>
 
-<p>Przykład (a)+(d). t[n] = b*t[n-1] + c, t[0] = a, t[1] = b*a + c.
+<p>Przykład (a)+(d). t[n] = b*t[n-1] + c, t[0] = a, t[1] = b*a + c
 (niehomogeniczna rekurencja liniowa).
 <br>Jeżeli b = 1, to t[1] = a + c, t[2] = a + 2*c, 
 t[n] = a + n*c (ciąg arytmetyczny).
 <br>Jeżeli b &ne; 1, to t[1] = b*a + c, t[2] = b^2*a + b*c + c, 
 t[3] = b^3*a + b^2*c + b*c + c,...
-<br>t[n] = b^n*a + c*(1 + b + b^2 + ... + b^{n-1}) = b^n*a + c*(1-b^n)/(1-b).
+<br>t[n] = b^n*a + c*(1 + b + b^2 + ... + b^{n-1}) 
+= b^n*a + c*(1-b^n)/(1-b) (ciąg geometryczny).
 
 <p>Drugi sposób to zdefiniowanie nowego ciągu 
 s[n] = t[n+1] - t[n], s[0] = b*a + c -a.
@@ -108,7 +110,7 @@ s[n] = t[n+1] - t[n], s[0] = b*a + c -a.
 dodajemy stronami, dostajemy
 <br>t[n] = t[0] + s[0]*(1 + b + b^2 + ... + b^{n-1}) = t[0] + s[0]*(1-b^n)/(1-b).
 
-<p>Trzeci sposób to usunięcie niehomogeniczności,
+<p>Trzeci sposób to usunięcie niehomogeniczności przez dodanie drugiego równania,
 <br>t[n+1] -b*t[n] = t[n] -b*t[n-1].
 
 <p>Czwarty sposób to zdefiniowanie przesuniętego ciągu 
@@ -161,10 +163,10 @@ to jedynym rozwiązaniem rekurencji jest
 <p>Przykład: ciąg Fibonacciego. t[n] -t[n-1] -t[n-2] = 0, t[0] = 0, t[1] = 1.
 <br>Postulujemy t[n] = r^n,
 równanie charakterystyczne r^2 -r -1 = 0.
-<br>Rozwiązania r[1] = (1 + sqrt(5))/2, r[2] = (1 -sqrt(5))/2,
-t[n] = c[1]*r[1]^n + c[2]*r[2]^n.
-<br>Warunki początkowe 0 = c[1] + c[2], 1 = c[1]*r[1] + c[2]*r[2],
-c[1] = 1/sqrt(5) = -c[2].
+<br>Pierwiastki r[1] = (1 + sqrt(5))/2, r[2] = (1 -sqrt(5))/2.
+<br>Rozwiązanie ogólne t[n] = c[1]*r[1]^n + c[2]*r[2]^n.
+<br>Warunki początkowe 0 = c[1] + c[2], 1 = c[1]*r[1] + c[2]*r[2].
+<br>Znalezione stałe c[1] = 1/sqrt(5) = -c[2].
 <br>Dostajemy zwarty wzór na n-ty wyraz ciągu Fibonacciego!
 
 <hr>
@@ -206,13 +208,13 @@ nateży brać następujące wyrazy:
 <p>Przykład (a). t[n] -7*t[n-1] + 15*t[n-2] -9*t[n-3] = 0 dla n &gt; 2, 
 t[0] = 0, t[1] = 1, t[2] = 2.
 <br>Postulujemy t[n] = r^n,
-równanie charakterystyczne r^3 -7r^2 + 15r -9 = 0, 
-(r-1)(r-3)^2 = 0, jest pierwiastek podwójny.
-<br>Rozwiązanie t[n] = c[1]*(1)^n + c[2]*3^n + c[3]*n*3^n.
+równanie charakterystyczne r^3 -7*r^2 + 15*r -9 = 0, (r-1)(r-3)^2 = 0.
+<br>Pierwiastki r[1] = 1, r[2] = 3 (pierwiastek podwójny).
+<br>Rozwiązanie ogólne t[n] = c[1]*(1)^n + c[2]*3^n + c[3]*n*3^n.
 <br>Warunki początkowe 0 = c[1] + c[2], 1 = c[1] + 3*c[2] + 3*c[3], 
 2 = c[1] + 9*c[2] + 18*c[3].
-<br>Rozwiązanie c[1] = -1, c[2] = 1, c[3] = -1/3, 
-t[n] = (-1)*1^n + (1)*3^n + (-1/3)*n*3^n.
+<br>Znalezione stałe c[1] = -1, c[2] = 1, c[3] = -1/3. 
+<br>Rozwiązanie końcowe t[n] = (-1)*1^n + (1)*3^n + (-1/3)*n*3^n.
 
 <hr>
 
@@ -256,18 +258,20 @@ t[0] = 0, t[1] = 1 (UWAGA duże współczynniki liczbowe).
 
 <hr>
 
-<p>Przykład (a). t[n]-3*t[n-1] = 4^n*(2*n+1) dla n &gt; 1, t[0] = 0, t[1] = 12.
+<p>Przykład (a). t[n] -3*t[n-1] = 4^n*(2*n + 1) dla n &gt; 1, 
+t[0] = 0, t[1] = 12.
 <br>Równanie homogeniczne t[n] -3*t[n-1] = 0,
 równanie charakterystyczne (r-3) = 0.
 <br>Część niehomogeniczna b = 4, d = 1, (r-b)^(d+1) = (r-4)^2.
-<br>Pełne równanie charakterystyczne (r-3)(r-4)^2 = 0, jest pierwiastek podwójny.
-<br>Rozwiązanie t[n] = c[1]*3^n + c[2]*4^n + c[3]*n*4^n.
+<br>Pełne równanie charakterystyczne (r-3)(r-4)^2 = 0.
+<br>Pierwiastki r[1] = 3, r[2] = 4 (pierwiastek podwójny).
+<br>Rozwiązanie ogólne t[n] = c[1]*3^n + c[2]*4^n + c[3]*n*4^n.
 <br>Są 3 stałe, a 2 warunki, trzeba obliczyć 
 t[2] -3*t[1] = 4^2*(2*2+1), t[2] = 116.
 <br>Warunki początkowe 0 = c[1] + c[2], 12 = 3*c[1] + 4*c[2] + 4*c[3], 
 116 = 9*c[1] + 16*c[2] + 32*c[3].
-<br>Rozwiązanie c[1] = 20, c[2] = -20, c[3] = 8, 
-t[n] = (20)*3^n + (-20)*4^n + (8)*n*4^n.
+<br>Znalezione stałe c[1] = 20, c[2] = -20, c[3] = 8.
+<br>Rozwiązanie końcowe t[n] = (20)*3^n + (-20)*4^n + (8)*n*4^n.
 
 <hr>
 
