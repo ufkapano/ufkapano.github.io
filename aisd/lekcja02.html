@@ -114,12 +114,13 @@ qsort(v, sizeof(v) / sizeof(*v), sizeof(*v), cmp_int);
 
 template&lt; class RandomIt &gt;
 void sort( RandomIt first, RandomIt last );
-// Sorts the elements in the range [first, last) in ascending order. 
+// Sorts the elements in the range [first, last) in non-descending order. 
 // The order of equal elements is not guaranteed to be preserved. 
-// Elements are compared using operator&lt;.
+// Elements are compared using operator&lt; (until C++20) or std::less{} (since C++20).
 
 template&lt; class RandomIt, class Compare &gt;
 void sort( RandomIt first, RandomIt last, Compare comp );
+// Elements are sorted with respect to comp.
 // bool cmp(const Type1 &amp; a, const Type2 &amp; b);
 // Funkcja zwraca true jeżeli a jest mniejsze od b.
 
@@ -175,6 +176,8 @@ assert( std::is_sorted(v, v + (sizeof(v) / sizeof(*v))) );   // zwykła tablica
 
 <p>Przykładowy plik <em>Makefile</em> wspomagający kompilację
 i sposób korzystania z narzędzia <em>make</em>.
+<br>UWAGA Wcięcia w pliku <em>Makefile</em> robimy klawiszem tabulacji,
+to nie jest ciąg spacji!
 
 <hr><pre>
 $ ls                # zawartość katalogu z projektem
@@ -193,11 +196,13 @@ rm -f main.out *.o core
 </pre><hr><pre>
 # Makefile
 # Kompilator g++.
-CC = g++
-# Mozliwe dodatkowe zmienne
+CXX = g++
+# Mozliwe dodatkowe zmienne.
 # LIBS = -ll -lm
 LIBS =
-CFLAGS = -Wall -std=c++11
+# Flagi dla kompilatora C++.
+# Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23
+CXXFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o atrapa.o
 # Pliki naglowkowe - sa wlaczane do plikow *.cpp.
@@ -209,11 +214,12 @@ TARGET = main.out
 # $&lt; oznacza nazwe pliku pierwszej zaleznosci reguly.
 # $@ oznacza nazwe pliku celu w regule.
 # Wszystkie pliki obiektowe zaleza od wszystkich plikow naglowkowych.
+# Wciecia robimy przez TAB.
 %.o : %.cpp $(HFILES) Makefile
-	$(CC) $(CFLAGS) -c $&lt; -o $@
+	$(CXX) $(CXXFLAGS) -c $&lt; -o $@
 
 $(TARGET) : $(OBJECTS)
-	$(CC) $(CFLAGS) $(LIBS) $(OBJECTS) -o $(TARGET)
+	$(CXX) $(CXXFLAGS) $(LIBS) $(OBJECTS) -o $(TARGET)
 
 # Okreslenie celow sztucznych.
 .PHONY : clean

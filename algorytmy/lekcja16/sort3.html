@@ -26,17 +26,19 @@ a ile otrzymamy z podanego wzoru.
 n - liczba elementów do posortowania
 n! - liczba możliwych permutacji n elementów
 k - liczba bitów (zero lub jeden)
-2**k - liczba możliwych ciągów k-elementowych zer i jedynek
-
-k     2**k     n!     n
-0        1      1     1
-1        2      2     2
-2        4
-3        8      6     3
-4       16
-5       32     24     4
-6       64
-7      128    120     5
+2^k - liczba możliwych ciągów k-elementowych zer i jedynek
++---+-----+-----+---+
+| k | 2^k |  n! | n |
++---+-----+-----+---+
+| 0 |   1 |   1 | 1 |
+| 1 |   2 |   2 | 2 |
+| 2 |   4 |     |   |
+| 3 |   8 |   6 | 3 |
+| 4 |  16 |     |   |
+| 5 |  32 |  24 | 4 |
+| 6 |  64 |     |   |
+| 7 | 128 | 120 | 5 |
++---+-----+-----+---+
 </pre><hr>
 
 <p>Dla większej liczby n nie jest łatwo podać dokładną liczbę porównań.
