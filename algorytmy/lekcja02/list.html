@@ -56,7 +56,8 @@ to lepiej zastosować słowniki lub zbiory.
 </pre>
 
 <hr><pre>
-list1 = [10, 20, 30, 40, 50, 60, 70]
+list1 = [10, 20, 30, 40, 50, 60]
+# list1 = [10, 20, 30, 40, 50, 60,]   # przecinek na końcu jest dozwolony
 list2 = ["abc", "d", "ef", "g", "hij"]
 list3 = [3, "xyz", [10, 20]]  # listy są heterogeniczne
 
@@ -244,10 +245,14 @@ Więcej wyjaśnień zostanie podanych przy funkcjach.
 [2 ** x for x in range(5)]              # [1, 2, 4, 8, 16]
 [[x, x * x] for x in range(6)]          # lista list
 [(x, x * x * x) for x in range(6)]      # przy krotkach wymagane nawiasy
-[x + y for x in range(3) for y in range(4)]
-[(x, y) for x in range(3) for y in range(4)]
 [chr(x) for x in range(97, 110)]
 "".join([chr(x) for x in range(97, 110)])    # sklejamy listę
+
+[x + y for x in range(3) for y in range(4)]
+[(x, y) for x in range(3) for y in range(4)]
+[x for x in range(2) for y in range(4)]   # [0, 0, 0, 0, 1, 1, 1, 1]
+[y for x in range(2) for y in range(4)]   # [0, 1, 2, 3, 0, 1, 2, 3]
+[c for s in ("aa","b","ccc") for c in s]   # ['a', 'a', 'b', 'c', 'c', 'c']
 
 sum([x * x for x in range(100)])        # pełna lista
 sum(x * x for x in range(100))         # generator
