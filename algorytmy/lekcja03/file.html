@@ -93,23 +93,23 @@ read() zwróci obiekt typu 'bytes'.
 <p>Zapisywanie danych do otwartego pliku tekstowego (mode "w").
 
 <hr><pre>
-liczba = 52   # różne typy danych
+number = 52   # różne typy danych
 x = 1.2345
-napis = "abc"
+word = "abc"
 
 outfile.write("jeden\n")            # metoda zwraca None
-outfile.write(str(liczba) + "\n")     # tu trzeba dodawać '\n'
+outfile.write(str(number) + "\n")     # tu trzeba dodawać '\n'
 outfile.write(str(x) + "\n")
-outfile.write(napis + "\n")
+outfile.write(word + "\n")
 
-outfile.write("%d\n" % liczba)      # zapis z procentem
+outfile.write("%d\n" % number)      # zapis z procentem
 outfile.write("%f\n" % x)
-outfile.write("%s\n" % napis)
+outfile.write("%s\n" % word)
 
 # Tego sposobu lepiej unikać, chyba trudniej przerobić na funkcję (Py2).
-print &gt;&gt; outfile, liczba   # drukuje tak jak na ekran, jest '\n'
+print &gt;&gt; outfile, number   # drukuje tak jak na ekran, jest '\n'
 print &gt;&gt; outfile, x
-print &gt;&gt; outfile, napis
+print &gt;&gt; outfile, word
 
 print &gt;&gt; outfile, "%s\t%s\t%s" % ("a1","a2","a3")
 outfile.write("%s\t%s\t%s\n" % ("a1","a2","a3"))   # tutaj trzeba dać '\n'
@@ -135,8 +135,8 @@ afile.write("0123456789abcdefgh")
 # whence=2, offset &lt; 0, bo od końca pliku
 
 afile.seek(5)                 # idź do 6-tego bajtu
-N = afile.tell()              # zwraca aktualną pozycję w pliku (int lub long w Py2)
-S = afile.read(1)             # czytaj 1 bajt
+N = afile.tell()              # zwraca aktualną pozycję w pliku (integer)
+S = afile.read(1)             # czytaj 1 bajt w Py2 (czytaj 1 code point w Py3)
 afile.seek(-3,2)              # idź do 3-go bajtu od końca (tylko Py2)
 </pre><hr>
 

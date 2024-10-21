@@ -37,7 +37,7 @@ wiersz_nagłówka:              # obowiązkowy dwukropek
 # Może to być wygodne w trybie interaktywnym.
 wiersz_nagłówka: instrukcja_prosta
 if condition: simple_statement
-if x &gt; y: print ( x )   # print ( x ) to instrukcja prosta
+if x &gt; y: print(x)   # print(x) to instrukcja prosta w Py2 lub wyrażenie w Py3
 </pre><hr><pre>
 # Zagnieżdżone bloki.
 blok1
@@ -84,7 +84,7 @@ else:                         # to jest sekcja opcjonalna
 if x:
     if y:
         instrukcja1
-else:   # powiązane z if x
+else:   # powiązane z 'if x'
     instrukcja2
 </pre><hr><pre>
 # Zastosowanie słownika (nie korzystać na siłę).
@@ -109,8 +109,8 @@ else:
 A = Y if W else Z
 
 a = 25 ; b = 30
-pos_a = (-a) if a &lt; 0 else a
-max_ab = b if a &lt; b else a
+pos_a = (-a) if a &lt; 0 else a   # prościej użyć abs(a)
+max_ab = b if a &lt; b else a   # prościej użyć max(a, b)
 
 # Zastosowanie do słowników.
 # Ustawienie domyślnej wartości, jeżeli klucza nie ma.

@@ -28,7 +28,7 @@ lub L.extend(sequence).
 
 <hr><pre>
 # Składnia.
-for item in sequence:
+for item in sequence:   # wiersz nagłówkowy
     instrukcje      # tu zwykle używamy item
     if test1:
         break       # wyjście z pętli, opcjonalne
@@ -71,8 +71,9 @@ for i in L:
     print(i)
     if (i % 2) == 1:            # jeżeli i jest nieparzyste
         L.append(2 * i)         # dodaję tylko parzyste
-        #L.extend([2 * i, 4 * i])
-# Wynik: 0 1 2 3 4 2 6
+        L.append(4 * i)         # dodaję tylko parzyste
+        #L.extend((2 * i, 4 * i))
+# Wynik: 0 1 2 3 4 2 4 6 12
 
 # Bezpieczniejszy wariant z kopią listy.
 for item in L[:]:   # albo list(L)
@@ -84,6 +85,21 @@ for key in D:                 # pętla po kluczach
     print("{} {}".format(key, D[key]))
 for (key, value) in D.items():
     print("{} {}".format(key, value))
+</pre><hr><pre>
+# Pętla po sekwencji w kolejności odwrotnej.
+
+for char in reversed("qwerty"):   # 'reversed object'
+    print(char)   # y, t, r, e, w, q
+</pre><hr><pre>
+# Pętla po sekwencji posortowanej w locie.
+
+for char in sorted("qwerty"):   # ['e', 'q', 'r', 't', 'w', 'y']
+    print(char)
+</pre><hr><pre>
+# Pętla po sekwencji bez duplikatów.
+
+for char in set("abracadabra"):   # 'a', 'c', 'd', 'b', 'r'
+    print(char)
 </pre><hr>
 
 <h3>GENEROWANIE WARTOŚCI PRZESUNIĘCIA I ELEMENTÓW</h3>
@@ -215,17 +231,17 @@ for x in L:
     if x % 2 != 0:
         break
 else:
-    print("Wszystkie parzyste")
+    print("wszystkie parzyste")
 
 # Zastosowanie all().
 
 if all(x % 2 == 0 for x in L):
-    print("Wszystkie parzyste")
+    print("wszystkie parzyste")
 
 # Sprawdzamy, czy choć jedna liczba jest parzysta.
 
 if any(x % 2 == 0 for x in L):
-    print("Jest liczba parzysta na liście")
+    print("jest liczba parzysta na liście")
 </pre><hr>
 
 </body>
