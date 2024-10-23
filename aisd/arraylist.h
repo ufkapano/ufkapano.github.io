@@ -9,10 +9,10 @@
 template <typename T>
 class ArrayList {
     T* tab;
-    int msize; // najwieksza mozliwa liczba elementow
-    int last; // pierwsza wolna pozycja
+    std::size_t msize; // najwieksza mozliwa liczba elementow
+    std::size_t last; // pierwsza wolna pozycja
 public:
-    ArrayList(int s=10) : msize(s), last(0) {
+    ArrayList(std::size_t s=10) : msize(s), last(0) {
         assert( s > 0 );
         tab = new T[s];
         assert( tab != nullptr );
@@ -33,8 +33,8 @@ public:
 
     bool empty() const { return last == 0; } // checks if the container has no elements
     bool full() const { return last == msize; } // checks if the container is full
-    int size() const { return last; } // liczba elementow na liscie
-    int max_size() const { return msize; } // najwieksza mozliwa liczba elementow
+    std::size_t size() const { return last; } // liczba elementow na liscie
+    std::size_t max_size() const { return msize; } // najwieksza mozliwa liczba elementow
     void push_front(const T& item); // dodanie na poczatek
     void push_front(T&& item); // dodanie na poczatek NIEOBOWIAZKOWE
     void push_back(const T& item); // dodanie na koniec
@@ -52,17 +52,17 @@ public:
     // Operacje z indeksami. NIEOBOWIAZKOWE
     // https://en.cppreference.com/w/cpp/language/operators
     // Array subscript operator
-    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
-    const T& operator[](int pos) const; // dostep do obiektu const
-    void erase(int pos); // usuniecie elementu na pozycji pos
+    T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](std::size_t pos) const; // dostep do obiektu const
+    void erase(std::size_t pos); // usuniecie elementu na pozycji pos
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
-    void insert(int pos, const T& item); // inserts item before pos
-    void insert(int pos, T&& item); // inserts item before pos
+    void insert(std::size_t pos, const T& item); // inserts item before pos
+    void insert(std::size_t pos, T&& item); // inserts item before pos
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
 
     friend std::ostream& operator<<(std::ostream& os, const ArrayList& L) {
-        for (int i=0; i < L.last; ++i) { // odwolanie L.last
+        for (std::size_t i=0; i < L.last; ++i) { // odwolanie L.last
             os << L.tab[i] << " ";   // odwolanie L.tab
         }
         return os;

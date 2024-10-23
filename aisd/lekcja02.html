@@ -139,12 +139,13 @@ void sort( RandomIt first, RandomIt last, Compare comp );
 // If the allocation fails, the less efficient algorithm is chosen. 
 
 std::vector&lt;int&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
-//std::array&lt;int, 10&gt; v{ { 9,4,7,3,6,8,2,1,5,0 } }; // bez '=' mamy {{}}
+//std::array&lt;int, 10&gt; v{ { 9,4,7,3,6,8,2,1,5,0 } }; // bez znaku '=' mamy {{}}
 std::array&lt;int, 10&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
 int v[] = { 9,4,7,3,6,8,2,1,5,0 }; // zwykła tablica
 
 std::sort(v.begin(), v.end()); // vector, array
 std::sort(std::begin(v), std::end(v)); // zwykła tablica, vector, array
+std::sort(v.data(), v.data() + v.size());   // array
 std::sort(v, v + (sizeof(v) / sizeof(*v))); // zwykła tablica
 </pre><hr><pre>
 // Szablon przykładowej funkcji sortującej.
@@ -170,6 +171,7 @@ void anysort(Iterator first, Iterator last, Compare comp);
 assert( std::is_sorted(v.begin(), v.end()) );   // vector, array
 assert( std::is_sorted(std::begin(v), std::end(v)) );   // zwykła tablica
 assert( std::is_sorted(v, v + (sizeof(v) / sizeof(*v))) );   // zwykła tablica
+assert( std::is_sorted(v.data(), v.data() + v.size()) );   // array
 </pre><hr>
 
 <h3>MAKEFILE</h3>
@@ -201,7 +203,7 @@ CXX = g++
 # LIBS = -ll -lm
 LIBS =
 # Flagi dla kompilatora C++.
-# Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23
+# Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
 CXXFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstaja z plikow *.cpp.
 OBJECTS = main.o atrapa.o
@@ -248,6 +250,8 @@ clean :
 
 <p>Zaimplementować algorytm sortowania przez scalanie.
 Można wykorzystać funkcję std::inplace_merge().
+
+<p>https://en.cppreference.com/w/cpp/algorithm/inplace_merge
 
 <h3>ZADANIE 2.6 (heapsort)</h3>
 

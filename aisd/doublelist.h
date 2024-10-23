@@ -39,7 +39,7 @@ public:
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
 
     bool empty() const { return head == nullptr; }
-    int size() const; // O(n) bo trzeba policzyc
+    std::size_t size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1)
     void push_front(T&& item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
@@ -53,12 +53,12 @@ public:
     void display_reversed(); // O(n)
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
-    T& operator[](int pos); // podstawienie L[pos]=item, odczyt L[pos]
-    const T& operator[](int pos) const; // dostep do obiektu const
-    void erase(int pos);
+    T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
+    const T& operator[](std::size_t pos) const; // dostep do obiektu const
+    void erase(std::size_t pos);
     int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
-    void insert(int pos, const T& item); // inserts item before pos,
-    void insert(int pos, T&& item); // inserts item before pos,
+    void insert(std::size_t pos, const T& item); // inserts item before pos,
+    void insert(std::size_t pos, T&& item); // inserts item before pos,
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
 };

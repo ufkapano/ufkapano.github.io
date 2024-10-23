@@ -58,7 +58,7 @@ public:
     DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
     DoubleList& operator=(DoubleList&amp;&amp; other); // move assignment operator, return *this NIEOBOWIAZKOWE
     bool empty() const { return head == nullptr; }
-    int size() const; // O(n) bo trzeba policzyć
+    std::size_t size() const; // O(n) bo trzeba policzyć
     void push_front(const T& item); // O(1)
     void push_front(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
@@ -142,7 +142,7 @@ void DoubleList&lt;T&gt;::pop_front() {
 
 <h3>ZADANIE 5.3</h3>
 
-<p>Zmienić klasę DoubleList przez wprowadzenie atrybutu length typu int, 
+<p>Zmienić klasę DoubleList przez wprowadzenie atrybutu length typu std::size_t, 
 który przechowuje aktualną długość listy powiązanej. 
 Dzięki temu metoda size() może działać w czasie O(1), a nie O(n). 
 

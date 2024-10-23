@@ -78,7 +78,7 @@ public:
     SingleList& operator=(const SingleList& other); // copy assignment operator, return *this
     SingleList& operator=(SingleList&amp;&amp; other); // move assignment operator, return *this NIEOBOWIAZKOWE
     bool empty() const { return head == nullptr; }
-    int size() const; // O(n) bo trzeba policzyć
+    std::size_t size() const; // O(n) bo trzeba policzyć
     void push_front(const T& item); // O(1)
     void push_front(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
@@ -103,7 +103,7 @@ sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 4.2</h3>
 
-<p>Zmienić klasę SingleList przez wprowadzenie atrybutu length typu int,
+<p>Zmienić klasę SingleList przez wprowadzenie atrybutu length typu std::size_t,
 który przechowuje aktualną długość listy powiązanej.
 Dzięki temu metoda size() może działać w czasie O(1), a nie O(n).
 
