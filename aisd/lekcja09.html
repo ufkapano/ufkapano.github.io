@@ -144,14 +144,14 @@ template &lt;typename T&gt;
 class MyPriorityQueue {
     std::vector&lt;T&gt; lst; // działa domyślny konstruktor dla std::vector
 public:
-    MyPriorityQueue(int s=10) { lst.reserve(s); } // default constructor
+    MyPriorityQueue(std::size_t s=10) { lst.reserve(s); } // default constructor
     ~MyPriorityQueue() { lst.clear(); }
     MyPriorityQueue(const MyPriorityQueue& other); // copy constructor
     MyPriorityQueue(MyPriorityQueue&amp;&amp; other); // move constructor
     MyPriorityQueue& operator=(const MyPriorityQueue& other); // copy assignment operator, return *this
     MyPriorityQueue& operator=(MyPriorityQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const { return lst.empty(); }
-    int size() const { return lst.size(); } // liczba elementów w kolejce
+    std::size_t size() const { return lst.size(); } // liczba elementów w kolejce
     void push(const T& item) { // dodanie do kolejki
         lst.push_back(item);
         std::push_heap(lst.begin(), lst.end());

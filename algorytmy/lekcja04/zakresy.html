@@ -46,9 +46,9 @@ X = 99         # zmienna globalna (automatycznie)
 def func():
     #print(X)  # NameError, X będzie lokalne
     X = 88     # zmienna lokalna
-    print(X)   # 88, odwołanie do lokalnego X
+    print(X)   # odwołanie do lokalnego X
 
-func()
+func()         # 88, lokalne X
 print(X)       # 99, globalne X
 </pre><hr><pre>
 X = 99         # zmienna globalna
@@ -59,7 +59,7 @@ def func():
     Y = 88     # zmienna lokalna
     Z = 77
 
-X = 55
+X = 55         # zmiana zmiennej globalnej X
 func()         # 55, rozwiązywanie nazw następuje w czasie wykonania!
 #print(Y)      # NameError, Y nie istnieje
 print(Z)       # 77, Z jest globalne
@@ -71,8 +71,8 @@ def func():
     print(X)   # dozwolone
     X = 88     # zmiana zmiennej globalnej
 
-func()         # 99
-print(X)       # 88
+func()         # 99, stara wartość zmiennej globalnej
+print(X)       # 88, nowa wartość zmiennej globalnej
 </pre><hr><pre>
 # https://www.python.org/dev/peps/pep-0227/
 # PEP 227 - Statically Nested Scopes

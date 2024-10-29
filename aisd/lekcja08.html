@@ -68,7 +68,7 @@ public:
     MyQueue& operator=(const MyQueue& other); // copy assignment operator, return *this
     MyQueue& operator=(MyQueue&amp;&amp; other); // move assignment operator, return *this
     bool empty() const; // checks if the container has no elements
-    int size() const; // liczba elementów w kolejce
+    std::size_t size() const; // liczba elementów w kolejce
     void push(const T& item); // dodanie na koniec, push_back(item)
     void push(T&amp;&amp; item); // dodanie na koniec, push_back(std::move(item))
     T& front(); // zwraca koniec, nie usuwa
@@ -93,11 +93,11 @@ i pełnej kolejki.
 template &lt;typename T&gt;
 class MyQueue {
     T* tab;
-    int msize; // największa możliwa liczba elementów plus jeden
-    int head; // pierwszy do pobrania
-    int tail; // pierwsza wolna pozycja
+    std::size_t msize; // największa możliwa liczba elementów plus jeden
+    std::size_t head; // pierwszy do pobrania
+    std::size_t tail; // pierwsza wolna pozycja
 public:
-    MyQueue(int s=10) : msize(s+1), head(0), tail(0) {
+    MyQueue(std::size_t s=10) : msize(s+1), head(0), tail(0) {
         tab = new T[s+1];
         assert( tab != nullptr );
     } // default constructor
@@ -110,8 +110,8 @@ public:
     // UWAGA Po przeniesieniu other.msize = 1, other.head = other.tail = 0.
     bool empty() const { return head == tail; }
     bool full() const { return (head + msize -1) % msize == tail; }
-    int size() const { return (tail - head + msize) % msize; }
-    int max_size() const { return msize-1; }
+    std::size_t size() const { return (tail - head + msize) % msize; }
+    std::size_t max_size() const { return msize-1; }
     void push(const T& item); // dodanie na koniec
     void push(T&amp;&amp; item); // dodanie na koniec
     T& front() { return tab[head]; } // zwraca początek

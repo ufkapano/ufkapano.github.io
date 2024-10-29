@@ -49,7 +49,10 @@ są wytwarzane w locie (on the fly).
 x = [i*i for i in range(100)]   # lista w całości
 
 # Wyrażenie generatora (generator expression) to wyrażenie, które zwraca iterator.
-x = (i*i for i in range(100))          # generator object
+y = (i*i for i in range(100))          # generator object
+
+# help(y)   # Help on generator object ...
+# type(y)   # &lt;class 'generator'&gt;
 
 # Tworzenie listy liczb w różnych wersjach Pythona.
 L = range(100)                  # Py2
@@ -64,6 +67,11 @@ def my_generator(stop):
     while value &lt; stop:
         yield value           # yield zamiast return
         value = value + 1
+
+# help(my_generator)   # Help on function my_generator ...
+# type(my_generator)   # &lt;class 'function'&gt;
+# help(my_generator(5))   # Help on generator object ...
+# type(my_generator(5))   # &lt;class 'generator'&gt;
 
 # Sposób 1 korzystania z generatora.
 # Mamy ukryty w tle protokół iteracji.

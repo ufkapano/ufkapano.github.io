@@ -48,7 +48,7 @@ def fibonacci(n):
     else:
         return fibonacci(n-1) + fibonacci(n-2)
 </pre><hr><pre>
-# avl(0) = 0, avl(1) = 1, avl(h) = avl(h-1) + avl(h-1) + 1,
+# avl(0) = 0, avl(1) = 1, avl(h) = avl(h-1) + avl(h-2) + 1,
 # minimalna liczba węzłów w drzewie AVL o wysokości h.
 
 def leonardo(h):
@@ -68,7 +68,6 @@ def binomial(n, k):
     else:
         return binomial(n-1, k-1) + binomial(n-1, k)
 </pre><hr>
-
 
 </body>
 </html>

@@ -22,18 +22,23 @@ Przykładowo lambda nie może zawierać print [Py2], bo to jest instrukcja
 (podobnie yield, return).
 
 <hr><pre>
-# Do lambda można przyporządkować nazwę.
+# Do funkcji lambda można przyporządkować nazwę.
 
 func1 = lambda x, y, z: x + y + z
-print(func1(2, 3, 4))
 
-def func1(x, y, z):   # równoważna funkcja
-    return x + y + z
+print(func1(2, 3, 4))   # 9
+
+def func2(x, y, z): return x + y + z   # równoważna funkcja
+
+print(func2(2, 3, 4))   # 9
+
+# Formalnie Python widzi różnicę między func1 i func2, co można sprawdzić
+# przez help(func1) i help(func2).
 </pre><hr><pre>
 # W argumentach lambda można używać argumentów domyślnych.
 
-func2 = (lambda x=0, y=0, z=0: x + y + z)
-print(func2(4, 5))
+func3 = (lambda x=0, y=0, z=0: x + y + z)
+print(func3(4, 5))
 </pre><hr><pre>
 # Lambda można stosować w funkcji map().
 
@@ -73,6 +78,9 @@ pair_list.sort(key=lambda t: abs(t[0]) + abs(t[1]))   # metryka taksówkowa
 pair_list.sort(key=lambda t: (-t[0], t[1]))
 # Sortujemy malejąco ze względu na t[0].
 # Jeżeli t[0] są równe, to sortujemy rosnąco ze względu na t[1].
+# UWAGA To nie jest to samo, co dwa kolejne sortowania
+# pair_list.sort(key=lambda t: -t[0])
+# pair_list.sort(key=lambda t: t[1])
 </pre><hr>
 
 </body>
