@@ -19,7 +19,10 @@ ze względu na ciągły rozwój nowych narzędzi.
 
 <p>https://docs.python.org/3/library/inspect.html
 <br>'inspect' - Inspect live objects [Py3.5+].
-inspect.get_annotations() [Py3.10].
+There are four main kinds of services provided by this module: 
+type checking, getting source code, inspecting classes and functions, 
+and examining the interpreter stack.
+inspect.get_annotations() [Py3.10+].
 
 <p>https://docs.python.org/3/library/typing.html
 <br>'typing' - Support for type hints [Py3.5+].
@@ -51,11 +54,11 @@ def nazwa_funkcji(*arguments: wyrażenie, **keywords: wyrażenie = wartość) -&
 </pre><hr><pre>
 # Adnotacje funkcji są zwykle używane jako podpowiedzi dla typów.
 
-def sum_two_numbers(a: int, b: int) -&gt; int:
+def sum_two_numbers(a: int, b: float) -&gt; complex:
    return a + b
 
 sum_two_numbers.__annotations__
-# {'a': &lt;class 'int'&gt;, 'b': &lt;class 'int'&gt;, 'return': &lt;class 'int'&gt;}
+# {'a': &lt;class 'int'&gt;, 'b': &lt;class 'float'&gt;, 'return': &lt;class 'complex'&gt;}
 </pre><hr><pre>
 # https://stackoverflow.com/questions/14379753/what-does-mean-in-python-function-definitions
 

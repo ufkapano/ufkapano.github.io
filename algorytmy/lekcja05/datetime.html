@@ -142,13 +142,13 @@ import time
 # time.time(), return the time in seconds since the epoch as float.
 # This is commonly referred to as 'Unix time'.
 
-start = time.clock()
+start = time.clock()   # removed in Py3.8
 # return CPU time (secs) since process start as a float (Py2)
 # ... statements ...
 elapsed = time.clock() - start
 
 start = time.process_time()
-# return the value (in fractional seconds) # of the sum of the system
+# return the value (in fractional seconds) of the sum of the system
 # and user CPU time of the current process (Py3.3+).
 # ... statements ...
 elapsed = time.process_time() - start

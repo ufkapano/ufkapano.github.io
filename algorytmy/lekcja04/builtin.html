@@ -97,7 +97,7 @@ def calc(x, y):
 
 L = range(9)
 list(map(calc, L, L))
-[calc(x, y) for (x, y) in zip(alist, alist)]   # lista składana
+[calc(x, y) for (x, y) in zip(L, L)]   # lista składana
 </pre><hr><pre>
 def check(x):
     return x % 2 != 0 and x % 3 != 0

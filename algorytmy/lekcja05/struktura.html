@@ -40,7 +40,7 @@ w postaci biblioteki i jak i skryptu najwyższego poziomu.
 Nazwa pliku: 'starwars.py'
 Nazwa modułu: 'starwars'
 __name__ == '__main__' jeżeli moduł działa jako program najwyższego poziomu,
-__name__ == 'starwars' jezeli moduł był importowany.
+__name__ == 'starwars' jeżeli moduł był importowany.
 </pre><hr>
 
 <h3>STRUKTURA MODUŁU</h3>
@@ -66,7 +66,7 @@ import sys
 def tester():   # funkcja testująca moduł
     instructions
 
-if __name__ == "__main__":
+if __name__ == "__main__":   # testujemy, jeżeli moduł nie jest importowany
     status = tester()
     sys.exit(status)
 </pre><hr>

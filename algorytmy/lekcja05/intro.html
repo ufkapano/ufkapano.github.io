@@ -8,7 +8,10 @@
 
 <h1>Korzystanie z modułów</h1>
 
-<p>PEP 302 - New Import Hooks
+<p>https://docs.python.org/3/library/importlib.html
+<br>importlib - The implementation of 'import'.
+
+<p>PEP 302 - New Import Hooks.
 
 <h3>WPROWADZENIE</h3>
 
@@ -45,10 +48,13 @@ modułów dodatkowych.
 <p>Podstawowe instrukcje związane z modułami to <em>import</em> oraz <em>from</em>. 
 Funkcja związana z modułami to <em>reload()</em>.
 Zwyczajowo instrukcje <em>import</em> umieszcza się na początku modułu.
-Zalecane jest umieszczanie każdego importu w osobnej linii.
+Zalecane jest umieszczanie każdego importu w osobnym wierszu.
 
-<p>W Pythonie 3 pojawiły się dodatkowe mechanizmy związane z importowaniem
-modułów, zawarte w bibliotece <em>importlib</em>.
+<p>W Pythonie 3 wszystkie mechanizmy związane z importowaniem
+modułów są zawarte w bibliotece <em>importlib</em>.
+Biblioteka <em>importlib</em> jest używana do dynamicznego importu
+modułów, a także w sytuacji, gdy nazwa modułu nie jest znana w czasie
+pisania kodu (wtyczki, rozszerzenia aplikacji).
 
 <p><em>Kod modułu jest wykonywany tylko raz podczas pierwszego importu.</em>
 Python wykonuje instrukcje modułu jedna po drugiej,
@@ -81,7 +87,7 @@ from module1 import name1, name2   # ładowanie wybranych nazw
 
 from module2 import *   # ładowanie wszystkich nazw
 
-print("{} {}".format(name1, name2()))   # nie ma kwalifikacji
+print(name1, name2())   # nie ma kwalifikacji
 </pre><hr><pre>
 import module1 as module2   # import modułu pod inną nazwą
 # Równoważne instrukcje są następujące:
@@ -99,8 +105,8 @@ from module3 import name1 as name2   # zmiana nazw atrybutów
 
 #reload(module1)   # Py2
 
-from importlib import reload   # Py3.4+
-reload(module1)
+import importlib
+importlib.reload(module1)   # Py3.4+
 </pre><hr>
 
 <p>Instrukcja <em>from</em> niszczy podział przestrzeni nazw,
@@ -178,9 +184,16 @@ instrukcję <em>from</em> - pozostaną referencje do starych obiektów.
 module_name = "string"
 exec("import " + module_name)
 </pre><hr><pre>
-# Korzystanie z __import__.
+# Korzystanie z __import__ (do użytku przez interpreter i w Pythonie 2).
 module_name = "string"
 string = __import__(module_name)
+</pre><hr><pre>
+# Programistyczny import modułu (Py3.1+).
+# importlib.import_module(name, package=None)
+
+import importlib
+module_name = "string"
+string = importlib.import_module(module_name)
 </pre><hr>
 
 <h3>"SKOMPILOWANE" PLIKI PYTHONA</h3>
