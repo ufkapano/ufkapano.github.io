@@ -13,6 +13,8 @@
 <p>PEP 420 - Implicit Namespace Packages 
 [a regular package (with an __init__.py) vs a namespace package]
 
+<p>https://github.com/sympy/sympy
+
 <h3>WPROWADZENIE</h3>
 
 <p>Tworzenie pakietów jest opcją Pythona bardziej zaawansowaną
@@ -22,8 +24,8 @@ w osobnych katalogach, co tworzy kolejne przestrzenie nazw
 zapobiegające konfliktom nazw.
 
 <p>Python 3 definiuje dwa rodzaje pakietów:
-pakiety regularne (regular packages)
-i pakiety przestrzeni nazw (namespace packages).
+pakiety regularne (ang. <em>regular packages</em>)
+i pakiety przestrzeni nazw (ang. <em>namespace packages</em>).
 
 <h3>PAKIETY REGULARNE</h3>
 
@@ -88,16 +90,15 @@ sympy/utilities/__init__.py   # obowiązkowy
 
 <h3>PAKIETY PRZESTRZENI NAZW</h3>
 
-<p>Od Pythona 3.3 pojawiły się <em>pakiety przestrzeni nazw</em> 
-(ang. namespace packages) [PEP 420].
+<p>Od Pythona 3.3 pojawiły się <em>pakiety przestrzeni nazw</em> [PEP 420].
 Takie pakiety składają się z części (ang. portions),
 które mogą istnieć w różnych lokalizacjach (katalogach), w sieci, 
 w pliku zip lub nawet mogą nie odpowiadać żadnym obiektom w systemie plików.
 Dla takich pakietów nie można używać plików <em>__init__.py</em>.
 Inaczej wygląda konstruowanie sys.path.
 
-<p>PEP 420 zaleca, aby w normalnej sytuacji tworzyć zwykłe pakiety
-(ang. regular packages), ponieważ są bardziej wydajne.
+<p>PEP 420 zaleca, aby w normalnej sytuacji tworzyć zwykłe pakiety regularne,
+ponieważ są bardziej wydajne.
 
 <h3>TOP-LEVEL SCRIPT ENVIRONMENT</h3>
 

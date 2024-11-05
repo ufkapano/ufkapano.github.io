@@ -42,6 +42,32 @@ tablica cykliczna lub
 zestaw tablic o stałym rozmiarze z dodatkowymi mechanizmami (STL).
 
 <hr><pre>
+// https://en.cppreference.com/w/cpp/container/deque
+
+#include &lt;deque&gt;
+
+// std::deque is an indexed sequence container that allows fast insertion
+// and deletion at both its beginning and its end.
+// The elements of a deque are not stored contiguously.
+// The storage of a deque is automatically expanded and contracted as needed.
+
+// Przykład użycia std::deque.
+std::deque&lt;int&gt; Q; 
+assert( Q.empty() );
+for (auto item : {1, 3, 5})
+    Q.push_front(item);   // wstawienie do kolejki
+for (auto item : {2, 4, 6})
+    Q.push_back(item);   // wstawienie do kolejki
+// Zawartość kontenera: 5 3 1 2 4 6
+assert( Q.front() == 5 );
+assert( Q.back() == 6 );
+assert( Q.size() == 6 );
+Q.front() = 55;
+Q.back() = 66;
+// Zawartość kontenera: 55 3 1 2 4 66
+Q.clear();
+assert( Q.empty() );
+</pre><hr><pre>
 // Interfejs kolejki dwustronnej
 template &lt;typename T&gt;
 class MyDeque {

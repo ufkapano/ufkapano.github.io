@@ -88,8 +88,10 @@ def average(values):
 
 class TestStatisticalFunctions(unittest.TestCase):
 
-    # Czynności przygotowawcze dla test suit (cała klasa).
-    def setUpClass(self): pass
+    # Czynności przygotowawcze dla test suit (cała klasa) [Py3.2+].
+    # Można utworzyć obiekt zbyt kosztowny, aby go tworzyć dla każdego test case.
+    @classmethod
+    def setUpClass(cls): pass
 
     # Czynności przygotowawcze dla test case (metody test_*).
     def setUp(self): pass
@@ -109,8 +111,9 @@ class TestStatisticalFunctions(unittest.TestCase):
     # Czynności czyszczące dla test case.
     def tearDown(self): pass
 
-    # Czynności czyszczące dla test suit.
-    def tearDownClass(self): pass
+    # Czynności czyszczące dla test suit [Py3.2+].
+    @classmethod
+    def tearDownClass(cls): pass
 
 # Załóżmy, że mamy w danym module zdefiniowane inne funkcje.
 # Przygotowujemy nową klasę do testowania tych funkcji.
@@ -222,6 +225,22 @@ class MySkippedTestCase(unittest.TestCase):
 
     def test_not_run(self): pass
 </pre><hr>
+
+<h3>COMMAND-LINE INTERFACE</h3>
+
+<p>Moduł <em>unittest</em> może być użyty w wierszu poleceń
+do uruchomienia testów z modułów, klas, czy metod testujących [Py3.2+].
+
+<hr><pre>
+$ python3 -m unittest test_module1 test_module2
+$ python3 -m unittest test_module.TestClass
+$ python3 -m unittest test_module.TestClass.test_method
+</pre><hr><pre>
+# Testowanie w trybie "Test Discovery" [Py3.2+].
+
+$ python3 -m unittest discover
+</pre><hr>
+
 
 </body>
 </html>

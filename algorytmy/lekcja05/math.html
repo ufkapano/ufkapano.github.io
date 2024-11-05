@@ -55,9 +55,9 @@ import math
 # math.radians(x) - zamiana stopni na radiany.
 # math.degrees(x) - zamiana radiany na stopnie.
 
-print ( math.pi )             # 3.141592... stała matematyczna
-print ( math.e )              # 2.718281...  stała matematyczna
-print ( math.hypot(3, 4) )    # 5.0 float
+print(math.pi)             # 3.141592... stała matematyczna
+print(math.e)              # 2.718281...  stała matematyczna
+print(math.hypot(3, 4))    # 5.0 float
 
 # Nowe funkcje z Pythona 2.6.
 # math.factorial(x) - silnia.
@@ -90,28 +90,30 @@ math.fsum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
 import random
 
 # Liczba przypadkowa z przedziału [0.0, 1.0).
-print ( random.random() )
+print(random.random())
 
 # Liczba przypadkowa całkowita z przedziału [start, stop].
 # Oba końce są włączone, co jest nietypowe dla Pythona.
 # random.randint(start, stop)
-print ( random.randint(1, 6) )
+print(random.randint(1, 6))   # symulacja rzutu kostką
 
 # Liczba przypadkowa całkowita z przedziału [start, stop).
 # random.randrange(start, stop=None, step=1)
-print ( random.randrange(1, 7) )
+print(random.randrange(1, 7))   # symulacja rzutu kostką
 
 # Wybór przypadkowego elementu z niepustej sekwencji.
 # random.choice(sequence)
 # To samo co
 # sequence[int(random.random() * len(sequence))]
-print ( random.choice(["jeden", "dwa", "trzy"]) )
+print(random.choice(["jeden", "dwa", "trzy"]))
 
 # Wymieszanie danej listy IN PLACE w czasie O(n) (Fisher-Yates shuffle).
-# L = range(100)
+# L = list(range(100))
 # random.shuffle(L)
 # To shuffle an immutable sequence and return a new shuffled list,
 # use random.sample(L, k=len(L)) instead.
+# random.sample(range(10), 10) zwraca nową listę wymieszaną.
+# random.sample("abcde", 5) zwraca listę 5 znaków wymieszaną.
 
 # Chooses k unique random elements from a population sequence.
 # Zwraca nową listę, population zostaje bez zmiany.
@@ -119,7 +121,7 @@ print ( random.choice(["jeden", "dwa", "trzy"]) )
 # w wynikowej liście. Elementy nie muszą być hashable.
 # population może być generatorem, będzie to wydajne.
 # random.sample(population, k)
-print ( random.sample(range(1000), 100) )
+print(random.sample(range(1000), 100))
 </pre><hr>
 
 <h3>MODUŁ decimal</h3>
@@ -130,14 +132,14 @@ import decimal
 x = decimal.Decimal("0.1")
 y = decimal.Decimal("0.3")
 z = 3*x-y                     # Decimal('0.0')
-print ( z )                   # 0.0
-print ( 3 * 0.1 - 0.3 )       # 5.5511151231257827e-17
+print(z)                   # 0.0
+print(3 * 0.1 - 0.3)       # 5.5511151231257827e-17
 
 # Ustawienie precyzji przydatne w aplikacjach finansowych.
-print ( 1999 + 1.33 )                   # 2000.3299999999999
+print(1999 + 1.33)                   # 2000.3299999999999
 decimal.getcontext().prec = 2
 pay = decimal.Decimal(str(1999 + 1.33)) # Decimal('2000.33')
-print ( pay )                           # 2000.33
+print(pay)                           # 2000.33
 </pre><hr>
 
 <h3>MODUŁ fractions</h3>
@@ -146,14 +148,14 @@ print ( pay )                           # 2000.33
 from fractions import Fraction
 
 u1 = Fraction(2, 3)           # Fraction(2, 3)
-print ( u1 )                  # 2/3
-print ( u1.numerator )        # 2, licznik
-print ( u1.denominator )      # 3, mianownik
+print(u1)                  # 2/3
+print(u1.numerator)        # 2, licznik
+print(u1.denominator)      # 3, mianownik
 u2 = Fraction(2, 8)           # Fraction(1, 4)
 
 # Konwersja z float do Fraction.
 u2 = Fraction("0.25")         # Fraction(1, 4)
-print ( u2 )                  # 1/4
+print(u2)                  # 1/4
 u3 = u1 / u2                  # Fraction(4, 3)
 u4 = Fraction("1.5")          # Fraction(3, 2)
 u4 = Fraction.from_float(1.5) # Fraction(3, 2)
@@ -202,7 +204,7 @@ import cmath
 <hr><pre>
 import scipy
 
-# SciPy --- A scientific computing package for Python
+# SciPy - A scientific computing package for Python
 # help(scipy)
 </pre><hr>
 
@@ -225,10 +227,10 @@ import numpy
 
 <h3>MODUŁ secrets</h3>
 
-<p>Moduł random nie jest przeznaczony do zastosowań związanych
+<p>Moduł <em>random</em> nie jest przeznaczony do zastosowań związanych
 z bezpieczeństwem lub kryptografią. Do takich zastosowań
-w Pythonie 3.6 pojawił się moduł secrets (PEP 506).
-PyPI zawiera ponadto moduł cryptography, który wspiera
+w Pythonie 3.6 pojawił się moduł <em>secrets</em> (PEP 506).
+PyPI zawiera ponadto moduł <em>cryptography</em>, który wspiera
 Pythona 2.6+, 3.4+ (instalacja przez pip).
 
 <hr><pre>

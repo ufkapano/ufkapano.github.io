@@ -20,15 +20,19 @@ Użycie tego modułu zwiększa przenośność programów na inne platformy.
 <hr><pre>
 import os
 
-os.system("date")                       # wywołanie polecenia powłoki
-var = os.environ.get("SHELL")           # pobranie zawartości zmiennej powłoki
+os.system("date")                  # wywołanie polecenia powłoki
+var = os.environ.get("SHELL")      # pobranie zawartości zmiennej powłoki
+var = os.environ["SHELL"]          # notacja słownikowa
+var = os.getenv("SHELL", default=None)   # alternatywa, '/bin/bash' w Debianie
+# UWAGA Późniejsze zmiany wartości zmiennych w środowisku nie są widoczne.
+
 print(var)
 print(os.uname())                    # krotka z informacją o systemie
 print(os.name)                       # "posix" lub "nt" lub "mac" lub ...
 print(os.sep)   # separator ścieżek, '/' w Linuksie, '\\' w Windows
 
 # current working directory 
-current = os.getcwd()   # '/home/andrzej'
+current = os.getcwd()   # current working directory, '/home/andrzej'
 
 # os.path is posixpath or ntpath
 # Creating platform-independent directory names with join()
@@ -74,8 +78,10 @@ for root, dirs, files in os.walk(top):   # walking top-down (default)
     # 'root' is a string, the path to the directory
     # 'dirs' is a list of the names of the subdirectories in 'root'
     # 'files' is a list of the names of the non-directory files in 'root'
+    if 'CVS' in dirs:
+        dirs.remove('CVS')  # nie odwiedzamy katalogów CVS
     for name in files:
-        if name.endswith(".pdf"):
+        if name.lower().endswith(".pdf"):
             n_pdf += 1
 
 print("The number of PDF files in {} directory is {}".format(top, n_pdf))
