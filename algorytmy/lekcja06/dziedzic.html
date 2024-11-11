@@ -60,8 +60,8 @@ print(C2.message)       # GvR, odczytanie wprost atrybutu klasy
 print(C3.__bases__)   # krotka klas nadrzędnych
 </pre><hr>
 
-<p>Jeżeli obiekt pochodzi z instrukcji class,
-to wyrażenie obiekt.atrybut uruchamia w Pythonie wyszukiwanie.
+<p>Jeżeli obiekt pochodzi z instrukcji <em>class</em>,
+to wyrażenie <em>obiekt.atrybut</em> uruchamia w Pythonie wyszukiwanie.
 Python przeszukuje drzewo połączonych obiektów, szukając
 pierwszego wystąpienia atrybutu.
 Najpierw szuka w obiekcie, a następnie we wszystkich klasach
@@ -111,6 +111,7 @@ value = 2012
 if __name__ == "__main__":
     adam = Person("Adam")
     print(adam.name)
+    print(value)
 </pre><hr><pre>
 # Moduł główny
 
@@ -125,6 +126,7 @@ print(persons.value)   # 2012, potrzebna kwalifikacja
 
 <hr><pre>
 # Poznane narzędzia.
+isinstance(instancja, klasa_lub_krotka_klas)
 instancja.__class__           # łącze do klasy
 instancja.__class__.__name__  # nazwa klasy
 instancja.__dict__.keys()     # przestrzeń nazw instancji (tylko atrybuty instancji)

@@ -14,7 +14,7 @@
 <em>How to Think Like a Computer Scientist</em>
 [różne wersje dostępne w sieci].
 
-<p>Gra Old Maid jest przykładem zastosowania dziedziczenia.
+<p>Gra Old Maid (odmiana gry Czarny Piotruś) jest przykładem zastosowania dziedziczenia.
 Celem gry jest pozbycie się wszystkich kart z ręki.
 Karty odkładamy w parach, a parę tworzą dwie czarne (Trefl, Pik)
 lub dwie czerwone (Karo, Kier) karty o tym samym numerze.
@@ -117,14 +117,14 @@ class Deck:
             hand = hands[i % n_hands] # do której reki
             hand.add_card(card)       # dodaj kartę
 </pre><hr><pre>
-class Hand(Deck):             # DZIEDZICZENIE z klasy Deck
+class Hand(Deck):   # DZIEDZICZENIE z klasy Deck
     """Klasa reprezentująca rękę gracza."""
     # Ręka to odmiana talii, każda metoda talii działa także dla ręki.
 
     def __init__(self, name=""):
         """Konstruktor ręki."""
         self.cards = []
-        self.name = name        # nazwa ręki, domyślnie pusta
+        self.name = name   # nazwa ręki, domyślnie pusta
 
     def __str__(self):
         """Zwróć postać napisową ręki."""
@@ -150,7 +150,7 @@ class CardGame:
         # Mamy tu nie tylko inicjalizację atrybutu, ale konkretne obliczenia.
         # Ogólnie gra ma dwa atrybuty: deck, hands.
         self.deck = Deck()
-        self.deck.shuffle()     # tasowanie talii
+        self.deck.shuffle()   # tasowanie talii
         self.hands = []
 
     def print_hands(self):
@@ -158,7 +158,7 @@ class CardGame:
         for hand in self.hands:
             print(hand)
 </pre><hr><pre>
-class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
+class OldMaidHand(Hand):   # tworzymy rękę do naszej gry
 
     # Metoda __init__ jest dziedziczona z klasy Hand.
     def remove_matches(self):
@@ -175,7 +175,7 @@ class OldMaidHand(Hand):    # tworzymy rękę do naszej gry
                 count += 1
         return count
 </pre><hr><pre>
-class OldMaidGame(CardGame):         # tworzymy naszą grę
+class OldMaidGame(CardGame):   # tworzymy naszą grę
 
     def play(self, names):
         # Usuwamy królową trefl.

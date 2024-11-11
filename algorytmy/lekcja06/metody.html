@@ -95,14 +95,16 @@ class Point:                   # definicja obiektu klasy
         return (self.x == other.x) and (self.y == other.y)
 
 pt1 = Point()
-pt1.set_point(3.4, 5.6)   # odpowiada Point.set_point(pt1, 3.4, 5.6)
-pt1.print_point()         # odpowiada Point.print_point(pt1)
+pt1.set_point(3.4, 5.6)
+# Point.set_point(pt1, 3.4, 5.6)   # równoważne
+pt1.print_point()
+# Point.print_point(pt1)   # równoważne
 pt2 = Point()
 pt2.set_point(3.4, 5.6)
 pt2.print_point()
 
 pt1.same_point(pt2)
-Point.same_point(pt1, pt2)   # równoważne
+# Point.same_point(pt1, pt2)   # równoważne
 
 # Metodę można utworzyć poza klasą, a następnie trzeba powiązać
 # ją z klasą (na tym etapie nazwa 'self' jest istotna).

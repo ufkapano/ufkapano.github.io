@@ -70,6 +70,9 @@ __hash__   wywoływane przez hash(x), zwraca int;
     Dla obiektów mutowalnych nie należy definiować __hash__.
 
 __bytes__   wywoływane przez bytes(x), zwraca obiekt bytes;
+
+__round__   wywoływane przez round(x, ndigits=None), zaokrąglanie;
+    metoda stosowana do typów skalarnych, liczb (np. wiek człowieka).
 </pre><hr><pre>
 # Operatory dwuargumentowe.
 __add__  dodawanie, x + y
@@ -130,7 +133,7 @@ alist = alist.__iadd__([5, 6])   # potrzebne return self
 
 # Przykład klasy dla obiektów zmiennych.
 class Time:
-    def __iadd__(self, other):
+    def __iadd__(self, other):   # działanie time1 += time2
         self.s += other.s
         return self   # typowe zachowanie
 </pre><hr><pre>
@@ -279,12 +282,12 @@ class Point:
     # seq = list(Point.counter + i for i in range(10))   # potrzebna kwalifikacja
 
     def __init__(self, x=0, y=0):
-        """Konstuktor punktu."""
+        """Konstruktor punktu."""
         self.x = x
         self.y = y
         # counter += 1   # nie działa!
         Point.counter += 1   # potrzebna kwalifikacja
-        print("init: counter={}".format(Point.counter))
+        print("init: counter = {}".format(Point.counter))
 
     def __str__(self):
         """Postać napisowa punktu."""
@@ -303,13 +306,13 @@ class Point:
         Point.counter -= 1
         print("del: counter={}".format(Point.counter))
 
-print("counter={}".format(Point.counter))   # na starcie counter=0
+print("counter = {}".format(Point.counter))   # na starcie counter=0
 pt1 = Point(3.4, 5.6)                   # counter=1
 pt2 = Point(4.5, 2.1)                   # counter=2
 print("metoda __str__ {} {}".format(pt1, pt2))
 print("metoda __add__ {}".format(pt1 + pt2))   # counter wzrasta do 3 i od razu wraca do 2
 
-# Każda instancja ma łącze do swojej klasy.
+# Każda instancja ma referencję do swojej klasy.
 print(pt1.__class__)
 print(pt1.__dict__.keys())   # przestrzeń nazw instancji
 
@@ -332,16 +335,14 @@ W Pythonie 2.6+ rich comparisons mają wyższy priorytet,
 niż metoda __cmp__, ale generalnie nie należy łączyć tych
 dwóch metod określających porównywanie obiektów.
 
-<hr><pre>
-Why Python need rich comparison?
+<p>http://stackoverflow.com/questions/20989750/why-python-need-rich-comparison
+<br>Why Python need rich comparison?
 Ładne przykłady z NumPy i the SQLAlchemy project.
 
-http://stackoverflow.com/questions/20989750/why-python-need-rich-comparison
-</pre><hr><pre>
-PEP 207 - Rich Comparisons.
+<p>https://www.python.org/dev/peps/pep-0207/
+<br>PEP 207 - Rich Comparisons.
 
-https://www.python.org/dev/peps/pep-0207/
-</pre><hr><pre>
+<hr><pre>
 # https://docs.python.org/2/library/functools.html
 # W Pythonie 2.7 wprowadzono dekorator, który ułatwia tworzenie metod
 # specjalnych dla rich comparisons.
