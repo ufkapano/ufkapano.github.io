@@ -16,7 +16,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W Pythonie 2.6 i 3 pojawiła się nowa instrukcja związana z wyjątkami
+<p>W Pythonie 2.6 i Pythonie 3 pojawiła się nowa instrukcja związana z wyjątkami
 - <em>with</em> z opcjonalnym <em>as</em> [PEP 343].
 Instrukcja została zaprojektowana do pracy z obiektami menedżerów
 kontekstu obsługującymi protokół oparty na metodach.
@@ -125,14 +125,16 @@ udostępnia moduł <em>contextlib</em> [PEP 343].
 
 <h3>UNITTEST</h3>
 
-<p>W Pythonie 2.7 pojawiła się możliwość użycia
+<p>https://docs.python.org/3/library/unittest.html#unittest.TestCase.assertRaises
+
+<p>W Pythonie 2.7 i 3.1 pojawiła się możliwość użycia
 <em>assertRaises()</em> jako menedżera kontekstu.
 Można badać szczegóły wyzwolonego w teście wyjątku.
 Warto prześledzić przykłady z dokumentacji [25.3 unittest].
 
 <hr><pre>
 with self.assertRaises(SomeException) as context:
-    instrukcje
+    instrukcja   # pojedyńcza instrukcja wyzwalająca wyjątek
 
 # Sprawdzenie pewnego kodu błędu (na zewnątrz instrukcji with).
 self.assertEqual(context.exception.error_code, 3)

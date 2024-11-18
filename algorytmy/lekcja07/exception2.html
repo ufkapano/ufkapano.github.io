@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/library/exceptions.html
 
+<p>https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
+
 <h3>WPROWADZENIE</h3>
 
 <p>Zalety wyjątków opartych na klasach.
@@ -92,7 +94,7 @@ Jeżeli żaden wyjątek nie jest obsługiwany, to zwracana krotka ma postać
 # Zgłoszenie instancji klasy [najbardziej typowe].
 # raise instancja_wyjątku
 raise IndexError()
-raise IndexError("Nasz komunikat")
+raise IndexError("message")
 
 # Zgłoszenie obiektu klasy - instancja klasy zostanie utworzona automatycznie.
 # raise klasa_wyjątku
@@ -119,27 +121,37 @@ raise exception
 <p>Instrukcja <em>assert</em> jest składniowym skrótem
 dla często wykorzystywanego w debugowaniu wzorca
 z instrukcją <em>raise</em>.
-Instrukcję <em>assert</em> można usunąć z kodu bajtowego 
+Najczęściej wykorzystuje się ją do weryfikowania warunków programu 
+w czasie jego tworzenia (tzw. sytuacje niemożliwe).
+Pomaga wcześnie wykrywać pewne błędy w programie.
+Ponadto <em>assert</em> działa jako dokumentacja dla innych deweloperów
+czytających kod, pozwala lepiej zrozumieć stan systemu w danym punkcie programu.
+
+<p>Nie powinno się używać <em>assert</em> do obsługi błędów użytkownika,
+czy innych błędów pojawiających się w trakcie pracy programu.
+
+<p>Instrukcję <em>assert</em> można usunąć z kodu bajtowego 
 skompilowanego programu, jeżeli w wierszu poleceń Pythona
 użyjemy opcji -O (<em>python -O main.py</em>), 
 tym samym optymalizując program.
-Instrukcję <em>assert</em> najczęściej wykorzystuje się
-do weryfikowania warunków programu w czasie jego tworzenia
-(tzw. sytuacje niemożliwe).
-Nie powinno się używać <em>assert</em> do obsługi błędów użytkownika,
-czy innych błędów pojawiających się w trakcie pracy programu.
 
 <hr><pre>
-# Składnia.
-assert warunek
-assert warunek, komunikat
-# 'warunek' to wyrażenie zwracające bool
-# 'komunikat' to string
+# Składnia podstawowa.
+assert expression
 
 # Równoważny kod.
 if __debug__:
-    if not warunek:
-        raise AssertionError(komunikat)
+    if not expression:
+        raise AssertionError()
+</pre><hr><pre>
+# Składnia rozszerzona.
+assert expression1, expression2
+
+# Równoważny kod.
+if __debug__:
+    if not expression1:
+        raise AssertionError(expression2)
+# expression2 to zwykle komunikat (string)
 </pre><hr><pre>
 &gt;&gt;&gt; x = 1
 &gt;&gt;&gt; assert x == 0

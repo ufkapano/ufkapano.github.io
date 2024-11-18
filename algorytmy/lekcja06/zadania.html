@@ -252,6 +252,9 @@ Ułamek jest reprezentowany przez parę liczb całkowitych.
 Napisać kod testujący moduł <em>fracs</em>.
 
 <hr><pre>
+#from fractions import gcd   # Py2
+from math import gcd   # Py3
+
 class Frac:
     """Klasa reprezentująca ułamek."""
 

@@ -37,9 +37,14 @@ Ułamek będzie reprezentowany przez listę dwóch liczb całkowitych
 Napisać kod testujący moduł <em>fracs</em>.
 Nie należy korzystać z klasy <em>Fraction</em> z modułu <em>fractions</em>.
 Można wykorzystać funkcję <em>fractions.gcd()</em>
+[Py2, zwraca liczby dodatnie lub ujemne]
+lub <em>math.gcd()</em> [Py3, zwraca liczby nieujemne]
 implementującą algorytm Euklidesa.
 
 <hr><pre>
+#from fractions import gcd   # Py2
+from math import gcd   # Py3
+
 def add_frac(frac1, frac2): pass        # frac1 + frac2
 
 def sub_frac(frac1, frac2): pass        # frac1 - frac2
