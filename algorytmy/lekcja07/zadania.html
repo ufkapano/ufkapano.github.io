@@ -16,8 +16,8 @@
 <p>W pliku <em>fracs.py</em> zdefiniować klasę Frac
 wraz z potrzebnymi metodami.
 Wykorzystać wyjątek <em>ValueError</em> do obsługi błędów w ułamkach.
-Dodać możliwości dodawania|odejmowania|mnożenia|dzielenia|porównywania liczb (int, long)
-do ułamków (działania lewostronne i prawostronne).
+Dodać możliwości dodawania|odejmowania|mnożenia|dzielenia|porównywania 
+liczb int do ułamków (działania lewostronne i prawostronne).
 Rozważyć możliwość włączenia liczb float do działań na ułamkach
 [Wskazówka: metoda float.as_integer_ratio()].
 Napisać kod testujący moduł <em>fracs</em>.
@@ -111,10 +111,10 @@ class TestFrac(unittest.TestCase): pass
 <p>W pliku <em>polys.py</em> zdefiniować klasę Poly
 wraz z potrzebnymi metodami.
 Wykorzystać wyjątek <em>ValueError</em> do obsługi błędów w wielomianach.
-Dodać możliwości dodawania liczb (int, long, float)
+Dodać możliwości dodawania liczb (int, float)
 do wielomianów (działania lewostronne i prawostronne).
-Dodanie nowych metod kontenerowych i sprawdzenie
-możliwości iteracji po instancji (for coeff in poly).
+Dodanie nowych metod kontenerowych i sprawdzenie możliwości iteracji 
+po instancji ('for coeff in poly' lub 'for term in poly').
 Napisać kod testujący moduł <em>polys</em>.
 
 <hr><pre>
@@ -171,7 +171,7 @@ class Poly:
     def __setitem__(self, i, value): pass     # poly[i] = value
 
     def __call__(self, x): pass     # poly(x)
-    # dla isinstance(x, (int,long,float)) odpowiada eval(),
+    # dla isinstance(x, (int,float)) odpowiada eval(),
     # dla isinstance(x, Poly) odpowiada combine()
 
 # Kod testujący moduł.

@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/library/index.html
 
+<p>https://docs.python.org/3/library/constants.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>Z dokumentacji Pythona: podstawowe typy wbudowane to typy liczbowe,
@@ -174,6 +176,14 @@ return, try, type (3.12), while, with (2.6+), yield (2.3+).
 
 <p>Inne słowa, których lepiej nie używać: 
 NotImplemented, Ellipsis.
+
+<p>NotImplemented jest to specjalna wartość zwracana przez metody
+specjalne binarne (__eq__, __lt__, __add__, __rsub__, itd.)
+lub metody specjalne działające in-place (__iadd__, __imul__, itd.).
+Wartość ta wskazuje, że dana operacja nie jest zaimplementowana
+dla danego drugiego typu. Typowo interpreter przechodzi wtedy
+do tego obiektu drugiego typu, aby sprawdzić wykonalność operacji.
+Niewłaściwe użycie NotImplemented prowadzi mylących komunikatów o błędach.
 
 <p>Z dokumentacji na temat Ellipsis: 
 Special value used in conjunction with extended slicing syntax. 

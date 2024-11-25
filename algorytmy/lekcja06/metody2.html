@@ -98,8 +98,8 @@ __truediv__  dzielenie prawdziwe, x / y (Py3),
 # Dla działania nieinstancja + instancja mamy
 # def __radd__(self, other): ...
 # w kodzie self będzie instancją, a other nieinstancją.
-# Nieinstancja nie może definiować __add__ lub powinna zwracać
-# wyjątek NotImplemented dla naszego typu.
+# Nieinstancja nie może definiować __add__ lub powinna zwracać obiekt
+# NotImplemented dla naszego typu (to nie jest wyjątek NotImplementedError).
 
 __radd__  right add
 __rsub__  right sub
@@ -152,7 +152,7 @@ __abs__  wartość bezwzględna, abs(x)
 __invert__  zwykle odwrotność lub negacja, ~x
 __complex__  implementacja complex(x)
 __int__  implementacja int(x)
-__long__  implementacja long(x)
+__long__  implementacja long(x) (Py2)
 __float__  implementacja float(x)
 __complex__  implementacja complex(x)
 </pre><hr><pre>
@@ -363,6 +363,36 @@ class Student:
     def __lt__(self, other):
         return ((self.lastname.lower(), self.firstname.lower()) &lt;
             (other.lastname.lower(), other.firstname.lower()))
+</pre><hr>
+
+<h3>NOTIMPLEMENTED</h3>
+
+<p>https://docs.python.org/3/library/numbers.html#implementing-the-arithmetic-operations
+
+<p>https://www.pythonmorsels.com/when-to-use-notimplemented/
+<br>When to use NotImplemented.
+
+<hr><pre>
+&gt;&gt;&gt; a = 3
+&gt;&gt;&gt; b = 3.0
+&gt;&gt;&gt; a == b
+True
+&gt;&gt;&gt; a.__eq__(b)
+NotImplemented
+&gt;&gt;&gt; b.__eq__(a)
+True
+&gt;&gt;&gt; a + b
+6.0
+&gt;&gt;&gt; a.__add__(b)
+NotImplemented
+&gt;&gt;&gt; b.__radd__(a)
+6.0
+# Porównanie między obiektami zwraca NotImplemented, jeżeli pierwszy obiekt
+# nie wie jak wykonać operację na drugim obiekcie. Python wtedy przechodzi
+# do drugiego obiektu i próbuje wykonać daną operację.
+#
+# Typowo w Pythonie stosujemy 'duck typing', ale powyższa sytuacja jest
+# przykładem stosowania 'strong type-checking'.
 </pre><hr>
 
 <h3>KONSTRUKTOR DOMYŚLNY</h3>

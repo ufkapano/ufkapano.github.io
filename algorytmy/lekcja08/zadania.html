@@ -21,14 +21,17 @@ lewy dolny i prawy górny. Wywołanie:
 <br>rectangle = Rectangle.from_points((point1, point2))
 
 <p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
-liczbę (współrzędną):
+liczbę (współrzędną tylko do odczytu):
 top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point:
+Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
 topleft, bottomleft, topright, bottomright.
 Można rozważyć zamianę metody center() na atrybut wirtualny.
 
 <p>W osobnym pliku (test_rectangles.py) przygotować testy klasy Rectangle 
 w formacie dla modułu 'pytest'.
+
+<pre>
+</pre>
 
 <h3>ZADANIE 8.2 (KLASA TRIANGLE)</h3>
 
@@ -39,9 +42,9 @@ trójkąt z listy lub krotki zawierającej trzy punkty. Wywołanie:
 <br>triangle = Triangle.from_points((point1, point2, point3))
 
 <p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
-liczbę (współrzędną):
+liczbę (współrzędną tylko do odczytu):
 top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point:
+Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
 topleft, bottomleft, topright, bottomright.
 Wymienione atrybuty wirtualne opisują prostokąt ograniczający
 dany trójkąt (bounding box).
@@ -49,6 +52,9 @@ Można rozważyć zamianę metody center() na atrybut wirtualny.
 
 <p>W osobnym pliku (test_triangles.py) przygotować testy klasy Triangle 
 w formacie dla modułu 'pytest'.
+
+<pre>
+</pre>
 
 <h3>ZADANIE 8.3 (KLASA CIRCLE)</h3>
 
@@ -62,9 +68,9 @@ Punkty będą leżeć na okręgu [trudne!]. Wywołanie:
 <br>circle = Circle.from_points((point1, point2, point3))
 
 <p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
-liczbę (współrzędną):
+liczbę (współrzędną tylko do odczytu):
 top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point:
+Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
 topleft, bottomleft, topright, bottomright.
 Wymienione atrybuty wirtualne opisują prostokąt ograniczający
 dany okrąg (bounding box).

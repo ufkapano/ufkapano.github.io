@@ -17,7 +17,9 @@
 <p>Przy próbie uruchomienia kodu Pythona mogą pojawić się
 co najmniej dwa rodzaje błędów: 
 błędy składniowe (syntax errors)
-oraz wyjątki (exceptions).
+oraz błędy czasu wykonania (runtime errors).
+Oba rodzaje błędów są obsługiwane przez wyjątki (exceptions).
+Z drugiej strony, pojawienie się wyjątku nie zawsze oznacza błąd w programie.
 
 <h3>BŁĘDY SKŁADNIOWE</h3>
 
@@ -227,12 +229,12 @@ Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 IndexError
 </pre><hr><pre>
-&gt;&gt;&gt; raise IndexError, "message"   # stara składnia
+&gt;&gt;&gt; raise IndexError, "message"   # stara składnia Py2
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 IndexError: message
 </pre><hr><pre>
-&gt;&gt;&gt; raise IndexError("message")   # nowa składnia
+&gt;&gt;&gt; raise IndexError("message")   # nowa składnia Py2.7, Py3
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 IndexError: message

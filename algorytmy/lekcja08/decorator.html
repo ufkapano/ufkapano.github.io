@@ -29,12 +29,12 @@ swojego wykonania z nazwą klasy.
 @decorator2
 @decorator1
 def func(arg1, arg2, ...):
-    pass
+    instrukcje
 
 # ... co jest równoważne ...
 
 def func(arg1, arg2, ...):
-    pass
+    instrukcje
 
 func = decorator2(decorator1(func))
 </pre><hr><pre>
@@ -65,7 +65,7 @@ def mytracer(func):
         print("mytracer working ...")   # dodatkowy komunikat
         return func(*arguments, **keywords)   # func zaszyte w wrapper
     #wrapper.__name__ = func.__name__   # w przybliżeniu
-    #wrapper.__doc__ = func.__doc__   # w przyblizeniu
+    #wrapper.__doc__ = func.__doc__   # w przybliżeniu
     return wrapper
 
 @mytracer

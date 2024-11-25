@@ -45,11 +45,15 @@ plików konfiguracyjnych w różnych formatach
 <hr><pre>
 # Zawartość pliku test_sample.py
 
+import pytest
+
 def inc(x):
     return x + 1
 
 def test_answer():   # wymagana nazwa test_*
     assert inc(3) == 5   # celowy błąd, używamy 'assert'
+    assert pytest.approx(inc(10.1), abs=0.1) == 11.0
+    assert pytest.approx(inc(10.1), rel=0.01) == 11.0   # default rel=1e-6
 </pre><hr><pre>
 # Uruchamianie testów:
 
@@ -145,6 +149,10 @@ $ python test_set.py   # używa pytest.main()
 def setA():
     return set([1, 3, 5])
 
+# UWAGA To nie jest równoważne podstawieniu
+# setA = set([1, 3, 5])
+# Sprawdzenie fixtures zdefiniowanych dla test cases: pytest --fixtures
+
 @pytest.fixture
 def setB():
     return set([2, 3])
@@ -175,7 +183,7 @@ def test_exceptions():
 
 def test_zero_division():
     with pytest.raises(ZeroDivisionError):
-        1 / 0
+        1 / 0   # pojedyńcza instrukcja wyzwalająca wyjątek
 
 def test_recursion_depth():
     with pytest.raises(RuntimeError) as excinfo:
@@ -183,7 +191,7 @@ def test_recursion_depth():
         def f():
             f()
 
-        f()
+        f()   # pojedyńcza instrukcja wyzwalająca wyjątek
     assert "maximum recursion" in str(excinfo.value)
 
 # excinfo to instancja 'ExceptionInfo', jest to wrapper dla bieżącego wyjątku.
@@ -197,7 +205,7 @@ def test_recursion_depth():
         def f():
             f()
 
-        f()
+        f()   # pojedyńcza instrukcja wyzwalająca wyjątek
 
 def test_values():
     with pytest.raises(ValueError, match='must be 0 or None'):
@@ -211,7 +219,7 @@ def test_values():
 def connector():
     conn = Connector("login", "passwd")
     yield conn   # przejście do testu
-    del conn   # czynności czyszczące
+    del conn   # czynności czyszczące (poniżej yield)
 
 def test_connection(connector):
     assert connector.send_msg("Hello")
