@@ -66,19 +66,22 @@ def average(values):
 # assertEqual(expression_to_test, expected_result)   # typowa kolejność
 
 # assertAlmostEqual(first, second, places=7, msg=None)
+# assertAlmostEqual(first, second, places=7, msg=None, delta=None) [Py3.2+]
 # - sprawdzanie wyniku typu float z domyślną dokładnością 7 cyfr;
+# jeżeli podano delta, to sprawdzane jest |first - second| &lt; delta
 
 # assertNotEqual(first, second, msg=None)
 # - sprawdzanie wyniku (test first != second);
 
 # assertNotAlmostEqual(first, second, places=7, msg=None)
+# assertNotAlmostEqual(first, second, places=7, msg=None, delta=None) [Py3.2+]
 # - sprawdzanie wyniku;
 
 # assertTrue(expr, msg=None)
-# - sprawdzanie wartości logicznej;
+# - sprawdzanie wartości logicznej (expr == True);
 
 # assertFalse(expr, msg=None)
-# - sprawdzanie wartości logicznej;
+# - sprawdzanie wartości logicznej (expr == False);
 
 # assertRaises(exception, callable, ...)
 # - sprawdzenie wystąpienia spodziewanego wyjątku;
@@ -98,7 +101,8 @@ class TestStatisticalFunctions(unittest.TestCase):
 
     # Dla poprawnych danych wejściowych nie ma prawa pojawić się wyjątek.
     def test_average_good(self):
-        # Nie wstawiamy docstringu.
+        # W testach nie używamy docstringów.
+        # Chcemy zachować standardowe komunikaty o błędach.
         self.assertEqual(average([20, 30, 70]), 40.0)
         self.assertEqual(round(average([1, 5, 7]), 1), 4.3)
 
@@ -129,6 +133,7 @@ class TestOtherFunctions(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()     # włącza wszystkie testy
     #unittest.main(verbosity=2)    # Python 2.7, więcej informacji
+    #unittest.main(argv=[''], exit=False)   # w trybie interaktywnym (Jupyter Notebook)
 
 # Jeżeli powyższy kod umieścimy w module 'average.py', to polecenie
 # python3 average.py -v

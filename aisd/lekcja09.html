@@ -23,8 +23,8 @@ która pozwala na przeprowadzenie następujących operacji:
 <li>testowanie, czy kolejka nie jest pusta [empty()],
 <li>odczyt liczby elementów w kolejce [size()],
 <li>wstawienie elementu do kolejki [push(item) lub put(item)],
-<li>usuwanie elementu o największym priorytecie [pop()],
-<li>dostęp do elementu o największym priorytecie [top()],
+<li>usuwanie elementu o największym (najmniejszym) priorytecie [pop()],
+<li>dostęp do elementu o największym (najmniejszym) priorytecie [top()],
 <li>czyszczenie kolejki [clear()].
 </ul>
 
@@ -67,6 +67,7 @@ std::priority_queue&lt; std::pair&lt;int,float&gt;,
     std::vector&lt; std::pair&lt;int,float&gt; &gt;,
     decltype(cmp) &gt; pq(cmp);
 </pre><hr><pre>
+std::priority_queue&lt;int&gt; pq;
 assert( pq.empty() );
 for (auto item : {1, 5, 4, 2, 3})
     pq.push(item);   // wstawienie do kolejki

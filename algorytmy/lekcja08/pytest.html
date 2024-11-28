@@ -51,6 +51,8 @@ def inc(x):
     return x + 1
 
 def test_answer():   # wymagana nazwa test_*
+    # W testach nie używamy docstringów.
+    # Chcemy zachować standardowe komunikaty o błędach.
     assert inc(3) == 5   # celowy błąd, używamy 'assert'
     assert pytest.approx(inc(10.1), abs=0.1) == 11.0
     assert pytest.approx(inc(10.1), rel=0.01) == 11.0   # default rel=1e-6
