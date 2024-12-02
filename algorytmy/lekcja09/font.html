@@ -26,18 +26,20 @@ font = pygame.font.SysFont("comicsansms", size)
 
 text = "sample text"   # tylko jeden wiersz tekstu
 
-# Determine the amount of space needed to render text.
-font.size(text)   # return (text_width, text_height)
-
 # Draw text on a new Surface.
 text_surf = font.render(text, antialias, color, background=None)   # return Surface
 text_surf = font.render(text, True, white)
 
+# Determine the amount of space needed to render text.
+text_size = font.size(text)   # return (text_width, text_height)
 text_width = text_surf.get_width()   # return int
 text_height = text_surf.get_height()   # return int
 
 # Zakładamy, że 'display Surface' ma rozmiary (width, height).
 text_rect = text_surf.get_rect(center=(width // 2, height // 2))
+# Można to zrobić w dwóch krokach:
+# (1) text_rect = text_surf.get_rect()   # pobranie rozmiaru
+# (2) text_rect.center = (width // 2, height // 2)   # ustawienie położenia
 
 surface.blit(text_surf, text_rect)
 </pre><hr>

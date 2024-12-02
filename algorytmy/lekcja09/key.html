@@ -22,10 +22,12 @@ oraz 'mod' (maska bitowa klawiszy modyfikujących).
 <p>Faktycznie mamy dwa sposoby na sprawdzenie, co robi urządzenie wejściowe
 (input device).
 <br>(1) Bezpośrednie sprawdzenie stanu urządzenia, np. przez
-pygame.key.get_pressed() lub pygame.mouse.get_pos().
+pygame.key.get_pressed() [moduł pygame.key]
+lub pygame.mouse.get_pos() [moduł pygame.mouse].
 Otrzymamy stan urządzenia 'w chwili wywołania funkcji'.
 Problemem może być "zgubienie" jakiegoś zdarzenia.
-<br>(2) Sprawdzenie atrybutów zdarzenia pobranego z kolejki zdarzeń.
+<br>(2) Sprawdzenie atrybutów zdarzenia pobranego z kolejki zdarzeń
+[moduł pygame.event].
 Tutaj analizujemy zdarzenie, które nastąpiło w przeszłości, 
 mniej lub bardziej odległej od chwili obecnej.
 Zaletą jest pewność, ze zdarzenia będą czekały w kolejce na przetworzenie.

@@ -42,12 +42,12 @@ class Block(pygame.sprite.Sprite):
     def __init__(self, color, width, height):
         #pygame.sprite.Sprite.__init__(self)   # działa konstruktor z klasy bazowej
         super().__init__()
-        self.image = pygame.Surface([width, height])   # powstaje surface
+        self.image = pygame.Surface([width, height])   # return Surface
         # Można załadować obrazek z dysku.
         self.image.fill(color)   # nie mamy obrazka, to będzie kolor
-        self.rect = self.image.get_rect()   # powstaje rect
+        self.rect = self.image.get_rect()   # return Rect
 </pre><hr><pre>
-Metody klasy Sprite
+# Metody instancji klasy Sprite.
 
 sprite.add(*groups)   # dodanie sprite do podanych grup
 sprite.remove(*groups)   # usunięcie sprite z podanych grup
@@ -78,7 +78,7 @@ należących do grupy.
 group = pygame.sprite.Group()
 group = pygame.sprite.Group(*sprites)
 </pre><hr><pre>
-Standardowe operacje Pythona
+# Standardowe operacje Pythona.
 
 sprite in group   # test przynależności
 len(group)   # liczebność grupy
@@ -86,7 +86,7 @@ bool(group)   # True, jeżeli len(group) != 0
 for sprite in group: pass   # iteracja po grupie
 # Nie można iterować po grupie i jednocześnie jej modyfikować!
 </pre><hr><pre>
-Metody klasy Group
+# Metody instancji klasy Group.
 
 group.sprites()   # return sprite_list
 group2 = group1.copy()
