@@ -65,7 +65,7 @@ class Button(pygame.sprite.Sprite):
         font = pygame.font.Font(None, font_size)   # load the pygame default font
         text_surf = font.render(text, True, black)   # czarne fonty
         text_rect = text_surf.get_rect()
-        self.image = pygame.Surface((text_rect.width, text_rect.height))
+        self.image = pygame.Surface(text_rect.size)
         self.image.fill(white)   # białe tło przycisku
         self.image.blit(text_surf, text_rect)
         self.rect = self.image.get_rect()   # lub text_rect

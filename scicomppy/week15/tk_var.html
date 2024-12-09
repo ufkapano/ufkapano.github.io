@@ -46,19 +46,19 @@ b2 = tk.BooleanVar(value=True)
 
 root = tk.Tk()
 
-strvar = tk.StringVar(root, name="person")
+var = tk.StringVar(root, name="person")
 root.setvar(name="person", value="GvR")
 print(root.getvar(name="person"))
 
-strvar.set("Guido")
-print(strvar.get())
+var.set("Guido")
+print(var.get())
 </pre><hr><pre>
 # Using Entry with variables.
 
-strvar = tk.StringVar()
-entry = tk.Entry(root, textvariable=strvar)
-strvar.set("new string")
-print(strvar.get())
+var = tk.StringVar()
+entry = tk.Entry(root, textvariable=var)
+var.set("new string")
+print(var.get())
 </pre><hr>
 
 </body>
