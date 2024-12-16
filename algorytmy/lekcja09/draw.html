@@ -36,6 +36,9 @@ white = (255, 255, 255)
 red = (255, 0, 0)
 green = (0, 255, 0)
 blue = (0, 0, 255)
+
+# Nowsze wersje pygame pozwalają na używanie stringów z nazwami kolorów:
+# 'black', 'gray', 'white', itp.
 </pre><hr><pre>
 # Wykorzystanie modułu pygame.Color dla RGB.
 # pygame.Color(r, g, b)
@@ -95,12 +98,30 @@ rect2 = rect1.move((x, y))   # krotka jako argument
 rect1.move_ip(x, y)   # przesunięcie 'in place'
 rect1.move_ip((x, y))   # krotka jako argument
 
+rect2 = rect1.inflate(dx, dy)   # rozszerzenie (+) lub skurczenie (-)
+rect2 = rect1.inflate((dx, dy))   # rozszerzenie lub skurczenie 
+rect1.inflate_ip(dx, dy)   # rozszerzenie lub skurczenie 'in place'
+rect1.inflate_ip((dx, dy))   # rozszerzenie lub skurczenie 'in place'
+
+rect2 = rect1.scale_by(scalar)   # skalowanie przez mnożnik
+rect2 = rect1.scale_by(scalex, scaley)   # skalowanie przez mnożnik
+rect1.scale_by_ip(scalar)   # skalowanie przez mnożnik 'in place'
+rect1.scale_by_ip(scalex, scaley)   # skalowanie przez mnożnik 'in place'
+
 rect1.contains(rect2)   # return bool
 
 rect1.collidepoint(x, y)   # return bool, test czy punkt jest wewnątrz rect
 rect1.collidepoint((x, y))   # krotka jako argument
 
 rect1.colliderect(rect2)   # return bool, test na kolizję
+
+rect1.collidelist(rect_list)   # return index
+# Zwraca indeks pierwszego Rect z listy, który koliduje z rect1.
+# Przy braku kolizji zwraca indeks -1.
+
+rect1.collidelistall(rect_list)   # return indices
+# Zwraca listę indeksów Rect z listy, które kolidują z rect1.
+# Przy braku kolizji zwraca pustą listę indeksów.
 </pre><hr>
 
 <h3>KSZTAŁTY</h3>

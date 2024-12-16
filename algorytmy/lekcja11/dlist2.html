@@ -125,13 +125,13 @@ class DoubleList:
             node = node.prev
 </pre><hr><pre>
 # Zastosowanie.
-alist = DoubleList()
-alist.insert_head(Node(11))   # [11]
-alist.insert_head(Node(22))   # [22, 11]
-alist.insert_tail(Node(33))   # [22, 11, 33]
-for item in alist:   # kolejność 22, 11, 33
+dlist = DoubleList()
+dlist.insert_head(Node(11))   # [11]
+dlist.insert_head(Node(22))   # [22, 11]
+dlist.insert_tail(Node(33))   # [22, 11, 33]
+for item in dlist:   # kolejność 22, 11, 33
     print(item)
-for item in reversed(alist):   # kolejność 33, 11, 22
+for item in reversed(dlist):   # kolejność 33, 11, 22
     print(item)
 </pre><hr>
 

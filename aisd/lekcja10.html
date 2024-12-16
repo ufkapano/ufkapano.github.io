@@ -58,6 +58,10 @@ struct BSTNode {
     // konstruktor zwykły
     BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
     ~BSTNode() { delete left; delete right; } // destruktor rekurencyjny
+    // UWAGA Jeżeli w BSTNode będzie domyślny destruktor postaci
+    // ~BSTNode() = default;
+    // to wtedy destruktor drzewa i metoda clear() muszą zwolnić pamięć
+    // wszystkich węzłów.
 };
 </pre><hr><pre>
 // Szablon dla przypadkowego drzewa binarnego.

@@ -136,11 +136,11 @@ class SingleList:    # lista jest jednocześnie iteratorem
     next = __next__   # kompatybilność Py2 i Py3
 </pre><hr><pre>
 # Zastosowanie.
-alist = SingleList()
-alist.insert_head(Node(11))   # [11]
-alist.insert_head(Node(22))   # [22, 11]
-alist.insert_tail(Node(33))   # [22, 11, 33]
-for item in alist:   # kolejność 22, 11, 33
+slist = SingleList()
+slist.insert_head(Node(11))   # [11]
+slist.insert_head(Node(22))   # [22, 11]
+slist.insert_tail(Node(33))   # [22, 11, 33]
+for item in slist:   # kolejność 22, 11, 33
     print(item)
 </pre><hr>
 
