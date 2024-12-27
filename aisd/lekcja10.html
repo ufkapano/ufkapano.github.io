@@ -59,7 +59,8 @@ struct BSTNode {
     BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
     ~BSTNode() { delete left; delete right; } // destruktor rekurencyjny
     // UWAGA Jeżeli w BSTNode będzie domyślny destruktor postaci
-    // ~BSTNode() = default;
+    // ~BSTNode() = default; lub
+    // ~BSTNode() {}
     // to wtedy destruktor drzewa i metoda clear() muszą zwolnić pamięć
     // wszystkich węzłów.
 };
@@ -128,12 +129,14 @@ void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T> *node, int level) {
 }
 </pre><hr><pre>
 #include &lt;cstdlib&gt;   // std::rand(), RAND_MAX, std::srand()
+#include &lt;ctime&gt;
 
 template &lt;typename T&gt;
 BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
     if (node == nullptr) {
         return new BSTNode&lt;T&gt;(item);
     }
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
     if (std::rand() % 2) { // można lepiej
         node->left = insert(node->left, item);
     } else {

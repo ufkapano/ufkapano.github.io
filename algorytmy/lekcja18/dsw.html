@@ -1,0 +1,123 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Algorytm DSW</h1>
+
+<p>https://en.wikipedia.org/wiki/Day%E2%80%93Stout%E2%80%93Warren_algorithm
+
+<h3>WPROWADZENIE</h3>
+
+<p>Algorytm DSW (Day, Stout, Warren) służy do zrównoważenia drzewa BST. 
+Algorytm działa w miejscu i w czasie O(n).
+
+<p>W oryginalnym algorytmie DSW wprowadza się pseudo-root, którego
+prawym dzieckiem jest zwykły root.
+Chyba chodzi o to, żeby nie robić rotacji pseudo-root, tylko poniżej,
+więc pseudo-root jest zawsze rodzicem poddrzewa.
+Przy równoważeniu drzewa ciągle trzeba osobno traktować root,
+bo on nie ma rodzica.
+
+<hr><pre>
+Pełne drzewa binarne z m wierzchołkami.
+m=1, liście 1, wysokość h=1
+m=3=2^2-1, liście 2, wysokość h=2
+m=7=2^3-1, liście 4=2^2, wysokość h=3
+m=15=2^4-1, liście 8=2^3, wysokość h=4
+m=31=2^5-1, liście 16=2^4, wysokość h=5
+m=2^h-1, liście 2^(h-1), wysokość h
+Przejście do nowego poziomu: m = 2*m+1.
+h = log2(m+1), ale ogólnie dla n będzie wystawać parę liści
+h = |_log2(n+1)_|
+h = math.floor(math.log(n+1, 2))   # Py
+m = int(math.pow(2, math.floor(math.log(n+1, 2)))) -1   # Py2, Py3
+m = int(math.pow(2, math.floor(math.log2(n+1)))) -1   # Py3.3+ better
+</pre><hr><pre>
+| Przykład drzewa z wierzchołkami od 1 do 10. Mniejsze pełne drzewo ma m=7.
+| Po fazie I mamy faktycznie listę jednokierunkową o długości n=10.
+| Robimy wstępne n-m rotacji, żeby została wysokość drzewa m=7.
+| (1)  rot1   2   rot2   2   rot3  (2)
+|   \        / \        / \        / \
+|    2      1  (3)     1   4      1   4
+|     \          \        / \        / \
+|      3          4      3  (5)     3   6
+|       \          \          \        / \
+|        4          5          6      5   7
+|         \          \          \          \
+|          5...       6...       7...       8...
+</pre><hr><pre>
+| Pierwsza pętla z m=3.
+|       4                  4                    (4)
+|     /   \              /   \                 /   \
+|   2     (6)          2       7             2       7
+|  / \    / \         / \     / \           / \     / \
+| 1   3  5   7       1   3   6  (8)        1   3   6   9
+|             \             /     \               /   / \
+|              8...        5       9...          5   8   10
+</pre><hr><pre>
+| Druga pętla z m=1.
+|          7
+|        /   \
+|      4       9
+|     / \     / \
+|    2   6   8   10
+|   / \ /
+|  1  3 5
+</pre><hr>
+
+<h3>PSEUDOKOD</h3>
+
+<hr><pre>
+# Wersja wg Wikipedii z pseudo_root.
+def dsw(top):
+    if top is None: return
+    # Faza I. Tworzenie kręgosłupa. Równolegle zliczamy węzły.
+    pseudo_root = Node()
+    pseudo_root.right = top
+    n = tree_to_vine(pseudo_root)
+    # Faza II. Równoważenie drzewa.
+    vine_to_tree(pseudo_root, n)
+    return pseudo_root.right
+</pre><hr><pre>
+def tree_to_vine(pseudo_root):
+    parent = pseudo_root
+    node = pseudo_root.right
+    n = 0   # jednocześnie zliczamy węzły drzewa
+    while node:
+        while node.left:
+            node = rotate_right(node)
+            parent.right = node   # zmienił się wierzchołek poddrzewa
+        parent = node
+        node = node.right
+        n += 1
+    return n
+</pre><hr><pre>
+def vine_to_tree(pseudo_root, n):
+    # Obliczenie liczby węzłow najbliższego pełnego drzewa binarnego.
+    m = 1   # drzewo pełne z jednym wierzchołkiem
+    while m &lt;= n:
+        m = m * 2 + 1   # dodajemy kolejne poziomy drzewa
+    # Teraz m jest większe od n, nawet gdy n jest pełnym drzewem.
+    m = (m - 1) // 2   # za dużo o jeden poziom
+    #m = int(math.pow(2, math.floor(math.log2(n+1)))) -1   # Py3.3+ 
+
+    # Potrzebujemy n-m rotacji co drugi wierzchołek z prawej strony.
+    # Na najniższym poziomie drzewa będzie n-m liści.
+    compress(pseudo_root, n-m)
+    while m > 1:
+        m = m // 2
+        compress(pseudo_root, m)   # m to obecna wysokość drzewa
+</pre><hr><pre>
+def compress(pseudo_root, counter):
+    parent = pseudo_root
+    for i in range(counter):
+        parent.right = rotate_left(parent.right)
+        parent = parent.right
+</pre><hr>
+
+</body>
+</html>
