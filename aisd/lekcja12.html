@@ -217,8 +217,8 @@ public:
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
     void bfs(); // przejście poziomami (wszerz)
-    T* find_max();
-    T* find_min();
+    T* find_max() const;
+    T* find_min() const;
     void display() { display(root, 0); }
     virtual void visit(AVLNode&lt;T&gt; *node) {
         assert(node != nullptr);

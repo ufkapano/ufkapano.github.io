@@ -63,8 +63,8 @@ public:
         }
         return nullptr;
     }
-    T* find_min();
-    T* find_max();
+    T* find_min() const;
+    T* find_max() const;
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }

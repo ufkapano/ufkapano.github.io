@@ -203,7 +203,7 @@ przeprowadza się okresowo.
 
 </ul>
 
-<h3>ZADANIE 13.1</h3>
+<h3>ZADANIE 13.1 (METODA ŁAŃCUCHOWA)</h3>
 
 <p>Przygotować implementację realizującą ADT MAP na bazie tablicy
 mieszającej z wykorzystaniem metody łańcuchowej.
@@ -261,7 +261,7 @@ S& HashTable&lt;F,S&gt;::operator[](const F&amp; key) {
 }
 </pre><hr>
 
-<h3>ZADANIE 13.2</h3>
+<h3>ZADANIE 13.2 (ADRESOWANIE OTWARTE)</h3>
 
 <p>Przygotować implementację realizującą ADT MAP na bazie tablicy
 mieszającej z wykorzystaniem adresowania otwartego
@@ -278,7 +278,7 @@ Wstawiane klucze: A5, A2, A3, B5, A9, B2, B9, C2
 template &lt;typename F, typename S&gt;
 class HashTable {
     int BUCKET;    // liczba bukietów
-    std::pair&lt;F,S&gt; **table; // tablica wskaznikow do par
+    std::pair&lt;F,S&gt; **table; // tablica wskaźnikow do par
 public:
     HashTable(int b);
     ~HashTable() { clear(); delete [] table; }
@@ -288,7 +288,7 @@ public:
     S& operator[](const F& key);
     S* find(const F& key);
     void remove(const F& key); // TRUDNE
-    int hash(const F& key) { return (int(key) % BUCKET); } // dziala dla int, float
+    int hash(const F& key) { return (int(key) % BUCKET); } // działa dla int, float
     void display() const;
     void clear();
 };
@@ -303,7 +303,7 @@ HashTable&lt;F,S&gt;::HashTable(int b) {
 }
 </pre><hr>
 
-<h3>ZADANIE 13.3</h3>
+<h3>ZADANIE 13.3 (ADRESOWANIE OTWARTE)</h3>
 
 <p>Poprawić metodę adresowania otwartego przez zastosowanie innych
 metod próbkowania.
