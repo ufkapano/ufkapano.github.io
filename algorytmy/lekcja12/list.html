@@ -36,13 +36,41 @@ Typowe operacje dla ADT List:
 (liniowa lub cykliczna) lub tablica, zwykle o zmiennej długości.
 W Pythonie ADT List jest realizowany przez wbudowany typ 'list',
 który wykorzystuje tablicę dynamiczną (dynamic array).
-[The growth pattern is:  0, 4, 8, 16, 24, 32, 40, 52, 64, 76, ...]
+[The growth pattern is (multiple of 4): 
+0, 4, 8, 16, 24, 32, 40, 52, 64, 76, ...]
 
 <p>https://stackoverflow.com/questions/3917574/how-is-pythons-list-implemented
 
 <p>http://www.laurentluce.com/posts/python-list-implementation/
 
 <p>https://en.wikipedia.org/wiki/Dynamic_array
+
+<hr><pre>
+Geometryczne rozszerzanie tablicy dynamicznej.
++---+---+
+| 2 |   | size=1, capacity=2
++---+---+
++---+---+
+| 2 | 7 | size=2, capacity=2
++---+---+
++---+---+---+---+
+| 2 | 7 | 1 |   | size=3, capacity=4
++---+---+---+---+
++---+---+---+---+
+| 2 | 7 | 1 | 3 | size=4, capacity=4
++---+---+---+---+
++---+---+---+---+---+---+---+---+
+| 2 | 7 | 1 | 3 | 8 |   |   |   | size=5, capacity=8
++---+---+---+---+---+---+---+---+
+Usuwamy 8, 3.
++---+---+---+---+---+---+---+---+
+| 2 | 7 | 1 |   |   |   |   |   | size=3, capacity=8
++---+---+---+---+---+---+---+---+
+Usuwamy 1, zmniejszenie tablicy (histereza).
++---+---+---+---+
+| 2 | 7 |   |   | size=2, capacity=4
++---+---+---+---+
+</pre><hr>
 
 </body>
 </html>
