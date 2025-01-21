@@ -20,9 +20,9 @@ Ile jest możliwych rozstawień?
 
 <p>Problem można wysłowić w języku teorii grafów.
 Wierzchołkami grafu są pola na szachownicy.
-krawędzie grafu łączą pola, z których hetmani atakują się wzajemnie.
-Szukamy zbioru niezależnego wierzchołków grafu o największej
-liczności. Problem jest NP-trudny.
+Krawędzie grafu łączą pola, z których hetmani atakują się wzajemnie.
+Szukamy zbioru niezależnego wierzchołków grafu o największej liczności. 
+Problem jest NP-trudny.
 
 <hr><pre>
 # Problem ośmiu hetmanów.
@@ -64,7 +64,7 @@ def probuj(k):   # wstaw hetmana do kolumny k
 
 N = 8  # bok szachownicy i jednocześnie liczba hetmanów
 
-# x[i] to pozycja hetmana w kolumnie i
+# x[i] to pozycja hetmana w kolumnie i (numer wiersza)
 x = N * [None]
 
 # a[j] == True to brak hetmana w wierszu j

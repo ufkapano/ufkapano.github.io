@@ -41,7 +41,9 @@ def traverse_dfs(graph, start, visit, visited=None):
     # tworzymy pustą listę węzłów odwiedzonych.
     if visited is None:
         visited = []   # lepiej set()
-    # Odwiedzamy wszystkie węzły dołączone do węzła start.
+    # Odwiedzamy wszystkie nieodwiedzone węzły dołączone do węzła start.
+    # Węzeł stanie się odwiedzony, kiedy dla tego węzła będzie
+    # wywołana funkcja traverse_dfs().
     visit(start)
     visited.append(start)
     for node in graph[start]:
@@ -54,11 +56,14 @@ w głąb zaczynające się od korzenia jest równoważne przechodzeniu
 przez drzewo w porządku preorder.
 
 <p>W reprezentacji list sąsiedztwa czas przeszukiwania grafu
-w głąb jest O(V+E).
+w głąb jest O(n+m).
 
 <p>Zamiast korzystania z rekurencji możemy określić metodę
 przechodzenia przez graf używającą jawnego stosu,
 podobnie jak przy przechodzeniu przez drzewo binarne metodą preorder.
+Wierzchołek nieodwiedzony staje się odwiedzony w chwili pobrania go ze stosu.
+Na stos wstawiamy wszystkich nieodwiedzonych sąsiadów obecnie
+przetwarzanego wierzchołka.
 
 <hr><pre>
 def traverse_stack(graph, start, visit):
@@ -83,14 +88,14 @@ sprawdzamy, czy został już odwiedzony.
 Rozwiązaniem jest implementacja stosu, która uniemożliwia umieszczanie
 na stosie dwóch takich samych elementów przez zastosowanie reguły 
 zastępowania starego elementu nowym.
-Wtedy wielkość stosu można ograniczyć do liczby wierzchołków V.
+Wtedy wielkość stosu można ograniczyć do liczby wierzchołków n.
 
 <p>Należy zwrócić uwagę, że kolejność odwiedzania wierzchołków
 w podejściu rekurencyjnym i podejściu ze stosem na ogół jest różna.
 Różnica wynika z kolejności pobierania elementów z listy sąsiedztwa.
 
 <hr><pre>
-# Wersja wyznaczająca drzewo DFS w postaci słownika.
+# Wersja wyznaczająca drzewo DFS w postaci słownika 'parent'.
 
 def traverse_dfs(graph, source, parent=None, pre_action=None, post_action=None):
     if parent is None:
@@ -122,6 +127,9 @@ Algorytm przechodzi przez graf we wszystkich kierunkach.
 Przed przejściem z danego węzła do kolejnego odwiedza wszystkie
 połączone z nim węzły.
 
+<p>W reprezentacji list sąsiedztwa czas przeszukiwania grafu
+wszerz jest O(n+m).
+
 <hr><pre>
 import collections
 
@@ -143,10 +151,10 @@ def traverse_bfs(graph, start, visit):
 kilka elementów odpowiadającym temu samemu węzłowi.
 Rozwiązaniem jest stosowanie reguły pomijania nowego
 powtarzającego się elementu.
-Wtedy wielkość kolejki można ograniczyć do liczby wierzchołków V.
+Wtedy wielkość kolejki można ograniczyć do liczby wierzchołków n.
 
 <hr><pre>
-# Wersja wyznaczająca drzewo BFS w postaci słownika.
+# Wersja wyznaczająca drzewo BFS w postaci słownika 'parent'.
 
 import collections
 

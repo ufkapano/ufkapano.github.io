@@ -73,16 +73,26 @@ wierzchołek końcowy łącznie z wagą krawędzi, która do niego prowadzi.
 graph = [[1], [2], [0, 3], [1]]   # bez wag (styl C++)
 graph = {0: [1], 1: [2], 2: [0, 3], 3: [1]}   # bez wag (styl GvR)
 graph = {0: set([1]), 1: set([2]), 2: set([0, 3]), 3: set([1])}   # bez wag (zbiory)
-graph = {0: [(1,1)], 1: [(2,1)], 2: [(0,1), (3,1)], 3: [(1,1)]}   # wagi (dict+list)
-graph = {0: {1: 1}, 1: {2: 1}, 2: {0: 1, 3: 1}, 3: {1: 1}} # wagi (dict+dict)
-graph = {0: {1: Edge(0, 1, 1)}, 
+graph = {
+0: [(1,1)], 
+1: [(2,1)], 
+2: [(0,1), (3,1)], 
+3: [(1,1)]}   # wagi (dict+list)
+graph = {
+0: {1: 1}, 
+1: {2: 1}, 
+2: {0: 1, 3: 1}, 
+3: {1: 1}}   # wagi (dict+dict)
+graph = {
+0: {1: Edge(0, 1, 1)}, 
 1: {2: Edge(1, 2, 1)}, 
 2: {0: Edge(2, 0, 1), 3: Edge(2, 3, 1)}, 
-3: {1: Edge(3, 1, 1)}} # wagi w pakiecie 'graphtheory'
-graph = {0: {1: {'weight': 1}}, 
+3: {1: Edge(3, 1, 1)}}   # wagi w pakiecie 'graphtheory'
+graph = {
+0: {1: {'weight': 1}}, 
 1: {2: {'weight': 1}}, 
 2: {0: {'weight': 1}, 3: {'weight': 1}}, 
-3: {1: {'weight': 1}}} # wagi w NetworkX
+3: {1: {'weight': 1}}}   # wagi w NetworkX
 </pre><hr>
 
 <li><em>Lista krawędzi</em>. 

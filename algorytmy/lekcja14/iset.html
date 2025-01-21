@@ -21,6 +21,12 @@ nie jest podzbiorem większego zbioru niezależnego.
 jest zbiorem niezależnym o największej liczności w G.
 Problem znalezienia największego zbioru niezależnego jest NP-trudny.
 
+<p>Rozważmy graf nieskierowany, w którym wierzchołki grafu mają 
+przyporządkowaną wagę (liczba dodatnia).
+W takim grafie rozważa się problem zbioru niezależnego o największej wadze,
+tzn. suma wag wierzchołków zbioru niezależnego ma być największa.
+Problem największego zbioru niezależnego jest szczególnym przypadkiem,
+w którym wagi wszystkich wierzchołków są równe jeden.
 
 <hr><pre>
 # Testowanie zbioru niezależnego.
@@ -46,8 +52,8 @@ class TestIndependentSet(unittest.TestCase):
 
 <h3>ALGORYTM Z POWROTAMI</h3>
 
-<p>Liczba potencjanych rozwiązań to 2^N, bo każdy wierzchołek może
-należeć lub nie do zbioru niezależnego.
+<p>Liczba potencjanych rozwiązań do sprawdzenia to 2^N, 
+bo każdy wierzchołek może należeć lub nie do zbioru niezależnego.
 
 <hr><pre>
 # 0 --- 1 --- 2   graf nie jest dwudzielny, bo są trójkąty

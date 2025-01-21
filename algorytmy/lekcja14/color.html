@@ -25,8 +25,8 @@ zaczynając od zera lub jedynki.
 
 <p>Kolorowanie wierzchołków grafu (ang. vertex coloring)
 polega na przyporządkowaniu wierzchołkom
-kolorów w taki sposób, aby każda krawędź miała końce różnych kolorów
-(takie kolorowanie wierzchołkowe jest legalne, dozwolone).
+kolorów w taki sposób, aby każda krawędź miała końce różnych kolorów.
+Takie kolorowanie wierzchołkowe jest legalne (dozwolone).
 
 <p>Graf jest k-kolorowalny wierzchołkowo, jeżeli istnieje
 legalne kolorowanie wierzchołków wykorzystujące k kolorów.
@@ -34,8 +34,8 @@ Kolorowanie optymalne wierzchołków grafu
 zawiera najmniejszą możliwą liczbę kolorów,
 którą nazywamy <em>liczbą chromatyczną</em>.
 Problem kolorowania wierzchołków jest NP-trudny.
-Problem decyzyjny polegający na określeniu, czy graf jest
-k-kolorowalny wierzchołkowo jest NP-zupełny dla k &gt; 3.
+Problem decyzyjny, polegający na określeniu czy graf jest
+k-kolorowalny wierzchołkowo, jest NP-zupełny dla k &gt; 3.
 
 <p>Łatwo jest stwierdzić, czy graf jest 2-kolorowalny wierzchołkowo
 (grafy dwudzielne).
@@ -60,7 +60,8 @@ Każdy graf planarny jest 4-kolorowalny wierzchołkowo (Appel, Haken, 1976).
 na kilka grup:
 
 <ul>
-<li>Algorytmy sekwencyjne, przydzielające kolory w sposób zachłanny.
+<li>Algorytmy sekwencyjne, przydzielające zachłannie kolory wierzchołkom 
+ustawionym w ciąg.
 
 <li>Algorytmy sekwencyjne z wymianą kolorów, która uruchamiana jest wtedy,
 gdy w następnym kroku zachłannym potrzebny jest nowy kolor.
@@ -87,7 +88,7 @@ def greedy_color(graph, color, source):
     return i
 
 def us_node_coloring(graph):
-    """Unordered Sequential Node Coloring."""
+    """Unordered Sequential Node Coloring, O(n+m) time."""
     color = dict((node, None) for node in graph)
     for source in graph:
         greedy_color(graph, color, source)
@@ -126,8 +127,8 @@ class TestNodeColoring(unittest.TestCase):
 <p>Kolorowanie krawędzi grafu (ang. edge coloring)
 polega na przyporządkowaniu krawędziom
 kolorów w taki sposób, aby dla każdego wierzchołka
-stykające się w nim krawędzie miały różne kolory
-(takie jest kolorowanie krawędziowe legalne, dozwolone).
+stykające się w nim krawędzie miały różne kolory.
+Takie jest kolorowanie krawędziowe legalne (dozwolone).
 
 <p>Graf jest k-kolorowalny krawędziowo, jeżeli istnieje
 legalne kolorowanie krawędzi wykorzystujące k kolorów.
