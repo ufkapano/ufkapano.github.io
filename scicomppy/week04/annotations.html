@@ -10,12 +10,31 @@
 
 <p>PEP 3107 - Function Annotations
 
+<p>PEP 482 - Literature Overview for Type Hints
+
+<p>PEP 484 - Type Hints
+
 <p>PEP 526 - Syntax for Variable Annotations
 
-<p>https://docs.python.org/3/howto/annotations.html
-<br>Annotations Best Practices
+<p>PEP 563 - Postponed Evaluation of Annotations
 
-<h3>FUNCTION ANNOTATION</h3>
+<p>PEP 649 - Deferred Evaluation Of Annotations Using Descriptors
+
+<p>https://docs.python.org/3/howto/annotations.html
+<br>Annotations Best Practices.
+
+<p>https://docs.python.org/3/library/typing.html
+<br>'typing' - Support for type hints [Py3.5+].
+
+<p>https://typing.readthedocs.io/en/latest/spec/index.html
+<br>Specification for the Python type system.
+
+<h3>INTRODUCTION</h3>
+
+<p>Python supports annotations on three different types: 
+functions, classes, and modules.
+
+<h3>FUNCTION ANNOTATIONS</h3>
 
 <p>Function arguments may have an annotation of the form ': expression' 
 following the parameter name. Any parameter may have an annotation, 
@@ -38,21 +57,27 @@ def function_name(*arguments: expression, **keywords: expression)-&gt; expressio
 </pre><hr><pre>
 # Function annotations are usually used for type hints.
 
-def sum_two_numbers(a: int, b: int) -&gt; int:
-   return a + b
+def sum_two_numbers(a: int, b: float) -&gt; complex:
+   return complex(a + b)
 
 sum_two_numbers.__annotations__
-# {'a': &lt;class 'int'&gt;, 'b': &lt;class 'int'&gt;, 'return': &lt;class 'int'&gt;}
+# {'a': &lt;class 'int'&gt;, 'b': &lt;class 'float'&gt;, 'return': &lt;class 'complex'&gt;}
 </pre><hr>
 
-<h3>VARIABLE ANNOTATION</h3>
+<h3>CLASS ANNOTATIONS</h3>
 
 <hr><pre>
 # When annotating a variable or a class attribute, assignment is optional:
 
 class C:
-    field: 'annotation'   # a class attribute annotation
+    field: int   # a class attribute annotation
 
+    def __init__(self) -&gt; None:
+        pass
+
+C.__annotations__
+# {'field': &lt;class 'int'&gt;}
+</pre><hr><pre>
 # Variable annotations are usually used for type hints.
 import typing
 
@@ -66,6 +91,8 @@ some_dict: dict[str, float] = {"a": 1.2}   # Py3.9+
 
 coords: typing.Tuple[float, float] = (1.2, 3.4)   # from 'typing' module
 coords: tuple[float, float] = (1.2, 3.4)   # Py3.9+
+
+Url = str   # type alias
 </pre><hr>
 
 <p>Type hints are optional and are not enforced by Python 

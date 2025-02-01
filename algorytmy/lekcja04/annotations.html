@@ -8,9 +8,24 @@
 
 <h1>Adnotacje (Python3)</h1>
 
-<p>PEP 3107 - Function Annotations
+<p>PEP 3107 - Function Annotations.
 
-<p>PEP 526 - Syntax for Variable Annotations
+<p>PEP 482 - Literature Overview for Type Hints.
+
+<p>PEP 484 - Type Hints.
+
+<p>PEP 526 - Syntax for Variable Annotations.
+
+<p>PEP 563 - Postponed Evaluation of Annotations.
+<br>Propozycja 'from __future__ import annotations' (Py3.7+).
+Adnotacje zmiennych i funkcji nie będą już obliczane w czasie definiowania
+zmiennych i funkcji, tylko będzie to odsunięte w czasie.
+W słowniku '__annotations__' będzie umieszczona postać napisowa adnotacji.
+
+<p>PEP 649 - Deferred Evaluation Of Annotations Using Descriptors.
+<br>Funkcje, klasy i moduły otrzymają nowy atrybut '__annotate__', 
+który zawiera referencję do funkcji obliczającej adnotacje obiektu.
+Redefinicja atrybutu '__annotations__' jako 'data descriptor'.
 
 <p>https://docs.python.org/3/howto/annotations.html
 <br>Annotations Best Practices.
@@ -26,11 +41,18 @@ inspect.get_annotations() [Py3.10+].
 
 <p>https://docs.python.org/3/library/typing.html
 <br>'typing' - Support for type hints [Py3.5+].
-Tu jest podana lista odpowiednich PEPs.
 
-<h3>ADNOTACJE FUNKCJI</h3>
+<p>https://typing.readthedocs.io/en/latest/spec/index.html
+<br>Specification for the Python type system.
 
-<p>Argumenty funkcji mogą mieć adnotacje (annotations) postaci
+<h3>WPROWADZENIE</h3>
+
+<p>Python wspiera adnotacje dla trzech różnych typów:
+funkcji, klas i modułów.
+
+<h3>ADNOTACJE DLA FUNKCJI</h3>
+
+<p>Argumenty funkcji mogą mieć adnotacje (ang. annotations) postaci
 ': expression', następującą po nazwie parametru.
 Podobnie może być dla parametrów postaci *identifier lub **identifier.
 Funkcje mogą mieć również adnotację 'return' postaci '-&gt; expression',
@@ -55,28 +77,35 @@ def nazwa_funkcji(*arguments: wyrażenie, **keywords: wyrażenie = wartość) -&
 # Adnotacje funkcji są zwykle używane jako podpowiedzi dla typów.
 
 def sum_two_numbers(a: int, b: float) -&gt; complex:
-   return a + b
+   return complex(a + b)
 
 sum_two_numbers.__annotations__
 # {'a': &lt;class 'int'&gt;, 'b': &lt;class 'float'&gt;, 'return': &lt;class 'complex'&gt;}
 </pre><hr><pre>
 # https://stackoverflow.com/questions/14379753/what-does-mean-in-python-function-definitions
 
-def kinetic_energy(m:'in kg', v:'in m/s')->'Joules': 
+def kinetic_energy(m: 'in kg', v: 'in m/s') -&gt; 'Joules': 
     return 0.5 * m * v**2
-# dictionary kinetic_energy.__annotations__
-# {'return': 'Joules', 'v': 'in m/s', 'm': 'in kg'}
+
+# kinetic_energy.__annotations__ to słownik postaci
+# {'m': 'in kg', 'v': 'in m/s', 'return': 'Joules'}
 </pre><hr>
 
-<h3>ADNOTACJE ZMIENNYCH</h3>
+<h3>ADNOTACJE DLA KLAS</h3>
 
 <hr><pre>
 # Podczas użycia adnotacji zmiennej lub atrybutu klasy
 # może wystąpić podstawienie wartości.
 
 class C:
-    field: 'annotation'   #  adnotacja atrybutu klasy
+    field: int   #  adnotacja atrybutu klasy
 
+    def __init__(self) -&gt; None:   # konwencja dla konstruktora
+        pass
+
+# C.__annotations__ to słownik postaci
+# {'field': &lt;class 'int'&gt;}
+</pre><hr><pre>
 # Adnotacje zmiennych są zwykle używane jako podpowiedzi do typów.
 import typing
 
@@ -90,10 +119,41 @@ some_dict: dict[str, float] = {"a": 1.2}   # Py3.9+
 
 coords: typing.Tuple[int, float] = (12, 3.4)
 coords: tuple[int, float] = (12, 3.4)   # Py3.9+
+
+Url = str   # alias typu
+</pre><hr><pre>
+# Nazwy Dict, List, Set, FrozenSet używa się do wartości zwracanych.
+# Dla argumentów funkcji preferuje się abstrakcyjne kolekcje typów, np.
+# Mapping, Sequence, AbstractSet.
+
+from typing import Sequence, Mapping, Set, Iterable, Iterator, Tuple, Text
+from typing import TypeVar, Callable, Any, AnyStr
+from typing import Union, Optional, Generic
+
+T = TypeVar('T', int, float, complex)
+Vector = Iterable[Tuple[T, T]]   # alias typu
+
+def inproduct(v: Vector[T]) -&gt; T:
+    return sum(x*y for x, y in v)
+
+# Callable[[Arg1Type, Arg2Type], ReturnType] ogólna postać
+# Callable[[], str] bez argumentów, zwraca str
+# Callable[[int, float], None] dwa argumenty (int i float), zwraca None
+
+# Text to alias dla str (Py3) lub unicode (Py2)
+# AnyStr jest zdefiniowane jako TypeVar('AnyStr', Text, bytes)
+# Sequence[float]
+# Set[int]
+# Mapping[int, str]
+# Mapping jest równowazne Mapping[Any, Any]
+# Iterable jest równoważne Iterable[Any]
+# Union[T1, T2, ...] ogólna postać, dopuszczalne typy to T1, T2, ...
+# Union[int, float]
+# Optional[T1] jest równoważne Union[T1, None]
 </pre><hr>
 
-<p>Podpowiedzi do typów są opcjonalne i nie są wymuszane w Pythonie.
-Bywają przydatne dla narzędzi do statycznej analizy typów.
+<p>Podpowiedzi do typów są i będą opcjonalne, nie są wymuszane w Pythonie.
+Bywają przydatne dla narzędzi do statycznej analizy typów (mypy, pytype).
 
 </body>
 </html>
