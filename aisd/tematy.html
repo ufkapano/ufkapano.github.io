@@ -93,6 +93,7 @@ int heap_right(int n) { return (3 * n + 3); }
 [https://en.wikipedia.org/wiki/Quadtree].
 
 <li>Program do obsługi biblioteki (użytkownicy, książki, wypożyczanie).
+Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
 <li>Program symulujący konta w banku.
 Operacje: zakładanie i usuwanie konta, wpłata, wypłata, przelew,
@@ -100,11 +101,17 @@ zapis i odczyt bazy z pliku.
 Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
 <li>Program do rezerwacji biletów lotniczych.
+Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
 <li>Baza danych książek, płyt, filmów, itp. 
 (jeden typ elementów, wystarczy jedna tabela).
-Operacje: dodawanie, usuwanie, wyszukiwanie rekordu,
+Operacje: dodawanie, usuwanie, wyszukiwanie rekordów,
 wypisywanie zawartości bazy, zapis i odczyt bazy z pliku.
+Przy wyszukiwaniu powinno wystarczyć podanie fragmentu danych z rekordu,
+np. fragmentu nazwiska autora czy tytułu.
+Wygodne jest wczytywanie bazy przy starcie programu, potem zapisywanie bazy
+do pliku po każdej zmianie danych (dodanie/usuwanie rekordu).
+Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
 <li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim
 [https://en.wikipedia.org/wiki/Maze_generation_algorithm].
