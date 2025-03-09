@@ -13,7 +13,7 @@
 <h3>INTRODUCTION</h3>
 
 <p>There are three distinct numeric types: 
-integers, floating point numbers, and complex numbers.
+integers (int), floating point numbers (float), and complex numbers (complex).
 
 <p>Mathematical modules: math, cmath, random, numpy, scipy.
 
@@ -46,8 +46,9 @@ bin(23)   # returns a string '0b10111'
 
 # int(x[, base]) - using a constructor
 int("32"), int(2.345), int(-3.456)
-int("111", 2)   # base 2, 7 base 10
-int("20", 16), 0x20  # base 16, 32 base 10
+int("111", 2)   # 111 base 2, 7 base 10
+int("21", 8)   # 21 base 8, 17 base 10
+int("20", 16), 0x20  # 20 base 16, 32 base 10
 
 # Division
 5 % 2, 5 / 2, 5 // 2
@@ -82,7 +83,7 @@ x &gt;&gt; n   # x shifted right by n bits, equivalent to floor division by pow(
 [int + float = float, float + complex = complex].
 
 <hr><pre>
-0., .2, -3.45, 2.43e+23
+0., .2, -3.45, 2.43e+23, 2e5
 3.14_15_93   # grouping in floating point literals (Py3.6+)
 
 # float(x) - using a constructor

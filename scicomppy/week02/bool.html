@@ -35,6 +35,17 @@ inherited from 'int'.
 In numeric contexts (for example when used as the argument to an arithmetic 
 operator), 'False' and 'True' behave like the integers 0 and 1, respectively.
 
+<hr><pre>
+&gt;&gt;&gt; True + True
+2
+&gt;&gt;&gt; True * True
+1
+&gt;&gt;&gt; True - True
+0
+&gt;&gt;&gt; False + False
+0
+</pre><hr>
+
 <h3>BOOLEAN OPERATIONS</h3>
 
 <p>'A or B', 'A and B', 'not A' (ascending priority).
@@ -48,9 +59,11 @@ operator), 'False' and 'True' behave like the integers 0 and 1, respectively.
 <p>'and' and 'or' are short-circuit operators:
 
 <ul>
-<li>'False and Anything' returns 'False', 'Anything' is not checked,
-<li>'True and Anything' returns 'Anything', but not converted to 'bool',
-<li>'True or Anything' returns 'True', 'Anything' is not checked,
+<li>'False and Anything' returns 'False', 'Anything' is not checked.
+<br>Example: L = [1, 3] ; print(1 &gt; 2 and L[4])   # print False, no exceptions
+<li>'True and Anything' returns 'Anything', but not converted to 'bool'.
+<br>Example: True and (2 + 2)   # return 4
+<li>'True or Anything' returns 'True', 'Anything' is not checked.
 <li>'False or Anything' returns 'Anything', but not converted to 'bool'.
 </ul>
 

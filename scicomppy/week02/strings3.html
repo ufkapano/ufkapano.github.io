@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
 
+<p>https://en.wikipedia.org/wiki/Alt_code
+
 <h3>INTRODUCTION</h3>
 
 <p>Textual data in Python is handled with strings.
@@ -172,10 +174,10 @@ bytes(range(4))   # return b'\x00\x01\x02\x03'
 bytes(obj)   # copying existing binary data via the buffer protocol
 
 bytes.fromhex('2Ef0 F1f2  ')   # b'.\xf0\xf1\xf2', classmethod
-# ASCII whitespaces are skipped.
+# ASCII whitespaces are skipped. b'\x2e' is b'.'
 
-for x in b'\xf0\xf1\xf2':
-    print(x)      # numbers 240, 241, 242
+for x in b'.\xf0\xf1\xf2':
+    print(x)      # numbers 46, 240, 241, 242
 
 list(b'abc')   # [97, 98, 99]
 </pre><hr>
