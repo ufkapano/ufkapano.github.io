@@ -16,11 +16,15 @@
 
 <p>PEP 636 - Structural Pattern Matching: Tutorial
 
+<p>https://learnpython.com/blog/python-match-case-statement/
+
 <h3>INTRODUCTION</h3>
 
 <p>A 'match' statement takes an expression and compares its value 
 to successive patterns given as one or more case blocks.
 This statement was introduced in Python 3.10.
+Note that 'match' and 'case' words are described as 'soft keywords',
+meaning they only work as keywords in a 'match' statement.
 
 <hr><pre>
 # The simplest form of a 'match' statement.
@@ -37,6 +41,20 @@ def http_error(status, flag=False):
             return "I'm a teapot"
         case _:   # optional, never fails to match
             return "Something's wrong with the internet"
+</pre><hr></pre>
+# if-else version.
+
+def http_error(status, flag=False):
+    if status == 400:
+        return "Bad request"
+    elif status == 401 or status == 403 or status == 404:
+        return "Not allowed"
+    elif status == 404:
+        return "Not found"
+    elif status == 418 and flag:   # using a guard
+        return "I'm a teapot"
+    else:
+        return "Something's wrong with the internet"
 </pre><hr>
 
 </body>
