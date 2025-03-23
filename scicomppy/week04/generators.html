@@ -148,13 +148,13 @@ for line in txt_gen:
 def txt_reader(file_name):   # possible MemoryError
     file = open(file_name, "r")
     result = file.read()   # loads everything into memory at once
-    result = result.rstrip()   # remove last "\n" if present
+    result = result.rstrip("\n")   # remove last "\n" if present
     result = result.split("\n")   # divide to lines 
     return result   # list of strings without "\n"
 </pre><hr><pre>
 def txt_reader(file_name):   # a generator function
     for line in open(file_name, "r"):
-        yield line   # lines with "\n" (the last line may be an exception)
+        yield line.rstrip("\n")   # lines without "\n"
 </pre><hr>
 
 </body>

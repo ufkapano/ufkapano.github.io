@@ -24,7 +24,7 @@ dir(__builtin__)   # list of objects
 
 import builtins   # Py3
 dir(builtins)   # list of objects
-zip is builtins.zip   # True
+assert zip is builtins.zip
 zip = my_better_zip
 </pre><hr>
 
@@ -99,7 +99,7 @@ list(x for x in [-2,-1,0,1,2] if x)   # generator object, equivalent
 import random
 import timeit
 
-L = [random.random() for x in range(1000000)]
+L = [random.random() for x in range(1000_000)]
 
 func = (lambda x: x &lt; 0.5)
 

@@ -83,16 +83,16 @@ university(rektor="Jacek Popiel", kanclerz="Monika Harpula")
 <h3>EXAMPLE</h3>
 
 <hr><pre>
-def f(a1, a2=v2, *a3, **a4): pass
+def func(a1, a2=v2, *a3, **a4): pass
 
-# a function call f(x1, x2, x3, x4, b1=x5, b2=x6)
+# a function call is func(x1, x2, x3, x4, b1=x5, b2=x6)
 # a1=x1, positional argument
 # a2=x2, positional argument (default value will not be used)
 # a3=(x3, x4), excess positional arguments
 # a4={"b1":x5, "b2":x6}, excess keyword arguments
 
 # The most general form is
-def g(*arguments, **keywords): pass
+def general_func(*arguments, **keywords): pass
 </pre><hr>
 
 <h3>UNPACKING ARGUMENTS</h3>
