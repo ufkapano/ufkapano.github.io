@@ -177,7 +177,17 @@ print(time.gmtime(0))   # show the epoch
 
 start = time.process_time()   # Py3.3+
 # statements
-elapsed = time.process_time() - start
+end = time.process_time()
+elapsed = end - start
+
+def timer(f, *args):   # for testing functions
+    start = time.perf_counter()   # or time.time()
+    f(*args)
+    end = time.perf_counter()   # or time.time()
+    return 1000 * (end - start)   # show the result in ms
+
+# Example.
+# print(timer(sum, range(1000)))
 </pre><hr>
 
 </body>

@@ -23,8 +23,11 @@ Programs should leave all pathname manipulation to 'os.path'
 <hr><pre>
 import os
 
-# current working directory 
-current = os.getcwd()   # '/home/andrzej' in Linux Debian
+current = os.getcwd()
+# the current working directory, '/home/andrzej' in Debian
+
+var = os.getenv("SHELL", default=None)
+# the value of the environment variable, '/bin/bash' in Debian
 
 # Using join().
 # parent directory 
