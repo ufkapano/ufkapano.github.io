@@ -26,10 +26,12 @@ that allows us to access methods of the base class.
 <hr><pre>
 #class Bird(object):   # Py2, new style classes
 class Bird:          # Py3
+
     def __init__(self, name):
         print("{} is a bird.".format(name))
 
 class Parrot(Bird):
+
     def __init__(self, name, food):
         #Bird.__init__(self, name)   # old style
         #super(Parrot, self).__init__(name)   # Py2 and Py3
