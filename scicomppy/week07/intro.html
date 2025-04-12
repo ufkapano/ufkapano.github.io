@@ -20,6 +20,7 @@
 <p>Exceptions are a means of breaking out of the normal flow 
 of control of a code block in order to handle errors 
 or other exceptional conditions.
+
 An exception is 'raised' at the point where the error is detected; 
 it may be 'handled' by the surrounding code block or by any code block 
 that directly or indirectly invoked the code block where the error occurred.
@@ -77,6 +78,7 @@ print(D["key"])   # KeyError
 &gt;&gt;&gt; help(builtins)
 </pre><hr><pre>
 BaseException
+    +-- BaseExceptionGroup (Py3.11+)
     +-- SystemExit
     +-- KeyboardInterrupt
     +-- GeneratorExit
@@ -101,6 +103,7 @@ BaseException
         |    +-- LookupError
         |        +-- IndexError
         |        +-- KeyError
+        |    +-- ExceptionGroup [BaseExceptionGroup] (Py3.11+)
         |    +-- ...
         +-- Warning
             +-- DeprecationWarning

@@ -52,6 +52,18 @@ itertools.chain('ABC', 'DEF')   # yield A B C D E F
 # itertools.chain.from_iterable(iterable)   # alternate constructor for chain()
 itertools.chain.from_iterable(['ABC', 'DEF'])   # yield A B C D E F
 </pre><hr><pre>
+# itertools.batched(iterable, n)   # Py3.12
+list( itertools.batched('ABCDEFG', 3))
+# [('A', 'B', 'C'), ('D', 'E', 'F'), ('G',)]
+</pre><hr><pre>
+# itertools.groupby(iterable[, key])   # sub-iterators grouped by value of key(v)
+
+[k for k, g in groupby('AAAABBBCCDAABBB')]   # a list of keys
+# ['A', 'B', 'C', 'D', 'A', 'B']
+
+[list(g) for k, g in groupby('AAAABBBCCD')]   # a list of groups
+# [['A', 'A', 'A', 'A'], ['B', 'B', 'B'], ['C', 'C'], ['D']]
+</pre><hr><pre>
 # itertools.islice(iterable, stop)
 # itertools.islice(iterable, start, stop [, step])
 # If 'stop' is None, then iteration continues until the iterator is exhausted, if at all.
@@ -89,7 +101,7 @@ list(itertools.product("abc", "123"))
 </pre><hr><pre>
 # Combinatoric generators.
 
-# itertools.permutations(p[, r])
+# itertools.permutations(iterable, r=None)
 # yield r-length tuples, all possible orderings, no repeated elements
 
 list(itertools.permutations([1, 2, 3]))   # 3! = 6 perms
@@ -98,13 +110,13 @@ list(itertools.permutations([1, 2, 3]))   # 3! = 6 perms
 list(itertools.permutations([1, 2, 3], 2))
 # [(1, 2), (1, 3), (2, 1), (2, 3), (3, 1), (3, 2)]
 
-# itertools.combinations(p, r)
+# itertools.combinations(iterable, r)
 # yield r-length tuples, in sorted order, no repeated elements
 
 list(itertools.combinations([1, 2, 3, 4], 3))
 [(1, 2, 3), (1, 2, 4), (1, 3, 4), (2, 3, 4)]
 
-# itertools.combinations_with_replacement(p, r)
+# itertools.combinations_with_replacement(iterable, r)
 # yield r-length tuples, in sorted order, with repeated elements
 
 list(itertools.combinations_with_replacement([1, 2, 3, 4], 3))

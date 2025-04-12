@@ -73,9 +73,9 @@ class Reverse:   # an instance of this class is an iterator
         return self.sequence[self.idx]
 
     next = __next__   # compatibility
-        # Python 2 has X.next().
-        # Python 3 has X.__next__().
-        # Python 3 i 2.6+ have a builtin function next(X).
+        # Py2 has X.next().
+        # Py3 has X.__next__().
+        # Py3 i Py2.6+ have a builtin function next(X).
 </pre><hr><pre>
 # Usage (for both versions).
 
@@ -96,7 +96,9 @@ for item in Reverse([1, 2, 3, 4]):
 it1 = iter([1, 2])   # list_iterator object in Py3 (lists have __iter__)
 it2 = iter("abcd")   # str_iterator object in Py3 (strings have __iter__)
 it3 = iter(it2)   # all iterators are also iterables
-assert it3 is it2
+assert it3 is it2   # the same id()
+it4 = iter(range(5))   # range_iterator (range has __iter__)
+it5 = iter({1:"a", 2:"b"})   # dict_keyiterator (dicts have __iter__)
 
 # Once you have an iterator, the only thing you can do with it is get
 # its next item. And you’ll get a stop iteration exception if you ask
