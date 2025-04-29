@@ -14,6 +14,11 @@
 <p>https://www.python-course.eu/numpy.php
 <br>Numpy Tutorial
 
+<p>https://numpy.org/doc/stable/numpy_2_0_migration_guide.html
+<br>NumPy 2.0 migration guide.
+<br>The precision of scalars is now preserved consistently.
+<br>The default integer used by NumPy is now 64bit on all 64bit systems.
+
 <p>Charles R. Harris et al,
 Array programming with NumPy, Nature 585, 357-362 (2020).
 
@@ -29,27 +34,22 @@ Nature Methods 17, 261-272 (2020).
 If you already have Python, you can install NumPy with:
 
 ANACONDA
-# Best practice, use an environment rather than install in the base env
-conda create -n my-env
-conda activate my-env
-# If you want to install from conda-forge
-conda config --env --add channels conda-forge
-# The actual install command
+# Best practice, use a virtual environment.
 conda install numpy
 
 PIP (in a virtual environment)
 pip install numpy
 
 APT (Debian Linux)
-Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3),
-python-pip, python-pip-whl, python3-pip.
+Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3).
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
 
 <p>NumPy stands for Numerical Python.
 NumPy is the fundamental package for scientific computing with Python. 
-It contains among other things [version 1.16.2 in Debian 10]:
+It contains among other things [version 1.16.2 in Debian 10,
+version 2.2.0 released 2024-12-0 (for Python 3.10-3.13)]:
 
 <ul>
 <li>a powerful N-dimensional array object,
@@ -159,7 +159,7 @@ sys.getsizeof(arr2[2])   # 53 = 49 + 4, str
 import timeit
 import numpy as np
 
-N = 1000000
+N = pow(10,6)
 
 x1 = list(range(N))
 y1 = list(range(N))
