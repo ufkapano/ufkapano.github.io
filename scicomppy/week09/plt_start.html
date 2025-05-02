@@ -13,6 +13,9 @@
 
 <p>https://matplotlib.org/tutorials/index.html
 
+<p>https://seaborn.pydata.org/
+<br>Seaborn is a Python data visualization library based on Matplotlib.
+
 <h3>INSTALLING MATPLOTLIB</h3>
 
 <hr><pre>
@@ -84,7 +87,7 @@ This explains why Figures can contain multiple Axes.
 </pre><hr><pre>
 import matplotlib.pyplot as plt
 
-plt.plot([1, 2, 3, 4], [10, 20, 25, 30])   # line segments
+plt.plot([1, 2, 3, 4], (10, 20, 25, 30))   # line segments
 plt.scatter([0.3, 3.8, 1.2, 2.5], [11, 25, 9, 26])   # points
 plt.show()   # display a figure
 plt.savefig("plot1.png")   # saving a figure to a file
