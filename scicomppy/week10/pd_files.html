@@ -200,8 +200,28 @@ df = pd.read_excel('data1.xlsx', sheet_name='Sheet1')
 
 df = pd.DataFrame([['a', 'b'], ['c', 'd']],
     index=['row1', 'row2'], columns=['col1', 'col2'])
-#df.to_excel("output.xlsx")
-df.to_excel("output2.xlsx", sheet_name='Sheet_name_1')
+
+df.to_excel("output1.xlsx")
+# +---+------+------+------+
+# |   | A    | B    | C    |
+# +---+------+------+------+
+# | 1 |      | col1 | col2 |
+# +---+------+------+------+
+# | 2 | row1 | a    | b    |
+# +---+------+------+------+
+# | 3 | row2 | c    | d    |
+# +---+------+------+------+
+
+df.to_excel("output2.xlsx", sheet_name='Sheet_name_1', index=False)
+# +---+------+------+
+# |   | A    | B    |
+# +---+------+------+
+# | 1 | col1 | col2 |
+# +---+------+------+
+# | 2 | a    | b    |
+# +---+------+------+
+# | 3 | c    | d    |
+# +---+------+------+
 </pre><hr>
 
 </body>

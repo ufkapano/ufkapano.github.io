@@ -23,6 +23,7 @@ in its site directories.
 <hr><pre>
 # Debian 10 apt package - python3-venv
 
+# python -m venv /path/to/new/virtual/environment
 $ python3 -m venv VE1   # creating the virtual environment in the VE1 directory
 
 $ ls VE1
@@ -35,23 +36,26 @@ version = 3.7.3
 </pre><hr><pre>
 # Windows 10
 
-c:\> python -m venv c:\path\to\myenv
-# Suggestion: use the directory c:\VIRTUAL\VE1
+# python -m venv c:\path\to\new\virtual\environment
+c:\&gt; python -m venv c:\VIRTUAL\VE1
 </pre><hr>
 
 <p>This will create the 'VE1' directory if it doesn’t exist, 
 and also create directories inside it containing a copy of the Python 
 interpreter, the standard library, and various supporting files.
 A common directory location for a virtual environment is '.venv'.
-Once you’ve created a virtual environment, you may activate it.
+
+<p>Since Py3.13 venv creates a .gitignore file for Git by default.
+
+<p>Once you’ve created a virtual environment, you may activate it.
 
 <hr><pre>
 $ source VE1/bin/activate   # for the bash shell in Linux
-# source VE1/bin/activate.csh   # for the tcsh shell in Linux
-# C:\> EV1\Scripts\activate.bat   # for cmd.exe in Windows
-# PS C:\> EV1\Scripts\Activate.ps1   # for PowerShell in Windows
+# source VE1/bin/activate.csh   # for the csh/tcsh shell in Linux
+# C:\&gt; EV1\Scripts\activate.bat   # for cmd.exe in Windows
+# PS C:\&gt; EV1\Scripts\Activate.ps1   # for PowerShell in Windows
 
-(VE1) $ python
+(VE1) $ python   # Debian 10
 Python 3.7.3 (default, Jan 22 2021, 20:04:44) 
 [GCC 8.3.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
