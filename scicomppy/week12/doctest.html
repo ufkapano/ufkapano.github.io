@@ -12,11 +12,20 @@
 
 <p>https://www.python-course.eu/python3_tests.php
 
+<p>https://realpython.com/python-doctest/
+<br>Python's doctest: Document and Test Your Code at Once
+
 <h3>INTRODUCTION</h3>
 
 <p>The 'doctest' module searches for pieces of text that look like 
 interactive Python sessions, and then executes those sessions 
 to verify that they work exactly as shown.
+
+<p>Note that comments are ignored by the interpreter but docstrings
+are not ignored and they are reachable at runtime 
+(the __doc__ attribute of functions, methods, classes, modules).
+It is important to keep the documentation in sync with the current state 
+of our code.
 
 <hr><pre>
 # Simple usage: checking examples in docstrings.
@@ -87,6 +96,18 @@ $ python -m doctest fib5.py -v   # without the 'if' part
 import doctest
 doctest.testfile("example.txt")
 # The file content is treated as if it were a single giant docstring.
+</pre><hr><pre>
+# In the case of exception tracebacks, doctest ignores the traceback body
+# because it can change unexpectedly. Only the first line:
+# Traceback (most recent call last):
+# and the last line are checked.
+"""
+... inside a docstring ...
+>>> 2 / 0
+Traceback (most recent call last):
+...            # the body is ignored by doctest
+ZeroDivisionError: division by zero
+"""
 </pre><hr>
 
 </body>

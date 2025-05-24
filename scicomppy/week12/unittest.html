@@ -74,7 +74,7 @@ class TestFibonacci(unittest.TestCase):   # the class name starts with 'Test'
         # assertAlmostEqual(first, second, places=7, msg=None, delta=None)
         # This function check that 'first' and 'second' are approximately
         # equal by computing the difference, rounding to the given number
-        # of decimal 'places', and comparing to zero.
+        # of decimal 'places' (after a dot), and comparing to zero.
 
     def test_fibonacci_exceptions(self):   # handling exceptions
         self.assertRaises(ValueError, fibonacci, -1)
@@ -135,7 +135,7 @@ class TestSets(unittest.TestCase):
 class TestSets(unittest.TestCase):
 
     def setUp(self):
-        print("make setA and setB")
+        print("make setA and setB")   # print() only for learning
         self.setA = set([1, 3, 5])
         self.setB = set([2, 3])
 
@@ -152,7 +152,7 @@ class TestSets(unittest.TestCase):
         self.assertEqual(self.setA.difference(self.setB), set([1, 5]))
 
     def tearDown(self):
-        print("cleaning")
+        print("cleaning")   # print() only for learning
 </pre><hr><pre>
 $ python test_set5.py -v
 test_difference (__main__.TestSets) ... make setA and setB
