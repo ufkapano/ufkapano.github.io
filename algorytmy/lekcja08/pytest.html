@@ -92,6 +92,11 @@ test_sample.py .                                                         [100%]
 =========================== 1 passed in 0.01 seconds ===========================
 
 # In Debian 10, 'python3 -m pytest' will use Python 3.7.
+</pre><hr><pre>
+# pytest can run unittest tests (from test*.py files) and doctest tests
+# (from test*.txt files).
+
+$ python3 -m pytest --doctest-glob="*.rst"   # *.rst files with doctest tests
 </pre><hr>
 
 <p>Raport zwracany przez 'pytest' pokazuje:

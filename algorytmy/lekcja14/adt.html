@@ -8,6 +8,8 @@
 
 <h1>ADT dla grafów</h1>
 
+<p>https://github.com/ufkapano/graphtheory/
+
 <h3>WPROWADZENIE</h3>
 
 <p>Poniżej podana jest propozycja interfejsu ADT 
@@ -94,15 +96,16 @@ class Graph:
     def del_node(self, node): pass      # usuwa wierzchołek z krawędziami incydentnymi
 
     def add_edge(self, edge): pass      # wstawienie krawędzi
+    #def add_edge(self, (source, target)): pass      # wstawienie krawędzi
 
     def has_edge(self, edge): pass      # bool
-    #def has_edge(self, source, target): pass   # bool
+    #def has_edge(self, (source, target)): pass   # bool
 
     def del_edge(self, edge): pass      # usunięcie krawędzi
-    #def del_edge(self, source, target): pass   # usunięcie krawędzi
+    #def del_edge(self, (source, target)): pass   # usunięcie krawędzi
 
     def weight(self, edge): pass        # zwraca wagę krawędzi
-    #def weight(self, source, target): pass   # zwraca wagę krawędzi
+    #def weight(self, (source, target)): pass   # zwraca wagę krawędzi
 
     def iternodes(self): pass           # iterator po wierzchołkach
 
