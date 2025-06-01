@@ -85,7 +85,9 @@ class TestFibonacci(unittest.TestCase):   # the class name starts with 'Test'
     def tearDown(self): pass
 
 if __name__ == "__main__":
-    unittest.main()
+    unittest.main()   # *.py files
+    # In the case of interacting session or Jupyter Notebook:
+    #unittest.main(argv=['ignored'], exit=False)
 </pre><hr><pre>
 # To execute tests:
 
