@@ -14,13 +14,13 @@
 2D square lattice with complex numbers z, |z| = 1.
 If \vec{n} = [cos(t1), sin(t1)], then z = exp(2 i t1).
 
+def random_complex():   # abs(z)=1
+    return cmath.rect(1.0, 2 * cmath.pi * random.random())
+
 L = np.empty((x, y), dtype=np.complex128)
 
 L[i, j] = random_complex()   # random orientation
 L[i, j] = complex(1, 0)   # ordered system
-
-def random_complex():   # abs(z)=1
-    return cmath.rect(1.0, 2 * cmath.pi * random.random())
 
 @njit('float64(complex128)')
 def interaction(spin):   # spin = z2/z1

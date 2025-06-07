@@ -53,10 +53,53 @@ print(f(1.3,2))   # return 3 (float -&gt; int)
 nopython=True   # force 'nopython mode'
 forceobj=True   # force 'object mode'
 fastmath=True   # relax some numerical rigour
-parallel=True   # enables automatic parallelization (no GIL!),only in 'nopython mode'
+parallel=True   # enables automatic parallelization (no GIL!), only in 'nopython mode'
 nogil=True   # Numba will release the GIL
 cache=True   # using a file-based cache
 debug=True   # for debugging
+</pre><hr>
+
+<h3>PARALLEL RANGE</h3>
+
+<p>https://numba.pydata.org/numba-doc/0.11/prange.html
+
+<p>Numba implements the ability to run loops in parallel.
+The loops body is scheduled in seperate threads, and they execute 
+in a nopython numba context. 
+'prange' automatically takes care of data privatization and reductions.
+
+<hr><pre>
+# numba3.py
+from numba import njit, float64, prange
+
+x = np.arange(1000000, dtype=np.float64)
+
+#@njit(parallel=True)   # with parallelization
+#@njit('float64(float64[:])')   # eager compilation.
+@njit
+def parallel_sum(arr):
+    result = 0.0
+    for i in prange(arr.shape[0]):
+        result += arr[i]
+    return result
+
+start = time.time()
+parallel_sum(x)
+end = time.time()
+print("Elapsed (with compilation) = {}".format(end - start))
+
+start = time.time()
+parallel_sum(x)
+end = time.time()
+print("Elapsed (after compilation) = {}".format(end - start))
+
+# Results.
+# Without numba = 0.11021208763122559
+# Elapsed (with compilation) = 0.05432915687561035
+# Elapsed (after compilation) = 0.0010497570037841797
+# With parallelization (12 cores).
+# Elapsed (with compilation) = 0.1597743034362793
+# Elapsed (after compilation) = 0.0004372596740722656
 </pre><hr>
 
 </body>

@@ -85,15 +85,27 @@ im = Image.new("L", (512, 512), color='white') # color=255
 
 import numpy as np
 
-a = np.zeros((128,128), dtype="uint8")   # black background
-for i in range(64):
-    for j in range(32,96):
+DIM = 128
+a = np.zeros((DIM,DIM), dtype="uint8")   # mode='L'
+
+for i in range(DIM // 2):
+    for j in range(DIM // 4, (DIM // 4) * 3):
         a[i,j] = 255   # white square
 
 im = Image.fromarray(a, mode='L')
 print ( im.getpixel((0,0)) ) # 0, (x,y)
-print ( im.getpixel((32,64)) ) # 0, (x,y)
-print ( im.getpixel((64,32)) ) # 255, (x,y)
+print ( im.getpixel((DIM // 4, DIM // 2)) ) # 0
+print ( im.getpixel((DIM // 2, DIM // 4)) ) # 255
+</pre><hr><pre>
+DIM = 128
+a = np.zeros((DIM,DIM,3), dtype="uint8")   # mode='RGB'
+
+for i in range(DIM):
+    for j in range(DIM):
+        for k in range(3):
+            a[i,j,k] = (i+10*j+50*k) % 256
+
+im = Image.fromarray(a, mode='RGB')
 </pre><hr><pre>
 im = Image.open("hopper.jpg")
 print(im.mode)   # RGB

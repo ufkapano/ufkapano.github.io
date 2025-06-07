@@ -9,9 +9,13 @@
 <h1>Numba - start</h1>
 
 <p>https://numba.pydata.org/
+<br>Numba makes Python code fast
 
 <p>https://numba.readthedocs.io/en/stable/user/index.html
 <br>User Manual
+
+<p>https://pypi.org/project/numba/
+<br>numba 0.61.2, released: Apr 9, 2025 [Py3.10+]
 
 <h3>INSTALLING NUMBA</h3>
 
@@ -50,12 +54,86 @@ using the industry-standard LLVM compiler library.
 for CPUs and GPUs, often with only minor code changes.
 
 <hr><pre>
+# Checking your installation.
+$ python3
+Python 3.7.3 (default, Mar 23 2024, 16:12:05) 
+[GCC 8.3.0] on linux
+Type "help", "copyright", "credits" or "license" for more information.
+&gt;&gt;&gt; import numba
+&gt;&gt;&gt; numba.__version__
+'0.42.0'            # Debian 10
+&gt;&gt;&gt; quit()
+$ numba -s          # information about your system capabilities
+System info:
+--------------------------------------------------------------------------------
+__Time Stamp__
+2025-06-07 17:58:19.391019
+
+__Hardware Information__
+Machine                                       : x86_64
+CPU Name                                      : skylake
+Number of accessible CPU cores                : 12
+Listed accessible CPUs cores                  : 0-11
+CFS restrictions                              : None
+CPU Features                                  : 
+adx aes avx avx2 bmi bmi2 clflushopt cmov cx16 f16c fma fsgsbase invpcid lzcnt
+mmx movbe pclmul popcnt prfchw rdrnd rdseed sahf sgx sse sse2 sse3 sse4.1 sse4.2
+ssse3 xsave xsavec xsaveopt xsaves
+
+__OS Information__
+Platform                                      : Linux-4.19.0-27-amd64-x86_64-with-debian-10.13
+Release                                       : 4.19.0-27-amd64
+System Name                                   : Linux
+Version                                       : #1 SMP Debian 4.19.316-1 (2024-06-25)
+OS specific info                              : debian10.13
+glibc info                                    : glibc 2.28
+
+__Python Information__
+Python Compiler                               : GCC 8.3.0
+Python Implementation                         : CPython
+Python Version                                : 3.7.3
+Python Locale                                 : pl_PL UTF-8
+
+__LLVM information__
+LLVM version                                  : 7.0.1
+
+__CUDA Information__
+CUDA driver library cannot be found or no CUDA enabled devices are present.
+Error class: &lt;class 'numba.cuda.cudadrv.error.CudaSupportError'&gt;
+
+__ROC Information__
+ROC available                                 : False
+Error initialising ROC due to                 : No ROC toolchains found.
+No HSA Agents found, encountered exception when searching:
+Error at driver init: 
+NUMBA_HSA_DRIVER /opt/rocm/lib/libhsa-runtime64.so is not a valid file path.  
+Note it must be a filepath of the .so/.dll/.dylib or the driver:
+
+__SVML Information__
+SVML state, config.USING_SVML                 : False
+SVML library found and loaded                 : False
+llvmlite using SVML patched LLVM              : False
+SVML operational                              : False
+
+__Threading Layer Information__
+TBB Threading layer available                 : True
+OpenMP Threading layer available              : True
+Workqueue Threading layer available           : True
+
+__Numba Environment Variable Information__
+None set.
+
+__Conda Information__
+Conda not present/not working.
+Error was [Errno 2] No such file or directory: 'conda': 'conda'
+</pre><hr><pre>
 # numba1.py
 from numba import jit
 import numpy as np
 import time
 
 x = np.arange(1000000, dtype=np.float64).reshape(1000, 1000)
+# Numba likes NumPy arrays, Python lists should be avoided.
 
 @jit(nopython=True)   # set "nopython" mode for best performance
 def go_fast(arr):   # function is compiled to machine code when called the first time
