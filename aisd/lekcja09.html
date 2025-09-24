@@ -9,190 +9,278 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (9) - ADT PRIORITY QUEUE</h1>
+<h1>AiSD (9) - ADT TREE</h1>
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
 <h3>WPROWADZENIE</h3>
 
-<p>Kolejka priorytetowa to ADT zawierający elementy z kluczami (priorytetami), 
-która pozwala na przeprowadzenie następujących operacji: 
+<p>Definicja rekurencyjna drzewa z korzeniem.
 
 <ul>
-<li>konstruktor tworzący pustą kolejkę,
-<li>testowanie, czy kolejka nie jest pusta [empty()],
-<li>odczyt liczby elementów w kolejce [size()],
-<li>wstawienie elementu do kolejki [push(item) lub put(item)],
-<li>usuwanie elementu o największym (najmniejszym) priorytecie [pop()],
-<li>dostęp do elementu o największym (najmniejszym) priorytecie [top()],
-<li>czyszczenie kolejki [clear()].
+<li>Pusta struktura jest drzewem.
+<li>Jeżeli t_1, ..., t_k są rozłącznymi drzewami, to drzewem jest także
+struktura, w której korzeń r posiada jako swoje dzieci korzenie
+drzew t_1, ..., t_k, przy czym dodawana jest krawędź od korzenia r
+do dziecka tylko jeżeli dziecko jest niepuste.
 </ul>
 
-<p>Kolejki priorytetowe często używają wewnętrznie kopca.
-Wtedy tablicę zamienia się w kopiec w czasie O(n),
-a wstawianie i usuwanie elementów zajmuje czas O(log n).
-Alternatywą są drzewa binarne samobalansujące się.
+<p>W teorii grafów definiuje się drzewo jako graf nieskierowany acykliczny,
+a korzeń to pewien wyróżniony wierzchołek.
+Wierzchołki bez dzieci to liście.
+W każdym drzewie istnieje dokładnie jedna ścieżka pomiędzy każdą parą wierzchołków.
+Zwykle rozważamy drzewa uporządkowane, gdzie kolejność dzieci jest ustalona.
+Poziom węzła to długość ścieżki do korzenia plus jeden.
+Poziom korzenia wynosi jeden.
+Wysokość niepustego drzewa to największy poziom węzła w drzewie.
+Wysokość pustego drzewa to z definicji zero.
+
+<p>Drzewa o stopniu rozgałęzienia m można zaimplementować tak, że każdy
+węzeł ma m łączy dla dzieci, niektóre mogą być puste.
+Inne bardziej oszczędne podejście to implementacja na lewo syn, na prawo brat
+(ang. left child, right sibling, LCRS), która zasadniczo jest drzewem binarnym.
+
+<p>W drzewie binarnym (uporządkowanym) każdy wierzchołek ma co najwyżej 
+dwoje dzieci (lewe i prawe).
+Drzewo binarne zbalansowane to drzewo binarne, w którym dla każdego
+węzła wysokości lewego i prawego poddrzewa różnią się co najwyżej o jeden.
 
 <hr><pre>
-// https://en.cppreference.com/w/cpp/container/priority_queue
-
-#include &lt;queue&gt;
-
-// W STL kolejka priorytetowa jest zbudowana na bazie std::vector,
-// inna możliwość to std::deque.
-// Jest to otoczka do zarządzania wewnętrznym kopcem.
-// Domyślnie w stałym czasie mamy dostęp do elementu największego.
-// Wstawianie i usuwanie elementów z kolejki zajmuje czas O(log n).
-// Można dostarczyć funkcję porównującą, która będzie użyta do ustalenia
-// priorytetów elementów, domyślnie jest to std::less.
-// Przykład użycia kolejki priorytetowej.
-
-//std::priority_queue&lt;int&gt; pq;   // domyślnie std::vector
-//std::priority_queue&lt;int, std::deque&lt;int&gt; &gt; pq;
-//std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; pq;
+// Szablon dla węzła drzewa binarnego i drzewa BST.
+template &lt;typename T&gt;
+struct BSTNode {
+// the default access mode and default inheritance mode are public
+    T value;
+    BSTNode *left, *right;
+    //BSTNode *parent;   // używane w pewnych zastosowaniach
+    // kostruktor domyślny
+    BSTNode() : value(T()), left(nullptr), right(nullptr) {}
+    // konstruktor zwykły
+    BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
+    ~BSTNode() { delete left; delete right; } // destruktor rekurencyjny
+    // UWAGA Jeżeli w BSTNode będzie domyślny destruktor postaci
+    // ~BSTNode() = default; lub
+    // ~BSTNode() {}
+    // to wtedy destruktor drzewa i metoda clear() muszą zwolnić pamięć
+    // wszystkich węzłów.
+};
 </pre><hr><pre>
-// Własna funkcja porównująca.
-auto cmp = [] (int left, int right) { return left &gt; right; };
-std::priority_queue&lt;int, std::vector&lt;int&gt;, decltype(cmp) &gt; pq(cmp);
+// Szablon dla przypadkowego drzewa binarnego.
+template &lt;typename T&gt;
+class RandomBinaryTree {
+    BSTNode&lt;T&gt; *root;
+public:
+    RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
+    ~RandomBinaryTree() { delete root; } // trzeba wyczyścić (rekurencyjnie)
+    void clear() { delete root; root = nullptr; }
+    bool empty() const { return root == nullptr; }
+    T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
+    void insert(const T& item) { root = insert(root, item); }
+    //void remove(const T& item); // na razie nie usuwamy elementów
+    // Szukając element dostajemy wskaźnik do elementu lub nullptr.
+    T* search(const T& item) const {
+        auto ptr = search(root, item);
+        return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
+    }
+    T* find_min() const;
+    T* find_max() const;
+    void preorder() { preorder(root); }
+    void inorder() { inorder(root); }
+    void postorder() { postorder(root); }
+    void iter_preorder();
+    void iter_inorder(); // trudne
+    void iter_postorder(); // trudne
+    void bfs(); // przejście poziomami (wszerz)
+    void display() { display(root, 0); }
 
-// https://en.cppreference.com/w/cpp/language/decltype
-// decltype() is useful when declaring types that are difficult
-// or impossible to declare using standard notation, like lambda-related
-// types or types that depend on template parameters. 
+    // Metody bezpośrednio odwołujące się do node.
+    // Mogą działać na poddrzewie.
+    BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
+    BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const;
+    void preorder(BSTNode&lt;T&gt; *node);
+    void inorder(BSTNode&lt;T&gt; *node);
+    void postorder(BSTNode&lt;T&gt; *node);
+    void display(BSTNode&lt;T&gt; *node, int level);
+    virtual void visit(BSTNode&lt;T&gt; *node) {
+        assert(node != nullptr);
+        std::cout &lt;&lt; "visiting " &lt;&lt; node->value &lt;&lt; std::endl;
+    }
+};
 </pre><hr><pre>
-// Wstawianie do kolejki par (priority, item) [jak w Pythonie].
-auto cmp = [] (std::pair&lt;int,float&gt; left, std::pair&lt;int,float&gt; right) {
-    return left.first &lt; right.first; };
-std::priority_queue&lt; std::pair&lt;int,float&gt;,
-    std::vector&lt; std::pair&lt;int,float&gt; &gt;,
-    decltype(cmp) &gt; pq(cmp);
-</pre><hr><pre>
-std::priority_queue&lt;int&gt; pq;
-assert( pq.empty() );
-for (auto item : {1, 5, 4, 2, 3})
-    pq.push(item);   // wstawienie do kolejki
-assert( pq.size() == 5 );
-// Pobranie z kolejki elementu i wypisanie go.
-std::cout &lt;&lt; pq.top() &lt;&lt; std::endl;   // wypisuje, ale nie zdejmuje!
-pq.pop();    // usuwa z kolejki, ale nie zwraca
-assert( pq.size() == 4 );
-while (!pq.empty()) {
-    std::cout &lt;&lt; pq.top() &lt;&lt; std::endl;
-    pq.pop();
+// Wyświetlanie obróconego (counterclockwise) drzewa binarnego.
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T&gt; *node, int level) {
+    if (node == nullptr) return;
+    display(node->right, level + 1);
+    std::cout &lt;&lt; std::string(3 * level, ' ') &lt;&lt; node->value &lt;&lt; std::endl;
+    display(node->left, level + 1);
 }
 </pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/make_heap
-
-// Constructs a max heap in the range [first, last).
-
-template &lt; class RandomIt &gt;
-void make_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void make_heap( RandomIt first, RandomIt last, Compare comp );
+// Druga wersja display() z rysowaniem krawędzi drzewa (Maksymilian Brzozowski).
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T> *node, int level) {
+    if (node == nullptr) return;
+    display(node-&gt;right, level + 1);
+    for (int i = 0; i &lt; level; i++) {
+        std::cout &lt;&lt; "   |";
+    }
+    std::cout &lt;&lt; "---" &lt;&lt; node-&gt;value &lt;&lt; std::endl;
+    display(node-&gt;left, level + 1);
+}
 </pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/push_heap
+#include &lt;cstdlib&gt;   // std::rand(), RAND_MAX, std::srand()
+#include &lt;ctime&gt;
 
-// A new element can be added using std::push_heap().
-// Element na pozycji last-1 jest wstawiany do kopca [first, last-1).
-
-template &lt; class RandomIt &gt;
-void push_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void push_heap( RandomIt first, RandomIt last, Compare comp );
+template &lt;typename T&gt;
+BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
+    if (node == nullptr) {
+        return new BSTNode&lt;T&gt;(item);
+    }
+    std::srand(std::time(nullptr)); // use current time as seed for random generator
+    if (std::rand() % 2) { // można lepiej
+        node->left = insert(node->left, item);
+    } else {
+        node->right = insert(node->right, item);
+    }
+    return node; // zwraca nowy korzeń
+}
 </pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/pop_heap
-
-// The first element can be removed using std::pop_heap().
-// Element z pozycji first jest zamieniany z last-1, a następnie
-// zakres [first, last-1) jest zamieniany na kopiec.
-
-template &lt; class RandomIt &gt;
-void pop_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void pop_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// https://en.cppreference.com/w/cpp/algorithm/sort_heap
-
-// Converts the max heap [first, last) into a sorted range in ascending order.
-// The resulting range no longer has the heap property. 
-
-template &lt; class RandomIt &gt;
-void sort_heap( RandomIt first, RandomIt last );
-
-template &lt; class RandomIt &gt;
-void sort_heap( RandomIt first, RandomIt last, Compare comp );
-</pre><hr><pre>
-// Sortowanie przez kopcowanie, złożoność O(n log n).
-std::vector&lt;int&gt; v = {3, 1, 4, 1, 5, 9};
-std::make_heap(v.begin(), v.end()); // tworzenie kopca
-std::sort_heap(v.begin(), v.end()); // wyjmowanie elementów największych
+template &lt;typename T&gt;
+BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, const T& item) const {
+    if (node == nullptr || node->value == item) {
+        return node;
+    }
+    T* ptr;
+    ptr = search(node->left, item);
+    if (ptr == nullptr) {
+        ptr = search(node->right, item);
+    }
+    return ptr;
+}
 </pre><hr>
+
+<h3>PRZECHODZENIE PO DRZEWIE WSZERZ (BFS)</h3>
+
+<p>Przechodzenie wszerz polega na odwiedzeniu korzenia, potem
+na przechodzeniu poziomami. Poziomy są przechodzone w kolejności
+od najbliższych do najdalszych, a w ramach poziomu węzły są
+odwiedzane od lewej do prawej.
+W implementacji wykorzystuje się kolejkę.
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::bfs() {
+    if (root == nullptr) return;
+    std::queue&lt;BSTNode&lt;T&gt;*&gt; Q; // wskaźniki do wezłów
+    BSTNode *node = root;
+    Q.push(node);
+    while (!Q.empty()) {
+        node = Q.front(); // podglądamy
+        Q.pop();        // usuwamy z kolejki
+        visit(node); // tu jest właściwe przetworzenie węzła
+        if (node->left != nullptr)
+            Q.push(node->left); // pierwsze wyjdzie lewe, potem prawe
+        if (node->right != nullptr)
+            Q.push(node->right);
+    }
+}
+</pre><hr>
+
+<h3>PRZECHODZENIE PO DRZEWIE W GŁĄB</h3>
+
+<p>Podczas przechodzenia w głąb przechodzimy możliwie daleko 
+w lewo (lub w prawo), następnie wracamy do najbliższego rozwidlenia
+i przechodzimy jeden krok w prawo (lub w lewo).
+Czynności powtarzamy, aż odwiedzimy wszystkie węzły.
+Moment odwiedzania węzła może być wybrany na kilka sposobów,
+stąd pochodzą trzy podstawowe odmiany przechodzenia:
+
+<ul>
+<li>przechodzenie z wyprzedzeniem (ang. preorder),
+<li>przechodzenie bezpośrednie (ang. inorder),
+<li>przechodzenie z opóźnieniem (ang. postorder).
+</ul>
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::inorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    inorder(node->left);
+    visit(node);
+    inorder(node->right);
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::preorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    visit(node);
+    preorder(node->left);
+    preorder(node->right);
+}
+</pre><hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::postorder(BSTNode&lt;T&gt; *node) {
+    if (node == nullptr) return;
+    postorder(node->left);
+    postorder(node->right);
+    visit(node);
+}
+</pre><hr>
+
+<p>Przechodzenie przez drzewo w kolejności preorder możemy 
+zaimplementować iteracyjnie za pomocą stosu. 
+
+<hr><pre>
+template &lt;typename T&gt;
+void RandomBinaryTree&lt;T&gt;::iter_preorder() {
+    if (root == nullptr) return;
+    std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskaźniki do węzłów
+    BSTNode&lt;T&gt; *node = root;
+    S.push(node);
+    while (!S.empty()) {
+        node = S.top(); // podglądamy
+        S.pop();        // usuwamy ze stosu
+        visit(node); // tu jest właściwe przetworzenie węzła
+        if (node->right != nullptr) // najpierw prawe poddrzewo!
+            S.push(node->right);
+        if (node->left != nullptr)
+            S.push(node->left);
+    }
+}
+</pre><hr>
+
+<p>Iteracyjne wersje inorder() i postorder() są bardziej skomplikowane
+[Drozdek].
 
 <h3>ZADANIE 9.1</h3>
 
-<p>Przygotować implementację realizującą ADT PRIORITY QUEUE 
-na bazie std::vector i kopca z STL.
-Wydajność: wstawianie O(log n), usuwanie O(log n), odczyt największego O(1).
-
-<hr><pre>
-#include &lt;vector&gt;
-#include &lt;algorithm&gt;   // make_heap, push_heap, pop_heap
-
-template &lt;typename T&gt;
-class MyPriorityQueue {
-    std::vector&lt;T&gt; lst; // działa domyślny konstruktor dla std::vector
-public:
-    MyPriorityQueue(std::size_t s=10) { lst.reserve(s); } // default constructor
-    ~MyPriorityQueue() { lst.clear(); }
-    MyPriorityQueue(const MyPriorityQueue& other); // copy constructor
-    MyPriorityQueue(MyPriorityQueue&amp;&amp; other); // move constructor
-    MyPriorityQueue& operator=(const MyPriorityQueue& other); // copy assignment operator, return *this
-    MyPriorityQueue& operator=(MyPriorityQueue&amp;&amp; other); // move assignment operator, return *this
-    bool empty() const { return lst.empty(); }
-    std::size_t size() const { return lst.size(); } // liczba elementów w kolejce
-    void push(const T& item) { // dodanie do kolejki
-        lst.push_back(item);
-        std::push_heap(lst.begin(), lst.end());
-    }
-    void push(T&amp;&amp; item) { // dodanie do kolejki
-        lst.push_back(std::move(item));
-        std::push_heap(lst.begin(), lst.end());
-    }
-    T& top() { return lst.front(); } // zwraca element największy, nie usuwa
-    void pop() { // usuwa element największy
-        std::pop_heap(lst.begin(), lst.end());
-        lst.pop_back();
-    }
-    void clear() { lst.clear(); } // czyszczenie listy z elementów
-    void display(); // nie oczekujemy jakiegoś uporządkowania elementów
-};
-</pre><hr>
+<p>Napisać funkcję calc_leaves(), która zlicza liście drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 9.2</h3>
 
-<p>Przygotować implementację realizującą ADT PRIORITY QUEUE 
-nie korzystającą z kopca z STL, tylko własnych funkcji.
-Wydajność: wstawianie O(log n), usuwanie O(log n), odczyt największego O(1).
+<p>Załóżmy, że drzewo binarne przechowuje liczby. 
+Napisać funkcję calc_total(), która podaje sumę liczb przechowywanych w drzewie. 
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 9.3</h3>
 
-<p>Przygotować prostą implementację realizującą ADT PRIORITY QUEUE 
-na bazie listy powiązanej pojedynczo. Lista jest stale uporządkowana, 
-a największy element znajduje się na początku listy. 
-Można wykorzystać klasę SingleList lub std::forward_list.
-Wydajność: wstawianie O(n), usuwanie O(1), odczyt największego O(1).
+<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
+najmniejszą i największą w drzewie binarnym.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
 
 <h3>ZADANIE 9.4</h3>
 
-<p>Przygotować prostą implementację realizującą ADT PRIORITY QUEUE 
-na bazie tablicy. Tablica nie jest uporządkowana. 
-Wstawiamy nowy element na koniec tablicy.
-Przy usuwaniu elementu największego znajdujemy jego indeks, 
-zamieniamy go miejscami z ostatnim elementem i skracamy tablicę jak dla stosu. 
-Wydajność: wstawianie O(1), usuwanie O(n), odczyt największego O(n).
+<p>Napisać funkcję calc_height() obliczającą wysokość drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+Wskazówka: w wersji iteracyjnej na stos można odkładać parę 
+(węzeł, poziom węzła), poziom korzenia wynosi 1.
+
+<h3>ZADANIE 9.5</h3>
+
+<p>Napisać funkcję calc_nodes() znajdującą liczbę węzłów drzewa binarnego.
+Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

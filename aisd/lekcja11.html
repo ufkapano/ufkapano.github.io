@@ -9,260 +9,246 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (11) - drzewa BST</h1>
+<h1>AiSD (11) - drzewa AVL</h1>
 
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+<p>OBOWIĄZKOWE DO PRZESŁANIA: 11.1 lub 11.2
 
 <h3>WPROWADZENIE</h3>
 
-<p>W drzewach BST (ang. Binary Search Tree, binarne drzewo poszukiwań)
-przeglądanie wierzchołków w kolejności inorder
-daje elementy posortowane niemalejąco. 
-Aby to uzyskać trzeba wstawiać elementy do drzewa w następujący sposób:
+<p>Drzewo AVL jest to zrównoważone binarne drzewo poszukiwań (BST), 
+w którym wysokość lewego i prawego poddrzewa każdego węzła różni się 
+co najwyżej o jeden. 
+Drzewo wynaleźli w roku 1962 dwaj rosyjscy matematycy
+Georgy Adelson-Velsky i Evgenii Landis.
+Każdemu węzłowi można przypisać współczynnik wyważenia (ang. balance factor),
+który jest równy różnicy wysokości prawego i lewego poddrzewa.
+W drzewie zrównoważonym współczynnik wyważenia może wynosić -1,0,+1.
+Przy wstawianiu elementu do drzewa lub usuwaniu elementu współczynnik
+może chwilowo przyjąć niedozwoloną wartość, ale wtedy wykonuje się
+pewną liczbę rotacji, które przywracają zrównoważenie drzewa.
 
-<ul>
-<li>Jeżeli łącze jest puste, to tworzymy węzeł z elementem.
-<li>Jeżeli łącze nie jest puste, to porównujemy wstawiany element 
-z elementem przechowywanym w węźle. Elementy mniejsze umieszczamy są 
-w lewym podrzewie, a większe lub równe w prawym poddrzewie.
-W pewnych rozwiązaniach duplikaty są ignorowane.
-</ul>
+<p>Minimalna liczba węzłów w drzewie AVL o wysokości h jest określona
+równaniem rekurencyjnym:
+<br>AVL(h) = AVL(h-1) + AVL(h-2) + 1,
+<br>gdzie AVL(0) = 0, AVL(1) = 1, są to liczby Leonardo.
+Stąd otrzymujemy ograniczenie wysokości drzewa h w zależności
+od liczby węzłów n:
+<br>lg(n+1) &lt;= h &lt; 1.44 lg(n+2) - 0.328.
 
-<p>Koszt wykonania podstawowych operacji w drzewie BST 
-(insert, search, remove) jest rzędu O(h), gdzie h jest wysokością drzewa.
-Jeżeli drzewo BST jest zrównoważone, wtedy h ~ log(n).
-W przypadku zdegenerowanym h = n.
+<p>Liczby Fibonacciego: F(n) = F(n-1) + F(n-2), F(0) = 0, F(1) = 1.
+<br>[AVL(h) + 1] = [AVL(h-1) + 1] + [AVL(h-2) + 1],
+<br>stąd AVL(h) + 1 = F(h+2), a na F(n) mamy zwarty wzór.
 
 <hr><pre>
-// Szablon dla binarnego drzewa poszukiwań.
+| https://en.wikipedia.org/wiki/AVL_tree
+| Algorithm | Average  | Worst case |
+| Space     | O(n)     | O(n)       |
+| Search    | O(log n) | O(log n)   |
+| Insert    | O(log n) | O(log n)   |
+| Delete    | O(log n) | O(log n)   |
+</pre><hr><pre>
+| https://www.geeksforgeeks.org/avl-tree-set-1-insertion/
+| Przykładowe drzewo AVL, w nawiasach współczynniki wyważenia.
+| balance_factor(node) = height(node->right) - height(node->left)
+|             12(-1)         |
+|            /      \        |
+|        8(-1)       18(-1)  |
+|        /   \        /      |
+|    5(-1)  11(0)   17(0)    |
+|    /                       |
+| 4(0)                       |
+</pre><hr>
+
+<h3>WYSZUKIWANIE (SEARCH)</h3>
+
+<p>Wyszukiwanie działa jak w zwykłym drzewie BST.
+
+<h3>PRZECHODZENIE (TRAVERSAL)</h3>
+
+<p>Wyszukanie następnika lub poprzednika danego węzła zajmuje 
+w najgorszym przypadku czas O(h) = O(log n). 
+Przejście przez wszystkie węzły drzewa BST wymaga
+przejścia przez każde łącze dwa razy (w dół i w górę), łączy jest n-1,
+więc łączny czas wynosi O(n). Czas zamortyzowany znajdowania
+poprzednika lub następnika w drzewie AVL wynosi 2x(n-1)/n,
+a więc w przybliżeniu 2.
+
+<h3>WSTAWIANIE (INSERT)</h3>
+
+<p>W pierwszym etapie wstawiamy element tak jak w zwykłym drzewie BST.
+Dalej należy uaktualnić współczynniki wyważenia rodziców.
+Wstawienie jednego węzła może zmienić wysokość poddrzewa co najwyżej o jeden,
+a współczynnik po wstawieniu może być w zakresie [-2, +2].
+Jeżeli po wstawieniu współczynniki są w zakresie [-1, +1],
+to nie są potrzebne rotacje.
+Jeżeli współczynnik danego węzła osiągnie wartość -2 lub +2,
+to potrzebne są rotacje poddrzewa o korzeniu w tym węźle.
+
+<p>Zauważmy, że idąc od wstawionego węzła w górę wystarczy znaleźć
+pierwszy węzeł, dla którego balance zmienił się na +2 lub -2.
+Po wykonaniu rotacji nie są potrzebne zmiany powyżej tego węzła.
+
+<p>Jeżeli idąc w górę od wstawionego węzła trafimy na węzeł, którego
+balance zmienił się na 0, to nie ma potrzeby iść wyżej i robić zmian.
+
+<hr><pre>
+|Wstawienie do prawego poddrzewa prawego dziecka.   |
+|  X(+1)        X(+2)           Y(0)                |
+|  /   \        /   \          /   \                |
+| A   Y(0)     A   Y(+1)     X(0)  C(-1)            |
+|     / \         /   \      / \    /               |
+|    B   C       B   C(-1)  A   B  D                |
+|                    /                              |
+|                   D                               |
+|Potrzebna rotacja w lewo (X) - L.                  |
+|Końcowa wysokość drzewa jest taka jak początkowa.  |
+|Zmiana wysokości poddrzewa nie propaguje się wyżej.|
+|Tak będzie również w pozostałych przypadkach.      |
+</pre><hr><pre>
+|Wstawienie do prawego poddrzewa prawego dziecka.   |
+|  X(+1)        X(+2)           Y(0)                |
+|  /   \        /   \          /   \                |
+| A   Y(0)     A   Y(+1)     X(0)  C(+1)            |
+|     / \         /   \      / \      \             |
+|    B   C       B   C(+1)  A   B      D            |
+|                       \                           |
+|                        D                          |
+|Potrzebna rotacja w lewo (X) - L.                  |
+</pre><hr><pre>
+|Wstawienie do lewego poddrzewa prawego dziecka.     |
+|  X(+1)        X(+2)        X(+2)           B(0)    |
+|  /   \        /   \        /   \          /   \    |
+| A   Y(0)     A   Y(-1)    A   B(+2)    X(-1)  Y(0) |
+|     / \         /   \            \      /     / \  |
+|    B   C      B(+1)  C           Y(0)  A     D   C |
+|                 \                / \               |
+|                  D              D   C              |
+|Potrzebna rotacja w prawo (Y) i w lewo (X) - RL.    |
+</pre><hr><pre>
+|Wstawienie do lewego poddrzewa prawego dziecka.     |
+|  X(+1)        X(+2)        X(+2)           B(0)    |
+|  /   \        /   \        /   \          /   \    |
+| A   Y(0)     A   Y(-1)    A   B(+1)    X(0)  Y(+1) |
+|     / \         /   \         /  \      / \     \  |
+|    B   C      B(-1)  C       D  Y(+1)  A   D     C |
+|               /                    \               |
+|              D                      C              |
+|Potrzebna rotacja w prawo (Y) i w lewo (X) - RL.    |
+</pre><hr><pre>
+|Wstawienie do lewego poddrzewa lewego dziecka.     |
+|    X(-1)        X(-2)           Y(0)              |
+|    /   \        /   \          /   \              |
+|  Y(0)   C    Y(-1)   C     A(-1)   X(0)           |
+|  / \         /   \          /      / \            |
+| A   B      A(-1)  B        D      B   C           |
+|            /                                      |
+|           D                                       |
+|Potrzebna rotacja w prawo (X) - R.                 |
+</pre><hr><pre>
+|Wstawienie do lewego poddrzewa lewego dziecka.     |
+|    X(-1)        X(-2)           Y(0)              |
+|    /   \        /   \          /   \              |
+|  Y(0)   C    Y(-1)   C     A(+1)   X(0)           |
+|  / \         /   \            \    / \            |
+| A   B      A(+1)  B            D  B   C           |
+|               \                                   |
+|                D                                  |
+|Potrzebna rotacja w prawo (X) - R.                 |
+</pre><hr><pre>
+|Wstawienie do prawego poddrzewa lewego dziecka.    |
+|    X(-1)        X(-2)        X(-2)       B(0)     |
+|    /   \        /   \        /   \       /  \     |
+|  Y(0)   C    Y(+1)   C   B(-2)    C   Y(0)  X(+1) |
+|  / \         /   \        /           / \      \  |
+| A   B       A  B(-1)    Y(0)         A   D      C |
+|                 /       / \                       |
+|                D       A   D                      |
+|Potrzebna rotacja w lewo (Y) i w prawo (X) - LR.   |
+</pre><hr><pre>
+|Wstawienie do prawego poddrzewa lewego dziecka.    |
+|    X(-1)        X(-2)        X(-2)       B(0)     |
+|    /   \        /   \        /   \       /  \     |
+|  Y(0)   C    Y(+1)   C    B(-2)   C   Y(-1)  X(0) |
+|  / \         /  \         /  \         /     / \  |
+| A   B       A  B(+1)   Y(-1)  D       A     D   C |
+|                   \     /                         |
+|                    D   A                          |
+|Potrzebna rotacja w lewo (Y) i w prawo (X) - LR.   |
+</pre><hr>
+
+<h3>USUWANIE (DELETE)</h3>
+
+<p>Usuwanie węzła może być bardziej czasochłonne niż wstawianie.
+
+<h3>IMPLEMENTACJA DRZEWA AVL</h3>
+
+<hr><pre>
+// Szablon dla węzła drzewa AVL.
 template &lt;typename T&gt;
-class BinarySearchTree {
-    BSTNode&lt;T&gt; *root;
+struct AVLNode {
+// the default access mode and default inheritance mode are public
+    T value;
+    int balance;
+    AVLNode *left, *right, *parent;
+    // kostruktor domyślny
+    AVLNode() : value(T()), balance(0),
+        left(nullptr), right(nullptr), parent(nullptr) {}
+    AVLNode(const T& item, AVLNode *p) : value(item), balance(0),
+        left(nullptr), right(nullptr), parent(p) {}
+    ~AVLNode() { delete left; delete right; } // destruktor
+};
+</pre><hr><pre>
+// Szablon dla drzewa AVL.
+template &lt;typename T&gt;
+class AVLTree {
 public:
-    BinarySearchTree() : root(nullptr) {} // konstruktor domyślny
-    ~BinarySearchTree() { delete root; } // trzeba wyczyścić
+    AVLTree() : root(nullptr) {}
+    ~AVLTree() { delete root; } // trzeba wyczyścić
     void clear() { delete root; root = nullptr; }
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
-    void insert(const T& item) { root = insert(root, item); }
-    void remove(const T& item); // usuwanie przez złączanie
-    // Szukając element dostajemy wskaźnik do elementu lub nullptr.
+    bool insert(const T& item);
+    void remove(const T& item);
     T* search(const T& item) const {
         auto ptr = search(root, item);
         return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
     }
-    T* iter_search(const T& item) const { // wg libavl
-        for (auto node=root; node != nullptr; ) {
-            if (item == node->value) {
-                return &amp;(node->value);
-            } else if (item &lt; node->value) {
-                node = node->left;
-            } else {
-                node = node->right;
-            }
-        }
-        return nullptr;
-    }
-    T* find_min() const;
-    T* find_max() const;
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
-    void iter_preorder();
-    void iter_inorder(); // trudne
-    void iter_postorder(); // trudne
     void bfs(); // przejście poziomami (wszerz)
+    T* find_max() const;
+    T* find_min() const;
     void display() { display(root, 0); }
-
-    // Metody bezpośrednio odwołujące się do node.
-    // Mogą działać na poddrzewie.
-    BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
-    BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const; // zwraca węzeł
-    BSTNode&lt;T&gt; * remove(BSTNode&lt;T&gt; *node); // zwraca nowy korzeń poddrzewa
-    void preorder(BSTNode&lt;T&gt; *node);
-    void inorder(BSTNode&lt;T&gt; *node);
-    void postorder(BSTNode&lt;T&gt; *node);
-    void display(BSTNode&lt;T&gt; *node, int level);
-    virtual void visit(BSTNode&lt;T&gt; *node) {
+    virtual void visit(AVLNode&lt;T&gt; *node) {
         assert(node != nullptr);
         std::cout &lt;&lt; "visiting " &lt;&lt; node->value &lt;&lt; std::endl;
     }
-};
-</pre><hr><pre>
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
-    if (node == nullptr) {
-        return new BSTNode&lt;T&gt;(item);
-    }
-    if (item &lt; node->value) {
-        node->left = insert(node->left, item);
-    } else {
-        node->right = insert(node->right, item);
-    }
-    return node; // zwraca nowy korzeń
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, const T& item) const {
-    if (node == nullptr || node->value == item) {
-        return node;
-    } else if (item &lt; node->value) {
-        return search(node->left, item);
-    } else {
-        return search(node->right, item);
-    }
-}
+private:
+// uzupełnić ...
 </pre><hr>
-
-<h3>ROTACJE DRZEWA BST</h3>
-
-<p>Rotacja drzewa (ang. tree rotation) jest operacją na drzewie BST,
-która zmienia jego lokalną strukturę bez zmiany kolejności elementów,
-przy przechodzeniu przez drzewo BST metodą inorder.
-Wyróżnia się dwie symetryczne operacje: rotacja w prawo i rotacja w lewo.
-
-<hr><pre>
-|     X     --[w prawo]-o    Y     |
-|    / \                    / \    |
-|   Y   C   o-[w lewo]--   A   X   |
-|  / \                        / \  |
-| A   B                      B   C |
-</pre><hr><pre>
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_right(BSTNode&lt;T&gt; *node) {
-    if (node->left == nullptr)
-        return node; // bez zmian
-    BSTNode&lt;T&gt; *top = node; // węzeł X
-    node = top->left; // węzeł Y
-    top->left = node->right; // przepinamy węzeł B
-    node->right = top; // przepinamy węzeł X
-    return node; // zwracamy węzeł Y
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node) {
-    if (node->right == nullptr)
-        return node; // bez zmian
-    BSTNode&lt;T&gt; *top = node; // węzeł Y
-    node = top->right; // węzeł X
-    top->right = node->left; // przepinamy węzeł B
-    node->left = top; // przepinamy węzeł Y
-    return node; // zwracamy węzeł X
-}
-</pre><hr>
-
-<h3>USUWANIE PRZEZ ZŁĄCZANIE</h3>
-
-<hr><pre>
-template &lt;typename T&gt;
-void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez złączanie
-    // Najpierw znajdujemy węzeł i jego rodzica.
-    BSTNode&lt;T&gt; *node = root;
-    BSTNode&lt;T&gt; *prev = nullptr;
-    while (node != nullptr) {
-        if (node->value == item)
-            break;
-        prev = node;
-        if (item &lt; node->value) {
-            node = node->left;
-        } else {
-            node = node->right;
-        }
-    }
-    // Szukamy przyczyny przerwania pętli while.
-    if (node != nullptr && node->value == item) {
-        // node ma być usunięty.
-        if (node == root) {
-            root = remove(node);
-        } else if (prev->left == node) {
-            prev->left = remove(node);
-        } else {
-            prev->right = remove(node);
-        }
-    } else if (root != nullptr) {
-        ; // klucza nie znaleziono
-    } else { // root == nullptr
-        ; // drzewo jest puste
-    }
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
-    // Mamy usunąć węzeł i zwrócić nowy korzeń poddrzewa.
-    assert(node != nullptr);
-    BSTNode&lt;T&gt; *new_root;
-    if (node->right == nullptr) { // node nie ma prawego dziecka
-        new_root = node->left;
-    } else if (node->left == nullptr) { // node nie ma lewego dziecka
-        new_root = node->right;
-    } else { // obecne lewe i prawe dziecko
-        new_root = node; // zapisujemy stary korzeń
-        node = node->left; // idziemy w lewo
-        while (node->right != nullptr) { // idziemy w prawo do końca
-            node = node->right;
-        }
-        node->right = new_root->right; // prawe poddrzewo przełączone
-        node = new_root; // węzeł do usunięcia
-        new_root = node->left; // nowy korzeń
-    }
-    delete node;
-    return new_root;
-}
-</pre><hr><pre>
-|      X                      Usuwamy węzeł X.
-|    /   \               Nowym korzeniem poddrzewa będzie Y.
-|   Y     C       Y         Z jest poprzednikiem X.
-|  / \           / \
-| A   Z         A   Z
-|    /             / \
-|   B             B   C
-</pre><hr>
-
-<h3>ALGORYTM DSW</h3>
-
-<p>https://en.wikipedia.org/wiki/Day%E2%80%93Stout%E2%80%93Warren_algorithm
-
-<p>Algorytm DSW (Day, Stout, Warren) służy do zrównoważenia drzewa BST.
-Algorytm działa w miejscu i w czasie O(n).
 
 <h3>ZADANIE 11.1</h3>
 
-<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
-najmniejszą i największą w drzewie BST.
-Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
+<p>https://rosettacode.org/wiki/AVL_tree#C.2B.2B
+
+<p>Zapoznać się z implementacją drzewa AVL z serwisu <em>rosettacode.org</em>.
+Dostosować kod do standardu C++11 (zamiana NULL na nullptr).
+Dodać pozostałe funkcje zdefinowane dla drzew BST.
+Funkcja display() powinna wyświetlać dodatkowo współczynnik wyważenia.
 
 <h3>ZADANIE 11.2</h3>
 
-<p>Napisać funkcję find_successor() znajdujący następnik danego
-węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
-Węzły powinny posiadać łącze do rodzica.
+<p>Napisać funkcję sprawdzającą poprawność drzewa AVL.
+Można obliczać wysokość drzewa AVL sprawdzając przy okazji,
+czy współczynnik wyważenia ma dozwoloną wartość (-1, 0, +1).
 
 <h3>ZADANIE 11.3</h3>
 
-<p>Napisać funkcję find_predecessor() znajdujący poprzednik danego
-węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
-Węzły powinny posiadać łącze do rodzica.
+<p>https://adtinfo.org/
 
-<h3>ZADANIE 11.4</h3>
-
-<p>Napisać funkcję sprawdzającą, czy drzewo binarne jest drzewem BST.
-Nie wystarczy sprawdzić dla każdego węzła, czy zachodzi 
-node-&gt;left-&gt;value &lt;= node-&gt;value, oraz 
-node-&gt;value &lt;= node-&gt;right-&gt;value. 
-Musimy do węzła przekazać informację od rodzica o ograniczeniach 
-na wartość przechowywaną w węźle.
-
-<hr><pre>
-|       5          Przykład drzewa binarnego, które nie jest drzewem BST.
-|     /   \        Wartość 6 jest większa od 3, ale nie jest mniejsza od 5.
-|   3       8
-|  / \     / \
-| 1   6   7   9
-</pre><hr>
-
-<h3>ZADANIE 11.5</h3>
-
-<p>Zaimplementować algorytm DSW.
+<p>Zapoznać się z biblioteką <em>libavl</em> (Ben Pfaff), która jest
+napisana w ANSI/ISO C89 z użyciem TexiWEB (literate programming).
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

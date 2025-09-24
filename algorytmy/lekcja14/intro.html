@@ -6,305 +6,164 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Rodzaje grafów</h1>
+<h1>Grupy abstrakcyjne</h1>
 
-<p>https://en.wikipedia.org/wiki/Seven_Bridges_of_K%C3%B6nigsberg
+<p>https://en.wikipedia.org/wiki/Group_theory
+
+<p>https://en.wikipedia.org/wiki/Computational_group_theory
 
 <h3>WPROWADZENIE</h3>
 
-<p>W wielu problemach spotykamy się z sytuacją, w której
-mamy do czynienia z pewnym zbiorem elementów, ale też
-z pewnym układem połączeń między parami tych elementów.
-Wtedy mogą pojawić się naturalne pytania.
-Czy istnieje droga między dwoma wyróżnionymi elementami,
-wykorzystująca istniejące połączenia?
-Ile elementów jest osiągalnych z wyróżnionego elementu?
-Jaka jest najkrótsza droga pomiędzy parą wyróżnionych elementów?
-Do modelowania takich sytuacji używamy abstrakcyjnych obiektów
-zwanych grafami (ang. graphs). Badaniem własności grafów zajmuje się
-teoria grafów, która jest działem matematyki i informatyki.
+<p>Badaniem własności grup zajmuje się teoria grup,
+która jest działem matematyki.
 
-<p>Przykłady zastosowań grafów.
+<h3>DEFINICJA GRUPY</h3>
 
-<ul>
-<li>Mapy - połączenia drogowe, kolejowe, lotnicze między miastami.
-<li>Dokumenty hipertekstowe.
-<li>Obwody elektryczne.
-<li>Planowanie - procesy produkcyjne, prace budowlane.
-<li>Transakcje - sieci rozmów telefonicznych, transakcje kupna-sprzedaży.
-<li>Sieci - sieci komputerowe, badanie odporności na uszkodzenia.
-<li>Struktura programu - struktura wywołań funkcji.
-<li>Relacje między ludźmi - zależności służbowe w firmie,
-znajomi na portalach społecznościowych.
-</ul>
+<p>Niech G będzie zbiorem niepustym, a * działaniem w G.
+Parę (G,*) nazywamy grupą, jeżeli spełnione są warunki:
+<br>(i) działanie * jest łączne, czyli 
+dla każdego a, b, c &in; G mamy (a*b)*c = a*(b*c)
+[można więc pisać a*b*c].
+<br>(ii) istnieje element neutralny (jednostkowy) e &in; G taki, że
+dla każdego a &in; G mamy e*a = a*e = a.
+<br>(iii) dla każdego a &in; G istnieje element odwrotny ~a taki, że
+a*(~a) = (~a)*a = e.
 
-<p>Kilka uwag ogólnych.
+<p>Jeżeli działanie * jest przemienne (a*b = b*a),
+to grupę (G,*) nazywamy przemienną (abelową).
+Często działanie w grupie abelowej oznacza się znakiem plus,
+a samą grupę przez (G,+).
 
-<ul>
-<li>Grafy spotykane w praktycznych zastosowaniach mogą być ogromne, 
-stąd wielka rola wydajnych algorytmów.
+<p>Twierdzenie. Niech (G,*) będzie grupą. Wtedy zachodzi:
+<br>(i) dla każdego a &in; G mamy ~(~a) = a.
+<br>(ii) dla każdego a, b &in; G mamy ~(a*b) = (~b)*(~a).
 
-<li>Wydajność algorytmów zależy nie tylko od własności zbioru
-elementów grafu, ale także od własności zbioru połączeń między
-tymi elementami, oraz od globalnych własności grafu,
-które są implikowane przez te połączenia.
+<p>Rząd grupy G jest to liczba elementów w grupie. Oznaczenie |G|.
+<br>Rząd ord(a) elementu a &in; G jest to najmniejsza liczba naturalna k
+taka, że a^k = e.
+<br>Dla każdego a &in; G zachodzi a^|G| = e, oraz ord(a) jest dzielnikiem |G|.
 
-<li>Trudno jest precyzyjnie zdefiniować modele grafów,
-jakie możemy spotkać w rzeczywistości.
-</ul>
+<p>Jeżeli grupa G zawiera element g taki, że ord(g) = |G| = n,
+to taką grupę nazywamy 'grupą cykliczną' (oznaczenie C_n).
+Element g nazywa się 'generatorem' grupy cyklicznej.
 
-<h3>PODSTAWOWE DEFINICJE</h3>
+<p>Podgrupa (subgroup) H grupy G jest to para (H,*),
+gdzie H jest podzbiorem G, * to działanie w G,
+a (H,*) jest grupą.
+H jest podgrupą właściwą, jeżeli 1 &lt; |H| &lt; |G|.
 
-<p>Grafem G nazywamy parę (V,E), 
-gdzie V to niepusty i skończony zbiór wierzchołków, 
-a E to skończony zbiór krawędzi, czyli par wierzchołków z V &times; V.
-Symbolem n=|V| będziemy oznaczać liczbę wierzchołków,
-a symbolem m=|E| liczbę krawędzi.
-Wyróżnia się dwa główne typy grafów:
+<h3>HOMOMORFIZM</h3>
 
-<ul>
-<li><em>Graf skierowany (ang. directed graph, digraph)</em>. 
-Krawędź (a,b) ma kierunek od a do b,
-czyli jest to para uporządkowana.
-Na rysunku istnieje strzałka od a do b.
-Inne oznaczenia krawędzi to a-b lub ab.
+<p>Homomorfizm dwóch grup (group homomorphism)
+[f: G &rarr; G'; f(a*b) = f(a)*f(b) dla każdego a, b &in; G].
+Jądro homomorfizmu [Ker(f) = f^{-1}({e'})].
 
-<li><em>Graf nieskierowany (ang. undirected graph)</em>. 
-Krawędź (a,b) jest równoważna krawędzi (b,a),
-czyli pary wierzchołków nie są uporządkowane.
-Na rysunku istnieje linia bez strzałek pomiędzy a i b.
-Można przyjąć, że w grafie nieskierowanym zawsze jednocześnie istnieją 
-pary uporządkowane (a,b) i (b,a).
+<p>Izomorfizm = homomorfizm + bijekcja.
 
-<br>Formalnie można wprowadzić relację równoważności w zbiorze par z VxV: 
-(a,b)R(c,d) wtw (a=c i b=d) lub (a=d i b=c).
-Wtedy dostaniemy klasy równoważności par które będą krawędziami;
-pętla [(a,a)]_R = {(a,a)};
-dla a &ne; b mamy [(a,b)]_R = {(a,b), (b,a)}.
+<p><strong>Twierdzenie Cayley'a:</strong>
+Każda grupa G rzędu n jest izomorficzna z pewną podgrupą
+grupy symetrycznej S_n.
 
-</ul>
+<h3>WARSTWY (COSETS)</h3>
 
-<h3>NAZEWNICTWO</h3>
+<p>Niech G to grupa, a A i B zbiory zawarte w G. Określamy
+<br>AB := {ab : a &in; A, b &in; B},
+<br>~A := {~a : a &in; A}.
+<br>Jeżeli b &in; G, to
+<br>bA := {b}A,
+<br>Ab := A{b}.
 
-<ul>
-<li>Wierzchołek (vertex; vertices), 
-węzeł (node; używane dla reprezentacji grafu), 
-punkt (point).
+<p>Dla niepustego A mamy własności:
+<br>(i) AG = GA = G,
+<br>(ii) ~G = G,
+<br>(iii) eA = Ae = A.
 
-<li>Krawędź (edge), linia (line), łuk (arc; w grafach skierowanych), 
-wiązanie (link; używane do struktur danych).
+<p>Niech H podgrupa G. Można zdefiniować relację równoważności:
+<br>a~~b wtw, gdy a(~b) &in; H.
+<br>Stąd dostaniemy klasy równoważności 
+<br>[a] = [b: b~~a] = [b: b(~a) &in; H] = [b: b &in; Ha] = Ha 
+(warstwa prawostronna; zbiór).
+<br>Podobnie można zdefiniować inną relację równoważności
+<br>a~~b wtw, gdy (~a)b &in; H.
+<br>Stąd dostaniemy klasy równoważności [a] = aH (warstwa lewostronna).
+Można rozłożyć G na rozłączne warstwy o <em>równej długości</em>
+G = H + aH + bH + ... + pH (dla grupy G skończonej).
+The cosets of any subgroup H form a partition of G.
 
-<li>Podgrafem (ang. subgraph) nazywamy taki podzbiór wierzchołków
-i krawędzi danego grafu, który tworzy graf.
+<p><strong>Twierdzenie Lagrange'a.</strong>
+Rząd podgrupy H jest podzielnikiem rzędu grupy G.
 
+<h3>PODGRUPA NIEZMIENNICZA, GRUPA ILORAZOWA</h3>
 
-<li>Dwa grafy są izomorficzne (ang. isomorfic), jeżeli w wyniku
-zamiany etykiet wierzchołków w jednym grafie otrzymamy układ
-krawędzi identyczny jak w drugim.
-Rozstrzygnięcie, czy dwa grafy są izomorficzne, czy nie, jest
-skomplikowanym problemem obliczeniowym.
-</ul>
+<p>Podgrupa H grupy G jest podgrupą niezmienniczą 
+(dzielnikiem normalnym, normal subgroup), 
+jeżeli aH = Ha dla każdego a &in; G 
+[równość w sensie zbiorów!].
+<br>Jeżeli H jest dzielnikiem normalnym, to dla każdego a &in; G zachodzi
+aH(~a) = H [tak można sprawdzać, że K jest dzielnikiem normalnym].
 
+<p>W zbiorze warstw można wprowadzić działanie [a]*[b] = [ab].
+Wtedy para (G/H,*) to grupa ilorazowa (quotient group or factor group), 
+a jej rząd to |G|/|H|.
 
-<h3>GRAFY SKIEROWANE</h3>
+<h3>KLASY ELEMENTÓW SPRZĘŻONYCH</h3>
 
 <ul>
-<li>Pętla (ang. self-loop) jest to krawędź łącząca wierzchołek
-z samym sobą, czyli krawędź typu (a,a).
+<li>W grupie G określamy relację równoważności 
+(przydaje się przy reprezentacjach):
+<br>a~~b wtw, gdy istnieje c &in; G takie, że cb(~c) = a (a jest sprzężone do b).
+<br>Możemy podzielić grupę G na rozłączne klasy równoważności
+(zwykle o różnej liczności).
 
-<li>Graf prosty (ang. simple graph) nie ma pętli i krawędzi 
-wielokrotnych (równoległych).
-Mówimy po prostu graf (bez przymiotników), choć niektórzy autorzy
-przez graf rozumieją ogólnie multigraf.
+<li>Element komutujący ze wszystkimi elementami grupy G stanowi
+odrębną klasę (np. element jednostkowy e)
+[a = cb(~c) = bc(~c) = be = b, ten sam element].
 
-<li>Krawędź (a,b) jest <em>wychodząca</em> z wierzchołka a
-i <em>wchodząca</em> do wierzchołka b.
+<li>Wszystkie elementy klasy elementów sprzężonych mają ten sam rząd.
 
-<li><em>Stopień wejściowy</em> wierzchołka (ang. indegree)
-jest liczbą krawędzi do niego wchodzących.
-<em>Stopień wyjściowy</em> wierzchołka (ang. outdegree)
-jest liczbą krawędzi wychodzących z niego.
-<em>Stopniem</em> wierzchołka w grafie skierowanym nazywamy liczbę
-będącą sumą jego stopni: wejściowego i wyjściowego.
-
-<li>Cormen pisze (str. 1194), że jeżeli w grafie istnieje
-krawędź (a,b) to wierzchołek b jest sąsiedni względem
-wierzchołka a. W grafie skierowanym nie jest to relacja
-symetryczna i chyba jest to trochę mylące.
-
-<li>Cormen pisze (str. 1196), że dla danego grafu skierowanego
-możemy rozważyć jego wersję nieskierowaną.
-Wtedy z krawędzi "usuwamy skierowanie", a jeżeli początkowo istnieją
-dwie krawędzie skierowane (a,b) i (b,a), to stapiają się w jedną
-krawędź nieskierowaną (a,b) &equiv; (b,a).
-
-</ul>
-
-<h3>GRAFY NIESKIEROWANE</h3>
-
-
-<ul>
-<li>Cormen na str. 1193 nie dopuszcza pętli (a,a)
-dla grafu nieskierowanego. Może to wynikać z tego, że krawędzie
-są zdefiniowane jako zbiory dwóch różnych wierzchołków
-(zbiory, aby nie było uporządkowania wierzchołków).
-
-<li>Wierzchołki a i b są względem siebie sąsiednie (ang. adjacent),
-jeżeli istnieje krawędź (a,b) &equiv; (b,a), która je łączy.
-Krawędź jest wtedy incydentna (ang. incident) z tymi wierzchołkami.
-Relacja sąsiedztwa jest symetryczna 
-(a jest sąsiedni do b i b jest sąsiedni do a).
-
-<li><em>Stopień</em> wierzchołka grafu (ang. degree or valency)
-jest to liczba krawędzi incydentnych z tym wierzchołkiem.
-
-<li>Cormen pisze (str. 1195), że dla danego grafu nieskierowanego
-możemy mówić o jego wersji skierowanej. Jest to graf skierowany,
-gdzie każda krawędź nieskierowana (a,b) &equiv; (b,a) jest zastąpiona
-dwoma krawędziami skierowanymi (a,b) i (b,a).
-
-<li>Multigraf (ang. multigraph) jest podobny do grafu nieskierowanego
-[Cormen str. 1196], ale zawiera wielokrotne krawędzie (ang. parallel edges).
-
+<li>Ilość elementów w klasie elementów sprzężonych jest podzielnikiem
+rzędu grupy G.
 </ul>
 
 
-<h3>ŚCIEŻKI I CYKLE</h3>
+<h3>STRUKTURY GRUPOWE</h3>
 
-<ul>
-<li>Ścieżka (ang. path) długości k w grafie G=(V,E)
-jest to ciąg (zwykle różnych) wierzchołków (v_0,v_1,...,v_k)
-takich, że krawędzie (v_{i-1},v_i) należą do E dla i=1,2,...,k.
-Jest to ścieżka z wierzchołka v_0 do wierzchołka v_k.
-Ścieżka długości zero to ciąg jednoelementowy (v_0) -
-zawsze istnieje.
-W ogólności wierzchołki i krawędzie na ścieżce mogą się powtarzać.
-Mówimy, że ścieżka zawiera wierzchołki i krawędzie.
-[notacja a-b-c-d]
+<p>Liczby struktur grupowych danego rzędu.
+Widać, że najczęściej mamy grupy C_n i D_n,
+iloczyny proste grup niższego rzędu,
+ale również pojawiają się nowe struktury grupowe.
+Ile jest grup prostych, to rozstrzyga twierdzenie.
 
-<li>Jeżeli istnieje ścieżka P z a do b, to mówimy, że 
-wierzchołek b jest osiągalny z wierzchołka a po ścieżce P.
+<pre>
++----+------+---------------------------------------------+
+|Rząd|Liczba| Przykłady, [n]=nieabelowa                   |
++----+------+---------------------------------------------+
+|  1 |    1 |C_1                                          |
+|  2 |    1 |C_2                                          |
+|  3 |    1 |C_3=A_3                                      |
+|  4 |    2 |C_4, D_2=C_2xC_2                             |
+|  5 |    1 |C_5                                          |
+|  6 |    2 |C_6=C_3xC_2, D_3[n]                          |
+|  7 |    1 |C_7                                          |
+|  8 |    5 |C_8, D_2xC_2, C_4xC_2, D_4[n], Kwaterniony[n]|
+|  9 |    2 |C_9, C_3xC_3                                 |
+| 10 |    2 |C_10=C_5xC_2, D_5[n]                         |
+| 11 |    1 |C_11                                         |
+| 12 |    5 |C_12, C_6xC_2, D_6[n], A_4[n], G_12[n]       |
++----+------+---------------------------------------------+
+D_2xC_2 = C_2xC_2xC_2
+C_12 = C_4xC_3
+C_6xC_2 = C_3xC_2xC_2
+D_6 = D_3xC_2 nieabelowa
+G_12 grupa nieabelowa opisana w książce Jamesa i Liebecka
+</pre>
 
-<li>Podścieżka ścieżki P jest ciągiem jej kolejnych wierzchołków.
+<h3>REPREZENTACJE GRUP</h3>
 
-<li>Ścieżka prosta (ang. simple path) to ścieżka, 
-w której nie ma powtarzających się wierzchołków i krawędzi.
-
-<li>Cykl (ang. cycle) jest to ścieżka (v_0,v_1,...,v_k), w której pierwszy
-i ostatni wierzchołek są takie same, v_0=v_k [notacja a-a, a-b-c-a].
-
-<li>Cykl prosty jest to cykl, w którym wszystkie wierzchołki są różne, 
-z wyjątkiem ostatniego, który jest równy pierwszemu.
-
-<li>Dwie ścieżki są rozłączne (ang. disjoint), jeżeli nie posiadają
-żadnych wspólnych wierzchołków (ewentualnie poza wierzchołkami
-końcowymi).
-
-</ul>
-
-<h3>WYBRANE KLASY GRAFÓW</h3>
-
-<ul>
-<li>Graf pusty lub graf zerowy N_n (ang. null graph) to graf, 
-którego zbiór krawędzi jest pusty, m=0.
-W implementacji grafów można przyjąć, 
-że pusty graf to para składająca się z pustego zbioru
-wierzchołków i pustego zbioru krawędzi.
-W teorii zwykle nie zezwala się na istnienie pustych grafów, 
-tzn. zakłada się, że przynajmniej zbiór wierzchołków musi być niepusty.
-
-<li>Graf regularny stopnia k (graf k-regularny) to graf nieskierowany, 
-w którym każdy wierzchołek ma taki sam stopień k.
-
-<li>Graf pełny K_n (ang. complete graph) to graf prosty NIESKIEROWANY, 
-w którym dla każdej pary wierzchołków istnieje krawędź je łącząca. 
-Jeżeli graf pełny ma n wierzchołków, to posiada m=n(n-1)/2 krawędzi.
-Graf pełny jest grafem regularnym stopnia n-1.
-Dopełnienie (ang. complement) grafu G to graf pełny z takim samym
-zbiorem wierzchołków jak G, lecz z którego usunięto wszystkie 
-krawędzie należące do G.
-
-<li>Graf spójny (ang. connected graph) to graf NIESKIEROWANY [Cormen], 
-w którym dla każdej pary wierzchołków istnieje ścieżka, która je łączy.
-Jeżeli graf nie jest spójny, to zbudowany jest ze spójnych
-składowych (ang. connected components), z których każda jest maksymalnym
-podgrafem spójnym.
-
-<br>Można pokazać, że dla grafu nieskierowanego spójnego G=(V,E) 
-zachodzi zależność m &ge; n-1.
-
-<li>Graf SKIEROWANY jest silnie spójny (ang. strongly connected) [Cormen],
-jeżeli każde dwa wierzchołki są osiągalne jeden z drugiego.
-Silnie spójne składowe grafu skierowanego są klasami
-abstrakcji relacji "są wzajemnie osiągalne" w zbiorze wierzchołków.
-Graf skierowany jest silnie spójny, jeżeli ma tylko jedną
-silnie spójną składową.
-
-<li>Graf dwuspójny (ang. biconnected graph) to 
-graf nieskierowany spójny, który pozostanie
-spójny po usunięciu dowolnego wierzchołka i krawędzi incydentnych do niego.
-Pojawia się przy obliczaniu współczynników wirialnych [2013_Wheatley].
-
-<li>Graf dwudzielny (ang. bipartite graph) to graf NIESKIEROWANY, 
-którego wierzchołki można podzielić na dwa podzbiory, 
-przy czym wszystkie krawędzie
-łączą wierzchołki jednego podzbioru z wierzchołkami drugiego.
-
-<li>Graf eulerowski to graf, w którym istnieje cykl Eulera,
-czyli cykl przechodzący przez wszystkie krawędzie,
-przez każdą dokładnie jeden raz.
-
-<li>Graf hamiltonowski to graf, w którym istnieje cykl Hamiltona,
-czyli cykl przechodzący przez wszystkie wierzchołki,
-przez każdy dokładnie jeden raz
-[jest związek z problemem komiwojażera].
-
-<li>Graf planarny (ang. planar graph) to graf, który może być narysowany
-na płaszczyźnie tak, aby jego krawędzie nie przecinały się.
-
-<li>Graf acykliczny to graf, w którym nie ma cykli.
-Graf nieskierowany acykliczny to drzewo lub las (suma drzew).
-DAG (ang. directed acyclic graph) to graf skierowany acykliczny.
-
-<li>Graf cykliczny C_n (ang. cycle graph) to graf spójny, 
-regularny stopnia 2, zawierający n wierzchołków (m=n).
-Liczba chromatyczna 2 (n parzyste) lub 3 (n nieparzyste).
-
-<li>Graf liniowy P_n (ang. path graph, linear graph) to graf otrzymany
-z grafu cyklicznego C_n przez usunięcie jednej krawędzi, m=n-1.
-
-<li>Graf koło W_n (ang. wheel graph) to graf powstający z grafu C_{n-1}
-przez połączenie każdego wierzchołka z nowym wierzchołkiem v, m=2n-2.
-
-</ul>
-
-<h3>DRZEWA</h3>
-
-<p>Drzewo (tree) to acykliczny graf nieskierowany spójny.
-Drzewo rozpinające (spanning tree) grafu spójnego jest podgrafem,
-który zawiera wszystkie wierzchołki grafu i jest jednocześnie
-pojedyńczym drzewem.
-
-<p>Graf G o n wierzchołkach jest drzewem wtedy i tylko wtedy,
-gdy spełnia któryś z czterech poniższych warunków:
-
-<ul>
-<li>G posiada n-1 krawędzi i nie zawiera cykli.
-<li>G posiada n-1 krawędzi i jest spójny.
-<li>Dokładnie jedna ścieżka prosta łączy każdą parę różnych
-wierzchołków należących do G.
-<li>G jest spójny, ale usunięcie jakiejkolwiek krawędzi rozspaja go.
-</ul>
-
-<h3>LEMAT O PODAWANIU RĄK</h3>
-
-<p>Dla grafu nieskierowanego zachodzi lemat [Cormen str. 1197]:
-
-<br>\sum_{v &in; V} degree(v) = 2 * m.
-
-<p>Dla grafu skierowanego zachodzi lemat:
-
-<br>\sum_{v &in; V} indegree(v) = m = \sum_{v &in; V} outdegree(v).
+<p>Reprezentacją grupy G nazywamy homomorfizm D z grupy G
+w grupę macierzy kwadratowych 
+[D(a*b) = D(a)*D(b) dla a, b z G].
+Rozmiar reprezentacji D to rozmiar macierzy.
 
 </body>
 </html>

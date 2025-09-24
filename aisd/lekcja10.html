@@ -9,78 +9,59 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (10) - ADT TREE</h1>
+<h1>AiSD (10) - drzewa BST</h1>
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
 <h3>WPROWADZENIE</h3>
 
-<p>Definicja rekurencyjna drzewa z korzeniem.
+<p>W drzewach BST (ang. Binary Search Tree, binarne drzewo poszukiwań)
+przeglądanie wierzchołków w kolejności inorder
+daje elementy posortowane niemalejąco. 
+Aby to uzyskać trzeba wstawiać elementy do drzewa w następujący sposób:
 
 <ul>
-<li>Pusta struktura jest drzewem.
-<li>Jeżeli t_1, ..., t_k są rozłącznymi drzewami, to drzewem jest także
-struktura, w której korzeń r posiada jako swoje dzieci korzenie
-drzew t_1, ..., t_k, przy czym dodawana jest krawędź od korzenia r
-do dziecka tylko jeżeli dziecko jest niepuste.
+<li>Jeżeli łącze jest puste, to tworzymy węzeł z elementem.
+<li>Jeżeli łącze nie jest puste, to porównujemy wstawiany element 
+z elementem przechowywanym w węźle. Elementy mniejsze umieszczamy są 
+w lewym podrzewie, a większe lub równe w prawym poddrzewie.
+W pewnych rozwiązaniach duplikaty są ignorowane.
 </ul>
 
-<p>W teorii grafów definiuje się drzewo jako graf nieskierowany acykliczny,
-a korzeń to pewien wyróżniony wierzchołek.
-Wierzchołki bez dzieci to liście.
-W każdym drzewie istnieje dokładnie jedna ścieżka pomiędzy każdą parą wierzchołków.
-Zwykle rozważamy drzewa uporządkowane, gdzie kolejność dzieci jest ustalona.
-Poziom węzła to długość ścieżki do korzenia plus jeden.
-Poziom korzenia wynosi jeden.
-Wysokość niepustego drzewa to największy poziom węzła w drzewie.
-Wysokość pustego drzewa to z definicji zero.
-
-<p>Drzewa o stopniu rozgałęzienia m można zaimplementować tak, że każdy
-węzeł ma m łączy dla dzieci, niektóre mogą być puste.
-Inne bardziej oszczędne podejście to implementacja na lewo syn, na prawo brat
-(ang. left child, right sibling, LCRS), która zasadniczo jest drzewem binarnym.
-
-<p>W drzewie binarnym (uporządkowanym) każdy wierzchołek ma co najwyżej 
-dwoje dzieci (lewe i prawe).
-Drzewo binarne zbalansowane to drzewo binarne, w którym dla każdego
-węzła wysokości lewego i prawego poddrzewa różnią się co najwyżej o jeden.
+<p>Koszt wykonania podstawowych operacji w drzewie BST 
+(insert, search, remove) jest rzędu O(h), gdzie h jest wysokością drzewa.
+Jeżeli drzewo BST jest zrównoważone, wtedy h ~ log(n).
+W przypadku zdegenerowanym h = n.
 
 <hr><pre>
-// Szablon dla węzła drzewa binarnego i drzewa BST.
+// Szablon dla binarnego drzewa poszukiwań.
 template &lt;typename T&gt;
-struct BSTNode {
-// the default access mode and default inheritance mode are public
-    T value;
-    BSTNode *left, *right;
-    //BSTNode *parent;   // używane w pewnych zastosowaniach
-    // kostruktor domyślny
-    BSTNode() : value(T()), left(nullptr), right(nullptr) {}
-    // konstruktor zwykły
-    BSTNode(const T& item) : value(item), left(nullptr), right(nullptr) {}
-    ~BSTNode() { delete left; delete right; } // destruktor rekurencyjny
-    // UWAGA Jeżeli w BSTNode będzie domyślny destruktor postaci
-    // ~BSTNode() = default; lub
-    // ~BSTNode() {}
-    // to wtedy destruktor drzewa i metoda clear() muszą zwolnić pamięć
-    // wszystkich węzłów.
-};
-</pre><hr><pre>
-// Szablon dla przypadkowego drzewa binarnego.
-template &lt;typename T&gt;
-class RandomBinaryTree {
+class BinarySearchTree {
     BSTNode&lt;T&gt; *root;
 public:
-    RandomBinaryTree() : root(nullptr) {} // konstruktor domyślny
-    ~RandomBinaryTree() { delete root; } // trzeba wyczyścić (rekurencyjnie)
+    BinarySearchTree() : root(nullptr) {} // konstruktor domyślny
+    ~BinarySearchTree() { delete root; } // trzeba wyczyścić
     void clear() { delete root; root = nullptr; }
     bool empty() const { return root == nullptr; }
     T& top() { assert(root != nullptr); return root->value; } // podgląd korzenia
     void insert(const T& item) { root = insert(root, item); }
-    //void remove(const T& item); // na razie nie usuwamy elementów
+    void remove(const T& item); // usuwanie przez złączanie
     // Szukając element dostajemy wskaźnik do elementu lub nullptr.
     T* search(const T& item) const {
         auto ptr = search(root, item);
         return ((ptr == nullptr) ? nullptr : &amp;(ptr->value));
+    }
+    T* iter_search(const T& item) const { // wg libavl
+        for (auto node=root; node != nullptr; ) {
+            if (item == node->value) {
+                return &amp;(node->value);
+            } else if (item &lt; node->value) {
+                node = node->left;
+            } else {
+                node = node->right;
+            }
+        }
+        return nullptr;
     }
     T* find_min() const;
     T* find_max() const;
@@ -96,7 +77,8 @@ public:
     // Metody bezpośrednio odwołujące się do node.
     // Mogą działać na poddrzewie.
     BSTNode&lt;T&gt; * insert(BSTNode&lt;T&gt; *node, const T& item); // zwraca nowy korzeń
-    BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const;
+    BSTNode&lt;T&gt; * search(BSTNode&lt;T&gt; *node, const T& item) const; // zwraca węzeł
+    BSTNode&lt;T&gt; * remove(BSTNode&lt;T&gt; *node); // zwraca nowy korzeń poddrzewa
     void preorder(BSTNode&lt;T&gt; *node);
     void inorder(BSTNode&lt;T&gt; *node);
     void postorder(BSTNode&lt;T&gt; *node);
@@ -107,37 +89,12 @@ public:
     }
 };
 </pre><hr><pre>
-// Wyświetlanie obróconego (counterclockwise) drzewa binarnego.
 template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T&gt; *node, int level) {
-    if (node == nullptr) return;
-    display(node->right, level + 1);
-    std::cout &lt;&lt; std::string(3 * level, ' ') &lt;&lt; node->value &lt;&lt; std::endl;
-    display(node->left, level + 1);
-}
-</pre><hr><pre>
-// Druga wersja display() z rysowaniem krawędzi drzewa (Maksymilian Brzozowski).
-template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::display(BSTNode&lt;T> *node, int level) {
-    if (node == nullptr) return;
-    display(node-&gt;right, level + 1);
-    for (int i = 0; i &lt; level; i++) {
-        std::cout &lt;&lt; "   |";
-    }
-    std::cout &lt;&lt; "---" &lt;&lt; node-&gt;value &lt;&lt; std::endl;
-    display(node-&gt;left, level + 1);
-}
-</pre><hr><pre>
-#include &lt;cstdlib&gt;   // std::rand(), RAND_MAX, std::srand()
-#include &lt;ctime&gt;
-
-template &lt;typename T&gt;
-BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
+BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, const T& item) {
     if (node == nullptr) {
         return new BSTNode&lt;T&gt;(item);
     }
-    std::srand(std::time(nullptr)); // use current time as seed for random generator
-    if (std::rand() % 2) { // można lepiej
+    if (item &lt; node->value) {
         node->left = insert(node->left, item);
     } else {
         node->right = insert(node->right, item);
@@ -146,141 +103,166 @@ BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::insert(BSTNode&lt;T&gt; *node, con
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
-BSTNode&lt;T&gt; * RandomBinaryTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, const T& item) const {
+BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, const T& item) const {
     if (node == nullptr || node->value == item) {
         return node;
-    }
-    T* ptr;
-    ptr = search(node->left, item);
-    if (ptr == nullptr) {
-        ptr = search(node->right, item);
-    }
-    return ptr;
-}
-</pre><hr>
-
-<h3>PRZECHODZENIE PO DRZEWIE WSZERZ (BFS)</h3>
-
-<p>Przechodzenie wszerz polega na odwiedzeniu korzenia, potem
-na przechodzeniu poziomami. Poziomy są przechodzone w kolejności
-od najbliższych do najdalszych, a w ramach poziomu węzły są
-odwiedzane od lewej do prawej.
-W implementacji wykorzystuje się kolejkę.
-
-<hr><pre>
-template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::bfs() {
-    if (root == nullptr) return;
-    std::queue&lt;BSTNode&lt;T&gt;*&gt; Q; // wskaźniki do wezłów
-    BSTNode *node = root;
-    Q.push(node);
-    while (!Q.empty()) {
-        node = Q.front(); // podglądamy
-        Q.pop();        // usuwamy z kolejki
-        visit(node); // tu jest właściwe przetworzenie węzła
-        if (node->left != nullptr)
-            Q.push(node->left); // pierwsze wyjdzie lewe, potem prawe
-        if (node->right != nullptr)
-            Q.push(node->right);
+    } else if (item &lt; node->value) {
+        return search(node->left, item);
+    } else {
+        return search(node->right, item);
     }
 }
 </pre><hr>
 
-<h3>PRZECHODZENIE PO DRZEWIE W GŁĄB</h3>
+<h3>ROTACJE DRZEWA BST</h3>
 
-<p>Podczas przechodzenia w głąb przechodzimy możliwie daleko 
-w lewo (lub w prawo), następnie wracamy do najbliższego rozwidlenia
-i przechodzimy jeden krok w prawo (lub w lewo).
-Czynności powtarzamy, aż odwiedzimy wszystkie węzły.
-Moment odwiedzania węzła może być wybrany na kilka sposobów,
-stąd pochodzą trzy podstawowe odmiany przechodzenia:
-
-<ul>
-<li>przechodzenie z wyprzedzeniem (ang. preorder),
-<li>przechodzenie bezpośrednie (ang. inorder),
-<li>przechodzenie z opóźnieniem (ang. postorder).
-</ul>
+<p>Rotacja drzewa (ang. tree rotation) jest operacją na drzewie BST,
+która zmienia jego lokalną strukturę bez zmiany kolejności elementów,
+przy przechodzeniu przez drzewo BST metodą inorder.
+Wyróżnia się dwie symetryczne operacje: rotacja w prawo i rotacja w lewo.
 
 <hr><pre>
+|     X     --[w prawo]-o    Y     |
+|    / \                    / \    |
+|   Y   C   o-[w lewo]--   A   X   |
+|  / \                        / \  |
+| A   B                      B   C |
+</pre><hr><pre>
 template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::inorder(BSTNode&lt;T&gt; *node) {
-    if (node == nullptr) return;
-    inorder(node->left);
-    visit(node);
-    inorder(node->right);
+BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_right(BSTNode&lt;T&gt; *node) {
+    if (node->left == nullptr)
+        return node; // bez zmian
+    BSTNode&lt;T&gt; *top = node; // węzeł X
+    node = top->left; // węzeł Y
+    top->left = node->right; // przepinamy węzeł B
+    node->right = top; // przepinamy węzeł X
+    return node; // zwracamy węzeł Y
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::preorder(BSTNode&lt;T&gt; *node) {
-    if (node == nullptr) return;
-    visit(node);
-    preorder(node->left);
-    preorder(node->right);
-}
-</pre><hr><pre>
-template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::postorder(BSTNode&lt;T&gt; *node) {
-    if (node == nullptr) return;
-    postorder(node->left);
-    postorder(node->right);
-    visit(node);
+BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_left(BSTNode&lt;T&gt; *node) {
+    if (node->right == nullptr)
+        return node; // bez zmian
+    BSTNode&lt;T&gt; *top = node; // węzeł Y
+    node = top->right; // węzeł X
+    top->right = node->left; // przepinamy węzeł B
+    node->left = top; // przepinamy węzeł Y
+    return node; // zwracamy węzeł X
 }
 </pre><hr>
 
-<p>Przechodzenie przez drzewo w kolejności preorder możemy 
-zaimplementować iteracyjnie za pomocą stosu. 
+<h3>USUWANIE PRZEZ ZŁĄCZANIE</h3>
 
 <hr><pre>
 template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::iter_preorder() {
-    if (root == nullptr) return;
-    std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskaźniki do węzłów
+void BinarySearchTree&lt;T&gt;::remove(const T& item) { // usuwanie przez złączanie
+    // Najpierw znajdujemy węzeł i jego rodzica.
     BSTNode&lt;T&gt; *node = root;
-    S.push(node);
-    while (!S.empty()) {
-        node = S.top(); // podglądamy
-        S.pop();        // usuwamy ze stosu
-        visit(node); // tu jest właściwe przetworzenie węzła
-        if (node->right != nullptr) // najpierw prawe poddrzewo!
-            S.push(node->right);
-        if (node->left != nullptr)
-            S.push(node->left);
+    BSTNode&lt;T&gt; *prev = nullptr;
+    while (node != nullptr) {
+        if (node->value == item)
+            break;
+        prev = node;
+        if (item &lt; node->value) {
+            node = node->left;
+        } else {
+            node = node->right;
+        }
+    }
+    // Szukamy przyczyny przerwania pętli while.
+    if (node != nullptr && node->value == item) {
+        // node ma być usunięty.
+        if (node == root) {
+            root = remove(node);
+        } else if (prev->left == node) {
+            prev->left = remove(node);
+        } else {
+            prev->right = remove(node);
+        }
+    } else if (root != nullptr) {
+        ; // klucza nie znaleziono
+    } else { // root == nullptr
+        ; // drzewo jest puste
     }
 }
+</pre><hr><pre>
+template &lt;typename T&gt;
+BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
+    // Mamy usunąć węzeł i zwrócić nowy korzeń poddrzewa.
+    assert(node != nullptr);
+    BSTNode&lt;T&gt; *new_root;
+    if (node->right == nullptr) { // node nie ma prawego dziecka
+        new_root = node->left;
+    } else if (node->left == nullptr) { // node nie ma lewego dziecka
+        new_root = node->right;
+    } else { // obecne lewe i prawe dziecko
+        new_root = node; // zapisujemy stary korzeń
+        node = node->left; // idziemy w lewo
+        while (node->right != nullptr) { // idziemy w prawo do końca
+            node = node->right;
+        }
+        node->right = new_root->right; // prawe poddrzewo przełączone
+        node = new_root; // węzeł do usunięcia
+        new_root = node->left; // nowy korzeń
+    }
+    delete node;
+    return new_root;
+}
+</pre><hr><pre>
+|      X                      Usuwamy węzeł X.
+|    /   \               Nowym korzeniem poddrzewa będzie Y.
+|   Y     C       Y         Z jest poprzednikiem X.
+|  / \           / \
+| A   Z         A   Z
+|    /             / \
+|   B             B   C
 </pre><hr>
 
-<p>Iteracyjne wersje inorder() i postorder() są bardziej skomplikowane
-[Drozdek].
+<h3>ALGORYTM DSW</h3>
+
+<p>https://en.wikipedia.org/wiki/Day%E2%80%93Stout%E2%80%93Warren_algorithm
+
+<p>Algorytm DSW (Day, Stout, Warren) służy do zrównoważenia drzewa BST.
+Algorytm działa w miejscu i w czasie O(n).
 
 <h3>ZADANIE 10.1</h3>
 
-<p>Napisać funkcję calc_leaves(), która zlicza liście drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
+najmniejszą i największą w drzewie BST.
+Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
 
 <h3>ZADANIE 10.2</h3>
 
-<p>Załóżmy, że drzewo binarne przechowuje liczby. 
-Napisać funkcję calc_total(), która podaje sumę liczb przechowywanych w drzewie. 
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+<p>Napisać funkcję find_successor() znajdujący następnik danego
+węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
+Węzły powinny posiadać łącze do rodzica.
 
 <h3>ZADANIE 10.3</h3>
 
-<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
-najmniejszą i największą w drzewie binarnym.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
-Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
+<p>Napisać funkcję find_predecessor() znajdujący poprzednik danego
+węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
+Węzły powinny posiadać łącze do rodzica.
 
 <h3>ZADANIE 10.4</h3>
 
-<p>Napisać funkcję calc_height() obliczającą wysokość drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
-Wskazówka: w wersji iteracyjnej na stos można odkładać parę 
-(węzeł, poziom węzła), poziom korzenia wynosi 1.
+<p>Napisać funkcję sprawdzającą, czy drzewo binarne jest drzewem BST.
+Nie wystarczy sprawdzić dla każdego węzła, czy zachodzi 
+node-&gt;left-&gt;value &lt;= node-&gt;value, oraz 
+node-&gt;value &lt;= node-&gt;right-&gt;value. 
+Musimy do węzła przekazać informację od rodzica o ograniczeniach 
+na wartość przechowywaną w węźle.
+
+<hr><pre>
+|       5          Przykład drzewa binarnego, które nie jest drzewem BST.
+|     /   \        Wartość 6 jest większa od 3, ale nie jest mniejsza od 5.
+|   3       8
+|  / \     / \
+| 1   6   7   9
+</pre><hr>
 
 <h3>ZADANIE 10.5</h3>
 
-<p>Napisać funkcję calc_nodes() znajdującą liczbę węzłów drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+<p>Zaimplementować algorytm DSW.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
