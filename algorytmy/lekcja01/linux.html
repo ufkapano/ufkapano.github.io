@@ -12,10 +12,10 @@
 
 <p>W Linuksie możemy spotkać trzy różne systemy do zarządzania
 pakietami Pythona:
-<br>(1) apt (Debian) or rpm (Red Hat) 
+<br>(1) apt (Debian) lub rpm (Red Hat) 
 [instalacja globalna, wymagane uprawnienia administratora (root)],
 <br>(2) pip [tylko dla danego użytkownika,
-najlepiej używać w środowisku wirtualnym],
+należy używać w środowisku wirtualnym],
 <br>(3) conda (Anaconda) [tylko dla danego użytkownika].
 
 <p>W Linuksie Python jest zwykle standardowo instalowany globalnie
@@ -29,8 +29,9 @@ i inne, bez specjalnego rozróżnienia.
 
 <p>W Linuksie Debian interpreter domyślnej wersji Pythona znajduje się w pliku
 <em>/usr/bin/python</em>.
-Debian 10 Buster zawiera Pythona 2.7.16 (python, python2, python2.7) 
+<br>Debian 10 Buster zawiera Pythona 2.7.16 (python, python2, python2.7) 
 i Pythona 3.7.3 (python3, python3.7).
+<br>Debian 13 Trixie zawiera Pythona 3.13.5 (python, python3, python3.13).
 
 <h3>REPL</h3>
 
@@ -50,14 +51,16 @@ Sesję interaktywną kończymy przez wywołanie funkcji
 (wygenerowanie z klawiatury znaku końca pliku).
 
 <hr><pre>
-$ python                      # uruchomienie interpretera z powłoki
-Python 2.6.6 ...              # i wejście do trybu interaktywnego
+$ python3                     # uruchomienie interpretera z powłoki
+Python 3.13.5 ...             # i wejście do trybu interaktywnego
 &gt;&gt;&gt; 1 + 2
 3
 &gt;&gt;&gt; 1/0
 Traceback (most recent call last):
-  File "&lt;stdin&gt;", line 1, in &lt;module&gt;
-ZeroDivisionError: integer division or modulo by zero
+  File "&lt;python-input-1&gt;", line 1, in &lt;module&gt;
+    1/0
+    ~^~
+ZeroDivisionError: division by zero
 # Pojawienie się błędu powoduje wywołanie wyjątku,
 # komunikat o błędzie i powrót do znaku zachęty.
 &gt;&gt;&gt; [Ctrl]+[d]
@@ -83,7 +86,7 @@ $
 
 <p>Do pracy interaktywnej można przygotować polecenia startowe
 Pythona w osobnym pliku (np. w <em>.pythonrc.py</em>)
-i umieścić ścieżkę do niego w zmiennej powłoki <em>PYTHONSTARTUP</em>. 
+i umieścić ścieżkę do niego w zmiennej powłoki PYTHONSTARTUP. 
 Plik jest przetwarzany tylko przy pracy interaktywnej.
 
 <p>Dodanie katalogu z modułami Pythona do zmiennej PYTHONPATH.
