@@ -24,21 +24,24 @@ Nature 610, 47-53 (2022).
 [<a href="2022Fawzi.pdf">PDF</a>]
 <br>https://doi.org/10.1038/s41586-022-05172-4
 
-<p>Złożoność czasowa i pamięciowa.
+<p><strong>Złożoność obliczeniowa algorytmu</strong> 
+to wielkość zasobów potrzebnych do jego uruchomienia.
+Największe znaczenie ma złożoność czasowa i pamięciowa.
 
-<p>Rozmiar danych wejściowych (ang. <em>input size</em>) wyrażony w bitach.
+<p>Rozmiar danych wejściowych (ang. <em>input size</em>) ma być wyrażony 
+w <strong>bitach</strong>.
 
 <hr>
 
-<p>Przykład. Dla wyszukiwania sekwencyjnego w ciągu n liczb
-rozmiar danych wejściowych to n*b, gdzie b to liczba bitów
+<p>Przykład. Dla <strong>wyszukiwania sekwencyjnego</strong> w ciągu n liczb
+rozmiar danych wejściowych to n*c, gdzie c to liczba bitów
 wykorzystywana na przechowywanie jednej liczby.
-Zwykle liczbę b pomija się jako stałą i złożoność obliczeniową
+Zwykle liczbę c pomija się jako stałą i złożoność obliczeniową
 wyszukiwania sekwencyjnego określa się jako O(n).
 
 <hr>
 
-<p>Przykład. Obliczanie n-tego wyrazu ciągu Fibonacciego.
+<p>Przykład. Obliczanie n-tego wyrazu <strong>ciągu Fibonacciego</strong>.
 Miarą danych wejściowych jest liczba bitów użyta to zakodowania
 wartości n, czyli |_lg(n)_| + 1. Dla n = 13 = 1101_2 mamy 4 bity
 [w Pythonie math.log(13,2) = 3.7].
@@ -49,10 +52,12 @@ wartości n, czyli |_lg(n)_| + 1. Dla n = 13 = 1101_2 mamy 4 bity
 Złożoność w przypadku pesymistycznym, średnim, najlepszym.
 <br>Złożoność zwykle wyraża się poprzez dane wejściowe, ale czasem
 można spotkać inne sposoby zapisu:
-<br>(1) algorytmy czułe na wyjście, np. algorytm Jarvisa ma złożoność O(n*h),
+<br>(1) <strong>algorytmy czułe na wyjście</strong>, 
+np. algorytm Jarvisa ma złożoność O(n*h),
 gdzie n to liczba punktów na płaszczyźnie, a h to liczba punktów
 należących do otoczki wypukłej.
-<br>(2) algorytmy parametryzowalne, np. w teorii grafów wyraża się
+<br>(2) <strong>algorytmy parametryzowalne</strong>, 
+np. w teorii grafów wyraża się
 złożoność obliczeniową algorytmów nie tylko przez 
 n, m (liczba wierzchołków i krawędzi grafu), ale również przez
 &Delta; (największy stopień wierzchołka),
@@ -71,8 +76,8 @@ O(lg n), O(n), O(n lg n), O(n^2), O(n^3), O(2^n), O(n!).
 
 <h3>ZADANIE 1.1</h3>
 
-<p>Rozwiązywanie rekurencji za pomocą indukcji.
-lg(x) to logarytm przy podstawie 2.
+<p><strong>Rozwiązywanie rekurencji za pomocą indukcji</strong>.
+<br>lg(x) to logarytm przy podstawie 2.
 
 <ul>
 <li>(a) t[0] = 0, t[n] = t[n-1] + 1 dla n &gt; 0. 
@@ -143,7 +148,7 @@ G(x) = \sum_{n=0}^{+\infty} t[n] x^n.
 
 <h3>ZADANIE 1.2</h3>
 
-<p>Homogeniczna rekurencja liniowa z różnymi pierwiastkami.
+<p><strong>Homogeniczna rekurencja liniowa z różnymi pierwiastkami</strong>.
 
 <p>a[0]*t[n] + a[1]*t[n-1] + ... + a[k]*t[n-k] = 0, k, a[i] są stałe.
 
@@ -156,11 +161,12 @@ to jedynym rozwiązaniem rekurencji jest
 
 <p>t[n] = c[1]*r[1]^n + c[2]*r[2]^n + ... + c[k]*r[k]^n.
 
-<p>Współczynniki c[i] wyznacza się z k warunków początkowych.
+<p>Współczynniki c[i] wyznacza się z k warunków początkowych
+na t[0], t[1], ..., t[k-1].
 
 <hr>
 
-<p>Przykład: ciąg Fibonacciego. t[n] -t[n-1] -t[n-2] = 0, t[0] = 0, t[1] = 1.
+<p>Przykład. Ciąg Fibonacciego. t[n] -t[n-1] -t[n-2] = 0, t[0] = 0, t[1] = 1.
 <br>Postulujemy t[n] = r^n,
 równanie charakterystyczne r^2 -r -1 = 0.
 <br>Pierwiastki r[1] = (1 + sqrt(5))/2, r[2] = (1 -sqrt(5))/2.
@@ -185,11 +191,11 @@ równanie charakterystyczne r^2 -r -1 = 0.
 
 <h3>ZADANIE 1.3</h3>
 
-<p>Homogeniczna rekurencja liniowa z wielokrotnymi pierwiastkami.
+<p><strong>Homogeniczna rekurencja liniowa z wielokrotnymi pierwiastkami</strong>.
 
 <p>Jeżeli równanie charakterystyczne posiada pierwiastek r 
 wielokrotności m, to w rozwiązaniu rekurencji dla tego pierwiastka
-nateży brać następujące wyrazy:
+należy brać następujące wyrazy:
 
 <p>t[n] = c[1]*r^n + c[2]*n*r^n + c[3]*n^2*r^n + ... + c[m]*n^(m-1)*r^n + dalsze pierwiastki.
 
@@ -220,7 +226,7 @@ równanie charakterystyczne r^3 -7*r^2 + 15*r -9 = 0, (r-1)(r-3)^2 = 0.
 
 <h3>ZADANIE 1.4</h3>
 
-<p>Niehomogeniczna rekurencja liniowa.
+<p><strong>Niehomogeniczna rekurencja liniowa</strong>.
 
 <p>a[0]*t[n] + a[1]*t[n-1] + ... + a[k]*t[n-k] = f(n), k, a[i] są stałe.
 
@@ -236,9 +242,9 @@ od części homogenicznej pierwotnego równania plus wyrazy pochodzące
 z części niehomogenicznej (może być kilka części niehomogenicznych).
 
 <p>Przykłady.
-<br>f(n) = c = 1^n*c, d = 0, mnożnik (r-1)^1.
-<br>f(n) = c^n, d = 0, mnożnik (r-c)^1.
-<br>f(n) = c*n^2 = 1^n*c*n^2, d = 2, mnożnik (r-1)^3.
+<br>f(n) = c = 1^n*c, b = 1, d = 0, mnożnik (r-1)^1.
+<br>f(n) = c^n, d = 0, b = c, mnożnik (r-c)^1.
+<br>f(n) = c*n^2 = 1^n*c*n^2, b = 1, d = 2, mnożnik (r-1)^3.
 
 <p>Rozwiązać rekurencje:
 
