@@ -12,17 +12,18 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Słownik (dictionary) to nieuporządkowany zbiór par (klucz: wartość),
+<p>Słownik (<em>dictionary</em>) to nieuporządkowany zbiór par (klucz: wartość),
 przy czym klucze muszą być różne.
-Słowniki nie są sekwencjami, ale odwzorowaniami (mapping).
+Słowniki nie są sekwencjami, ale odwzorowaniami (<em>mapping</em>).
 Wartości (obiekty) są przechowywane po kluczu,
 a nie po ich pozycji względnej.
 
-<p>Klucz musi być niezmienny (immutable), zwykle są to liczby lub stringi.
-Kluczami mogą być krotki (tuple), jeśli zawierają tylko liczby, napisy
-i krotki.
+<p>Klucz musi być niezmienny (<em>immutable</em>), zwykle są to liczby lub stringi.
+Kluczami mogą być krotki (<em>tuple</em>), jeśli zawierają tylko liczby, 
+stringi i krotki.
 
-<p>Próba pobrania nieistniejącego klucza jest błędem (KeyError).
+<p>Próba pobrania nieistniejącego klucza jest błędem, rzucany jest wyjątek
+<em>KeyError</em>.
 
 <p>Słowniki są zmienne, mogą być modyfikowane w miejscu,
 mogą rosnąć lub kurczyć się na życzenie.
@@ -64,9 +65,9 @@ D['three'] = 'trzy'
 D = {k1:v1, k2:v2, k3:v3}
 # D = {k1:v1, k2:v2, k3:v3,}   # przecinek na końcu jest dozwolony
 
-D.keys()            # [k1, k2, k3] Py2
-D.values()          # [v1, v2, v3] Py2
-D.items()           # [(k1, v1), (k2, v2), (k3, v3)] Py2
+D.keys()            # [k1, k2, k3] lista kluczy w Py2
+D.values()          # [v1, v2, v3] lista wartości w Py2
+D.items()           # [(k1, v1), (k2, v2), (k3, v3)] lista par w Py2
 
 D.keys()            # zwraca widok kluczy (Py3)
 D.values()          # zwraca widok wartości (Py3)
@@ -95,7 +96,7 @@ for (char, number) in D.items():
 <p>Sortowanie kluczy dla słowników.
 
 <hr><pre>
-chars = {}                    # inicjalizacja pustego słownika
+chars = {}   # inicjalizacja pustego słownika
 # chars.get(char) zwraca chars[char] lub None.
 # chars.get(char, 0) zwraca chars[char] lub 0.
 for char in "abrakadabra":
@@ -103,16 +104,17 @@ for char in "abrakadabra":
 print(chars)
 
 # Sortowanie par (key, value).
-items = chars.items()        # dostaję listę krotek (Py2)
+items = list(chars.items())   # dostaję listę krotek
 items.sort()
 
 # Sortowanie samych kluczy.
-keys = chars.keys()
+keys = list(chars.keys())   # tworzymy listę kluczy
 keys.sort()
-[chars[key] for key in keys]     # lista wartości
+[chars[key] for key in keys]   # lista wartości
 
-# Python 2.5 zawiera wbudowaną funkcję sorted(), która dla obiektu
+# Od Pythona 2.5 istnieje wbudowana funkcja sorted(), która dla obiektu
 # iterowalnego zwraca posortowaną listę.
+# W przypadku słowników sorted() zwraca posortowaną listę kluczy.
 for key in sorted(chars):
     print("{} {}".format(key, chars[key]))
 </pre><hr>
@@ -122,35 +124,31 @@ for key in sorted(chars):
 <hr><pre>
 # Przykładowe inicjalizacje słownika.
 D = {k1:v1, k2:v2}                 # klasyczna
-D = dict([(k1, v1), (k2, v2)])     # z listy krotek
+D = dict([(k1, v1), (k2, v2)])     # z listy par (krotek)
 D = dict(zip([k1, k2], [v1, v2]))  # z dwóch list
-D = dict(name1=v1, name2=v2)       # {'name1':v1, 'name2':v2}
+D = dict(name1=v1, name2=v2)       # powstaje {'name1':v1, 'name2':v2}
 
-if D != {}:         # porównywanie z pustym słownikiem
+if D != {}:   # porównywanie z pustym słownikiem
     print("słownik nie jest pusty")
-if D:               # pusty słownik oznacza False
+if D:         # pusty słownik oznacza False
     print("słownik nie jest pusty")   # jw
 
-D.clear()                     # wyczyszczenie słownika
-E = D.copy()                  # kopia słownika
-E = dict(D)                   # jw, ale wygodniej
-D.has_key(key)                # zwraca True/False
-key in D                      # jw, zalecane
+D.clear()           # wyczyszczenie słownika
+E = D.copy()        # kopia słownika
+E = dict(D)         # jw, ale wygodniej
+D.has_key(key)      # zwraca True/False
+key in D            # jw, zalecane
 
-D.items()                     # zwraca listę krotek (key, value) (Py2)
-D.keys()                      # zwraca listę kluczy (Py2)
-D.values()                    # zwraca listę wartości (Py2)
-
-D.get(key)                    # zwraca D[key] lub None
-D.get(key, value)             # zwraca D[key] lub value
+D.get(key)          # zwraca D[key] lub None
+D.get(key, value)   # zwraca D[key] lub value
 D.setdefault(key, value)
 # if key in D then return D[key],
 # if key not in D then set D[key] = value and return value
 
-D.pop(key)                    # zwraca D[key] i usuwa ze słownika
-D.pop(key, value)             # zwraca D[key] lub value, gdy key nie ma w słowniku
-D.popitem()                   # zwraca 2-tuple (key, value) [chyba losowo] 
-                              # lub Error, gdy słownik jest pusty
+D.pop(key)          # zwraca D[key] i usuwa ze słownika
+D.pop(key, value)   # zwraca D[key] lub value, gdy key nie ma w słowniku
+D.popitem()         # zwraca 2-tuple (key, value) [chyba losowo] 
+                    # lub Error, gdy słownik jest pusty
 D = dict.fromkeys(S[, value])    # S to sekwencja, value to domyślnie None
 D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
 D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
@@ -191,23 +189,23 @@ def merge_dicts(*dict_args):
 
 <h3>SŁOWNIKI SYSTEMOWE</h3>
 
-<p>locals() zwraca słownik zawierający current scope's local variables,
-czyli lokalnie dostępne nazwy.
+<p><em>locals()</em> zwraca słownik zawierający 
+<em>current scope's local variables</em>, czyli lokalnie dostępne nazwy.
 
-<p>vars() jest równoważne locals().
+<p><em>vars()</em> jest równoważne <em>locals()</em>.
 
-<p>vars([object]) jest równoważne object.__dict__, czyli dostajemy
-słownik będący przestrzenią nazw obiektu, zawierającą np. 
+<p><em>vars([object])</em> jest równoważne <em>object.__dict__</em>, 
+czyli dostajemy słownik będący przestrzenią nazw obiektu, zawierającą np. 
 atrybuty obiektu.
 
 <h3>DZIEDZICZENIE ZE SŁOWNIKÓW</h3>
 
-<p>Od Pythona 2.5 w klasie dziedziczonej z dict można zdefiniować
-metodę __missing__(). Wtedy przy wywołaniu D[key], jeżeli klucz
-nie istnieje, to wywoływana jest metoda __missing__(key).
-Można określić pożądane zachowanie, 
-np. inne niż stała domyślna wartość.
-Daje to większą elastyczność niż metody get() czy setdefault().
+<p>Od Pythona 2.5 w klasie dziedziczonej z <em>dict</em> można zdefiniować
+metodę <em>__missing__()</em>. 
+Wtedy przy wywołaniu <em>D[key]</em>, jeżeli klucz
+nie istnieje, to wywoływana jest metoda <em>__missing__(key)</em>.
+Można określić pożądane zachowanie, np. inne niż stała domyślna wartość.
+Daje to większą elastyczność niż metody <em>get()</em> czy <em>setdefault()</em>.
 
 <h3>PYTHON 3</h3>
 
@@ -220,8 +218,10 @@ list(D.keys())                # zwraca listę kluczy
 list(D.values())              # zwraca listę wartości
 </pre><hr>
 
-<p>Obiekty zwracane przez metody słowników są dynamiczne, to są widoki (views).
-Można po nich iterować, można sprawdzać należenie do obiektu (membership test).
+<p>Obiekty zwracane przez metody słowników są dynamiczne, 
+to są widoki (<em>views</em>).
+Można po nich iterować, można sprawdzać należenie do obiektu 
+(<em>membership test</em>).
 
 <hr><pre>
 &gt;&gt;&gt; D = { "first" : 1, "second" : 2 }
@@ -235,11 +235,13 @@ dict_keys(['second', 'third', 'first'])   # widać zmianę
 True
 </pre><hr>
 
-<p>Nie ma metody D.has_key(key), stosuje się konstrukcję 'key in D'.
+<p>W Pythonie 3 nie ma metody <em>D.has_key(key)</em>, 
+stosuje się konstrukcję <em>key in D</em>.
 
-<p>Występuje konstrukcja słowników składanych (dict comprehension).
+<p>W Pythonie 3 występuje konstrukcja słowników składanych 
+(<em>dict comprehension</em>).
 Wydaje się, że można to łatwo zastąpić przez konstrukcję
-z listą par (key, value),
+z listą par <em>(key, value)</em>.
 
 <hr><pre>
 keys = [k1, k2, k3]
@@ -254,7 +256,7 @@ D = {x: x*3 for x in "qwerty"}          # Py3 i Py2.7
 D = dict((x, x*3) for x in "qwerty")    # generator
 </pre><hr><pre>
 # Korzystanie z operatora ** (Py3).
-# Ta sama idea dla argumentów funkcji (**keywords).
+# Ta sama idea występuje dla argumentów funkcji (**keywords).
 D1 = {"a": 1, "b": 2}
 D2 = {"c": 3, "d": 4}
 merged_dict = {**D1, **D2}   # unpacking in a single line
@@ -275,7 +277,7 @@ D3 = D1 | D2   # unia słowników tworzy nowy słownik (Py3.9.7)
 # Ogólnie D1 | D2 to nie to samo, co D2 | D1.
 
 D1 |= D2   # działa jak D1.update(D2), in-place (augmented assignment)
-# Przypomnienie: dla list mamy L1 += L2, co działa jak L1.extend(L2), in-place
+# Przypomnienie: dla list mamy L1 += L2, co działa jak L1.extend(L2), in-place.
 </pre><hr>
 
 </body>

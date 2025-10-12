@@ -14,34 +14,35 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Typ logiczny 'bool' to dwie stałe: 
-'True' (dawniej równe 1) i 
-'False' (dawniej równe 0).
-'True' i 'False' pojawiły się w Py2.3.
-Jednak ogólnie w Pythonie jako fausz logiczny traktuje się:
+<p>Typ logiczny <em>bool</em> to dwie stałe: 
+<em>True</em> (dawniej równe 1) i 
+<em>False</em> (dawniej równe 0).
+<br><em>True</em> i <em>False</em> pojawiły się w Py2.3.
+<br>Jednak ogólnie w Pythonie jako fausz logiczny traktuje się:
 
 <ul>
 <li>liczbę zero (0, 0.0, 0e0, 0j, itp.),
-<li>stałe 'False' i 'None' (null),
-<li>puste kolekcje (pusta lista, tuple, słownik, itp.),
+<li>stałe <em>False</em> i <em>None</em> (null),
+<li>puste kolekcje (pusta lista, krotka, słownik, itp.),
 <li>puste napisy,
-<li>obiekty posiadające metodę __nonzero__(), jeśli zwraca ona 'False' lub 0.
-<li>obiekty posiadające metodę __len__(), jeśli zwraca ona 0.
+<li>obiekty posiadające metodę <em>__nonzero__()</em>, 
+jeśli zwraca ona <em>False</em> lub 0.
+<li>obiekty posiadające metodę <em>__len__()</em>, jeśli zwraca ona 0.
 </ul>
 
 <p>Wszystko inne jest prawdą logiczną.
 
-<p>Operatory 'and' i 'or' zwracają wartość ostatnio
+<p>Operatory <em>and</em> i <em>or</em> zwracają wartość ostatnio
 obliczonego wyrażenia.
 
 <p>Wartości logiczne zwracane przez operatory porównania, 
-operator zawierania ('in') oraz operator negacji
-('not') reprezentowane są przez obiekty 'True' i 'False'.
+operator zawierania (<em>in</em>) oraz operator negacji
+(<em>not</em>) reprezentowane są przez obiekty <em>True</em> i <em>False</em>.
 
 <p>Operatory porównania można łączyć tak jak w zapisie matematycznym.
-Priorytety operatorów od najwyższego: not, and, or.
-<br>Przykładowo (A or not B and C)
-<br>jest równoważne (A or ((not B) and C)).
+<br>Priorytety operatorów od najwyższego: <em>not</em>, <em>and</em>, <em>or</em>.
+<br>Przykładowo <em>(A or not B and C)</em>
+<br>jest równoważne <em>(A or ((not B) and C))</em>.
 <br>Dla pewności można jednak stosować nawiasy.
 
 <p>Wyrażenia logiczne są obliczane od lewej do prawej (tak jak w języku C), 
@@ -49,17 +50,17 @@ czyli jeżeli wiadomo jaki będzie rezultat, to nie są sprawdzane do końca
 wszystkie segmenty wyrażenia, np.
 
 <ul>
-<li>(False and Anything) zwraca False,
-Anything nie jest sprawdzane,
-<li>(True and Anything) zwraca Anything,
-ale nie przekształca wyniku do typu bool,
-<li>(True or Anything) zwraca True,
-Anything nie jest sprawdzane,
-<li>(False or Anything) zwraca Anything,
-ale nie przekształca wyniku do typu bool.
+<li><em>(False and Anything)</em> zwraca <em>False</em>,
+<em>Anything</em> nie jest sprawdzane,
+<li><em>(True and Anything)</em> zwraca <em>Anything</em>,
+ale nie przekształca wyniku do typu <em>bool</em>,
+<li><em>(True or Anything)</em> zwraca <em>True</em>,
+<em>Anything</em> nie jest sprawdzane,
+<li><em>(False or Anything)</em> zwraca <em>Anything</em>,
+ale nie przekształca wyniku do typu <em>bool</em>.
 </ul>
 
-<p>Trzeba pamiętać, że wyrażenie Anything może być samo w sobie 
+<p>Trzeba pamiętać, że wyrażenie <em>Anything</em> może być samo w sobie 
 niepoprawne, np. odwołanie się poza obszar listy.
 
 <p>Operatory porównań:
@@ -67,12 +68,13 @@ a &lt; b, a &lt;= b, a &gt; b, a &gt;= b,
 a == b, a &lt;&gt; b [Py2], a != b.
 
 <p>Testy identyczności: a is b [id(a) == id(b)], a is not b [id(a) != id(b)].
-Operatory 'is' i 'is not' mogą być stosowane do dowolnych obiektów
+Operatory <em>is</em> i <em>is not</em> mogą być stosowane do dowolnych obiektów
 i nigdy nie wywołują wyjątków.
 
-<p>Zawieranie się w sekwencji lub kolekcji: a in S, a not in S.
+<p>Zawieranie się w sekwencji lub kolekcji: 
+<em>a in S</em>, <em>a not in S</em>.
 Te operacje są wspierane dla typów, które są iterowalne lub mają
-zaimplementowaną metodę '__contains__()'.
+zaimplementowaną metodę <em>__contains__()</em>.
 
 <p>Sekwencje w Pythonie są porównywane leksykograficznie.
 Dozwolone jest porównywanie obiektów różnych typów (tylko Py2),

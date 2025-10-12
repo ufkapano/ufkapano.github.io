@@ -15,21 +15,21 @@
 <p>W Pythonie nie ma instrukcji switch czy case, ponieważ
 można je łatwo zastąpić serią testów if i elif.
 Można również wykorzystać słownik do symulacji wyborów.
-Python 3.10 wprowadził nową instrukcję 'match'.
+Python 3.10 wprowadził nową instrukcję <em>match</em>.
 
 <hr><pre>
 # Porównanie C i Pythona.
-if (x &gt; y) {               /* ANSI C */
+if (x &gt; y) {   /* ANSI C */
     x = 1;
     y = 2;
 }
 
-if x &gt; y:                  # Python, nawiasy opcjonalne
-    x = 1                 # bez klamerek, średników
-    y = 2                 # obowiązkowe wcięcie kodu (4 spacje)
+if x &gt; y:           # Python, nawiasy opcjonalne
+    x = 1           # bez klamerek, średników
+    y = 2           # obowiązkowe wcięcie kodu (4 spacje)
 </pre><hr><pre>
 # Instrukcje złożone w Pythonie.
-wiersz_nagłówka:              # obowiązkowy dwukropek
+wiersz_nagłówka:   # obowiązkowy dwukropek
     zagnieżdżony_blok_instrukcji
 
 # Przypadek specjalny - lepiej unikać.
@@ -64,17 +64,17 @@ regularnego i czytelnego kodu.
 # Składnia.
 if test1:
     instrukcje
-elif test2:                   # opcjonalne, może być więcej sekcji elif
+elif test2:         # opcjonalne, może być więcej sekcji elif
     instrukcje
-else:                         # opcjonalne (jeden raz), jeśli nic nie pasuje
+else:               # opcjonalne (jeden raz), jeśli nic nie pasuje
     instrukcje
 </pre><hr><pre>
 # Niech n będzie pewną liczbą całkowitą.
 if n &lt; 0:
     print("liczba ujemna!")
-elif n % 2 == 0:              # sprawdzamy inną możliwość
+elif n % 2 == 0:    # sprawdzamy inną możliwość
     print("{} {}".format(n, "liczba parzysta"))
-else:                         # to jest sekcja opcjonalna
+else:               # to jest sekcja opcjonalna
     print("{} {}".format(n, "liczba nieparzysta"))
 </pre><hr><pre>
 # Porównanie C i Pythona.

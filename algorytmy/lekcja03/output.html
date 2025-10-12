@@ -21,9 +21,9 @@ Polecenie przekształca obiekt
 na jego reprezentację tekstową, dodaje formatowanie
 i przesyła do standardowego wyjścia.
 
-<p>Kolejne elementy po słowie print oddzielamy przecinkami.
-Przecinek na końcu wiersza z print zapobiega wyświetleniu "\n",
-czyli przejściu do nowej linii.
+<p>Kolejne elementy po słowie <em>print</em> oddzielamy przecinkami.
+Przecinek na końcu wiersza z <em>print</em> zapobiega wyświetleniu "\n",
+czyli przejściu do nowego wiersza.
 
 <p>W Pythonie 3 <em>print()</em> jest funkcją wbudowaną.
 
@@ -198,10 +198,10 @@ c = 2-4j
 # 'int: 42;  hex: 0x2a;  oct: 0o52;  bin: 0b101010'
 </pre><hr>
 
-<h3>F-STRINGS</h3>
+<h3>F-STRINGS (PY3.6+)</h3>
 
 <hr><pre>
-# W Py3.6 pojawiły się f-strings, formatted string literals (PEP 498).
+# W Pythonie 3.6 pojawiły się f-strings, formatted string literals (PEP 498).
 # F-strings są szybsze od metody z % i format().
 # Rozpoczynają się od prefiksu 'f' lub 'F', w klamrach {} są wyrażenia lub zmienne.
 name = "Adam"
@@ -219,10 +219,32 @@ message = (
     f"Third part {variable3}."
 )   # multiline f-strings (rezultat to jeden wiersz!)
 
+three_lines = f'''first line
+{expression}
+last line
+'''
+
 name, phone = 'Andrzej', 4628
 f'|{name:10}|{phone:10d}|'   # '|Andrzej   |      4628|'
 # Alignment options can be used.
 f'|{name:&gt;10}|{phone:&lt;10}|'   # '|   Andrzej|4628      |'
+</pre><hr>
+
+<h3>T-STRINGS (PY3.14+)</h3>
+
+<hr><pre>
+# W Pythonie 3.14 pojawiły się t-strings (template strings, PEP 750),
+# które są uogólnieniem f-strings.
+# Rozpoczynają się od prefiksu 't' lub 'T', w klamrach {} są wyrażenia lub zmienne.
+# t-strings są przetwarzane na obiekty nowego typu string.templatelib.Template.
+# Zachowywana jest pamięć o strukturze, co można wykorzystać do testowania
+# typów wyrażeń (SQL, shell) lub dodatkowego przetwarzania (HTML, CSS).
+# Za pomocą dodatkowych funkcji można w końcu otrzymać zwykły string.
+
+from string.templatelib import Template
+
+name = "World"
+template: Template = t"Hello {name}"   # użycie adnotacji
 </pre><hr>
 
 </body>

@@ -21,7 +21,7 @@ sekwencje, mapowania, pliki, klasy, instancje i wyjątki.
 liczby całkowite (dowolnych rozmiarów),
 liczby zmiennoprzecinkowe,
 liczby zespolone.
-Są stringi (łańcuchy napisowe).
+Są stringi (łańcuchy napisowe) do przechowywania tekstu.
 Python jest wyposażony w kilka typów kolekcji:
 listy, krotki (tuples), słowniki, zbiory.
 Listy, krotki i napisy są <em>sekwencjami</em> i mają wiele
@@ -83,8 +83,8 @@ if isinstance(x, (int, long)):   # Py2 (Py3 nie ma typu long)
 
 if isinstance(S, (set, frozenset)):
     print("to jest zbiór")
-
-# Dawny, odradzany sposób.
+</pre><hr><pre>
+# Dawny, odradzany sposób sprawdzania typów.
 # Funkcja type() zwraca obiekt typu - są różnice między Py2 i Py3.
 if type(x) is type(1) or type(x) is type(1.0):
     print("to jest liczba")
@@ -92,13 +92,17 @@ if type(x) is type(1) or type(x) is type(1.0):
 if type(x) is int or type(x) is float:
     print("to jest liczba")
 
-# Moduł types zawiera nazwy dla innych typów.
+# Moduł 'types' zawiera nazwy dla innych typów.
 import types
 dir(types)
 </pre><hr>
 
 <p>Wbudowane stałe Pythona: 
-False, True, None, NotImplemented, Ellipsis.
+<em>False</em>, 
+<em>True</em>, 
+<em>None</em>, 
+<em>NotImplemented</em>, 
+<em>Ellipsis</em>.
 
 <h3>HASH</h3>
 
@@ -107,23 +111,23 @@ False, True, None, NotImplemented, Ellipsis.
 <p>https://www.pythonforthelab.com/blog/what-are-hashable-objects/
 
 <p>Obok podziału obiektów na zmienne i niezmienne, istnieje podział
-na obiekty hashowalne (ang. hashable objects) i niehashowalne.
+na obiekty hashowalne (ang. <em>hashable objects</em>) i niehashowalne.
 Hashowanie to zasadniczo obliczanie pewnej liczby na bazie obiektu,
 przy czym ta liczba nie zmienia się przez cały czas życia obiektu.
 Wykorzystuje się je w tablicach hashowalnych, a w Pythonie przy
 słownikach i zbiorach (klucze w słowniku i elementy zbioru
 muszą być obiektami hashowalnymi).
 
-<p>Zauważmy, że wbudowane typy niezmienne (immutable) w Pythonie
+<p>Zauważmy, że wbudowane typy niezmienne (ang. <em>immutable</em>) w Pythonie
 są zawsze hashowalne.
 Hash zależy od danych przechowywanych przez obiekt, a nie od tożsamości
-obiektu, tożsamość jest sprawdzana przez funkcję id().
+obiektu, tożsamość jest sprawdzana przez funkcję <em>id()</em>.
 Kiedy dwa obiekty mają ten sam hash, wtedy mogą, ale nie muszą być równe,
 bo może wystąpić kolizja. Kolizja jest zjawiskiem typowym, Python wtedy
-porównuje obiekty bezpośrednio (a == b).
+porównuje obiekty bezpośrednio (<em>a == b</em>).
 
 <p>Obiekty tworzone przez klasy zdefiniowane przez użytkownika są 
-z definicji hashowalne, przy czym hash jest obliczany na bazie id().
+z definicji hashowalne, przy czym hash jest obliczany na bazie <em>id()</em>.
 
 <hr><pre>
 &gt;&gt;&gt; a = "abc"
@@ -167,10 +171,11 @@ keyword.iskeyword("max")   # False
 
 <p>Słowa kluczowe Pythona: 
 False (3.9), None (3.9), True (3.9), 
-and, as (2.6+), assert, async (3.9), await (3.9), break (3.9), case (3.10),
+and, as (2.6+), assert, async (3.9), await (3.9), break (3.9), 
+case (3.10, soft keyword),
 class, continue, def, del, elif, else, except, exec (2.x),
 finally, for, from, global, if, import, in, is, 
-lambda, match (3.10), nonlocal (3.x), 
+lambda, match (3.10, soft keyword), nonlocal (3.x), 
 not, or, pass, print (2.x), raise,
 return, try, type (3.12), while, with (2.6+), yield (2.3+).
 

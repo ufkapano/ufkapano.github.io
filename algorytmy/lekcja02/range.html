@@ -46,9 +46,9 @@ W Pythonie mamy dedykowane narzędzia do obsługi takich ciągów.
 
 <h3>PYTHON 2</h3>
 
-<p>W Pythonie 2 funkcja wbudowana 'range()' zwraca listę liczb.
+<p>W Pythonie 2 funkcja wbudowana <em>range</em> zwraca listę liczb.
 
-<p>Klasa 'xrange' zwraca obiekt, który generuje liczby na żądanie.
+<p>Klasa <em>xrange</em> zwraca obiekt, który generuje liczby na żądanie.
 
 <hr><pre>
 range(i, j) zwraca [i, i+1, i+2, ..., j-1] dla i &lt; j.
@@ -62,11 +62,12 @@ i &gt; last &gt; j dla k &lt; 0.
 
 <h3>PYTHON 3</h3>
 
-<p>Obiekt 'range' reprezentuje niezmienną sekwencję liczb i zwykle
-jest używany w pętli 'for' do wykonania ustalonej liczby przebiegów pętli.
+<p>Obiekt <em>range</em> reprezentuje niezmienną sekwencję liczb 
+i zwykle jest używany w pętli <em>for</em> do wykonania ustalonej 
+liczby przebiegów pętli.
 
-<p>Zaletą 'range' w porównaniu z listami i krotkami jest stała i nieduża
-ilość pamięci, niezależnie od wielkości zakresu.
+<p>Zaletą <em>range</em> w porównaniu z listami i krotkami jest stała 
+i nieduża ilość pamięci, niezależnie od wielkości zakresu.
 
 <hr><pre>
 list(range(1, 6))         # [1, 2, 3, 4, 5]
@@ -95,6 +96,8 @@ sys.getsizeof(range(2))   # 48
 
 sys.getsizeof((0, 1, 2))   # 72
 sys.getsizeof(range(3))   # 48
+
+# Wniosek: warto stosować range zamiast nawet krótkich krotek.
 </pre><hr>
 
 </body>

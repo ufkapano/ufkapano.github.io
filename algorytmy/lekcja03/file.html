@@ -19,7 +19,7 @@ oraz dodatkowych modułów, które pomagają w zarządzaniu plikami.
 <p>Obiekty plików są w Pythonie głównym interfejsem do plików
 zewnętrznych znajdujących się na komputerze.
 
-<p>Tworzymy obiekt pliku (file object) za pomocą funkcji
+<p>Tworzymy obiekt pliku (<em>file object</em>) za pomocą funkcji
 <em>open()</em>.
 Po użyciu pliku powinno się go zamknąć za pomocą wbudowanej metody
 <em>close()</em>, aby zwolnić zasoby systemowe powiązane z otwartym plikiem.
@@ -32,10 +32,9 @@ Zawartość pliku tekstowego może być podzielona na wiersze.
 Każdy wiersz, ewentualnie oprócz ostatniego, 
 kończy się znakiem końca wiersza (zwykle "\n", newline).
 
-
 <p>W Pythonie 3 pliki otwarte w trybie tekstowym zwracają zawartość jako string,
-gdzie bajty są dekodowane do 'code points' z użyciem ustawionego 
-kodowania (encoding).
+gdzie bajty są dekodowane do <em>code points</em> z użyciem ustawionego 
+kodowania (<em>encoding</em>).
 
 <p>Pliki inne niż tekstowe to pliki binarne, które powinny być przetwarzane
 przez aplikacje znające ich strukturę.
@@ -88,7 +87,7 @@ L = infile.readlines(50)
 </pre><hr>
 
 <p>Jeżeli plik został otwarty w trybie binarnym (mode "rb"), to funkcja
-read() zwróci obiekt typu 'bytes'.
+<em>read()</em> zwróci obiekt typu <em>bytes</em>.
 
 <p>Zapisywanie danych do otwartego pliku tekstowego (mode "w").
 

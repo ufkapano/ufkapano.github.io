@@ -14,14 +14,14 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W Pythonie 2 funkcja input() próbuje interpretować wprowadzone dane
+<p>W Pythonie 2 funkcja <em>input()</em> próbuje interpretować wprowadzone dane
 i z tego powodu jest powolna i raczej niebezpieczna. 
 Lepiej wczytać dane jako string za pomocą 
-funkcji raw_input(), a następnie rzutować na potrzebny typ.
+funkcji <em>raw_input()</em>, a następnie rzutować na potrzebny typ.
 W razie potrzeby możemy się zabezpieczyć przez try/except.
 
-<p>W Pythonie 3 istnieje tylko funkcja input(), która działa tak
-jak raw_input() w Pythonie 2 i zwraca zawsze string.
+<p>W Pythonie 3 istnieje tylko funkcja <em>input()</em>, która działa tak
+jak <em>raw_input()</em> w Pythonie 2 i zwraca zawsze string.
 
 <hr><pre>
 # Składnia.
@@ -30,17 +30,19 @@ jak raw_input() w Pythonie 2 i zwraca zawsze string.
 # input([prompt]) - zwraca wartość (Py2)
 # równoważne eval(raw_input(prompt))
 
+# input([prompt]) - zwraca string (Py3)
+
 word = raw_input(prompt)
 variable = input(prompt)
-
-# Przy input() wynik może być typu int, float lub inny.
+</pre><hr><pre>
+# Przy input() wynik może być typu int, float lub inny (Py2).
 # Jeżeli chcemy mieć na pewno int, to można zrobić tak:
 # n = int(raw_input("Podaj int: "))
 # Jeżeli wejście nie będzie pasowało do int, to będzie wyjątek.
 
-line = raw_input("Podaj napis: ")
+line = raw_input("Podaj napis: ")   # Py2
 
-n = input("Podaj liczbe: ")
+n = input("Podaj liczbe: ")   # Py2
 print(type(n))
 print("{} {}".format("Podana liczba:", n))
 </pre><hr><pre>

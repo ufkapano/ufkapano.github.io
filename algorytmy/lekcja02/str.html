@@ -14,8 +14,10 @@
 
 <p>Łańcuch (string) to uporządkowany ciąg znaków używany do przechowywania
 informacji tekstowej. 
-W Pythonie 2 znaki odpowiadają bajtom, więc bytes() to alias do str() (Py2.7).
-W Pythonie 3 string (typ 'str') zawiera znaki Unikodu (code points), które
+W Pythonie 2 znaki odpowiadają bajtom, więc <em>bytes()</em> to alias 
+do <em>str()</em> (Py2.7).
+W Pythonie 3 string (typ <em>str</em>) zawiera znaki Unikodu 
+(<em>code points</em>), które
 zamienia się na ciąg bajtów korzystając z ustalonego kodowania.
 Jeden znak Unikodu może odpowiadać kilku bajtom.
 
@@ -27,7 +29,7 @@ Dozwolone są ujemne offsety (odliczanie od końca).
 <p>W Pythonie nie ma osobnego typu znakowego jak w języku C. 
 Znakami są po prostu stringi o długości jeden.
 
-<p>Moduły pomocnicze: string, re, itp.
+<p>Moduły pomocnicze: <em>string</em>, <em>re</em>, itp.
 
 <p>Stałe łańcuchowe mogą być zapisywane z użyciem apostrofów lub
 znaków cudzysłowu. Dzięki temu możemy wstawiać znak cudzysłowu/apostrofu
@@ -64,13 +66,16 @@ wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
 | S.format(...)        | Py2.6+, Py3.x               |
 | del S                | usuwanie napisu             |
 +----------------------+-----------------------------+
-</pre><hr><pre>
-Standard Unikodu przypisuje abstrakcyjnym znakom (characters)
-liczby całkowite dodatnie (code points).
-String Unikodu jest to ciąg code points.
-Reguły transformacji stringu Unikodu na ciąg bajtów jest to kodowanie.
+</pre><hr>
+
+<p>Standard Unikodu przypisuje abstrakcyjnym znakom (<em>characters</em>)
+liczby całkowite dodatnie (<em>code points</em>).
+String Unikodu jest to ciąg <em>code points</em>.
+<br>Reguły transformacji stringu Unikodu na ciąg bajtów jest to 
+<strong>kodowanie</strong>.
 Najpopularniejsze obecnie kodowanie to UTF-8.
 
+<hr><pre>
 Code point 97 (litera 'a') odpowiada u'\x61' = u'\u0061' = u'\U00000061', 
 (0)110.0001, jeden bajt w UTF-8.
 
@@ -135,16 +140,16 @@ Y = 2
 <h3>INDEKSOWANIE</h3>
 
 <p>Dla łańcucha S dozwolone są indeksy od 0 do len(S)-1. 
-Indeks ujemny S[-n] rozumiany jest jako S[len(S)-n].
-S[i] jest napisem o długości jeden.
+<br>Indeks ujemny S[-n] rozumiany jest jako S[len(S)-n].
+<br>S[i] jest łańcuchem o długości jeden.
 
 <h3>WYCINANIE</h3>
 
-<p>S[j:k] wycina elementy od S[j] do S[k-1] włącznie, tworząc nowy napis.
-S[:k] oznacza S[0:k].
-S[j:] oznacza S[j:len(S)].
-S[:] daje cały napis.
-S[:j] + S[j:] daje cały napis.
+<p>S[j:k] wycina elementy od S[j] do S[k-1] włącznie, tworząc nowy łańcuch.
+<br>S[:k] oznacza S[0:k].
+<br>S[j:] oznacza S[j:len(S)].
+<br>S[:] daje cały łańcuch.
+<br>S[:j] + S[j:] daje cały łańcuch.
 
 <hr><pre>
 # Napisy można porównywać (&lt;, &gt;, ==), nawet trójkami.
@@ -197,7 +202,7 @@ TypeError: 'str' object does not support item assignment
 
 <p>Znak plus (+) czy gwiazdka (*) oznacza co innego dla liczb, 
 a co innego dla napisów.
-Jest to przykład <em>polimorfizmu</em> w Pythonie.
+Jest to przykład <strong>polimorfizmu</strong> w Pythonie.
 
 <h3>BUDOWANIE NAPISÓW</h3>
 
@@ -220,13 +225,13 @@ result = "".join(colors)
 zwracają nowy łańcuch.
 
 <hr><pre>
-dir(str)                 # lista metod stringów
-print(ord("a"))       # 97, kod ASCII znaku
-print(ord(u"ą))       # 261, ord() działa też dla unikodu w Py2
-print(chr(98))        # "b", znak dla danego kodu ASCII
+dir(str)            # lista metod stringów
+print(ord("a"))     # 97, kod ASCII znaku
+print(ord(u"ą))     # 261, ord() działa też dla unikodu w Py2
+print(chr(98))      # "b", znak dla danego kodu ASCII
 
 word = "".join(["a","b","c","d","e","f"])   # sklejanie listy znaków lub stringów
-print(word)           # "abcdef"
+print(word)         # "abcdef"
 word.find("cd")     # 2, odnalezienie przesunięcia podłańcucha
 word.replace("bc", "xyz")     # zastąpienie wystąpień podłańcucha
 
@@ -273,10 +278,12 @@ S.isupper()
 S.isspace()
 </pre><hr>
 
-<p>Jeżeli chcemy sprawdzić, czy obiekt jest łańcuchem, 
-korzystamy z funkcji <em>isinstance(obiekt, basestring)</em>, 
+<p>Jeżeli w Pythonie 2 chcemy sprawdzić, czy obiekt X jest łańcuchem, 
+korzystamy z wywołania <em>isinstance(X, basestring)</em>, 
 gdzie <em>basestring</em> to klasa bazowa dla
-str i unicode (Python 2.3+).
+<em>str</em> i <em>unicode</em> (Py2.3+).
+<br>W Pythonie 3 korzystamy z wywołania <em>isinstance(X, str)</em>,
+klasa <em>basestring</em> została usunięta z języka (PEP 3137).
 
 <p>Łańcuchy znaków obsługują zaawansowane operacje formatowania
 ze znakiem procenta (%) lub metodą <em>format</em>
@@ -285,16 +292,17 @@ ze znakiem procenta (%) lub metodą <em>format</em>
 <h3>MEMORYVIEW</h3>
 
 <p>W Pythonie 2.7 pojawia się <em>memoryview(object)</em>,
-przy czym obiekt musi wspierać buffer protocole.
-Buffer protocole dostarcza sposobu na dostęp do wewnętrznych danych obiektu.
-W zwykłym kodzie pythonowym używa się buffer protocole
-za pomocą <em>memoryview()</em>.
-Obiekty wbudowane wspierające buffer protocole to 
+przy czym obiekt musi wspierać protokół buforowania (<em>buffer protocole</em>).
+Protokół buforowania dostarcza sposobu na dostęp do wewnętrznych 
+danych obiektu.
+W zwykłym kodzie pythonowym używa się protokołu buforowania
+za pomocą klasy <em>memoryview</em>.
+Obiekty wbudowane wspierające protokół buforowania to 
 <em>str</em> i <em>bytearray</em> (ale nie <em>unicode</em>).
-<em>memoryview()</em> ma dwie metody tobytes() i tolist(),
+Klasa <em>memoryview</em> ma dwie metody <em>tobytes()</em> i <em>tolist()</em>,
 oraz kilka atrybutów tylko do odczytu.
 
-<p>Za pomocą <em>memoryview()</em> można używać i modyfikować
+<p>Za pomocą klasy <em>memoryview</em> można używać i modyfikować
 duże ilości danych bez ich kopiowania. Dzięki temu dany program używa
 mniej pamięci i działa szybciej.
 
@@ -345,23 +353,23 @@ występują typy <em>bytes</em> i <em>str</em>,
 które mają odmienne własności.
 W Py3 znika <em>basestring</em> (PEP 3137).
 
-<p><em>bytes(object)</em> zwraca niezmienną (immutable) tablicę bajtów.
-[W Py2.7 jest to alias do str().]
+<p><em>bytes(object)</em> zwraca niezmienną (<em>immutable</em>) tablicę bajtów.
+[W Py2.7 jest to alias do <em>str()</em>.]
 
-<p><em>bytearray(object)</em> zwraca zmienną (mutable) tablicę bajtów.
+<p><em>bytearray(object)</em> zwraca zmienną (<em>mutable</em>) tablicę bajtów.
 [Istnieje w Py2.7.]
 
-<p><em>str(object)</em> zwraca niezmienny string mogący zawierać znaki unikodu.
+<p><em>str(object)</em> zwraca niezmienny string mogący zawierać znaki Unikodu.
 [W Py2 odpowiada mu unicode().]
 
 <p><em>memoryview(object)</em> tworzy widok obiektu. 
-Obiekt musi wspierać protokół buforowania (buffer protocol), czyli dawać
-dostęp do bufora obiektu bez robienia kopii. 
+Obiekt musi wspierać protokół buforowania (<em>buffer protocol</em>), 
+czyli dawać dostęp do bufora obiektu bez robienia kopii. 
 Było wiele zmian w kolejnych wersjach Py3.
 
 <h3>PRZYKŁAD</h3>
 
-<p>Praca w systemie Linux Debian 10, ustawienie locale 'pl_PL.UTF-8'.
+<p>Praca w systemie Linux Debian 10, ustawienie locale <em>pl_PL.UTF-8</em>.
 
 <hr><pre>
 # Wprowadzanie tekstu z klawiatury (Py2).

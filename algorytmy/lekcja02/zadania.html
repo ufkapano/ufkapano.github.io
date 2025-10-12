@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Zadania</title>
+<title>Python</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -23,7 +23,7 @@ Sprawdzić, czy można utworzyć zmienne o takich nazwach.
 
 <p>Sprawdzić listę obiektów wbudowanych.
 W czasie normalnej pracy nie ma potrzeby importowania
-modułu __builtin__, ponieważ obiekty wbudowane są dostępne.
+modułu <em>__builtin__</em>, ponieważ obiekty wbudowane są dostępne.
 
 <hr><pre>
 &gt;&gt;&gt; import __builtin__
@@ -78,24 +78,24 @@ len(str(2 ** 10000))            # konwersja liczby do napisu
 S = "ab"   'cd'               # niejawna konkatenacja do "abcd"
 "ab'cd", 'ab"cd'              # zastosowanie
 S = "a\tb\nc\"d"              # znaki specjalne
-print ( "{} {}".format(len(S), S) )   # 7
+print("{} {}".format(len(S), S))   # 7
 
 S = """jeden
 dwa
 trzy"""     # napis wielowierszowy, podobnie z '''
-print ( S )
-
+print(S)
+</pre><hr><pre>
 # Sprawdzić indeksowanie i wycinki.
 S = "abrakadabra"
 S[2], S[-3], S[3:5], S[3:], S[:4]
-
+</pre><hr><pre>
 # Sprawdzić konkatenację (łączenie) i powtórzenie napisów.
 L = ["a", "b", "c"]
 L[0] + L[1] + L[2]            # ręczne dodawanie
 L[0] + "=" + L[1] + "=" + L[2]
 "".join(L)                    # zalecane
 "=".join(L)                   # zalecane
-# S.join([S1,S2,S3]) daje S1+S+S2+S+S3
+# S.join([S1, S2, S3]) daje napis (S1 + S + S2 + S + S3).
 
 # Sprawdzić niezmienność napisów.
 </pre><hr>
@@ -172,8 +172,8 @@ rozpoczynające się od znaku # (linie z komentarzami).
 
 <h3>ZADANIE 2.10</h3>
 
-<p>Mamy dany napis wielowierszowy <em>line</em>.
-Podać sposób obliczenia liczby wyrazów w napisie.
+<p>Mamy dany string wielowierszowy <em>line</em>.
+Podać sposób obliczenia liczby wyrazów w stringu.
 Przez wyraz rozumiemy ciąg "czarnych" znaków, oddzielony
 od innych wyrazów białymi znakami (spacja, tabulacja, newline).
 
@@ -182,7 +182,7 @@ od innych wyrazów białymi znakami (spacja, tabulacja, newline).
 
 <h3>ZADANIE 2.11</h3>
 
-<p>Podać sposób wyświetlania napisu <em>word</em> tak,
+<p>Podać sposób wyświetlania stringu <em>word</em> tak,
 aby jego znaki były rozdzielone znakiem podkreślenia.
 
 <pre>
@@ -190,17 +190,17 @@ aby jego znaki były rozdzielone znakiem podkreślenia.
 
 <h3>ZADANIE 2.12</h3>
 
-<p>Zbudować napis stworzony z pierwszych
-znaków wyrazów z wiersza <em>line</em>.
+<p>Zbudować string stworzony z pierwszych
+znaków wyrazów ze stringu <em>line</em>.
 Zbudować napis stworzony z ostatnich
-znaków wyrazów z wiersza <em>line</em>.
+znaków wyrazów ze stringu <em>line</em>.
 
 <pre>
 </pre>
 
 <h3>ZADANIE 2.13</h3>
 
-<p>Znaleźć łączną długość wyrazów w napisie <em>line</em>.
+<p>Znaleźć łączną długość wyrazów w stringu <em>line</em>.
 Wskazówka: można skorzystać z funkcji <em>sum()</em>.
 
 <pre>
@@ -209,7 +209,7 @@ Wskazówka: można skorzystać z funkcji <em>sum()</em>.
 <h3>ZADANIE 2.14</h3>
 
 <p>Znaleźć: (a) najdłuższy wyraz, (b) długość najdłuższego
-wyrazu w napisie <em>line</em>.
+wyrazu w stringu <em>line</em>.
 
 <pre>
 </pre>
@@ -217,15 +217,14 @@ wyrazu w napisie <em>line</em>.
 <h3>ZADANIE 2.15</h3>
 
 <p>Na liście L znajdują się liczby całkowite dodatnie.
-Stworzyć napis będący ciągiem cyfr kolejnych liczb
-z listy L.
+Stworzyć string będący ciągiem cyfr kolejnych liczb z listy L.
 
 <pre>
 </pre>
 
 <h3>ZADANIE 2.16</h3>
 
-<p>W tekście znajdującym się w zmiennej <em>line</em>
+<p>W tekście znajdującym się w stringu <em>line</em>
 zamienić ciąg znaków "GvR" na "Guido van Rossum".
 
 <pre>
@@ -233,7 +232,7 @@ zamienić ciąg znaków "GvR" na "Guido van Rossum".
 
 <h3>ZADANIE 2.17</h3>
 
-<p>Posortować wyrazy z napisu <em>line</em>
+<p>Posortować wyrazy ze stringu <em>line</em>
 raz alfabetycznie, a raz pod względem długości.
 Wskazówka: funkcja wbudowana <em>sorted()</em>.
 
@@ -243,7 +242,7 @@ Wskazówka: funkcja wbudowana <em>sorted()</em>.
 <h3>ZADANIE 2.18</h3>
 
 <p>Znaleźć liczbę cyfr zero w dużej liczbie całkowitej.
-Wskazówka: zamienić liczbę na napis.
+Wskazówka: zamienić liczbę na string.
 
 <pre>
 </pre>
@@ -251,7 +250,7 @@ Wskazówka: zamienić liczbę na napis.
 <h3>ZADANIE 2.19</h3>
 
 <p>Na liście L mamy liczby jedno-, dwu- i trzycyfrowe
-dodatnie.  Chcemy zbudować napis z trzycyfrowych bloków,
+dodatnie.  Chcemy zbudować string z trzycyfrowych bloków,
 gdzie liczby jedno- i dwucyfrowe będą miały blok
 dopełniony zerami, np.  007, 024. 
 Wskazówka: <em>str.zfill()</em>.

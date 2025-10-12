@@ -16,7 +16,7 @@
 
 <ul>
 <li>Liczby całkowite typu <em>int</em>,
-<li>Liczby całkowite długie typu <em>long</em>
+<li>Liczby całkowite długie typu <em>long</em> w Py2
 ['L' suffix, tożsamy z <em>int</em> w Py3],
 <li>Liczby zmiennoprzecinkowe, rzeczywiste typu <em>float</em>,
 <li>Liczby zespolowe typu <em>complex</em>.
@@ -26,10 +26,10 @@
 
 <ul>
 <li>Liczby dziesiętne o ustalonej precyzji 
-(moduł <em>decimal</em>, klasa <em>Decimal</em>, Py2.4+).
+(moduł <em>decimal</em>, klasa <em>Decimal</em>, Py2.4+, Py3).
 <li>Ułamki implementujące obiekt liczby wymiernej, gdzie
 jawnie przechowuje się licznik i mianownik
-(moduł <em>fractions</em>, klasa <em>Fraction</em>, Py2.6+).
+(moduł <em>fractions</em>, klasa <em>Fraction</em>, Py2.6+, Py3).
 </ul>
 
 <p>Po przekroczeniu zakresu <em>int</em> Python 2 automatycznie
@@ -80,16 +80,16 @@ dla trzech argumentów równoważne <em>(x ** y) % z</em>.
 Funkcja różni się od <em>math.trunc()</em>.
 
 <li>Minimum,
-<em>min(iterable[, key=func])</em> - jeden argument, 
-<em>min(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
+<br><em>min(iterable[, key=func])</em> - jeden argument, 
+<br><em>min(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
 
 <li>Maksimum,
-<em>max(iterable[, key=func])</em> - jeden argument, 
-<em>max(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
+<br><em>max(iterable[, key=func])</em> - jeden argument, 
+<br><em>max(a, b, c, ...[, key=func])</em> - więcej niż jeden argument.
 
 <li>Funkcja <em>sum(iterable[, start])</em>,
 zwraca sumę sekwencji liczb, ale nie stringów.
-Parametr start domyślnie wynosi zero,
+<br>Parametr <em>start</em> domyślnie wynosi zero,
 dla pustej sekwencji suma wynosi zero.
 </ul>
 

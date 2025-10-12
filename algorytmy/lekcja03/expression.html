@@ -44,6 +44,10 @@ first, *L, last = M    # M[0], M[1:-1], M[-1]
 <h3>WYRAŻENIA PRZYPISANIA</h3>
 
 <p>PEP 572 - Assignment Expressions (walrus operator)
+<br>(variable := expression) Unparenthesized assignment expressions 
+are prohibited at the top level of an expression statement.
+
+<p>https://www.codeconquest.com/blog/python-walrus-operator-uses-and-controversy/
 
 <p>W Pythonie 3.8 pojawiły się wyrażenia przypisania i nowa składnia ':=',
 która przypisuje wartości do zmiennych jako część większego wyrażenia.
@@ -52,9 +56,13 @@ uniknąć dwukrotnego obliczania tego samego wyrażenia,
 uniknąć głębokiego zagnieżdżania kodu, itp.
 Na ogół wymagane są nawiasy otaczające wyrażenie przypisania.
 
-<p>Warto pamiętać, że ':=' tworzy wyrażenie (expression), a '=' tworzy
-instrukcję (statement), przez co ich dozwolone zakresy występowania
-tylko częściowo się pokrywają.
+<p>Warto pamiętać, że ':=' tworzy wyrażenie (<em>expression</em>), 
+a '=' tworzy instrukcję (<em>statement</em>), przez co ich dozwolone 
+zakresy występowania tylko częściowo się pokrywają.
+
+<p>Wyrażenie przypisania wzbudziło kontrowersje w środowisku
+deweloperów Pythona. Podobno było przyczyną rezygnacji GvR z honorowego
+stanowiska dożywotniego dyktatora w 2018 roku.
 
 <hr><pre>
 # The assignment expression helps avoid calling len() twice.
@@ -69,9 +77,15 @@ if (match := pattern.search(data)) is not None:
 while (block := f.read(256)) != '':
     process(block)   # 'block' is needed twice
 </pre><hr><pre>
+import random
+while (number := random.randint(1, 10)) != 5:
+    print(number)
+</pre><hr><pre>
 # Reuse a value that's expensive to compute.
-[y := f(x), y**2, y**3]
+[y := f(x), y**2, y**3]   # dozwolone
+[(y := f(x)), y**2, y**3]   # bezpieczniej z nawiasami
 # zamiast [f(x), f(x)**2, f(x)**3]
+# lub y = f(x) ; [y, y**2, y**3]
 </pre><hr><pre>
 # Share a subexpression between a comprehension filter clause and its output.
 filtered_data = [y for x in data if (y := f(x)) is not None]

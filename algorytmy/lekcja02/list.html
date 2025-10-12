@@ -17,7 +17,7 @@ Są heterogeniczne i mogą być dowolnie zagnieżdżane.
 Dostęp do obiektów możliwy jest za pomocą offsetu (położenia na liście). 
 
 <p>Listy mogą się rozrastać i kurczyć w miejscu, czyli są 
-zmiennymi (mutable) sekwencjami. 
+zmiennymi (<em>mutable</em>) sekwencjami. 
 Z technicznego punktu widzenia, 
 listy Pythona zawierają zero lub więcej odwołań do innych obiektów.
 Listy obsługują zagnieżdżanie obiektów na dowolną głębokość.
@@ -114,7 +114,18 @@ L4 = list(L1)       # jeszcze prościej
 
 <h3>SORTOWANIE LIST</h3>
 
+<p>https://www.youtube.com/watch?v=XjOnY-OLAPc
+<br>Quicksort, Timsort, Powersort - PyCon US 2023 talk
+
 <p>Listy mają wbudowaną metodę do sortowania elementów w miejscu.
+Przez prawie 20 lat Python wykorzystywał algorytm sortowania stabilnego
+<em>Timsort</em>, którego autorem jest Tim Peters (Py2.3 - Py3.10).
+W Pythonie 3.11 pojawił się nowy algorytm sortowania stabilnego
+<em>Powersort</em>, którego autorem jest Sebastian Wild.
+W algorytmie <em>Timsort</em> zmieniono politykę łączenia podsekwencji,
+w celu przyspieszenia algorytmu. Wcześniej poprawiono w algorytmie
+<em>Timsort</em> pewien błąd, który ujawnił się po raz pierwszy
+w języku Java.
 
 <hr><pre>
 # help(list.sort)
@@ -145,15 +156,20 @@ print(alist)   # ['Ala', 'auto', 'bocian', 'Barbara']
 </pre><hr>
 
 <p>Prosty sposób sortowania to wykorzystanie wbudowanej funkcji
-<em>sorted()</em>, która zwraca nową, posortowaną listę.
-Korzysta ona z metody specjalnej __lt__ i może być używana nie tylko
-dla list, ale dla obiektów iterowanych.
+<em>sorted()</em>, która zwraca nową, posortowaną listę
+(oryginalna lista pozostaje niezmieniona).
+Korzysta ona z metody specjalnej <em>__lt__</em> i może być używana nie tylko
+dla list, ale ogólnie dla obiektów iterowanych.
+<em>sorted()</em> pozwala na sortowanie niezmiennych sekwencji.
 
 <hr><pre>
 # help(sorted)
 # sorted(iterable, cmp=None, key=None, reverse=False)   # Py2
 # sorted(iterable, /, *, key=None, reverse=False)   # Py3
 # Zwraca nową posortowaną listę.
+
+sorted("dacb")   # ['a', 'b', 'c', 'd'] sortowanie znaków
+sorted((7,2,5,3))   # [2, 3, 5, 7] sortowanie krotki
 
 # Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
 def mysorted(iterable):
@@ -181,14 +197,14 @@ blist = sorted(alist, key=operator.itemgetter(1))
 <h3>METODY LIST</h3>
 
 <p>W Pythonie często możemy zobaczyć wyrażenia typu
-'obiekt.metoda(argumenty)'.
+<em>obiekt.metoda(argumenty)</em>.
 Nawiązuje to do programowania obiektowego.
 Metoda jest funkcją, która należy do obiektu i nosi pełną nazwę
-'obiekt.metoda()'. 
+<em>obiekt.metoda()</em>. 
 Obiekt innego typu może posiadać metodę o tej samej nazwie, 
-np. 'obiekt2.metoda()', ale nie prowadzi to do dwuznaczności.
-Mamy również konstrukcje typu 'obiekt.atrybut' i również różne obiekty
-mogą mieć atrybut o tej samej nazwie, ale o różnych typach.
+np. <em>obiekt2.metoda()</em>, ale nie prowadzi to do dwuznaczności.
+Mamy również konstrukcje typu <em>obiekt.atrybut</em> i również różne obiekty
+mogą mieć atrybut o tej samej nazwie, ale niekonieznie tym samym typie.
 
 <hr><pre>
 dir(list)           # spis metod i atrybutów dla list
@@ -197,20 +213,20 @@ L = ["a", "a", "a", "b", "b"]
 L.count("a")        # 3, liczba wystąpień "a" na liście
 
 L.append("c")       # dołączenie "c" na koniec listy
-print(L)         # ['a', 'a', 'a', 'b', 'b', 'c']
+print(L)            # ['a', 'a', 'a', 'b', 'b', 'c']
 
 L.insert(1, "x")    # dołączenie przed indeksem 1
-print(L)         # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
+print(L)            # ['a', 'x', 'a', 'a', 'b', 'b', 'c']
 
 L.remove("a")       # usuwanie wskazanego elementu - pierwsze wystąpienie
-print(L)         # ['x', 'a', 'a', 'b', 'b', 'c']
+print(L)            # ['x', 'a', 'a', 'b', 'b', 'c']
 
 L.pop()             # "c", usuwanie od końca (błąd dla pustej listy)
 L.pop(2)            # "a", usuwanie elementu nr 2 - zwraca element
-print(L)         # ['x', 'a', 'b', 'b']
+print(L)            # ['x', 'a', 'b', 'b']
 
 L.reverse()         #  odwracanie listy IN PLACE
-print(L)         # ['b', 'b', 'a', 'x']
+print(L)            # ['b', 'b', 'a', 'x']
 
 # L.index(x[, i[, j]])   # indeks x od i, a przed j
 L.index("a")        # 2, jaki indeks ma "a"
@@ -221,12 +237,13 @@ print(L)         # ['b', 'b', 'a', 'x', 'q', 'w', 'e', 'r', 't', 'y']
 
 <h3>LISTY SKŁADANE</h3>
 
-<p>List comprehensions, czyli listy składane 
+<p><em>List comprehensions</em>, czyli listy składane 
 są elementami programowania funkcyjnego, przejętymi z języka Haskell.
 Jest to zwarty sposób na tworzenie list bez odwoływania się
-do map(), filter(), czy wyrażeń lambda.
-Kolejność elementów w nawiasie kwadratowym:
-wyrażenie, pętla for, dalej wielokrotnie (opcjonalnie) pętla for lub if.
+do <em>map()</em>, <em>filter()</em>, czy wyrażeń lambda.
+<br>Kolejność elementów w nawiasie kwadratowym:
+wyrażenie, pętla <em>for</em>, dalej wielokrotnie (opcjonalnie) 
+pętla <em>for</em> lub wyrażenie warunkowe <em>if</em>.
 Listy składane często pozwalają uzyskać dużą szybkość przetwarzania,
 jak kod w języku C.
 Należy zachować umiar przy tworzeniu zagnieżdżonych list składanych,
@@ -235,7 +252,7 @@ często bardziej czytelne są zwykłe pętle wielokrotne.
 <p>Składnia list składanych przenosi się w dużej mierze
 na generatory, czyli "leniwe" funkcje zwracające pojedyńczą wartość
 na żądanie. 
-Generatory można również tworzyć za pomocą wyrażenia yield.
+Generatory można również tworzyć za pomocą wyrażenia <em>yield</em>.
 Więcej wyjaśnień zostanie podanych przy funkcjach.
 
 <hr><pre>

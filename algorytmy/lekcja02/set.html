@@ -13,12 +13,12 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Zbiory są dostępne bez importu od Pythona 2.4.
-Są dwa rodzaje wbudowanych zbiorów: set (mutable)
-i frozenset (immutable, hashable).
-Konstrukcja zbiorów bazuje na doświadczeniach z modułem sets.
+Są dwa rodzaje wbudowanych zbiorów: <em>set</em> (<em>mutable</em>)
+i <em>frozenset</em> (<em>immutable</em>, <em>hashable</em>).
+Konstrukcja zbiorów bazuje na doświadczeniach z modułem <em>sets</em>.
 Elementy zbioru muszą być hashowalne, tak jak klucze słowników.
 Jeżeli chcemy utworzyć zbiór zbiorów, to wewnętrzne zbiory
-muszą być klasy frozenset.
+muszą być klasy <em>frozenset</em>.
 
 <pre>
 +---------------------------+------------+------------------------+
@@ -47,7 +47,7 @@ muszą być klasy frozenset.
 +---------------------------+------------+------------------------+
 </pre>
 
-<p>Operacje dostępne tylko dla mutable sets, ponieważ zbiory
+<p>Operacje dostępne tylko dla zbiorów zmiennych, ponieważ zbiory
 mogą zmienić swój skład.
 
 <pre>
@@ -70,8 +70,8 @@ mogą zmienić swój skład.
 </pre>
 
 <p>Porównywanie dwóch zbiorów ma sens, gdy jeden zawiera się w drugim.
-W przeciwnym razie wyjdzie False.
-Zbiory nie implementują metody __cmp__().
+W przeciwnym razie otrzymamy <em>False</em>.
+Zbiory nie implementują metody <em>__cmp__()</em>.
 
 <hr><pre>
 # Konstrukcja: set(iterable)
