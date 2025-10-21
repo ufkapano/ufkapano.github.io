@@ -36,7 +36,7 @@ for item in sequence:   # wiersz nagłówkowy
         continue    # przejście na górę pętli, opcjonalne
     instrukcje
 else:               # opcjonalne
-    instrukcje      # jeżeli nie było break, działa nawet przy pustej sekwencji
+    instrukcje      # jeżeli nie było 'break', działa nawet przy pustej sekwencji
 </pre><hr><pre>
 word = "praca"
 for char in word:             # pętla po stringu
@@ -63,7 +63,7 @@ for item in (6, "abc", 1.2):
 for (a, b) in [(2, "i"), (3.14, "f"), ("a", "s")]:
     print("{} {} {} {}".format("pierwszy", a, "drugi", b))
 </pre><hr><pre>
-# Wydłużanie listy w trakcie działania pętli for.
+# Wydłużanie listy w trakcie działania pętli 'for'.
 # Zachować ostrożność!
 # Można wpaść w pętlę nieskończoną.
 L = list(range(5))
@@ -79,7 +79,7 @@ for i in L:
 for item in L[:]:   # albo list(L)
     process(item)
 </pre><hr><pre>
-# Pętla for w konteście słowników.
+# Pętla 'for' w konteście słowników.
 D = {"a": 1, "b": 2, "c": 3}
 for key in D:                 # pętla po kluczach
     print("{} {}".format(key, D[key]))
@@ -176,7 +176,7 @@ list(zip("ab", "1234"))   # [('a', '1'), ('b', '2')]
 # map(function, sequence[, sequence, ...]) zwraca listę.
 # W Py3 map() zwraca 'map object' (iterator).
 </pre><hr><pre>
-# Funkcję map można łatwo zastąpić listą składaną.
+# Funkcję map() można łatwo zastąpić listą składaną.
 L = [-2, -1, 0, 1, 2]
 list(map(abs, L))   # [2, 1, 0, 1, 2]
 [abs(x) for x in L]
@@ -200,7 +200,7 @@ list(map(str.upper, words))   # ['JEDEN', 'DWA', 'TRZY']
 keys = ["jeden", "dwa", "trzy"]
 values = ["I", "II", "III"]
 D = dict(zip(keys, values))
-# To samo za pomocą pętli for.
+# To samo za pomocą pętli 'for'.
 D = {}              # lub D = dict()
 for (k, v) in zip(keys, values):
     D[k] = v
@@ -225,7 +225,7 @@ L = [1, 2, 4, 5]
 
 # Sprawdzamy, czy wszystkie liczby są parzyste.
 
-# Zastosowanie klauzuli else w pętli for.
+# Zastosowanie klauzuli 'else' w pętli 'for'.
 
 for x in L:
     if x % 2 != 0:

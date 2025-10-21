@@ -83,6 +83,12 @@ L.sort(cmp=cmpfunc)   # Python 2, przekazanie funkcji porównującej
 
 <h3>SORTOWANIE W C/C++</h3>
 
+<p>https://en.wikipedia.org/wiki/Introsort
+<br><strong>Introsort</strong> or <strong>introspective sort</strong> 
+is a hybrid sorting algorithm that provides both fast average performance 
+and (asymptotically) optimal worst-case performance.
+Introsort was invented by David Musser in 1997.
+
 <hr><pre>
 #include &lt;cstdlib&gt;   // qsort()
 
@@ -199,31 +205,32 @@ rm -f main.out *.o core
 # Makefile
 # Kompilator g++.
 CXX = g++
-# Mozliwe dodatkowe zmienne.
+# Możliwe dodatkowe zmienne.
 # LIBS = -ll -lm
 LIBS =
 # Flagi dla kompilatora C++.
 # Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
 CXXFLAGS = -Wall -std=c++11
-# Pliki obiektowe - powstaja z plikow *.cpp.
+# Pliki obiektowe - powstają z plików *.cpp.
 OBJECTS = main.o atrapa.o
-# Pliki naglowkowe - sa wlaczane do plikow *.cpp.
+# Pliki nagłówkowe - są włączane do plików *.cpp.
 HFILES = atrapa.h
-# Koncowy plik wykonywalny.
+# Końcowy plik wykonywalny.
 TARGET = main.out
 
-# Definicja domyslnej reguly wzorcowej.
-# $&lt; oznacza nazwe pliku pierwszej zaleznosci reguly.
-# $@ oznacza nazwe pliku celu w regule.
-# Wszystkie pliki obiektowe zaleza od wszystkich plikow naglowkowych.
-# Wciecia robimy przez TAB.
+# Definicja domyślnej reguły wzorcowej.
+# $&lt; oznacza nazwę pliku pierwszej zależności reguły.
+# $@ oznacza nazwę pliku celu w regule.
+# Wszystkie pliki obiektowe zależą od wszystkich plików nagłówkowych.
+# Wcięcia robimy przez TAB.
 %.o : %.cpp $(HFILES) Makefile
 	$(CXX) $(CXXFLAGS) -c $&lt; -o $@
 
+# Na końcu wstawiamy $(LIBS), aby nie było problemów z linkowaniem.
 $(TARGET) : $(OBJECTS)
-	$(CXX) $(CXXFLAGS) $(LIBS) $(OBJECTS) -o $(TARGET)
+	$(CXX) $(CXXFLAGS) $(OBJECTS) -o $(TARGET) $(LIBS)
 
-# Okreslenie celow sztucznych.
+# Określenie celów sztucznych.
 .PHONY : clean
 
 clean :
