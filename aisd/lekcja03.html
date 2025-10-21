@@ -16,19 +16,28 @@
 <h3>WPROWADZENIE</h3>
 
 <p>ADT LIST reprezentuje skończoną liczbę uporządkowanych elementów,
-które mogą się powtarzać. Jeżeli liczba uporządkowanych elementów może być 
-potencjalnie nieskończona, to używa się pojęcia strumienia. 
-Lista to podstawowy przykład kontenera do przechowywania elementów. 
+które mogą się powtarzać. 
+Elementy są <em>uporządkowane</em> (niekoniecznie posortowane!), 
+czyli każdy element ma określoną pozycję (indeks) na liście.
+Jeżeli liczba uporządkowanych elementów może być 
+potencjalnie nieskończona, to używa się pojęcia <em>strumienia</em>. 
+Lista to podstawowy przykład kontenera do przechowywania elementów,
+przy czym w ogólności elementy nie muszą być tego samego typu. 
 Typowe operacje dla ADT LIST są następujące:
 
 <ul>
 <li>konstruktor tworzący pustą listę,
 <li>testowanie, czy lista nie jest pusta [empty()],
-<li>odczyt liczby elementów na liście [size()],
+<li>odczyt liczby elementów na liście, 
+to jest <strong>długość</strong> listy [size()],
+<li>odczyt największej możliwej liczby elementów
+(<em>capacity</em>) [max_size()],
 <li>dołączanie elementu na początek listy [push_front(item)],
 <li>dołączanie elementu na koniec listy [push_back(item)],
-<li>dostęp do głowy (head), czyli pierwszego (lewego skrajnego) elementu [front()],
-<li>dostęp do ogona (tail), czyli ostatniego (prawego skrajnego) elementu [back()],
+<li>dostęp do głowy (<em>head</em>), 
+czyli pierwszego (lewego skrajnego) elementu [front()],
+<li>dostęp do ogona (<em>tail</em>), 
+czyli ostatniego (prawego skrajnego) elementu [back()],
 <li>usunięcie elementu pierwszego [pop_front()],
 <li>usunięcie elementu ostatniego [pop_back()],
 <li>czyszczenie listy, czyli usunięcie wszystkich elementów [clear()],
@@ -36,15 +45,16 @@ Typowe operacje dla ADT LIST są następujące:
 <li>dołączanie elementu przed element na pozycji i [insert()],
 <li>usunięcie elementu o danym indeksie i [erase()],
 <li>sortowanie listy [sort()],
-<li>łączenie dwóch <em>posortowanych</em> list w jedną [merge()].
+<li>łączenie dwóch <strong>posortowanych</strong> list w jedną [merge()].
 </ul>
 
 <p>ADT LIST jest typowo implementowany jako lista powiązana 
 (liniowa lub cykliczna) lub tablica, zwykle o zmiennej długości.
 
 <p>W STL indeksowany dostęp do elementów zapewniają kontenery
-std::vector (ciągły obszar pamięci) i 
-std::deque (sekwencja indywidualnie alokowanych tablic o stałym rozmiarze).
+<em>std::vector</em> (ciągły obszar pamięci) i 
+<em>std::deque</em> (sekwencja indywidualnie alokowanych tablic 
+o stałym rozmiarze).
 
 <hr><pre>
 // Kontenery w STL realizujące w pewnym stopniu ADT LIST.
@@ -64,11 +74,11 @@ std::deque (sekwencja indywidualnie alokowanych tablic o stałym rozmiarze).
 
 It2 copy( It1 first, It1 last, It2 d_first );
 
-// Przykład, kopiowanie w obrębie jednej tablicy a.
+// Przykład. Kopiowanie w obrębie jednej tablicy a.
 // +--+--+--+--+--+--+--+--+--+--+
 // |a0|a1|a2|a3|a4|a5|a6|a7|a8|a9| stan początkowy
 // +--+--+--+--+--+--+--+--+--+--+
-// std::copy(a+5, a+9, a+3); // kopiowanie 4 elementów, a5, a6, a7, a8
+// std::copy(a+5, a+9, a+3); // kopiowanie 4 elementów: a5, a6, a7, a8
 // +--+--+--+--+--+--+--+--+--+--+
 // |a0|a1|a2|a5|a6|a7|a8|a7|a8|a9| stan końcowy
 // +--+--+--+--+--+--+--+--+--+--+
@@ -78,11 +88,11 @@ It2 copy( It1 first, It1 last, It2 d_first );
 
 It2 copy_backward( It1 first, It1 last, It2 d_last );
 
-// Przykład, kopiowanie w obrębie jednej tablicy a.
+// Przykład. Kopiowanie w obrębie jednej tablicy a.
 // +--+--+--+--+--+--+--+--+--+--+
 // |a0|a1|a2|a3|a4|a5|a6|a7|a8|a9| stan początkowy
 // +--+--+--+--+--+--+--+--+--+--+
-// std::copy_backward(a+2, a+6, a+7); // kopiowanie 4 elementów, a5, a4, a3, a2
+// std::copy_backward(a+2, a+6, a+7); // kopiowanie 4 elementów: a5, a4, a3, a2
 // +--+--+--+--+--+--+--+--+--+--+
 // |a0|a1|a2|a3|a2|a3|a4|a5|a8|a9| stan końcowy
 // +--+--+--+--+--+--+--+--+--+--+
@@ -92,21 +102,54 @@ It2 copy_backward( It1 first, It1 last, It2 d_last );
 
 <p>Przygotować implementację realizującą ADT LIST na bazie
 tablicy o stałym rozmiarze, ustalanym w czasie tworzenia listy.
-Będzie to klasa ArrayList umieszczona w pliku 
+Będzie to klasa <em>ArrayList</em> umieszczona w pliku 
 <a href="arraylist.h">arraylist.h</a>.
-Uzupełnić plik arraylist.h, stworzyć funkcję main() i testy
+Uzupełnić plik <em>arraylist.h</em>, stworzyć funkcję main() i testy
 sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 3.2</h3>
 
+<p>https://chalmersgu-data-structure-courses.github.io/OpenDSA/Published/ChalmersGU-DSABook/html/ListArrayDynamic.html
+
 <p>Przygotować implementację realizującą ADT LIST na bazie
-tablicy o zmieniającym się rozmiarze.
-Będzie to klasa ArrayList umieszczona w pliku arraylist.h.
-Początkowy rozmiar tablicy (min_size) może wynosić 2 lub 4.
-Po zapełnieniu tablicy rozmiar może się powiększać o stałą wartość
-lub może się podwajać (wybrać jedną możliwość).
+tablicy o zmieniającym się rozmiarze (tablica dynamiczna).
+Będzie to klasa <em>ArrayList</em> umieszczona w pliku <em>arraylist.h</em>.
+Początkowy rozmiar tablicy (min_size) może wynosić 1, 2 lub 4.
+Po zapełnieniu tablicy rozmiar może się powiększać o stały czynnik,
+np. może się podwajać. Powiększanie tablicy o stałą liczbę miejsc
+nie jest dobrym rozwiązaniem, ze względu na wielokrotne kopiowanie elementów.
 Po usunięciu pewnej liczby elementów tablica może się zmniejszać,
 aż do osiągnięcia początkowego rozmiaru minimalnego.
+
+<p>Zbadajmy liczbę kopiowań elementów podczas powiększania tablicy 
+o czynnik 2.
+<br>resize(2), kopiowany 1 element
+<br>resize(4), kopiowane 2 elementy
+<br>resize(8), kopiowane 4 elementy
+<br>resize(16), kopiowane 8 elementów
+<br>resize(32), kopiowane 16 elementów
+<br>resize(64), kopiowane 32 elementy
+<br>resize(128), kopiowane 64 elementy
+<br>resize(2^k), kopiowane 2^{k-1} elementów
+
+<p>Załóżmy najbardziej niekorzystny przypadek, że liczba elementów
+wstawionych do tablicy wynosi n = 2^k + 1.
+Tablica rozszerzy się do rozmiaru 2^{k+1}.
+Łączna liczba kopiowań elementów wynosi
+<br>1 + 2 + 4 + ... + 2^k = (1 - 2^{k+1}) / (1 - 2) = 2^{k+1} -1
+= 2 * 2^k -1 = 2 (n-1) -1 = 2n -3.
+<br>Pokazaliśmy, że stosując strategię podwajania rozmiaru tablicy,
+wstawianie do tablicy n elementów wymaga mniej niż 2n kopiowań elementów.
+Inaczej mówiąc, wstawienie jednego elementu do tablicy kosztuje 
+co najwyżej dwa kopiowania elementów.
+
+<p>Osobnym zagadnieniem jest zmniejszanie rozmiaru tablicy
+przy zmniejszającej się liczbie elementów.
+Załóżmy, że aktualny rozmiar tablicy wynosi 2^k.
+Dobrą strategią jest zmniejszanie rozmiaru do 2^k / 2,
+jeżeli liczba elementów zmaleje do 2^k / 4 lub 2^k / 3, a nie do 2^k / 2.
+Unikamy wtedy częstego powiększania i zmniejszania rozmiaru tablicy,
+kiedy liczba elementów oscyluje koło 2^k / 2.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
