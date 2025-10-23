@@ -16,20 +16,20 @@ The specification for the nonlocal statement.
 
 <h3>WPROWADZENIE</h3>
 
-<p>Każda zmienna żyje w określonej przestrzeni nazw (namespace).
+<p>Każda zmienna żyje w określonej przestrzeni nazw (<em>namespace</em>).
 Kiedy mówimy o szukaniu wartości nazwy w odniesieniu do kodu,
-do przestrzeni nazw odnosi się zakres (scope).
+do przestrzeni nazw odnosi się zakres (<em>scope</em>).
 Funkcje definiują zakres lokalny, a moduły zakres globalny.
 Rozwiązywanie konfliktów w zakresie nazw w Pythonie nazywane jest
-regułą LEGB (local, enclosing, global, builtin).
+regułą LEGB (<em>local, enclosing, global, builtin</em>).
 
 <ul>
-<li>local - zakres lokalny
-<li>enclosing - zakres lokalny instrukcji <em>def</em>
+<li><em>local</em> - zakres lokalny
+<li><em>enclosing</em> - zakres lokalny instrukcji <em>def</em>
 lub wyrażeń <em>lambda</em> zawierających daną funkcję
 [działa przy funkcjach zagnieżdżonych]
-<li>global - zakres globalny (moduł)
-<li>builtin - zakres wbudowany
+<li><em>global</em> - zakres globalny (moduł)
+<li><em>builtin</em> - zakres wbudowany
 </ul>
 
 <p>Python wykorzystuje lokalizację przypisania do nazwy

@@ -26,10 +26,11 @@ x, y, z = "abc"               # przypisanie sekwencji
 [x, y, z] = (1, 2, 3)         # przypisanie sekwencji
 x = y = z = 0                 # przypisanie z wieloma celami
 # x = (y = (z = 0))           # SyntaxError, to nie działa jak w C/C++!
-x += 5                        # przypisane rozszerzone (x = x + 5)
-L += 5                        # odpowiada L.append(5), IN PLACE
-L += sequence                 # odpowiada L.extend(sequence), IN PLACE
+x = 1 ; x += 5                # przypisane rozszerzone (x = x + 5)
+y += item                     # ogólnie y.__iadd__(item) lub y = y + item
+L = [] ; L += sequence        # odpowiada L.extend(sequence), IN PLACE
 L += [sequence]               # dołączenie sekwencji w całości, L.append(sequence)
+L += 5                        # TypeError (Py3.13+), dawniej L.append(5)
 </pre><hr><pre>
 L = [1, 2, 3, 4]
 front, L = L[0], L[1:]        # odcięcie początku

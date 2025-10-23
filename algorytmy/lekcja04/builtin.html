@@ -55,25 +55,27 @@ reduce() [Py2], reload(), slice(), type(), vars().
 <p>Wbudowane funkcje przydatne przy pracy na listach:
 
 <ul>
-<li>zip(sequence1 [, sequence2, ...]) - zwraca jedną listę krotek [Py2] 
+<li><em>zip(sequence1 [, sequence2, ...])</em> - zwraca jedną listę krotek [Py2] 
 lub iterator krotek [Py3].
 
-<li>map(func, sequence) - funkcja 'func' przetworzy po kolei każdy element listy
+<li><em>map(func, sequence)</em> - funkcja <em>func</em> 
+przetworzy po kolei każdy element listy
 i zwróci listę wyników [Py2] lub iterator wyników [Py3].
 
-<li>filter(func, sequence) - z sekwencji pozostaną
-elementy, dla których funkcja 'func' zwróci True.
+<li><em>filter(func, sequence)</em> - z sekwencji pozostaną
+elementy, dla których funkcja <em>func</em> zwróci <em>True</em>.
 W Py2 filter() zwraca listę, krotkę lub string.
-W Py3 filter() zwraca 'filter object' (iterator).
+W Py3 filter() zwraca <em>filter object</em> (iterator).
 
-<li>reduce(func, sequence) - zwraca pojedyńczą
+<li><em>reduce(func, sequence)</em> - zwraca pojedyńczą
 wartość obliczaną następująco: funkcja dwóch argumentów pobiera
 pierwsze dwa elementy z listy, oblicza wynik; dalej funkcja pobiera
 poprzedni wynik i trzeci element z listy, oblicza wynik, itd.
-W Py3 funkcja jest umieszczona w module 'functools'.
+W Py3 funkcja jest umieszczona w module <em>functools</em>.
 </ul>
 
-<p>Funkcje map() i filter() można łatwo zastąpić listą składaną.
+<p>Funkcje <em>map()</em> i <em>filter()</em> 
+można łatwo zastąpić listą składaną.
 
 <hr><pre>
 def cube(x):
@@ -171,7 +173,6 @@ def lcm(a, b):
 
 reduce(lcm, sequence, 1)
 </pre><hr>
-
 
 </body>
 </html>

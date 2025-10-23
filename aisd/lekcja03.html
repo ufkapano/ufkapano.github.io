@@ -70,7 +70,8 @@ o stałym rozmiarze).
 // Przy kopiowaniu szeregu elementów tablicy przydają się funkcje z STL.
 
 // https://en.cppreference.com/w/cpp/algorithm/copy
-// To jest dobre przy kopiowaniu w lewo przy nakładaniu się zakresów.
+// Funkcja odpowiednia przy kopiowaniu w lewo przy nakładaniu się zakresów.
+// Podajemy tylko początek zakresu docelowego (d_first).
 
 It2 copy( It1 first, It1 last, It2 d_first );
 
@@ -84,7 +85,8 @@ It2 copy( It1 first, It1 last, It2 d_first );
 // +--+--+--+--+--+--+--+--+--+--+
 </pre><hr><pre>
 // https://en.cppreference.com/w/cpp/algorithm/copy_backward
-// To jest dobre przy kopiowaniu w prawo przy nakładaniu się zakresów.
+// Funkcja odpowiednia przy kopiowaniu w prawo przy nakładaniu się zakresów.
+// Podajemy tylko koniec zakresu docelowego (d_last).
 
 It2 copy_backward( It1 first, It1 last, It2 d_last );
 
@@ -98,16 +100,17 @@ It2 copy_backward( It1 first, It1 last, It2 d_last );
 // +--+--+--+--+--+--+--+--+--+--+
 </pre><hr>
 
-<h3>ZADANIE 3.1</h3>
+<h3>ZADANIE 3.1 (TABLICA STATYCZNA)</h3>
 
 <p>Przygotować implementację realizującą ADT LIST na bazie
-tablicy o stałym rozmiarze, ustalanym w czasie tworzenia listy.
+tablicy o stałym rozmiarze (tablica statyczna), 
+ustalanym w czasie tworzenia listy.
 Będzie to klasa <em>ArrayList</em> umieszczona w pliku 
 <a href="arraylist.h">arraylist.h</a>.
 Uzupełnić plik <em>arraylist.h</em>, stworzyć funkcję main() i testy
 sprawdzające działanie interfejsu list.
 
-<h3>ZADANIE 3.2</h3>
+<h3>ZADANIE 3.2 (TABLICA DYNAMICZNA)</h3>
 
 <p>https://chalmersgu-data-structure-courses.github.io/OpenDSA/Published/ChalmersGU-DSABook/html/ListArrayDynamic.html
 
@@ -122,7 +125,7 @@ Po usunięciu pewnej liczby elementów tablica może się zmniejszać,
 aż do osiągnięcia początkowego rozmiaru minimalnego.
 
 <p>Zbadajmy liczbę kopiowań elementów podczas powiększania tablicy 
-o czynnik 2.
+o czynnik 2. Zakładamy, że elementy są kolejno wstawiane do tablicy.
 <br>resize(2), kopiowany 1 element
 <br>resize(4), kopiowane 2 elementy
 <br>resize(8), kopiowane 4 elementy

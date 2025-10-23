@@ -22,27 +22,27 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Wyrażenia yield (yield expressions) pojawiły się w Pythonie 2.5
-do definiowania funkcji generatora (generator function)
-zamiast zwykłej funkcji. Wyrażenia yield mogą się pojawić jedynie
-w ciele definicji funkcji.
+<p>Wyrażenia <em>yield</em> (<em>yield expressions</em>) 
+pojawiły się w Pythonie 2.5 do definiowania funkcji generatora 
+(<em>generator function</em>) zamiast zwykłej funkcji. 
+Wyrażenia <em>yield</em> mogą się pojawić jedynie w ciele definicji funkcji.
 
 <p>Z generatorów korzystamy zwykle wtedy, gdy nie potrzebujemy
 pamiętać pełnej listy, a lista jest tylko pewnym krokiem
 pośrednim w obliczeniach.
 Generatory to "leniwe funkcje": obliczają wartości tylko wtedy,
 gdy są żądane.
-Generatory są iteratorami, bo obsługują metodę next() [Py2]
-lub __next__() [Py3] i funkcję wbudowaną next() [Py2.7, Py3].
+Generatory są iteratorami, bo obsługują metodę <em>next()</em> [Py2]
+lub <em>__next__()</em> [Py3] i funkcję wbudowaną <em>next()</em> [Py2.7, Py3].
 Więcej o iteratorach powiemy po omówieniu klas i wyjątków (lekcja 7).
 
-<p>Każde wyrażenie yield tymczasowo zatrzymuje przetwarzanie,
+<p>Każde wyrażenie <em>yield</em> tymczasowo zatrzymuje przetwarzanie,
 zapamiętuje stan funkcji. Po wznowieniu generatora (ponownym wywołaniu)
 przetwarzanie jest kontunuowane od miejsca zatrzymania.
 
 <p>Generatory są iteratorami, a więc można po nich przejść tylko raz.
 Wartości generatora nie są przechowywane w pamięci, tylko
-są wytwarzane w locie (on the fly).
+są wytwarzane w locie (<em>on the fly</em>).
 
 <hr><pre>
 # Przykładowa lista składana.
@@ -288,8 +288,9 @@ for i in (i*i for i in range(10)):
 81 81
 </pre><hr>
 
-<p>Listy składane są  żarłoczne (greedy), obliczają wynik od razu, jako listę.
-Generatory są leniwe (lazy), obliczają jedną wartość na raz, kiedy
+<p>Listy składane są  żarłoczne (<em>greedy</em>), 
+obliczają wynik od razu jako listę.
+Generatory są leniwe (<em>lazy</em>), obliczają jedną wartość na raz, kiedy
 jest potrzebna. Warto zapamiętać regułę:
 
 <ul>
@@ -299,8 +300,8 @@ jest wymaganym wynikiem końcowym.
 tylko pośrednim etapem obliczeń.
 </ul>
 
-<p>W Py3.3 pojawiło się wyrażenie (generator delegation)
-'yield from sequence'.
+<p>W Py3.3 pojawiło się wyrażenie (<em>generator delegation</em>)
+postaci <em>yield from sequence</em>.
 Zwykle odpowiada to w Py2 wyrażeniu:
 
 <hr><pre>

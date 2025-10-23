@@ -22,7 +22,7 @@
 
 <ul>
 <li>liczbę zero (0, 0.0, 0e0, 0j, itp.),
-<li>stałe <em>False</em> i <em>None</em> (null),
+<li>stałe <em>False</em> i <em>None</em> (<em>null</em>),
 <li>puste kolekcje (pusta lista, krotka, słownik, itp.),
 <li>puste napisy,
 <li>obiekty posiadające metodę <em>__nonzero__()</em>, 
@@ -40,7 +40,8 @@ operator zawierania (<em>in</em>) oraz operator negacji
 (<em>not</em>) reprezentowane są przez obiekty <em>True</em> i <em>False</em>.
 
 <p>Operatory porównania można łączyć tak jak w zapisie matematycznym.
-<br>Priorytety operatorów od najwyższego: <em>not</em>, <em>and</em>, <em>or</em>.
+<br><strong>Priorytety operatorów</strong> od najwyższego: 
+<em>not</em>, <em>and</em>, <em>or</em>.
 <br>Przykładowo <em>(A or not B and C)</em>
 <br>jest równoważne <em>(A or ((not B) and C))</em>.
 <br>Dla pewności można jednak stosować nawiasy.
@@ -63,20 +64,27 @@ ale nie przekształca wyniku do typu <em>bool</em>.
 <p>Trzeba pamiętać, że wyrażenie <em>Anything</em> może być samo w sobie 
 niepoprawne, np. odwołanie się poza obszar listy.
 
-<p>Operatory porównań:
+<p><strong>Operatory porównań</strong>:
 a &lt; b, a &lt;= b, a &gt; b, a &gt;= b, 
 a == b, a &lt;&gt; b [Py2], a != b.
 
-<p>Testy identyczności: a is b [id(a) == id(b)], a is not b [id(a) != id(b)].
-Operatory <em>is</em> i <em>is not</em> mogą być stosowane do dowolnych obiektów
+<p><strong>Testy identyczności</strong>: 
+a is b [id(a) == id(b)], a is not b [id(a) != id(b)].
+<br>Operatory <em>is</em> i <em>is not</em> mogą być stosowane do dowolnych obiektów
 i nigdy nie wywołują wyjątków.
 
-<p>Zawieranie się w sekwencji lub kolekcji: 
+<p><strong>Zawieranie się w sekwencji lub kolekcji</strong>: 
 <em>a in S</em>, <em>a not in S</em>.
-Te operacje są wspierane dla typów, które są iterowalne lub mają
+<br>Te operacje są wspierane dla typów, które są iterowalne lub mają
 zaimplementowaną metodę <em>__contains__()</em>.
 
-<p>Sekwencje w Pythonie są porównywane leksykograficznie.
+<hr><pre>
+"a" in "b", "a"   # (False, 'a'), przecinek nie jest operatorem, tylko separatorem
+("a" in "b"), "a"   # (False, 'a')
+"a" in ("b", "a")   # True
+</pre><hr>
+
+<p>Sekwencje w Pythonie są porównywane <strong>leksykograficznie</strong>.
 Dozwolone jest porównywanie obiektów różnych typów (tylko Py2),
 ale rezultaty mogą zależeć od wersji języka.
 
@@ -84,7 +92,7 @@ ale rezultaty mogą zależeć od wersji języka.
 
 <p>Dokumentacja Pythona określa osiem operacji porównywania:
 a &lt; b, a &lt;= b, a &gt; b, a &gt;= b, a == b, a != b, a is b, a is not b.
-Operacje porównywania mogą być dowolnie łączone w łańcuchy:
+<br>Operacje porównywania mogą być dowolnie łączone w łańcuchy:
 <br>(a &lt; b &lt;= c) oznacza (a &lt; b) and (b &lt;= c), 
 ale b będzie obliczone tylko raz;
 <br>(a is b is c is d) oznacza (a is b) and (b is c) and (c is d).
