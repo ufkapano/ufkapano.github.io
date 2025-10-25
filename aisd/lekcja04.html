@@ -37,6 +37,7 @@ przypomnimy typowe operacje dla tego ADT.
 <li>konstruktor tworzący pustą listę,
 <li>testowanie, czy lista nie jest pusta [empty()],
 <li>odczyt liczby elementów na liście [size()],
+<li>odczyt największej możliwej liczby elementów [max_size()],
 <li>dołączanie elementu na początek listy [push_front(item)],
 <li>dołączanie elementu na koniec listy [push_back(item)],
 <li>dostęp do pierwszego (lewego skrajnego) elementu [front()],
@@ -46,7 +47,7 @@ przypomnimy typowe operacje dla tego ADT.
 <li>czyszczenie listy [clear()],
 </ul>
 
-<p>Lista pojedynczo powiązana występuje w STL jako std::forward_list.
+<p>Lista pojedynczo powiązana występuje w STL jako <em>std::forward_list</em>.
 
 <hr><pre>
 |   head              tail            |
@@ -89,21 +90,22 @@ public:
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementów O(n)
     void display(); // O(n)
-    void reverse(); // O(n)
+    void reverse(); // O(n) NIEOBOWIAZKOWE
 };
 </pre><hr>
 
 <h3>ZADANIE 4.1</h3>
 
 <p>Przygotować implementację realizującą ADT LIST na bazie listy powiązanej
-pojedynczo. Będzie to klasa SingleList umieszczona w pliku
+pojedynczo. Będzie to klasa <em>SingleList</em> umieszczona w pliku
 <a href="singlelist.h">singlelist.h</a>.
-Uzupełnić plik singlelist.h, stworzyć funkcję main() i testy
+Uzupełnić plik <em>singlelist.h</em>, stworzyć funkcję main() i testy
 sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 4.2</h3>
 
-<p>Zmienić klasę SingleList przez wprowadzenie atrybutu length typu std::size_t,
+<p>Zmienić klasę <em>SingleList</em> przez wprowadzenie atrybutu 
+<em>length</em> typu <em>std::size_t</em>,
 który przechowuje aktualną długość listy powiązanej.
 Dzięki temu metoda size() może działać w czasie O(1), a nie O(n).
 

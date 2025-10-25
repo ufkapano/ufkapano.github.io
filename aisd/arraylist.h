@@ -45,8 +45,8 @@ public:
     void pop_back(); // usuwa koniec, error dla pustej listy
     void clear(); // czyszczenie listy z elementow
     void display(); // lepiej zdefiniowac operator<<
-    void reverse(); // odwracanie kolejnosci
-    void sort(); // sortowanie listy
+    void reverse(); // odwracanie kolejnosci NIEOBOWIAZKOWE
+    void sort(); // sortowanie listy NIEOBOWIAZKOWE
     void merge(ArrayList& other); //  merges two sorted lists into one NIEOBOWIAZKOWE
 
     // Operacje z indeksami. NIEOBOWIAZKOWE

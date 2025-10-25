@@ -47,7 +47,7 @@ public:
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementow O(n)
     void display(); // O(n)
-    void reverse(); // O(n)
+    void reverse(); // O(n) NIEOBOWIAZKOWE
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]

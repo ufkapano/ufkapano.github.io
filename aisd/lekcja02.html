@@ -16,10 +16,12 @@ Implementacja dwóch algorytmów sortowania w C++, w tym co najmniej
 jednego zaawansowanego.
 Funkcje sortujące muszą być szablonami,
 muszą mieć podany interfejs tablicowy lub z iteratorami,
-wystarczy użyć standardowego porównywania (operator&lt;).
+wystarczy użyć standardowego porównywania (<em>operator&lt;</em>).
+W programie należy sprawdzić, czy sortowanie się udało,
+najlepiej wykorzystać funkcję <em>std::is_sorted()</em>.
 Proszę przesłać archiwum ZIP katalogu z programem, 
 który zawiera Makefile i pliki źródłowe.
-Program powinien kompilować się poleceniem 'make'.
+Program powinien kompilować się poleceniem <em>make</em>.
 
 <h3>WPROWADZENIE</h3>
 
@@ -76,7 +78,7 @@ k liczba różnych cyfr, d liczba cyfr w kluczach.
 # L to lista elementów, które można porównywać.
 # Liczby są sortowane normalnie.
 # Napisy są sortowane leksykograficznie.
-L.sort()   # sortowanie stabilne algorytmem timsort
+L.sort()   # sortowanie stabilne algorytmem timsort (Py2.3-Py3.10) lub powersort (Py3.11+)
 L.sort(key=len)   # sortowanie napisów pod względem długości
 L.sort(cmp=cmpfunc)   # Python 2, przekazanie funkcji porównującej
 </pre><hr>
