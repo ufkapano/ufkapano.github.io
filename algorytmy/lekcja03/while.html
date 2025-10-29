@@ -26,7 +26,7 @@ while test1:        # wiersz nagłówkowy, test pętli
         continue    # przejście do test1, opcjonalne
     instrukcje
 else:               # opcjonalne
-    instrukcje      # wykonane, jeśli pętli nie zakończyło break
+    instrukcje      # wykonane, jeśli pętli nie zakończyło 'break'
 # Część 'else' będzie wykonana również wtedy, gdy ciało pętli
 # nigdy nie zostanie wykonane.
 </pre><hr><pre>
@@ -73,20 +73,42 @@ while True:
     else:
         print(int(reply) ** 2)
 </pre><hr><pre>
-# Obsługa błędów za pomocą instrukcji 'try' (przechwytywanie wyjątków).
+# Obsługa błędów za pomocą instrukcji 'try/except' (przechwytywanie wyjątków).
 # Łatwiej można sobie radzić z niezwykłymi przypadkami.
 
 while True:
-    #reply = raw_input("Wpisz tekst:")   # Py2
-    reply = input("Wpisz tekst:")   # Py3
+    reply = input("Wpisz liczbę lub 'stop':")   # Py3
     if reply == "stop":
         break
     try:
         number = int(reply)
-    except ValueError:        # kod obsługujący błędy
+        # Można kontynuować zakładając, że konwersja się udała.
+        print(number ** 2)
+    except ValueError:        # kod obsługujący wyjątek
+        print("To nie jest liczba!")
+</pre><hr><pre>
+while True:
+    reply = input("Wpisz tekst:")   # Py3
+    if reply == "stop":
+        break
+    try:                      # testujemy konwersję
+        number = int(reply)
+    except ValueError:        # kod obsługujący wyjątek
         print("To nie jest liczba!")
     else:                     # jeśli nie było zgłoszenia wyjątku
         print(number ** 2)
+</pre><hr><pre>
+while True:
+    reply = input("Wpisz tekst:")   # Py3
+    if reply == "stop":
+        break
+    try:                      # testujemy konwersję
+        number = int(reply)
+    except ValueError:        # kod obsługujący wyjątek
+        print("To nie jest liczba!")
+        continue              # nie chcemy wykonywać dalszych instrukcji
+    # Kod poza instrukcją try/except.
+    print(number ** 2)
 </pre><hr>
 
 </body>

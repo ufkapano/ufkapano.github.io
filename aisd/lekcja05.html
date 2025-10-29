@@ -13,17 +13,23 @@
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie.
 
+<p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
+<br>(1) Katalog z programem powinien zawierać Makefile i pliki źródłowe.
+<br>(2) Program powinien kompilować się poleceniem <em>make</em>.
+<br>(3) Nie używać deklaracji <em>using namespace std;</em>.
+<br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
+
 <h3>WPROWADZENIE</h3>
 
 <p>Listy powiązane podwójnie mają elementy powiązane dwoma łączami: 
-do elementu następnego (next) i do elementu poprzedniego (prev). 
+do elementu następnego (<em>next</em>) i do elementu poprzedniego (<em>prev</em>). 
 W łatwy sposób możemy poruszać się po liście do przodu i wstecz. 
 Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego, 
 podczas gdy przy listach połączonych pojedynczo potrzebne było też łącze 
 do węzła poprzedzającego. 
 
 <p>Lista powiązana podwójnie może być wykorzystana do implementacji
-std::list z biblioteki STL.
+<em>std::list</em> z biblioteki STL.
 
 <hr><pre>
 |      head                  tail             |
@@ -76,19 +82,19 @@ public:
 <h3>ZADANIE 5.1</h3>
 
 <p>Przygotować implementację realizującą ADT LIST na bazie listy powiązanej
-podwójnie. Będzie to klasa DoubleList umieszczona w pliku
+podwójnie. Będzie to klasa <em>DoubleList</em> umieszczona w pliku
 <a href="doublelist.h">doublelist.h</a>.
-Uzupełnić plik doublelist.h, stworzyć funkcję main() i testy
+Uzupełnić plik <em>doublelist.h</em>, stworzyć funkcję main() i testy
 sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 5.2</h3>
 
-<p>Zmienić klasę DoubleList przez wprowadzenie wartownika, czyli
+<p>Zmienić klasę <em>DoubleList</em> przez wprowadzenie wartownika, czyli
 sztucznego węzła łączącego głowę i ogon listy powiązanej podwójnie.
-Wartownik nie przechowuje żadnych istotnych danych w polu value.
+Wartownik nie przechowuje żadnych istotnych danych w polu <em>value</em>.
 W ten sposób powstaje lista cykliczna, co upraszcza wstawianie
 i usuwanie węzłów.
-W klasie DoubleList wystarczy przechowywać tylko łącze do wartownika.
+W klasie <em>DoubleList</em> wystarczy przechowywać tylko łącze do wartownika.
 
 <hr><pre>
 |       nil       |     nil  +----------------------------+ |
@@ -142,7 +148,8 @@ void DoubleList&lt;T&gt;::pop_front() {
 
 <h3>ZADANIE 5.3</h3>
 
-<p>Zmienić klasę DoubleList przez wprowadzenie atrybutu length typu std::size_t, 
+<p>Zmienić klasę <em>DoubleList</em> przez wprowadzenie atrybutu 
+<em>length</em> typu <em>std::size_t</em>, 
 który przechowuje aktualną długość listy powiązanej. 
 Dzięki temu metoda size() może działać w czasie O(1), a nie O(n). 
 

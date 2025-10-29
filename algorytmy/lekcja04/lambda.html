@@ -22,6 +22,19 @@ Przykładowo lambda nie może zawierać <em>print</em> w Pythonie 2,
 bo to jest instrukcja (podobnie <em>yield</em>, <em>return</em>).
 
 <hr><pre>
+# Składnia.
+
+lambda arguments: expression
+
+lambda: expression   # obiekt wywoływalny
+
+# Obiekty wywoływalne często tworzy się za pomocą klasy z metodą __call__.
+
+# Powstały obiekt zachowuje się jak funkcja zdefiniowana następująco
+
+def &lt;lambda&gt;(arguments):
+    return expression
+</pre><hr><pre>
 # Do funkcji lambda można przyporządkować nazwę.
 
 func1 = lambda x, y, z: x + y + z
@@ -36,9 +49,13 @@ print(func2(2, 3, 4))   # 9
 # przez help(func1) i help(func2).
 </pre><hr><pre>
 # W argumentach lambda można używać argumentów domyślnych.
+# Można również używać składni z *identifier i **identifier.
 
 func3 = (lambda x=0, y=0, z=0: x + y + z)
-print(func3(4, 5))
+print(func3(4, 5))   # 9
+
+func4 = lambda *arguments, **keywords: print(arguments, keywords)
+print(func4(2, 4, x=5, y=6))   # (2, 4) {'x': 5, 'y': 6}
 </pre><hr><pre>
 # Lambda można stosować w funkcji map().
 
