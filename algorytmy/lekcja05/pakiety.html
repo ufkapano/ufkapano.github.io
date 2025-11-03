@@ -24,17 +24,17 @@ w osobnych katalogach, co tworzy kolejne przestrzenie nazw
 zapobiegające konfliktom nazw.
 
 <p>Python 3 definiuje dwa rodzaje pakietów:
-pakiety regularne (ang. <em>regular packages</em>)
-i pakiety przestrzeni nazw (ang. <em>namespace packages</em>).
+<strong>pakiety regularne</strong> (ang. <em>regular packages</em>)
+i <strong>pakiety przestrzeni nazw</strong> (ang. <em>namespace packages</em>).
 
 <h3>PAKIETY REGULARNE</h3>
 
 <hr><pre>
 # Załóżmy, że w katalogu bieżącym mamy moduł główny 'main.py' i moduły:
 # main.py
-# dir1/__init__.py            (obowiązkowy plik, dir1 to pakiet)
+# dir1/__init__.py            (obowiązkowy plik, 'dir1' to pakiet)
 # dir1/module1.py
-# dir1/dir2/__init__.py       (obowiązkowy plik, dir2 to podpakiet)
+# dir1/dir2/__init__.py       (obowiązkowy plik, 'dir2' to podpakiet)
 # dir1/dir2/module2.py
 
 # Instrukcje w module głównym main.py.
@@ -54,8 +54,9 @@ Są one obecne jako deklaracje dla Pythona.
 <h3>STRUKTURA PRZYKŁADOWEGO PAKIETU REGULARNEGO</h3>
 
 <p>Fragment struktury przykładowego pakietu SymPy.
-Wszystko działa, jeżeli katalog "sympy" znajduje się
-w zmiennej PYTHONPATH.
+Wszystko działa, jeżeli katalog <em>sympy</em> znajduje się
+w zmiennej PYTHONPATH lub w strukturze katalogów zarządzanej przez APT
+(Debian) lub program <em>pip</em>.
 
 <hr><pre>
 sympy/          # główny katalog
@@ -90,12 +91,12 @@ sympy/utilities/__init__.py   # obowiązkowy
 
 <h3>PAKIETY PRZESTRZENI NAZW</h3>
 
-<p>Od Pythona 3.3 pojawiły się <em>pakiety przestrzeni nazw</em> [PEP 420].
-Takie pakiety składają się z części (ang. portions),
+<p>Od Pythona 3.3 pojawiły się <strong>pakiety przestrzeni nazw</strong> [PEP 420].
+Takie pakiety składają się z części (ang. <em>portions</em>),
 które mogą istnieć w różnych lokalizacjach (katalogach), w sieci, 
 w pliku zip lub nawet mogą nie odpowiadać żadnym obiektom w systemie plików.
 Dla takich pakietów nie można używać plików <em>__init__.py</em>.
-Inaczej wygląda konstruowanie sys.path.
+Inaczej wygląda konstruowanie <em>sys.path</em>.
 
 <p>PEP 420 zaleca, aby w normalnej sytuacji tworzyć zwykłe pakiety regularne,
 ponieważ są bardziej wydajne.
@@ -105,13 +106,13 @@ ponieważ są bardziej wydajne.
 <p>https://stackoverflow.com/questions/44977227/how-to-configure-main-py-init-py-and-setup-py-for-a-basic-package
 
 <p>Pojedynczy moduł uruchamiany jako moduł najwyższego poziomu
-ma ustawiony atrybut __name__ na "__main__".
+ma ustawiony atrybut <em>__name__</em> na string <em>"__main__"</em>.
 Moduł może dzięki temu sprawdzić jak został uruchomiony.
 
 <p>W przypadku pakietu ten sam efekt można osiągnąć przez dołączenie
-pliku __main__.py w głównym katalogu modułu [Py3].
+pliku <em>__main__.py</em> w głównym katalogu modułu [Py3].
 Podobnie można uruchamiać archiwum ZIP z kodem pythonowym,
-jeżeli wewnątrz archiwum jest plik __main__.py.
+jeżeli wewnątrz archiwum jest plik <em>__main__.py</em>.
 
 <hr><pre>
 # Załóżmy, że w katalogu bieżącym mamy moduł główny i moduły:

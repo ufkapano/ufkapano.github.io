@@ -23,7 +23,7 @@ Jeżeli nazwa modułu to <em>abc</em>, to nazwa pliku modułu ma
 postać <em>abc.py</em>. Wewnątrz modułu jego nazwa dostępna
 jest jako wartość zmiennej globalnej <em>__name__</em>.
 
-<p>Import modułu tworzy <em>przestrzeń nazw</em>, 
+<p>Import modułu tworzy <strong>przestrzeń nazw</strong>, 
 a zmienne zdefiniowane na najwyższym poziomie pliku modułu 
 stają się atrybutami zaimportowanego obiektu modułu.
 Inaczej mówiąc, zakres globalny pliku modułu staje się 
@@ -56,7 +56,7 @@ Biblioteka <em>importlib</em> jest używana do dynamicznego importu
 modułów, a także w sytuacji, gdy nazwa modułu nie jest znana w czasie
 pisania kodu (wtyczki, rozszerzenia aplikacji).
 
-<p><em>Kod modułu jest wykonywany tylko raz podczas pierwszego importu.</em>
+<p><strong>Kod modułu jest wykonywany tylko raz podczas pierwszego importu.</strong>
 Python wykonuje instrukcje modułu jedna po drugiej,
 od góry pliku do dołu. 
 Zwykle instrukcje wewnątrz modułu służą do jego inicjalizacji.
@@ -124,7 +124,7 @@ Inaczej mówiąc, funkcja wbudowana <em>dir()</em> pozwala
 dowiedzieć się jakie nazwy są zdefiniowane przez moduł.
 
 <p>Python automatycznie zawiera wielki zbiór modułów narzędzi
-znany pod nazwą <em>biblioteki standardowej</em>.
+znany pod nazwą <strong>biblioteki standardowej</strong>.
 Są one zwykle dostępne tam, gdzie można uruchomić Pythona.
 
 <h3>JAK DZIAŁA IMPORTOWANIE</h3>
@@ -133,10 +133,10 @@ Są one zwykle dostępne tam, gdzie można uruchomić Pythona.
 wykonywane są trzy osobne kroki.
 
 <ol>
-<li>Odnalezienie pliku modułu 
-(wykorzystanie standardowej ścieżki wyszukiwania modułów).
-<li>Skompilowanie go do kodu bajtowego, jeśli jest to konieczne
-(powstają pliki <em>.pyc</em>).
+<li>Odnalezienie pliku modułu.
+Wykorzystywana jest standardowa ścieżka wyszukiwania modułów.
+<li>Skompilowanie go do kodu bajtowego, jeśli jest to konieczne.
+Powstają pliki <em>.pyc</em>.
 <li>Wykonanie kodu modułu w celu utworzenia zdefiniowanych
 przez niego obiektów.
 </ol>
@@ -154,10 +154,10 @@ print(sys.path)             # ścieżka wyszukiwania
 
 <ol>
 <li>Katalog główny programu.
-<li>Katalogi ze zmiennej środowiskowej <em>PYTHONPATH</em> 
-(jeśli są ustawione).
-<li>Katalogi biblioteki standardowej (zależne od instalacji).
-<li>Zawartość wszystkich plików <em>.pth</em> (jeśli są obecne).
+<li>Katalogi ze zmiennej środowiskowej <em>PYTHONPATH</em>,
+jeśli zmienna jest ustawiona.
+<li>Katalogi biblioteki standardowej, zależne od instalacji.
+<li>Zawartość wszystkich plików <em>.pth</em>, jeśli są obecne.
 </ol>
 
 <p>Zestawienie tych czterech komponentów staje się <em>sys.path</em>

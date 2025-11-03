@@ -89,23 +89,49 @@ math.fsum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
 <hr><pre>
 import random
 
-# Liczba przypadkowa z przedziału [0.0, 1.0).
-print(random.random())
+# Bookkeeping functions.
+
+# random.seed(a=None) - initialize the random number generator
+random.seed()   # the current system time is used
+random.getstate()
+random.setstate(state)
+</pre><hr><pre>
+# Funkcje dla liczb całkowitych.
+
+# random.randrange(stop)
+# random.randrange(start, stop[, step])
+# Wybór przypadkowego elementu z range(start, stop[, step]).
 
 # Liczba przypadkowa całkowita z przedziału [start, stop].
 # Oba końce są włączone, co jest nietypowe dla Pythona.
 # random.randint(start, stop)
-print(random.randint(1, 6))   # symulacja rzutu kostką
-
-# Liczba przypadkowa całkowita z przedziału [start, stop).
-# random.randrange(start, stop=None, step=1)
-print(random.randrange(1, 7))   # symulacja rzutu kostką
+random.randint(1, 6)   # symulacja rzutu kostką
+</pre><hr><pre>
+# Funkcje dla sekwencji.
 
 # Wybór przypadkowego elementu z niepustej sekwencji.
 # random.choice(sequence)
 # To samo co
 # sequence[int(random.random() * len(sequence))]
-print(random.choice(["jeden", "dwa", "trzy"]))
+random.choice(["jeden", "dwa", "trzy"])
+
+# random.choices(population, weights=None, *, cum_weights=None, k=1) (Py3.6)
+# Return a k sized list of elements chosen from the population with replacement.
+random.choices(range(10), k=5)   # [2, 7, 5, 8, 5]
+
+# Próbkowanie z wagami z powtórzeniami (ruletka).
+random.choices(['red', 'black', 'green'], [18, 18, 2], k=6)
+# ['red', 'green', 'black', 'black', 'red', 'black']
+
+# Chooses k unique random elements from a population sequence.
+# Zwraca nową listę, population zostaje bez zmiany.
+# population może zawierać powtórzenia, które mogą pojawić się
+# w wynikowej liście. Elementy nie muszą być hashable.
+# population może być generatorem, będzie to wydajne.
+# random.sample(population, k)
+random.sample(range(1000), 100)
+random.sample(['red', 'blue'], counts=[4, 2], k=5)
+random.sample(['red', 'red', 'red', 'red', 'blue', 'blue'], k=5)   # jw
 
 # Wymieszanie danej listy IN PLACE w czasie O(n) (Fisher-Yates shuffle).
 # L = list(range(100))
@@ -114,14 +140,21 @@ print(random.choice(["jeden", "dwa", "trzy"]))
 # use random.sample(L, k=len(L)) instead.
 # random.sample(range(10), 10) zwraca nową listę wymieszaną.
 # random.sample("abcde", 5) zwraca listę 5 znaków wymieszaną.
+</pre><hr><pre>
+# Rozkłady z liczbami rzeczywistymi.
 
-# Chooses k unique random elements from a population sequence.
-# Zwraca nową listę, population zostaje bez zmiany.
-# population może zawierać powtórzenia, które mogą pojawić się
-# w wynikowej liście. Elementy nie muszą być hashable.
-# population może być generatorem, będzie to wydajne.
-# random.sample(population, k)
-print(random.sample(range(1000), 100))
+# Liczba przypadkowa z przedziału [0.0, 1.0).
+random.random()
+
+# Liczba przypadkowa całkowita z przedziału [start, stop).
+# random.randrange(start, stop=None, step=1)
+random.randrange(1, 7)   # symulacja rzutu kostką
+
+# Rozkład trójkątny.
+random.triangular(low, high, mode)
+
+# Rozkład Gaussa.
+random.gauss(mu, sigma)
 </pre><hr>
 
 <h3>MODUŁ decimal</h3>
@@ -131,15 +164,15 @@ import decimal
 
 x = decimal.Decimal("0.1")
 y = decimal.Decimal("0.3")
-z = 3*x-y                     # Decimal('0.0')
-print(z)                   # 0.0
-print(3 * 0.1 - 0.3)       # 5.5511151231257827e-17
+z = 3*x-y   # Decimal('0.0')
+print(z)   # 0.0
+print(3 * 0.1 - 0.3)   # 5.5511151231257827e-17
 
 # Ustawienie precyzji przydatne w aplikacjach finansowych.
-print(1999 + 1.33)                   # 2000.3299999999999
+print(1999 + 1.33)   # 2000.3299999999999
 decimal.getcontext().prec = 2
-pay = decimal.Decimal(str(1999 + 1.33)) # Decimal('2000.33')
-print(pay)                           # 2000.33
+pay = decimal.Decimal(str(1999 + 1.33))   # Decimal('2000.33')
+print(pay)   # 2000.33
 </pre><hr>
 
 <h3>MODUŁ fractions</h3>
@@ -147,11 +180,11 @@ print(pay)                           # 2000.33
 <hr><pre>
 from fractions import Fraction
 
-u1 = Fraction(2, 3)           # Fraction(2, 3)
-print(u1)                  # 2/3
-print(u1.numerator)        # 2, licznik
-print(u1.denominator)      # 3, mianownik
-u2 = Fraction(2, 8)           # Fraction(1, 4)
+u1 = Fraction(2, 3)      # Fraction(2, 3)
+print(u1)                # 2/3
+print(u1.numerator)      # 2, licznik
+print(u1.denominator)    # 3, mianownik
+u2 = Fraction(2, 8)      # Fraction(1, 4)
 
 # Konwersja z float do Fraction.
 u2 = Fraction("0.25")         # Fraction(1, 4)
@@ -167,8 +200,7 @@ u5 = Fraction(*T)             # rozpakowanie krotki
 # Konwersja z Fraction do float.
 f1 = float(u5)                # 2.5, zwykły sposób
 
-# Python 2.7
-# Konwersja ze stringu.
+# Konwersja ze stringu (Py2.7, Py3).
 Fraction("314")               # Fraction(314, 1)
 Fraction("2/3")               # Fraction(2, 3)
 Fraction("3.1415")            # Fraction(6283, 2000)
@@ -183,11 +215,11 @@ from fractions import gcd
 
 # Można robić konwersje z Decimal.
 from decimal import Decimal
-Fraction(Decimal('1.1'))      # Fraction(11, 10)
+Fraction(Decimal('1.1'))   # Fraction(11, 10)
 
 # Ułamek z ułamka.
 Fraction(Fraction(1, 7), 5)   # Fraction(1, 35)
-Fraction(Fraction(1, 7), Fraction(2, 3))  # Fraction(3, 14)
+Fraction(Fraction(1, 7), Fraction(2, 3))   # Fraction(3, 14)
 </pre><hr>
 
 <h3>MODUŁ cmath</h3>
@@ -219,8 +251,8 @@ import numpy
 # 3. Linear Algebra, Fourier Transforms, Random Number Generation.
 # help(numpy)
 
-# PEP 465 - A dedicated infix operator for matrix multiplication
-# Nowy operator mnożenia macierzowego @ od Pythona 3.8
+# PEP 465 - A dedicated infix operator for matrix multiplication.
+# Nowy operator mnożenia macierzowego @ od Pythona 3.8.
 # arr * arr   # elementwise multiplication
 # arr @ arr   # matrix multiplication
 </pre><hr>
@@ -231,7 +263,7 @@ import numpy
 z bezpieczeństwem lub kryptografią. Do takich zastosowań
 w Pythonie 3.6 pojawił się moduł <em>secrets</em> (PEP 506).
 PyPI zawiera ponadto moduł <em>cryptography</em>, który wspiera
-Pythona 2.6+, 3.4+ (instalacja przez pip).
+Pythona 2.6+, 3.4+ (instalacja przez <em>pip</em>).
 
 <hr><pre>
 # Python 3.6+

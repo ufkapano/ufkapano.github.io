@@ -12,33 +12,35 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł wspiera automatyzację testów, grupowanie testów w kolekcje,
-niezależność testów od narzędzi raportuących wyniki testów (reporting frameworks).
+<p>Moduł <em>unittest</em> wspiera automatyzację testów, grupowanie testów 
+w kolekcje, niezależność testów od narzędzi raportuących wyniki testów 
+(<em>reporting frameworks</em>).
 Moduł dostarcza klasy, które ułatwiają te zadania.
 Ważne pojęcia:
 
 <ul>
-<li>test fixture - reprezentuje przygotowania potrzebne do przeprowadzenia
-testów, różne akcje czyszczące.
-<li>test case - najmniejsza jednostka testowania, 
+<li><strong>test fixture</strong> - reprezentuje przygotowania potrzebne 
+do przeprowadzenia testów, różne akcje czyszczące.
+<li><strong>test case</strong> - najmniejsza jednostka testowania, 
 sprawdza konkretny wynik dla danego wejścia.
-<li>test suite - kolekcja test cases lub test suites.
-<li>test runner - zarządza testami i prezentuje wyniki użytkownikowi.
+<li><strong>test suite</strong> - kolekcja test cases lub test suites.
+<li><strong>test runner</strong> - zarządza testami i prezentuje wyniki 
+użytkownikowi.
 </ul>
 
-<p>Testy tworzymy w klasach wywiedzionych z unittest.TestCase.
-Jednostką testowania (test case) jest metoda bez parametrów,
+<p>Testy tworzymy w klasach wywiedzionych z <em>unittest.TestCase</em>.
+Jednostką testowania (<em>test case</em>) jest metoda bez parametrów,
 o nazwie rozpoczynającej się od "test", 
 która ma sprawdzać jedną konkretną rzecz dotyczącą kodu.
 Test ma być przeprowadzony automatycznie, ma być niezależny
 od innych testów, a wynik ma być automatycznie zinterpretowany.
 
-<p>Testy mogą być grupowane w zestawach (test suits),
-typowy zestaw tworzą metody z jednej klasy wywiedzionej z unittest.TestCase.
-
+<p>Testy mogą być grupowane w zestawach (<em>test suits</em>),
+typowy zestaw tworzą metody z jednej klasy wywiedzionej 
+z <em>unittest.TestCase</em>.
 
 <p>Poniżej mamy przykład prostego modułu zawierającego funkcję
-average() do obliczania średniej arytmetycznej listy liczb.
+<em>average()</em> do obliczania średniej arytmetycznej listy liczb.
 Kod testujący funkcję został umieszczony w tym samym module.
 Kod testujący zostanie wykonany, jeżeli moduł zostanie uruchomiony
 jako moduł główny.
@@ -46,7 +48,7 @@ jako moduł główny.
 <p>W praktyce kod testujący moduł zwykle umieszcza się w osobnym pliku.
 Testy dla modułu <em>spam.py</em> umieszcza się w pliku <em>test_spam.py</em>.
 Często testy (pliki <em>test_*.py</em>) umieszcza się w osobnym
-katalogu tests.
+podkatalogu <em>tests</em>.
 
 <hr><pre>
 import unittest
@@ -133,7 +135,8 @@ class TestOtherFunctions(unittest.TestCase):
 if __name__ == '__main__':
     unittest.main()     # włącza wszystkie testy
     #unittest.main(verbosity=2)    # Python 2.7, więcej informacji
-    #unittest.main(argv=[''], exit=False)   # w trybie interaktywnym (Jupyter Notebook)
+    # W trybie interaktywnym lub w Jupyter Notebook:
+    #unittest.main(argv=['ignored'], exit=False)
 
 # Jeżeli powyższy kod umieścimy w module 'average.py', to polecenie
 # python3 average.py -v
@@ -189,12 +192,12 @@ dostępną za darmo pod adresem
 
 <h3>POMIJANIE TESTÓW</h3>
 
-<p>Moduł 'unittest' dostarcza kilka dekoratorów używanych do pomijania testów
-(skip, skipIf, skipUnless, expectedFailure) oraz jedną metodę
-(TestCase.skipTest).
+<p>Moduł <em>unittest</em> dostarcza kilka dekoratorów używanych 
+do pomijania testów (skip, skipIf, skipUnless, expectedFailure) 
+oraz jedną metodę (<em>TestCase.skipTest</em>).
 Można pominąć pojedynczy test lub klasę z testami.
-Dla pominiętych testów nie działają setUp() i tearDown().
-Dla pominiętych klas nie działają setUpClass() i tearDownClass().
+Dla pominiętych testów nie działają <em>setUp()</em> i <em>tearDown()</em>.
+Dla pominiętych klas nie działają <em>setUpClass()</em> i <em>tearDownClass()</em>.
 
 <hr><pre>
 class MyTestCase(unittest.TestCase):

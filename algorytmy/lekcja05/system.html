@@ -15,7 +15,7 @@
 <h3>MODUŁ __future__ (Py2)</h3>
 
 <p>Udostępnianie właściwości języka niezgodnych z wcześniejszym
-zachowaniem jest możliwe poprzez import z modułu __future__.
+zachowaniem jest możliwe poprzez import z modułu <em>__future__</em>.
 Ważne, że to nie jest normalny import, to jest zmiana sposobu
 interpretowania kodu przez Pythona.
 Takie wiersze muszą być na samej górze pliku.
@@ -52,10 +52,11 @@ Hello world...
 
 <p>https://docs.python.org/3/library/io.html
 
-<p>Moduł 'io' dostarcza środków do obsługi różnych typów I/O.
+<p>Moduł <em>io</em> dostarcza środków do obsługi różnych typów I/O.
 Są trzy główne typy I/O: text I/O, binary I/O, raw I/O.
-Obiekt należący do jednej z tych kategorii to 'obiekt pliku' (file object),
-to mogą być prawdziwe pliki, gniazda (sockets), potoki (pipes).
+Obiekt należący do jednej z tych kategorii to 
+<strong>obiekt pliku</strong> (<em>file object</em>),
+to mogą być prawdziwe pliki, gniazda (<em>sockets</em>), potoki (<em>pipes</em>).
 
 <hr><pre>
 import io
@@ -64,7 +65,7 @@ import io
 f = open("myfile.txt", "r", encoding="utf-8")
 f = io.StringIO("some initial text data")   # in-memory text stream
 
-# Binary I/O spodziewa się 'bytes-like objects' i tworzy obiekty 'bytes'
+# Binary I/O spodziewa się 'bytes-like objects' i tworzy obiekty 'bytes'.
 f = open("myfile.jpg", "rb")
 f = io.BytesIO(b"some initial binary data: \x00\x01")   # in-memory binary stream
 
@@ -91,7 +92,7 @@ z = copy.deepcopy(x)          # głęboka kopia x
 # Od Pythona 2.5 kopiowane są funkcje.
 
 # Klasy mogą używać tego samego interfejsu do kontroli kopiowania
-# co w przypadku modułu pickle.
+# co w przypadku modułu 'pickle'.
 # W klasach można zdefiniować metody specjalne __copy__ i __deepcopy__,
 # które opisują płytką i głęboką kopię instancji tej klasy.
 
@@ -109,13 +110,16 @@ class MyClass(object):
 <p>Moduł dostarcza specjalistyczne kontenerowe typy danych.
 
 <ul>
-<li>namedtuple() - (Py2.6+) factory function for creating tuple subclasses with named fields
-<li>deque - (Py2.4+) list-like container with fast appends and pops on either end (kolejka dwukierunkowa)
+<li>namedtuple() - (Py2.6+) factory function for creating tuple subclasses 
+with named fields.
+<li>deque - (Py2.4+) list-like container with fast appends and pops 
+on either end (kolejka dwukierunkowa).
 <li>Counter - (Py2.7) dict subclass for counting hashable objects
-[domyślnie brakujące klucze mają wartość 0, nie pojawia się KeyError]
+[domyślnie brakujące klucze mają wartość 0, nie pojawia się <em>KeyError</em>].
 <li>OrderedDict - (Py2.7) dict subclass that remembers the order 
-entries were added [PEP 372]
-<li>defaultdict - (Py2.5+) dict subclass that calls a factory function to supply missing values
+entries were added [PEP 372].
+<li>defaultdict - (Py2.5+) dict subclass that calls a factory function 
+to supply missing values.
 </ul>
 
 <p>W Pythonie 2.6 dodano abstrakcyjne klasy bazowe (ABCs, PEP 3119)
@@ -153,11 +157,12 @@ if isinstance(my_variable, collections.Sized):   # istnieje __len__
 
 <h3>MODUŁ argparse (Py2.7, Py3.2+)</h3>
 
-<p>Moduły getopt, optparse, argparse [PEP 389] służą do parsowania
-argumentów podanych w wierszu poleceń.
-Moduł getopt przypomina getopt() z biblioteki języka C, przez co
+<p>Moduły <em>getopt</em>, <em>optparse</em>, <em>argparse</em> [PEP 389] 
+służą do parsowania argumentów podanych w wierszu poleceń.
+Moduł getopt przypomina <em>getopt()</em> z biblioteki języka C, przez co
 przydaje się do pisania prototypów, które będą przepisywane do C.
-Do nowych skryptów Pythona zaleca się używanie najnowszego modułu argparse.
+Do nowych skryptów Pythona zaleca się używanie najnowszego modułu 
+<em>argparse</em>.
 
 </body>
 </html>
