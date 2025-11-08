@@ -70,15 +70,17 @@ os.remove(path)   # remove a file
 os.rename(old_name, new_name)   # rename a file or directory
 os.listdir(path)   # return a list containing the names of the files
 </pre><hr><pre>
-# os.path.walk(top, func, arg)   # directory tree walk with callback function.
+# os.walk(top, topdown=True, onerror=None, followlinks=False)
+# Generuje 3-tuple (root, dirs, files) przechodząc drzewo katalogów
+# z góry na dół lub z dołu do góry, zaczynając od katalogu 'top'.
 # Przykład: zliczanie plików PDF w drzewie podkatalogów.
 
 n_pdf = 0   # the number of PDF files
 for root, dirs, files in os.walk(top):   # walking top-down (default)
-    # 'root' is a string, the path to the directory
-    # 'dirs' is a list of the names of the subdirectories in 'root'
-    # 'files' is a list of the names of the non-directory files in 'root'
-    if 'CVS' in dirs:
+    # 'root' is a string, the path to the directory.
+    # 'dirs' is a list of the names of the subdirectories in 'root'.
+    # 'files' is a list of the names of the non-directory files in 'root'.
+    if 'CVS' in dirs:   # można modyfikować 'dirs' idąc top-down
         dirs.remove('CVS')  # nie odwiedzamy katalogów CVS
     for name in files:
         if name.lower().endswith(".pdf"):
@@ -92,7 +94,7 @@ print("The number of PDF files in {} directory is {}".format(top, n_pdf))
 
 for root, dirs, files in os.walk(top, topdown=False):   # walking bottom-up
     for name in files:
-        os.remove(os.path.join(root, name))
+        os.remove(os.path.join(root, name))   # budujemy pełną ścieżkę
     for name in dirs:
         os.rmdir(os.path.join(root, name))
 </pre><hr>

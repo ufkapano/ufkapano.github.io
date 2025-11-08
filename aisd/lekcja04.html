@@ -11,13 +11,13 @@
 
 <h1>AiSD (4) - ADT LIST (lista pojedynczo powiązana)</h1>
 
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie. 
+
 <p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
-<br>(1) Katalog z programem powinien zawierać Makefile i pliki źródłowe.
+<br>(1) Katalog z programem powinien zawierać <em>Makefile</em> i pliki źródłowe.
 <br>(2) Program powinien kompilować się poleceniem <em>make</em>.
 <br>(3) Nie używać deklaracji <em>using namespace std;</em>.
 <br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
-
-<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie. 
 
 <h3>WPROWADZENIE</h3>
 
@@ -90,8 +90,8 @@ public:
     void push_front(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
     void push_back(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
-    T& front() const { return head->value; } // zwraca początek, nie usuwa
-    T& back() const { return tail->value; } // zwraca koniec, nie usuwa
+    T& front() const { assert(!empty()); return head->value; } // zwraca początek, nie usuwa
+    T& back() const { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa początek O(1)
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementów O(n)
@@ -105,7 +105,7 @@ public:
 <p>Przygotować implementację realizującą ADT LIST na bazie listy powiązanej
 pojedynczo. Będzie to klasa <em>SingleList</em> umieszczona w pliku
 <a href="singlelist.h">singlelist.h</a>.
-Uzupełnić plik <em>singlelist.h</em>, stworzyć funkcję main() i testy
+Uzupełnić plik <em>singlelist.h</em>, stworzyć funkcję <em>main()</em> i testy
 sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 4.2</h3>
@@ -113,7 +113,7 @@ sprawdzające działanie interfejsu list.
 <p>Zmienić klasę <em>SingleList</em> przez wprowadzenie atrybutu 
 <em>length</em> typu <em>std::size_t</em>,
 który przechowuje aktualną długość listy powiązanej.
-Dzięki temu metoda size() może działać w czasie O(1), a nie O(n).
+Dzięki temu metoda <em>size()</em> może działać w czasie O(1), a nie O(n).
 
 <h3>ZADANIE 4.3</h3>
 

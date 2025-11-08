@@ -44,8 +44,8 @@ public:
     void push_front(T&& item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
     void push_back(T&& item); // O(1) NIEOBOWIAZKOWE
-    T& front() const { return head->value; } // zwraca poczatek, nie usuwa
-    T& back() const { return tail->value; } // zwraca koniec, nie usuwa
+    T& front() const { assert(!empty()); return head->value; } // zwraca poczatek, nie usuwa
+    T& back() const { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)
     void pop_back(); // usuwa koniec O(1)
     void clear(); // czyszczenie listy z elementow O(n)
