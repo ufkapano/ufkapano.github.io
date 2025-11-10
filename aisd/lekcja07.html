@@ -17,7 +17,8 @@
 
 <p>Stos to ADT, który pozwala zapisywać dane i następnie pobierać je 
 w kolejności odwrotnej do zapisu 
-(ang. last in, first out, LIFO; ostatni wchodzi, pierwszy wychodzi).
+(ang. <em>last in</em>, <em>first out</em>, LIFO; 
+ostatni wchodzi, pierwszy wychodzi).
 Typowe operacje dla ADT STACK są następujące:
 
 <ul>
@@ -114,7 +115,7 @@ for item in input:
 +-------+-------+-----------------------------------------+
 </pre><hr>
 
-<h3>ZADANIE 7.1</h3>
+<h3>ZADANIE 7.1 (ONP)</h3>
 
 <p>Zaimplementować algorytm obliczania wartości wyrażenia podanego w ONP.
 Zakładamy, że na wejściu będą liczby całkowite i cztery możliwe działania:
@@ -128,41 +129,41 @@ int rpn(const std::vector&lt;std::string&gt;&amp; input);
 // assert( rpn(input) == -3 );
 </pre><hr>
 
-<h3>ZADANIE 7.2</h3>
+<h3>ZADANIE 7.2 (std::array)</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie tablicy.
-Wykorzystać klasę ArrayList lub std::array.
+Wykorzystać klasę <em>ArrayList</em> lub <em>std::array</em>.
 Operacje push() i pop() działające w stałym czasie można uzyskać
 przy użyciu push_back() i pop_back().
 
-<h3>ZADANIE 7.3</h3>
+<h3>ZADANIE 7.3 (std::forward_list)</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej pojedynczo.
-Wykorzystać klasę SingleList lub std::forward_list.
+Wykorzystać klasę <em>SingleList</em> lub <em>std::forward_list</em>.
 Operacje push() i pop() działające w stałym czasie można uzyskać
 przy użyciu push_front() i pop_front().
 
-<h3>ZADANIE 7.4</h3>
+<h3>ZADANIE 7.4 (std::list)</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej podwójnie.
-Wykorzystać klasę DoubleList lub std::list.
+Wykorzystać klasę <em>DoubleList</em> lub <em>std::list</em>.
 Możliwe są dwa warianty realizacji push() i pop(),
 działające w stałym czasie: 
 (a) push_back() i pop_back(), 
 (b) push_front() i pop_front(). 
 
-<h3>ZADANIE 7.5</h3>
+<h3>ZADANIE 7.5 (DOPASOWANIE OGRANICZNIKÓW)</h3>
 
 <p>Zaimplementować algorytm dopasowywania ograniczników [Drozdek str. 134].
 Algorytm wykorzystuje stos do przechowywania kolejno odczytanych
 ograniczników.
 Dla prostoty argumentem funkcji może być napis zawierający ograniczniki
 i inne znaki, komentarze w pierwszym przybliżeniu można pominąć.
-Funkcja zwraca bool.
+Funkcja zwraca wartość typu <em>bool</em>.
 
-<h3>ZADANIE 7.6</h3>
+<h3>ZADANIE 7.6 (DODAWANIE WIELKICH LICZB)</h3>
 
 <p>Zaimplementować algorytm dodawania wielkich liczb całkowitych dodatnich
 [Drozdek str. 135]. Algorytm wykorzystuje trzy stosy do przechowywania cyfr: 

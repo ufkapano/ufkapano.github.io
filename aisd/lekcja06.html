@@ -15,25 +15,29 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>ADT DEQUE (double-ended queue, kolejka dwustronna) reprezentuje kontener, 
+<p>ADT DEQUE (<em>double-ended queue</em>, kolejka dwustronna) 
+reprezentuje kontener, 
 który pozwala na szybkie O(1) dodawanie i usuwanie elementów z obu końców.
-W STL mamy kolejkę std::deque, która pozwala dodatkowo na swobodny dostęp 
-do wszystkich elementów w stałym czasie O(1).
+W STL mamy kolejkę <em>std::deque</em>, która pozwala dodatkowo na swobodny 
+dostęp do wszystkich elementów w stałym czasie O(1).
 Typowe operacje dla ADT DEQUE są następujące:
 
 <ul>
 <li>konstruktor tworzący pustą listę,
 <li>testowanie, czy lista nie jest pusta [empty()],
 <li>odczyt liczby elementów na liście [size()],
-<li>dołączanie elementu na początek listy [push_front(item)],
-<li>dołączanie elementu na koniec listy [push_back(item)],
-<li>dostęp do głowy (head), czyli pierwszego (lewego skrajnego) elementu [front()],
-<li>dostęp do ogona (tail), czyli ostatniego (prawego skrajnego) elementu [back()],
+<li>odczyt największej możliwej liczby elementów [max_size()],
+<li>dołączanie nowego elementu na początek listy [push_front(item)],
+<li>dołączanie nowego elementu na koniec listy [push_back(item)],
+<li>dostęp do głowy (<em>head</em>), czyli pierwszego (lewego skrajnego) 
+elementu [front()],
+<li>dostęp do ogona (<em>tail</em>), czyli ostatniego (prawego skrajnego) 
+elementu [back()],
 <li>usunięcie elementu pierwszego [pop_front()],
 <li>usunięcie elementu ostatniego [pop_back()],
 <li>czyszczenie listy [clear()],
 <li>dostęp do elementu o danym indeksie i,
-<li>dołączanie elementu przed element na pozycji i [insert()],
+<li>dołączanie nowego elementu przed element na pozycji i [insert()],
 <li>usunięcie elementu o danym indeksie i [erase()].
 </ul>
 
@@ -104,7 +108,7 @@ public:
 };
 </pre><hr>
 
-<h3>ZADANIE 6.1</h3>
+<h3>ZADANIE 6.1 (TABLICA CYKLICZNA)</h3>
 
 <p>Przygotować implementację realizującą ADT DEQUE na bazie tablicy 
 o stałym rozmiarze (tablica cykliczna), ustalanym w czasie tworzenia listy.
@@ -198,15 +202,15 @@ void MyDeque&lt;T&gt;::display() {
 }
 </pre><hr>
 
-<h3>ZADANIE 6.2</h3>
+<h3>ZADANIE 6.2 (std::list)</h3>
 
 <p>Przygotować implementację realizującą ADT DEQUE na bazie listy powiązanej
-podwójnie. Wykorzystać klasę DoubleList lub std::list.
+podwójnie. Wykorzystać klasę <em>DoubleList</em> lub <em>std::list</em>.
 
-<h3>ZADANIE 6.3</h3>
+<h3>ZADANIE 6.3 (TABLICA CYKLICZNA)</h3>
 
-<p>Przygotować implementację realizującą ADT DEQUE na bazie std::vector
-lub std::array jako tablicy cyklicznej.
+<p>Przygotować implementację realizującą ADT DEQUE na bazie 
+<em>std::vector</em> lub <em>std::array</em> jako tablicy cyklicznej.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

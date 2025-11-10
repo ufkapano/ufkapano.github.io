@@ -19,7 +19,7 @@ typu <em>float</em>. Chcemy taką parę traktować jako jeden
 złożony obiekt. Przykładowym rozwiązaniem jest lista lub krotka,
 ale zwykle lepsze jest zdefiniowanie nowego typu, inaczej <em>klasy</em>.
 Składnia (dwukropek i wcięcia) jest taka jak dla innych wyrażeń złożonych
-w Pythonie. Nazewnictwo klas powinno być typu StudlyCups.
+w Pythonie. Nazewnictwo klas powinno być typu <em>StudlyCups</em>.
 
 <p>Instrukcja wykonywalna <em>class</em> tworzy obiekt klasy 
 i przypisuje go do nazwy. Zakres instrukcji <em>class</em>
@@ -93,7 +93,7 @@ point1 == point2   # False, to nie są te same obiekty, inne id
 point3 = point1    # kopiujemy referencję
 point1 == point3   # True,  to jest porównywanie referencji
 
-# Taki typ równości nazywa się shallow equality (płytka, powierzchowna równość).
+# Taki typ równości nazywa się 'shallow equality' (płytka, powierzchowna równość).
 # Aby porównać zawartość obiektów (deep equality, głęboka równość),
 # możemy napisać funkcję.
 
@@ -109,8 +109,8 @@ same_point(point1, point3)   # True, oczywiste
 
 <p>Chcemy stworzyć klasę do reprezentowania prostokąta.
 Zakładamy dla prostoty, że boki prostokąta są równoległe do osi X i Y.
-Będziemy określać lewy dolny róg prostokąta, szerokość (width)
-i wysokość (height).
+Będziemy określać lewy dolny róg prostokąta, szerokość (<em>width</em>)
+i wysokość (<em>height</em>).
 
 <hr><pre>
 class Point:
@@ -161,28 +161,30 @@ import copy
 point1 = Point()
 point1.x = 3
 point1.y = 4
-point2 = copy.copy(point1)
+point2 = copy.copy(point1)   # płytka kopia
 point1 == point2             # False, inne referencje
 same_point(point1, point2)   # True, te same wartości x i y
 </pre><hr>
 
-<p>Dla obiektów prostych jak Point, które nie mają zagnieżdzonych innych
-obiektów, zwykłe <em>copy.copy()</em> jest wystarczające (shallow copy).
-Ale dla obiektu Rectangle, który zawiera referencję do Point,
+<p>Dla obiektów prostych jak <em>Point</em>, które nie mają zagnieżdzonych 
+innych obiektów, zwykła <strong>płytka kopia</strong> (ang. <em>shallow copy</em>) 
+wykonana przez <em>copy.copy()</em> jest wystarczająca.
+Ale dla obiektu <em>Rectangle</em>, który zawiera referencję do <em>Point</em>,
 <em>copy.copy()</em> nie robi tego, czego oczekujemy.
 Jeżeli stworzymy prostokąt <em>rect1</em>, a następnie za pomocą
 <em>copy.copy()</em> zrobimy kopię <em>rect2</em>, to okaże się, że
 <em>rect1</em> i <em>rect2</em> zawierają referencję do tego samego punktu
 (<em>rect1.corner</em> jest identyczny z <em>rect2.corner</em>).
-Rozwiązaniem jest głęboka kopia (deep copy). Wykorzystamy ją do
-przepisania funkcji <em>grow_rect()</em> tak, aby zwracała nowy obiekt 
-klasy Rectangle, który jest w tym samym położeniu, ale ma nowe wymiary.
+Rozwiązaniem jest <strong>głęboka kopia</strong> (ang. <em>deep copy</em>). 
+Wykorzystamy ją do przepisania funkcji <em>grow_rect()</em> tak, aby 
+zwracała nowy obiekt klasy <em>Rectangle</em>, który jest w tym samym 
+położeniu, ale ma nowe wymiary.
 
 <hr><pre>
 def grow_rect2(rect, dw, dh):   # zwraca nowy obiekt
     """Zwróć powiększony prostokąt."""
     import copy
-    rect2 = copy.deepcopy(rect)
+    rect2 = copy.deepcopy(rect)   # głęboka kopia
     rect2.width = rect2.width + dw
     rect2.height = rect2.height + dh
     return rect2

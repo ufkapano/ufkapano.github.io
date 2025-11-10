@@ -33,10 +33,11 @@ gdzie składowane są kody źródłowe programów,
 (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
-porównywanie (operator==, operator!=), wyświetlanie.
+porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;).
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
-Klasa Term przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
-Klasa Poly przechowuje łącze do posortowanej listy powiązanej wyrazów
+Klasa Term opisuje węzeł listy powiązanej i
+przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
+Klasa Poly przechowuje łącze do posortowanej malejąco listy powiązanej wyrazów
 i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
 (odczyt współczynnika przy danej potędze x),
@@ -45,14 +46,14 @@ degree() (stopień wielomianu).
 <li>Implementacja wielomianów na bazie tablic (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
-porównywanie (operator==, operator!=), wyświetlanie.
+porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;).
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
 Klasa Poly przechowuje tablicę współczynników i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
 (odczyt współczynnika przy danej potędze x),
 degree() (stopień wielomianu).
 
-<li>Implementacja kwaternionów podobnie do std::complex
+<li>Implementacja kwaternionów podobnie do <em>std::complex</em>
 [https://en.wikipedia.org/wiki/Quaternion].
 Działania na kwaternionach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), sprzężenie (conjugate), moduł,
@@ -67,7 +68,7 @@ wyświetlanie (operator&lt;&lt;).
 
 <li>Drzewa AVL.
 
-<li>Drzewa czerwono-czarne (red-black trees).
+<li>Drzewa czerwono-czarne (ang. <em>red-black trees</em>).
 
 <li>Drzewa splay.
 
@@ -108,10 +109,11 @@ Wygodne jest wczytywanie bazy przy starcie programu, potem zapisywanie bazy
 do pliku po każdej zmianie danych (dodanie/usuwanie rekordu).
 Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
-<li>Obliczanie mediany kroczącej (ang. running median)
+<li>Obliczanie mediany kroczącej (ang. <em>running median</em>)
 [https://en.wikipedia.org/wiki/Moving_average#Moving_median].
 
-<li>Implementacja systemu T9 (predictive text), stosowanego w telefonach komórkowych 
+<li>Implementacja systemu T9 (<em>predictive text</em>), 
+stosowanego w telefonach komórkowych 
 do łatwiejszego pisania tekstów za pomocą klawiatury 3x4
 [https://en.wikipedia.org/wiki/T9_(predictive_text)].
 Używa się 8 przycisków znaczących 2-9.

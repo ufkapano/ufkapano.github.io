@@ -15,7 +15,8 @@
 <p>W Pythonie nie ma przeciążania funkcji, bo nazwa funkcji jest
 referencją do obiektu. W C++ mogą być funkcje o tej samej nazwie,
 które różnią się typami argumentów (ale nie zwracanych wartości).
-W Pythonie przeciążanie operatorów robi się za pomocą metod specjalnych.
+W Pythonie przeciążanie operatorów robi się za pomocą 
+<strong>metod specjalnych</strong>.
 
 <h3>PRZECIĄŻANIE OPERATORÓW</h3>
 
@@ -266,7 +267,7 @@ print(X.counter)    # odczyt licznika wywołań funkcji
 <h3>ATRYBUTY KLASY</h3>
 
 <p>Czasem potrzebna jest znajomość liczby istniejących
-instancji danej klasy. Rozwiązaniem jest atrybut klasy,
+instancji danej klasy. Rozwiązaniem jest <strong>atrybut klasy</strong>,
 który na bieżąco zwiększa wartość o jeden przy tworzeniu instancji, 
 a także zmniejsza wartość o jeden przy niszczeniu instancji.
 Atrybut klasy istnieje w przestrzeni nazw klasy, więc potrzebna
@@ -277,7 +278,7 @@ listach składanych, wyrażeniach generatorów.
 <hr><pre>
 class Point:
     """Klasa dla punktów."""
-    counter = 0                     # atrybut klasy
+    counter = 0   # atrybut klasy
     # seq = list(counter + i for i in range(10))   # nie działa!
     # seq = list(Point.counter + i for i in range(10))   # potrzebna kwalifikacja
 
@@ -330,9 +331,10 @@ ich klas nadrzędnych.
 
 <h3>RICH COMPARISONS</h3>
 
-<p>W Pythonie 3 nie ma metody __cmp__, tylko stosuje się rich comparisons.
-W Pythonie 2.6+ rich comparisons mają wyższy priorytet,
-niż metoda __cmp__, ale generalnie nie należy łączyć tych
+<p>W Pythonie 3 nie ma metody <em>__cmp__</em>, tylko stosuje się 
+<em>rich comparisons</em>.
+W Pythonie 2.6+ <em>rich comparisons</em> mają wyższy priorytet,
+niż metoda <em>__cmp__</em>, ale generalnie nie należy łączyć tych
 dwóch metod określających porównywanie obiektów.
 
 <p>http://stackoverflow.com/questions/20989750/why-python-need-rich-comparison
@@ -401,10 +403,11 @@ NotImplemented
 domyślny, czyli dla klasy C konstruktor wywoływany bez argumentów C().
 W C++ taki konstruktor jest uruchamiany przykładowo przy tworzeniu
 pustej tablicy obiektów i na ogół jest potrzebny. 
-W Pythonie pustą tablicę zwykle wypełniamy obiektami None.
+W Pythonie pustą tablicę zwykle wypełniamy obiektami <em>None</em>.
 Wbudowane typy danych zwykle mają taki konstruktor:
-int() i float() zwracają zero, list() i tuple() zwracają puste kolekcje, 
-dict() zwraca pusty słownik.
+<em>int()</em> i <em>float()</em> zwracają zero, 
+<em>list()</em> i <em>tuple()</em> zwracają puste kolekcje, 
+<em>dict()</em> zwraca pusty słownik.
 Wydaje się więc, że nie ma powodu, aby nie obsługować takiej sytuacji 
 w klasach tworzonych przez użytkownika.
 

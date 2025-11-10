@@ -115,8 +115,8 @@ public:
     DoubleList(); // trzeba alokować wartownika
     ~DoubleList(); // tu trzeba wyczyścić węzły i wartownika
     bool empty() const { return nil->next == nil; }
-    T& front() const { return nil->next->value; } // zwraca początek, nie usuwa
-    T& back() const { return nil->prev->value; } // zwraca koniec, nie usuwa
+    T& front() const { assert(!empty()); return nil->next->value; } // zwraca początek, nie usuwa
+    T& back() const { assert(!empty()); return nil->prev->value; } // zwraca koniec, nie usuwa
 };
 </pre><hr><pre>
 template &lt;typename T&gt;
