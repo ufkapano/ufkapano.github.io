@@ -12,12 +12,13 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Funkcja iter(X) zwraca obiekt iteratora, utworzony na bazie obiektu X.
-Obiekt X musi wspierać protokół iteracji 
-(metoda __iter__, obiekt dostarcza swój iterator)
-lub protokół sekwencji (metoda __getitem__ z argumentami int startującymi od 0).
+<p>Funkcja <em>iter(X)</em> zwraca obiekt iteratora, utworzony na bazie 
+obiektu X. Obiekt X musi wspierać <strong>protokół iteracji</strong> 
+(metoda <em>__iter__</em>, obiekt dostarcza swój iterator)
+lub <strong>protokół sekwencji</strong> (metoda <em>__getitem__</em> 
+z argumentami typu <em>int</em> startującymi od 0).
 
-<p>Druga wersja wywołania funkcji iter() zwraca iterator zbudowany
+<p>Druga wersja wywołania funkcji <em>iter()</em> zwraca iterator zbudowany
 na bazie obiektu wywoływalnego i strażnika (wartość kończąca iterację).
 
 <hr><pre>
@@ -49,17 +50,17 @@ class Dumb:
 
 x = Dumb("word")
 
-#print(dir(x))   # nie ma __iter__, __next__
+#print(dir(x))   # nie ma __iter__ i __next__
 print(x[1])   # zwraca 'o'
 #print(x[10])   # IndexError: string index out of range
-#len(x)   # AttributeError: Dumb instance has no attribute '__len__'
+#len(x)   # AttributeError: Dumb instance has no attribute __len__
 
 for item in x:   # można iterować po x
     print(item)
 
 y = iter(x)         # można jawnie utworzyć iterator
 
-#print(dir(y))   # pojawia się __iter__, __next__ (Py3.7)
+#print(dir(y))   # pojawia się __iter__ i __next__ (Py3.7)
 print(next(y))   # w
 print(next(y))   # o
 print(next(y))   # r
@@ -68,7 +69,7 @@ print(next(y))   # StopIteration
 </pre><hr><pre>
 # Przygotowanie iteratora na bazie obiektu wywoływalnego.
 # Obiekt wywoływalny to zwykle coś więcej niż funkcja,
-# bo posiada/utrzymuje swój stan pomiędzy wywołaniami.
+# bo posiada i utrzymuje swój stan pomiędzy wywołaniami.
 
 class MyInt:
     """Klasa do tworzenia obiektów wywoływalnych, zwracających kolejne int."""
@@ -89,8 +90,8 @@ y = iter(x, 10)     # y to callable-iterator object
 
 for i in y:         # zwróci 3,4,5,6,7,8,9 (bez 10)
     print(i)
-# 1 i 2 było wykorzystane wcześniej przez print(),
-# 10 wykorzystane na zatrzymanie iteratora
+# wartości 1 i 2 były wykorzystane wcześniej przez print(),
+# wartość 10 jest wykorzystana na zatrzymanie iteratora
 #print(next(y))   # wyzwala StopIteration
 print(x())   # 11, obiekt wywoływalny jest aktywny
 </pre><hr>
@@ -100,6 +101,7 @@ print(x())   # 11, obiekt wywoływalny jest aktywny
 <hr><pre>
 import itertools
 
+# Różne wersje iteratora nieskończonego zwracającego zawsze wartość 0.
 iter_zeros1 = iter(int, 1)   # int() zwraca 0
 iter_zeros2 = iter((lambda: 0), 1)   # funkcja bez argumentów to obiekt wywoływalny
 iter_zeros3 = itertools.cycle([0])   # itertools.cycle(sequence)
@@ -107,6 +109,7 @@ iter_zeros4 = itertools.repeat(0)    # itertools.repeat(x, times=5)
 </pre><hr><pre>
 import random
 
+# Przykłady iteratorów nieskończonych.
 it = iter(MyInt(), 0)   # zwraca 1,2,3,... z obiektu wywoływalnego
 it = (random.choice(range(7)) for _ in iter(int, 1))   # przypadkowy dzień tygodnia
 it = iter(lambda: random.choice(range(7)), -1)   # jw

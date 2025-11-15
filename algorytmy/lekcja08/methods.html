@@ -26,8 +26,8 @@ nazwy klasy.
 Jednak dzięki powiązaniu z klasą można lepiej podzielić kod programu
 oraz można korzystać z dziedziczenia.
 
-<p>Metody klasy jako pierwszy argument mają obiekt klasy (cls),
-a nie obiekt instancji (self). Metodę klasy można użyć do budowy
+<p>Metody klasy jako pierwszy argument mają obiekt klasy (<em>cls</em>),
+a nie obiekt instancji (<em>self</em>). Metodę klasy można użyć do budowy
 dodatkowego konstruktora.
 
 <hr><pre>
@@ -103,7 +103,11 @@ class Poly:
         new_poly.size = len(new_poly.data)
         return new_poly
 
+class SpecialPoly(Poly): pass
+
 assert Poly.from_iterable([0, 3, 5]) == Poly(3, 1) + Poly(5, 2)
+spoly = SpecialPoly.from_iterable([1, 2, 3])
+assert isinstance(spoly, SpecialPoly)   # działa dzięki @classmethod
 </pre><hr>
 
 </body>

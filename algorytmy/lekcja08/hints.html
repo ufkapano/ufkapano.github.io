@@ -12,9 +12,9 @@
 
 <p>Aby kontrolować wartość prawdy w instancjach klas zdefiniowanych
 przez użytkownika, należy korzystać z metod specjalnych
-__nonzero__ lub __len__.
-Korzystamy z __len__, jeżeli nasza klasa jest kontenerem, 
-który ma długość (przykład z sieci, Code Like a Pythonist).
+<em>__nonzero__</em>, <em>__bool__</em> lub <em>__len__</em>.
+Korzystamy z <em>__len__</em>, jeżeli nasza klasa jest kontenerem, 
+który ma długość (przykład z Internetu, <em>Code Like a Pythonist</em>).
 
 <hr><pre>
 class MyContainer(object):
@@ -28,8 +28,8 @@ class MyContainer(object):
         return len(self.data)
 </pre><hr>
 
-<p>Jeżeli nasza klasa nie jest kontenerem, korzystamy z __bool__ (Py3) 
-i __nonzero__ (Py2).
+<p>Jeżeli nasza klasa nie jest kontenerem, korzystamy z <em>__bool__</em> (Py3) 
+i <em>__nonzero__</em> (Py2).
 
 <hr><pre>
 class MyClass(object):
@@ -84,7 +84,7 @@ After delete
 
 <h3>HASHING</h3>
 
-<p>Każda klasa Pythona ma metodę __hash__(), której domyślna 
+<p>Każda klasa Pythona ma metodę <em>__hash__</em>, której domyślna 
 implementacja ma postać:
 
 <hr><pre>
@@ -92,9 +92,9 @@ def __hash__(self):
     return id(self)
 </pre><hr>
 
-<p>User może zaimplementować to na nowo po swojemu.
-Funkcja hash(X) wywołuje metodę X.__hash__().
-Klasy wbudowane Pythona z reguły redefiniują metodę __hash__().
+<p>Użytkownik może zaimplementować to na nowo po swojemu.
+Funkcja <em>hash(X)</em> wywołuje metodę <em>X.__hash__()</em>.
+Klasy wbudowane Pythona z reguły redefiniują metodę <em>__hash__</em>.
 
 <hr><pre>
 # Przykładowo dla int mamy coś takiego.
@@ -106,15 +106,15 @@ def __hash__(self):
     raise TypeError("list objects are unhashable")
 </pre><hr>
 
-<p>Główna idea dotycząca hash jest taka, że jeżeli dwa obiekty
+<p>Główna idea dotycząca hashu jest taka, że jeżeli dwa obiekty
 mają różny hash, to nie są równe, ale jeżeli mają taki sam hash,
-to _mogą_ być równe (to jest nazywane "hash collision").
+to <em>mogą</em> być równe (to jest nazywane "hash collision").
 Jedyne wymaganie ze strony Pythona jest aby wartości hash
-nie zmieniały się po tym, jak zostaną zwrócone przez metodę __hash__().
+nie zmieniały się po tym, jak zostaną zwrócone przez metodę <em>__hash__</em>.
 
-<p>Trzeba pamiętać, że hashing jest platform-dependent.
+<p>Trzeba pamiętać, że hashing jest <em>platform-dependent</em>.
 Stąd w SymPy mogą być różne kolejności zwracanych wyrażeń,
-co rodzi problemy przy pisaniu testów (np. doctest).
+co rodzi problemy przy pisaniu testów (np. <em>doctest</em>).
 
 <p>http://stackoverflow.com/questions/17192418/hash-function-in-python
 <br>hash() is randomised by default each time you start a new instance 
@@ -128,7 +128,7 @@ use one of the hashes in hashlib (import hashlib).
 Sprawdzamy co się dzieje przy wywołaniu polecenia a == b.
 Python wywołuje metody w podanej kolejności.
 Jeżeli dana metoda nie jest zaimplementowana,
-lub jeżeli zwróci wyjątek NotImplemented,
+lub jeżeli zwróci obiekt <em>NotImplemented</em>,
 Python przeskakuje ją i próbuje następnej, aż do skutku.
 Ostatnia linia zawsze kończy się sukcesem.
 
@@ -188,20 +188,20 @@ d.__hash__()
 # resolution dla operatora == jak pokazano powyżej.
 </pre><hr>
 
-<p>Widać, że w method resolution dla operatorów porównań nie ma hash,
+<p>Widać, że w <em>method resolution</em> dla operatorów porównań nie ma hash,
 więc nie ma znaczenia co zwraca. Ale hash jest używany przy
 słownikach i zbiorach. Oficjalna dokumentacja Pythona mówi 
-o obiektach hashable i non-hashable.
-W praktyce wystarczy prześledzić method resolution opisaną tutaj.
+o obiektach <em>hashable</em> i <em>non-hashable</em>.
+W praktyce wystarczy prześledzić <em>method resolution</em> opisaną tutaj.
 
 <h3>SLOTS</h3>
 
-<p>Python domyślnie przechowuje atrybuty instancji w słowniku __dict__,
+<p>Python domyślnie przechowuje atrybuty instancji w słowniku <em>__dict__</em>,
 co daje możliwość dodawania atrybutów w czasie pracy programu.
 Przy małych klasach ze znanymi atrybutami może to jednak prowadzić
 do marnowania pamięci RAM.
 Można wymusić alokowanie stałej ilości pamięci na atrybuty
-przy zastosowaniu __slots__ zamiast słownika.
+przy zastosowaniu <em>__slots__</em> zamiast słownika.
 Pewne problemy pojawiają się przy korzystaniu z dziedziczenia.
 
 <hr><pre>
@@ -231,9 +231,9 @@ class ClassWithSlots(object):
 
 <p>W Pythonie 2.2 pojawiła się funkcja wbudowana <em>super()</em>,
 która działa tylko z klasami w nowym stylu.
-Return a proxy object that delegates method calls to a parent 
+<br><em>Return a proxy object that delegates method calls to a parent 
 or sibling class of type. This is useful for accessing inherited 
-methods that have been overridden in a class.
+methods that have been overridden in a class.</em>
 
 <hr><pre>
 # super(type[, object-or-type])    # Py2.7

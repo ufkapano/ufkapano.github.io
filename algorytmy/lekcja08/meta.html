@@ -25,19 +25,20 @@ obiekt klasy jest instacją obiektu metaklasy.
 
 <p>Funkcjonalność metaklas częściowo pokrywa się z funkcjonalnością
 dekoratorów klas.
-Metaklasy są typowo używane jako fabryki klas (class-factory),
+Metaklasy są typowo używane jako fabryki klas (<em>class-factory</em>),
 ale badano różne inne zastosowania. Wg dokumentacji Pythona:
 <br><em>Some ideas that have been explored include enum, logging, 
 interface checking, automatic delegation, automatic property creation, 
 proxies, frameworks, and automatic resource locking/synchronization.</em>
 
-<p>Kiedy wykonywana jest instrukcja 'class', wykonywane są następujące kroki:
+<p>Kiedy wykonywana jest instrukcja <em>class</em>, 
+wykonywane są następujące kroki:
 
 <ul>
 
-<li>Badane jest MRO (Method Resolution Order), hierarchia klas.
+<li>Badane jest MRO (<em>Method Resolution Order</em>), hierarchia klas.
 
-<li>Określana jest właściwa metaklasa [type() lub coś innego].
+<li>Określana jest właściwa metaklasa [<em>type()</em> lub coś innego].
 
 <li>Przygotowywana jest przestrzeń nazw klasy [powstaje słownik].
 
@@ -50,8 +51,8 @@ proxies, frameworks, and automatic resource locking/synchronization.</em>
 <h3>TWORZENIE METAKLASY</h3>
 
 <p>Metaklasy najczęściej implementują dwie metody
-(__init__, __new__), przejmując kontrolę nad procedurą tworzenia
-i inicjalizacji nowej instancji klasy.
+(<em>__init__</em>, <em>__new__</em>), przejmując kontrolę nad procedurą 
+tworzenia i inicjalizacji nowej instancji klasy.
 Klasy otrzymują nową warstwę logiki.
 
 <hr><pre>
@@ -113,14 +114,11 @@ sprawdzania, czy obiekt spełnia daną specyfikację.
 Próba utworzenia podklasy bez nadpisania przygotowanych metod z klasy bazowej
 nie uda się.
 
-<p>Moduł 'abc' dostarcza infrastrukturę do definiowania ABCs.
-W module 'collections' znajdują się pewne konkretne klasy wyprowadzone z ABCs.
-W podmodule 'collections.abc' znajdują się pewne ABCs, które można użyć 
-do testowania interfejsów.
-
-
-
-
+<p>Moduł <em>abc</em> dostarcza infrastrukturę do definiowania ABCs.
+W module <em>collections</em> znajdują się pewne konkretne klasy 
+wyprowadzone z ABCs.
+W podmodule <em>collections.abc</em> znajdują się pewne ABCs, 
+które można użyć do testowania interfejsów.
 
 <p>Abstrakcyjne klasy bazowe mają zestaw metod abstrakcyjnych.
 

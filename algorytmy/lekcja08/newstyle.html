@@ -34,21 +34,21 @@ oraz mechanizmu wyszukiwania metod specjalnych dla operacji wbudowanych.
 W Pythonie 3 wszystkie klasy są tworzone w nowym stylu.
 
 <p>Klasy w nowym stylu mogą używać niskopoziomowych konstruktorów
-__new__().
+<em>__new__</em>.
 
-<p>Klasy w nowym stylu mogą używać deskryptorów (łącznie z __slots__),
+<p>Klasy w nowym stylu mogą używać deskryptorów (łącznie z <em>__slots__</em>),
 stare nie mogą [a generalized way to customize attribute access].
 
 <p>Klasy w nowym stylu mogą używać metod statycznych i metod klasy.
 
 <p>Klasy w nowym stylu mogą używać dekoratorów (Py2.4+).
 
-<p>Klasy w nowym stylu mogą używać funkcji <em>super</em>
-[super(SomeClass, object-or-type). Delegowanie wywołania metody 
-do przodka klasy. To jest szczególnie przydatne, gdy metoda została
-nadpisana].
+<p>Klasy w nowym stylu mogą używać funkcji <em>super()</em>
+[<em>super(SomeClass, object-or-type)</em>. 
+Delegowanie wywołania metody do przodka klasy. 
+To jest szczególnie przydatne, gdy metoda została nadpisana].
 
-<p>Method Resolution Order (MRO): Klasy w nowym stylu przeszukują każdą
+<p><em>Method Resolution Order (MRO)</em>: Klasy w nowym stylu przeszukują każdą
 klasę bazową tylko raz. Klasy w starym stylu przeszukują klasy
 bazowe od lewej do prawej, stosując rekurencję, co czasem
 prowadzi do niejednoznaczności (wielokrotne przeszukiwanie).

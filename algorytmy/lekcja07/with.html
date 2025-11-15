@@ -14,12 +14,15 @@
 
 <p>https://docs.python.org/3/reference/datamodel.html#with-statement-context-managers
 
+<p>https://docs.python.org/3/library/contextlib.html
+<br>contextlib — Utilities for with-statement contexts.
+
 <h3>WPROWADZENIE</h3>
 
 <p>W Pythonie 2.6 i Pythonie 3 pojawiła się nowa instrukcja związana z wyjątkami
 - <em>with</em> z opcjonalnym <em>as</em> [PEP 343].
-Instrukcja została zaprojektowana do pracy z obiektami menedżerów
-kontekstu obsługującymi protokół oparty na metodach.
+Instrukcja została zaprojektowana do pracy z obiektami 
+<strong>menedżerów kontekstu</strong> obsługującymi protokół oparty na metodach.
 Instrukcja <em>with/as</em> ma być alternatywą dla zwykłego zastosowania
 <em>try/finally</em>.
 
@@ -64,20 +67,22 @@ with open(outfile_name, 'w') as outfile, \
 
 <ul>
 <li>Wyrażenie jest analizowane, w wyniku czego otrzymujemy obiekt
-menedżera kontekstu, który musi zawierać metody __enter__ i __exit__.
+menedżera kontekstu, który musi zawierać metody 
+<em>__enter__</em> i <em>__exit__</em>.
 
-<li>Wywoływana jest metoda __enter__, a wartość przez nią zwracana
+<li>Wywoływana jest metoda <em>__enter__</em>, a wartość przez nią zwracana
 jest przypisywana do zmiennej w części <em>as</em>, jeśli jest ona obecna.
 
-<li>Wykonywany jest kod w bloku with.
+<li>Wykonywany jest kod w bloku <em>with</em>.
 
-<li>Jeżeli blok with zwraca wyjątek, to zostaje wywołana metoda __exit__
-z argumentami zawierającymi szczegóły wyjątku.
+<li>Jeżeli blok <em>with</em> zwraca wyjątek, to zostaje wywołana metoda 
+<em>__exit__</em> z argumentami zawierającymi szczegóły wyjątku.
 Jeżeli metoda zwraca wartość będącą fałszem (typowe działanie),
 to wyjątek jest zgłaszany ponownie.
 
-<li>Jeżeli blok with nie zgłasza wyjątku, to nadal wywoływana jest
-metoda __exit__, ale do jej argumentów przekazywane są obiekty None.
+<li>Jeżeli blok <em>with</em> nie zgłasza wyjątku, to nadal wywoływana jest
+metoda <em>__exit__</em>, ale do jej argumentów przekazywane są 
+trzy obiekty <em>None</em>.
 
 </ul>
 
@@ -150,9 +155,9 @@ self.assertTrue(isinstance(context.exception, SomeException))
 self.assertTrue("NoneType" in str(context.exception))
 </pre><hr>
 
-<p>W Pythonie 3.4 pojawił się menedżer kontekstu subTest(), który
-pomaga tworzyć testy o bardziej czytelnych komunikatach.
-Zwykle używa się subTest(), gdy mamy wiele mało różniących się testów,
+<p>W Pythonie 3.4 pojawił się menedżer kontekstu <em>subTest()</em>, 
+który pomaga tworzyć testy o bardziej czytelnych komunikatach.
+Zwykle używa się <em>subTest()</em>, gdy mamy wiele mało różniących się testów,
 np. zmieniają się tylko parametry wywołania danej funkcji.
 
 <hr><pre>
@@ -180,15 +185,16 @@ class NumbersTest(unittest.TestCase):
 
 <p>W pewnych sytuacjach potrzebne są działania czyszczące na końcu
 przetwarzania, które zostaną wykonane niezależnie od wystąpienia wyjątków. 
-W ramach jednego modułu można wykorzystać try/except/finally
-lub menedżera kontekstu with.
+W ramach jednego modułu można wykorzystać <em>try/except/finally</em>
+lub menedżera kontekstu <em>with</em>.
 
-<p>Jeżeli pewne działania mają być wykonane przy normalnym zakończeniu działania
-interpretera, dawny sposób polegał na rejestrowaniu jednej funkcji
-bezparametrowej func() w funkcji systemowej sys.exitfunc(func).
-Obecnie zalecanym sposobem działania jest korzystanie z modułu 'atexit',
+<p>Jeżeli pewne działania mają być wykonane przy normalnym zakończeniu 
+działania interpretera, dawny sposób polegał na rejestrowaniu jednej 
+funkcji bezparametrowej <em>func()</em> w funkcji systemowej 
+<em>sys.exitfunc(func)</em>.
+Obecnie zalecanym sposobem działania jest korzystanie z modułu <em>atexit</em>,
 dzięki któremu można rejestrować wiele funkcji wykonujących
-prace czyszczące. Moduł 'atexit' jest obecny w Pythonie 2 i 3.
+prace czyszczące. Moduł <em>atexit</em> jest obecny w Pythonie 2 i 3.
 
 <hr><pre>
 # https://docs.python.org/3/library/atexit.html

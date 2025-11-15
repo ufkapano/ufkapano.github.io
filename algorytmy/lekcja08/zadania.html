@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Zadania</title>
+<title>Python</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -13,45 +13,53 @@
 
 <h3>ZADANIE 8.1 (KLASA RECTANGLE)</h3>
 
-<p>Wzbogacić klasę Rectangle o nowe funkcjonalności (plik rectangles.py).
+<p>Wzbogacić klasę <em>Rectangle</em> o nowe funkcjonalności 
+(plik <em>rectangles.py</em>).
 
-<p>Stworzyć metodę klasy o nazwie 'from_points', która pozwoli utworzyć 
+<p>Stworzyć metodę klasy o nazwie <em>from_points</em>, która pozwoli utworzyć 
 prostokąt z listy lub krotki zawierającej dwa punkty,
 lewy dolny i prawy górny. Wywołanie:
-<br>rectangle = Rectangle.from_points((point1, point2))
 
-<p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
+<hr><pre>
+rectangle = Rectangle.from_points((point1, point2))
+</pre><hr>
+
+<p>Za pomocą dekoratora <em>@property</em> dodać atrybuty wirtualne zwracające 
 liczbę (współrzędną tylko do odczytu):
-top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
-topleft, bottomleft, topright, bottomright.
-Można rozważyć zamianę metody center() na atrybut wirtualny.
+<em>top, left, bottom, right, width, height</em>.
+Dodać atrybuty wirtualne zwracające <em>Point</em> (tylko do odczytu):
+<em>topleft, bottomleft, topright, bottomright</em>.
+Można rozważyć zamianę metody <em>center()</em> na atrybut wirtualny.
 
-<p>W osobnym pliku (test_rectangles.py) przygotować testy klasy Rectangle 
-w formacie dla modułu 'pytest'.
+<p>W osobnym pliku (<em>test_rectangles.py</em>) przygotować testy klasy 
+<em>Rectangle</em> w formacie dla modułu <em>pytest</em>.
 
 <pre>
 </pre>
 
 <h3>ZADANIE 8.2 (KLASA TRIANGLE)</h3>
 
-<p>Wzbogacić klasę Triangle o nowe funkcjonalności (plik triangles.py).
+<p>Wzbogacić klasę <em>Triangle</em> o nowe funkcjonalności 
+(plik <em>triangles.py</em>).
 
-<p>Stworzyć metodę klasy o nazwie 'from_points', która pozwoli utworzyć 
+<p>Stworzyć metodę klasy o nazwie <em>from_points</em>, która pozwoli utworzyć 
 trójkąt z listy lub krotki zawierającej trzy punkty. Wywołanie:
-<br>triangle = Triangle.from_points((point1, point2, point3))
 
-<p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
+<hr><pre>
+triangle = Triangle.from_points((point1, point2, point3))
+</pre><hr>
+
+<p>Za pomocą dekoratora <em>@property</em> dodać atrybuty wirtualne zwracające 
 liczbę (współrzędną tylko do odczytu):
-top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
-topleft, bottomleft, topright, bottomright.
+<em>top, left, bottom, right, width, height</em>.
+Dodać atrybuty wirtualne zwracające <em>Point</em> (tylko do odczytu):
+<em>topleft, bottomleft, topright, bottomright</em>.
 Wymienione atrybuty wirtualne opisują prostokąt ograniczający
-dany trójkąt (bounding box).
-Można rozważyć zamianę metody center() na atrybut wirtualny.
+dany trójkąt (<em>bounding box</em>).
+Można rozważyć zamianę metody <em>center()</em> na atrybut wirtualny.
 
-<p>W osobnym pliku (test_triangles.py) przygotować testy klasy Triangle 
-w formacie dla modułu 'pytest'.
+<p>W osobnym pliku (<em>test_triangles.py</em>) przygotować testy klasy 
+<em>Triangle</em> w formacie dla modułu <em>pytest</em>.
 
 <pre>
 </pre>
@@ -60,23 +68,27 @@ w formacie dla modułu 'pytest'.
 
 <p>https://en.wikipedia.org/wiki/Circumcircle
 
-<p>Wzbogacić klasę Circle o nowe funkcjonalności (plik circles.py).
+<p>Wzbogacić klasę <em>Circle</em> o nowe funkcjonalności 
+(plik <em>circles.py</em>).
 
-<p>Stworzyć metodę klasy o nazwie 'from_points', która pozwoli utworzyć 
+<p>Stworzyć metodę klasy o nazwie <em>from_points</em>, która pozwoli utworzyć 
 okrąg z listy lub krotki zawierającej trzy punkty. 
 Punkty będą leżeć na okręgu [trudne!]. Wywołanie:
-<br>circle = Circle.from_points((point1, point2, point3))
 
-<p>Za pomocą dekoratora @property dodać atrybuty wirtualne zwracające 
+<hr><pre>
+circle = Circle.from_points((point1, point2, point3))
+</pre><hr>
+
+<p>Za pomocą dekoratora <em>@property</em> dodać atrybuty wirtualne zwracające 
 liczbę (współrzędną tylko do odczytu):
-top, left, bottom, right, width, height.
-Dodać atrybuty wirtualne zwracające Point (tylko do odczytu):
-topleft, bottomleft, topright, bottomright.
+<em>top, left, bottom, right, width, height</em>.
+Dodać atrybuty wirtualne zwracające <em>Point</em> (tylko do odczytu):
+<em>topleft, bottomleft, topright, bottomright</em>.
 Wymienione atrybuty wirtualne opisują prostokąt ograniczający
-dany okrąg (bounding box).
+dany okrąg (<em>bounding box</em>).
 
-<p>W osobnym pliku (test_circles.py) przygotować testy klasy Circle 
-w formacie dla modułu 'pytest'.
+<p>W osobnym pliku (<em>test_circles.py</em>) przygotować testy klasy 
+<em>Circle</em> w formacie dla modułu <em>pytest</em>.
 
 </body>
 </html>

@@ -13,23 +13,26 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Warto zestawić trzy ważne pojęcia:
-<br>(1) 'iterable' to cokolwiek, po czym można iterować
-[funkcja iter() potrafi zbudować iterator],
-<br>(2) 'iterator' to rzecz, która realizuje iterowanie
-[metody __iter__() i __next__() powinny być obecne],
-<br>(3) 'generator' to jeden z prostszych sposobów zbudowania własnego 
-iteratora ['generator expressions' i 'generator functions'].
+<br>(1) <strong>iterable</strong> to cokolwiek, po czym można iterować
+[funkcja <em>iter()</em> potrafi zbudować iterator],
+<br>(2) <strong>iterator</strong> to rzecz, która realizuje iterowanie
+[metody <em>__iter__</em> i <em>__next__</em> powinny być obecne],
+<br>(3) <strong>generator</strong> to jeden z prostszych sposobów zbudowania 
+własnego iteratora 
+[<em>generator expressions</em>, <em>generator functions</em>].
 
 <p>Iterator jest obiektem reprezentującym strumień danych.
-Kolejne wywołania funkcji next() zwracają kolejne elementy ze strumienia danych.
-Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania next()
-wyzwalają wyjątek StopIteration.
+Kolejne wywołania funkcji <em>next()</em> zwracają kolejne elementy 
+ze strumienia danych.
+Kiedy strumień danych zostaje wyczerpany, to kolejne wywołania <em>next()</em>
+wyzwalają wyjątek <em>StopIteration</em>.
 
-<p>Kolejna wymagana metoda iteratorów to __iter__(), która zwraca sam
-obiekt iteratora. Po każdym iteratorze można iterować (jest iterable). 
-Funkcja iter() odwołuje się do metody __iter__(), ale w odróżnieniu
-od np. list, kolejne wywołania funkcji iter() zwrócą ten sam wyczerpany
-iterator (dla list dostaniemy świeży iterator idący od początku listy).
+<p>Kolejna wymagana metoda iteratorów to <em>__iter__</em>, która zwraca sam
+obiekt iteratora. Po każdym iteratorze można iterować (jest <em>iterable</em>). 
+Funkcja <em>iter()</em> odwołuje się do metody <em>__iter__</em>, 
+ale w odróżnieniu od np. list, kolejne wywołania funkcji <em>iter()</em> 
+zwrócą ten sam wyczerpany iterator 
+(dla list dostaniemy świeży iterator idący od początku listy).
 Kiedy iterator zostanie wyczerpany, nie można go użyć ponownie ani zresetować.
 
 <hr><pre>
@@ -102,17 +105,18 @@ for element in iterable:
 
 # Działanie takiej pętli for można opisać następująco.
 
-# create an iterator object from that iterable
+# Create an iterator object from that iterable.
 iter_obj = iter(iterable)
 
-# infinite loop
+# Infinite loop.
 while True:
     try:
-        # get the next item
+        # Get the next item.
         element = next(iter_obj)
-        process(element)   # do something with element
+        # Do something with element.
+        process(element)
     except StopIteration:
-        # if StopIteration is raised, break from loop
+        # If StopIteration is raised, break from loop.
         break
 </pre><hr>
 

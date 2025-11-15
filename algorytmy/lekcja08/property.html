@@ -12,7 +12,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Typowe zastosowanie dekoratora @property to utworzenie
+<p>Typowe zastosowanie dekoratora <em>@property</em> to utworzenie
 zarządzalnego atrybutu. Użytkownik używa składni takiej samej jak dla
 zwykłego atrybutu (odczyt, podstawienie), a jednocześnie w niewidoczny
 sposób mogą być wykonywane inne operacje.
@@ -61,7 +61,9 @@ c = C()
 c.x = 20   # działa setx, to samo co c.setx(20)
 #c.x = 5   # ValueError: x can't be lesser than 10
 print(c.__doc__)   # Klasa C.
+
 # W trybie interaktywnym help(c) lub help(C) ujawnia dla x string "I'm the 'x' property."
+
 print(c.x)   # działa getx, to samo co dla c.getx()
 del c.x   # działa delx, to samo co c.delx()
 print(c.x)   # AttributeError: 'C' object has no attribute '_x'

@@ -14,7 +14,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł 'itertools' (Py2.3+) zawiera funkcje tworzące iteratory 
+<p>Moduł <em>itertools</em> (Py2.3+) zawiera funkcje tworzące iteratory 
 do wydajnego realizowania pętli. 
 Prawdziwa siła tych narzędzi leży w odpowiednim komponowaniu funkcji 
 do szybkiego, wydajnego pamięciowo i dobrze wyglądającego kodu.
@@ -29,6 +29,7 @@ itertools.count(10)   # yield 10 11 12 13 14 ...
 itertools.count(10, 5)   # yield 10 15 20 25 ...
 
 # enumerate(iterable, start=0)
+list(enumerate("abcd"))   # [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd')]
 zip(itertools.count(start=0), iterable)   # emulacja bez pętli for
 
 # itertools.cycle(iterable)
@@ -83,7 +84,8 @@ itertools.zip_longest([10, 20], [1, 2, 3, 4], fillvalue=0)
 </pre><hr><pre>
 # itertools.product(*iterables, repeat=1)
 # Iloczyn kartezjański wejściowych iteratorów.
-# product(A, B) jest równoważne ((x,y) for x in A for y in B).
+# product(A,B) jest równoważne ((x,y) for x in A for y in B).
+# product(A,B,C) jest równoważne ((x,y,z) for x in A for y in B for z in C).
 
 list(itertools.product("abc", "123"))
 # [('a', '1'), ('a', '2'), ('a', '3'),
@@ -148,7 +150,7 @@ def best_grouper(inputs, n, fillvalue=None):
     iters = [iter(inputs)] * n
     return itertools.zip_longest(*iters, fillvalue=fillvalue)
     # Działa nawet jeżeli n nie dzieli len(inputs).
-
+</pre><hr><pre>
 # Przykładowa implementacja batched() (Raymond Hettinger).
 def batched(iterable, n):
 #def batched(iterable, n, fillvalue=None):

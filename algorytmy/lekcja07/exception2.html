@@ -19,7 +19,7 @@
 <ul>
 <li>Można je organizować w kategorie.
 <li>Dołączają informacje o stanie.
-<li>Obsługują dziedziczenie. Instrukcja try/except przechwyci dany
+<li>Obsługują dziedziczenie. Instrukcja <em>try/except</em> przechwyci dany
 wyjątek i wszystkie inne klasy potomne.
 </ul>
 
@@ -28,6 +28,7 @@ wyjątek i wszystkie inne klasy potomne.
 # Nowe podejście - wyjątek to klasa wywiedziona z klasy Exception.
 # Do nazwy dajemy suffix "Error", o ile wyjątek to błąd.
 # Dla ostrzeżeń w nazwie dodajemy "Warning".
+
 class MyError(Exception):
     """Warto stworzyć wiersz dokumentujący."""
     pass
@@ -49,12 +50,13 @@ except MyError as exception:
 
 <p>Jeżeli wyjątek został wyzwolony z argumentami, to w instancji
 wyjątku są domyślnie przechowywane jako krotka w atrybucie <em>args</em>.
-Dla wygody klasa Exception definiuje metodę __str__()
+Dla wygody klasa <em>Exception</em> definiuje metodę <em>__str__</em>
 wyświetlającą argumenty, dzięki czemu
 nie musimy bezpośrednio odwoływać się do atrybutu <em>args</em>.
 
-<p>Można zdefiniować własny konstruktor wyjątku (__init__).
-Podobnie można określić własny sposób wyświetlania wyjątku (__str__).
+<p>Można zdefiniować własny konstruktor wyjątku (metoda <em>__init__</em>).
+Podobnie można określić własny sposób wyświetlania wyjątku 
+(metoda <em>__str__</em>).
 
 <hr><pre>
 class MyError(Exception):
@@ -67,8 +69,8 @@ class MyError(Exception):
 
 try:
     raise MyError(2*2)    # instancja wyjątku
-except MyError as exception:  # Py2.6+, Py3
-# except MyError, exception:   # Py2.6-
+except MyError as exception:   # Py2.6+, Py3
+# except MyError, exception:   # Py2.5-
 # Python 3 interpretuje przecinek jako oznaczający krotkę.
 # Obiekt exception jest to zgłoszona instancja klasy MyError.
     print("mam wyjątek, value {}".format(exception.value))
@@ -80,10 +82,10 @@ print("Zgłoszono wyjątek {}".format(sys.exc_info()))
 </pre><hr>
 
 <p>Ostatnio zgłoszony i przechwycony wyjątek jest dostępny ogólnie, 
-jako drugi argument krotki wyników wywołania sys.exc_info(),
-(typ, wartość, ślad), (type, value, traceback).
+jako drugi argument krotki wyników wywołania <em>sys.exc_info()</em>,
+(typ, wartość, ślad), (<em>type, value, traceback</em>).
 Jeżeli żaden wyjątek nie jest obsługiwany, to zwracana krotka ma postać
-(None, None, None).
+(<em>None, None, None</em>).
 
 <h3>INSTRUKCJA RAISE</h3>
 
@@ -167,7 +169,7 @@ AssertionError: x have to be zero
 
 <h3>HIERARCHIA KLAS DLA WYJĄTKÓW WBUDOWANYCH</h3>
 
-<p>Kiedy except z instrukcji try wymienia klasę nadrzędną,
+<p>Kiedy <em>except</em> z instrukcji <em>try</em> wymienia klasę nadrzędną,
 przechwytuje instancje tej klasy, a także instancje wszystkich
 jej klas podrzędnych.
 
@@ -179,11 +181,11 @@ Można dziedziczyć z wyjątków wbudowanych, ale należy unikać
 dziedziczenia wielobazowego ze względu na specyficzne zarządzanie
 pamięcią w wyjątkach i możliwe konflikty.
 
-<p>W Pythonie 3.11 pojawiły się 'grupy wyjątków' (exception groups),
-które są używane kiedy trzeba jednocześnie rzucić wiele niepowiązanych 
-ze sobą wyjątków.
-Do stworzenia grupy wyjatków wykorzystuje się dziedziczenie
-z klasy 'ExceptionGroup'.
+<p>W Pythonie 3.11 pojawiły się <strong>grupy wyjątków</strong> 
+(<em>exception groups</em>), które są używane wtedy, kiedy trzeba 
+jednocześnie rzucić wiele niepowiązanych ze sobą wyjątków.
+Do stworzenia grupy wyjątków wykorzystuje się dziedziczenie
+z klasy <em>ExceptionGroup</em>.
 
 <hr><pre>
 &gt;&gt;&gt; import exceptions   # Py2.6+
@@ -192,8 +194,12 @@ z klasy 'ExceptionGroup'.
 &gt;&gt;&gt; import builtins   # Py3, built-in functions, exceptions, and other objects
 &gt;&gt;&gt; help(builtins)
 </pre><hr><pre>
+# Wyjątki tworzą drzewo dziedziczenia o korzeniu w 'object' (Py3).
+
+object (Py3)
+|
 BaseException
-    +-- BaseExceptionGroup (Py3.11)
+    +-- BaseExceptionGroup (Py3.11+)
     +-- SystemExit   # rzucany przez sys.exit()
     +-- KeyboardInterrupt   # rzucany po naciśnięciu Ctrl+C lub Delete
     +-- GeneratorExit   # rzucany przez generator.close() i coroutine.close()
@@ -212,19 +218,21 @@ BaseException
         |    +-- MemoryError
         |    +-- RuntimeError
         |        +-- NotImplementedError
+        |        +-- RecursuionError
         |    +-- EnvironmentError
         |        +-- IOError
         |        +-- OSError
         |    +-- LookupError
         |        +-- IndexError
         |        +-- KeyError
-        |    +-- ExceptionGroup [BaseExceptionGroup] (Py3.11)
+        |    +-- ExceptionGroup [BaseExceptionGroup] (Py3.11+)
         |    +-- ...
         +-- Warning
             +-- DeprecationWarning [PEP 387]
-            +-- UserWarning
-            +-- SyntaxWarning
+            +-- ImportWarning
             +-- RuntimeWarning
+            +-- SyntaxWarning
+            +-- UserWarning
             +-- ...
 </pre><hr>
 
@@ -232,43 +240,43 @@ BaseException
 
 <ul>
 
-<li><strong>ArithmeticError</strong>.
+<li><em>ArithmeticError</em> -
 Klasa bazowa dla wyjątków związanych z błędami arytmetycznymi.
 
-<li><strong>AssertionError</strong>.
-Powstaje gdy wyrażenie <em>assert</em> napotka False.
+<li><em>AssertionError</em> -
+Powstaje gdy wyrażenie <em>assert</em> napotka <em>False</em>.
 
-<li><strong>IndexError</strong>. 
+<li><em>IndexError</em> - 
 Powstaje kiedy indeks sekwencji jest poza dozwolonym zakresem.
-Jeżeli indeks nie jest liczbą całkowitą, to powstaje TypeError.
+Jeżeli indeks nie jest liczbą całkowitą, to powstaje <em>TypeError</em>.
 
-<li><strong>KeyError</strong>. 
-Powstaje kiedy słownik (ogólnie mapping) nie posiada żądanego klucza.
+<li><em>KeyError</em> - 
+Powstaje kiedy słownik (ogólnie <em>mapping</em>) nie posiada żądanego klucza.
 
-<li><strong>LookupError</strong>.
-Wspólna klasa bazowa dla IndexError i KeyError.
+<li><em>LookupError</em> -
+Wspólna klasa bazowa dla <em>IndexError</em> i <em>KeyError</em>.
 
-<li><strong>MemoryError</strong>.
+<li><em>MemoryError</em> -
 Powstaje wtedy, kiedy brakuje pamięci, ale można się ratować 
 przez usunięcie pewnych obiektów.
 
-<li><strong>NameError</strong>.
+<li><em>NameError</em> -
 Powstaje kiedy lokalna lub globalna nazwa zmiennej nie zostaje znaleziona.
 
-<li><strong>SyntaxError</strong>.
+<li><em>SyntaxError</em> -
 Powstaje kiedy parser napotka błąd składniowy.
 
-<li><strong>TypeError</strong>.
+<li><em>TypeError</em> -
 Powstaje kiedy operacja lub funkcja jest zastosowana do obiektu
 niewłaściwego typu.
 
-<li><strong>EnvironmentError</strong>.
-Wspólna klasa bazowa dla IOError i OSError.
+<li><em>EnvironmentError</em> -
+Wspólna klasa bazowa dla <em>IOError</em> i <em>OSError</em>.
 
-<li><strong>ValueError</strong>.
+<li><em>ValueError</em> -
 Powstaje kiedy wbudowana operacja lub funkcja otrzymuje argument
 właściwego typu, ale mający niewłaściwą wartość.
-Chodzi o sytuację podobną do tej opisywanej przez IndexError.
+Chodzi o sytuację podobną do tej opisywanej przez <em>IndexError</em>.
 
 </ul>
 
