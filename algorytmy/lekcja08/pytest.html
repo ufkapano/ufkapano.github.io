@@ -18,7 +18,7 @@
 
 <h3>INSTALALACJA</h3>
 
-<p>'pytest' nie należy do biblioteki standardowej, więc trzeba go 
+<p><em>pytest</em> nie należy do biblioteki standardowej, więc trzeba go 
 dodatkowo zainstalować.
 
 <hr><pre>
@@ -31,14 +31,15 @@ Debian packages: python-pytest (Py2.7), python3-pytest (Py3), oraz zależności.
 
 <h3>WPROWADZENIE</h3>
 
-<p>Framework 'pytest' (Py3.6+) ułatwia pisanie krótkich testów, 
+<p>Framework <em>pytest</em> (Py3.6+) ułatwia pisanie krótkich testów, 
 ale również dobrze się skaluje i wspiera testowanie dużych aplikacji
 i bibliotek.
 
 <p>Pliki z testami powinny mieć odpowiednie nazwy 
-(spam.py to moduł do testowania): test_spam.py lub spam_test.py.
+(<em>spam.py</em> to moduł do testowania): 
+<em>test_spam.py</em> lub <em>spam_test.py</em>.
 
-<p>Można przygotować środowisko do testów z 'pytest' za pomocą
+<p>Można przygotować środowisko do testów z <em>pytest</em> za pomocą
 plików konfiguracyjnych w różnych formatach
 (pytest.ini, pyproject.toml, tox.ini, setup.cfg, conftest.py).
 
@@ -99,15 +100,17 @@ test_sample.py .                                                         [100%]
 $ python3 -m pytest --doctest-glob="*.rst"   # *.rst files with doctest tests
 </pre><hr>
 
-<p>Raport zwracany przez 'pytest' pokazuje:
+<p>Raport zwracany przez <em>pytest</em> pokazuje:
 <br>(1) stan systemu,
 <br>(2) katalog do przeszukiwania i pliki z testami,
 <br>(3) liczbę wykrytych testów (funkcji testujących).
 
-<p>Na wyjściu dostajemy status każdego testu w postaci podobnej do 'unittest':
+<p>Na wyjściu dostajemy status każdego testu w postaci podobnej do 
+<em>unittest</em>:
 <br>(1) kropka (.) oznacza sukces testu,
 <br>(2) litera 'F' oznacza porażkę testu,
-<br>(3) litera 'E' oznacza pojawienie się niespodziewanego wyjątku podczas testu.
+<br>(3) litera 'E' oznacza pojawienie się niespodziewanego wyjątku 
+podczas testu.
 
 <h3>IMPORT PYTEST</h3>
 
@@ -150,7 +153,7 @@ $ python test_set.py   # używa pytest.main()
 <br>(3) <strong>Assert</strong> - sprawdzenie wyników.
 <br>(4) <strong>Cleanup</strong> - czyszczenie po testach.
 
-<p>'Fixtures' to działania dla kroku 'Arrange'.
+<p><em>Fixtures</em> to działania dla kroku <em>Arrange</em>.
 
 <hr><pre>
 @pytest.fixture   # dekorator
@@ -199,7 +202,7 @@ def test_recursion_depth():
         def f():
             f()
 
-        f()   # pojedyńcza instrukcja wyzwalająca wyjątek
+        f()   # pojedyncza instrukcja wyzwalająca wyjątek
     assert "maximum recursion" in str(excinfo.value)
 
 # excinfo to instancja 'ExceptionInfo', jest to wrapper dla bieżącego wyjątku.
@@ -213,7 +216,7 @@ def test_recursion_depth():
         def f():
             f()
 
-        f()   # pojedyńcza instrukcja wyzwalająca wyjątek
+        f()   # pojedyncza instrukcja wyzwalająca wyjątek
 
 def test_values():
     with pytest.raises(ValueError, match='must be 0 or None'):
@@ -227,7 +230,7 @@ def test_values():
 def connector():
     conn = Connector("login", "passwd")
     yield conn   # przejście do testu
-    del conn   # czynności czyszczące (poniżej yield)
+    del conn   # czynności czyszczące (poniżej 'yield')
 
 def test_connection(connector):
     assert connector.send_msg("Hello")
@@ -235,7 +238,7 @@ def test_connection(connector):
 
 <h3>MARKERY</h3>
 
-<p>Funkcje testujące mogą być udekorowane przez 'pytest.mark'.
+<p>Funkcje testujące mogą być udekorowane przez <em>pytest.mark</em>.
 Można również tworzyć własne markery, które muszą być rejestrowane.
 
 <hr><pre>

@@ -38,7 +38,8 @@ Wysokość pustego drzewa to z definicji zero.
 <p>Drzewa o stopniu rozgałęzienia m można zaimplementować tak, że każdy
 węzeł ma m łączy dla dzieci, niektóre mogą być puste.
 Inne bardziej oszczędne podejście to implementacja na lewo syn, na prawo brat
-(ang. left child, right sibling, LCRS), która zasadniczo jest drzewem binarnym.
+(ang. <em>left child</em>, <em>right sibling</em>, LCRS), 
+która zasadniczo jest drzewem binarnym.
 
 <p>W drzewie binarnym (uporządkowanym) każdy wierzchołek ma co najwyżej 
 dwoje dzieci (lewe i prawe).
@@ -196,9 +197,9 @@ Moment odwiedzania węzła może być wybrany na kilka sposobów,
 stąd pochodzą trzy podstawowe odmiany przechodzenia:
 
 <ul>
-<li>przechodzenie z wyprzedzeniem (ang. preorder),
-<li>przechodzenie bezpośrednie (ang. inorder),
-<li>przechodzenie z opóźnieniem (ang. postorder).
+<li>przechodzenie z wyprzedzeniem (ang. <em>preorder</em>),
+<li>przechodzenie bezpośrednie (ang. <em>inorder</em>),
+<li>przechodzenie z opóźnieniem (ang. <em>postorder</em>).
 </ul>
 
 <hr><pre>
@@ -227,7 +228,7 @@ void RandomBinaryTree&lt;T&gt;::postorder(BSTNode&lt;T&gt; *node) {
 }
 </pre><hr>
 
-<p>Przechodzenie przez drzewo w kolejności preorder możemy 
+<p>Przechodzenie przez drzewo w kolejności <em>preorder</em> możemy 
 zaimplementować iteracyjnie za pomocą stosu. 
 
 <hr><pre>
@@ -249,38 +250,40 @@ void RandomBinaryTree&lt;T&gt;::iter_preorder() {
 }
 </pre><hr>
 
-<p>Iteracyjne wersje inorder() i postorder() są bardziej skomplikowane
-[Drozdek].
+<p>Iteracyjne wersje <em>inorder()</em> i <em>postorder()</em> 
+są bardziej skomplikowane [Drozdek].
 
 <h3>ZADANIE 9.1</h3>
 
-<p>Napisać funkcję calc_leaves(), która zlicza liście drzewa binarnego.
+<p>Napisać funkcję <em>calc_leaves()</em>, która zlicza liście drzewa binarnego.
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 9.2</h3>
 
 <p>Załóżmy, że drzewo binarne przechowuje liczby. 
-Napisać funkcję calc_total(), która podaje sumę liczb przechowywanych w drzewie. 
+Napisać funkcję <em>calc_total()</em>, która podaje sumę liczb 
+przechowywanych w drzewie. 
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <h3>ZADANIE 9.3</h3>
 
-<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
-najmniejszą i największą w drzewie binarnym.
+<p>Napisać funkcje <em>find_min()</em> i <em>find_max()</em> znajdujące 
+odpowiednio wartość najmniejszą i największą w drzewie binarnym.
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
-Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
+Funkcje powinny zwracać wskaźnik do wartości lub <em>nullptr</em> 
+dla pustego drzewa.
 
 <h3>ZADANIE 9.4</h3>
 
-<p>Napisać funkcję calc_height() obliczającą wysokość drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+<p>Napisać funkcję <em>calc_height()</em> obliczającą wysokość 
+drzewa binarnego. Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 Wskazówka: w wersji iteracyjnej na stos można odkładać parę 
 (węzeł, poziom węzła), poziom korzenia wynosi 1.
 
 <h3>ZADANIE 9.5</h3>
 
-<p>Napisać funkcję calc_nodes() znajdującą liczbę węzłów drzewa binarnego.
-Stworzyć dwie wersje: rekurencyjną i iteracyjną.
+<p>Napisać funkcję <em>calc_nodes()</em> znajdującą liczbę węzłów 
+drzewa binarnego. Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

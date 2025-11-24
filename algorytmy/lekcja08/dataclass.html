@@ -1,0 +1,155 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Dekorator @dataclass</h1>
+
+<p>https://docs.python.org/3/library/dataclasses.html
+
+<p>PEP 557 – Data Classes [wprowadzony w Py3.7]
+
+<p>PEP 526 – Syntax for Variable Annotations [wprowadzony w Py3.6]
+
+<h3>WPROWADZENIE</h3>
+
+<p>Moduł <em>dataclasses</em> dostarcza dekorator i funkcje do automatycznego 
+generowania metod specjalnych dla klas zdefiniowanych przez użytkownika (Py3.7+).
+Generowane metody to <em>__init__</em>, <em>__repr__</em>,
+<em>__eq__</em>, <em>__ne__</em>,
+<em>rich comparisons</em> (opcja <em>order=True</em>), 
+<em>__hash__</em> (opcja <em>frozen=True</em>).
+Poza tym powstaje normalna klasa, można po niej dziedziczyć, itp. 
+Generalnie te klasy mają przechowywać stan, a nie dużo logiki. 
+Obowiązkowo trzeba używać adnotacji.
+
+<p>Można definiować domyślne wartości atrybutów. 
+Jeżeli dany atrybut ma wartość domyślną, to następne też muszą mieć, 
+tak jak dla zwykłych funkcji (bo tu powstanie konstruktor). 
+To jest też ważne przy dziedziczeniu.
+
+<p>Dodatkowe informacje dotyczące atrybutów dostarcza się przez użycie 
+funkcji <em>field()</em>.
+
+<p>W klasie można zdefiniować metodę <em>__post_init__</em>, która
+będzie uruchamiana przez wygenerowany konstruktor <em>__init__</em>.
+Przykładowe zastosowanie to inicjalizacja atrybutów, które zależą
+od wartości innych atrybutów.
+<br>Jeżeli konstruktor <em>__init__</em> nie jest generowany
+(<em>init=False</em>), wtedy <em>__post_init__</em> 
+<strong>nie jest</strong> automatycznie uruchamiane.
+Więcej informacji można znaleźć w dokumentacji Pythona.
+
+<hr><pre>
+@dataclasses.dataclass(*, init=True, repr=True, eq=True, order=False,
+    unsafe_hash=False, frozen=False, match_args=True, kw_only=False,
+    slots=False, weakref_slot=False)
+</pre><hr><pre>
+# Przykład z dokumentacji i PEP 557.
+
+from dataclasses import dataclass
+
+@dataclass   # typowe użycie
+# @dataclass()   # tak też można dla domyślnych ustawień (order=False)
+# @dataclass(order=True)   # to wygeneruje rich comparisons,
+#     będą porównywane krotki zbudowane z kolejnych pól
+class InventoryItem:
+    """Class for keeping track of an item in inventory."""
+    # Kolejność zmiennych będzie zachowana w wygenerowanym konstruktorze.
+    name: str           # obowiązkowe type annotations
+    unit_price: float
+    quantity_on_hand: int = 0   # default value
+
+    def total_cost(self) -&gt; float:
+        return self.unit_price * self.quantity_on_hand
+</pre><hr><pre>
+# Generowany konstruktor ma typową postać.
+
+def __init__(self, name: str, unit_price: float, quantity_on_hand: int = 0):
+    self.name = name
+    self.unit_price = unit_price
+    self.quantity_on_hand = quantity_on_hand
+</pre><hr><pre>
+# https://stackoverflow.com/questions/4828080/how-to-make-an-immutable-object-in-python
+# How to make an immutable object in Python?
+
+import typing
+from dataclasses import dataclass
+
+@dataclass(frozen=True)   # wygeneruje __hash__
+class Immutable:
+    a: typing.Any
+    b: typing.Any
+
+item = Immutable(10, 20)
+print(item)   # Immutable(a=10, b=20)
+print(item.a, item.b)   # 10 20
+#item.a = 11   # dataclasses.FrozenInstanceError: cannot assign to field 'a'
+
+# Przed Py3.7 używano niezmiennych 'namedtuple' w takiej sytuacji.
+# Jednak metoda __eq__ dla 'namedtuple' porównuje tylko wartości pól,
+# a nie typy/klasy obiektów, co może być źródłem błędów w kodzie.
+
+from collections import namedtuple
+
+Immutable2 = namedtuple("Immutable2", ["a", "b"])
+Immutable3 = namedtuple("Immutable3", ["a", "c"])
+
+item2 = Immutable2(11, 22)
+print(item2)   # Immutable2(a=11, b=22)
+print(item2.a, item2.b)   # 11 22
+print(item2[0], item2[1])   # 11 22
+#item2.a = 13   # AttributeError: can't set attribute
+
+item3 = Immutable3(11, 22)
+print(item3)   # Immutable3(a=11, c=22)
+assert item2 == item3
+assert item2[0] == item3[0] and item2[1] == item3[1]   # jw
+</pre><hr><pre>
+from dataclasses import dataclass, field
+
+@dataclass
+class Deck:
+    # Podajemy wartość domyślną.
+    #first: str = "word"   # jest atrybut klasy
+    first: str = field(default="word")   # jest atrybut klasy
+    #first: str = field(default_factory=lambda: "word")   # nie ma atrybutu klasy
+    # Podajemy 'zero-argument callable' do tworzenia wartości domyślnej.
+    second: list[int] = field(default_factory=list)
+    # Tworzymy wartość domyślną oraz chcemy ukryć pole w repr().
+    third: float = field(default=0.0, repr=False)
+
+deck = Deck()
+print(deck)   # Deck(first='word', second=[])
+print(Deck.first)   # wyświetlanie atrybutu klasy (nie ma przy default_factory)
+</pre><hr>
+
+<h3>PRZYKŁAD</h3>
+
+<p>https://docs.python.org/3/library/numbers.html
+<br>numbers — Numeric abstract base classes
+<br>Hierarchia klas abstrakcyjnych:
+Number, Complex, Real, Rational, Integral.
+
+<hr><pre>
+# Implementacja klasy Point z użyciem dekoratora @dataclass.
+
+from dataclasses import dataclass
+from numbers import Real
+
+@dataclass(frozen=True)   # chcemy mieć __hash__
+class Point:
+    x: Real
+    y: Real
+
+    def __add__(self, other):
+        return Point(self.x + other.x, self.y + other.y)
+
+    # ... dalsze metody ...
+</pre><hr>
+
+</body>
+</html>
