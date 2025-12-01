@@ -18,23 +18,23 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł 'sprite' zawiera klasę Sprite i klasę Group, która zawiera sprites.
-W module są jeszcze inne specjalistyczne klasy oraz funkcje
-do wykrywania kolizji sprites.
+<p>Moduł <em>sprite</em> zawiera klasę <em>Sprite</em> i klasę <em>Group</em>, 
+która zawiera sprites. W module są jeszcze inne specjalistyczne klasy 
+oraz funkcje do wykrywania kolizji sprites.
 Użycie tych klas jest opcjonalne, ale są one przydatne w typowych grach.
 
 <p>Wykrywanie kolizji ciał poprzez sprawdzanie nakrywających się 
 pikseli na ogół jest zbyt powolne, jak na potrzeby gier wideo.
-Lepiej jest stworzyć obiekty Rect trochę mniejsze od poruszających się ciał,
-a następnie użyć obiekty Rect do wykrycia kolizji.
+Lepiej jest stworzyć obiekty <em>Rect</em> trochę mniejsze od poruszających 
+się ciał, a następnie użyć obiekty <em>Rect</em> do wykrycia kolizji.
 
 <h3>KLASA SPRITE</h3>
 
-<p>Klasa Sprite jest pomyślana jako klasa bazowa dla różnych rodzajów
-obiektów w grze.
-Ważne jest nadpisanie atrybutów 'image' oraz 'rect'.
-Przydaje się nadpisanie metody update() do sterowania zachowaniem sprite,
-domyślna metoda nie robi nic.
+<p>Klasa <em>Sprite</em> jest pomyślana jako klasa bazowa dla różnych 
+rodzajów obiektów w grze.
+Ważne jest nadpisanie atrybutów <em>image</em> oraz <em>rect</em>.
+Przydaje się nadpisanie metody <em>update()</em> do sterowania zachowaniem 
+sprite, domyślna metoda nie robi nic.
 
 <hr><pre>
 class Block(pygame.sprite.Sprite):
@@ -58,21 +58,21 @@ sprite.groups()   # return group_list; lista grup, do których należy sprite
 
 <h3>KLASA GROUP</h3>
 
-<p>Klasa Group jest zaprojektowana do przechowywania sprites,
+<p>Klasa <em>Group</em> jest zaprojektowana do przechowywania sprites,
 a w grze można tworzyć specjalizowane klasy potomne.
 Dodawanie i usuwanie sprites z grupy jest wydajne, podobnie jak
 sprawdzenie, czy sprite nateży do grupy.
 Jeden sprite może należeć jednocześnie do wielu grup.
-Lepiej korzystać z grup niż dodawać nowe atrubuty do klasy Sprite,
+Lepiej korzystać z grup niż dodawać nowe atrubuty do klasy <em>Sprite</em>,
 bo to ułatwia wyszukiwanie w grze.
 
-<p>Metody Group.draw() i Group.clear() wymagają, aby każdy sprite miał 
-atrybuty 'image' oraz 'rect'.
+<p>Metody <em>Group.draw()</em> i <em>Group.clear()</em> wymagają, 
+aby każdy sprite miał atrybuty <em>image</em> oraz <em>rect</em>.
 
-<p>Metoda Group.update() wywołuje Sprite.update() dla wszystkich sprites
-należących do grupy.
+<p>Metoda <em>Group.update()</em> wywołuje <em>Sprite.update()</em> 
+dla wszystkich sprites należących do grupy.
 
-<p>Wykrywanie kolizji sprites wymaga, aby sprites posiadały atrybut 'rect'.
+<p>Wykrywanie kolizji sprites wymaga, aby sprites posiadały atrybut <em>rect</em>.
 
 <hr><pre>
 group = pygame.sprite.Group()
@@ -107,22 +107,22 @@ group1.has(group2, group3, sprite4, sprite5)   # można łączyć
 # all(sprite in group for sprite in sprites)
 
 # Wg dokumentacji dla add(), remove(), has():
-# Each sprite argument can also be a iterator containing Sprites.
+# Each sprite argument can also be a iterator containing sprites.
 
 group.update(*arguments, **keywords)
 # Równoważny kod:
 # for sprite in group:
 #     sprite.update(*arguments, **keywords)
 
-group.draw(Surface)   # blit the Sprite images
+group.draw(surface)   # blit the sprite images
 # Równoważny (prawie) kod:
 # for sprite in group:
-#     Surface.blit(sprite.image, sprite.rect)
+#     surface.blit(sprite.image, sprite.rect)
 
-group.clear(Surface_dest, background)   # draw a background over the Sprites;
+group.clear(surface_dest, background)   # draw a background over the sprites;
 # Zamazuje pozycje sprites używając 'background'.
-# Korzysta z pozycji (Rect) z ostatniego wywołania Group.draw().
-# 'background' to jest zwykle Surface o taki rozmiarze jak Surface_dest.
+# Korzysta z pozycji (Rect) z ostatniego wywołania group.draw().
+# 'background' to jest zwykle Surface o takim rozmiarze jak surface_dest.
 # Może też być 'callback function' typu clear_callback(surface, rect).
 </pre><hr>
 
@@ -132,9 +132,10 @@ group.clear(Surface_dest, background)   # draw a background over the Sprites;
 # Wykrywanie kolizji sprite1 i sprite2.
 
 sprite1.rect.colliderect(sprite2.rect)   # return bool
+# Odwołanie się do Rect.
 
 pygame.sprite.collide_rect(sprite1, sprite2)   # return bool
-# wewnętrznie używane są atrybuty 'rect'.
+# Wewnętrznie używane są atrybuty 'rect'.
 </pre><hr><pre>
 # Wykrywanie kolizji sprite z grupą innych sprites.
 # Zwraca None, jeżeli nie ma kolizji.

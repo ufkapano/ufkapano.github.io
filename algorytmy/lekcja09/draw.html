@@ -16,16 +16,17 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł 'draw' służy do rysowania prostych kształtów na ekranie.
+<p>Moduł <em>draw</em> służy do rysowania prostych kształtów na ekranie.
 Funkcje rysujące zwykle przyjmują jako argumenty powierzchnię do rysowania
-(obiekt Surface), kolor, prostokąt dla kształtu (obiekt Rect).
-Funkcje zwracają prostokąt ograniczający zmienione piksele (bounding box).
+(obiekt <em>pygame.Surface</em>), kolor, prostokąt dla kształtu 
+(obiekt <em>pygame.Rect</em>).
+Funkcje zwracają prostokąt ograniczający zmienione piksele (<em>bounding box</em>).
 
 <h3>KOLORY</h3>
 
-<p>Kolor można definiować jako obiekt klasy pygame.Color,
-3-tuple (RGB), 4-tuple (RGBA), oraz liczbę int, która będzie odwzorowana
-na kolor za pomocą mapy kolorów.
+<p>Kolor można definiować jako obiekt klasy <em>pygame.Color</em>,
+3-tuple (RGB), 4-tuple (RGBA), oraz liczbę <em>int</em>, 
+która będzie odwzorowana na kolor za pomocą mapy kolorów.
 
 <hr><pre>
 # Najprostsze definicje kolorów RGB, liczby int w zakresie 0-255.
@@ -57,17 +58,17 @@ blue = pygame.Color(0, 0, 255)
 
 <h3>OBIEKT RECT</h3>
 
-<p>Obiekt pygame.Rect służy do przechowywania i manipulowania współrzędnymi
-prostokątnych obszarów na ekranie.
-Wiele funkcji wymagających Rect akceptuje również podanie takich
-argumentów, jakie można użyć do utworzenia Rect.
+<p>Obiekt <em>pygame.Rect</em> służy do przechowywania i manipulowania 
+współrzędnymi prostokątnych obszarów na ekranie.
+Wiele funkcji wymagających <em>Rect</em> akceptuje również podanie takich
+argumentów, jakie można użyć do utworzenia <em>Rect</em>.
 Do prostokąta nie należy prawy i dolny ciąg pikseli, co jest istotne
 przy wykrywaniu kolizji prostokątów.
 
-<p>Obiekt Rect posiada szereg wirtualnych atrybutów, które można użyć
+<p>Obiekt <em>Rect</em> posiada szereg wirtualnych atrybutów, które można użyć
 do zmiany rozmiaru lub przesunięcia oryginalnego obiektu.
-Metody Rect zwracają nowy zmieniony Rect lub działają 'in place', 
-czyli zmieniają oryginalny obiekt.
+Metody <em>Rect</em> zwracają nowy zmieniony <em>Rect</em> lub działają 
+<em>in place</em>, czyli zmieniają oryginalny obiekt.
 
 <hr><pre>
 # Tworzenie obiektu Rect.
@@ -93,8 +94,8 @@ x, y, w, h = rect3   # obiekty Rect są iterowalne (iterable)
 </pre><hr><pre>
 # Wybrane metody obiektu Rect.
 rect2 = rect1.copy()   # kopiowanie
-rect2 = rect1.move(x, y)   # przesunięcie
-rect2 = rect1.move((x, y))   # krotka jako argument
+rect2 = rect1.move(x, y)   # przesunięcie, powstaje nowy Rect
+rect2 = rect1.move((x, y))   # krotka jako argument, powstaje nowy Rect
 rect1.move_ip(x, y)   # przesunięcie 'in place'
 rect1.move_ip((x, y))   # krotka jako argument
 

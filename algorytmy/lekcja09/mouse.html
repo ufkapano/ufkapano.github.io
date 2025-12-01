@@ -12,55 +12,71 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł 'mouse' służy do obsługi myszy.
+<p>Moduł <em>mouse</em> służy do obsługi myszy.
 
 <p>Przyciski myszy po naciśnięciu i zwolnieniu generują odpowiednio
-zdarzenia pygame.MOUSEBUTTONDOWN i pygame.MOUSEBUTTONUP.
-Oba zdarzenia mają atrybut 'button', reprezentujący odpowiedni przycisk.
+zdarzenia <em>pygame.MOUSEBUTTONDOWN</em> i <em>pygame.MOUSEBUTTONUP</em>.
+Oba zdarzenia mają atrybut <em>button</em>, reprezentujący odpowiedni przycisk.
 Liczby int 1 (lewy przycisk), 2 (środkowy przycisk), 3 (prawy przycisk) 
 odpowiadają trzem przyciskom,
 4 odpowiada kręceniu kółka w górę,
 5 odpowiada kręceniu kółka w dół.
-Oba zdarzenia mają także atrybut 'pos' zawierający krotkę (x, y).
+Oba zdarzenia mają także atrybut <em>pos</em> zawierający krotkę (x, y).
 
-<p>Przesuwanie myszy generuje zdarzenia pygame.MOUSEMOTION.
+<p>Przesuwanie myszy generuje zdarzenia <em>pygame.MOUSEMOTION</em>.
 Ruch myszy jest podzielony ma małe i precyzyjne zdarzenia ruchu,
 które są wstawiane do kolejki zdarzeń.
-Atrybuty zdarzenia to 'pos' (krotka (x, y)), 
-'rel' (względne przesunięcie od ostatniego zdarzenia ruchu),
-'buttons' (3-tuple bool ze stanem klawiszy podczas przesuwania).
+Atrybuty zdarzenia to <em>pos</em> (krotka (x, y)), 
+<em>rel</em> (względne przesunięcie od ostatniego zdarzenia ruchu),
+<em>buttons</em> (3-tuple bool ze stanem klawiszy podczas przesuwania).
 
 <p>Jeżeli kolejka zdarzeń nie jest prawidłowo czyszczona, to zdarzenia ruchu
 mogą ją przepełnić, a wtedy nowe zdarzenia są ignorowane bez ostrzeżenia.
 
-<p>W Pygame 2 pojawiły się zdarzenia pygame.MOUSEWHEEL
+<p>W <em>pygame 2</em> pojawiły się zdarzenia <em>pygame.MOUSEWHEEL</em>
 do właściwej obsługi kółka myszy (atrybuty: x, y, flipped, which).
 
 <h3>PRZYKŁAD</h3>
 
 <hr><pre>
 # mouse1.py
+# SPOSÓB I - badanie stanu urządzenia (pygame.mouse).
 # MAIN GAME LOOP
 while True:
     # HANDLE EVENTS
     for event in pygame.event.get():
-        if event.type == pygame.MOUSEBUTTONDOWN:
-            # SPOSÓB I - badanie zdarzeń (pygame.event).
+        if event.type == pygame.QUIT:   # QUIT Event, pygame.locals.QUIT
+            pygame.quit()   # deactivates the Pygame library
+            sys.exit(0)
+
+    # CHECKING INPUTS
+    button_seq = pygame.mouse.get_pressed()
+    # return (button1, button2, button3), sekwencja wartości bool,
+    # która reprezentuje stan wszystkich przycisków myszy (True to naciśnięty)
+    print("button_seq {}".format(button_seq))
+    if any(button_seq):
+        position = pygame.mouse.get_pos()   # return (x, y),
+        # pozycja kursora względem lewego górnego rogu display
+</pre><hr><pre>
+# mouse2.py
+# SPOSÓB II - badanie zdarzeń (pygame.event).
+# MAIN GAME LOOP
+while True:
+    # HANDLE EVENTS
+    for event in pygame.event.get():
+        if event.type == pygame.QUIT:   # QUIT Event, pygame.locals.QUIT
+            pygame.quit()   # deactivates the Pygame library
+            sys.exit(0)
+        elif event.type == pygame.MOUSEBUTTONDOWN:
             print("event down dict {}".format(event.__dict__))   # atrybuty button, pos
 
             button_number = event.button   # liczba 1-5
-            button_position = event.pos   # (x, y)
-
-            # SPOSÓB II - badanie stanu urządzenia (pygame.mouse).
-            position = pygame.mouse.get_pos()   # return (x, y),
+            position = event.pos   # (x, y)
             # pozycja kursora względem lewego górnego rogu display
-
-            button_seq = pygame.mouse.get_pressed()
-            # return (button1, button2, button3), sekwencja wartości bool,
-            # która reprezentuje stan wszystkich przycisków myszy (True to naciśnięty)
 
         elif event.type == pygame.MOUSEBUTTONUP:
             print("event up dict {}".format(event.__dict__))   # atrybuty button, pos
+
         elif event.type == pygame.MOUSEMOTION:
             print("event motion dict {}".format(event.__dict__))   # atrybuty pos, rel, buttons
 </pre><hr>

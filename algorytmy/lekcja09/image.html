@@ -12,10 +12,11 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Moduł 'image' zawiera funkcje do ładowania i zapisywania obrazów,
-a także do tranferu obrazów. Obrazy są przechowywane jako obiekty Surface.
+<p>Moduł <em>image</em> zawiera funkcje do ładowania i zapisywania obrazów,
+a także do transferu obrazów. 
+<br>Obrazy są przechowywane jako obiekty <em>Surface</em>.
 
-<p>W typowej instalacji Pygame można wczytywać obrazy w formatach
+<p>W typowej instalacji <em>pygame</em> można wczytywać obrazy w formatach
 BMP, GIF (non-animated), JPEG, LBM (and PBM, PGM, PPM), PCX, PNG, PNM,
 SVG (limited support, using Nano SVG), TGA (uncompressed), TIFF, WEBP, XPM.
 Zapis obrazów jest możliwy dla formatów BMP, JPEG, PNG, TGA.
@@ -30,7 +31,7 @@ surface = pygame.image.load(os.path.join('img', 'picture.png'))
 
 surface_rect = surface.get_rect()   # return Rect
 # surface.get_rect(**keywords)
-# Można przekazać słowa kluczowe, które będą wykorzytane do ustawienia
+# Można przekazać słowa kluczowe, które będą wykorzystane do ustawienia
 # atrybutów obiektu Rect, np.
 surface_rect = surface.get_rect(center=(width // 2, height // 2)
 </pre><hr><pre>

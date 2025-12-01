@@ -123,7 +123,7 @@ Zakładamy, że na wejściu będą liczby całkowite i cztery możliwe działani
 
 <hr><pre>
 int rpn(const std::vector&lt;std::string&gt;&amp; input);
-// for (auto w : input) { /* sprawdzanie w */ }
+// for (auto&amp; word : input) { /* sprawdzanie word */ }
 
 // std::vector&lt;std::string&gt; input { "-6", "+2", "/" };
 // assert( rpn(input) == -3 );
