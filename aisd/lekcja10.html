@@ -15,9 +15,9 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W drzewach BST (ang. Binary Search Tree, binarne drzewo poszukiwań)
-przeglądanie wierzchołków w kolejności inorder
-daje elementy posortowane niemalejąco. 
+<p>W <strong>drzewach BST</strong> (ang. <em>Binary Search Tree</em>, 
+binarne drzewo poszukiwań) przeglądanie wierzchołków w kolejności 
+<em>inorder</em> daje elementy posortowane niemalejąco. 
 Aby to uzyskać trzeba wstawiać elementy do drzewa w następujący sposób:
 
 <ul>
@@ -29,7 +29,8 @@ W pewnych rozwiązaniach duplikaty są ignorowane.
 </ul>
 
 <p>Koszt wykonania podstawowych operacji w drzewie BST 
-(insert, search, remove) jest rzędu O(h), gdzie h jest wysokością drzewa.
+(<em>insert</em>, <em>search</em>, <em>remove</em>) jest rzędu O(h), 
+gdzie h jest wysokością drzewa.
 Jeżeli drzewo BST jest zrównoważone, wtedy h ~ log(n).
 W przypadku zdegenerowanym h = n.
 
@@ -116,7 +117,8 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::search(BSTNode&lt;T&gt; *node, con
 
 <h3>ROTACJE DRZEWA BST</h3>
 
-<p>Rotacja drzewa (ang. tree rotation) jest operacją na drzewie BST,
+<p><strong>Rotacja drzewa</strong> (ang. <em>tree rotation</em>) 
+jest operacją na drzewie BST,
 która zmienia jego lokalną strukturę bez zmiany kolejności elementów,
 przy przechodzeniu przez drzewo BST metodą inorder.
 Wyróżnia się dwie symetryczne operacje: rotacja w prawo i rotacja w lewo.
@@ -209,7 +211,7 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
     return new_root;
 }
 </pre><hr><pre>
-|      X                      Usuwamy węzeł X.
+|      X                 Usuwamy węzeł X, który ma dwoje dzieci.
 |    /   \               Nowym korzeniem poddrzewa będzie Y.
 |   Y     C       Y         Z jest poprzednikiem X.
 |  / \           / \
@@ -222,33 +224,36 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
 
 <p>https://en.wikipedia.org/wiki/Day%E2%80%93Stout%E2%80%93Warren_algorithm
 
-<p>Algorytm DSW (Day, Stout, Warren) służy do zrównoważenia drzewa BST.
-Algorytm działa w miejscu i w czasie O(n).
+<p><strong>Algorytm DSW</strong> (Day, Stout, Warren) służy do zrównoważenia 
+drzewa BST. Algorytm działa w miejscu i w czasie O(n).
 
-<h3>ZADANIE 10.1</h3>
+<h3>ZADANIE 10.1 (MIN i MAX)</h3>
 
-<p>Napisać funkcje find_min() i find_max() znajdujące odpowiednio wartość
-najmniejszą i największą w drzewie BST.
-Funkcje powinny zwracać wskaźnik do wartości lub nullptr dla pustego drzewa.
+<p>Napisać funkcje <em>find_min()</em> i <em>find_max()</em> znajdujące 
+odpowiednio wartość najmniejszą i największą w drzewie BST.
+Funkcje powinny zwracać wskaźnik do wartości lub <em>nullptr</em> 
+dla pustego drzewa.
 
-<h3>ZADANIE 10.2</h3>
+<h3>ZADANIE 10.2 (SUCCESSOR)</h3>
 
-<p>Napisać funkcję find_successor() znajdujący następnik danego
-węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
+<p>Napisać funkcję <em>find_successor()</em> znajdujący następnik danego
+węzła przy przechodzeniu <em>inorder</em> 
+(lub <em>nullptr</em>, jeżeli go nie ma).
 Węzły powinny posiadać łącze do rodzica.
 
-<h3>ZADANIE 10.3</h3>
+<h3>ZADANIE 10.3 (PREDECESSOR)</h3>
 
-<p>Napisać funkcję find_predecessor() znajdujący poprzednik danego
-węzła przy przechodzeniu inorder (lub nullptr, jeżeli go nie ma).
+<p>Napisać funkcję <em>find_predecessor()</em> znajdujący poprzednik danego
+węzła przy przechodzeniu <em>inorder</em> 
+(lub <em>nullptr</em>, jeżeli go nie ma).
 Węzły powinny posiadać łącze do rodzica.
 
-<h3>ZADANIE 10.4</h3>
+<h3>ZADANIE 10.4 (TEST BST)</h3>
 
 <p>Napisać funkcję sprawdzającą, czy drzewo binarne jest drzewem BST.
 Nie wystarczy sprawdzić dla każdego węzła, czy zachodzi 
-node-&gt;left-&gt;value &lt;= node-&gt;value, oraz 
-node-&gt;value &lt;= node-&gt;right-&gt;value. 
+<em>node-&gt;left-&gt;value &lt;= node-&gt;value</em>, oraz 
+<em>node-&gt;value &lt;= node-&gt;right-&gt;value</em>. 
 Musimy do węzła przekazać informację od rodzica o ograniczeniach 
 na wartość przechowywaną w węźle.
 
@@ -260,7 +265,7 @@ na wartość przechowywaną w węźle.
 | 1   6   7   9
 </pre><hr>
 
-<h3>ZADANIE 10.5</h3>
+<h3>ZADANIE 10.5 (DSW)</h3>
 
 <p>Zaimplementować algorytm DSW.
 

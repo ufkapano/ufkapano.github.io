@@ -17,7 +17,8 @@
 
 <p>Kolejka to ADT, który pozwala zapisywać dane i następnie pobierać je 
 w takiej kolejności, w jakiej je zapisano 
-(ang. first in, first out, FIFO; pierwszy wchodzi, pierwszy wychodzi).
+(ang. <em>first in</em>, <em>first out</em>, FIFO; 
+pierwszy wchodzi, pierwszy wychodzi).
 Typowe operacje dla ADT QUEUE są następujące:
 
 <ul>
@@ -79,7 +80,7 @@ public:
 };
 </pre><hr>
 
-<h3>ZADANIE 8.1</h3>
+<h3>ZADANIE 8.1 (TABLICA CYKLICZNA)</h3>
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie tablicy cyklicznej.
 Kolejne elementy będą wstawiane do tablicy cyklicznie, czyli po dojściu
@@ -122,27 +123,27 @@ public:
 };
 </pre><hr>
 
-<h3>ZADANIE 8.2</h3>
+<h3>ZADANIE 8.2 (std::forward_list)</h3>
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie listy
 powiązanej pojedynczo.
-Wykorzystać klasę SingleList [push_back(), pop_front()] lub 
-std::forward_list [tu jest trudniej, bo nie ma back() i push_back()].
+Wykorzystać klasę <em>SingleList</em> [push_back(), pop_front()] lub 
+<em>std::forward_list</em> [tu jest trudniej, bo nie ma back() i push_back();
+trzeba korzystać z before_begin() oraz insert_after()].
 
-<h3>ZADANIE 8.3</h3>
+<h3>ZADANIE 8.3 (std::list)</h3>
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie listy
 powiązanej podwójnie.
-Wykorzystać klasę DoubleList lub std::list.
+Wykorzystać klasę <em>DoubleList</em> lub <em>std::list</em>.
 Możliwe są dwa warianty realizacji push() i pop():
 (a) push_back() i pop_front(),
 (b) push_front() i pop_back().
 
-<h3>ZADANIE 8.4</h3>
+<h3>ZADANIE 8.4 (std::stack)</h3>
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie dwóch stosów.
-Wykorzystać std::stack lub MyStack z zestawu nr 7.
-
+Wykorzystać <em>std::stack</em> lub <em>MyStack</em> z zestawu nr 7.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

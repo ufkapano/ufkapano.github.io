@@ -15,7 +15,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Definicja rekurencyjna drzewa z korzeniem.
+<p>Definicja rekurencyjna <strong>drzewa z korzeniem</strong>.
 
 <ul>
 <li>Pusta struktura jest drzewem.
@@ -25,14 +25,15 @@ drzew t_1, ..., t_k, przy czym dodawana jest krawędź od korzenia r
 do dziecka tylko jeżeli dziecko jest niepuste.
 </ul>
 
-<p>W teorii grafów definiuje się drzewo jako graf nieskierowany acykliczny,
-a korzeń to pewien wyróżniony wierzchołek.
-Wierzchołki bez dzieci to liście.
-W każdym drzewie istnieje dokładnie jedna ścieżka pomiędzy każdą parą wierzchołków.
+<p>W teorii grafów definiuje się <strong>drzewo</strong> jako graf 
+nieskierowany acykliczny, a <strong>korzeń</strong> to pewien wyróżniony 
+wierzchołek. Wierzchołki bez dzieci to <strong>liście</strong>.
+W każdym drzewie istnieje dokładnie jedna ścieżka pomiędzy każdą parą 
+wierzchołków.
 Zwykle rozważamy drzewa uporządkowane, gdzie kolejność dzieci jest ustalona.
-Poziom węzła to długość ścieżki do korzenia plus jeden.
+<strong>Poziom węzła</strong> to długość ścieżki do korzenia plus jeden.
 Poziom korzenia wynosi jeden.
-Wysokość niepustego drzewa to największy poziom węzła w drzewie.
+<strong>Wysokość</strong> niepustego drzewa to największy poziom węzła w drzewie.
 Wysokość pustego drzewa to z definicji zero.
 
 <p>Drzewa o stopniu rozgałęzienia m można zaimplementować tak, że każdy
@@ -41,10 +42,11 @@ Inne bardziej oszczędne podejście to implementacja na lewo syn, na prawo brat
 (ang. <em>left child</em>, <em>right sibling</em>, LCRS), 
 która zasadniczo jest drzewem binarnym.
 
-<p>W drzewie binarnym (uporządkowanym) każdy wierzchołek ma co najwyżej 
-dwoje dzieci (lewe i prawe).
-Drzewo binarne zbalansowane to drzewo binarne, w którym dla każdego
-węzła wysokości lewego i prawego poddrzewa różnią się co najwyżej o jeden.
+<p>W <strong>drzewie binarnym</strong> (uporządkowanym) każdy wierzchołek 
+ma co najwyżej dwoje dzieci (lewe i prawe).
+Drzewo binarne <strong>zbalansowane</strong> to drzewo binarne, 
+w którym dla każdego węzła wysokości lewego i prawego poddrzewa różnią się 
+co najwyżej o jeden.
 
 <hr><pre>
 // Szablon dla węzła drzewa binarnego i drzewa BST.
@@ -253,19 +255,19 @@ void RandomBinaryTree&lt;T&gt;::iter_preorder() {
 <p>Iteracyjne wersje <em>inorder()</em> i <em>postorder()</em> 
 są bardziej skomplikowane [Drozdek].
 
-<h3>ZADANIE 9.1</h3>
+<h3>ZADANIE 9.1 (ZLICZANIE LIŚCI)</h3>
 
 <p>Napisać funkcję <em>calc_leaves()</em>, która zlicza liście drzewa binarnego.
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
-<h3>ZADANIE 9.2</h3>
+<h3>ZADANIE 9.2 (SUMOWANIE LICZB)</h3>
 
 <p>Załóżmy, że drzewo binarne przechowuje liczby. 
 Napisać funkcję <em>calc_total()</em>, która podaje sumę liczb 
 przechowywanych w drzewie. 
 Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 
-<h3>ZADANIE 9.3</h3>
+<h3>ZADANIE 9.3 (MIN i MAX)</h3>
 
 <p>Napisać funkcje <em>find_min()</em> i <em>find_max()</em> znajdujące 
 odpowiednio wartość najmniejszą i największą w drzewie binarnym.
@@ -273,14 +275,14 @@ Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 Funkcje powinny zwracać wskaźnik do wartości lub <em>nullptr</em> 
 dla pustego drzewa.
 
-<h3>ZADANIE 9.4</h3>
+<h3>ZADANIE 9.4 (OBLICZANIE WYSOKOŚCI)</h3>
 
 <p>Napisać funkcję <em>calc_height()</em> obliczającą wysokość 
 drzewa binarnego. Stworzyć dwie wersje: rekurencyjną i iteracyjną.
 Wskazówka: w wersji iteracyjnej na stos można odkładać parę 
 (węzeł, poziom węzła), poziom korzenia wynosi 1.
 
-<h3>ZADANIE 9.5</h3>
+<h3>ZADANIE 9.5 (ZLICZANIE WĘZŁÓW)</h3>
 
 <p>Napisać funkcję <em>calc_nodes()</em> znajdującą liczbę węzłów 
 drzewa binarnego. Stworzyć dwie wersje: rekurencyjną i iteracyjną.

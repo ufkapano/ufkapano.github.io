@@ -15,12 +15,13 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Drzewo AVL jest to zrównoważone binarne drzewo poszukiwań (BST), 
-w którym wysokość lewego i prawego poddrzewa każdego węzła różni się 
+<p><strong>Drzewo AVL</strong> jest to zrównoważone binarne drzewo poszukiwań 
+(BST), w którym wysokość lewego i prawego poddrzewa każdego węzła różni się 
 co najwyżej o jeden. 
 Drzewo wynaleźli w roku 1962 dwaj rosyjscy matematycy
 Georgy Adelson-Velsky i Evgenii Landis.
-Każdemu węzłowi można przypisać współczynnik wyważenia (ang. balance factor),
+Każdemu węzłowi można przypisać <strong>współczynnik wyważenia</strong> 
+(ang. <em>balance factor</em>),
 który jest równy różnicy wysokości prawego i lewego poddrzewa.
 W drzewie zrównoważonym współczynnik wyważenia może wynosić -1,0,+1.
 Przy wstawianiu elementu do drzewa lub usuwaniu elementu współczynnik
@@ -228,27 +229,27 @@ private:
 // uzupełnić ...
 </pre><hr>
 
-<h3>ZADANIE 11.1</h3>
+<h3>ZADANIE 11.1 (AVL)</h3>
 
 <p>https://rosettacode.org/wiki/AVL_tree#C.2B.2B
 
 <p>Zapoznać się z implementacją drzewa AVL z serwisu <em>rosettacode.org</em>.
 Dostosować kod do standardu C++11 (zamiana NULL na nullptr).
 Dodać pozostałe funkcje zdefinowane dla drzew BST.
-Funkcja display() powinna wyświetlać dodatkowo współczynnik wyważenia.
+Funkcja <em>display()</em> powinna wyświetlać dodatkowo współczynnik wyważenia.
 
-<h3>ZADANIE 11.2</h3>
+<h3>ZADANIE 11.2 (TEST AVL)</h3>
 
 <p>Napisać funkcję sprawdzającą poprawność drzewa AVL.
 Można obliczać wysokość drzewa AVL sprawdzając przy okazji,
 czy współczynnik wyważenia ma dozwoloną wartość (-1, 0, +1).
 
-<h3>ZADANIE 11.3</h3>
+<h3>ZADANIE 11.3 (LIBAVL)</h3>
 
 <p>https://adtinfo.org/
 
 <p>Zapoznać się z biblioteką <em>libavl</em> (Ben Pfaff), która jest
-napisana w ANSI/ISO C89 z użyciem TexiWEB (literate programming).
+napisana w ANSI/ISO C89 z użyciem TexiWEB (<em>literate programming</em>).
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
