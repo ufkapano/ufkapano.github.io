@@ -12,16 +12,17 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Widżet 'Button' jest używany do wyświetlania klikalnego przycisku.
+<p>Widżet <em>Button</em> jest używany do wyświetlania klikalnego przycisku.
 Można go skonfigurować tak, aby naciśnięcie przycisku wywoływało
 pewną funkcję.
 
 <p>Funkcja uruchomiona przez naciśnięcie przycisku blokuje całą aplikację
-do chwili swojego zakończenia [command=lambda: time.sleep(10)]. 
+do chwili swojego zakończenia [<em>command=lambda: time.sleep(5)</em>]. 
 Jeżeli działanie funkcji ma zajmować czas dłuższy niż jedna sekunda, 
 wtedy należy rozważyć użycie mechanizmu wątków.
 
-<p>Wiele 'keyword arguments' z widżetu 'Label' działa także w widżecie 'Button'.
+<p>Wiele <em>keyword arguments</em> z widżetu <em>Label</em> działa także 
+w widżecie <em>Button</em>.
 
 <hr><pre>
 # button1.py
@@ -56,6 +57,7 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
 height=10   # in text units
 font="Times 10 bold"
+state=tk.NORMAL   # or tk.DISABLED
 command=callback   # funkcja wywoływana po kliknięciu przycisku
 command=sys.exit   # zakończenie programu
 command=lambda: print("message in the command line")

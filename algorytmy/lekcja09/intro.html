@@ -77,12 +77,12 @@ screen = pygame.display.set_mode(size)   # stworzenie display Surface
 pygame.display.set_caption('Hello')   # napis w pasku tytułu
 
 # MAIN GAME LOOP
-done = False   # flaga do wykrycia zakończenia while
-while not done:
+running = True   # flaga do wykrycia zakończenia while
+while running:
     # HANDLE EVENTS
     for event in pygame.event.get():
         if event.type == pygame.QUIT:   # QUIT Event
-            done = True   # chcemy zakończyć pętlę while;
+            running = False   # chcemy zakończyć pętlę while;
             # samo 'break' nie wystarczy, bo mamy zagnieżdżoną pętlę
     # DRAWING
     # Rysowanie różnych obiektów, sprawdzanie przekrywania, itp.

@@ -19,10 +19,10 @@
 
 <h3>INSTALACJA</h3>
 
-<p>Biblioteka 'tkinter' jest dostarczana z Pythonem 3, więc zwykle nie trzeba
-jej osobno instalować. Jednak czasami, szczególnie pod Windows,
-biblioteka może być przypadkowo usunięta z listy instalowanych 
-elementów Pythona.
+<p>Biblioteka <em>tkinter</em> jest dostarczana z Pythonem 3, 
+więc zwykle nie trzeba jej osobno instalować. 
+Jednak czasami, szczególnie pod Windows, biblioteka może być przypadkowo 
+usunięta z listy instalowanych elementów Pythona.
 
 <hr><pre>
 PIP (konto użytkownika lub środowisko wirtualne)
@@ -34,10 +34,11 @@ Pakiety Debiana: python-tk, python3-tk, oraz zależności.
 
 <h3>START</h3>
 
-<p>Pakiet 'tkinter' jest standardowym interfejsem Pythona do Tcl/Tk GUI toolkit
-(Tcl = Tool Command Language).
-Tk i tkinter są dostępne na większości platform Uniksowych i na Windows.
-Samo Tk nie jest częścią Pythona, jest rozwijane w firmie ActiveState.
+<p>Pakiet <em>tkinter</em> jest standardowym interfejsem Pythona 
+do <em>Tcl/Tk GUI toolkit (Tcl = Tool Command Language)</em>.
+<em>Tk</em> i <em>tkinter</em> są dostępne na większości platform 
+Uniksowych i na Windows.
+Samo <em>Tk</em> nie jest częścią Pythona, jest rozwijane w firmie ActiveState.
 
 <hr><pre>
 # Podane polecenie powinno otworzyć okno ukazujące interfejs Tk.
@@ -52,10 +53,10 @@ import tkinter as tk   # Py3 lub Py2 w Debianie
 tk._test()   # otwarcie okna
 </pre><hr>
 
-<p>Tkinter jest lekki i wieloplatformowy (Windows, MacOS, Linux). 
-Jest to faktycznie standardowy GUI framework dla Pythona,
+<p><em>Tkinter</em> jest lekki i wieloplatformowy (Windows, MacOS, Linux). 
+Jest to faktycznie standardowy <em>GUI framework</em> dla Pythona,
 choć czasem jest krytykowany za przestarzały wygląd.
-Przy przejściu z Py2 do Py3 pewne moduły tkinter zmieniły nazwy,
+Przy przejściu z Py2 do Py3 pewne moduły <em>tkinter</em> zmieniły nazwy,
 przez co zmienił się sposób importu.
 
 <hr><pre>
@@ -85,8 +86,9 @@ label.grid()   # użycie menedżera geometrii
 root.mainloop()   # uruchomienie pętli zdarzeń tkinter
 </pre><hr>
 
-<p>Instrukcja 'root.mainloop()' poleca Pythonowi uruchomić 
-'pętlę zdarzeń' tkinter. Wtedy rozpoczyna się nasłuchiwanie zdarzeń,
+<p>Instrukcja <em>root.mainloop()</em> poleca Pythonowi uruchomić 
+<strong>pętlę zdarzeń</strong> <em>tkinter</em>. 
+Wtedy rozpoczyna się nasłuchiwanie zdarzeń,
 takich jak naciśnięcia przycisków myszy lub klawiszy klawiatury.
 Kod następujący po tej instrukcji jest blokowany aż do chwili,
 kiedy wywołane okno zostaje zamknięte.

@@ -1,0 +1,96 @@
+<html>
+<head>
+<title>Python</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<h1>Podejście obiektowe w pygame</h1>
+
+<h3>WPROWADZENIE</h3>
+
+<p>Aplikację graficzną w <em>pygame</em> można zbudować korzystając 
+z podejścia obiektowego.
+
+<hr><pre>
+# class2.py
+import pygame
+
+class Box(pygame.sprite.Sprite):
+
+    def __init__(self, color, width, height):
+        super().__init__()
+        self.color = color
+        self.image = pygame.Surface([width, height])   # powstaje surface
+        self.image.fill(self.color)
+        self.rect = self.image.get_rect()   # powstaje rect
+
+    def update(self):
+        self.image.fill(self.color)
+
+class Game:
+
+    def __init__(self):
+        # INITIALIZE THE GAME
+        pygame.init()   # to zawsze na starcie
+        size = width, height = (400, 400)
+        self.screen = pygame.display.set_mode(size)   # display Surface
+        pygame.display.set_caption('Box')
+        self.font = pygame.font.Font(None, 30)
+        self.create_items()
+
+        # CLOCK
+        self.FPS = 60   # frames per second setting
+        self.clock = pygame.time.Clock()
+
+    def create_items(self):
+        # LOAD IMAGES
+        self.box = Box('white', 200, 200)
+        self.box.rect.topleft = (100, 100)
+
+    def handle_events(self):
+        # HANDLE EVENTS
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:   # QUIT Event
+                return False
+            # Wykrywanie wcisniecia i puszczenia klawisza.
+            elif event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_r:
+                    self.box.color = 'red'
+                elif event.key == pygame.K_g:
+                    self.box.color = 'green'
+                elif event.key == pygame.K_b:
+                    self.box.color = 'blue'
+                elif event.key == pygame.K_q:
+                    return False
+        return True
+
+    def update(self):
+        self.box.update()
+
+    def draw(self):
+        # DRAWING
+        self.screen.fill('black')   # na nowo czarny ekran
+        self.screen.blit(self.box.image, self.box.rect)
+        pygame.display.flip()
+
+    def play(self):
+        # MAIN GAME LOOP
+        running = True
+        while running:
+            running = self.handle_events()
+            self.update()
+            self.draw()
+            self.clock.tick(self.FPS)
+
+        pygame.quit()   # deactivates the Pygame library
+
+if __name__ == "__main__":
+    game = Game()
+    game.play()
+    # dalsze instrukcje bez pygame ...
+</pre><hr>
+
+</body>
+</html>

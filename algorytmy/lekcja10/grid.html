@@ -12,12 +12,13 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Grid dzieli okno lub Frame na wiersze i kolumny.
-Lokalizację widżetu określamy przez wywołanie .grid()
-i przekazanie indeksów wiersza i kolumny do argumentów 'row' i 'column'
-(row=i, column=j). Indeksy dla wierszy i kolumn zaczynają się od zera.
+<p>Grid dzieli okno lub <em>Frame</em> na wiersze i kolumny.
+Lokalizację widżetu określamy przez wywołanie <em>.grid()</em>
+i przekazanie indeksów wiersza oraz kolumny do argumentów 
+<em>row</em> i <em>column</em> (<em>row=i, column=j</em>). 
+Indeksy dla wierszy i kolumn zaczynają się od zera.
 
-<p>Opcja 'sticky' dla grid opisuje jak widżet ma się ułożyć
+<p>Opcja <em>sticky</em> dla menedżera grid opisuje jak widżet ma się ułożyć
 względem komórki siatki.
 
 <hr><pre>
@@ -48,7 +49,6 @@ sticky=tk.NSEW   # "nsew" or (tk.N, tk.S, tk.E, tk.W)
 +----------------+--------------+
 </pre><hr><pre>
 # grid1.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -67,7 +67,6 @@ for i in range(3):
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # grid2.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -91,7 +90,6 @@ for i in range(3):
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # grid3.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -109,7 +107,6 @@ label2.grid(row=1, column=0, sticky=tk.SW)
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # grid4.py
-
 import tkinter as tk
 
 root = tk.Tk()

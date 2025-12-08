@@ -300,9 +300,24 @@ import pytest
 
 class TestSets:   # 'Test' prefix jest ważny
 
-# scope: zakres dzielony przez daną 'fixture';
-# "function" (default), "class", "module", "package", "session"
+    @classmethod
+    def setup_class(cls):   # runs once per class
+        pass
 
+    @classmethod
+    def teardown_class(cls):   # runs at end of class
+        pass
+
+    def setup_method(self, test_method):   # test_method can be ignored
+        # configure self.attribute
+        pass
+
+    def teardown_method(self, test_method):
+        # tear down self.attribute
+        pass
+
+    # scope: zakres dzielony przez daną 'fixture';
+    # "function" (default), "class", "module", "package", "session"
     @pytest.fixture(scope="class")
     def setA(self):   # 'self' is the first argument in methods
         return set([1, 3, 5])
