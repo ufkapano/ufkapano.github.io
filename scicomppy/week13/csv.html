@@ -22,9 +22,12 @@ The format is not formally defined by a stable specification
 and is subtle enough that parsing lines of a CSV file with something like 
 line.split(",") is eventually bound to fail.
 
-<p>The 'csv' module implements classes to read and write tabular data 
-in CSV format. The most important are two functions:
-csv.reader() and csv.writer().
+<p>The <em>csv</em> module implements classes to read and write tabular data 
+in CSV format. 
+<br>The most important are two functions:
+<em>csv.reader()</em> and <em>csv.writer()</em>.
+<br>There are also two classes to read and write data in dictionary form:
+<em>csv.DictReader</em> and <em>csv.DictWriter</em>.
 
 <p>Each row read from the csv file is returned as a list of strings.
 
@@ -49,23 +52,32 @@ and the old Macintosh convention '\r'.
 # csv.reader(csvfile, dialect='excel', **fmtparams)
 # csvfile : objects which support the iterator protocol (file objects, list objects)
 
-#with open('spam.csv', 'r') as infile:   # Py2
-#with open('spam.csv', 'r', newline='') as infile:   # Py3, the default system encoding
-with open('spam.csv', 'r', newline='', encoding='utf-8') as infile:   # Py3
+#with open(filename, 'r') as infile:   # Py2
+#with open(filename, 'r', newline='') as infile:   # Py3, the default system encoding
+with open(filename, 'r', newline='', encoding='utf-8') as infile:   # Py3
     # newline='' : line endings are returned untranslated
-    #spam_reader = csv.reader(infile)
     # default dialect='excel'
     # default delimiter=','
-    #spam_reader = csv.reader(infile, delimiter=':')   # /etc/passwd, /etc/group
-    spam_reader = csv.reader(infile, delimiter=' ')
 
-    for row in spam_reader:
+    #reader = csv.reader(infile)
+    #reader = csv.reader(infile, delimiter=':')   # /etc/passwd, /etc/group
+    reader = csv.reader(infile, delimiter=' ')
+
+    for row in reader:
         print(row)   # ['item1', 'item2', ...] a list of strings
 </pre><hr><pre>
 # Parsing strings.
 
 for row in csv.reader(['one,two,three']):
     print(row)   # ['one', 'two', 'three'] one row
+</pre><hr><pre>
+# csv.DictReader(f, fieldnames=None, restkey=None, restval=None,
+#     dialect='excel', *args, **kwds)
+
+with open(filename, 'r', newline='') as infile:
+    reader = csv.DictReader(infile)
+    for row in reader:
+        print(row)   # row is a dict
 </pre><hr><pre>
 # csv.writer(csvfile, dialect='excel', **fmtparams)
 # csvfile : any object with a write() method
@@ -76,20 +88,32 @@ print(rows)
 # [(0, 'a'), (1, 'b'), (2, 'c'), (3, 'd'), (4, 'e'),
 # (5, 'f'), (6, 'g'), (7, 'h'), (8, 'i'), (9, 'j')]
 
-#with open(file_name, 'w') as outfile:   # Py2
-#with open(file_name, 'w', newline='') as outfile:   # Py3, the default system encoding
-with open(file_name, 'w', newline='', encoding='utf-8') as outfile:   # Py3
-    #spam_writer = csv.writer(outfile)
+#with open(filename, 'w') as outfile:   # Py2
+#with open(filename, 'w', newline='') as outfile:   # Py3, the default system encoding
+with open(filename, 'w', newline='', encoding='utf-8') as outfile:   # Py3
     # default dialect='excel'
     # default lineterminator="\r\n"
     # default delimiter=","
-    #spam_writer = csv.writer(outfile, delimiter="\t")
-    spam_writer = csv.writer(outfile, delimiter=" ", lineterminator="\n") # unix
 
-    #spam_writer.writerow(fields)   # optional fields
-    #spam_writer.writerows(rows)   # all rows at once
+    #writer = csv.writer(outfile)
+    #writer = csv.writer(outfile, delimiter="\t")
+    writer = csv.writer(outfile, delimiter=" ", lineterminator="\n") # unix
+
+    #writer.writerow(fields)   # optional fields
+    #writer.writerows(rows)   # all rows at once
     for row in rows:
-        spam_writer.writerow(row)
+        writer.writerow(row)
+</pre><hr><pre>
+# csv.DictWriter(f, fieldnames, restval='', extrasaction='raise',
+#     dialect='excel', *args, **kwds)
+
+with open(filename, 'w', newline='') as outfile:
+    writer = csv.DictWriter(outfile, fieldnames=names)
+    # fieldnames : a sequence of keys
+    # rows : a sequence of dicts
+    writer.writeheader()
+    for row in rows:
+        writer.writerow(row)
 </pre><hr>
 
 <h3>USING NUMPY</h3>
@@ -99,12 +123,12 @@ import numpy as np
 
 # Read CSV and make np.array.
 
-data = np.loadtxt(file_name, delimiter=",")
+data = np.loadtxt(filename, delimiter=",")
 # default dtype=float
 </pre><hr><pre>
 # Write np.array to CSV.
 
-np.savetxt(file_name, data, delimiter=",")
+np.savetxt(filename, data, delimiter=",")
 </pre><hr>
 
 <h3>USING PANDAS</h3>
@@ -114,12 +138,12 @@ import pandas as pd
 
 # Read CSV and make DataFrame.
 
-df = pd.read_csv(file_name, sep=",", encoding="utf-8", names=None)
+df = pd.read_csv(filename, sep=",", encoding="utf-8", names=None)
 df.info()   # numbers and strings are recognized
 </pre><hr><pre>
 # Write DataFrame to CSV.
 
-df.to_csv(file_name, index=False, encoding="utf-8")
+df.to_csv(filename, index=False, encoding="utf-8")
 </pre><hr>
 
 <h3>EXAMPLES</h3>

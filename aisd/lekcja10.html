@@ -124,11 +124,11 @@ przy przechodzeniu przez drzewo BST metodą inorder.
 Wyróżnia się dwie symetryczne operacje: rotacja w prawo i rotacja w lewo.
 
 <hr><pre>
-|     X     --[w prawo]-o    Y     |
-|    / \                    / \    |
-|   Y   C   o-[w lewo]--   A   X   |
-|  / \                        / \  |
-| A   B                      B   C |
+|     X     --[w prawo]-o    Y     | Kolejność inorder: |
+|    / \                    / \    | A Y B X C          |
+|   Y   C   o-[w lewo]--   A   X   |                    |
+|  / \                        / \  |                    |
+| A   B                      B   C |                    |
 </pre><hr><pre>
 template &lt;typename T&gt;
 BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::rotate_right(BSTNode&lt;T&gt; *node) {
@@ -218,6 +218,12 @@ BSTNode&lt;T&gt; * BinarySearchTree&lt;T&gt;::remove(BSTNode&lt;T&gt; *node) {
 | A   Z         A   Z
 |    /             / \
 |   B             B   C
+</pre><hr><pre>
+|      X                Y jest nowym korzeniem i poprzednikiem X.
+|    /   \          
+|   Y     C       Y
+|  /             / \
+| A             A   C
 </pre><hr>
 
 <h3>ALGORYTM DSW</h3>
