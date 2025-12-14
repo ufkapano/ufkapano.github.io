@@ -10,8 +10,9 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Listy powiązane podwójne mają elementy powiązane dwoma łączami:
-do elementu następnego (next) i do elementu poprzedniego (prev).
+<p><strong>Listy powiązane podwójne</strong> mają elementy powiązane 
+dwoma łączami: do elementu następnego (<em>next</em>) 
+i do elementu poprzedniego (<em>prev</em>).
 W łatwy sposób możemy poruszać się po liście do przodu i wstecz.
 Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego,
 podczas gdy przy listach połączonych pojedynczo potrzebne było też
@@ -19,10 +20,11 @@ podczas gdy przy listach połączonych pojedynczo potrzebne było też
 
 <h3>IMPLEMENTACJA 1</h3>
 
-<p>Rozpoczniemy od implementacji klasy Node reprezentującej węzły.
-Obok pola danych (data) musimy przechowywać łącza prev i next.
+<p>Rozpoczniemy od implementacji klasy <em>Node</em> reprezentującej węzły.
+Obok pola danych (<em>data</em>) musimy przechowywać łącza 
+<em>prev</em> i <em>next</em>.
 Dostęp do listy zapewnia para łączy do pierwszego i ostatniego
-węzła pair = [head, tail].
+węzła, <em>pair = [head, tail]</em>.
 
 <hr><pre>
 class Node:
@@ -74,9 +76,9 @@ pair[1].prev = node   # łącze w tail trzeba uaktualnić
 <h3>PRZECHODZENIE PRZEZ LISTĘ DWUKIERUNKOWĄ</h3>
 
 <p>Stworzymy funkcje potrzebne do zarządzania tak określoną listą.
-Funkcja traverse_forward() pozwala przejść przez listę od początku
-do końca i wykonać operację visit() na każdym węźle.
-Funkcja traverse_backward() przechodzi przez listę od końca
+Funkcja <em>traverse_forward()</em> pozwala przejść przez listę od początku
+do końca i wykonać operację <em>visit()</em> na każdym węźle.
+Funkcja <em>traverse_backward()</em> przechodzi przez listę od końca
 do początku.
 
 <hr><pre>
@@ -100,7 +102,7 @@ def print_dlist(pair):
         print(node)
         node = node.next
 </pre><hr><pre>
-def count_dlist(pair):        # algorytm klasy O(n)
+def count_dlist(pair):   # algorytm klasy O(n)
     node = pair[0]
     length = 0
     while node:
@@ -155,7 +157,8 @@ def remove_tail(pair):   # zwraca node
         return node
 </pre><hr>
 
-<p>Możemy napisać funkcję, która sortuje listę metodą insertsort.
+<p>Możemy napisać funkcję <em>insertsort()</em>, która sortuje listę metodą 
+sortowania przez wstawianie.
 
 <hr><pre>
 def insertsort(pair):     # sortowanie przez wstawianie

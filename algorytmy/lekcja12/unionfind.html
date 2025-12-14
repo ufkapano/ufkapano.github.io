@@ -13,8 +13,9 @@ Getting back to the past in the union-find problem
 
 <h3>WPROWADZENIE</h3>
 
-<p>Struktura zbiorów rozłącznych jest wykorzystywana
-do rozwiązania problemu połączeniowego.
+<p><strong>Struktura zbiorów rozłącznych</strong> 
+(ang. <em>disjoint-sets structure</em>) 
+jest wykorzystywana do rozwiązania problemu połączeniowego.
 
 <h3>PROBLEM POŁĄCZENIOWY</h3>
 
@@ -287,12 +288,12 @@ dwie heurystyki dla poprawienia wydajności.
 
 <ul>
 
-<li><em>Łączenie według rangi</em>.
-Dla każdego węzła przechowujemy <em>rangę</em> stanowiącą górne 
+<li><strong>Łączenie według rangi</strong>.
+Dla każdego węzła przechowujemy <strong>rangę</strong> stanowiącą górne 
 ograniczenie na wysokość węzła. Ranga może się zmienić jedynie
 przy operacji <em>union</em>.
 
-<li><em>Kompresja ścieżek</em>.
+<li><strong>Kompresja ścieżek</strong>.
 Podczas operacji <em>find</em> zmieniamy tak łącze w każdym
 węźle na ścieżce do reprezentanta, aby wskazywał bezpośrednio
 na korzeń.
@@ -333,9 +334,6 @@ class UnionFind:
             if self.rank[x] == self.rank[y]:
                 self.rank[y] = self.rank[y] + 1
 </pre><hr>
-
-
-
 
 </body>
 </html>

@@ -90,9 +90,9 @@ public:
     void preorder() { preorder(root); }
     void inorder() { inorder(root); }
     void postorder() { postorder(root); }
-    void iter_preorder();
-    void iter_inorder(); // trudne
-    void iter_postorder(); // trudne
+    void preorder_iter();
+    void inorder_iter(); // trudne
+    void postorder_iter(); // trudne
     void bfs(); // przejście poziomami (wszerz)
     void display() { display(root, 0); }
 
@@ -235,7 +235,7 @@ zaimplementować iteracyjnie za pomocą stosu.
 
 <hr><pre>
 template &lt;typename T&gt;
-void RandomBinaryTree&lt;T&gt;::iter_preorder() {
+void RandomBinaryTree&lt;T&gt;::preorder_iter() {
     if (root == nullptr) return;
     std::stack&lt;BSTNode&lt;T&gt;*&gt; S; // wskaźniki do węzłów
     BSTNode&lt;T&gt; *node = root;

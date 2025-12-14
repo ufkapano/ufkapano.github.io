@@ -16,19 +16,19 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Tablica mieszająca (ang. hash table) używa funkcji mieszającej
-do obliczenia indeksu klucza w tablicy bukietów.
+<p><strong>Tablica mieszająca</strong> (ang. <em>hash table</em>) 
+używa funkcji mieszającej do obliczenia indeksu klucza w tablicy bukietów.
 Jeżeli klucze są liczbami z niedużego zakresu, to można je
 przechowywać w tablicy pod indeksem k.
-Zwykle jednak wykorzystuje się funkcję mieszającą hash(k), 
-która oblicza położenie klucza k w tablicy.
+Zwykle jednak wykorzystuje się funkcję mieszającą <em>hash(key)</em>, 
+która oblicza położenie klucza <em>key</em> w tablicy.
 Dobra funkcja mieszająca powinna (1) działać szybko [niski koszt]
 i (2) jednorodnie rozmieszczać klucze w tablicy.
 Wtedy wstawianie, wyszukiwanie i usuwanie klucza działa w czasie O(1).
 
 <p>W praktyce nie jest łatwo znaleźć doskonałą funkcję mieszającą
-i pojawiają się <em>kolizje</em>, czyli dla kluczy k1 != k2 otrzymujemy
-hash(k1) = hash(k2).
+i pojawiają się <strong>kolizje</strong>, czyli dla kluczy 
+<em>key1 != key2</em> otrzymujemy <em>hash(key1) = hash(key2)</em>.
 Kolizje zdarzają się zwykle tym częściej im bardziej zapełniona jest tablica,
 dlatego zwykle tablica jest większa niż spodziewana liczba kluczy.
 Niektóre metody mieszania dobrze działają dla rozmiaru tablicy
@@ -39,20 +39,20 @@ będącym potęgą dwójki, inne dla liczb pierwszych.
 <p>Typowe sposoby radzenia sobie z kolizjami [Drozdek].
 
 <ul>
-<li>Adresowanie otwarte (ang. open adressing).
+<li><strong>Adresowanie otwarte</strong> (ang. <em>open adressing</em>).
 <br>Jeżeli klucz koliduje z innym kluczem, wybiera się inną dostępną
 komórkę niż tą wskazywaną przez klucz.
-Najprostszym rozwiązaniem jest <em>próbkowanie liniowe</em>,
+Najprostszym rozwiązaniem jest <strong>próbkowanie liniowe</strong>,
 gdzie wybiera się następną wolną komórkę
 [przy końcu tablicy przechodzi się na początek,
-wzór na indeks (hash(key) + i) mod table_size].
+wzór na indeks <em>(hash(key) + i) mod table_size</em>].
 Próbkowanie liniowe ma tendencję do tworzenia zgrupowań zajętych komórek,
 co pogarsza wydajność tablicy mieszającej.
 Przy wyszukiwaniu klucza sprawdza się komórki po kolei aż klucz zostanie
 znaleziony lub będzie jasne, że klucza nie ma w tablicy 
 (napotkanie pustej komórki lub sprawdzenie całej pełnej tablicy).
 
-<li>Metoda łańcuchowa (ang. chaining).
+<li><strong>Metoda łańcuchowa</strong> (ang. <em>chaining</em>).
 <br>Każda komórka tablicy jest łączem do listy powiązanej,
 która przechowuje klucze kolidujące. Lista może być nieuporządkowana,
 posortowana, albo samoorganizująca się, w celu poprawienia efektywności.

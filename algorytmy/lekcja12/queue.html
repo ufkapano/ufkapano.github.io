@@ -12,8 +12,9 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Kolejka to ADT, który pozwala zapisywać dane
-i następnie pobierać je w takiej kolejności, w jakiej je zapisano 
+<p><strong>Kolejka</strong> (ang. <em>queue</em>) to ADT, 
+który pozwala zapisywać dane i następnie pobierać je w takiej kolejności, 
+w jakiej je zapisano 
 (ang. <em>first in, first out</em>, FIFO; pierwszy wchodzi, pierwszy wychodzi).
 Interfejs kolejki ma minimum cztery funkcje:
 
@@ -27,11 +28,14 @@ Interfejs kolejki ma minimum cztery funkcje:
 </ul>
 
 <p>Jeżeli kolejka ma ograniczenie na liczbę przechowywanych elementów, 
-to stosuje się jeszcze funkcję is_full(). 
+to stosuje się jeszcze funkcję <em>is_full()</em>. 
 Sytuacje prowadzące do błędu: 
 przepełnienie kolejki, pobieranie elementu z pustej kolejki.
 
 <h3>KOLEJKI W PYTHONIE</h3>
+
+<p><em>ADT Queue</em> jest realizowany przez klasę <em>Queue</em>
+z modułu <em>queue</em> w Py3 (moduł <em>Queue</em> w Py2).
 
 <hr><pre>
 #from Queue import Queue   # Py2
@@ -43,8 +47,9 @@ Q = Queue()
 # Q.empty()   # czy pusta
 </pre><hr>
 
-<p>Inna implementacja kolejki może korzystać z collections.deque i operacji
-len, clear, append+popleft lub appendleft+pop.
+<p>Inna implementacja kolejki może korzystać z <em>collections.deque</em> 
+i operacji <em>len()</em>, <em>clear()</em>, <em>append()+popleft()</em> 
+lub <em>appendleft()+pop()</em>.
 
 <h3>IMPLEMENTACJA 1</h3>
 
@@ -126,16 +131,16 @@ class Queue:
         return data
 </pre><hr>
 
-<p>Metoda put() nie jest optymalna, ponieważ jest klasy O(n).
+<p>Metoda <em>put()</em> nie jest optymalna, ponieważ jest klasy O(n).
 Wymaga przejścia przez wszystkie węzły, aby dotrzeć do ostatniego
-węzła. Rozwiązaniem tego problemu jest dodatkowy atrybut tail
-w klasie Queue, w którym zapisana będzie referencja do ostatniego
+węzła. Rozwiązaniem tego problemu jest dodatkowy atrybut <em>tail</em>
+w klasie <em>Queue</em>, w którym zapisana będzie referencja do ostatniego
 elementu.
 
 <h3>IMPLEMENTACJA 3</h3>
 
 <p>Implementacja kolejki FIFO za pomocą listy jednokierunkowej.
-Dodajemy wskaźnik do ogona, aby poprawić wydajność listy.
+Dodajemy wskaźnik do ogona (<em>tail</em>), aby poprawić wydajność listy.
 
 <hr><pre>
 class Node:
@@ -202,9 +207,9 @@ class Queue(dlist.DoubleList):
 
 <p>Implementacja kolejki FIFO za pomocą tablicy cyklicznej.
 Przy inicjalizacji kolejki trzeba podać maksymalną liczbę
-przechowywanych w kolejce elementów (size).
+przechowywanych w kolejce elementów (<em>size</em>).
 Wykorzystywana w implementacji tablica będzie o jeden większa,
-aby przy pełnej tablicy head i tail były różne.
+aby przy pełnej tablicy <em>head</em> i <em>tail</em> były różne.
 
 <hr><pre>
 class Queue:

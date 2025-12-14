@@ -11,9 +11,9 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Istnieją pewne subtelne problemy przy implementacji list
-z wykorzystaniem tylko klasy Node.
+z wykorzystaniem tylko klasy <em>Node</em>.
 Przy przejściu z funkcji do metod jest problem z pustą listą.
-Nie można wywoływać metod, gdy węzeł jest równy None.
+Nie można wywoływać metod, gdy węzeł jest równy <em>None</em>.
 Rozwiązaniem jest inna implementacja.
 
 <p>Innym problemem są operacje, które są klasy O(n), co powoduje,
@@ -25,7 +25,7 @@ elementów, oraz możemy przechowywać łącze do końca listy.
 
 <h3>IMPLEMENTACJA 2</h3>
 
-<p>Obok klasy Node wprowadzamy klasę SingleList, 
+<p>Obok klasy <em>Node</em> wprowadzamy klasę <em>SingleList</em>, 
 w której przechowujemy elementy informacyjne poprawiające 
 wydajność operacji na listach.
 
@@ -102,7 +102,7 @@ while not alist.is_empty():   # kolejność 22, 11, 33
 
 <h3>LISTA POWIĄZANA POJEDYNCZO Z ITERATOREM</h3>
 
-<p>Istnieją co najmniej dwa sposoby wyposażenia klasy SingleList
+<p>Istnieją co najmniej dwa sposoby wyposażenia klasy <em>SingleList</em>
 w możliwość iteracji po elementach listy.
 
 <hr><pre>

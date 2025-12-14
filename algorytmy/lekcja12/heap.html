@@ -6,7 +6,7 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Sterty</h1>
+<h1>Sterty (kopce)</h1>
 
 <h3>WPROWADZENIE</h3>
 
@@ -23,7 +23,8 @@ Lepszym rozwiązaniem jest zastosowanie stert.
 
 <h3>STERTY</h3>
 
-<p>Sterty (kopce) są to drzewa (zwykle binarne) zorganizowane tak, 
+<p><strong>Sterta</strong> lub <strong>kopiec</strong> (ang. <em>heap</em>) 
+jest to drzewo (zwykle binarne) zorganizowane tak, 
 że można szybko pobrać węzeł o największej wartości. 
 Koszty takiego rozwiązania są mniejsze
 od kosztów zachowywania uporządkowania danych.
@@ -44,8 +45,8 @@ Lewe i prawe dziecko danego węzła znajdują się w miejscach
 Jest to ważne przy naszej implementacji stert.
 
 <p>Interfejs sterty ma 4 funkcje:
-__init__(), is_empty(), insert(), remove().
-Czasem dodaje się funkcję count().
+<em>__init__()</em>, <em>is_empty()</em>, <em>insert()</em>, <em>remove()</em>.
+Czasem dodaje się funkcję <em>count()</em>.
 Musimy umieć porównywać elementy wkładane na stertę.
 
 <hr><pre>
@@ -67,13 +68,13 @@ poziom 5 |15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 <p>Implementacja oparta jest na założeniu, że indeksy tablicy
 przechowującej elementy sterty są numerowane od zera.
 Na początku definiujemy funkcje, króre dla elementu o indeksie n
-obliczają odpowiednio: indeks rodzica (heap_parent), 
-indeks lewego potomka (heap_left)
-i indeks prawego potomka (heap_right).
+obliczają odpowiednio: indeks rodzica (<em>heap_parent</em>), 
+indeks lewego potomka (<em>heap_left</em>)
+i indeks prawego potomka (<em>heap_right</em>).
 Następnie definiujemy funkcje, które przywracają strukturę sterty,
-jeżeli zmienił się element o indeksie najmniejszym (fix_down)
-lub największym (fix_up).
-W końcu określamy klasę Heap z metodami wymaganymi dla stery.
+jeżeli zmienił się element o indeksie najmniejszym (<em>fix_down</em>)
+lub największym (<em>fix_up</em>).
+W końcu określamy klasę <em>Heap</em> z metodami wymaganymi dla stery.
 
 <hr><pre>
 def heap_parent(n):

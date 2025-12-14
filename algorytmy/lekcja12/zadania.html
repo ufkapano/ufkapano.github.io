@@ -1,6 +1,6 @@
 <html>
 <head>
-<title>Zadania</title>
+<title>Python</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 </head>
 
@@ -60,8 +60,8 @@ print(m)         # metoda __str__
 
 <p>Poprawić implementację tablicową stosu tak, aby korzystała
 z wyjątków w przypadku pojawienia się błędu.
-Metoda pop() ma zgłaszać błąd w przypadku pustego stosu.
-Metoda push() ma zgłaszać błąd w przypadku przepełnienia stosu.
+Metoda <em>pop()</em> ma zgłaszać błąd w przypadku pustego stosu.
+Metoda <em>push()</em> ma zgłaszać błąd w przypadku przepełnienia stosu.
 Napisać kod testujący stos.
 
 <pre>
@@ -82,24 +82,23 @@ oznacza odpowiednio brak lub istnienie liczby i na stosie.
 
 <h3>ZADANIE 12.4 (QUEUE)</h3>
 
-<p>Poprawić metodę get(), 
+<p>Poprawić metodę <em>get()</em>, 
 aby w przypadku pustej kolejki zwracała wyjątek.
-Poprawić metodę put() w tablicowej implementacji kolejki, 
+Poprawić metodę <em>put()</em> w tablicowej implementacji kolejki, 
 aby w przypadku przepełnienia kolejki zwracała wyjątek.
 Napisać kod testujący kolejkę.
 
 <h3>ZADANIE 12.5 (PRIORITYQUEUE)</h3>
 
-<p>Poprawić metodę remove() w pythonowej implementacji kolejki
+<p>Poprawić metodę <em>remove()</em> w pythonowej implementacji kolejki
 priorytetowej tak, aby uniknąć kosztownego pobierania elementu
 ze środka listy.
 
-<p>Poprawić metodę remove() w tablicowej implementacji kolejki
+<p>Poprawić metodę <em>remove()</em> w tablicowej implementacji kolejki
 priorytetowej, aby w przypadku pustej kolejki generowała wyjątek.
 
-<p>Poprawić metodę insert() w tablicowej implementacji kolejki
-priorytetowej, aby w przypadku przepełnienia kolejki
-generowała wyjątek.
+<p>Poprawić metodę <em>insert()</em> w tablicowej implementacji kolejki
+priorytetowej, aby w przypadku przepełnienia kolejki generowała wyjątek.
 
 <pre>
 </pre>
@@ -107,9 +106,9 @@ generowała wyjątek.
 <h3>ZADANIE 12.6 (PRIORITYQUEUE)</h3>
 
 <p>Załóżmy, że w kolejce priorytetowej będą przechowywane elementy,
-których priorytet można zmienić za pomocą metody increase(value).
-Dodać kolejce metodę increase(value), która pozwoli na zmianę
-priorytetów wszystkich elementów w kolejce o wartość value.
+których priorytet można zmienić za pomocą metody <em>increase(value)</em>.
+Dodać kolejce metodę <em>increase(value)</em>, która pozwoli na zmianę
+priorytetów wszystkich elementów w kolejce o wartość <em>value</em>.
 Taka kolejka może symulować działanie systemu operacyjnego,
 który zwiększa priorytet zadaniom czekającym w kolejce do wykonania.
 Cykliczne zwiększanie priorytetów zapobiega długiemu przebywaniu

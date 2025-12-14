@@ -11,13 +11,13 @@
 <h3>WPROWADZENIE</h3>
 
 <p>W pewnych zastosowaniach list możemy wymagać, aby lista była
-stale posortowana. Potrzebujemy funkcji insert(), która
+stale posortowana. Potrzebujemy funkcji <em>insert()</em>, która
 będzie wstawiała elementy do listy we właściwe miejsce. 
 Największy element będzie znajdował się na początku listy.
 
 <h3>LISTY POWIĄZANE POJEDYŃCZO POSORTOWANE</h3>
 
-<p>Funkcja insert() ma zwracać nowy początek listy.
+<p>Funkcja <em>insert()</em> ma zwracać nowy początek listy.
 
 <hr><pre>
 def insert(node, new_node):
@@ -37,7 +37,7 @@ def insert(node, new_node):
         return node   # stary head
 </pre><hr>
 
-<p>Napiszemy funkcję merge(), która będzie łączyć
+<p>Napiszemy funkcję <em>merge()</em>, która będzie łączyć
 dwie listy posortowane w jedną listę posortowaną.
 Funkcja zwraca początek wspólnej listy.
 
@@ -76,8 +76,8 @@ def merge(node1, node2):
 
 <h3>LISTY POWIĄZANE PODWÓJNIE POSORTOWANE</h3>
 
-<p>Budujemy listę posortowaną, gdzie największy element będzie
-się znajdował na początku listy.
+<p>Budujemy listę posortowaną powiązaną podwójnie, gdzie największy element 
+będzie się znajdował na początku listy.
 
 <hr><pre>
 def insert_sorted(pair, node):
@@ -105,9 +105,9 @@ def insert_sorted(pair, node):
         after.prev = node
 </pre><hr>
 
-<p>Napiszemy funkcję merge(), która będzie łączyć dwie listy
+<p>Napiszemy funkcję <em>merge()</em>, która będzie łączyć dwie listy
 posortowane w jedną listę posortowaną.
-Funkcja zwraca nową listę.
+Funkcja zwraca nową listę (<em>pair3</em>).
 
 <hr><pre>
 def merge(pair1, pair2): pass

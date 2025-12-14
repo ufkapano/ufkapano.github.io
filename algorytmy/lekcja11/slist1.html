@@ -10,8 +10,8 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Listy powiązane składają się z szeregu elementów (węzłów) 
-powiązanych ze sobą łączami.
+<p><strong>Listy powiązane pojedynczo</strong> składają się z szeregu 
+elementów (węzłów) powiązanych ze sobą łączami.
 Python udostępnia listy jako swój typ wbudowany, a inne języki
 pozwalają samemu stworzyć ich odpowiednik.
 Węzły list powiązanych pojedynczo przechowują pewną wartość oraz
@@ -30,8 +30,8 @@ konwencji:
 <h3>IMPLEMENTACJA 1</h3>
 
 <p>Pierwszy etap ręcznej implementacji list w Pythonie to stworzenie
-klasy reprezentującej węzeł listy.
-Dostęp do listy zapewnia łącze do jej pierwszego węzła (head).
+klasy <em>Node</em> reprezentującej węzeł listy.
+Dostęp do listy zapewnia łącze do jej pierwszego węzła (<em>head</em>).
 
 <hr><pre>
 class Node:
@@ -71,7 +71,7 @@ head = Node(4, head)          # [4, 2, 3]
 <h3>PRZECHODZENIE PRZEZ LISTĘ JEDNOKIERUNKOWĄ</h3>
 
 <p>Posługiwanie się danymi zorganizowanymi w listy nazywa się
-przetwarzaniem list.
+<strong>przetwarzaniem list</strong>.
 Rozważmy funkcję <em>traverse()</em>, która pozwala przejść przez 
 listę i wykonać operację <em>visit()</em> na każdym węźle.
 
@@ -136,7 +136,7 @@ def is_empty(node):
 
 <p>Zbadamy operacje, które przebudowują listę, dlatego jako wynik
 muszą zwracać referencję do ewentualnie zmienionego początku listy.
-Napiszemy funkcje insert_head() i insert_tail(),
+Napiszemy funkcje <em>insert_head()</em> i <em>insert_tail()</em>,
 które dodają element odpowiednio na początek i na koniec listy,
 a zwracają nowy początek listy.
 
@@ -166,14 +166,14 @@ def insert_tail(node, new_node):   # algorytm klasy O(n)
 # head = insert_tail(head, Node(55))
 </pre><hr>
 
-<p>Napiszemy funkcję reverse_list(), która odwraca kolejność
+<p>Napiszemy funkcję <em>reverse_list()</em>, która odwraca kolejność
 elementów na liście, a zwraca nowy początek listy.
 Realizacja tego zadania wymaga trzech zmiennych przechowujących
-referencje do węzłów (before, after, node).
-Łącze before wskazuje na fragment listy już zmodyfikowany,
-a łącze after wskazuje na fragment, który jeszcze nie został
-zmodyfikowany. Dzięki łączu node nie zgubimy połączenia
-z resztą listy przy zmienianiu łącza after.next.
+referencje do węzłów (<em>before</em>, <em>after</em>, <em>node</em>).
+Łącze <em>before</em> wskazuje na fragment listy już zmodyfikowany,
+a łącze <em>after</em> wskazuje na fragment, który jeszcze nie został
+zmodyfikowany. Dzięki łączu <em>node</em> nie zgubimy połączenia
+z resztą listy przy zmienianiu łącza <em>after.next</em>.
 
 <hr><pre>
 def reverse_list(node):   # zwraca nowy head
@@ -191,13 +191,12 @@ def reverse_list(node):   # zwraca nowy head
 # head = reverse_list(head)
 </pre><hr>
 
-<p>Następna funkcja wykonuje sortowanie węzłów listy metodą
-sortowania przez wstawianie. Elementy będą ustawione
+<p>Następna funkcja <em>insertsort()</em> wykonuje sortowanie węzłów listy 
+metodą sortowania przez wstawianie. Elementy będą ustawione
 od największego do najmniejszego. Algorytm nie jest zbyt wydajny,
 ponieważ jest klasy O(n^2), ale ma walory dydaktyczne.
-Charakterystyczne jest przesuwanie widełek (before, after)
-wzdłuż listy, aby znaleźć miejsce do wstawienia węzła pomiędzy
-nimi. 
+Charakterystyczne jest przesuwanie widełek (<em>before</em>, <em>after</em>)
+wzdłuż listy, aby znaleźć miejsce do wstawienia węzła pomiędzy nimi. 
 
 <hr><pre>
 def insertsort(node):
@@ -233,12 +232,13 @@ def insertsort(node):
 
 <p>https://www.geeksforgeeks.org/detect-loop-in-a-linked-list/
 
-<p>Ciekawym problemem jest wykrywanie cykli na liście powiązanej.
+<p>Ciekawym problemem jest <strong>wykrywanie cykli</strong> 
+na liście powiązanej.
 Chodzi o sytuację, kiedy ostatni węzeł listy zamiast łącza None
 posiada łącze do pewnego węzła ze środka listy.
 Problem rozwiązuje algorytm Floyda (1967), nazywany także algorytmem
-żółwia i zająca (ang. Floyd’s Cycle-Finding Algorithm,
-The Tortoise and the Hare Algorithm).
+żółwia i zająca (ang. <em>Floyd’s Cycle-Finding Algorithm</em>,
+<em>The Tortoise and the Hare Algorithm</em>).
 
 <p>Algorytm utrzymuje dwa łącza, żółwia i zająca, przy czym
 łącze żółwia przesuwa się o jedną pozycję, a łącze zająca o dwie pozycje.

@@ -10,9 +10,9 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Kolejka priorytetowa to ADT zawierający elementy z kluczami 
-(priorytetami), która pozwala na przeprowadzenie co najmniej
-czterech pierwszych operacji:
+<p><strong>Kolejka priorytetowa</strong> (ang. <em>priority queue</em>) 
+to ADT zawierający elementy z kluczami (priorytetami), 
+która pozwala na przeprowadzenie co najmniej czterech pierwszych operacji:
 
 <ul>
 <li>Inicjalizacja pustej kolejki (konstruktor).
@@ -44,26 +44,27 @@ kolejki priorytetowej.
 Wtedy element o największym priorytecie jest pierwszy lub ostatni,
 w zależności od sposobu sortowania. 
 Operacja wstawiania elementu będzie kosztowna.
-[zmiana priorytetu elementu pociąga konieczność ponownego
+[Zmiana priorytetu elementu pociąga konieczność ponownego
 sortowania; można też tak: wyjąć wskazany element, zmienić mu
-priorytet i wstawić ponownie do kolejki]
+priorytet i wstawić ponownie do kolejki.]
 
 <li>Możemy dodawać elementy do kolejki bez sortowania,
 a dopiero przy usuwaniu elementu z kolejki wybierać największego.
 Operacja usuwania elementu będzie kosztowna.
-[tu bez problemu zmieniamy priorytety w kolejce]
+[Tu bez problemu zmieniamy priorytety w kolejce.]
 
 <li>Możemy w kolejce utrzymywać częściowe uporządkowanie na stercie.
 Wtedy operacje wstawiania i usuwania elementu będą wiązały się
 z pewną pracą.
-[zmiana priorytetu wymaga przebudowy sterty]
+[Zmiana priorytetu wymaga przebudowy sterty.]
 </ul>
 
 <p>Na nasze potrzeby zakładamy, że interfejs kolejki priorytetowej
 będzie miał cztery funkcje:
-__init__(), is_empty(), insert(), remove().
+<em>__init__()</em>, <em>is_empty()</em>, <em>insert()</em>, <em>remove()</em>.
 Warto zauważyć, że jeżeli chcemy tylko sprawdzić największy element 
-w kolejce, to możemy kolejno zastosować metody remove() i insert().
+w kolejce, to możemy kolejno zastosować metody <em>remove()</em> 
+i <em>insert()</em>.
 Sprawdzimy różne sposoby implementacji kolejki priorytetowej.
 Dla prostoty będziemy elementy porównywać bezpośrednio, choć można
 zmodyfikować kod tak, aby funkcja porównująca była parametrem
@@ -267,7 +268,7 @@ class PriorityQueue:
 <h3>IMPLEMENTACJA 5</h3>
 
 <p>Implementacja kolejki z priorytetami za pomocą sterty.
-Metody klasy Heap będą dziedziczone przez klasę PriorityQueue.
+Metody klasy <em>Heap</em> będą dziedziczone przez klasę <em>PriorityQueue</em>.
 
 <hr><pre>
 import heap
