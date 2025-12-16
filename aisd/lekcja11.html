@@ -71,7 +71,7 @@ w najgorszym przypadku czas O(h) = O(log n).
 Przejście przez wszystkie węzły drzewa BST wymaga
 przejścia przez każde łącze dwa razy (w dół i w górę), łączy jest n-1,
 więc łączny czas wynosi O(n). Czas zamortyzowany znajdowania
-poprzednika lub następnika w drzewie AVL wynosi 2x(n-1)/n,
+poprzednika lub następnika w drzewie AVL wynosi 2 &times; (n-1)/n,
 a więc w przybliżeniu 2.
 
 <h3>WSTAWIANIE (INSERT)</h3>
@@ -234,9 +234,10 @@ private:
 <p>https://rosettacode.org/wiki/AVL_tree#C.2B.2B
 
 <p>Zapoznać się z implementacją drzewa AVL z serwisu <em>rosettacode.org</em>.
-Dostosować kod do standardu C++11 (zamiana NULL na nullptr).
+Dostosować kod do standardu C++11 (zamiana <em>NULL</em> na <em>nullptr</em>).
 Dodać pozostałe funkcje zdefinowane dla drzew BST.
-Funkcja <em>display()</em> powinna wyświetlać dodatkowo współczynnik wyważenia.
+Funkcja <em>display()</em> powinna wyświetlać dodatkowo współczynnik wyważenia
+dla każdego węzła.
 
 <h3>ZADANIE 11.2 (TEST AVL)</h3>
 

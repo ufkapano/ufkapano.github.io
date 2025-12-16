@@ -32,6 +32,28 @@ Dostęp do każdego elementu tablicy jest tak samo szybki.
 Dozwolone indeksy zwykle zaczynają się od zera (C/C++, Python)
 lub od jedynki (Pascal).
 
+<p>W Pythonie homogeniczne tablice elementów są wykorzystywane głównie
+do obliczeń numerycznych. 
+W bibliotece standardowej mamy moduł <em>array</em>, a poza biblioteką 
+standardową jest dostępny pakiet <em>Numpy</em>.
+
+<hr><pre>
+# https://docs.python.org/3/library/array.html
+
+import array
+
+array.typecodes   # 'bBuhHiIlLqQfd', type codes
+a = array.array('i', [2, 4, 6])   # Python int, min 2 bytes (signed int from C)
+b = array.array('f', [2.0, 4.0, 6.0])   # Python float, min f bytes (float from C)
+c = array.array('d', [2.0, 4.0, 6.0])   # Python float, min 8 bytes (double from C)
+a.append(8)
+a.itemsize   # 4, Debian 13
+a.buffer_info()   # (140636280497456, 4), (address, length)
+a.extend(iterable)
+a.reverse()
+a.clear()   # Py3.13
+</pre><hr>
+
 <h3>CIĄGI ZNAKÓW</h3>
 
 <p>https://stackoverflow.com/questions/16797459/how-is-str-implemented-in-python
@@ -40,8 +62,8 @@ lub od jedynki (Pascal).
 (łańcucha znaków, napisu, stringu) 
 określa się tablicę znaków o zmiennej długości. 
 Koniec napisu zaznacza się za pomocą specjalnego znaku końca ciągu ('\0'). 
-W Pythonie typ string jest typem wbudowanym, a napisy są niezmienne
-i mają określone pewne działania.
+W Pythonie typ string (klasa <em>str</em>) jest typem wbudowanym, 
+a napisy są niezmienne i mają określone pewne działania.
 W innych językach mogą występować inne implementacje. 
 Typowe operacje na stringach: wyznaczanie długości stringu, 
 kopiowanie stringu, porównywanie leksykograficzne, sklejanie stringów. 
@@ -118,7 +140,7 @@ W dalszych rozważaniach skupimy się na drzewach binarnych.
 </ul>
 
 <p>Algorytm DSW (Day, Stout, Warren, 1986) jest to
-algorytm równoważący drzewo BST [Wikipedia].
+algorytm jednorazowo równoważący drzewo BST [Wikipedia].
 
 <h3>WIKIPEDIA</h3>
 
