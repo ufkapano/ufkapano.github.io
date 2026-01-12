@@ -11,11 +11,15 @@
 <h3>WPROWADZENIE</h3>
 
 <p><strong>Lista</strong> to ADT, który reprezentuje skończoną liczbę 
-uporządkowanych elementów (wartości) mogących się powtarzać.
+<strong>uporządkowanych</strong> elementów (wartości) mogących się powtarzać.
+Elementy są uporządkowane (każdy ma swoją ustaloną pozycję),
+ale nie muszą być posortowane, nie jest wymagane istnienie operacji
+porównywania elementów.
 Jeżeli liczba uporządkowanych elementów może być potencjalnie nieskończona,
 to używa się pojęcia <strong>strumienia</strong>.
 Lista to podstawowy przykład kontenera do przechowywania elementów.
-Typowe operacje dla <em>ADT List</em>:
+
+<p>Typowe operacje dla <em>ADT List</em>:
 
 <ul>
 <li>konstruktor tworzący pustą listę,
@@ -48,9 +52,9 @@ który wykorzystuje tablicę dynamiczną (<em>dynamic array</em>).
 
 <hr><pre>
 Geometryczne rozszerzanie tablicy dynamicznej.
-+---+---+
-| 2 |   | size=1, capacity=2
-+---+---+
++---+
+| 2 | size=1, capacity=2
++---+
 +---+---+
 | 2 | 7 | size=2, capacity=2
 +---+---+
@@ -72,6 +76,38 @@ Usuwamy 1, zmniejszenie tablicy (histereza).
 | 2 | 7 |   |   | size=2, capacity=4
 +---+---+---+---+
 </pre><hr>
+
+<p>https://chalmersgu-data-structure-courses.github.io/OpenDSA/Published/ChalmersGU-DSABook/html/ListArrayDynamic.html
+
+<p>Zbadajmy liczbę kopiowań elementów podczas powiększania tablicy 
+o czynnik 2. Zakładamy, że elementy są kolejno wstawiane do tablicy.
+<br>resize(2), kopiowany 1 element
+<br>resize(4), kopiowane 2 elementy
+<br>resize(8), kopiowane 4 elementy
+<br>resize(16), kopiowane 8 elementów
+<br>resize(32), kopiowane 16 elementów
+<br>resize(64), kopiowane 32 elementy
+<br>resize(128), kopiowane 64 elementy
+<br>resize(2^k), kopiowane 2^{k-1} elementów
+
+<p>Załóżmy najbardziej niekorzystny przypadek, że liczba elementów
+wstawionych do tablicy wynosi n = 2^k + 1.
+Tablica rozszerzy się do rozmiaru 2^{k+1}.
+Łączna liczba kopiowań elementów wynosi
+<br>1 + 2 + 4 + ... + 2^k = (1 - 2^{k+1}) / (1 - 2) = 2^{k+1} -1
+= 2 * 2^k -1 = 2 (n-1) -1 = 2n -3.
+<br>Pokazaliśmy, że stosując strategię podwajania rozmiaru tablicy,
+wstawianie do tablicy n elementów wymaga mniej niż 2n kopiowań elementów.
+Inaczej mówiąc, wstawienie jednego elementu do tablicy kosztuje 
+co najwyżej dwa kopiowania elementów.
+
+<p>Osobnym zagadnieniem jest zmniejszanie rozmiaru tablicy
+przy zmniejszającej się liczbie elementów.
+Załóżmy, że aktualny rozmiar tablicy wynosi 2^k.
+Dobrą strategią jest zmniejszanie rozmiaru do 2^k / 2,
+jeżeli liczba elementów zmaleje do 2^k / 4 lub 2^k / 3, a nie do 2^k / 2.
+Unikamy wtedy częstego powiększania i zmniejszania rozmiaru tablicy,
+kiedy liczba elementów oscyluje koło 2^k / 2.
 
 </body>
 </html>

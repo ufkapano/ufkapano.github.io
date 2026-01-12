@@ -16,7 +16,7 @@
 który pozwala zapisywać dane i następnie pobierać je w takiej kolejności, 
 w jakiej je zapisano 
 (ang. <em>first in, first out</em>, FIFO; pierwszy wchodzi, pierwszy wychodzi).
-Interfejs kolejki ma minimum cztery funkcje:
+Interfejs <em>ADT Queue</em> ma minimum cztery funkcje:
 
 <ul>
 <li>Inicjalizacja pustej kolejki (konstruktor).
@@ -85,12 +85,12 @@ możemy w dowolnym programie korzystać z kolejek.
 <hr><pre>
 import queue
 
-aqueue = queue.Queue()    # inicjalizacja kolejki
+Q = queue.Queue()    # inicjalizacja kolejki
 for item in ["a", 2, 3.5]:
-    aqueue.put(item)
+    Q.put(item)
 # Pobieranie elementów z kolejki w kolejności: "a", 2, 3.5
-while not aqueue.is_empty():
-    print(aqueue.get())
+while not Q.is_empty():
+    print(Q.get())
 </pre><hr>
 
 <h3>IMPLEMENTACJA 2</h3>

@@ -15,7 +15,7 @@
 <p>Stos (ang. <em>stack</em>) to ADT, który pozwala zapisywać dane
 i następnie pobierać je w kolejności odwrotnej do zapisu 
 (ang. <em>last in, first out</em>, LIFO; ostatni wchodzi, pierwszy wychodzi).
-Interfejs stosu składa się minimum z czterech funkcji:
+Interfejs <em>ADT Stack</em> składa się minimum z czterech funkcji:
 
 <ul>
 <li>Inicjalizacja pustego stosu (konstruktor).
@@ -92,12 +92,12 @@ bez dodatkowych zabiegów.
 <hr><pre>
 import stack
 
-astack = stack.Stack()
+S = stack.Stack()
 for item in ["a", 2, 3.5]:
-    astack.push(item)
+    S.push(item)
 # Zdejmowanie elementów ze stosu w kolejności 3.5, 2, "a".
-while not astack.is_empty():
-    print(astack.pop())
+while not S.is_empty():
+    print(S.pop())
 </pre><hr>
 
 <h3>IMPLEMENTACJA 2</h3>

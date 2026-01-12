@@ -22,15 +22,16 @@ konkretnych reprezentacji struktur danych i implementacji algorytmów.
 Przy analizie wydajności programów musimy być świadomi kosztów operacji 
 podstawowych.
 
-<p>Dla zbiorów obiektów abstrakcyjnych zwykle potrzebujemy 
+<p>Dla kontenera obiektów abstrakcyjnych zwykle potrzebujemy 
 następujących operacji:
 
 <ul>
-<li>inicjalizacja zbioru obiektów (konstruktor)
-<li>umieszczenie nowego obiektu w zbiorze (insert, push, put)
-<li>usuwanie obiektu ze zbioru (remove, pop, get)
-<li>niszczenie zbioru obiektów (destruktor, zwolnienie zasobów)
-<li>kopiowanie zbioru obiektów (konstruktor kopiujący, podstawienie kopiujące)
+<li>inicjalizacja kontenera (konstruktor),
+<li>testowanie, czy kontener nie jest pusty (empty),
+<li>umieszczenie nowego obiektu w kontenerze (insert, push, put),
+<li>usuwanie obiektu z kontenera (remove, pop, get),
+<li>niszczenie kontenera (destruktor, zwolnienie zasobów),
+<li>odczyt liczby obiektów w kontenerze (size).
 </ul>
 
 <p>Najważniejsze abstrakcyjne typy danych:
@@ -39,7 +40,7 @@ następujących operacji:
 <li>lista (<em>list</em>)
 <li>stos (LIFO, <em>stack</em>)
 <li>kolejka (FIFO, <em>queue</em>)
-<li><em>double-ended queue</em> (<em>deque</em>)
+<li>kolejka dwustronna (<em>double-ended queue</em>, <em>deque</em>)
 <li>kolejka z priorytetami (<em>priority queue</em>)
 <li>sterta/kopiec (<em>heap</em>)
 <li>graf (<em>graph</em>)

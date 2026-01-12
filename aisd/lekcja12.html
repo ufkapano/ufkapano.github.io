@@ -27,8 +27,8 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>ADT MAP to inaczej tablica asocjacyjna (ang. associative array), 
-tablica skojarzeniowa, mapa, słownik.
+<p>ADT MAP to inaczej <strong>tablica asocjacyjna</strong> 
+(ang. <em>associative array</em>), tablica skojarzeniowa, mapa, słownik.
 Przechowuje on pary (klucz, wartość) i umożliwia dostęp do wartości 
 za pomocą klucza. Jest to mapowanie klucza na wartość.
 ADT MAP może być realizowany jako drzewa poszukiwań (BST, AVL, trie),
@@ -46,16 +46,14 @@ złożona z szukanego klucza i pewnej domyślnej wartości
 <li>testowanie, czy mapa nie jest pusta [empty()],
 <li>odczyt liczby par w mapie [size()],
 <li>dodanie nowej pary do mapy [insert(pair)],
-<li>dodanie nowej wartości do istniejącego klucza (modyfikacja pary),
-<li>usunięcie pary z mapy,
+<li>dodanie nowej wartości do istniejącego klucza (modyfikacja pary) [update(pair)],
+<li>usunięcie pary z mapy [erase(key)],
 <li>testowanie, czy mapa zawiera klucz key [find(key)],
-<li>dostęp do wartości połączonej z danym kluczem,
+<li>dostęp do wartości połączonej z danym kluczem [lookup(key)],
 <li>iterowanie po wszystkich kluczach/wartościach/parach,
 zwykle kolejność zwracanych elementów zależy od implementacji,
 <li>czyszczenie mapy [clear()].
 </ul>
-
-
 
 <hr><pre>
 // https://en.cppreference.com/w/cpp/utility/pair/make_pair
@@ -126,8 +124,8 @@ i (2) jednorodnie rozmieszczać klucze w tablicy.
 Wtedy wstawianie, wyszukiwanie i usuwanie klucza działa w czasie O(1).
 
 <p>W praktyce nie jest łatwo znaleźć doskonałą funkcję mieszającą
-i pojawiają się <em>kolizje</em>, czyli dla kluczy key1 != key2 otrzymujemy
-hash(key1) = hash(key2).
+i pojawiają się <strong>kolizje</strong>, czyli dla kluczy key1 != key2 
+otrzymujemy hash(key1) = hash(key2).
 Kolizje zdarzają się zwykle tym częściej im bardziej zapełniona jest tablica,
 dlatego zwykle tablica jest większa niż spodziewana liczba kluczy.
 Niektóre metody mieszania dobrze działają dla rozmiaru tablicy
@@ -172,20 +170,20 @@ musimy zajmować się przedrostkiem +48.
 <h3>PROBLEM KOLIZJI</h3>
 
 <p>Typowe sposoby radzenia sobie z kolizjami 
-(ang. collision resolution) [Drozdek].
+(ang. <em>collision resolution</em>) [Drozdek].
 
 <ul>
 
-<li>Metoda łańcuchowa (ang. chaining).
+<li><strong>Metoda łańcuchowa</strong> (ang. <em>chaining</em>).
 <br>Każda komórka tablicy jest łączem do listy powiązanej,
 która przechowuje klucze kolidujące. Lista może być nieuporządkowana,
 posortowana, albo samoorganizująca się, w celu poprawienia efektywności.
 Metoda ta wymaga dodatkowej pamięci na wskaźniki w tablicy i na listach.
 
-<li>Adresowanie otwarte (ang. open addressing).
+<li><strong>Adresowanie otwarte</strong> (ang. <em>open addressing</em>).
 <br>Jeżeli klucz koliduje z innym kluczem, wybiera się inną dostępną
 komórkę niż tą wskazywaną przez klucz.
-Najprostszym rozwiązaniem jest <em>próbkowanie liniowe</em>,
+Najprostszym rozwiązaniem jest <strong>próbkowanie liniowe</strong>,
 gdzie wybiera się następną wolną komórkę
 [przy końcu tablicy przechodzi się na początek,
 wzór na indeks (hash(key) + i) mod table_size].
@@ -229,14 +227,14 @@ public:
     void display() const;
     void clear(); // czyścimy wszystkie listy
 };
-
+</pre><hr><pre>
 template&lt;typename F, typename S&gt;
 HashTable&lt;F,S&gt;::HashTable(int b) {
     BUCKET = b;
     table = new std::list&lt; std::pair&lt;F,S&gt; &gt;[BUCKET];
     assert( table != nullptr );
 }
-
+</pre><hr><pre>
 template&lt;typename F, typename S&gt;
 void HashTable&lt;F,S&gt;::display() const {
     for (int i = 0; i &lt; BUCKET; i++) {
@@ -246,7 +244,7 @@ void HashTable&lt;F,S&gt;::display() const {
         std::cout &lt;&lt; std::endl;
     }
 }
-
+</pre><hr><pre>
 template&lt;typename F, typename S&gt;
 S& HashTable&lt;F,S&gt;::operator[](const F&amp; key) {
     int index = hash(key);
@@ -292,7 +290,7 @@ public:
     void display() const;
     void clear();
 };
-
+</pre><hr><pre>
 template &lt;typename F, typename S&gt;
 HashTable&lt;F,S&gt;::HashTable(int b) {
     BUCKET = b;
@@ -309,13 +307,13 @@ HashTable&lt;F,S&gt;::HashTable(int b) {
 metod próbkowania.
 
 <ul>
-<li>Próbkowanie kwadratowe (ang. quadratic probing).
+<li><strong>Próbkowanie kwadratowe</strong> (ang. <em>quadratic probing</em>).
 <br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
 sprawdzamy komórkę (hash(key)+i*i) mod table_size.
 Inny sposób to (hash(key)+c1*i+c2*i*i) mod table_size,
 gdzie c1, c2 to pewne stałe.
 
-<li>Podwójne mieszanie (ang. double hashing).
+<li><strong>Podwójne mieszanie</strong> (ang. <em>double hashing</em>).
 <br>Jeżeli komórka hash(key) jest zajęta, to w i-tym kroku
 sprawdzamy komórkę (hash(key)+i*hash2(key)) mod table_size,
 gdzie hash2(key) jest drugą funkcją mieszającą.

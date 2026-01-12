@@ -14,7 +14,7 @@
 największego lub najmniejszego elementu ze zbioru, z którego
 elementy często są usuwane i do którego są wstawiane.
 Jednym ze sposobów rozwiązania tego problemu jest zachowanie 
-uporządkowania zbioru, dzięki czemu element najmniejszy lub
+posortowanego zbioru, dzięki czemu element najmniejszy lub
 największy jest zawsze dostępny. Jednak stałe porządkowanie zbioru
 jest rozwiązaniem kosztownym, poza tym naszym celem nie jest
 trzymanie w kolejności wszystkich elementów, wobec czego robimy
@@ -27,7 +27,7 @@ Lepszym rozwiązaniem jest zastosowanie stert.
 jest to drzewo (zwykle binarne) zorganizowane tak, 
 że można szybko pobrać węzeł o największej wartości. 
 Koszty takiego rozwiązania są mniejsze
-od kosztów zachowywania uporządkowania danych.
+od kosztów zachowywania posortowanych danych.
 Każdy węzeł dziecko ma wartość mniejszą (lub równą) od rodzica.
 Węzeł główny ma wartość największą w całym drzewie.
 
@@ -67,7 +67,7 @@ poziom 5 |15 16 17 18 19 20 21 22 23 24 25 26 27 28 29 30
 
 <p>Implementacja oparta jest na założeniu, że indeksy tablicy
 przechowującej elementy sterty są numerowane od zera.
-Na początku definiujemy funkcje, króre dla elementu o indeksie n
+Na początku definiujemy funkcje, które dla elementu o indeksie n
 obliczają odpowiednio: indeks rodzica (<em>heap_parent</em>), 
 indeks lewego potomka (<em>heap_left</em>)
 i indeks prawego potomka (<em>heap_right</em>).
@@ -161,12 +161,12 @@ w dowolnym programie korzystać ze sterty.
 <hr><pre>
 import heap
 
-aheap = heap.Heap()
+H = heap.Heap()
 for item in [5, 10, 20, 1, 25, 22, 9]:
-    aheap.insert(item)
+    H.insert(item)
 # Zdejmowanie elementów ze sterty od największego do najmniejszego.
-while not aheap.is_empty():
-    print(aheap.remove())
+while not H.is_empty():
+    print(H.remove())
 </pre><hr>
 
 <p>Jeżeli na stercie jest N elementów, to ścieżka od korzenia
