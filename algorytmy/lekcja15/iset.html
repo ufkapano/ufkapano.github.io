@@ -12,12 +12,14 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p><em>Zbiór niezależny</em> (ang. independent set) 
+<p><strong>Zbiór niezależny</strong> (ang. <em>independent set</em>) 
 grafu nieskierowanego G=(V,E) jest to podzbiór S zbioru wierzchołków V, 
 taki że żadne dwa wierzchołki z S nie są połączone krawędzią z E.
-'Maksymalny zbiór niezależny' (ang. maximal independent set)
+<strong>Maksymalny zbiór niezależny</strong> 
+(ang. <em>maximal independent set</em>)
 nie jest podzbiorem większego zbioru niezależnego.
-'Największy zbiór niezależny' (ang. maximum independent set)
+<strong>Największy zbiór niezależny</strong> 
+(ang. <em>maximum independent set</em>)
 jest zbiorem niezależnym o największej liczności w G.
 Problem znalezienia największego zbioru niezależnego jest NP-trudny.
 
@@ -53,14 +55,12 @@ class TestIndependentSet(unittest.TestCase):
 <h3>ALGORYTM Z POWROTAMI</h3>
 
 <p>Liczba potencjanych rozwiązań do sprawdzenia to 2^N, 
-bo każdy wierzchołek może należeć lub nie do zbioru niezależnego.
+bo każdy wierzchołek może należeć lub nie należeć do zbioru niezależnego.
 
 <hr><pre>
-# 0 --- 1 --- 2   graf nie jest dwudzielny, bo są trójkąty
-# |   / |     |
-# |  /  |     |   niezależne: 0, 4, 2 (najlepszy)
-# | /   |     |
-# 3 --- 4 --- 5
+# 0---1---2   graf nie jest dwudzielny, bo są trójkąty
+# | / |   |
+# 3---4---5   największy zbiór niezależny: {0, 2, 4}
 
 N = 6   # liczba wierzchołków
 
@@ -104,7 +104,8 @@ def graph_iset(k):
         else:
             if len(tmp_set) > len(independent_set):
                 independent_set = set(tmp_set)
-    else:   # used[node]==0
+    else:
+        assert used[node] == 0
         # Najpierw sprawdzam możliwość, że należy do iset.
         add_iset(node)
         if k &lt; N-1:

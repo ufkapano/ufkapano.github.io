@@ -12,13 +12,21 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p><em>Zbiór dominujący</em> (ang. dominating set) grafu nieskierowanego 
-G=(V,E) jest to podzbiór S zbioru wierzchołków V, taki że 
-każdy wierzchołek z V, który nie należy do S, ma co najmniej
+<p><strong>Zbiór dominujący</strong> (ang. <em>dominating set</em>) 
+grafu nieskierowanego G=(V,E) jest to podzbiór S zbioru wierzchołków V taki, 
+że każdy wierzchołek z V, który nie należy do S, ma co najmniej
 jednego sąsiada w S.
-Problem znalezienia najmniejszego zbioru dominującego jest trudny.
+
+<p>Problem znalezienia najmniejszego zbioru dominującego, jako
+problem decyzyjny, jest NP-zupełny.
+Dla danego grafu G i liczby k pytamy, czy najmniejszy zbiór dominujący
+ma liczność mniejszą lub równą k.
 
 <hr><pre>
+# 5---3---4---1  najmniejsze zbiory dominujące: {3,4}, {4,6}
+#   \ |   |
+#     6---2
+</pre><hr><pre>
 # Testowanie zbioru dominującego.
 
 import unittest

@@ -10,18 +10,35 @@
 
 <p>https://en.wikipedia.org/wiki/Exact_cover
 
+<p>https://en.wikipedia.org/wiki/Pentomino
+
+<pre>
+ _ _ _ _ _ _ _ _ _ _ 
+|  _ _ _|  _| |_   _|
+|_|  _ _| |_   _| | |
+|_ _| | |_ _|_| |_| |
+|  _ _| | |_   _|_  |
+|_|_ _ _|_  |_|   |_|
+|_ _ _ _ _|_ _|_ _ _|
+</pre>
+
 <p>https://arxiv.org/abs/cs/0011047
-<br>Dancing links, Donald E. Knuth.
+<br>Donald E. Knuth, <em>Dancing links</em>, arXiv:cs/0011047 [cs.DS].
+
+<p>https://arxiv.org/abs/1010.5890
+<br>A. Kapanowski, <em>Python for education: the exact cover problem</em>,
+arXiv:1010.5890 [cs.DS].
 
 <h3>WPROWADZENIE</h3>
 
-<p>Problem dokładnego pokrycia zbioru (the exact cover problem)
+<p><strong>Problem dokładnego pokrycia zbioru</strong> 
+(<em>the exact cover problem</em>)
 może być określony abstrakcyjnie następująco [Knuth, Dancing links]:
 Jeżeli dana jest macierz zer i jedynek, to czy posiada
 ona zbiór wierszy zawierający dokładnie jedną 1 w każdej kolumnie?
 Przykładowo macierz A poniżej posiada taki zbiór (wiersze 1, 4, 5).
 
-<hr><pre>
+<pre>
 +----------+---------------+
 | Kolumna  | A B C D E F G |
 +----------+---------------+
@@ -32,13 +49,13 @@ Przykładowo macierz A poniżej posiada taki zbiór (wiersze 1, 4, 5).
 | Wiersz 5 | 0 1 0 0 0 0 1 | *
 | Wiersz 6 | 0 0 0 1 1 0 1 |
 +----------+---------------+
-</pre><hr>
+</pre>
 
 <p>Można też patrzeć na kolumny jak na przestrzeń, a na wiersze
 jak na podzbiory tej przestrzeni. Wtedy będziemy chcieli
 pokryć przestrzeń podzbiorami rozłącznymi.
 W każdym przypadku problem jest trudny, NP-zupełny.
-Rozwiązuje się go za pomocą algorytmów z powrotami (backtracking).
+Rozwiązuje się go za pomocą algorytmów z powrotami (<em>backtracking</em>).
 
 <h3>PARKIET</h3>
 

@@ -15,7 +15,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Algorytmy z powrotami (ang. backtracking) są algorytmami rekurencyjnymi.
+<p>Algorytmy z powrotami (ang. <em>backtracking</em>) są algorytmami rekurencyjnymi.
 Szukamy algorytmów poszukujących rozwiązań dla specyficznych 
 problemów metodą prób i błędów. Zwykle stosowanym tu sposobem 
 jest podział rozwiązywanego zadania na podzadania. 
@@ -37,23 +37,23 @@ oraz możliwości stosowania rekurencji.
 Kod może być zorganizowany na kilka sposobów.
 
 <ul>
-<li>Znajdowanie <em>pojedyńczego</em> rozwiązania danego problemu.
+<li>Znajdowanie <strong>pojedynczego rozwiązania</strong> danego problemu.
 Przykładem jest określenie drogi skoczka szachowego
 i rozmieszczenie ośmiu hetmanów.
 Każde rozwiązanie jest jednakowo dobre, więc kończymy poszukiwania
 po znalezieniu pierwszego rozwiązania.
-<li>Znajdowanie <em>wszystkich</em> rozwiązań danego problemu.
-Przykładem jest układanie pentomino, ale także droga skoczka szachowego
-i osiem hetmanów.
-<li>Znajdowanie <em>optymalnego</em> rozwiązania.
+<li>Znajdowanie <strong>wszystkich rozwiązań</strong> danego problemu.
+Przykładem jest układanie pentomino, ale także problem skoczka szachowego
+i problem ośmiu hetmanów.
+<li>Znajdowanie <strong>optymalnego rozwiązania</strong>.
 Należy wygenerować wszystkie możliwe rozwiązania i zachować jedno
-w pewnym sensie optymalne. Musimy mieć daną pewną funkcję f,
+w pewnym sensie optymalne. Musimy mieć daną pewną funkcję f(),
 która będzie mierzyć wartość każdego rozwiązania.
 Przykładem jest poszukiwanie największego zbioru niezależnego w grafie,
-a funkcja f będzie zwracać liczność znalezionego zbioru niezależnego.
+a funkcja f() będzie zwracać liczność znalezionego zbioru niezależnego.
 Podczas pracy algorytmu przechowujemy najlepsze z dotychczasowych
-rozwiązań, ponadto trzeba rozpocząć od poprawnej wartości początkowej
-(np. zbiór niezależny pusty lub jednoelementowy).
+rozwiązań, ponadto trzeba rozpocząć od poprawnej wartości początkowej,
+np. zbiór niezależny pusty lub jednoelementowy.
 </ul>
 
 <p>Cechy charakterystyczne algorytmów z powrotami:
@@ -64,39 +64,43 @@ końcowego są zapisywane. Jeżeli dochodzimy do ślepej uliczki,
 to odpowiednie zapisy są usuwane.
 
 <li>Liczba potencjalnych kandydatów w każdym kroku jest
-skończona (ale może się zmieniać w kolejnych krokach).
+skończona, ale może się zmieniać w kolejnych krokach.
 
 <li>Programy często używają parametru jawnie określającego
 głębokość rekurencji, co pozwala na proste sformułowanie
 warunku zakończenia.
 </ul>
 
-<p>Algorytm z powrotami jest właściwie <em>metaheurystyką</em>
+<p>Algorytm z powrotami jest właściwie <strong>metaheurystyką</strong>
 niż specyficznym algorytmem. Użytkownik musi określić problem
 do rozwiązania, naturę częściowego rozwiązania i jak należy
 częściowe rozwiązanie uzupełniać w celu otrzymania pełnego
-rozwiązania. W przeciwieństwie do wielu innych mataheurystyk,
+rozwiązania. W przeciwieństwie do wielu innych metaheurystyk,
 mamy tu gwarancję znalezienia wszystkich rozwiązań
 w ograniczonym zakresie czasu.
 
 <p>Wybrane problemy rozwiązywane za pomocą algorytmów z powrotami:
 
 <ul>
-<li>Droga skoczka szachowego.
+<li>Problem skoczka szachowego.
 <li>Problem ośmiu hetmanów.
-<li>Problem dokładnego pokrycia zbioru (latin square; sudoku).
-<li>Problem trwałego małżeństwa [Wirth] [Mamy dane n kobiet i n mężczyzn.
+<li>Problem dokładnego pokrycia zbioru.
+Przykładami są układanie kwadratu łacińskiego n &times; n 
+(ang. <em>latin square</em>) lub sudoku (różne warianty planszy: 
+4 &times; 4, 6 &times; 6, 9 &times; 9, itp.).
+<li>Problem trwałego małżeństwa [Wirth]. Mamy dane n kobiet i n mężczyzn.
 Każda kobieta i każdy mężczyzna szereguje partnerów według preferencji.
 Jeżeli n par zostało dobranych tak, że istnieje mężczyzna i kobieta,
 którzy nie stanowią małżeństwa, ale mężczyzna przedkłada tę kobietę 
 nad aktualną żonę, a kobieta przedkłada tego mężczyznę nad aktualnego
 męża, to taki dobór małżeństw jest nietrwały. Jeżeli żadna taka para
-nie istnieje, to dobór małżeństw jest <em>trwały</em>.].
-<li>Problem m-kolorowania grafu (ang. m coloring problem) - problem
-kolorowania wierzchołków grafu nieskierowanego m kolorami.
+nie istnieje, to dobór małżeństw jest <em>trwały</em>..
+<li>Problem m-kolorowania grafu (ang. <em>m coloring problem</em>).
+Jest to problem kolorowania wierzchołków grafu nieskierowanego m kolorami.
 Przy rozwiązywaniu metodą siłową mamy m^n rozwiązań do sprawdzenia.
-<li>Problem optymalnego wyboru [Wirth] (problem znalezienia największego zbioru 
-niezależnego w grafie nieskierowanym; problem plecakowy).
+<li>Problem optymalnego wyboru [Wirth].
+Przykładem jest problem znalezienia największego zbioru niezależnego 
+w grafie nieskierowanym lub problem plecakowy.
 </ul>
 
 </body>

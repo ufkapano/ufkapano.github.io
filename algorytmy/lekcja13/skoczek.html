@@ -6,13 +6,21 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Droga skoczka szachowego</h1>
+<h1>Problem skoczka szachowego</h1>
 
 <p>https://en.wikipedia.org/wiki/Knight%27s_tour
+<br>Zamknięta ścieżka skoczka szachowego dla planszy 8 &times; 8.
+Obrazek autorstwa Badlydrawnjeff - Praca własna, created using 
+User:Interiot's Toolserver hack of en.User:Ilmari Karonen's perl script., 
+Domena publiczna, https://commons.wikimedia.org/w/index.php?curid=1480166
+
+<p><img src="../img/Turk-knights-tour.png" alt="[ Turk knights tour ]" 
+width="341" height="341">
 
 <h3>WPROWADZENIE</h3>
 
-<p>Problem polega na obejściu całej szachownicy w taki sposób,
+<p><strong>Problem skoczka szachowego</strong>
+polega na obejściu całej szachownicy w taki sposób,
 że każde pole będzie odwiedzone dokładnie raz.
 Możliwe są różne punkty startowe na szachownicy.
 Dla skoczka istnieje potencjalnie osiem kierunków ruchu
@@ -21,17 +29,22 @@ do następnej pozycji.
 <p>Warto zauważyć, że problem drogi skoczka szachowego jest specjalnym
 przypadkiem NP-trudnego problemu znajdowania ścieżki lub cyklu Hamiltona
 w grafie nieskierowanym.
-Okazuje się, problem znalezienia drogi skoczka szachowego
-jest taką instancją ogólnego problemu, która ma rozwiązanie wielomianowe.
+<strong>Cykl Hamiltona</strong> to taki cykl w grafie, w którym każdy 
+wierzchołek grafu odwiedzany jest dokładnie raz (oprócz pierwszego wierzchołka). 
+Analogicznie, <strong>ścieżka Hamiltona</strong> to taka ścieżka w której 
+każdy wierzchołek odwiedzony jest dokładnie raz.
+
+<p>Okazuje się, problem znalezienia drogi skoczka szachowego
+jest taką instancją ogólnego problemu, dla której można znaleźć rozwiązanie
+w czasie wielomianowym.
 Istnieją algorytmy działające w czasie liniowym względem liczby
 pól szachownicy O(n^2) [n to bok planszy kwadratowej n &times; n], 
 które znajdują rozwiązanie problemu.
 
-<p>Otwarta ścieżka Hamiltona istnieje dla każdego n większego lub równego 5.
-Zamknięta ścieżka Hamiltona (cykl) istnieje dla każdego n parzystego
-większego lub równego 6.
+<p>Ścieżka Hamiltona istnieje dla każdego n większego lub równego 5.
+Cykl Hamiltona istnieje dla każdego n parzystego większego lub równego 6.
 Algorytmy znajdujące rozwiązanie zwykle wykorzystują metodę
-dziel i zwyciężaj, gdzie rozwiązania dla małych planszy są
+<strong>dziel i zwyciężaj</strong>, gdzie rozwiązania dla małych planszy są
 zawczasu przygotowane.
 
 <p>Problem znajdowania zamkniętej ścieżki skoczka może być rozwiązany
@@ -39,6 +52,7 @@ przy pomocy sztucznej sieci neuronowej (Takefuji, Lee, 1992).
 
 <hr><pre>
 # Problem drogi skoczka na kwadratowej szachownicy o boku N.
+# Program znajduje otwarte i zamknięte drogi skoczka.
 # Współrzędne planszy x i y mają zakres od 0 do N-1.
 
 def rysuj():
