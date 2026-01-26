@@ -49,11 +49,18 @@ class Matrix:
 
     def __mul__(self, other): pass   # mnożenie macierzy
 
+    def reshape(self, r, c):   # zmiana wymiarów macierzy
+        assert r * c == self.rows * self.cols
+        self.rows = r
+        self.cols = c
+
 # Zastosowanie.
-m = Matrix(3, 4)
-m[1, 2] = 12     # metoda __setitem__
+m = Matrix(3, 4)   # widok na dane 3x4
+m.data = list(range(12))
+m[1, 2] = 120     # metoda __setitem__
 print(m[1, 2])   # metoda __getitem__
 print(m)         # metoda __str__
+m.reshape(2, 6)   # widok na dane 2x6
 </pre><hr>
 
 <h3>ZADANIE 12.2 (STACK)</h3>

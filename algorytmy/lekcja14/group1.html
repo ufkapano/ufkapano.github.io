@@ -11,8 +11,8 @@
 <h3>WPROWADZENIE</h3>
 
 <p>W pierwszej wersji grupa będzie zbiorem, w którym
-przechowywane będą instancje klasy Perm.
-Klasa Group będzie dziedziczyć z klasy set.
+przechowywane będą instancje klasy <em>Perm</em>.
+Klasa <em>Group</em> będzie dziedziczyć z klasy <em>set</em>.
 
 <p>Implementacja działa tylko dla małych grup permutacji,
 ale prezentuje wiele aspektów programowania w Pythonie.
@@ -60,10 +60,6 @@ class Group(set):
             perms_generated = set()
             new_order = self.order()
 
-    def listperms(self):
-        """Zwraca listę permutacji z grupy."""
-        return list(self)
-
     def iterperms(self):
         """Iterator po permutacjach z grupy."""
         return iter(self)
@@ -86,10 +82,9 @@ G.insert(R1)
 G.insert(R2)
 # Wygeneruje się obrót o 180 stopni, permutacja [2, 3, 0, 1].
 print(G)   # dziedziczone po słownikach
-print("order {}".format(G.order()))   # 4, rząd grupy D_2
-print("contains {}".format(Perm(N) in G))   # True
-print("contains {}".format(Perm(N, [1, 0, 2, 3]) in G))   # False
-print("listperms {}".format(G.listperms()))
+assert G.order() == 4   # rząd grupy D_2
+assert Perm(N) in G
+assert Perm(N, [1, 0, 2, 3]) not in G
 for perm in G.iterperms():
     print("{} {}".format(perm, perm.label()))
 </pre><hr>
