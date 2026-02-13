@@ -33,32 +33,37 @@ gdzie składowane są kody źródłowe programów,
 (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
-porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;).
+porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;),
+konstruktor kopiujący, podstawienie kopiujące (operator=).
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
-Klasa Term opisuje węzeł listy powiązanej i
+Klasa <em>Term</em> opisuje węzeł listy powiązanej i
 przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
-Klasa Poly przechowuje łącze do posortowanej malejąco listy powiązanej wyrazów
+Klasa <em>Poly</em> przechowuje łącze do posortowanej malejąco listy powiązanej wyrazów
 i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x),
-degree() (stopień wielomianu).
+(odczyt współczynnika przy danej potędze x,
+brak wyrazu oznacza zerowy współczynnik),
+degree() (stopień wielomianu, zerowy wielomian ma stopień zero).
 
 <li>Implementacja wielomianów na bazie tablic (szablon, współczynniki typu T).
 Działania na wielomianach: dodawanie (operator+), odejmowanie (operator-), 
 mnożenie (operator*), obliczanie wartości wielomianu (algorytm Hornera),
-porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;).
+porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;),
+konstruktor kopiujący, podstawienie kopiujące (operator=).
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
-Klasa Poly przechowuje tablicę współczynników i implementuje działania.
+Klasa <em>Poly</em> przechowuje tablicę współczynników i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x),
-degree() (stopień wielomianu).
+(odczyt współczynnika przy danej potędze x,
+brak wyrazu oznacza zerowy współczynnik),
+degree() (stopień wielomianu, zerowy wielomian ma stopień zero).
 
 <li>Implementacja kwaternionów podobnie do <em>std::complex</em>
 [https://en.wikipedia.org/wiki/Quaternion].
 Działania na kwaternionach: dodawanie (operator+), odejmowanie (operator-), 
-mnożenie (operator*), sprzężenie (conjugate), moduł,
-porównywanie (operator==, operator!=), 
-wyświetlanie (operator&lt;&lt;).
+mnożenie (operator*), sprzężenie (conjugate lub conj), moduł (abs),
+kwadrat modułu (norm),
+porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;),
+konstruktor kopiujący, podstawienie kopiujące (operator=).
 
 <li>Obliczanie wielomianu szachowego
 [https://en.wikipedia.org/wiki/Rook_polynomial].
@@ -79,9 +84,12 @@ Cormen str. 245, reprezentacja
 <li>Drzewo przedziałowe, czyli drzewo binarne do przechowywania
 danych o przedziałach liczbowych. Cormen str. 351.
 
-<li>Kopiec trójkowy.
+<li>Kopiec trójkowy, czyli kopiec wykorzystujący drzewo trójkowe
+(węzeł ma najwyżej troje dzieci) zamiast drzewa binarnego
+[https://en.wikipedia.org/wiki/D-ary_heap].
 
 <hr><pre>
+# Obliczanie pozycji rodzica i dzieci w kopcu trójkowym dla węzła o numerze n.
 int heap_parent(int n) { return (n-1) / 3; }
 int heap_left(int n) { return (3 * n + 1); }
 int heap_middle(int n) { return (3 * n + 2); }

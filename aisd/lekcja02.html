@@ -176,7 +176,8 @@ void anysort(Iterator first, Iterator last, Compare comp);
 // https://en.cppreference.com/w/cpp/algorithm/is_sorted
 
 // Sprawdzenie poprawności sortowania liczb całkowitych.
-#include &lt;cassert&gt;
+#include &lt;algorithm&gt; // dla std::is_sorted()
+#include &lt;cassert&gt; // dla assert()
 
 // Wykorzystanie funkcji z STL.
 assert( std::is_sorted(v.begin(), v.end()) );   // vector, array
