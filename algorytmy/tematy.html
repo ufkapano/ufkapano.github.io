@@ -84,6 +84,19 @@ class Matrix(dict):
         self.data[pair] = value
 </pre><hr>
 
+<li>Algorytm Kadane dla tablicy 1D i 2D.
+Funkcje kadane1d(arr) i kadane2d(arr) powinny zwracać sumę elementów 
+podtablicy i odpowiednie zakresy indeksów podtablicy.
+<br>[https://en.wikipedia.org/wiki/Maximum_subarray_problem]
+
+<li>Drzewo przedziałowe (ang. <em>segment tree</em>), czyli
+struktura danych do przechowywania informacji o tablicy liczbowej A[0...n-1].
+Struktura pozwala na szybkie zapytania O(log n) dotyczące dowolnej
+podtablicy A[left...right], takie jak suma elementów,
+wartość najmniejsza/największa.
+Można też w czasie O(log n) dodawać pewną liczbę do każdego elementu podtablicy.
+<br>[https://cp-algorithms.com/data_structures/segment_tree.html]
+
 </ul>
 
 <h3>CIAŁA LICZBOWE</h3>
@@ -91,8 +104,10 @@ class Matrix(dict):
 <ul>
 
 <li>Kwaterniony.
-Implementacja działań na kwaternionach.
-Należy zapewnić współpracę z typami wbudowanymi (int, float, complex).
+Implementacja działań na kwaternionach, analogicznie do działań
+na liczbach zespolonych <em>complex</em>.
+Należy zapewnić współpracę z typami wbudowanymi 
+(<em>int</em>, <em>float</em>, <em>complex</em>).
 
 <hr><pre>
 class Quat:
@@ -134,15 +149,23 @@ class Node:
         return str(self.data)
 </pre><hr>
 
-<li>Drzewa czerwono-czarne (red-black trees).
+<li>Drzewo czerwono-czarne (ang. <em>red-black tree</em>),
+czyli drzewo BST o dodatkowych właściwościach.
+<br>[https://en.wikipedia.org/wiki/Red%E2%80%93black_tree]
 
-<li>Drzewa splay.
+<li>Drzewo rozchylane (ang. <em>splay tree</em>), czyli drzewo BST
+zmieniające swoją strukturę tak, że często wyszukiwane węzły stają się
+szybsze do znalezienia.
+<br>[https://en.wikipedia.org/wiki/Splay_tree]
 
-<li>Drzewa AVL.
+<li>Drzewo AVL, czyli drzewo BST, w którym dla każdego wezła różnica wysokości
+leweo i prawego poddrzewa może się różnić co najwyżej o jeden.
+<br>[https://en.wikipedia.org/wiki/AVL_tree]
 
 <li>Drzewa ukorzenione o dowolnym stopniu rozgałęzień.
 Cormen str. 245, reprezentacja 
 <em>na lewo syn, na prawo brat</em>.
+<br>[https://en.wikipedia.org/wiki/Left-child_right-sibling_binary_tree]
 
 <hr><pre>
 class Node:
@@ -155,12 +178,17 @@ class Node:
         return str(self.data)
 </pre><hr>
 
-<li>Drzewo przedziałowe, czyli drzewo binarne do przechowywania
-danych o przedziałach liczbowych. Cormen str. 351.
+<li>Drzewo przedziałowe (ang. <em>interval tree</em>), 
+czyli drzewo binarne do przechowywania danych o przedziałach na osi liczbowej
+[Cormen str. 351]. Dzięki tej strukturze można wydajnie znajdować
+wszystkie przedziały przekrywające się z danym punktem lub przedzałem.
+<br>[https://en.wikipedia.org/wiki/Interval_tree]
 
 <li>Kopce Fibonacciego [trudne]. Cormen str. 513.
 
-<li>Kopiec trójkowy.
+<li>Kopiec trójkowy, czyli kopiec wykorzystujący drzewo trójkowe 
+(węzeł ma najwyżej troje dzieci) zamiast drzewa binarnego 
+[https://en.wikipedia.org/wiki/D-ary_heap].
 
 <hr><pre>
 def heap_parent(n): return (n-1) / 3
@@ -168,7 +196,6 @@ def heap_left(n): return (3 * n + 1)
 def heap_middle(n): return (3 * n + 2)
 def heap_right(n): return (3 * n + 3)
 </pre><hr>
-
 
 </ul>
 
@@ -298,11 +325,6 @@ użytkownika lub zapisać do pliku, najlepiej graficznego.
 <li>Wyszukiwanie wzorca w tekście algorytmem KMP.
 Funkcja 'pattern_matching(text, pattern)' powinna zwracać indeks i 
 id którego nastąpiło dopasowanie wzorca.
-
-<li>Algorytm Kadane dla tablicy 1D i 2D.
-Funkcje kadane1d(arr) i kadane2d(arr) powinny zwracać sumę elementów 
-podmacierzy i odpowiednie zakresy indeksów podmacierzy
-[https://en.wikipedia.org/wiki/Maximum_subarray_problem].
 
 <li>Problem plecakowy (ang. knapsack problem).
 

@@ -65,26 +65,46 @@ kwadrat modułu (norm),
 porównywanie (operator==, operator!=), wyświetlanie (operator&lt;&lt;),
 konstruktor kopiujący, podstawienie kopiujące (operator=).
 
-<li>Obliczanie wielomianu szachowego
-[https://en.wikipedia.org/wiki/Rook_polynomial].
+<li>Obliczanie wielomianu szachowego.
+<br>[https://en.wikipedia.org/wiki/Rook_polynomial]
 
-<li>Implementacja list z przeskokami (szablon, elementy na liście typu T)
-[https://en.wikipedia.org/wiki/Skip_list].
+<li>Implementacja list z przeskokami (ang. <em>skip list</em>).
+Ma to być szablon z elementami na liście typu T.
+<br>[https://en.wikipedia.org/wiki/Skip_list]
 
-<li>Drzewa AVL.
+<li>Drzewo czerwono-czarne (ang. <em>red-black tree</em>),
+czyli drzewo BST o dodatkowych właściwościach.
+<br>[https://en.wikipedia.org/wiki/Red%E2%80%93black_tree]
 
-<li>Drzewa czerwono-czarne (ang. <em>red-black trees</em>).
+<li>Drzewo AVL, czyli drzewo BST, w którym dla każdego wezła różnica wysokości
+leweo i prawego poddrzewa może się różnić co najwyżej o jeden.
+<br>[https://en.wikipedia.org/wiki/AVL_tree]
 
-<li>Drzewa splay.
+<li>Drzewo rozchylane (ang. <em>splay tree</em>), czyli drzewo BST
+zmieniające swoją strukturę tak, że często wyszukiwane węzły stają się
+szybsze do znalezienia.
+<br>[https://en.wikipedia.org/wiki/Splay_tree]
 
-<li>Drzewa ukorzenione o dowolnym stopniu rozgałęzień.
+<li>Drzewo ukorzenione o dowolnym stopniu rozgałęzień.
 Cormen str. 245, reprezentacja 
 <em>na lewo syn, na prawo brat</em>.
 
-<li>Drzewo przedziałowe, czyli drzewo binarne do przechowywania
-danych o przedziałach liczbowych. Cormen str. 351.
+<li>Drzewo przedziałowe (ang. <em>interval tree</em>), 
+czyli drzewo binarne do przechowywania danych o przedziałach na osi liczbowej
+[Cormen str. 351]. Dzięki tej strukturze można wydajnie znajdować
+wszystkie przedziały przekrywające się z danym punktem lub przedzałem.
+<br>[https://en.wikipedia.org/wiki/Interval_tree]
 
-<li>Kopiec trójkowy, czyli kopiec wykorzystujący drzewo trójkowe
+<li>Drzewo przedziałowe (ang. <em>segment tree</em>), czyli
+struktura danych do przechowywania informacji o tablicy liczbowej A[0...n-1].
+Struktura pozwala na szybkie zapytania O(log n) dotyczące dowolnej
+podtablicy A[left...right], takie jak suma elementów,
+wartość najmniejsza/największa.
+Można też w czasie O(log n) dodawać pewną liczbę do każdego elementu podtablicy.
+<br>[https://cp-algorithms.com/data_structures/segment_tree.html]
+
+<li>Kopiec trójkowy (ang. <em>ternary heap</em>), 
+czyli kopiec wykorzystujący drzewo trójkowe
 (węzeł ma najwyżej troje dzieci) zamiast drzewa binarnego
 [https://en.wikipedia.org/wiki/D-ary_heap].
 
@@ -117,16 +137,17 @@ Wygodne jest wczytywanie bazy przy starcie programu, potem zapisywanie bazy
 do pliku po każdej zmianie danych (dodanie/usuwanie rekordu).
 Nie należy używać serwerów dużych baz danych, można użyć biblioteki SQLite.
 
-<li>Obliczanie mediany kroczącej (ang. <em>running median</em>)
-[https://en.wikipedia.org/wiki/Moving_average#Moving_median].
+<li>Obliczanie mediany kroczącej (ang. <em>running median</em>).
+<br>[https://en.wikipedia.org/wiki/Moving_average#Moving_median]
 
 <li>Implementacja systemu T9 (<em>predictive text</em>), 
 stosowanego w telefonach komórkowych 
-do łatwiejszego pisania tekstów za pomocą klawiatury 3x4
-[https://en.wikipedia.org/wiki/T9_(predictive_text)].
+do łatwiejszego pisania tekstów za pomocą klawiatury 3x4.
 Używa się 8 przycisków znaczących 2-9.
 Jeżeli wyświetli się kilka wyrazów, ale pierwszy nie jest tym właściwym,
 to klawisz '*' daje przejście do następnego wyrazu.
+<br>[https://en.wikipedia.org/wiki/T9_(predictive_text)]
+
 
 <pre>
 +------+------+------+
