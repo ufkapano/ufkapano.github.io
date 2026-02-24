@@ -1,0 +1,176 @@
+<html>
+<head>
+<title>Lekcja 1</title>
+<meta http-equiv="content-type" content="text/html; charset=utf-8">
+</head>
+
+<body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
+
+<p><a href="index.html">AiSD (index)</a>
+<hr>
+
+<h1>AiSD (1) - ADT SET</h1>
+
+<p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
+
+<p>https://en.wikipedia.org/wiki/Set_(abstract_data_type)
+
+<!--
+<p>https://brilliant.org/wiki/sets-adt/
+<br>Hash tables and sets are very related.
+<br>Implementują w Pythonie zbiory za pomocą dict, co jest trochę bez sensu.
+
+<p>https://brilliant.org/wiki/associative-arrays/
+-->
+
+<h3>WPROWADZENIE</h3>
+
+<p>Zbiór to ADT, który pozwala przechowywać dane bez powtórzeń
+i bez ustalonego uporządkowania.
+Jest to komputerowa realizacja matematycznego pojęcia zbioru skończonego.
+Istotne jest, aby operacja sprawdzania należenia elementu do zbioru
+była wykonywana w stałym czasie O(1).
+
+<p>Czasem wymaga się, aby elementy zbioru były posortowane.
+Wtedy sprawdzanie należenia elementu do zbioru zajmuje czas O(log n).
+
+<p>Typowe operacje dla ADT SET są następujące:
+
+<ul>
+<li>konstruktor tworzący pusty zbiór,
+<li>testowanie, czy zbiór nie jest pusty [empty()],
+<li>odczyt liczby elementów w zbiorze [size()],
+<li>dodanie elementu do zbioru [insert(item)],
+<li>usuwanie elementu ze zbioru [erase(item), remove(item)],
+<li>test należenia do zbioru [find(item), contains(item)],
+<li>czyszczenie zbioru [clear()].
+</ul>
+
+<p>Działania na zbiorach:
+
+<ul>
+<li>wyznaczanie sumy zbiorów S &cup; T [union(S,T)],
+<li>wyznaczanie części wspólnej zbiorów S &cap; T [intersection(S,T)],
+<li>wyznaczanie różnicy zbiorów S-T [difference(S,T)],
+<li>sprawdzenie, czy zbiór S jest podzbiorem zbioru T, S &sub; T [subset(S,T)],
+</ul>
+
+<hr><pre>
+// https://en.cppreference.com/w/cpp/container/set
+
+#include &lt;set&gt;
+
+// std::set is an associative container that contains a sorted set of unique
+// objects of type Key. Sorting is done using the key comparison function Compare.
+// Search, removal, and insertion operations have logarithmic complexity.
+// Sets are usually implemented as red-black trees.
+
+// Przykład użycia zbioru posortowanego.
+
+// Elementy zbioru będą wewnętrznie posortowane.
+// std::set&lt;int&gt; intset = {4,0,3,1,2};   // initializer list
+std::set&lt;int&gt; intset;
+for (int i = 0; i &lt; 15; i++)
+    intset.insert(i % 5);   // elementy powtarzające się są ignorowane
+    // operacja insert() zwraca status typu
+    // std::pair&lt; std::set&lt;int&gt;::iterator, bool &gt;
+assert( intset.size() == 5 );
+assert( intset.count(2) == 1 );   // dozwolone 0 lub 1 dla set
+assert( intset.count(20) == 0 );   // brak 20 w zbiorze
+
+// Wyszukiwanie elementu w zbiorze, dostajemy iterator.
+auto it = intset.find(3);
+assert( it != intset.end() );   // liczba 3 należy do zbioru
+
+assert( intset.contains(3) );   // C++20
+
+// intset.erase(3);   // usunięcie liczby 3
+intset.erase(it);   // użycie iteratora do usunięcia liczby 3
+
+it = intset.find(7);
+assert( it == intset.end() );   // liczby 7 nie ma w zbiorze
+intset.clear();   // opróżnienie zbioru
+assert( intset.empty() );
+</pre><hr><pre>
+// https://en.cppreference.com/w/cpp/container/unordered_set
+
+#include &lt;unordered_set&gt;
+
+// std::unordered_set is an associative container that contains a set of unique
+// objects of type Key. Search, insertion, and removal have average constant-time complexity.
+// The elements are not sorted in any particular order (hashing is used),
+// but organized into buckets.
+// Container elements may not be modified.
+
+// Przykład użycia zbioru nieuporządkowanego.
+// Działa to samo, co dla std::set.
+</pre><hr>
+
+<h3>ZADANIE 1.1 (TABLICA MIESZAJĄCA)</h3>
+
+<p>Przygotować implementację realizującą ADT SET na bazie tablicy mieszającej 
+z wykorzystaniem metody łańcuchowej.
+
+<hr><pre>
+// Szablon dla prostego zbioru wykorzystującego metodę łańcuchową.
+
+template&lt;typename T&gt;
+class MySet {
+    int BUCKET;    // liczba bukietów
+    std::list&lt;T&gt; *table;
+public:
+    MySet(int b);  // konstruktor
+    ~MySet() { clear(); delete [] table; }
+    bool empty() const; // czy zbiór jest pusty?
+    int size() const; // liczba elementów zbioru
+    void insert(T key); // wstawienie klucza do zbioru
+    T* find(const T& key); // czy klucz jest w zbiorze? zwraca &amp;key lub nullptr
+    void remove(const T& key);
+    int hash(const T& key) { return (int(key) % BUCKET); } // działa dla int, float
+    void display() const;
+    void clear(); // czyścimy zbiór
+};
+</pre><hr><pre>
+template&lt;typename T&gt;
+MySet&lt;T&gt;::MySet(int b) {
+    BUCKET = b;
+    table = new std::list&lt;T&gt;[BUCKET]; // tablica z pustymi listami
+    assert( table != nullptr );
+}
+</pre><hr><pre>
+template&lt;typename T&gt;
+void MySet&lt;T&gt;::display() const {
+    for (int i = 0; i &lt; BUCKET; i++)
+        for (const T&amp; k : table[i])
+            std::cout &lt;&lt; k &lt;&lt; " ";
+    std::cout &lt;&lt; std::endl;
+}
+</pre><hr>
+
+<h3>ZADANIE 1.2 (DRZEWO BST)</h3>
+
+<p>Przygotować implementację realizującą ADT SET na bazie drzewa BST, 
+najlepiej samobalansującego (AVL, RBT).
+Inna możliwość to użycie listy z przeskokami.
+Elementy powtarzające się mają być ignorowane.
+Wyświetlane elementy zbioru będą posortowane (kolejność <em>inorder</em>).
+
+<h3>ZADANIE 1.3 (TABLICA BOOL)</h3>
+
+<p>Przygotować implementację zbioru do przechowywania liczb całkowitych
+z zakresu od 0 do n-1. Wykorzystać tablicę int lub bool, w której 0 lub 1 
+na pozycji k oznacza odpowiednio brak lub istnienie liczby k w zbiorze.
+Zadbać o to, aby odczyt liczby elementów w zbiorze odbywał się 
+w stałym czasie O(1). Zastosowanie: zbiór wierzchołków grafu w reprezentacji
+macierzy sąsiedztwa, gdzie wierzchołki grafu są liczbami od 0 do n-1.
+
+<h3>ZADANIE 1.4 (DRZEWO TRIE)</h3>
+
+<p>Przygotować implementację realizującą ADT SET na bazie drzewa trie
+do przechowywania stringów.
+
+<hr>
+<p><a href="index.html">AiSD (index)</a>
+
+</body>
+</html>

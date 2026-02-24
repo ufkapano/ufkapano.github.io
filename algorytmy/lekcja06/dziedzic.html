@@ -58,6 +58,10 @@ print(I2.message)       # GvR, dochodzimy do atrybutu klasy C2
 print(C2.message)       # GvR, odczytanie wprost atrybutu klasy
 
 print(C3.__bases__)   # krotka klas nadrzędnych
+# (&lt;class '__main__.C1'&gt;, &lt;class '__main__.C2'&gt;)
+
+print(C3.__mro__)   # krotka klas MRO, jest też funkcja C3.mro()
+(&lt;class '__main__.C3'&gt;, &lt;class '__main__.C1'&gt;, &lt;class '__main__.C2'&gt;, &lt;class 'object'&gt;)
 </pre><hr>
 
 <p>Jeżeli obiekt pochodzi z instrukcji <em>class</em>,
@@ -66,6 +70,9 @@ Python przeszukuje drzewo połączonych obiektów, szukając
 pierwszego wystąpienia atrybutu.
 Najpierw szuka w obiekcie, a następnie we wszystkich klasach
 powyżej niego, od dołu do góry i od lewej do prawej.
+Kolejność wprzeszukiwania klas jest określona przez MRO
+(ang. <em>Method Resolution Order</em>).
+MRO jest wyznaczane przez algorytm linearyzacji C3.
 
 <h3>WYWOŁYWANIE METOD KLAS NADRZĘDNYCH</h3>
 
@@ -178,7 +185,7 @@ def command(pet):
 pets = [Cat(), Dog(), Person()]   # działają konstruktory klas
 
 # Przykład polimorfizmu Pythona.
-# Funkcja oczekuje określonego interfejsu (metody 'speak'),
+# Funkcja oczekuje określonego interfejsu/protokołu (metody 'speak'),
 # a nie określonego typu argumentu.
 for pet in pets:
     command(pet)

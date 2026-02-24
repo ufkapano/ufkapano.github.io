@@ -20,6 +20,8 @@ a klasami stworzonymi przez użytkownika.]
 
 <p>https://docs.python.org/2/howto/descriptor.html
 
+<p>https://docs.python.org/3/howto/mro.html
+
 <h3>WPROWADZENIE</h3>
 
 <p>W Pythonie 2.2 wprowadzono nowy rodzaj klas "w nowym stylu". 
@@ -94,6 +96,13 @@ class New3(New1): pass
 class New4(New2, New3): pass
 
 # Teraz MRO: New4, New2, New3, New1, object.
+
+print("bases", New4.__bases__)   # krotka klas bazowych
+# bases (&lt;class '__main__.New2'&gt;, &lt;class '__main__.New3'&gt;)
+
+print("mro", New4.__mro__)   # krotka klas MRO, jest też funkcja New4.mro()
+# mro (&lt;class '__main__.New4'&gt;, &lt;class '__main__.New2'&gt;, &lt;class '__main__.New3'&gt;,
+#    &lt;class '__main__.New1'&gt;, &lt;class 'object'&gt;)
 </pre><hr>
 
 </body>

@@ -41,8 +41,7 @@ przechowuje jeden niezerowy wyraz wielomianu (c*x^n).
 Klasa <em>Poly</em> przechowuje łącze do posortowanej malejąco listy powiązanej wyrazów
 i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x,
-brak wyrazu oznacza zerowy współczynnik),
+(odczyt współczynnika przy danej potędze x, zwraca referencję),
 degree() (stopień wielomianu, zerowy wielomian ma stopień zero).
 
 <li>Implementacja wielomianów na bazie tablic (szablon, współczynniki typu T).
@@ -53,8 +52,7 @@ konstruktor kopiujący, podstawienie kopiujące (operator=).
 Wielomiany są równe, gdy ich różnica jest wielomianem zerowym.
 Klasa <em>Poly</em> przechowuje tablicę współczynników i implementuje działania.
 Przydają się funkcje clear(), is_zero(), operator[]
-(odczyt współczynnika przy danej potędze x,
-brak wyrazu oznacza zerowy współczynnik),
+(odczyt współczynnika przy danej potędze x, zwraca referencję),
 degree() (stopień wielomianu, zerowy wielomian ma stopień zero).
 
 <li>Implementacja kwaternionów podobnie do <em>std::complex</em>
@@ -91,8 +89,9 @@ Cormen str. 245, reprezentacja
 
 <li>Drzewo przedziałowe (ang. <em>interval tree</em>), 
 czyli drzewo binarne do przechowywania danych o przedziałach na osi liczbowej
-[Cormen str. 351]. Dzięki tej strukturze można wydajnie znajdować
-wszystkie przedziały przekrywające się z danym punktem lub przedzałem.
+[Cormen str. 351, jest to wzbogacone drzewo czerwono-czarne].
+Dzięki tej strukturze można wydajnie znajdować
+wszystkie przedziały przekrywające się z danym punktem lub przedziałem.
 <br>[https://en.wikipedia.org/wiki/Interval_tree]
 
 <li>Drzewo przedziałowe (ang. <em>segment tree</em>), czyli
