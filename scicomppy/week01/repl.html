@@ -25,8 +25,9 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>A command-line interface (CLI) processes commands to a computer program 
-in the form of lines of text. The program which handles the interface 
+<p>A <strong>command-line interface (CLI)</strong> processes commands 
+to a computer program in the form of lines of text. 
+The program which handles the interface 
 is called a command-line interpreter or command-line processor.
 
 <p>An operating system CLI: UNIX/Linux (sh, ksh, csh, bash, tcsh, etc.), 
@@ -45,12 +46,11 @@ The Python REPL (the Python prompt) can be used as a calculator.
 characters used in CLI to indicate readiness to accept commands
 [Python (&gt;&gt;&gt;), Linux ($ or #), Windows (&gt;)].
 
-<h3>DEBIAN 10</h3>
+<h3>DEBIAN 13</h3>
 
 <hr><pre>
-$ python             # run Python 2, the same for 'python2' or 'python2.7'
-Python 2.7.16 (default, Oct 10 2019, 22:02:15) 
-[GCC 8.3.0] on linux2
+$ python             # run Python 3, the same for 'python3' or 'python3.13'
+Python 3.13.5 (main, Jun 25 2025, 18:55:22) [GCC 14.2.0] on linux
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; 23 + 34     # comments after '#' are ignored
 57
@@ -66,15 +66,8 @@ Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; (10 + 12 +     # open "(" or "[" or "{" is more readable
 ... 13)                     # ... continued
 35
-&gt;&gt;&gt; [Ctrl]+[d]     # or quit(), the end of the work 
-$                          # back to the shell
-</pre><hr><pre>
-$ python3     # the same for 'python3.7'
-Python 3.7.3 (default, Jul 25 2020, 13:03:44) 
-[GCC 8.3.0] on linux
-Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; for i in [1, 2, 3]:   # a compound statement
-...     print (i)
+...     print(i)
 ...                      # an empty line required
 1
 2
@@ -83,16 +76,17 @@ Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; help(math)       # exit with [q]
 &gt;&gt;&gt; help(math.sin)
 &gt;&gt;&gt; math.pi
-3.1415926535897931
+3.141592653589793
 &gt;&gt;&gt; math.sqrt(2) / 2.0   # using dot
-0.70710678118654757
+0.7071067811865476
 &gt;&gt;&gt; [Ctrl]+[d]     # or quit(), the end of the work 
 $                          # back to the shell
 </pre><hr>
 
-<h3>WINDOWS 10</h3>
+<h3>WINDOWS 10, WINDOWS 11</h3>
 
-<p>Open 'Command Prompt' (cmd.exe) or 'Windows PowerShell' and run Python.
+<p>Open <em>Command Prompt</em> (<em>cmd.exe</em>) or 
+<em>Windows PowerShell</em> and run Python.
 
 </body>
 </html>
