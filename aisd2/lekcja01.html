@@ -26,22 +26,29 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Zbiór to ADT, który pozwala przechowywać dane bez powtórzeń
-i bez ustalonego uporządkowania.
+i (zwykle) bez ustalonego uporządkowania.
 Jest to komputerowa realizacja matematycznego pojęcia zbioru skończonego.
 Istotne jest, aby operacja sprawdzania należenia elementu do zbioru
-była wykonywana w stałym czasie O(1).
+była wykonywana w stałym czasie O(1), podobnie jak wstawianie i usuwanie
+elementów.
 
 <p>Czasem wymaga się, aby elementy zbioru były posortowane.
-Wtedy sprawdzanie należenia elementu do zbioru zajmuje czas O(log n).
+Wtedy sprawdzanie należenia elementu do zbioru zajmuje czas O(log n),
+podobnie jak wstawianie i usuwanie elementów.
+
+<p>W języku Python dostępne są zbiory zmienne (<strong>set</strong>)
+i niezmienne (<strong>frozenset</strong>). Zbiorów niezmiennych
+nie można modyfikować po utworzeniu, ale są one hashowalne.
 
 <p>Typowe operacje dla ADT SET są następujące:
 
 <ul>
 <li>konstruktor tworzący pusty zbiór,
-<li>testowanie, czy zbiór nie jest pusty [empty()],
+<li>testowanie, czy zbiór jest pusty [empty()],
 <li>odczyt liczby elementów w zbiorze [size()],
 <li>dodanie elementu do zbioru [insert(item)],
 <li>usuwanie elementu ze zbioru [erase(item), remove(item)],
+<li>pobranie jakiegokolwiek elementu ze zbioru,
 <li>test należenia do zbioru [find(item), contains(item)],
 <li>czyszczenie zbioru [clear()].
 </ul>
@@ -70,10 +77,17 @@ Wtedy sprawdzanie należenia elementu do zbioru zajmuje czas O(log n).
 // Elementy zbioru będą wewnętrznie posortowane.
 // std::set&lt;int&gt; intset = {4,0,3,1,2};   // initializer list
 std::set&lt;int&gt; intset;
-for (int i = 0; i &lt; 15; i++)
+for (int i = 0; i &lt; 15; i++) {
     intset.insert(i % 5);   // elementy powtarzające się są ignorowane
     // operacja insert() zwraca status typu
     // std::pair&lt; std::set&lt;int&gt;::iterator, bool &gt;
+}
+for (auto item : intset) {   // działa pętla zakresowa
+    std::cout &lt;&lt; item &lt;&lt; std::endl;
+}   // 0 1 2 3 4 elementy uporządkowane rosnąco
+for (auto it = intset.begin(); it != intset.end(); ++it) { // iteratory
+    std::cout &lt;&lt; *it &lt;&lt; std::endl;
+}
 assert( intset.size() == 5 );
 assert( intset.count(2) == 1 );   // dozwolone 0 lub 1 dla set
 assert( intset.count(20) == 0 );   // brak 20 w zbiorze
@@ -158,8 +172,9 @@ Wyświetlane elementy zbioru będą posortowane (kolejność <em>inorder</em>).
 <h3>ZADANIE 1.3 (TABLICA BOOL)</h3>
 
 <p>Przygotować implementację zbioru do przechowywania liczb całkowitych
-z zakresu od 0 do n-1. Wykorzystać tablicę int lub bool, w której 0 lub 1 
-na pozycji k oznacza odpowiednio brak lub istnienie liczby k w zbiorze.
+z zakresu od 0 do n-1. Wykorzystać tablicę <em>int</em> lub <em>bool</em>, 
+w której 0 lub 1 na pozycji k oznacza odpowiednio brak lub istnienie 
+liczby k w zbiorze.
 Zadbać o to, aby odczyt liczby elementów w zbiorze odbywał się 
 w stałym czasie O(1). Zastosowanie: zbiór wierzchołków grafu w reprezentacji
 macierzy sąsiedztwa, gdzie wierzchołki grafu są liczbami od 0 do n-1.

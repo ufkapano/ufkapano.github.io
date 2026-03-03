@@ -23,7 +23,7 @@ Typowe operacje dla ADT STACK są następujące:
 
 <ul>
 <li>konstruktor tworzący pusty stos,
-<li>testowanie, czy stos nie jest pusty [empty()],
+<li>testowanie, czy stos jest pusty [empty()],
 <li>odczyt liczby elementów na stosie [size()],
 <li>dołączanie elementu do stosu [push(item)],
 <li>usuwanie ostatniego elementu ze stosu [pop()],
@@ -143,6 +143,11 @@ powiązanej pojedynczo.
 Wykorzystać klasę <em>SingleList</em> lub <em>std::forward_list</em>.
 Operacje push() i pop() działające w stałym czasie można uzyskać
 przy użyciu push_front() i pop_front().
+
+<p>Warto zauważyć, że wykorzystując kod klasy <em>SingleList</em>
+możemy go uprościć i wewnętrznie korzystać tylko 
+ze wskaźnika <em>head</em>. Konstruktor kopiujący i <em>operator=</em> 
+powinien działać z optymalną złożonością O(n).
 
 <h3>ZADANIE 7.4 (std::list)</h3>
 

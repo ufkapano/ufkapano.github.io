@@ -24,7 +24,7 @@ Typowe operacje dla ADT DEQUE są następujące:
 
 <ul>
 <li>konstruktor tworzący pustą listę,
-<li>testowanie, czy lista nie jest pusta [empty()],
+<li>testowanie, czy lista jest pusta [empty()],
 <li>odczyt liczby elementów na liście [size()],
 <li>odczyt największej możliwej liczby elementów [max_size()],
 <li>dołączanie nowego elementu na początek listy [push_front(item)],
@@ -171,6 +171,7 @@ public:
     void display();
     void display_reversed();
     // Operacje z indeksami. NIEOBOWIĄZKOWE
+    // Pozycja 'pos' w deque to pozycja (head + pos) % msize w tablicy.
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](std::size_t pos) const; // dostęp do obiektu const
     void erase(std::size_t pos);
