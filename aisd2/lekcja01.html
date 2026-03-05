@@ -82,7 +82,7 @@ for (int i = 0; i &lt; 15; i++) {
     // operacja insert() zwraca status typu
     // std::pair&lt; std::set&lt;int&gt;::iterator, bool &gt;
 }
-for (auto item : intset) {   // działa pętla zakresowa
+for (auto&amp; item : intset) {   // działa pętla zakresowa
     std::cout &lt;&lt; item &lt;&lt; std::endl;
 }   // 0 1 2 3 4 elementy uporządkowane rosnąco
 for (auto it = intset.begin(); it != intset.end(); ++it) { // iteratory
@@ -124,6 +124,7 @@ assert( intset.empty() );
 
 <p>Przygotować implementację realizującą ADT SET na bazie tablicy mieszającej 
 z wykorzystaniem metody łańcuchowej.
+<br>Zastanowić się nad implementacją iteratora po elementach zbioru.
 
 <hr><pre>
 // Szablon dla prostego zbioru wykorzystującego metodę łańcuchową.
@@ -139,10 +140,11 @@ public:
     int size() const; // liczba elementów zbioru
     void insert(T key); // wstawienie klucza do zbioru
     T* find(const T& key); // czy klucz jest w zbiorze? zwraca &amp;key lub nullptr
+    bool contains(const T& key); // czy klucz jest w zbiorze?
     void remove(const T& key);
     int hash(const T& key) { return (int(key) % BUCKET); } // działa dla int, float
-    void display() const;
     void clear(); // czyścimy zbiór
+    void display() const; // wypisuje { item1, item2, ..., itemk }
 };
 </pre><hr><pre>
 template&lt;typename T&gt;
@@ -168,6 +170,7 @@ najlepiej samobalansującego (AVL, RBT).
 Inna możliwość to użycie listy z przeskokami.
 Elementy powtarzające się mają być ignorowane.
 Wyświetlane elementy zbioru będą posortowane (kolejność <em>inorder</em>).
+<br>Zastanowić się nad implementacją iteratora po elementach zbioru.
 
 <h3>ZADANIE 1.3 (TABLICA BOOL)</h3>
 
@@ -178,11 +181,13 @@ liczby k w zbiorze.
 Zadbać o to, aby odczyt liczby elementów w zbiorze odbywał się 
 w stałym czasie O(1). Zastosowanie: zbiór wierzchołków grafu w reprezentacji
 macierzy sąsiedztwa, gdzie wierzchołki grafu są liczbami od 0 do n-1.
+<br>Zastanowić się nad implementacją iteratora po elementach zbioru.
 
 <h3>ZADANIE 1.4 (DRZEWO TRIE)</h3>
 
 <p>Przygotować implementację realizującą ADT SET na bazie drzewa trie
 do przechowywania stringów.
+<br>Zastanowić się nad implementacją iteratora po elementach zbioru.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
