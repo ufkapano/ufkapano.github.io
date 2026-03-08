@@ -19,21 +19,22 @@
 <p>Objects considered false:
 
 <ul>
-<li>constants defined to be false: 'None' and 'False',
+<li>constants defined to be false: <em>None</em> and <em>False</em>,
 <li>zero of any numeric type: 0, 0.0, 0j, Decimal(0), Fraction(0, 1),
 <li>empty sequences and collections: '', tuple(), [], {}, set(), range(0),
 <li>empty strings,
-<li>objects with a '__bool__()' method that returns 'False' (Py3),
-<li>objects with a '__nonzero__()' method that returns 'False' (Py2),
-<li>objects with a '__len__()' method that returns zero.
+<li>objects with a <em>__bool__()</em> method that returns <em>False</em> (Py3),
+<li>objects with a <em>__nonzero__()</em> method that returns <em>False</em> (Py2),
+<li>objects with a <em>__len__()</em> method that returns zero.
 </ul>
 
 <p>Everything else is considered true.
 
-<p>'True' and 'False' are instances of the 'bool' class which is
-inherited from 'int'.
+<p><em>True</em> and <em>False</em> are instances of the <em>bool</em> 
+class which is inherited from <em>int</em>.
 In numeric contexts (for example when used as the argument to an arithmetic 
-operator), 'False' and 'True' behave like the integers 0 and 1, respectively.
+operator), <em>False</em> and <em>True</em> behave like the integers 0 and 1, 
+respectively.
 
 <hr><pre>
 &gt;&gt;&gt; True + True
@@ -48,33 +49,40 @@ operator), 'False' and 'True' behave like the integers 0 and 1, respectively.
 
 <h3>BOOLEAN OPERATIONS</h3>
 
-<p>'A or B', 'A and B', 'not A' (ascending priority).
+<p><em>A or B</em>, <em>A and B</em>, <em>not A</em> (ascending priority).
 
-<p>'A or not B and C' is interpreted as 'A or ((not B) and C)'.
+<p>(<em>A or not B and C</em>) is interpreted as <em>A or ((not B) and C)</em>.
 
-<p>'not A == B' is interpreted as 'not (A == B)' ('==' is a non-Boolean operator!).
+<p>(<em>not A == B</em>) is interpreted as <em>not (A == B)</em> 
+(== is a non-Boolean operator!).
 
 <p>Use parentheses () in case of doubt.
 
-<p>'and' and 'or' are short-circuit operators:
+<p><em>and</em> and <em>or</em> are short-circuit operators:
 
 <ul>
-<li>'False and Anything' returns 'False', 'Anything' is not checked.
+<li>(<em>False and Anything</em>) returns <em>False</em>, 
+<em>Anything</em> is not checked.
 <br>Example: L = [1, 3] ; print(1 &gt; 2 and L[4])   # print False, no exceptions
-<li>'True and Anything' returns 'Anything', but not converted to 'bool'.
+<li>(<em>True and Anything</em>) returns <em>Anything</em>, 
+but not converted to <em>bool</em>.
 <br>Example: True and (2 + 2)   # return 4
-<li>'True or Anything' returns 'True', 'Anything' is not checked.
-<li>'False or Anything' returns 'Anything', but not converted to 'bool'.
+<li>(<em>True or Anything</em>) returns <em>True</em>, 
+<em>Anything</em> is not checked.
+<li>(<em>False or Anything</em>) returns <em>Anything</em>, 
+but not converted to <em>bool</em>.
 </ul>
 
 <h3>COMPARISONS</h3>
 
-<p>'A == B', 'A != B', 'A &lt; B', 'A &lt;= B', 'A &gt; B', 'A &gt;= B'.
+<p><em>A == B</em>, <em>A != B</em>, <em>A &lt; B</em>, <em>A &lt;= B</em>, 
+<em>A &gt; B</em>, <em>A &gt;= B</em>.
 
-<p>Identity tests: 'A is B' [id(A) == id(B)], 'A is not B'.
+<p>Identity tests: <em>A is B</em> [<em>id(A) == id(B)</em>], 
+<em>A is not B</em>.
 
-<p>'x in S' and 'x not in S' operations are supported by types that are 
-iterable or implement the '__contains__()' method.
+<p>(<em>x in S</em>) and (<em>x not in S</em>) operations are supported 
+by types that are iterable or implement the <em>__contains__()</em> method.
 
 
 </body>

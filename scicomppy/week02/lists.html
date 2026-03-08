@@ -65,9 +65,17 @@ list1 = [
     56,
     2,
 ]   # last comma is ignored
+# Also in functions: print(1, 2, 3,)
 </pre><hr>
 
 <h3>SORTING</h3>
+
+<p>https://www.youtube.com/watch?v=XjOnY-OLAPc
+<br>Quicksort, Timsort, Powersort - PyCon US 2023 talk
+
+<p>Stable sorting in Python:
+<br><em>Timsort</em> from Py2.3 to Py3.10,
+<br><em>Powersort</em> since Py3.11.
 
 <hr><pre>
 # help(list.sort)
@@ -143,16 +151,16 @@ lists[1].append(5)   # [[3], [5], []]
 "".join([chr(x) for x in range(97, 110)])
 </pre><hr><pre>
 # Generators
-sum([x * x for x in range(100)])        # lists Py2
-sum((x * x for x in xrange(100)))         # generator Py2
-sum(x * x for x in xrange(100))         # the same
-sum(x * x for x in range(100))          # generator Py3
+sum([x * x for x in range(100)])        # lists in Py2
+sum((x * x for x in xrange(100)))         # generators in Py2
+sum(x * x for x in xrange(100))         # the same in Py2
+
+sum(x * x for x in range(100))          # generator in Py3
 sum(len(x) for x in ["a", "bb", "ccc"]) # generator
 
 max(ord(x) for x in "qwerty")           # generator, the greatest numer
 max("qwerty", key=ord)                  # char with the greatest ord()
 </pre><hr>
-
 
 </body>
 </html>

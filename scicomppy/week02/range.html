@@ -78,9 +78,9 @@ assert isinstance(s, slice)   # 'slice' is a class
 
 <h3>PYTHON 2</h3>
 
-<p>In Python 2, 'range' is a builtin function that retuns a list.
+<p>In Python 2, <em>range</em> is a builtin function that retuns a list.
 
-<p>'xrange' returns an object that generates the numbers 
+<p><em>xrange</em> returns an object that generates the numbers 
 in the range on demand.
 
 <hr><pre>
@@ -96,14 +96,15 @@ i &gt; last &gt; j for k &lt; 0.
 
 <h3>PYTHON 3</h3>
 
-<p>The 'range' type represents an immutable sequence of numbers 
-and is commonly used for looping a specific number of times in 'for' loops.
+<p>The <em>range</em> type represents 
+an <strong>immutable sequence of numbers</strong> 
+and is commonly used for looping a specific number of times in <em>for</em> loops.
 
-<p>The advantage of the 'range' type over a regular 'list' or 'tuple' 
-is that a 'range' object will always take the same (small) amount of memory, 
-no matter the size of the range it represents.
-It only stores the 'start', 'stop' and 'step' values, calculating individual 
-items and subranges as needed.
+<p>The advantage of the <em>range</em> type over a regular <em>list</em> 
+or <em>tuple</em> is that a <em>range</em> object will always take the same 
+(small) amount of memory, no matter the size of the range it represents.
+It only stores the <em>start</em>, <em>stop</em> and <em>step</em> values, 
+calculating individual items and subranges as needed.
 
 <hr><pre>
 list(range(1, 6))         # [1, 2, 3, 4, 5]

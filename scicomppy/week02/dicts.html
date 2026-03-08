@@ -12,9 +12,9 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>A mapping object maps 'hashable' values to arbitrary objects. 
-Mappings are mutable objects. 
-There is currently only one standard mapping type, the 'dictionary'.
+<p>A mapping object maps <strong>hashable</strong> values to arbitrary objects. 
+<br>Mappings are <strong>mutable</strong> objects. 
+<br>There is currently only one standard mapping type, the <em>dictionary</em>.
 
 <p>Dictionary order is guaranteed to be insertion order (Py3.7+).
 
@@ -80,9 +80,9 @@ D.setdefault(key, value)
 # if key in D then return D[key],
 # if key not in D then set D[key] = value and return value
 
-D.pop(key)                    # return D[key] and remove
-D.pop(key, value)             # return D[key] (or value) and remove
-D.popitem()                   # return 2-tuple (key, value)
+D.pop(key)                    # return D[key] and remove key
+D.pop(key, value)             # return D[key] (or value) and remove key
+D.popitem()                   # return 2-tuple (key, value) and remove key
 
 D = dict.fromkeys(S[, value])    # S is a sequence, value is None by default
 D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}

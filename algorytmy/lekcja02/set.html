@@ -21,52 +21,53 @@ Jeżeli chcemy utworzyć zbiór zbiorów, to wewnętrzne zbiory
 muszą być klasy <em>frozenset</em>.
 
 <pre>
-+---------------------------+------------+------------------------+
-| Operacja                  | Równoważne | Wynik                  |
-+---------------------------+------------+------------------------+
-|S = set() ; S = frozenset()|            |zbiór pusty             |
-|S = {1, 3, 4}              |            |tworzenie zbioru (Py2.7)|
-|S = set(iterable)          |            |tworzenie zbioru        |
-|S = frozenset(iterable)    |            |zbiór niezmienny        |
-|len(S)                     |            |liczebność              |
-|for item in S: pass        |            |iteracja                |
-|item in S                  |            |należenie do zbioru     |
-|item not in S              |            |nienależenie do zbioru  |
-|S1.issubset(S2)            |S1 &lt;= S2    |czy S1 jest zawarty w S2|
-|S1.issuperset(S2)          |S1 &gt;= S2    |czy S1 zawiera S2       |
-|S1.union(S2)               |S1 | S2     |suma zbiorów            |
-|S1.union(S2, S3)           |S1 | S2 | S3|suma zbiorów (Py2.6+)   |
-|S1.intersection(S2)        |S1 &amp; S2     |iloczyn zbiorów         |
-|S1.intersection(S2, S3)    |S1 &amp; S2 &amp; S3|iloczyn zbiorów (Py2.6+)|
-|S1.difference(S2)          |S1 - S2     |różnica zbiorów         |
-|S1.difference(S2, S3)      |S1 - S2 - S3|różnica zbiorów (Py2.6+)|
-|S1.symmetric_difference(S2)|S1 ^ S2     |(S1-S2)|(S2-S1)         |
-|S1.isdisjoint(S2)          |            |czy rozłączne (Py2.6+)  |
-|S2 = S1.copy()             |            |shallow copy of S1      |
-|S2 = set(S1)               |            |shallow copy of S1      |
-+---------------------------+------------+------------------------+
++------------------------------+--------------+--------------------------+
+| Operacja                     | Równoważne   | Wynik                    |
++------------------------------+--------------+--------------------------+
+| S = set() ; S = frozenset()  |              | zbiór pusty              |
+| S = {1, 3, 4}                |              | tworzenie zbioru         |
+| S = set(iterable)            |              | tworzenie zbioru         |
+| S = frozenset(iterable)      |              | zbiór niezmienny         |
+| S = {x**2 for x in iterable} |              | set comprehension        |
+| len(S)                       |              | liczebność               |
+| for item in S: pass          |              | iteracja                 |
+| item in S                    |              | należenie do zbioru      |
+| item not in S                |              | nienależenie do zbioru   |
+| S1.issubset(S2)              | S1 &lt;= S2     | czy S1 jest zawarty w S2 |
+| S1.issuperset(S2)            | S1 &gt;= S2     | czy S1 zawiera S2        |
+| S1.union(S2)                 | S1 | S2      | suma zbiorów             |
+| S1.union(S2, S3)             | S1 | S2 | S3 | suma zbiorów             |
+| S1.intersection(S2)          | S1 &amp; S2      | iloczyn zbiorów          |
+| S1.intersection(S2, S3)      | S1 &amp; S2 &amp; S3 | iloczyn zbiorów          |
+| S1.difference(S2)            | S1 - S2      | różnica zbiorów          |
+| S1.difference(S2, S3)        | S1 - S2 - S3 | różnica zbiorów          |
+| S1.symmetric_difference(S2)  | S1 ^ S2      | (S1-S2)|(S2-S1)          |
+| S1.isdisjoint(S2)            |              | czy rozłączne            |
+| S2 = S1.copy()               |              | shallow copy of S1       |
+| S2 = set(S1)                 |              | shallow copy of S1       |
++------------------------------+--------------+--------------------------+
 </pre>
 
 <p>Operacje dostępne tylko dla zbiorów zmiennych, ponieważ zbiory
 mogą zmienić swój skład.
 
 <pre>
-+----------------------------------+----------------------+
-| Operacja                         | Równoważne           |
-+----------------------------------+----------------------+
-|S1.update(S2)                     |S1 |= S2              |
-|S1.update(S2, S3)                 |S1 |= S2 | S3 (Py2.6+)|
-|S1.intersection_update(S2)        |S1 &amp;= S2              |
-|S1.intersection_update(S2, S3)    |S1 &amp;= S2 &amp; S3 (Py2.6+)|
-|S1.difference_update(S2)          |S1 -= S2              |
-|S1.difference_update(S2, S3)      |S1 -= S2 | S3 (Py2.6+)|
-|S1.symmetric_difference_update(S2)|S1 ^= S2              |
-|S.add(item)                       |                      |
-|S.remove(item) [item musi należeć]|                      |
-|S.discard(item)                   |                      |
-|S.pop() [zbiór niepusty]          |                      |
-|S.clear() [zostanie pusty]        |                      |
-+----------------------------------+----------------------+
++------------------------------------+---------------+
+| Operacja                           | Równoważne    |
++------------------------------------+---------------+
+| S1.update(S2)                      | S1 |= S2      |
+| S1.update(S2, S3)                  | S1 |= S2 | S3 |
+| S1.intersection_update(S2)         | S1 &amp;= S2      |
+| S1.intersection_update(S2, S3)     | S1 &amp;= S2 &amp; S3 |
+| S1.difference_update(S2)           | S1 -= S2      |
+| S1.difference_update(S2, S3)       | S1 -= S2 | S3 |
+| S1.symmetric_difference_update(S2) | S1 ^= S2      |
+| S.add(item)                        |               |
+| S.remove(item) [item musi należeć] |               |
+| S.discard(item)                    |               |
+| S.pop() [zbiór niepusty]           |               |
+| S.clear() [zostanie pusty]         |               |
++------------------------------------+---------------+
 </pre>
 
 <p>Porównywanie dwóch zbiorów ma sens, gdy jeden zawiera się w drugim.

@@ -14,12 +14,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The Unicode standard describes how 'characters' [abstractions] 
-are represented by 'code points' [integer values].
-<strong>A Unicode string is a sequence of code points.</strong>
+<p>The Unicode standard describes how <strong>characters</strong> [abstractions] 
+are represented by <strong>code points</strong> [integer values].
+<br><em>A Unicode string is a sequence of code points.</em>
 
 <p>The rules for translating a Unicode string into a sequence of bytes 
-are called an 'encoding'.
+are called an <strong>encoding</strong>.
 UTF-8 is probably the most commonly supported encoding,
 UTF stands for Unicode Transformation Format.
 
@@ -68,7 +68,7 @@ list(utf)         # [226, 130, 172] (list of int)
 
 <ul>
 <li>Check whether the libraries used in your application support 
-Unicode natively [json]. 
+Unicode natively [<em>json</em> module]. 
 <li>The manual approach (not recommended):
 Converted Unicode data to a particular encoding before it gets written 
 to disk or sent over a socket.
@@ -76,7 +76,7 @@ Read an 8-bit string from a file, and convert the string with
 unicode(str, encoding) [the problem is that you can read only part 
 of the bytes encoding a single Unicode character; 
 one solution: read the entire file into memory and then perform the decoding].
-<li>Use the 'codecs' module to read and write files.
+<li>Use the <em>codecs</em> module to read and write files.
 </ul>
 
 <p>Tips for writing Unicode-aware programs:
