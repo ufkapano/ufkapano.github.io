@@ -36,7 +36,7 @@ print(expression, expression, file=outfile)   # print to an open file
 </pre><hr><pre>
 # Compatibility: print a single string.
 
-print ( "{} {}".format(expression, expression) )
+print("{} {}".format(expression, expression))
 </pre><hr>
 
 <h3>STR.FORMAT</h3>
@@ -115,11 +115,14 @@ c = 2-4j
 <h3>F-STRINGS</h3>
 
 <p>Formatted string literals (f-strings) begin a string 
-with a prefix 'f' or 'F'.
+with a prefix <em>f</em> or <em>F</em>.
 
 <hr><pre>
 # f"first {expression} second {expression}"
 # F'single {expression}'
+# f'''first line
+# {expression}
+# last line'''   # a string with three lines
 
 year = 2016
 event = 'Referendum'

@@ -20,11 +20,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>A 'match' statement takes an expression and compares its value 
+<p>A <em>match</em> statement takes an expression and compares its value 
 to successive patterns given as one or more case blocks.
 This statement was introduced in Python 3.10.
-Note that 'match' and 'case' words are described as 'soft keywords',
-meaning they only work as keywords in a 'match' statement.
+Note that <em>match</em> and <em>case</em> words are described as 
+<strong>soft keywords</strong>,
+meaning they only work as keywords in a <em>match</em> statement.
 
 <hr><pre>
 # The simplest form of a 'match' statement.
@@ -41,7 +42,7 @@ def http_error(status, flag=False):
             return "I'm a teapot"
         case _:   # optional, never fails to match
             return "Something's wrong with the internet"
-</pre><hr></pre>
+</pre><hr><pre>
 # if-else version.
 
 def http_error(status, flag=False):

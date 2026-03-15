@@ -14,17 +14,17 @@
 
 <p>Python distinguishes between binary and text I/O.
 
-<p>Files opened in binary mode ('mode' with 'b) 
+<p>Files opened in binary mode (<em>mode</em> with <em>b</em>) 
 return contents as bytes objects without any decoding.
 
-<p>Files opened in text mode ('mode' with 't', the default)
-return contents as string where bytes are decoded using 'encoding'.
+<p>Files opened in text mode (<em>mode</em> with <em>t</em>, the default)
+return contents as string where bytes are decoded using <strong>encoding</strong>.
 A text file content can be divided onto lines ending with '\n'.
 Note that the last line may be without '\n'.
 
-<p>'open()' returns a 'file object', and is most commonly used with two 
-arguments: open(filename, mode). Files opened for processing
-should be closed as soon as possible.
+<p><em>open()</em> returns a <strong>file object</strong>, and is most 
+commonly used with two arguments: <em>open(filename, mode)</em>. 
+<br>Files opened for processing should be closed as soon as possible.
 
 <hr><pre>
 # afile = open(filename, mode='r', buffering)   # Py2
