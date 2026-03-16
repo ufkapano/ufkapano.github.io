@@ -13,6 +13,14 @@
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
+<p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
+<br>(1) Katalog z programem powinien zawierać <em>Makefile</em> i pliki źródłowe.
+<br>(2) Program powinien kompilować się poleceniem <em>make</em>.
+<br>(3) Nie używać deklaracji <em>using namespace std;</em>.
+<br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
+
+<h3>WPROWADZENIE</h3>
+
 <p>https://en.wikipedia.org/wiki/Set_(abstract_data_type)
 
 <!--
@@ -22,8 +30,6 @@
 
 <p>https://brilliant.org/wiki/associative-arrays/
 -->
-
-<h3>WPROWADZENIE</h3>
 
 <p>Zbiór to ADT, który pozwala przechowywać dane bez powtórzeń
 i (zwykle) bez ustalonego uporządkowania.
@@ -136,9 +142,9 @@ class MySet {
 public:
     MySet(int b);  // konstruktor
     ~MySet() { clear(); delete [] table; }
-    bool empty() const; // czy zbiór jest pusty?
+    bool empty() const { return size() == 0; } // czy zbiór jest pusty?
     int size() const; // liczba elementów zbioru
-    void insert(T key); // wstawienie klucza do zbioru
+    void insert(const T& key); // wstawienie klucza do zbioru
     T* find(const T& key); // czy klucz jest w zbiorze? zwraca &amp;key lub nullptr
     bool contains(const T& key); // czy klucz jest w zbiorze?
     void remove(const T& key);

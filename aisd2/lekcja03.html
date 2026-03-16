@@ -13,9 +13,355 @@
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
+<p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
+<br>(1) Katalog z programem powinien zawierać <em>Makefile</em> i pliki źródłowe.
+<br>(2) Program powinien kompilować się poleceniem <em>make</em>.
+<br>(3) Nie używać deklaracji <em>using namespace std;</em>.
+<br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
+
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p>Dla grafu G=(V,E) przyjmujemy oznaczenia: n=|V|, m=|E|.
+V(G) to zbiór wierzchołków, E(G) to zbiór krawędzi.
+<br>Macierz sąsiedztwa A ma wymiar n &times; n.
+<br>A[u][v] = 0 oznacza brak krawędzi (u,v).
+<br>A[u][v] = 1 oznacza istnienie krawędzi (u,v).
+<br>Dla grafu nieskierowanego macierz A jest <strong>symetryczna</strong>, 
+A[u][v] = A[v][u].
+Można powiedzieć, że jedna krawędź nieskierowana (u,v) jest wewnętrznie
+zapisywana jako dwie krawędzie skierowane (u,v) oraz (v,u).
+<br>Dla <strong>grafu ważonego</strong> wagę krawędzi zapisujemy 
+w elemencie A[u][v] = weight(u,v).
+Waga nie może być równa zero, bo zero oznacza brak krawędzi.
+<br>Dla <strong>grafów prostych</strong> zawsze A[u][u] = 0 (brak pętli). 
+
+<p>Jeżeli dopuszczamy możliwość istnienia pętli (ang. <em>loop</em>)
+w grafie, czyli opisujemy <strong>multigraf</strong>, 
+to pętlę przy wierzchołku u zaznaczamy jako A[u][u] = 1.
+Przy każdym wierzchołku może być najwyżej jedna pętla,
+bo w macierzy A przechowjemy tylko 0/1.
+<br>Dla <strong>multigrafu ważonego</strong> można zapisać A[u][u] = weight(u,u),
+ale tylko jeżeli każdy wierzchołek ma co najwyżej jedną pętlę ważoną.
+
+<p>Typowe operacje dla ADT GRAPH.
+
+<ul>
+<li>konstruktor tworzący pusty graf skierowany lub nieskierowany;
+<li>odczyt liczby wierzchołków [v()];
+<li>odczyt liczby krawędzi [e()];
+<li>testowanie, czy graf jest skierowany [is_directed()];
+<li>wstawianie nowego wierzchołka [add_node(u) lub przez konstruktor];
+<li>usuwanie danego wierzchołka u wraz z krawędziami incydentnymi [del_node(u)];
+w przypadku implementacji z macierzą sąsiedztwa wierzchołek faktycznie
+nie jest usuwany;
+<li>testowanie należenia wierzchołka u do grafu [has_node(u)];
+<li>wstawianie nowej krawędzi (u,v) 
+[add_edge(u,v) lub dla krawędzi z wagą add_edge(u,v,weight)];
+zwykle automatycznie wstawiane są też wierzchołki u i v, jeżeli wcześniej
+nie dodano ich do grafu;
+<li>usuwanie krawędzi (u,v) [del_edge(u,v)];
+<li>testowanie istnienia krawędzi (u,v) 
+[has_edge(u,v) lub przez zerową wagę weight(u,v)];
+<li>odczyt wagi krawędzi weight(u,v) 
+[domyślnie przyjmuje się wagę 1 (int lub float)];
+<li>iteracja po wierzchołkach grafu;
+<li>iteracja po krawędziach grafu;
+<li>iteracja po sąsiadach danego wierzchołka u;
+<li>czyszczenie grafu [clear()].
+</ul>
+
+<hr><pre>
+| Przykład grafu skierowanego i jego macierzy sąsiedztwa.
+| 1 --o 2   +---+---+---+---+---+
+| o   / |   |r\c| 0 | 1 | 2 | 3 |
+| |  /  |   +---+---+---+---+---+
+| | o   o   | 0 | 0 | 1 | 0 | 1 | złożoność pamięciowa to O(n^2) bitów
+| 0 --o 3   +---+---+---+---+---+
+|           | 1 | 0 | 0 | 1 | 0 | outdegree(0) = 2, indegree(0) = 1,
+| n = 4     +---+---+---+---+---+ outdegree(1) = 1, indegree(1) = 1,
+| m = 5     | 2 | 1 | 0 | 0 | 1 | outdegree(2) = 2, indegree(2) = 1,
+|           +---+---+---+---+---+ outdegree(3) = 0, indegree(3) = 2,
+|           | 3 | 0 | 0 | 0 | 0 | \sum_v outdegree(v) = \sum_v indegree(v) = m
+|           +---+---+---+---+---+
+</pre><hr><pre>
+| Przykład grafu nieskierowanego i jego macierzy sąsiedztwa.
+| 1---2   +---+---+---+---+---+
+| | / |   |r\c| 0 | 1 | 2 | 3 | macierz jest symetryczna
+| 0---3   +---+---+---+---+---+
+|         | 0 | 0 | 1 | 1 | 1 | złożoność pamięciowa to O(n^2) bitów
+| n = 4   +---+---+---+---+---+
+| m = 5   | 1 | 1 | 0 | 1 | 0 | degree(1) = degree(3) = 2,
+|         +---+---+---+---+---+ degree(0) = degree(2) = 3,
+|         | 2 | 1 | 1 | 0 | 1 | \sum_v degree(v) = 2 m
+|         +---+---+---+---+---+
+|         | 3 | 1 | 0 | 1 | 0 |
+|         +---+---+---+---+---+
+</pre><hr>
+
+<h3>KRAWĘDZIE</h3>
+
+<p>Krawędzie grafu są reprezentowane przez klasę <em>Edge&lt;T&gt;</em>.
+To jest szablon, w którym wierzchołki grafu są typu <em>T</em>,
+a wagi krawędzi typu <em>float</em>.
+Domyślna waga krawędzi wynosi 1.0.
+
+<hr><pre>
+// edge.hpp
+template&lt;typename T&gt;
+class Edge {
+public:
+    T source;
+    T target;
+    float weight;
+    Edge(T s, T t, float w=1.0) : source(s), target(t), weight(w) {}
+    ~Edge() {}                // destruktor
+    Edge(const Edge&amp; edge) : source(edge.source), target(edge.target),
+        weight(edge.weight) {}  // copy-constructor
+    // Operator negacji bitowej, ale tu pasuje.
+    Edge operator~() const { return Edge(target, source, weight); }
+    Edge&amp; operator=(const Edge&amp; other); // return *this;
+    friend std::ostream&amp; operator&lt;&lt;(std::ostream&amp; os, const Edge&amp; edge);
+    bool operator==(const Edge& edge);
+    bool operator!=(const Edge& edge);
+};
+</pre><hr>
+
+<h3>INTERFEJS GRAFÓW</h3>
+
+<hr><pre>
+// basegraph.hpp
+template &lt;typename T&gt;
+class BaseGraph { // abstract class
+public:
+    BaseGraph() {}
+    ~BaseGraph() {}
+    virtual bool is_directed() const = 0;
+    virtual int v() const = 0; // liczba wierzcholkow
+    virtual int e() const = 0; // liczba krawedzi
+    virtual int degree(T u) = 0; // problem z const dla operator[]
+    virtual int indegree(T u) = 0; // stopień wejściowy
+    virtual int outdegree(T u) = 0; // stopień wyjściowy
+    virtual void add_node(T u) = 0;
+    virtual void del_node(T u) = 0;
+    virtual bool has_node(T u) const = 0;
+    virtual void add_edge(T u, T w, float weight=1.0) = 0;
+    virtual void add_edge(Edge&lt;T&gt; edge) = 0;
+    virtual void del_edge(T u, T w) = 0;
+    virtual void del_edge(Edge&lt;T&gt; edge) = 0;
+    virtual bool has_edge(T u, T w) const = 0;
+    virtual bool has_edge(Edge&lt;T&gt; edge) const = 0;
+    virtual float weight(T u, T w) const = 0;
+    virtual float weight(Edge&lt;T&gt; edge) const = 0;
+    virtual void clear() = 0;
+    virtual void display() const = 0;
+};
+</pre><hr>
+
+<h3>ITERATORY</h3>
+
+<p>Istnieje wzorzec projektowy Iterator, który może być zrealizowany 
+na wiele sposobów.
+
+<hr><pre>
+// Korzystanie z iteratorów po kontenerze w STL.
+// begin(), end() dla zwykłych iteratorów;
+// cbegin(), cend() dla iteratorów z gwarancją niezmienności kontenera;
+// rbegin(), rend() dla iteratorów odwrotnych;
+// crbegin(), crend() dla iteratorów odwrotnych z gwarancją niezmienności kontenera;
+for (auto it = container.begin(); it != container.end(); ++it)
+    print(*it);
+</pre><hr><pre>
+// Inny spotykany interfejs iteratorów.
+auto it = container.create_iterator();
+for (it.first(); !it.is_done(); it.next())
+    print(it.current());
+</pre><hr><pre>
+// Korzystanie z iteratorów w grafie.
+
+Graph G(7); // macierz sąsiedztwa, n = 7, graf nieskierowany
+Graph G(7,true); // macierz sąsiedztwa, n = 7, graf skierowany
+// Dodawanie krawędzi ...
+
+for (auto n_it = G.node_begin(); n_it != G.node_end(); ++n_it) {
+    print_node(*n_it); // NodeIterator, *n_it jest typu int
+}
+for (auto e_it = G.edge_begin(); e_it != G.edge_end(); ++e_it) {
+    print_edge(*e_it); // EdgeIterator, *e_it jest typu Edge&lt;int&gt;
+}
+// Niech 'node' oznacza pewien wierzchołek grafu.
+for (auto a_it = G.adj_begin(node); a_it != G.adj_end(node); ++a_it) {
+    print_node(*a_it); // AdjacentIterator, *a_it jest typu int
+}
+</pre><hr><pre>
+class NodeIterator : public Iterator&lt;int&gt; { ... };
+NodeIterator node_begin() { return NodeIterator(this, 0); } // lub bez zera
+NodeIterator node_end() { return NodeIterator(this, v()); }
+</pre><hr><pre>
+class EdgeIterator : public Iterator&lt;Edge&lt;int&gt;&gt; { ... };
+EdgeIterator edge_begin() { return EdgeIterator(this); }
+EdgeIterator edge_end() { return EdgeIterator(this, v(), v()); } // konwencja
+</pre><hr><pre>
+class AdjacentIterator : public Iterator&lt;int&gt; { ... };
+AdjacentIterator adj_begin(int r) { return AdjacentIterator(this, r); }
+AdjacentIterator adj_end(int r) { return AdjacentIterator(this, r, v()); }
+</pre><hr>
+
+<h3>INTERFEJS ITERATORÓW</h3>
+
+<hr><pre>
+// iterator.hpp
+template &lt;typename T&gt;
+class Iterator { // abstract class
+public:
+    Iterator() {}
+    ~Iterator() {}
+    // Sa problemy w dziedziczeniu tych funkcji.
+    //virtual Iterator& operator=(const Iterator& other) = 0; // tego się nie robi
+    //virtual Iterator& operator++() = 0;
+    //virtual Iterator operator++(int) = 0;
+    //virtual bool operator==(const Iterator& other) = 0;
+    //virtual bool operator!=(const Iterator& other) = 0;
+    virtual T operator*() const = 0; // działa
+};
+</pre><hr>
+
+<h3>ZADANIE 3.1 (GRAF BEZ WAG)</h3>
+
+<p>Przygotować implementację realizującą ADT GRAPH na bazie macierzy
+sąsiedztwa dla grafu bez wag krawędzi. 
+Będzie to klasa <em>Graph</em> umieszczona w pliku 
+<a href="graph.hpp">graph.hpp</a>.
+Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu grafów.
+
+<p>W kilku metodach zamiast podawania dwóch argumentów <em>int</em> (u,w)
+można zaimplementować dodatkowo korzystanie z jednego argumentu
+typu <em>Edge&lt;int&gt;</em>.
+
+<p>Wierzchołki grafu to liczby od 0 do n-1.
+
+<hr><pre>
+// graph.hpp
+class Graph : public BaseGraph&lt;int&gt; { // wersja 6x
+    bool directed; // czy graf jest skierowany
+    std::vector&lt; std::vector&lt;int&gt; &gt; adj_matrix; // macierz sąsiedztwa
+public:
+    // Tu jest alokowana pamięć na macierz kwadratową nxn
+    // i następuje wypełnianie macierzy zerami.
+    Graph(int n, bool directed=false) : directed(directed) {
+        adj_matrix = std::vector&lt; std::vector&lt;int&gt; &gt;(n, std::vector&lt;int&gt;(n, 0));
+    }
+    ~Graph() { clear(); }
+    bool is_directed() const override { return directed; } // czy graf jest skierowany O(1)
+    int v() const override { return adj_matrix.size(); } // liczba wierzchołków grafu O(1)
+    int e() const override { // liczba krawędzi grafu, O(n^2) time
+        int counter = 0;
+        for (int u = 0; u &lt; v(); u++)
+            for (int w = 0; w &lt; v(); w++)
+                counter += adj_matrix[u][w]; // sumujemy 0 i 1
+        return (directed ? counter : counter / 2);
+    }
+    int degree(int u) override; // liczba sąsiadów (tylko graf nieskierowany
+    int indegree(int u) override; // liczba krawędzi wchodzących do u
+    int outdegree(int u) override; // liczba krawędzi wychodzących z u
+    void add_node(int u) override {
+        assert( 0 &lt;= u &amp;&amp; u &lt; v() );
+    }
+    void del_node(int u) override { // tylko usuwamy krawędzie incydentne
+        for (int w = 0; w &lt; v(); w++) {
+            adj_matrix[u][w] = 0;
+            adj_matrix[w][u] = 0;
+        }
+    }
+    bool has_node(int u) const override {
+        return (0 &lt;= u && u &lt; v());
+    }
+    void add_edge(int u, int w, float weight=1.0) override; // wstawienie krawędzi (u,w)
+    void add_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(int u, int w) override; // usunięcie krawędzi (u,w)
+    void del_edge(Edge&lt;int&gt; edge) override;
+    bool has_edge(int u, int w) const override { // test istnienia krawędzi
+        return adj_matrix[u][w] == 1;
+    }
+    bool has_edge(Edge&lt;int&gt; edge) const override {
+        return adj_matrix[edge.source][edge.target] == 1;
+    }
+    float weight(int u, int w) const override {
+        return adj_matrix[u][w];
+    }
+    float weight(Edge&lt;int&gt; edge) const override {
+        return adj_matrix[edge.source][edge.target];
+    }
+    void clear() override; // usunięcie wszystkich krawędzi O(n^2)
+    void display() const override; // wypisywanie 'directed' i adj_matrix
+};
+</pre><hr>
+
+<h3>ZADANIE 3.2 (GRAF WAŻONY)</h3>
+
+<p>Przygotować implementację realizującą ADT GRAPH na bazie macierzy
+sąsiedztwa dla grafu z wagami krawędzi. 
+W macierzy sąsiedztwa zamiast 1/0 powinny być przechowywane 
+wagi krawędzi (<em>int</em> lub <em>float</em>),
+przy czym wagi muszą być różne od zera.
+Takie podejście nie jest dobre, jeżeli w danym problemie mamy krawędzie
+z zerowymi wagami, np. tak jest w sieciach przepływowych.
+
+<p>Inne rozwiązanie to przechowywanie w macierzy sąsiedztwa
+wskaźników do krawędzi (klasa <em>Edge</em>). 
+Wskaźnik <em>nullptr</em> oznacza brak krawędzi.
+To rozwiązanie pozwala na przechowywanie w krawędziach innych danych
+niż dowolne wagi (również zerowe), np. etykiet tekstowych.
+
+<hr><pre>
+// graph.hpp
+class Graph : public BaseGraph&lt;int&gt; { // wersja 7x
+    bool directed;
+    // Adjacency matrix to store graph edges.
+    std::vector&lt;std::vector&lt;Edge&lt;int&gt; *&gt; &gt; adj_matrix;
+public:
+    Graph(int n, bool directed=false) : directed(directed) {
+        adj_matrix = std::vector&lt; std::vector&lt;Edge&lt;int&gt; *&gt; &gt;(
+            n, std::vector&lt;Edge&lt;int&gt; *&gt;(n, nullptr));
+    }
+    ~Graph() { clear(); } // trzeba zwolnić pamięć krawędzi
+    bool is_directed() const override { return directed; }
+    int v() const override { return adj_matrix.size(); }
+    int e() const override;
+    int degree(int u) override; // stopień wierzchołka
+    int indegree(int u) override;
+    int outdegree(int u) override;
+    void add_node(int u) override;
+    void del_node(int u) override;
+    bool has_node(int u) const override;
+    void add_edge(int u, int w, float weight=1.0); // dodanie krawędzi (u,w)
+    void add_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(int u, int w); // usunięcie krawędzi (u,w)
+    void del_edge(Edge&lt;int&gt; edge) override;
+    bool has_edge(int u, int w) const override { // test istnienia krawędzi
+        return adj_matrix[u][w] != nullptr;
+    }
+    bool has_edge(Edge&lt;int&gt; edge) const override {
+        return adj_matrix[edge.source][edge.target] != nullptr;
+    }
+    float weight(int u, int w) const override; // waga krawędzi lub 0.0
+    float weight(Edge&lt;int&gt; edge) const override;
+    void clear() override; // usunięcie wszystkich krawędzi O(n^2)
+    void display() const override;
+};
+</pre><hr>
+
+<h3>ZADANIE 3.3</h3>
+
+<p>W obu poprzenich zadaniach zamiast korzystania z <em>std::vector</em> 
+można rozważyć korzystanie z alokowanej tablicy wskaźników do alokowanych 
+wierszy macierzy.
+
+<hr><pre>
+int n; // trzeba zapisać rozmiar tablic
+int **adj_matrix; // grafy bez wag
+Edge&lt;int&gt; ***adj_matrix; // grafy ważone
+</pre>
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
