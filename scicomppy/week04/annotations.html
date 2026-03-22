@@ -24,10 +24,13 @@
 <br>Annotations Best Practices.
 
 <p>https://docs.python.org/3/library/typing.html
-<br>'typing' - Support for type hints [Py3.5+].
+<br><strong>typing</strong> - Support for type hints [Py3.5+].
 
 <p>https://typing.readthedocs.io/en/latest/spec/index.html
 <br>Specification for the Python type system.
+
+<p>https://mypy.readthedocs.io/en/stable/cheat_sheet_py3.html
+<br>Type hints cheat sheet.
 
 <h3>INTRODUCTION</h3>
 
@@ -36,14 +39,14 @@ functions, classes, and modules.
 
 <h3>FUNCTION ANNOTATIONS</h3>
 
-<p>Function arguments may have an annotation of the form ': expression' 
+<p>Function arguments may have an annotation of the form <em>: expression</em> 
 following the parameter name. Any parameter may have an annotation, 
-even those of the form *identifier or **identifier. 
-Functions may have 'return' annotation of the form '-&gt; expression' 
-after the parameter list.
+even those of the form <em>*identifier</em> or <em>**identifier</em>. 
+Functions may have <em>return</em> annotation of the form 
+<em>-&gt; expression</em> after the parameter list.
 
 <p>The annotation values are available as values of a dictionary keyed 
-by the parameters’ names in the __annotations__ attribute 
+by the parameters’ names in the <em>__annotations__</em> attribute 
 of the function object.
 
 <hr><pre>
@@ -96,7 +99,8 @@ Url = str   # type alias
 </pre><hr>
 
 <p>Type hints are optional and are not enforced by Python 
-but they are useful to static type analysis tools (mypy, pytype), 
+but they are useful to static type analysis tools 
+(<em>mypy</em>, <em>pytype</em>), 
 and aid IDEs with code completion and refactoring.
 
 </body>
