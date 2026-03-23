@@ -15,7 +15,290 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p>Typowe operacje dla ADT GRAPH.
+
+<ul>
+<li>konstruktor tworzący pusty graf skierowany lub nieskierowany;
+<li>odczyt liczby wierzchołków [v()];
+<li>odczyt liczby krawędzi [e()];
+<li>testowanie, czy graf jest skierowany [is_directed()];
+<li>wstawianie nowego wierzchołka [add_node(u) lub przez konstruktor];
+<li>usuwanie danego wierzchołka u wraz z krawędziami incydentnymi [del_node(u)];
+w przypadku implementacji z macierzą sąsiedztwa wierzchołek faktycznie
+nie jest usuwany;
+<li>testowanie należenia wierzchołka u do grafu [has_node(u)];
+<li>wstawianie nowej krawędzi (u,v) 
+[add_edge(u,v) lub dla krawędzi z wagą add_edge(u,v,weight)];
+zwykle automatycznie wstawiane są też wierzchołki u i v, jeżeli wcześniej
+nie dodano ich do grafu;
+<li>usuwanie krawędzi (u,v) [del_edge(u,v)];
+<li>testowanie istnienia krawędzi (u,v) 
+[has_edge(u,v) lub przez zerową wagę weight(u,v)];
+<li>odczyt wagi krawędzi weight(u,v) 
+[domyślnie przyjmuje się wagę 1 (int lub float)];
+<li>iteracja po wierzchołkach grafu;
+<li>iteracja po krawędziach grafu;
+<li>iteracja po sąsiadach danego wierzchołka u;
+<li>czyszczenie grafu [clear()].
+</ul>
+
+<hr><pre>
+| Przykład grafu skierowanego i jego listy sąsiedztwa.
+| Złożoność pamięciowa to zwykle O((n+m) log n) bitów.
+| 1 --o 2   +---+
+| o   / |   |   |   +---+   +---+    puste
+| |  /  |   | 0 +--o| 1 +--o| 3 +--| łącze
+| | o   o   |   |   +---+   +---+
+| 0 --o 3   +---+
+|           |   |   +---+
+| n = 4     | 1 +--o| 2 +--|
+| m = 5     |   |   +---+
+|           +---+
+|           |   |   +---+   +---+
+|           | 2 +--o| 0 +--o| 3 +--|
+|           |   |   +---+   +---+
+|           +---+
+|           |   |
+|           | 3 +--|
+|           |   |
+|           +---+
+</pre><hr><pre>
+| Przykład grafu nieskierowanego i jego listy sąsiedztwa.
+| Złożoność pamięciowa to zwykle O((n+m) log n) bitów.
+| 1---2   +---+
+| | / |   |   |   +---+   +---+   +---+    puste
+| 0---3   | 0 +--o| 1 +--o| 2 +--o| 3 +--| łącze
+|         |   |   +---+   +---+   +---+
+|         +---+
+|         |   |   +---+   +---+
+| n = 4   | 1 +--o| 0 +--o| 2 +--|
+| m = 5   |   |   +---+   +---+
+|         +---+
+|         |   |   +---+   +---+   +---+
+|         | 2 +--o| 0 +--o| 1 +--o| 3 +--|
+|         |   |   +---+   +---+   +---+
+|         +---+
+|         |   |   +---+   +---+
+|         | 3 +--o| 0 +--o| 2 +--|
+|         |   |   +---+   +---+
+|         +---+
+</pre><hr>
+
+<h3>ITERATORY</h3>
+
+<hr><pre>
+// Korzystanie z iteratorów w grafie.
+// W grafie używamy std::map lub std::unordered_map.
+
+Graph&lt;int&gt; G; // lista sąsiedztwa, wierzchołki int, graf nieskierowany
+Graph&lt;int&gt; G(true); // lista sąsiedztwa, wierzchołki int, graf skierowany
+// Dodawanie wierzchołków i krawędzi ...
+
+for (auto n_it = G.node_begin(); n_it != G.node_end(); ++n_it) {
+    print_node(*n_it); // NodeIterator
+}
+for (auto e_it = G.edge_begin(); e_it != G.edge_end(); ++e_it) {
+    print_edge(*e_it); // EdgeIterator
+}
+// Niech 'node' oznacza pewien wierzchołek grafu.
+for (auto a_it = G.adj_begin(node); a_it != G.adj_end(node); ++a_it) {
+    print_node(*a_it); // AdjacentIterator
+}
+</pre><hr><pre>
+class NodeIterator : public Iterator&lt;T&gt; { ... };
+// w grafie używamy std::map lub std::unordered_map
+NodeIterator node_begin() {
+    return NodeIterator(this, this-&gt;adj_list.begin());
+}
+NodeIterator node_end() {
+    return NodeIterator(this, this-&gt;adj_list.end());
+}
+</pre><hr><pre>
+class EdgeIterator : public Iterator&lt;Edge&lt;T&gt;&gt; { ... };
+// w grafie używamy std::map lub std::unordered_map
+EdgeIterator edge_begin() {
+    return EdgeIterator(this);
+}
+EdgeIterator edge_end() {
+    return EdgeIterator(this, this-&gt;adj_list.end(),
+        this-&gt;adj_list.begin()-&gt;second.end()); // konwencja
+}
+</pre><hr><pre>
+class AdjacentIterator : public Iterator&lt;T&gt; { ... };
+// w grafie używamy std::map lub std::unordered_map
+AdjacentIterator adj_begin(T u) {
+    auto pair_it = this-&gt;adj_list.find(u);
+    return AdjacentIterator(this, pair_it, pair_it-&gt;second.begin());
+}
+AdjacentIterator adj_end(T u) {
+    auto pair_it = this-&gt;adj_list.find(u);
+    return AdjacentIterator(this, pair_it, pair_it-&gt;second.end());
+}
+</pre><hr>
+
+<h3>ZADANIE 4.1 (GRAF BEZ WAG)</h3>
+
+<p>Przygotować implementację realizującą ADT GRAPH na bazie listy
+sąsiedztwa dla grafu bez wag krawędzi. 
+Będzie to klasa <em>Graph</em> umieszczona w pliku
+<a href="graph5b.hpp">graph.hpp</a>.
+Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu grafów.
+
+<p>Wektor <em>adj_list</em> zawiera wektory/listy różnej długości. 
+Wierzchołki grafu to liczby od 0 do n-1.
+
+<hr><pre>
+// graph.hpp
+class Graph : public BaseGraph&lt;int&gt; { // wersja 5b
+    bool directed; // czy graf jest skierowany
+    std::vector&lt; std::vector&lt;int&gt; &gt; adj_list; // lista sąsiedztwa
+public:
+    // Powstaje wektor z 'n' pustymi wektorami.
+    Graph(int n, bool directed=false) : directed(directed) {
+        adj_list = std::vector&lt; std::vector&lt;int&gt; &gt;(n);
+    }
+    ~Graph() { clear(); }
+    bool is_directed() const override { return directed; } // czy graf jest skierowany O(1)
+    int v() const override { return adj_list.size(); } // liczba wierzchołków grafu O(1)
+    int e() const override { // liczba krawędzi grafu O(n)
+        int counter = 0;
+        for (auto&amp; vec : adj_list)
+            counter += vec.size();
+        return (directed ? counter : counter / 2);
+    }
+    int degree(int u) override { return adj_list[u].size(); }
+    int indegree(int u) override; // liczba krawędzi wchodzących do u
+    int outdegree(int u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
+    void add_node(int u) override { assert((0 &lt;= u) && (u &lt; v())); } // tylko test zakresu
+    void del_node(int u) override; // usuwanie krawedzi incydentnych
+    bool has_node(int u) const override { return (0 &lt;= u) && (u &lt; v()); } // tylko test zakresu
+    void add_edge(int u, int w) override; // wstawienie krawędzi (u,w)
+    void add_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(int u, int w) override; // usunięcie krawędzi (u,w)
+    void del_edge(Edge&lt;int&gt; edge) override;
+    bool has_edge(int u, int w) const override; // test istnienia krawędzi (u,w)
+    bool has_edge(Edge&lt;int&gt; edge) const override;
+    float weight(int u, int v) const override;
+    float weight(Edge&lt;int&gt; edge) const override;
+    void clear() override { // usunięcie wszystkich krawędzi (wierzchołki zostają)
+        // Zostawiamy adj_list z pustymi listami sąsiedztwa.
+        for (auto&amp; vec : adj_list)
+            vec.clear();
+    }
+    void display() const override; // wypisywanie 'directed' i adj_list
+};
+</pre><hr><pre>
+// Inna możliwość to alokowana tablica z wektorami/listami różnej długości.
+class Graph : public BaseGraph&lt;int&gt; { // wersja 5d
+    int n;
+    bool directed;
+    std::vector&lt;int&gt; *adj_list;
+public:
+    Graph(int nn, bool directed=false) : n(nn), directed(directed) {
+        adj_list = new std::vector&lt;int&gt; [n];
+    }
+    ~Graph() { clear(); delete [] adj_list; }
+    bool is_directed() const override { return directed; }
+    int v() const override { return n; } // liczba wierzcholkow
+    int e() const override { // liczba krawedzi
+        int counter = 0;
+        for (int u = 0; u &lt; n; u++)
+            counter += adj_list[u].size();
+        return (directed ? counter : counter / 2);
+    }
+</pre><hr>
+
+<h3>ZADANIE 4.2 (GRAF BEZ WAG)</h3>
+
+<p>Przygotować implementację realizującą ADT GRAPH na bazie listy
+sąsiedztwa dla grafu bez wag krawędzi. 
+Będzie to klasa <em>Graph</em> (szablon) umieszczona w pliku 
+<em>graph.hpp</em>.
+Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu grafów.
+
+<p>Mapa ma klucze typu <em>T</em> (wierzchołki), a wartości to listy/wektory 
+z wartościami typu <em>T</em> (listy sąsiadów).
+
+<hr><pre>
+// graph.hpp
+template &lt;typename T&gt;
+class Graph : public BaseGraph&lt;T&gt; { // wersja 5x
+    bool directed;
+    std::unordered_map&lt;T, std::list&lt;T&gt; &gt; adj_list; // lista sąsiedztwa
+    //std::unordered_map&lt;T, std::vector&lt;T&gt; &gt; adj_list; // lista sąsiedztwa
+public:
+    Graph(bool d=false) : directed(d) {}
+    ~Graph() { adj_list.clear(); }
+    bool is_directed() const override { return directed; }
+    int v() const override { return adj_list.size(); } // liczba wierzchołków
+    int e() const override { // liczba krawędzi
+        int counter = 0;
+        for (auto&amp; pair : adj_list)
+            counter += pair.second.size();
+        return (directed ? counter : counter / 2);
+    }
+    int degree(T u) override { return adj_list[u].size(); }
+    int indegree(T u) override; // liczba krawędzi wchodzących do u
+    int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
+    void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
+    void del_node(T u) override;
+    bool has_node(T u) const override;
+    void add_edge(T u, T w) override; // wstawienie krawędzi (u,w)
+    void add_edge(Edge&lt;T&gt; edge) override;
+    void del_edge(T u, T w) override; // usunięcie krawędzi (u,w)
+    void del_edge(Edge&lt;T&gt; edge) override;
+    bool has_edge(T u, T w) const override; // test istnienia krawędzi
+    bool has_edge(Edge&lt;T&gt; edge) const override;
+    void clear() override { adj_list.clear(); }
+    void display() const override;
+};
+</pre><hr>
+
+<h3>ZADANIE 4.3 (GRAF WAŻONY)</h3>
+
+<p>Przygotować implementację realizującą ADT GRAPH na bazie listy
+sąsiedztwa dla grafu z wagami krawędzi. 
+Na liście sąsiedztwa powinny być przechowywane pary
+(wierzchołek końcowy krawędzi, waga krawędzi).
+
+<p>Inne rozwiązanie to przechowywanie na liście sąsiedztwa wskaźników
+do krawędzi (klasa <em>Edge</em>).
+
+<hr><pre>
+template &lt;typename T&gt;
+class Graph { // wersja5c
+    bool directed;
+    std::unordered_map&lt;T, std::list&lt;Edge&lt;T&gt; *&gt; &gt; adj_list; // lista sąsiedztwa
+    //std::unordered_map&lt;T, std::vector&lt;Edge&lt;T&gt; *&gt; &gt; adj_list; // lista sąsiedztwa
+public:
+    Graph(bool directed=false) : directed(directed) {}
+    ~Graph() { adj_list.clear(); }
+    bool is_directed() const override { return directed; }
+    int v() const override { return adj_list.size(); } // liczba wierzchołków
+    int e() const override { // liczba krawędzi
+        int counter = 0;
+        for (auto&amp; pair : adj_list)
+            counter += pair.second.size();
+        return (directed ? counter : counter / 2);
+    }
+    int degree(T u) override { return adj_list[u].size(); }
+    int indegree(T u) override; // liczba krawędzi wchodzących do u
+    int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
+    void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
+    void del_node(T u) override;
+    bool has_node(T u) const override;
+    void add_edge(T u, T w, float weight=1.0) override; // wstawienie krawędzi (u,w) z wagą
+    void del_edge(T u, T w) override; // usunięcie krawędzi (u,w)
+    bool has_edge(T u, T w) const override; // test istnienia krawędzi
+    float weight(T u, T w) const override; // waga krawędzi lub 0.0
+    void clear() override; // trzeba zwolnić pamięć krawędzi
+    void display() const override;
+};
+</pre><hr>
+
+<h3>ZADANIE 4.4</h3>
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
