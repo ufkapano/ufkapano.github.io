@@ -173,14 +173,22 @@ public:
     void add_node(int u) override { assert((0 &lt;= u) && (u &lt; v())); } // tylko test zakresu
     void del_node(int u) override; // usuwanie krawedzi incydentnych
     bool has_node(int u) const override { return (0 &lt;= u) && (u &lt; v()); } // tylko test zakresu
-    void add_edge(int u, int w) override; // wstawienie krawędzi (u,w)
-    void add_edge(Edge&lt;int&gt; edge) override;
+    void add_edge(int u, int w, float weight=1.0) override; // wstawienie krawędzi (u,w)
+    void add_edge(Edge&lt;int&gt; edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(int u, int w) override; // usunięcie krawędzi (u,w)
-    void del_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(Edge&lt;int&gt; edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(int u, int w) const override; // test istnienia krawędzi (u,w)
-    bool has_edge(Edge&lt;int&gt; edge) const override;
+    bool has_edge(Edge&lt;int&gt; edge) const override {
+        return has_edge(edge.source, edge.target);
+    }
     float weight(int u, int v) const override;
-    float weight(Edge&lt;int&gt; edge) const override;
+    float weight(Edge&lt;int&gt; edge) const override {
+        return weight(edge.source, edge.target);
+    }
     void clear() override { // usunięcie wszystkich krawędzi (wierzchołki zostają)
         // Zostawiamy adj_list z pustymi listami sąsiedztwa.
         for (auto&amp; vec : adj_list)
@@ -245,12 +253,22 @@ public:
     void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
     void del_node(T u) override;
     bool has_node(T u) const override;
-    void add_edge(T u, T w) override; // wstawienie krawędzi (u,w)
-    void add_edge(Edge&lt;T&gt; edge) override;
+    void add_edge(T u, T w, float weight=1.0) override; // wstawienie krawędzi (u,w)
+    void add_edge(Edge&lt;T&gt; edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(T u, T w) override; // usunięcie krawędzi (u,w)
-    void del_edge(Edge&lt;T&gt; edge) override;
+    void del_edge(Edge&lt;T&gt; edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(T u, T w) const override; // test istnienia krawędzi
-    bool has_edge(Edge&lt;T&gt; edge) const override;
+    bool has_edge(Edge&lt;T&gt; edge) const override {
+        return has_edge(edge.source, edge.target);
+    }
+    float weight(T u, T w) const override; // waga krawędzi lub 0.0
+    float weight(Edge&lt;T&gt; edge) const override {
+        return weight(edge.source, edge.target);
+    }
     void clear() override { adj_list.clear(); }
     void display() const override;
 };
@@ -290,9 +308,21 @@ public:
     void del_node(T u) override;
     bool has_node(T u) const override;
     void add_edge(T u, T w, float weight=1.0) override; // wstawienie krawędzi (u,w) z wagą
+    void add_edge(Edge&lt;T&gt; edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(T u, T w) override; // usunięcie krawędzi (u,w)
+    void del_edge(Edge&lt;T&gt; edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(T u, T w) const override; // test istnienia krawędzi
+    bool has_edge(Edge&lt;T&gt; edge) const override {
+        return has_edge(edge.source, edge.target);
+    }
     float weight(T u, T w) const override; // waga krawędzi lub 0.0
+    float weight(Edge&lt;T&gt; edge) const override {
+        return weight(edge.source, edge.target);
+    }
     void clear() override; // trzeba zwolnić pamięć krawędzi
     void display() const override;
 };

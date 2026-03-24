@@ -277,9 +277,13 @@ public:
         return (0 &lt;= u && u &lt; v());
     }
     void add_edge(int u, int w, float weight=1.0) override; // wstawienie krawędzi (u,w)
-    void add_edge(Edge&lt;int&gt; edge) override;
+    void add_edge(Edge&lt;int&gt; edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(int u, int w) override; // usunięcie krawędzi (u,w)
-    void del_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(Edge&lt;int&gt; edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(int u, int w) const override { // test istnienia krawędzi
         return adj_matrix[u][w] == 1;
     }
@@ -335,9 +339,13 @@ public:
     void del_node(int u) override;
     bool has_node(int u) const override;
     void add_edge(int u, int w, float weight=1.0); // dodanie krawędzi (u,w)
-    void add_edge(Edge&lt;int&gt; edge) override;
+    void add_edge(Edge&lt;int&gt; edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(int u, int w); // usunięcie krawędzi (u,w)
-    void del_edge(Edge&lt;int&gt; edge) override;
+    void del_edge(Edge&lt;int&gt; edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(int u, int w) const override { // test istnienia krawędzi
         return adj_matrix[u][w] != nullptr;
     }
@@ -345,7 +353,9 @@ public:
         return adj_matrix[edge.source][edge.target] != nullptr;
     }
     float weight(int u, int w) const override; // waga krawędzi lub 0.0
-    float weight(Edge&lt;int&gt; edge) const override;
+    float weight(Edge&lt;int&gt; edge) const override {
+        return weight(edge.source, edge.target);
+    }
     void clear() override; // usunięcie wszystkich krawędzi O(n^2)
     void display() const override;
 };

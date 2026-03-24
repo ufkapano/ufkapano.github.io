@@ -49,9 +49,13 @@ public:
         return (0 <= u && u < v());
     }
     void add_edge(int u, int w, float weight=1.0) override;
-    void add_edge(Edge<int> edge) override;
+    void add_edge(Edge<int> edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(int u, int w) override;
-    void del_edge(Edge<int> edge) override;
+    void del_edge(Edge<int> edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(int u, int w) const override {
         return adj_matrix[u][w] == 1;
     }

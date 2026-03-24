@@ -43,13 +43,21 @@ public:
     void del_node(int u) override; // usuwanie krawedzi incydentnych
     bool has_node(int u) const override { return (0 <= u && u < v()); } // tylko test zakresu
     void add_edge(int u, int v, float weight=1.0) override; // wstawienie krawędzi (u,v)
-    void add_edge(Edge<int> edge) override;
+    void add_edge(Edge<int> edge) override {
+        add_edge(edge.source, edge.target, edge.weight);
+    }
     void del_edge(int u, int v) override; // usunięcie krawędzi (u,v)
-    void del_edge(Edge<int> edge) override;
+    void del_edge(Edge<int> edge) override {
+        del_edge(edge.source, edge.target);
+    }
     bool has_edge(int u, int v) const override;
-    bool has_edge(Edge<int> edge) const override;
+    bool has_edge(Edge<int> edge) const override {
+        return has_edge(edge.source, edge.target);
+    }
     float weight(int u, int v) const override;
-    float weight(Edge<int> edge) const override;
+    float weight(Edge<int> edge) const override {
+        return weight(edge.source, edge.target);
+    }
     void clear() override; // usunięcie wszystkich krawędzi
     void display() const override;
 
