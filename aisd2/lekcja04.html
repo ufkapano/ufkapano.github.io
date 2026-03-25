@@ -292,7 +292,7 @@ class Graph { // wersja5c
     //std::unordered_map&lt;T, std::vector&lt;Edge&lt;T&gt; *&gt; &gt; adj_list; // lista sąsiedztwa
 public:
     Graph(bool directed=false) : directed(directed) {}
-    ~Graph() { adj_list.clear(); }
+    ~Graph() { clear(); } // trzeba zwolnić pamięć krawędzi
     bool is_directed() const override { return directed; }
     int v() const override { return adj_list.size(); } // liczba wierzchołków
     int e() const override { // liczba krawędzi
