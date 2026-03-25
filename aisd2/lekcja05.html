@@ -13,9 +13,232 @@
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
+<p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
+<br>(1) Katalog z programem powinien zawierać <em>Makefile</em> i pliki źródłowe.
+<br>(2) Program powinien kompilować się poleceniem <em>make</em>.
+<br>(3) Nie używać deklaracji <em>using namespace std;</em>.
+<br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
+
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p><strong>Przeszukiwanie (przechodzenie) grafu</strong> to czynność 
+polegająca na odwiedzeniu w usystematyzowany sposób wszystkich 
+wierzchołków grafu w celu zebrania potrzebnych informacji [Wikipedia].
+Często podczas przejścia grafu rozwiązujemy już jakiś problem, 
+ale przeważnie jest to tylko wstęp do wykonania właściwego algorytmu.
+
+<p>Powszechnie stosuje się dwie metody przeszukiwania grafów:
+<br>przeszukiwanie wszerz (ang. <em>breadth-first search</em>, BFS),
+<br>przeszukiwanie w głąb (ang. <em>depth-first search</em>, DFS).
+
+<p>Są jeszcze inne sposoby odwiedzania wierzchołków grafu,
+o specjalnych właściwościach, takie jak:
+<br><em>lexicographic breadth first search</em> (LexBFS),
+<br><em>maximum cardinality search</em> (MCS).
+
+<h3>BFS</h3>
+
+<hr><pre>
+# Wersja pseudokodu z kolorami wierzchołków.
+Input: A graph G.
+Output: BFS tree (Parent), distances (Distance).
+Algorithm BFS(G):
+    let Color[] be an empty table for vertex colors
+    let Parent[] be an empty table for links
+    let Distance[] be an empty table for distances
+    for each vertex u in V(G) do
+        set Color[u] to WHITE
+        set Distance[u] to infinity
+        set Parent[u] to None
+    for each vertex u in V(G) do
+        if Color[u] is WHITE then
+            call BFSVisit(G,u)
+</pre><hr><pre>
+Input: A graph G and a starting vertex s of G.
+Output: Shortest paths to s for all vertices (Parent), distances (Distance).
+Algorithm BFSVisit(G,s):
+    set Color[s] to GREY
+    call pre_action(s)   # Preorder.append(s)
+    set Parent[s] to None
+    set Distance[s] to 0
+    let Q be an empty queue
+    Q.put(s)
+    while Q is not empty do
+        set u to Q.get()
+        for each edge (u,v) in E(G) do   # adjacency list
+            if Color[v] is WHITE then
+                set Color[v] to GREY
+                call pre_action(v)   # Preorder.append(v)
+                set Parent[v] to u
+                set Distance[v] to Distance[u] + 1
+                Q.put(v)
+        set Color[u] to BLACK
+        call post_action(u)   # Postorder.append(u)
+# W kolejce Q są jedynie szare wierzchołki (niezmiennik pętli).
+# Cormen udowadnia złożoność BFS O(n+m) dla reprezentacji z listami sąsiedztwa.
+# Cormen udowadnia, że BFS wyznacza najkrótsze ścieżki do s.
+# Cormen pisze, że rozróżnianie szarych i czarnych wierzchołków nie jest
+# konieczne, ale pomaga w zrozumieniu BFS.
+</pre><hr><pre>
+# Algorytm wypisywania najkrótszej ścieżki z s do t.
+Algorithm PrintPath(G,s,t):   # wersja rekurencyjna
+    if s equals t then
+        print s
+    else if Parent[t] is None then
+        print "no path"
+    else
+        call PrintPath(G,s,Parent[t])
+        print t   # kolejność wyświetlania: s, ..., Parent[t], t
+</pre><hr>
+
+<p>Wybór kolejności sąsiadów wierzchołka v w pętli <em>for</em> nie jest
+określony, w praktyce zależy od implementacji grafu.
+
+<p>Czasowa złożoność obliczeniowa BFS to O(n+m) w reprezentacji list sąsiedztwa.
+<br>Pamięciowa złożoność obliczeniowa BFS to O(n).
+
+<p><strong>Uporządkowanie BFS</strong> to takie uporządkowanie wierzchołków 
+grafu, że jest to możliwa kolejność odwiedzania wierzchołków algorytmem BFS.
+
+<p>Wybrane zastosowania BFS:
+<br>wyznaczanie najkrótszych ścieżek w grafie (w sensie przeskoków),
+<br>wyznaczanie spójnych składowych grafu nieskierowanego,
+<br>wykrywanie grafu dwudzielnego,
+<br>wyznaczanie największego przepływu w sieciach przepływowych,
+<br>generowanie labiryntu.
+
+<h3>DFS</h3>
+
+<hr><pre>
+# Wersja Cormena z kolorowaniem wierzchołków.
+Input: A graph G.
+Output: DFS tree (Parent).
+Algorithm DFS(G):
+    let Color[] be an empty table for node colors
+    let Parent[] be an empty table for links
+    for each node u in V(G) do
+        set Color[u] to WHITE
+        set Parent[u] to None
+    for each node u in V(G) do
+        if Color[u] is WHITE then
+            call DFSVisit(G,u)
+    return Parent
+</pre><hr><pre>
+Algorithm DFSVisit(G,u):
+    set Color[u] to GREY
+    call pre_action(u)   # Preorder.append(u)
+    for each edge (u,v) in E(G) do
+        if Color[v] is WHITE then   # adjacency list
+            set Parent[v] to u
+            call DFSVisit(G,v)
+    set Color[u] to BLACK
+    call post_action(u)   # Postorder.append(u)
+# Cormen dla każdego wierzchołka wyznacza czas odwiedzenia (wierzchołek
+# staje się GREY) i czas przetworzenia (wierzchołek staje się BLACK).
+</pre><hr>
+
+<p>Czasowa złożoność obliczeniowa DFS to O(n+m) w reprezentacji list sąsiedztwa.
+<br>Pamięciowa złożoność obliczeniowa DFS to O(n).
+
+<p>Wybrane zastosowania DFS:
+<br>wyznaczanie składowych spójnych grafu nieskierowanego,
+<br>wykrywanie grafu dwudzielnego,
+<br>sortowanie topologiczne wierzchołków grafu,
+<br>testowanie planarności grafu,
+<br>wyznaczanie mostów i punktów artykulacji grafu,
+<br>wykrywanie cykli w grafie,
+<br>wyznaczanie silnie spójnych składowych w grafie skierowanym,
+<br>generowanie labiryntu (zwykle z dodaniem przypadkowości).
+
+<h3>ZADANIE 5.1 (BFS)</h3>
+
+<p>Wygenerować graf przypadkowy spójny z n=10.
+Znaleźć kolejność odkrywania wierzchołków grafu przez BFS.
+
+<hr><pre>
+// bfs.hpp
+template&lt;typename T, typename G&gt; // node type, graph type
+class BFS {
+    G&amp; graph;
+    std::unordered_map&lt;T, bool&gt; visited;
+public:
+    std::vector&lt;T&gt; preorder;
+    BFS(G&amp; g) : graph(g) {
+        for (auto n_it = graph.node_begin();
+            n_it != graph.node_end();
+            ++n_it) {
+            visited[*n_it] = false;
+        }
+    }
+    ~BFS() = default; // destruktor
+    void run(T u = T()) {
+        if (u != T()) { // badamy jedną składową spójną
+            visit(u);
+        } else {
+            for (auto n_it = graph.node_begin();
+                n_it != graph.node_end();
+                ++n_it) {
+                if (!visited[*n_it])
+                    visit(*n_it);
+            } // for
+        } // if
+    }
+    void visit(T s);
+};
+// Usage:
+// auto algorithm = BFS&lt;int,Graph&gt;(graph);
+// algorithm.run(start_node);
+// for (auto&amp; node : algorithm.preorder) { ... }
+// for (auto&amp; node : algorithm.postorder) { ... }
+</pre><hr>
+
+<h3>ZADANIE 5.2 (DFS)</h3>
+
+<p>Wygenerować graf przypadkowy spójny z n=10.
+Znaleźć kolejność odkrywania wierzchołków grafu przez DFS.
+
+<hr><pre>
+// dfs.hpp
+template&lt;typename T, typename G&gt; // node type, graph type
+class DFS {
+    G&amp; graph;
+    std::unordered_map&lt;T, bool&gt; visited;
+public:
+    std::vector&lt;T&gt; preorder;
+    std::vector&lt;T&gt; postorder;
+    DFS(G&amp; g) : graph(g) {
+        for (auto n_it = graph.node_begin();
+            n_it != graph.node_end();
+            ++n_it) {
+            visited[*n_it] = false;
+        }
+    }
+    ~DFS() = default; // destruktor
+    void run(T u = T()) {
+        if (u != T()) { // badamy jedną składową spójną
+            visit(u);
+        } else {
+            for (auto n_it = graph.node_begin();
+                n_it != graph.node_end();
+                ++n_it) {
+                if (!visited[*n_it])
+                    visit(*n_it);
+            } // for
+        } // if
+    }
+    void visit(T u);
+};
+// Usage:
+// auto algorithm = DFS&lt;int,Graph&gt;(graph);
+// algorithm.run(start_node);
+// for (auto&amp; node : algorithm.preorder) { ... }
+// for (auto&amp; node : algorithm.postorder) { ... }
+</pre><hr>
+
+<h3>ZADANIE 5.3 (DEPTH TRACKER)</h3>
+
+<p>Zaimplementować BFS lub DFS w taki sposób, aby oprócz kolejności
+napotykanych wierzchołków wyznaczać ich odległość od wierzchołka startowego.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

@@ -107,7 +107,7 @@ Domyślna waga krawędzi wynosi 1.0.
 
 <hr><pre>
 // edge.hpp
-template&lt;typename T&gt;
+template &lt;typename T&gt;
 class Edge {
 public:
     T source;
@@ -130,6 +130,8 @@ public:
 
 <hr><pre>
 // basegraph.hpp
+#include "edge.hpp"
+
 template &lt;typename T&gt;
 class BaseGraph { // abstract class
 public:
@@ -178,8 +180,10 @@ for (it.first(); !it.is_done(); it.next())
 </pre><hr><pre>
 // Korzystanie z iteratorów w grafie.
 
+// Przykładowe definicje grafów.
 Graph G(7); // macierz sąsiedztwa, n = 7, graf nieskierowany
-Graph G(7,true); // macierz sąsiedztwa, n = 7, graf skierowany
+Graph G(9,true); // macierz sąsiedztwa, n = 9, graf skierowany
+
 // Dodawanie krawędzi ...
 
 for (auto n_it = G.node_begin(); n_it != G.node_end(); ++n_it) {
@@ -316,6 +320,9 @@ wskaźników do krawędzi (klasa <em>Edge</em>).
 Wskaźnik <em>nullptr</em> oznacza brak krawędzi.
 To rozwiązanie pozwala na przechowywanie w krawędziach innych danych
 niż dowolne wagi (również zerowe), np. etykiet tekstowych.
+
+<p>Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu grafów.
 
 <hr><pre>
 // graph.hpp

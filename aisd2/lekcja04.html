@@ -90,8 +90,11 @@ nie dodano ich do grafu;
 // Korzystanie z iteratorów w grafie.
 // W grafie używamy std::map lub std::unordered_map.
 
+// Przykładowe definicje grafów.
 Graph&lt;int&gt; G; // lista sąsiedztwa, wierzchołki int, graf nieskierowany
-Graph&lt;int&gt; G(true); // lista sąsiedztwa, wierzchołki int, graf skierowany
+Graph&lt;char&gt; G(true); // lista sąsiedztwa, wierzchołki char, graf skierowany
+Graph&lt;std::string&gt; G; // lista sąsiedztwa, wierzchołki std::string, graf nieskierowany
+
 // Dodawanie wierzchołków i krawędzi ...
 
 for (auto n_it = G.node_begin(); n_it != G.node_end(); ++n_it) {
@@ -283,8 +286,11 @@ Na liście sąsiedztwa powinny być przechowywane pary
 
 <p>Inne rozwiązanie to przechowywanie na liście sąsiedztwa wskaźników
 do krawędzi (klasa <em>Edge</em>).
+Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu grafów.
 
 <hr><pre>
+// graph.hpp
 template &lt;typename T&gt;
 class Graph { // wersja5c
     bool directed;
