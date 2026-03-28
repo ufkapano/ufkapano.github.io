@@ -13,18 +13,20 @@
 <h3>INTRODUCTION</h3>
 
 <p>This module provides generic shallow and deep copy operations.
-<br>A 'shallow copy' constructs a new compound object and then 
-inserts 'references' into it to the objects found in the original.
-<br>A 'deep copy' constructs a new compound object and then, recursively, 
-inserts 'copies' into it of the objects found in the original.
+<br>A <strong>shallow copy</strong> constructs a new compound object 
+and then inserts <strong>references</strong> into it to the objects 
+found in the original.
+<br>A <strong>deep copy</strong> constructs a new compound object and then, 
+recursively, inserts <strong>copies</strong> into it of the objects 
+found in the original.
 
 <p>Two problems with deep copy operations:
 <br>(a) recursive objects may cause a recursive loop,
 <br>(b) it may copy too much, such as data which is intended 
 to be shared between copies.
 
-<p>The deepcopy() function avoids these problems by:
-<br>(a) keeping a 'memo' dictionary of objects already copied during 
+<p>The <em>deepcopy()</em> function avoids these problems by:
+<br>(a) keeping a <em>memo</em> dictionary of objects already copied during 
 the current copying pass,
 <br>(b) letting user-defined classes override the copying operation 
 or the set of components copied.

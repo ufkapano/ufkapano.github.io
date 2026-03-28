@@ -144,10 +144,15 @@ public:
     virtual int indegree(T u) = 0; // stopień wejściowy
     virtual int outdegree(T u) = 0; // stopień wyjściowy
     virtual void add_node(T u) = 0;
+    // Ponowne dodanie istniejącego wierzchołka jest ignorowane bez błędu.
     virtual void del_node(T u) = 0;
+    // Usunięcie wierzchołka automatycznie usuwa krawędzie wchodzące i wychodzące.
     virtual bool has_node(T u) const = 0;
     virtual void add_edge(T u, T w, float weight=1.0) = 0;
     virtual void add_edge(Edge&lt;T&gt; edge) = 0;
+    // Jeżeli krawędź (u,w) istnieje w grafie, to próba dodania tej krawędzi
+    // powinna być raportowana jako błąd w grafach prostych.
+    // Dodanie krawędzi automatycznie dodaje brakujące wierzchołki.
     virtual void del_edge(T u, T w) = 0;
     virtual void del_edge(Edge&lt;T&gt; edge) = 0;
     virtual bool has_edge(T u, T w) const = 0;

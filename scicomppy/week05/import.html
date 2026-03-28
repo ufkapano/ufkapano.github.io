@@ -19,23 +19,23 @@
 <p>Python code in one module gains access to the code in another module 
 by the process of importing it.
 
-<p>The 'import' statement combines two operations:
+<p>The <em>import</em> statement combines two operations:
 <br>(a) searching for the named module [finders], 
 <br>(b) binding the results of that search to a name in the local scope 
 [loaders; module execution].
 
 <p>When a module is first imported, Python searches for the module 
 and if found, it creates a module object, initializing it. 
-If the named module cannot be found, a 'ImportError' (Py2) or
-'ModuleNotFoundError' (Py3.6+) is raised.
+If the named module cannot be found, a <em>ImportError</em> (Py2) or
+<em>ModuleNotFoundError</em> (Py3.6+) is raised.
 
 <p>The Python interpreter searches for modules in the following sequences:
 <br>(a) the current directory,
-<br>(b) directories in the shell variable PYTHONPATH,
+<br>(b) directories in the shell variable <em>PYTHONPATH</em>,
 <br>(c) default locations (installation-dependent).
 
-<p>The module search path is stored in the system module 'sys' 
-as the 'sys.path' variable.
+<p>The module search path is stored in the system module <em>sys</em> 
+as the <em>sys.path</em> variable.
 
 <hr><pre>
 import sys
@@ -58,7 +58,7 @@ help(module1)   # NAME, FILE, FUNCTIONS, DATA
 dir(module1)              # namespace
 module1.__dict__.keys()   # namespace
 </pre><hr><pre>
-# Using 'from...import' statements.
+# Using 'from ... import' statements.
 # We can import specific names from a module into the current namespace.
 
 from module1 import name1, name2
@@ -72,7 +72,7 @@ from module1 import (name1, name2)   # for long lists of names
 
 from module2 import *   # importing all names, possible problems
 
-print("{} {}".format(name1, name2()))
+print(name1, name2())
 </pre><hr><pre>
 import module1 as module2
 

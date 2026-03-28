@@ -15,7 +15,7 @@
 <p>This module provides access to the mathematical functions defined 
 by the C standard.
 
-<p>Complex number versions of many functions are in the 'cmath' module.
+<p>Complex number versions of many functions are in the <em>cmath</em> module.
 
 <hr><pre>
 import math
@@ -28,14 +28,16 @@ import math
 # ceil() and floor() return float in Py2 and int in Py3
 
 # math.comb(n, k) - evaluates to n! / (k! * (n - k)!) (Py3.8)
-# math.perm(n, k=None) - evaluates to n! / (n - k)! when k &lt;= n (Py3.8)
+# math.perm(n, k=None) - evaluates to n! / (n - k)! when k &lt;= n (Py3.8+)
 # math.prod(iterable, *, start=1) - the product of all the elements in iterable (Py3.8)
 
 # math.fabs(x)
 # math.fsum(iterable) - more accurate then sum(iterable)
 # math.factorial(x)
 # math.gcd(x, y) - the greatest common divisor
+# math.gcd(*integers) - support for an arbitrary number of arguments (Py3.9+)
 # math.lcm(x, y) - the least common multiple
+# math.lcm(*integers) - support for many arguments (Py3.9+)
 
 # math.isfinite(x)
 # math.isinf(x)
@@ -44,6 +46,7 @@ import math
 # Power and logarithmic functions
 
 # math.exp(x) - more accurate then math.e ** x
+# math.exp2(x) - 2 ** x (Py3.11+)
 # math.expm1(x) - more accurate then math.exp(x)-1
 # math.log(x) - the natural logarithm ln(x)
 # math.log(x, base) -  math.log(x)/math.log(base)
@@ -52,15 +55,16 @@ import math
 # math.log10(x) - more accurate then math.log(x, 10)
 # math.pow(x, y) - returns x ** y, converts both arguments to float
 # math.sqrt(x) - the square root of x
+# math.isqrt(n) -  the integer square root of the nonnegative integer n (Py3.8+)
+# math.hypot(x, y) - return math.sqrt(x*x + y*y)
 </pre><hr><pre>
 # Trigonometric and hyperbolic functions
 
 # math.sin(x), math.cos(x), math.tan(x),
 # math.asin(x), math.acos(x), math.atan(x),
 # math.sinh(x), math.cosh(x), math.tanh(x),
-# math.asinh(x), math.acosh(x), math.atanh(x)
+# math.asinh(x), math.acosh(x), math.atanh(x),
 # math.atan2(y, x) - return atan(y / x) in radians [correct quadrant]
-# math.hypot(x, y) - return math.sqrt(x*x + y*y)
 </pre><hr><pre>
 # Special functions
 

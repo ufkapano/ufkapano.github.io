@@ -11,31 +11,31 @@
 <p>https://docs.python.org/3/reference/import.html
 
 <p>PEP 420 - Implicit Namespace Packages
-[a regular package (with an __init__.py) vs a namespace package]
+[a regular package (with an <em>__init__.py</em>) vs a namespace package]
 
 <h3>INTRODUCTION</h3>
 
-<p>Python has a concept of 'packages' to help organize modules 
+<p>Python has a concept of <strong>packages</strong> to help organize modules 
 and provide a naming hierarchy.
 You can think of packages as the directories on a file system 
 and modules as files within directories.
 
 <p>It’s important to keep in mind that all packages are modules, 
 but not all modules are packages
-[a package contains a '__path__' attribute].
+[a package contains a <em>__path__</em> attribute].
 
-<p>Python defines two types of packages, 'regular packages' 
-and 'namespace packages'.
+<p>Python defines two types of packages, <strong>regular packages</strong> 
+and <strong>namespace packages</strong>.
 
 <h3>REGULAR PACKAGES</h3>
 
 <p>Regular packages are traditional packages typically implemented 
-as a directory containing an '__init__.py' file. 
+as a directory containing an <em>__init__.py</em> file. 
 
-<p>When a regular package is imported, this '__init__.py' file 
+<p>When a regular package is imported, this <em>__init__.py</em> file 
 is implicitly executed, and the objects it defines are bound to names 
 in the package’s namespace. 
-The '__init__.py' file can contain the same Python code that any other 
+The <em>__init__.py</em> file can contain the same Python code that any other 
 module can contain, and Python will add some additional attributes 
 to the module when it is imported.
 
@@ -65,7 +65,7 @@ from dir2.module2 import name2
 
 <h3>NAMESPACE PACKAGES</h3>
 
-<p>A namespace package is a composite of various 'portions', 
+<p>A namespace package is a composite of various <strong>portions</strong>, 
 where each portion contributes a subpackage to the parent package. 
 Portions may reside in different locations on the file system. 
 Portions may also be found in zip files, on the network, 
