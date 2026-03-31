@@ -89,6 +89,15 @@ Algorithm PrintPath(G,s,t):   # wersja rekurencyjna
     else
         call PrintPath(G,s,Parent[t])
         print t   # kolejność wyświetlania: s, ..., Parent[t], t
+</pre><hr><pre>
+# Przykład. Wierzchołki grafu numerowane w kolejności napotkania w BFS (preorder).
+#    0   2(1)  5(2)   drzewo BFS  0   2   5
+#     o---o---o                   o---o---o
+#     | / | \ |                   |     \
+# 1(1)o   |   o6(2)              1o       o6
+#     | \ | / |                   | \
+#     o---o---o                   o   o---o
+# 3(2)   4(2)  7(3)               3   4   7
 </pre><hr>
 
 <p>Wybór kolejności sąsiadów wierzchołka v w pętli <em>for</em> nie jest
@@ -135,6 +144,15 @@ Algorithm DFSVisit(G,u):
     call post_action(u)   # Postorder.append(u)
 # Cormen dla każdego wierzchołka wyznacza czas odwiedzenia (wierzchołek
 # staje się GREY) i czas przetworzenia (wierzchołek staje się BLACK).
+</pre><hr><pre>
+# Przykład. Wierzchołki grafu numerowane w kolejności napotkania w DFS (preorder).
+#    0    5   4       drzewo DFS  0   5   4
+#     o---o---o                   o   o---o
+#     | / | \ |                   |       |
+#    1o   |   o3                 1o       o3
+#     | \ | / |                     \   / |
+#     o---o---o                   o---o   o
+#     7   2   6                   7   2   6
 </pre><hr>
 
 <p>Czasowa złożoność obliczeniowa DFS to O(n+m) w reprezentacji list sąsiedztwa.
@@ -163,6 +181,7 @@ class BFS {
     std::unordered_map&lt;T, bool&gt; visited;
 public:
     std::vector&lt;T&gt; preorder;
+    std::vector&lt;T&gt; postorder;
     BFS(G&amp; g) : graph(g) {
         for (auto n_it = graph.node_begin();
             n_it != graph.node_end();
@@ -186,7 +205,8 @@ public:
     void visit(T s);
 };
 // Usage:
-// auto algorithm = BFS&lt;int,Graph&gt;(graph);
+// auto algorithm = BFS&lt;int,Graph&gt;(graph); // macierz sąsiedztwa
+// auto algorithm = BFS&lt;char,Graph&lt;char&gt;&gt;(graph); // lista sąsiedztwa
 // algorithm.run(start_node);
 // for (auto&amp; node : algorithm.preorder) { ... }
 // for (auto&amp; node : algorithm.postorder) { ... }
@@ -229,7 +249,8 @@ public:
     void visit(T u);
 };
 // Usage:
-// auto algorithm = DFS&lt;int,Graph&gt;(graph);
+// auto algorithm = DFS&lt;int,Graph&gt;(graph); // macierz sąsiedztwa
+// auto algorithm = DFS&lt;char,Graph&lt;char&gt;&gt;(graph); // lista sąsiedztwa
 // algorithm.run(start_node);
 // for (auto&amp; node : algorithm.preorder) { ... }
 // for (auto&amp; node : algorithm.postorder) { ... }

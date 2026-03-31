@@ -2,12 +2,8 @@
 #define GRAPH_HPP
 
 #include <iostream>   // cout
-#include <algorithm> // std::find()
+#include <algorithm> // std::find(), std::erase()
 #include <vector>
-#include <map>
-#include <list>
-#include <queue>
-#include <utility>   // make_pair(), std::pair
 #include <cassert>    // assert()
 
 #include "edge.hpp"
