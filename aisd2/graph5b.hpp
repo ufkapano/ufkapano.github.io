@@ -304,14 +304,9 @@ void Graph::add_edge(int u, int w, float weight) {
 void Graph::del_edge(int u, int w) {
     assert( u >= 0 && u < v() );
     assert( w >= 0 && w < v() );
-    auto it = std::find(adj_list[u].begin(), adj_list[u].end(), w);
-    assert( it != adj_list[u].end() );
-    adj_list[u].erase(it);
-    if (!directed) {
-        it = std::find(adj_list[w].begin(), adj_list[w].end(), u);
-        assert( it != adj_list[w].end() );
-        adj_list[w].erase(it);
-    }
+    std::erase(adj_list[u], w); // C++20
+    if (!directed)
+        std::erase(adj_list[w], u); // C++20
 }
 
 #endif // GRAPH_HPP
