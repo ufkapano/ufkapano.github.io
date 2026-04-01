@@ -137,6 +137,8 @@ class BaseGraph { // abstract class
 public:
     BaseGraph() = default;
     ~BaseGraph() = default;
+    BaseGraph(const BaseGraph& other) = default;
+    BaseGraph& operator=(const BaseGraph& other) = default;
     virtual bool is_directed() const = 0;
     virtual int v() const = 0; // liczba wierzcholkow
     virtual int e() const = 0; // liczba krawedzi
@@ -224,8 +226,9 @@ class Iterator { // abstract class
 public:
     Iterator() = default;
     ~Iterator() = default;
+    Iterator(const Iterator& other) = default;
+    Iterator& operator=(const Iterator& other) = default;
     // Sa problemy w dziedziczeniu tych funkcji.
-    //virtual Iterator& operator=(const Iterator& other) = 0; // tego się nie robi
     //virtual Iterator& operator++() = 0;
     //virtual Iterator operator++(int) = 0;
     //virtual bool operator==(const Iterator& other) = 0;

@@ -214,6 +214,9 @@ template &lt;typename F, typename S&gt;
 class HashTable {
     int BUCKET;    // liczba bukietów
     std::list&lt; std::pair&lt;F,S&gt; &gt; *table;
+    int hash(const F& key) {
+        return (int(key) % BUCKET + BUCKET) % BUCKET;
+    } // działa dla int, float
 public:
     HashTable(int b);
     ~HashTable() { clear(); delete [] table; }
@@ -223,7 +226,6 @@ public:
     S&amp; operator[](const F&amp; key); // m[key]=value lub m[key] z domyślną wartością
     S* find(const F& key); // zwraca &amp;value lub nullptr
     void remove(const F& key);
-    int hash(const F& key) { return (int(key) % BUCKET); } // działa dla int, float
     void display() const;
     void clear(); // czyścimy wszystkie listy
 };
@@ -277,6 +279,9 @@ template &lt;typename F, typename S&gt;
 class HashTable {
     int BUCKET;    // liczba bukietów
     std::pair&lt;F,S&gt; **table; // tablica wskaźnikow do par
+    int hash(const F& key) {
+        return (int(key) % BUCKET + BUCKET) % BUCKET;
+    } // działa dla int, float
 public:
     HashTable(int b);
     ~HashTable() { clear(); delete [] table; }
@@ -286,7 +291,6 @@ public:
     S& operator[](const F& key);
     S* find(const F& key);
     void remove(const F& key); // TRUDNE
-    int hash(const F& key) { return (int(key) % BUCKET); } // działa dla int, float
     void display() const;
     void clear();
 };

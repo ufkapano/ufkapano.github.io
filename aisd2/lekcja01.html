@@ -135,6 +135,8 @@ class BaseSet { // abstract class
 public:
     BaseSet() = default;
     ~BaseSet() = default;
+    BaseSet(const BaseSet& other) = default;
+    BaseSet& operator=(const BaseSet& other) = default;
     bool empty() const { return size() == 0; } // czy zbiór jest pusty?
     virtual int size() const = 0; // liczba elementów zbioru
     virtual int max_size() const = 0;
@@ -162,7 +164,9 @@ template&lt;typename T&gt;
 class MySet : public BaseSet&lt;T&gt; {
     int BUCKET;    // liczba bukietów
     std::list&lt;T&gt; *table;
-    int hash(const T&amp; key) const { return (int(key) % BUCKET); } // działa dla int, float
+    int hash(const T&amp; key) const {
+        return (int(key) % BUCKET + BUCKET) % BUCKET;
+    } // działa dla int, float
 public:
     MySet(int b);  // konstruktor
     ~MySet() { clear(); delete [] table; }
