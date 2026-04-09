@@ -75,7 +75,6 @@ Algorithm BFSVisit(G,s):
         set Color[u] to BLACK
         call post_action(u)   # Postorder.append(u)
 # W kolejce Q są jedynie szare wierzchołki (niezmiennik pętli).
-# Cormen udowadnia złożoność BFS O(n+m) dla reprezentacji z listami sąsiedztwa.
 # Cormen udowadnia, że BFS wyznacza najkrótsze ścieżki do s.
 # Cormen pisze, że rozróżnianie szarych i czarnych wierzchołków nie jest
 # konieczne, ale pomaga w zrozumieniu BFS.
@@ -103,7 +102,8 @@ Algorithm PrintPath(G,s,t):   # wersja rekurencyjna
 <p>Wybór kolejności sąsiadów wierzchołka v w pętli <em>for</em> nie jest
 określony, w praktyce zależy od implementacji grafu.
 
-<p>Czasowa złożoność obliczeniowa BFS to O(n+m) w reprezentacji list sąsiedztwa.
+<p>Czasowa złożoność obliczeniowa BFS to O(n+m) w reprezentacji list 
+sąsiedztwa [Cormen].
 <br>Pamięciowa złożoność obliczeniowa BFS to O(n).
 
 <p><strong>Uporządkowanie BFS</strong> to takie uporządkowanie wierzchołków 
@@ -155,7 +155,8 @@ Algorithm DFSVisit(G,u):
 #     7   2   6                   7   2   6
 </pre><hr>
 
-<p>Czasowa złożoność obliczeniowa DFS to O(n+m) w reprezentacji list sąsiedztwa.
+<p>Czasowa złożoność obliczeniowa DFS to O(n+m) w reprezentacji list 
+sąsiedztwa [Cormen].
 <br>Pamięciowa złożoność obliczeniowa DFS to O(n).
 
 <p>Wybrane zastosowania DFS:

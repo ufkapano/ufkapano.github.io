@@ -17,7 +17,185 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p><strong>Sortowanie topologiczne</strong> 
+polega na zanurzeniu porządku częściowego 
+(~&lt;) w porządku liniowym, tj. na utworzeniu takiego ciągu elementów a[], 
+że jeśli a[j] ~&lt; a[k], to j &lt; k [Knuth].
+
+<p>Porządek częściowy można zapisać w grafie skierowanym acyklicznym (dagu), 
+a wtedy mówimy o sortowaniu topologicznym grafu.
+Można sortować topologicznie tylko grafy skierowane bez cykli skierowanych.
+
+<p>Wierzchołki grafu mogą reprezentować zadania do wykonania.
+Krawędź (u,v) w grafie oznacza, że zadanie u musi być wykonane przed
+zadaniem v. Uporządkowanie topologiczne wierzchołków będzie dozwoloną
+kolejnością wykonywania zadań. Zwykle istnieje kilka możliwych
+uporządkowań topologicznych wierzchołków.
+
+<p>Zastosowania sortowania topologicznego:
+<br>wyznaczanie najkrótszych ścieżek z jednego źródła w dagu [DAGShortestPath],
+<br>zarządzanie projektami, wyznaczanie ścieżki krytycznej,
+<br>wyznaczanie kolejności obliczania formuł w komórkach arkusza kalkulacyjnego,
+<br>porządkowanie zadań w <em>Makefile</em>,
+<br>rozwiązywanie zależności między symbolami w linkerach.
+
+<p>Są dwa podstawowe algorytmy sortowania topologicznego,
+działające w czasie liniowym O(n+m):
+<br>(1) sortowanie topologiczne na bazie DFS [1976 Tarjan],
+<br>(2) algorytm usuwania wierzchołków niezależnych [1962 Kahn].
+
+<h3>TESTOWANIE SORTOWANIA TOPOLOGICZNEGO</h3>
+
+<hr><pre>
+Graph G(n,true); // graf skierowany, macierz sąsiedztwa, T = int
+Graph&lt;char&gt; G(true); // graf skierowany, lista sąsiedztwa, T = char
+// dodawanie krawędzi grafu, wierzchołki grafu są typu T
+std::vector&lt;T&gt; sorted_nodes;
+std::unordered_map&lt;T,int&gt; idx;
+for (int i = 0; i &lt; G.v(); ++i)
+    idx[sorted_nodes[i]] = i;
+for (auto it = G.edge_begin(); it != G.edge_end(); ++it)
+    assert( idx[(*it).source] &lt; idx[(*it).target] );
+</pre><hr>
+
+<h3>UŻYCIE DFS (TARJAN)</h3>
+
+<hr><pre>
+Input: A directed acyclic graph G (dag).
+Output: A sequence of vertices sorted topologically.
+Algorithm TopologicalSortDFS(G):
+    let Color[] be an empty table for vertex colors
+    let L be an empty list that will contain sorted vertices
+    for each vertex u in V(G) do
+        set Color[u] to WHITE
+    for each vertex u in V(G) do
+        if Color[u] is WHITE then
+            call DFSVisit(G,u)   # post_action(u) is L.append(u)
+    reverse L
+    return L
+</pre><hr>
+
+<p>Łatwo sprawdzić, czy graf jest skierowany.
+Standardowe przeszukiwanie DFS nie raportuje cykli w grafie skierowanym. 
+Prosta modyfikacja DFS pozwala wykryć cykl skierowany.
+
+<hr><pre>
+Algorithm DFSVisit(G,u):
+    set Color[u] to GREY
+    call pre_action(u)
+    for each edge (u,w) in E(G) do
+        if Color[w] is WHITE then   # adjacency list
+            set Parent[w] to u
+            call DFSVisit(G,w)
+        else if Color[v] is GREY then
+            return error   # back edge detected (not a dag)
+    set Color[u] to BLACK
+    call post_action(u)
+</pre><hr>
+
+<h3>USUWANIE WIERZCHOŁKÓW NIEZALEŻNYCH (KAHN)</h3>
+
+<p>Algorytm wykryje, że graf nie jest dagiem.
+
+<hr><pre>
+Input: A directed acyclic graph G (dag).
+Output: A sequence of nodes sorted topologically.
+Algorithm TopologicalSortKahn(G):
+    let L be an empty list that will contain sorted nodes
+    let S be a set of all nodes with no incoming edge
+    while S is not empty do
+        remove a node u from S
+        add u to L
+        for each edge (u,v) in E(G) do
+            remove edge (u,v) from G
+            if v has no other incoming edges then
+                insert v into S
+    if G has edges then
+        return error   # G has at least one cycle (not a dag)
+    else
+        return L   # a topologically sorted order
+# Depending on the order that nodes u are removed from the set S,
+# a different solution is created. 
+</pre><hr>
+
+<h3>KLASYFIKACJA KRAWĘDZI</h3>
+
+<p>Klasyfikacja krawędzi w grafie [Cormen]:
+<br>(1) <strong>krawędzie drzewowe</strong> (tree edge) 
+<br>[(u,v) to krawędź drzewowa, jeżeli v odwiedzamy w wyniku badania 
+krawędzi (u,v); czyli v jest biały],
+<br>(2) <strong>krawędzie powrotne</strong> (back edge) 
+<br>[(u,v) to krawędź powrotna, jeżeli v jest przodkiem u w drzewie DFS;
+czyli v jest szary, ale w grafie nieskierowanym v != Parent[u];
+taka krawędź oznacza cykl w grafie],
+<br>(3) <strong>krawędzie w przód</strong> (forward edge) 
+<br>[(u,v) to krawędź w przód, jeżeli v jest potomkiem u, 
+ale (u,v) to nie jest krawędź drzewowa; czyli v jest czarny i jest potomkiem,
+a więc można dojść od v do u przez Parent;
+u jest wcześniej niż v na liście Preorder],
+<br>(4) <strong>krawędzie poprzeczne</strong> (cross edge) 
+<br>[to są wszystkie inne krawędzie (u,v); 
+krawędzie łączą wierzchołki z jednego drzewa DFS, jeżeli jeden nie jest 
+przodkiem drugiego;
+krawędzie łączą też wierzchołki z różnych drzew DFS;
+czyli v jest czarny i nie można dojść od v do u przez Parent;
+u jest później niż v na liście Preorder].
+
+<p>Twierdzenie [Cormen].
+<br>W przeszukiwaniu DFS grafu nieskierowanego G każda krawędź jest albo
+krawędzią drzewową, albo krawędzią powrotną.
+
+<p>Lemat [Cormen].
+<br>Graf skierowany jest acykliczny wtw, gdy nie posiada krawędzi powrotnych
+w przeszukiwaniu DFS.
+
+<p>Algorytm klasyfikujący krawędzie w grafie skierowanym lub nieskierowanym
+wykorzystuje DFS i działa w czasie O(n+m) dla reprezentacji list sąsiedztwa.
+Istnienie krawędzi powrotnych jest oznaką istnienia cyklu w grafie.
+
+<hr><pre>
+Input: A graph G and a vertex u of G.
+Output: Edge classification.
+Algorithm DFSVisit(G,u):
+    set Color[u] to GREY   # Preorder.append(u)
+    for each edge (u,v) in E(G) do   # adjacency list
+        if Color[v] is WHITE then
+            set Parent[v] to u
+            print "(u,v) is a tree edge"
+            call DFSVisit(G,v)
+        else if Color[v] is GREY then
+            if (G is directed) or (v != Parent[u]) then
+                print "(u,v) is a back edge"   # cycle detected
+        else   # Color[v] is BLACK
+            if G is not directed then
+                continue   # krawędź była już badana jako back edge
+            # ma być directed graph, cross or forward edge;
+            # forward edge, jeżeli v jest potomkiem u;
+            set w to v
+            set forward to false   # ustawiam flagę
+            while Parent[w] is not None do   # idziemy w kierunku korzenia
+                set w to Parent[w]
+                if w equals u then
+                    print "(u,v) is a forward edge"
+                    set forward to true
+            if forward is false then
+                print "(u,v) is a cross edge"
+    set Color[u] to BLACK   # Postorder.append(u)
+</pre><hr>
+
+<h3>ZADANIE 6.1 (TARJAN)</h3>
+
+<p>Zaimplementować algorytm Tarjana sortowania topologicznego z użyciem DFS.
+
+<h3>ZADANIE 6.2 (KAHN)</h3>
+
+<p>Zaimplementować algorytm Kahna sortowania topologicznego przez
+usuwanie wierzchołków niezależnych.
+
+<h3>ZADANIE 6.3 (WYKRYWANIE CYKLI)</h3>
+
+<p>Zaimplementować algorytm wykrywający cykle w grafie skierowanym
+lub nieskierowanym.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

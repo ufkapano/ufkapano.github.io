@@ -13,6 +13,12 @@
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
+<p><strong>Ogólne zalecenia do przesyłanych programów.</strong>
+<br>(1) Katalog z programem powinien zawierać <em>Makefile</em> i pliki źródłowe.
+<br>(2) Program powinien kompilować się poleceniem <em>make</em>.
+<br>(3) Nie używać deklaracji <em>using namespace std;</em>.
+<br>(4) Zalecane są testy automatyczne z <em>assert()</em>.
+
 <h3>WPROWADZENIE</h3>
 
 <p>Typowe operacje dla ADT GRAPH.
@@ -211,8 +217,8 @@ public:
     }
     ~Graph() { clear(); delete [] adj_list; }
     bool is_directed() const override { return directed; }
-    int v() const override { return n; } // liczba wierzcholkow
-    int e() const override { // liczba krawedzi
+    int v() const override { return n; } // liczba wierzchołków
+    int e() const override { // liczba krawędzi
         int counter = 0;
         for (int u = 0; u &lt; n; u++)
             counter += adj_list[u].size();
