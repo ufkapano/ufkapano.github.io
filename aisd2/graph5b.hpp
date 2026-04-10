@@ -32,11 +32,14 @@ public:
             counter += vec.size();
         return (directed ? counter : counter / 2);
     }
-    int degree(int u) override { return adj_list[u].size(); }
+    int degree(int u) override {
+        assert( !directed );
+        return adj_list[u].size();
+    }
     int indegree(int u) override { return 0; } // poprawic
     int outdegree(int u) override { return adj_list[u].size(); }
     void add_node(int u) override { assert( 0 <= u && u < v() ); } // tylko test zakresu
-    void del_node(int u) override; // usuwanie krawedzi incydentnych
+    void del_node(int u) override; // tylko usuwanie krawedzi incydentnych
     bool has_node(int u) const override { return (0 <= u && u < v()); } // tylko test zakresu
     void add_edge(int u, int v, float weight=1.0) override; // wstawienie krawędzi (u,v)
     void add_edge(Edge<int> edge) override {
@@ -280,6 +283,7 @@ void Graph::del_node(int u) { // tylko usuwanie krawedzi
        if (it != vec.end())
            vec.erase(it);
     }
+    adj_list[u].clear();
 }
 
 // Function to add an edge between vertices u and v of the graph

@@ -176,7 +176,10 @@ public:
             counter += vec.size();
         return (directed ? counter : counter / 2);
     }
-    int degree(int u) override { return adj_list[u].size(); }
+    int degree(int u) override {
+        assert( !directed );
+        return adj_list[u].size();
+    }
     int indegree(int u) override; // liczba krawędzi wchodzących do u
     int outdegree(int u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
     void add_node(int u) override { assert((0 &lt;= u) && (u &lt; v())); } // tylko test zakresu
@@ -256,7 +259,10 @@ public:
             counter += pair.second.size();
         return (directed ? counter : counter / 2);
     }
-    int degree(T u) override { return adj_list[u].size(); }
+    int degree(T u) override {
+        assert( !directed );
+        return adj_list[u].size();
+    }
     int indegree(T u) override; // liczba krawędzi wchodzących do u
     int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
     void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
@@ -313,7 +319,10 @@ public:
             counter += pair.second.size();
         return (directed ? counter : counter / 2);
     }
-    int degree(T u) override { return adj_list[u].size(); }
+    int degree(T u) override {
+        assert( !directed );
+        return adj_list[u].size();
+    }
     int indegree(T u) override; // liczba krawędzi wchodzących do u
     int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
     void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek

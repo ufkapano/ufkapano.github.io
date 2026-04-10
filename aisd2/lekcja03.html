@@ -114,9 +114,9 @@ public:
     T target;
     float weight;
     Edge(T s, T t, float w=1.0) : source(s), target(t), weight(w) {}
-    ~Edge() {}                // destruktor
+    ~Edge() = default;   // destruktor
     Edge(const Edge&amp; edge) : source(edge.source), target(edge.target),
-        weight(edge.weight) {}  // copy-constructor
+        weight(edge.weight) {}   // copy-constructor
     // Operator negacji bitowej, ale tu pasuje.
     Edge operator~() const { return Edge(target, source, weight); }
     Edge&amp; operator=(const Edge&amp; other); // return *this;
@@ -142,9 +142,9 @@ public:
     virtual bool is_directed() const = 0;
     virtual int v() const = 0; // liczba wierzcholkow
     virtual int e() const = 0; // liczba krawedzi
-    virtual int degree(T u) = 0; // problem z const dla operator[]
-    virtual int indegree(T u) = 0; // stopień wejściowy
-    virtual int outdegree(T u) = 0; // stopień wyjściowy
+    virtual int degree(T u) = 0; // grafy nieskierowane, problem z const dla operator[]
+    virtual int indegree(T u) = 0; // grafy skierowane, stopień wejściowy
+    virtual int outdegree(T u) = 0; // grafy skierowane, stopień wyjściowy
     virtual void add_node(T u) = 0;
     // Ponowne dodanie istniejącego wierzchołka jest ignorowane bez błędu.
     virtual void del_node(T u) = 0;
