@@ -32,6 +32,10 @@ zadaniem v. Uporządkowanie topologiczne wierzchołków będzie dozwoloną
 kolejnością wykonywania zadań. Zwykle istnieje kilka możliwych
 uporządkowań topologicznych wierzchołków.
 
+<p>Na sortowanie topologiczne grafu można spojrzeć jak na umieszczanie
+jego wierzchołków na linii poziomej w taki sposób, żeby wszystkie krawędzie
+były skierowane od strony lewej do prawej [Cormen].
+
 <p>Zastosowania sortowania topologicznego:
 <br>wyznaczanie najkrótszych ścieżek z jednego źródła w dagu [DAGShortestPath],
 <br>zarządzanie projektami, wyznaczanie ścieżki krytycznej,
@@ -43,6 +47,23 @@ uporządkowań topologicznych wierzchołków.
 działające w czasie liniowym O(n+m):
 <br>(1) sortowanie topologiczne na bazie DFS [1976 Tarjan],
 <br>(2) algorytm usuwania wierzchołków niezależnych [1962 Kahn].
+
+<hr><pre>
+| Przykład sortowania topologicznego dagu.
+| 0 --o 1 --o 2   uporządkowanie 1: 0 3 4 1 5 2
+| | \   o     o   uporządkowanie 2: 0 3 4 5 1 2
+| |  \  |     |
+| o   o |     |
+| 3 --o 4 --o 5
+|
+| +----------+ +----------+
+| |          | |          |
+| |          o |          o
+| 0 --o 3 --o 4 --o 1     5 --o 2
+| |                o |          o
+| |                | |          |
+| +----------------+ +----------+
+</pre><hr>
 
 <h3>TESTOWANIE SORTOWANIA TOPOLOGICZNEGO</h3>
 
@@ -110,7 +131,7 @@ Algorithm TopologicalSortKahn(G):
             remove edge (u,v) from G
             if v has no other incoming edges then
                 insert v into S
-    if G has edges then
+    if G has edges then   # len(L) &lt; |V(G)|
         return error   # G has at least one cycle (not a dag)
     else
         return L   # a topologically sorted order
@@ -120,7 +141,7 @@ Algorithm TopologicalSortKahn(G):
 
 <h3>KLASYFIKACJA KRAWĘDZI</h3>
 
-<p>Klasyfikacja krawędzi w grafie [Cormen]:
+<p>Klasyfikacja krawędzi w grafie na bazie DFS [Cormen]:
 <br>(1) <strong>krawędzie drzewowe</strong> (tree edge) 
 <br>[(u,v) to krawędź drzewowa, jeżeli v odwiedzamy w wyniku badania 
 krawędzi (u,v); czyli v jest biały],
@@ -185,12 +206,25 @@ Algorithm DFSVisit(G,u):
 
 <h3>ZADANIE 6.1 (TARJAN)</h3>
 
-<p>Zaimplementować algorytm Tarjana sortowania topologicznego z użyciem DFS.
+<p>Zaimplementować algorytm Tarjana sortowania topologicznego dagu 
+z użyciem DFS.
+
+<hr><pre>
+// Proponowany interfejs algorytmu Tarjana (szablon funkcji).
+template&lt;typename T, typename G&gt; // node type, graph type
+std::vector&lt;T&gt; topsort_dfs(G&amp; graph);
+</pre><hr>
 
 <h3>ZADANIE 6.2 (KAHN)</h3>
 
-<p>Zaimplementować algorytm Kahna sortowania topologicznego przez
-usuwanie wierzchołków niezależnych.
+<p>Zaimplementować algorytm Kahna sortowania topologicznego dagu
+przez usuwanie wierzchołków niezależnych.
+
+<hr><pre>
+// Proponowany interfejs algorytmu Kahna (szablon funkcji).
+template&lt;typename T, typename G&gt; // node type, graph type
+std::vector&lt;T&gt; topsort_kahn(G&amp; graph);
+</pre><hr>
 
 <h3>ZADANIE 6.3 (WYKRYWANIE CYKLI)</h3>
 

@@ -99,7 +99,7 @@ Algorithm PrintPath(G,s,t):   # wersja rekurencyjna
 # 3(2)   4(2)  7(3)               3   4   7
 </pre><hr>
 
-<p>Wybór kolejności sąsiadów wierzchołka v w pętli <em>for</em> nie jest
+<p>Wybór kolejności sąsiadów wierzchołka u w pętli <em>for</em> nie jest
 określony, w praktyce zależy od implementacji grafu.
 
 <p>Czasowa złożoność obliczeniowa BFS to O(n+m) w reprezentacji list 
@@ -173,6 +173,7 @@ sąsiedztwa [Cormen].
 
 <p>Wygenerować graf przypadkowy spójny z n=10.
 Znaleźć kolejność odkrywania wierzchołków grafu przez BFS.
+Dodać możliwość wyznaczania drzewa BFS.
 
 <hr><pre>
 // bfs.hpp
@@ -191,7 +192,7 @@ public:
         }
     }
     ~BFS() = default; // destruktor
-    void run(T u = T()) {
+    void run(T u = T()) { // kulawe rozwiązanie
         if (u != T()) { // badamy jedną składową spójną
             visit(u);
         } else {
@@ -217,6 +218,7 @@ public:
 
 <p>Wygenerować graf przypadkowy spójny z n=10.
 Znaleźć kolejność odkrywania wierzchołków grafu przez DFS.
+Dodać możliwość wyznaczania drzewa DFS.
 
 <hr><pre>
 // dfs.hpp
@@ -235,7 +237,7 @@ public:
         }
     }
     ~DFS() = default; // destruktor
-    void run(T u = T()) {
+    void run(T u = T()) { // kulawe rozwiązanie
         if (u != T()) { // badamy jedną składową spójną
             visit(u);
         } else {
