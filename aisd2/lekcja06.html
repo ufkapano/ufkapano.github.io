@@ -104,10 +104,10 @@ Prosta modyfikacja DFS pozwala wykryć cykl skierowany.
 Algorithm DFSVisit(G,u):
     set Color[u] to GREY
     call pre_action(u)
-    for each edge (u,w) in E(G) do
-        if Color[w] is WHITE then   # adjacency list
-            set Parent[w] to u
-            call DFSVisit(G,w)
+    for each edge (u,v) in E(G) do
+        if Color[v] is WHITE then   # adjacency list
+            set Parent[v] to u
+            call DFSVisit(G,v)
         else if Color[v] is GREY then
             return error   # back edge detected (not a dag)
     set Color[u] to BLACK
