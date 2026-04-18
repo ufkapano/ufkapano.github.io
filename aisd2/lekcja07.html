@@ -15,7 +15,216 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p><strong>Ścieżką</strong> (ang. <em>path</em>) P z s do t w grafie G 
+nazywamy ciąg wierzchołków (v_0, v_1, v_2, ..., v_k), gdzie v_0=s, v_k=t, 
+oraz (v_{i-1}, v_i) (i=1,...,k) są krawędziami z E(G).
+Czasem definiuje się ścieżkę jako ciąg krawędzi.
+<br>W przypadku multigrafów trzeba wskazać które dokładnie krawędzie 
+tworzą ścieżkę.
+<br>W grafie skierowanym mówimy o <strong>ścieżce skierowanej</strong>
+z krawędziami skierowanymi.
+
+<p><strong>Długość ścieżki</strong> P wynosi k (liczba skoków, liczba krawędzi).
+Ścieżka składająca się z jednego wierzchołka ma długość zero.
+Ścieżka długości k ma w ciągu k+1 wierzchołków, niekoniecznie różnych.
+
+<p><strong>Ścieżka prosta</strong> (ang. <em>simple path</em>)
+jest to ścieżka, w której wszystkie wierzchołki (i krawędzie) są różne [Cormen].
+
+<p><strong>Cykl</strong> jest to ścieżka, w której pierwszy i ostatni 
+wierzchołek są takie same, v_0=v_k.
+Czasem utożamia się cykle różniące się tylko wyborem wierzchołka początkowego 
+lub kierunkiem obchodzenia wierzchołków.
+
+<p><strong>Cykl prosty</strong> jest to cykl, w którym wszystkie wierzchołki 
+są różne, z wyjątkiem ostatniego, który jest równy pierwszemu.
+
+<p><strong>Graf transponowany</strong> to graf skierowany 
+z odwróconymi krawędziami.
+Macierz sąsiedztwa grafu transponowanego G^T to transponowana macierz 
+sąsiedztwa oryginalnego grafu G.
+<br>G^T = (V(G),E^T), gdzie E^T = {(u,v) : (v,u) &in; E(G)}.
+<br>Zauważmy, że grafy G i G^T mają te same silnie spójne składowe.
+
+<h3>SKŁADOWE SPÓJNE W GRAFIE NIESKIEROWANYM</h3>
+
+<p>Graf nieskierowany G jest <strong>spójny</strong> (ang. <em>connected</em>),
+jeżeli istnieje ścieżka pomiędzy każdą parą jego wierzchołków.
+<br><strong>Składowa spójna</strong> jest to maksymalny spójny podgraf G.
+Każdy wierzchołek grafu G należy do dokładnie jednej składowej spójnej.
+
+<p>Składowe spójne grafu nieskierowanego można wyznaczyć za pomocą
+przeszukiwania DFS lub BFS (wygodniejsze, bo bez rekurencji).
+Zaczynamy od dowolnego wierzchołka i odwiedzamy wszystkie wierzchołki
+z jego składowej spójnej. Następnie znajdujemy nieodwiedzony nowy
+wierzchołek i odwiedzamy wierzchołki z jego składowej spójnej.
+Czynności powtarzamy aż do wyczerpania wierzchołków nieodwiedzonych.
+<br>Złożoność obliczeniowa algorytmu dla grafu w reprezentacji list 
+sąsiedztwa to O(n+m).
+
+<hr><pre>
+Input: An undirected graph G.
+Output: Connected components of G.
+Algorithm ConnectedComponents(G):
+    let Color[] be an empty table for vertex colors
+    let Component[] be a table for component numbers
+    set ncc to 0   # the number of connected components
+    for each vertex u in V(G) do
+        set Color[u] to WHITE
+    for each vertex u in V(G) do
+        if Color[u] is WHITE then
+            call DFSVisit(G,u)   # or call BFSVisit(G,u)
+            # pre_action(u) is "set Component[u] to ncc"
+            set ncc to ncc + 1   # go to a new component
+    return ncc
+</pre><hr>
+
+<h3>SKŁADOWE SILNIE SPÓJNE W GRAFIE SKIEROWANYM</h3>
+
+<p>Graf skierowany G jest  <strong>silnie spójny</strong> 
+(ang. <em>strongly connected</em>),
+jeżeli istnieje ścieżka skierowana pomiędzy każdą parą jego wierzchołków.
+Zauważmy, że ścieżki od u do v oraz od v do u są różne.
+<br><strong>Składowa silnie spójna</strong> jest to maksymalny silnie spójny 
+podgraf G.
+
+<p>Silnie spójne składowe dla grafu skierowanego można wyznaczyć
+przez dwukrotne użycie DFS, jest to algorytm Kosaraju (1978).
+Pierwsze użycie DFS tworzy pewien porządek topologiczny dla wierzchołków grafu.
+Drugie użycie DFS wykorzystuje ten porządek i każde drzewo DFS będzie
+wyznaczać dokładnie jedną silnie spójną składową.
+
+<hr><pre>
+Input: A directed graph G.
+Output: Strongly connected components of G.
+Algorithm StronglyConnectedComponents(G):
+    # Step 1: finding the vertex order
+    let L be an empty list for vertices
+    call DFS(G)   # post_action(u) is L.append(u)
+    reverse L
+    # Step 2: using the transpose graph
+    calculate the transpose graph G^T
+    let Color[] be an empty table for vertex colors
+    let Component[] be a table for component numbers
+    for each vertex u in V(G^T) do
+        set Color[u] to WHITE
+    set nscc to 0   # the number of strongly connected components
+    # call DFS(G^T) using L
+    for each vertex u in L do
+        if Color[u] is WHITE then
+            call DFSVisit(G^T,u)
+            # post_action(u) is "set Component[u] to nscc"
+            set nscc to nscc + 1  # go to a new component
+    return nscc
+</pre><hr><pre>
+| Przykład wyznaczania silnie spójnych składowych grafu skierowanego.
+| 0 --o 1     2     DFS od 0 daje postorder 4,3,1,0
+| o   / |     |o    DFS od 2 daje postorder 5,2
+| |  /  |     ||    total postorder 4,3,1,0,5,2
+| | o   o     o|    reversed postorder 2,5,0,1,3,4
+| 3 --o 4 o-- 5
+| Graf transponowany.
+| 0 o-- 1     2     DFS od 2 daje postorder 5,2 (pierwsza składowa spójna)
+| |   o o     |o    DFS od 0 daje postorder 1,3,0 (druga składowa spójna)
+| |  /  |     ||    DFS od 4 daje postorder 4 (trzecia składowa spójna)
+| o /   |     o|
+| 3 o-- 4 --o 5
+| Acykliczny graf składowych silnie spójnych.
+| (0,1,3) --o (4) o-- (2,5)
+</pre><hr>
+
+<p>Zadanie [Cormen, zad. 22.5-1]. O ile może zmienić się liczba silnie
+spójnych składowych w grafie po dodaniu nowej krawędzi?
+
+<h3>WYZNACZANIE PUNKTÓW ARTYKULACJI (GRAF NIESKIEROWANY)</h3>
+
+<p><strong>Punkt artykulacji</strong> (ang. <em>articulation point/vertex</em>) 
+jest to wierzchołek, którego usunięcie (wraz z krawędziami incydentnymi)
+zwiększa liczbę składowych spójnych.
+<br>Algorytm trywialny O(n*(n+m)) polega na tymczasowym usuwaniu kolejnych 
+wierzchołków i sprawdzaniu, czy liczba składowych spójnych zwiększa się.
+<br>Algorytm Tarjana O(n+m) używa DFS i oblicza pewne funkcje.
+
+<h3>WYZNACZANIE MOSTÓW (GRAF NIESKIEROWANY)</h3>
+
+<p><strong>Most</strong> (ang. <em>bridge</em>) jest to krawędź, 
+której usunięcie zwiększa liczbę składowych spójnych. 
+<br>Krawędź jest mostem wtw, gdy nie należy do żadnego cyklu (prostego).
+<br>Graf bez mostów nazywamy <strong>grafem dwuspójnym</strong>
+(ang. <em>biconnected graph</em>).
+<br>Algorytm trywialny O(m*(n+m)) polega na tymczasowym usuwaniu kolejnych 
+krawędzi i sprawdzaniu, czy liczba składowych spójnych zwiększa się.
+<br>Algorytm Tarjana O(n+m) używa DFS i oblicza pewne funkcje.
+
+<h3>ZADANIE 7.1 (SKŁADOWE SPÓJNE)</h3>
+
+<p>Zaimplementować algorytm znajdowania składowych spójnych w grafie
+nieskierowanym.
+Wygenerować przykładowy graf nieskierowany niespójny z n=10.
+Wyznaczyć składowe spójne grafu.
+
+<hr><pre>
+// connected.hpp
+template&lt;typename T, typename G&gt; // node type, graph type
+class ConnectedComponents {
+    G&amp; graph;
+    std::unordered_map&lt;T, bool&gt; visited;
+public:
+    std::unordered_map&lt;T, int&gt; component; // a table for component numbers
+    int ncc; // the number of connected components
+    ConnectedComponents(G&amp; g) : graph(g), ncc(0) {
+        assert( !graph.is_directed() );
+        for (auto n_it = graph.node_begin();
+            n_it != graph.node_end();
+            ++n_it) {
+            visited[*n_it] = false;
+        }
+    }
+    ~ConnectedComponents() = default; // destruktor
+    void run();
+    void visit(T u);
+};
+// Usage:
+// auto algorithm = ConnectedComponents&lt;int,Graph&gt;(G); // macierz sąsiedztwa
+// auto algorithm = ConnectedComponents&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
+// algorithm.run();
+// for (auto pair : algorithm.component)
+//     std::cout &lt;&lt; pair.first &lt;&lt; " component " &lt;&lt; pair.second &lt;&lt; std::endl;
+// std::cout &lt;&lt; "total components " &lt;&lt; algorithm.ncc &lt;&lt; std::endl;
+</pre><hr>
+
+<h3>ZADANIE 7.2 (SKŁADOWE SILNIE SPÓJNE)</h3>
+
+<p>Zaimplementować algorytm znajdowania składowych silnie spójnych 
+w grafie skierowanym.
+Wygenerować przykładowy graf skierowany z n=10.
+Wyznaczyć silnie spójne składowe grafu.
+
+<hr><pre>
+// connected.hpp
+template&lt;typename T, typename G&gt; // node type, graph type
+class StronglyConnectedComponents { ... };
+// Usage:
+// auto algorithm = StronglyConnectedComponents&lt;int,Graph&gt;(G); // macierz sąsiedztwa
+// auto algorithm = StronglyConnectedComponents&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
+// algorithm.run();
+// for (auto pair : algorithm.component)
+//     std::cout &lt;&lt; pair.first &lt;&lt; " component " &lt;&lt; pair.second &lt;&lt; std::endl;
+// std::cout &lt;&lt; "total components " &lt;&lt; algorithm.nscc &lt;&lt; std::endl;
+</pre><hr>
+
+<h3>ZADANIE 7.3 (PUNKTY ARTYKULACJI)</h3>
+
+<p>Zaimplementować algorytm znajdowania punktów artykulacji
+w grafie nieskierowanym.
+Wygenerować przykładowy graf nieskierowany spójny z n=10.
+Wyznaczyć wszystkie punkty artykulacji grafu.
+
+<h3>ZADANIE 7.4 (MOSTY)</h3>
+
+<p>Zaimplementować algorytm znajdowania mostów w grafie nieskierowanym.
+Wygenerować przykładowy graf nieskierowany spójny z n=10.
+Wyznaczyć wszystkie mosty w grafie.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

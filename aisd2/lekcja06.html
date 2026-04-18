@@ -96,7 +96,8 @@ Algorithm TopologicalSortDFS(G):
     return L
 </pre><hr>
 
-<p>Łatwo sprawdzić, czy graf jest skierowany.
+<p>Łatwo sprawdzić, czy graf jest skierowany. 
+Trudniej sprawdzić, czy graf jest acykliczny.
 Standardowe przeszukiwanie DFS nie raportuje cykli w grafie skierowanym. 
 Prosta modyfikacja DFS pozwala wykryć cykl skierowany.
 
@@ -120,12 +121,12 @@ Algorithm DFSVisit(G,u):
 
 <hr><pre>
 Input: A directed acyclic graph G (dag).
-Output: A sequence of nodes sorted topologically.
+Output: A sequence of vertices sorted topologically.
 Algorithm TopologicalSortKahn(G):
-    let L be an empty list that will contain sorted nodes
-    let S be a set of all nodes with no incoming edge
+    let L be an empty list that will contain sorted vertices
+    let S be a set of all vertices with no incoming edge
     while S is not empty do
-        remove a node u from S
+        remove a vertex u from S
         add u to L
         for each edge (u,v) in E(G) do
             remove edge (u,v) from G
@@ -135,13 +136,13 @@ Algorithm TopologicalSortKahn(G):
         return error   # G has at least one cycle (not a dag)
     else
         return L   # a topologically sorted order
-# Depending on the order that nodes u are removed from the set S,
+# Depending on the order that vertices u are removed from the set S,
 # a different solution is created. 
 </pre><hr>
 
-<h3>KLASYFIKACJA KRAWĘDZI</h3>
+<h3>KLASYFIKACJA KRAWĘDZI GRAFU</h3>
 
-<p>Klasyfikacja krawędzi w grafie na bazie DFS [Cormen]:
+<p>Klasyfikacja krawędzi grafu na bazie DFS [Cormen]:
 <br>(1) <strong>krawędzie drzewowe</strong> (tree edge) 
 <br>[(u,v) to krawędź drzewowa, jeżeli v odwiedzamy w wyniku badania 
 krawędzi (u,v); czyli v jest biały],
@@ -208,6 +209,8 @@ Algorithm DFSVisit(G,u):
 
 <p>Zaimplementować algorytm Tarjana sortowania topologicznego dagu 
 z użyciem DFS.
+Wygenerować przykładowy dag z n=10. 
+Posortować topologicznie wierzchołki dagu.
 
 <hr><pre>
 // Proponowany interfejs algorytmu Tarjana (szablon funkcji).
@@ -219,6 +222,8 @@ std::vector&lt;T&gt; topsort_dfs(G&amp; graph);
 
 <p>Zaimplementować algorytm Kahna sortowania topologicznego dagu
 przez usuwanie wierzchołków niezależnych.
+Wygenerować przykładowy dag z n=10. 
+Posortować topologicznie wierzchołki dagu.
 
 <hr><pre>
 // Proponowany interfejs algorytmu Kahna (szablon funkcji).
@@ -230,6 +235,7 @@ std::vector&lt;T&gt; topsort_kahn(G&amp; graph);
 
 <p>Zaimplementować algorytm wykrywający cykle w grafie skierowanym
 lub nieskierowanym.
+Wygenerować przykladowy graf z n=10. Sprawdzić, czy graf zawiera cykl.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

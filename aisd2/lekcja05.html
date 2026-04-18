@@ -123,12 +123,12 @@ grafu, że jest to możliwa kolejność odwiedzania wierzchołków algorytmem BF
 Input: A graph G.
 Output: DFS tree (Parent).
 Algorithm DFS(G):
-    let Color[] be an empty table for node colors
+    let Color[] be an empty table for vertex colors
     let Parent[] be an empty table for links
-    for each node u in V(G) do
+    for each vertex u in V(G) do
         set Color[u] to WHITE
         set Parent[u] to None
-    for each node u in V(G) do
+    for each vertex u in V(G) do
         if Color[u] is WHITE then
             call DFSVisit(G,u)
     return Parent
@@ -184,25 +184,28 @@ class BFS {
 public:
     std::vector&lt;T&gt; preorder;
     std::vector&lt;T&gt; postorder;
+    std::unordered_map&lt;T, T&gt; parent;     // drzewo BFS
+    std::unordered_map&lt;T, int&gt; distance; // odległość od źrodła w przeskokach
     BFS(G&amp; g) : graph(g) {
         for (auto n_it = graph.node_begin();
             n_it != graph.node_end();
             ++n_it) {
             visited[*n_it] = false;
+            parent[*n_it] = *n_it; // konwencja, brak rodzica
+            distance[*n_it] = -1; // konwencja, -1 oznacza nieskończoność
         }
     }
     ~BFS() = default; // destruktor
-    void run(T u = T()) { // kulawe rozwiązanie
-        if (u != T()) { // badamy jedną składową spójną
-            visit(u);
-        } else {
-            for (auto n_it = graph.node_begin();
-                n_it != graph.node_end();
-                ++n_it) {
-                if (!visited[*n_it])
-                    visit(*n_it);
-            } // for
-        } // if
+    void run(T u) { // badamy jedną składową spójną
+        visit(u);
+    }
+    void run() {
+        for (auto n_it = graph.node_begin();
+            n_it != graph.node_end();
+            ++n_it) {
+            if (!visited[*n_it])
+                visit(*n_it);
+        }
     }
     void visit(T s);
 };
@@ -229,25 +232,26 @@ class DFS {
 public:
     std::vector&lt;T&gt; preorder;
     std::vector&lt;T&gt; postorder;
+    std::unordered_map&lt;T, T&gt; parent; // drzewo DFS
     DFS(G&amp; g) : graph(g) {
         for (auto n_it = graph.node_begin();
             n_it != graph.node_end();
             ++n_it) {
             visited[*n_it] = false;
+            parent[*n_it] = *n_it; // konwencja, brak rodzica
         }
     }
     ~DFS() = default; // destruktor
-    void run(T u = T()) { // kulawe rozwiązanie
-        if (u != T()) { // badamy jedną składową spójną
-            visit(u);
-        } else {
-            for (auto n_it = graph.node_begin();
-                n_it != graph.node_end();
-                ++n_it) {
-                if (!visited[*n_it])
-                    visit(*n_it);
-            } // for
-        } // if
+    void run(T u) { // badamy jedną składową spójną
+        visit(u);
+    }
+    void run() {
+        for (auto n_it = graph.node_begin();
+            n_it != graph.node_end();
+            ++n_it) {
+            if (!visited[*n_it])
+                visit(*n_it);
+        }
     }
     void visit(T u);
 };
