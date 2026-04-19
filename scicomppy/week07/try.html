@@ -14,12 +14,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'try' statement can be used used to specify exception handlers
+<p>The <em>try</em> statement can be used used to specify exception handlers
 and/or cleanup code for a group of statements.
 
-<p>The 'except' clause(s) specify one or more exception handlers.
+<p>The <em>except</em> clause(s) specify one or more exception handlers.
 
-<p>The 'finally' clause can be used to specify cleanup code which 
+<p>The <em>finally</em> clause can be used to specify cleanup code which 
 does not handle the exception, but is executed whether an exception 
 occurred or not in the preceding code.
 
@@ -73,11 +73,11 @@ print(sys.exc_info())   # return (type, value, traceback)
 
 <h3>EXCEPTION GROUPS (PY3.11+)</h3>
 
-<p>Exception groups are used when it is necessary to raise multiple 
-unrelated exceptions. They are part of the exception hierarchy 
-so they can be handled with except like all other exceptions. 
-In addition, they are recognised by except*, which matches their subgroups 
-based on the types of the contained exceptions.
+<p><strong>Exception groups</strong> are used when it is necessary 
+to raise multiple unrelated exceptions. They are part of the exception 
+hierarchy so they can be handled with <em>except</em> like all other exceptions. 
+In addition, they are recognised by <em>except*</em>, which matches their 
+subgroups based on the types of the contained exceptions.
 
 <hr><pre>
 &gt;&gt;&gt; try:

@@ -17,12 +17,14 @@
 <h3>INTRODUCTION</h3>
 
 <p>Three notions:
-<br>(1) an iterable is anything that you can iterate over
-[iter() can build an iterator],
-<br>(2) an iterator is the thing that does the actual iterating
-[__iter__() and __next__() methods should be present],
-<br>(3) generators are one of the simpler ways to create your own iterators
-['lazy evaluation'; generator expressions and generator functions].
+<br>(1) an <strong>iterable</strong> is anything that you can iterate over
+[<em>iter()</em> can build an iterator],
+<br>(2) an <strong>iterator</strong> is the thing that does the actual 
+iterating
+[<em>__iter__()</em> and <em>__next__()</em> methods should be present],
+<br>(3) <strong>generators</strong> are one of the simpler ways to create 
+your own iterators [<strong>lazy evaluation</strong>; 
+generator expressions and generator functions].
 
 <hr><pre>
 for item in iterable:   # iteration
@@ -148,18 +150,18 @@ for element in iterable:
 
 # It is equivalent to the following code.
 
-# create an iterator object from that iterable
+# Create an iterator object from that iterable.
 iter_obj = iter(iterable)
 
-# infinite loop
+# Infinite loop.
 while True:
     try:
-        # get the next item
+        # Get the next item.
         element = next(iter_obj)
-        # do something with element
+        # Do something with element.
         process(element)
     except StopIteration:
-        # if StopIteration is raised, break from loop
+        # If StopIteration is raised, break from loop.
         break
 </pre><hr>
 

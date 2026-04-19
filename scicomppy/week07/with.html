@@ -18,18 +18,19 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Python’s 'with' statement supports the concept of a runtime context 
-defined by a context manager. This is implemented using a pair of methods 
+<p>Python’s <em>with</em> statement supports the concept of a runtime context 
+defined by a <strong>context manager</strong>. 
+This is implemented using a pair of methods 
 that allow user-defined classes to define a runtime context 
-that is entered before the statement body is executed (__enter__)
-and exited when the statement ends (__exit__).
+that is entered before the statement body is executed (<em>__enter__</em>)
+and exited when the statement ends (<em>__exit__</em>).
 
 <p>Typical uses of context managers include saving and restoring 
 various kinds of global state, locking and unlocking resources, 
 closing opened files, etc.
 
-<p>The 'with' statement allows common 'try + except + finally' usage patterns 
-to be encapsulated for convenient reuse.
+<p>The <em>with</em> statement allows common <em>try + except + finally</em> 
+usage patterns to be encapsulated for convenient reuse.
 
 <hr><pre>
 # Syntax.
