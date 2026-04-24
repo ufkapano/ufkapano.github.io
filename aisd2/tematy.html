@@ -25,9 +25,18 @@ gdzie składowane są kody źródłowe programów,
 <br>(2) email z linkiem do archiwum ZIP w chmurze UJ,
 <br>(3) email z archiwum ZIP w załączniku.
 
-<h3>TEMATY PROJEKTÓW</h3>
+<h3>GRAFY</h3>
 
 <ul>
+
+<li>Algorytm Boruvki - minimalne drzewo rozpinające dla grafu nieskierowanego 
+ważonego spójnego.
+
+<li>Algorytm Kruskala - minimalne drzewo rozpinające dla grafu nieskierowanego 
+ważonego spójnego.
+
+<li>Algorytm Prima - minimalne drzewo rozpinające dla grafu nieskierowanego 
+ważonego spójnego.
 
 <li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim
 [https://en.wikipedia.org/wiki/Maze_generation_algorithm].
@@ -35,6 +44,52 @@ Labirynt rozumiemy jako drzewo rozpinające dla pewnej sieci
 kwadratowej n &times; m [https://en.wikipedia.org/wiki/Lattice_graph].
 Labirynt należy na końcu wyświetlić na ekranie w formie przyjaznej dla
 użytkownika lub zapisać do pliku, najlepiej graficznego.
+
+<li>Podaj efektywny algorytm działający w czasie O(n+m), 
+który znajduje liczbę wszystkich ścieżek w dagu [Cormen]. 
+Ścieżka może się zaczynać i kończyć w dowolnym wierzchołku.
+Wskazówka: W pierwszym kroku należy wykonać sortowanie topologiczne
+wierzchołków dagu.
+Przygotuj pseudokod i implementację w C++.
+Przetestuj implementację na przygładowym dagu, np. z lekcji 6.
+
+<hr><pre>
+| Przykład sortowania topologicznego dagu.
+| 0 --o 1 --o 2   uporządkowanie 1: 0 3 4 1 5 2
+| | \   o     o   uporządkowanie 2: 0 3 4 5 1 2
+| |  \  |     |
+| o   o |     |
+| 3 --o 4 --o 5
+| ścieżki długości 1 to 8 krawędzi,
+| ścieżek długości 2 jest 8 [012, 034, 041, 045, 341, 345, 412, 452],
+| ścieżek długości 3 jest 6 [0341, 0345, 0412, 0452, 3412, 3452],
+| ścieżek długości 4 jest 2 [03412, 03452], RAZEM 24 ścieżki
+</pre><hr>
+
+<li>Algorytm kolorowania wierzchołków grafu.
+
+<li>Algorytm kolorowania krawędzi grafu.
+
+<li>Algorytm znajdowania największego zbioru niezależnego w grafie.
+
+<li>Algorytm znajdowania najmniejszego zbioru dominującego w grafie.
+
+<li>Znajdowanie cyklu Eulera (każda krawędź przebyta dokładnie raz).
+
+<li>Znajdowanie cyklu Hamiltona (każdy wierzchołek odwiedzony dokładnie raz).
+
+<li>Problem komiwojażera (ang. Traveling Salesman Problem, TSP), 
+np. algorytm najbliższych sąsiadów (z powtórzeniami lub bez), 
+algorytm sortowania krawędzi, algorytm genetyczny, symulowane wyżarzanie.
+
+<li>Algorytm A* - algorytm heurystyczny znajdowania najkrótszej ścieżki 
+w grafie ważonym.
+
+</ul>
+
+<h3>GEOMETRIA</h3>
+
+<ul>
 
 <li>Wyznaczanie otoczki wypukłej, np. Graham, Jarvis, quickhull
 [https://en.wikipedia.org/wiki/Convex_hull].

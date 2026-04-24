@@ -15,7 +15,221 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p>Grafy można wykorzystać do modelowania połączeń drogowych między
+miastami, przy czym odległości między miastami będą zapisane jako wagi
+krawędzi. Można rozważyć problem znalezienia najkrótszego połączenia
+między dwoma ustalonymi miastami.
+
+<p>Inny przykład to modelowanie połączeń lotniczych między miastami,
+przy czym będzie nas interesować koszt połączeń lotniczych.
+Można rozważyć problem znalezienia najtańszego połączenia między
+dwoma ustalonymi miastami.
+
+<p>W <strong>problemie najkrótszych ścieżek</strong> rozważa się
+graf skierowany ważony G = (V,E), gdzie każdej krawędzi skierowanej
+(u,v) &in; E(V) przypisana jest rzeczywista waga w(u,v).
+Czasem rozważa się wagi całkowite.
+
+<p><strong>Wagą</strong> w(P) ścieżki (skierowanej) P przechodzącej 
+przez wierzchołki (v_0, v_1, v_2, ..., v_k) 
+nazywamy sumę wag jej krawędzi (skierowanych),
+<br>w(P) = w(v_0,v_1) + w(v_1,v_2) + ... + w(v_{k-1},v_k)
+= \sum_{i=1}^k w(v_{i-1},v_i).
+<br><strong>Waga najkrótszej ścieżki</strong> od u do v jest to
+<br>&delta;(u,v) = min{w(P) : P to ścieżka skierowana od u do v}.
+<br>Jeżeli nie istnieje żadna ścieżka skierowana od u do v, to przyjmuje się, 
+że &delta;(u,v) ma wartość nieskończoną.
+
+<p>W pewnych zastosowaniach mogą pojawić się krawędzie z ujemnymi wagami.
+Najkrótsze ścieżki będą wtedy dobrze zdefiniowane tylko wtedy, 
+gdy w grafie nie będzie cykli o ujemnej wadze.
+W pewnych algorytmach wykrywa się cykle o ujemnej wadze.
+
+<p>Ogólnie najkrótsze ścieżki nie zawierają również cykli 
+o dodatniej wadze, bo ich usunięcie dałoby ścieżkę o mniejszej wadze.
+Cykle o zerowej wadze można usuwać ze ścieżki bez zmiany wagi,
+więc przyjmuje się bez straty ogólności, że najkrótsze ścieżki
+to ścieżki proste o co najwyżej n-1 krawędziach.
+
+<p>Przypomnijmy, że algorytm BFS wyznacza najkrótsze ścieżki w grafach
+skierowanych bez wag, co można interpretować jako przypadek jednostkowych
+wag dla każdej krawędzi.
+
+<h3>WARIANTY</h3>
+
+<p>Istnieje kilka wariantów problemu znajdowania najkrótszych ścieżek [Cormen].
+
+<ul>
+<li><strong>Najkrótsze ścieżki z jednym źródłem.</strong>
+<li><strong>Najkrótsze ścieżki z jednym wierzchołkiem docelowym.</strong>
+Odwracając zwrot krawędzi można sprowadzić ten problem do problemu
+z jednym źródłem.
+<li><strong>Najkrótsza ścieżka między jedną parą wierzchołków.</strong>
+Ten problem można rozwiązać przez rozwiązanie problemu z jednym źródłem
+i w najgorszym przypadku nie znamy lepszego algorytmu.
+<li><strong>Najkrótsze ścieżki między wszystkimi parami wierzchołków.</strong>
+Można ten problem rozwiązać przez rozwiązywanie dla każdego wierzchołka
+problemu z jednym źródłem, ale zwykle rozwiązuje się go inaczej.
+</ul>
+
+<h3>WŁASNOŚĆ OPTYMALNEJ PODSTRUKTURY</h3>
+
+<p>Najkrótsza ścieżka między dwoma wierzchołkami zawiera w sobie inne
+najkrótsze ścieżki. Jest to własność <strong>optymalnej podstruktury</strong>, 
+która to własność jest wykorzystywana w algorytmach zachłannych 
+i w programowaniu dynamicznym.
+
+<p>Lemat [Cormen]. Rozważmy graf skierowany ważony G.
+<br>Niech P będzie najkrótszą ścieżką od v_0 do v_k, 
+przechodzącą przez wierzchołki (v_0, v_1, v_2, ..., v_k).
+<br>Niech P_{ij} będzie podścieżką P od v_i do v_j, 
+przechodzącą przez wierzchołki (v_i, ..., v_j),
+gdzie 1 &le; i &le; j &le; k.
+<br>Wtedy P_{ij} jest najkrótszą ścieżką od v_i do v_j.
+
+<h3>REPREZENTOWANIE NAJKRÓTSZYCH ŚCIEŻEK</h3>
+
+<p>Najkrótsze ścieżki reprezentuje się podobnie jak drzewa za pomocą
+tablicy poprzedników Parent[]. Wierzchołek źródłowy nie ma poprzednika.
+W implementacji można przyjąć, że wierzchołek źródłowy jest sam swoim
+poprzednikem.
+Tablica Parent[] reprezentuje <strong>drzewo najkrótszych ścieżek</strong>,
+czyli podgraf skierowany z korzeniem w wierzchołku źródłowym.
+Drzewo najkrótszych ścieżek może nie być wyznaczone jednoznacznie,
+może istnieć wiele rozwiązań.
+
+<h3>ALGORYTM DIJKSTRY</h3>
+
+<p>Algorytm Dijkstry jest używany w przypadku grafów z dodatnimi wagami
+krawędzi, całkowitymi lub rzeczywistymi.
+
+<hr><pre>
+Input: A weighted directed graph G with positive edge weights,
+    a starting vertex s of G.
+Output: Shortest paths from s (Parent) and distances (Distance).
+Algorithm Dijkstra(G,s,weight):
+    let Distance[] be an empty table for distances from s
+    let Parent[] be an empty table for links
+    let S be an empty set for processed vertices   # do analizy teoretycznej
+    let Q be an empty min priority queue
+    # Step 1: initialization
+    for each vertex u in V(G) do   # O(n) time
+        set Distance[u] to infinity
+        set Parent[u] to None
+        Q.put(u)
+    set Distance[s] to 0
+    # Step 2: edge relaxation
+    while Q is not empty do
+        # niezmiennik pętli while: Q equals V(G)-S
+        set u to the vertex in Q with minimum Distance[u]
+        remove u from Q
+        insert u into S
+        for each edge (u,v) in E(G) do
+            set alt to Distance[u] + weight(u,v)
+            if alt &lt; Distance[v] then
+                set Distance[v] to alt   # to zmienia priorytet v w Q 
+                set Parent[v] to u
+# Algorytm Dijkstry jest zachłanny, wybiera "najlżejszy" u z V(G)-S.
+# Złożoność obliczeniowa zależy od implementacji kolejki Q.
+# Pętla for po krawędziach wykona się sumarycznie m razy i tyle będzie relaksacji.
+# Dokładniej, tak będzie dla reprezentacji z listą sąsiedztwa.
+# Dla macierzy sąsiedztwa wybieramy sąsiadów w czasie O(n).
+# Wybranie minimum z Q w najprostszej implementacji to czas O(n).
+# Wtedy łączny czas to O(n^2+m) = O(n^2).
+# Dla grafów rzadkich i kopca binarnego dostajemy O((n+m) log n).
+# Dla kopca Fibonacciego dostajemy O(n log n + m).
+
+# W pewnych implementacjach po zmianie priorytetu wierzchołka wstawiamy go
+# ponownie do Q. Wtedy przy usuwaniu wierzchołków z kolejki trzeba sprawdzać,
+# czy dany wierzchołek nie był już przetwarzany wcześniej.
+# Sumarycznie do Q może zostać wstawionych co najwyżej n+m elementów.
+</pre><hr>
+
+<h3>ALGORYTM BELLMANA-FORDA</h3>
+
+<p>Algorytm Bellmana-Forda jest wolniejszy od algorytmu Dijkstry,
+ale działa również dla grafów skierowanych z ujemnymi wagami krawędzi,
+przy czym nie mogą występować ujemne cykle.
+Algorytm wykonuje n-1 razy relaksację wszystkich krawędzi grafu,
+a na końcu sprawdza ewentualne występowanie ujemnych cykli.
+Algorytm działa w czasie O(nm) dla grafu w reprezentacji list sąsiedztwa.
+
+<hr><pre>
+Input: A weighted directed graph G with no negative cycles,
+    a starting vertex s of G.
+Output: Shortest paths from s (Parent) and distances (Distance).
+Algorithm BellmanFord(G,s,weight):
+    let Distance[] be an empty table for distances from s
+    let Parent[] be an empty table for links
+    # Step 1: initialization
+    for each vertex u in V(G) do   # O(n) time
+        set Distance[u] to infinity
+        set Parent[u] to None
+    set Distance[s] to 0
+    # Step 2: edge relaxation
+    for step from 1 to |V(G)|-1 do
+        for each edge (u,v) in E(G) do   # O(nm) time
+            set alt to Distance[u] + weight(u,v)
+            if alt &lt; Distance[v] then
+                set Distance[v] to alt
+                set Parent[v] to u
+    # Step 3: check for negative-weight cycles
+    for each edge (u,v) in E(G) do
+        if Distance[u] + weight(u,v) &lt; Distance[v] then
+            return error "negative cycle detected"
+</pre><hr>
+
+<h3>NAJKRÓTSZE ŚCIEŻKI W DAGU</h3>
+
+<p>Algorytm wykonuje relaksacje krawędzi ważonego dagu zgodnie
+z porządkiem topologicznym jego wierzchołków.
+Najkrótsze ścieżki są zawsze dobrze określone, ponieważ w dagu
+nie istnieją cykle.
+Algorytm działa w czasie O(n+m) dla dagu w reprezentacji list sąsiedztwa.
+
+<hr><pre>
+Input: A weighted dag G, a starting vertex s of G.
+Output: Shortest paths from s (Parent) and distances (Distance).
+Algorithm DAGShortestPath(G,s,weight):
+    let Distance[] be an empty table for distances from s
+    let Parent[] be an empty table for links
+    # Step 1: initialization
+    for each vertex u in V(G) do   # O(n) time
+        set Distance[u] to infinity
+        set Parent[u] to None
+    set Distance[s] to 0
+    # Step 2: topological sorting
+    call TopologicalSortDFS(G)   # O(n+m) time
+    # Step 3: edge relaxation
+    for each vertex u in V(G), in topological order, do
+        for each edge (u,v) in E(G) do   # total O(m) time
+            set alt to Distance[u] + weight(u,v)
+            if alt &lt; Distance[v] then
+                set Distance[v] to alt
+                set Parent[v] to u
+</pre><hr>
+
+<h3>ZADANIE 8.1 (DIJKSTRA)</h3>
+
+<p>Zaimplementować algorytm Dijkstry znajdowania najkrótszych ścieżek
+z jednego źródła dla grafu skierowanego z dodatnimi wagami krawędzi.
+Wygenerować przykładowy graf skierowany ważony z n=10.
+Wyznaczyć najkrótsze ścieżki z wybranego wierzchołka.
+
+<h3>ZADANIE 8.2 (BELLMAN-FORD)</h3>
+
+<p>Zaimplementować algorytm Bellmana-Forda znajdowania najkrótszych ścieżek
+z jednego źródła dla grafu skierowanego z możliwymi ujemnymi wagami krawędzi,
+ale bez ujemnych cykli.
+Wygenerować przykładowy graf skierowany ważony z n=10.
+Wyznaczyć najkrótsze ścieżki z wybranego wierzchołka.
+
+<h3>ZADANIE 8.3 (DAG)</h3>
+
+<p>Zaimplementować algorytm znajdowania najkrótszych ścieżek z jednego
+źródla dla dagu z możliwymi ujemnymi wagami krawędzi.
+Wygenerować przykładowy dag ważony z n=10.
+Wyznaczyć najkrótsze ścieżki z wybranego wierzchołka.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
