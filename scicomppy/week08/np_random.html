@@ -14,7 +14,70 @@
 <p>https://numpy.org/doc/stable/reference/random/index.html
 <br>Random sampling (numpy.random) for numpy versions &gt; 1.17
 
-<h3>RANDOM</h3>
+<p>https://numpy.org/doc/stable/reference/random/new-or-different.html
+
+<h3>RANDOM SAMPLING (NUMPY VERSION 1.7+)</h3>
+
+<hr><pre>
+BitGenerator (PCG64 is the default)
+| (stream of bits)
+Generator
+| (distributions)
+pseudo-random numbers
+</pre><hr>
+
+<p>The <em>numpy.random</em> module implements pseudo-random number generators
+(RNGs) with the ability to draw samples from a variety of probability 
+distributions. In general, users will create a Generator instance 
+with <em>default_rng</em> and call the various methods on it to obtain samples 
+from different distributions.
+
+<p>Each Generator instance owns a BitGenerator instance that implements 
+the core RNG algorithm.
+The Generator takes the bit generator-provided stream and transforms 
+them into more useful distributions.
+
+<p>NumPy implements several different BitGenerator classes implementing 
+different RNG algorithms.
+<em>default_rng</em> currently uses PCG64 as the default BitGenerator.
+There is also the MT19937 (Mersenne Twister)
+algorithm used in the legacy RandomState class. 
+RandomState is maintained for backward compatibility.
+
+<p>Many of the RandomState methods are exported as functions 
+in <em>numpy.random</em>. This usage is discouraged, as it is implemented 
+via a global RandomState instance.
+
+<hr><pre>
+import numpy as np
+
+# Recommended constructor for Generator.
+# numpy.random.default_rng(seed=None)
+rng = np.random.default_rng()
+print(rng)   # Generator(PCG64)
+
+# Generate random floats uniformly distributed over the range [0,1).
+rng.random()
+# 0.17587875075447124   # may vary
+rng.random((2,3))   # shape=(2,3)
+# array([[0.29460014, 0.15512146, 0.3207094 ],
+#       [0.67896005, 0.19816737, 0.79222467]])
+
+# Generate an array of 10 numbers according to a unit Gaussian distribution.
+rng.standard_normal(10)
+# array([-0.83337107, -1.11861209, -0.28787136,  0.83640375,  0.07775067,
+#        0.33662937,  0.10654067,  0.44827837, -0.09803265, -0.73633881])
+
+# Generate an array of 5 integers uniformly over the range [0,10).
+rng.integers(low=0, high=10, size=5)
+# array([7, 1, 3, 8, 8])   # may vary
+
+# Generate random bytes.
+rng.bytes(8)   # lenght=8
+# b'r\x1c2o\xe5\xdf\x1a\xdb'
+</pre><hr>
+
+<h3>RANDOM SAMPLING (NUMPY VERSION 1.16)</h3>
 
 <hr><pre>
 # Simple random data.
@@ -61,34 +124,36 @@ np.random.choice(range(1,7), size=(2,3))
 </pre><hr><pre>
 # Permutations
 
-np.random.shuffle(arr)
-np.random.permutation(arr)
+np.random.shuffle(arr)   # operates in-place
+np.random.permutation(arr)   # returns a copy
 np.random.permutation(n)   # np.random.permutation(np.arange(n))
 </pre><hr><pre>
 # Distributions
 
-mu, sigma = 0, 0.1   # mean and standard deviation
-s = np.random.normal(mu, sigma, 1000)
+mu, sigma, size = 0, 0.1, 1000   # mean and standard deviation
+s = np.random.normal(mu, sigma, size)
 
-n, p = 10, .5   # number of trials, probability of each trial
-s = np.random.binomial(n, p, 1000)
+n, p, size = 10, .5, 1000   # number of trials, probability of each trial
+s = np.random.binomial(n, p, size)
 # result of flipping a coin 10 times, tested 1000 times.
 
-loc, scale = 10, 1
-s = np.random.logistic(loc, scale, 1000)
+loc, scale, size = 10, 1, 1000
+s = np.random.logistic(loc, scale, size)
 
-low, high = -1, 1
-s = np.random.uniform(low, high, 1000)   # interval [low, high)
+low, high, size = -1, 1, 1000
+s = np.random.uniform(low, high, size)   # interval [low, high)
+s = np.random.uniform((-1,-1), (1,1), (100,2))
+# 100 points from the square [-1,1)x[-1,1)
 
-left, mode, right = -3, 0, 8
-s = np.random.triangular(left, mode, right, 1000)   # interval [left, right]
+left, mode, right, size = -3, 0, 8, 1000
+s = np.random.triangular(left, mode, right, size)   # interval [left, right]
 
 s = np.random.poisson(lam=5, size=1000)
 
 s = np.random.exponential(scale=1.0, size=1000)
 
-loc, scale = 0., 1.
-s = np.random.laplace(loc, scale, 1000)
+loc, scale, size = 0., 1., 1000
+s = np.random.laplace(loc, scale, size)
 </pre><hr><pre>
 # Random generator
 

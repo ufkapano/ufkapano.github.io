@@ -13,6 +13,14 @@
 <h3>INTRODUCTION</h3>
 
 <hr><pre>
+# numpy.array(object, dtype=None, *, copy=True, order='K', subok=False,
+#     ndmin=0, like=None)
+# object : an array, any object exposing the array interface, an object whose
+#     __array__ method returns an array, or any (nested) sequence;
+# ndmin : specifies the minimum number of dimensions that the resulting array
+#     should have; ones will be prepended to the shape as needed to meet
+#     this requirement.
+</pre><hr><pre>
 age = np.array(35)   # zero-dimensional array
 print(age)   # 35
 print(age.shape)   # (), empty tuple
@@ -22,7 +30,7 @@ a = np.array( [2, 3, 4] )   # from a regular Python list or tuple
 # a = np.array( [2, 3, 4], dtype=int )   # explicite
 print(a.ndim)   # 1, one-dimensional array
 print(a.shape)   # (3,)
-print(b.dtype)   # dtype('int64'), deduced
+print(a.dtype)   # dtype('int64'), deduced
 </pre><hr><pre>
 b = np.array( [(1.5, 2, 3), [4, 5, 6]] )   # note mix of tuple and list
 # b = np.array( [(1.5, 2, 3), [4, 5, 6]], dtype=float )   # explicite

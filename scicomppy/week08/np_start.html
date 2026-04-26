@@ -42,14 +42,15 @@ pip install numpy
 
 APT (Debian Linux)
 Packages (with dependencies): python-numpy (Py2.7), python3-numpy (Py3).
+[version 1.16.2 in Debian 10]
+[version 2.2.4 in Debian 13]
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
 
 <p>NumPy stands for Numerical Python.
 NumPy is the fundamental package for scientific computing with Python. 
-It contains among other things [version 1.16.2 in Debian 10,
-version 2.2.0 released 2024-12-0 (for Python 3.10-3.13)]:
+It contains among other things:
 
 <ul>
 <li>a powerful N-dimensional array object,
@@ -61,13 +62,12 @@ version 2.2.0 released 2024-12-0 (for Python 3.10-3.13)]:
 <p>NumPy’s main object is the homogeneous multidimensional array.
 It is a table of elements (usually numbers), all of the same type, 
 indexed by a tuple of non-negative integers. 
-In NumPy dimensions are called 'axes'.
+In NumPy dimensions are called <strong>axes</strong>.
 
 <hr><pre>
 import numpy as np   # typical import under the 'np' alias
 
-print(np.__version__)   # 1.16.2 for Debian 10
-# also help(np) at the end
+print(np.__version__)   # also help(np) at the end
 
 a = np.arange(15).reshape(3, 5)   # array object 
 # arange() is like range() but returns an array.
@@ -132,10 +132,14 @@ print(sys.getsizeof(lst[0]))   # 28, int
 
 arr = np.array([24, 12, 57])
 print(arr.dtype)            # dtype('int64')
-print(sys.getsizeof(arr))   # 120 = 96 + 3 * 8
+print(sys.getsizeof(arr))
+# 120 = 96 + 3 * 8 (Debian 10)
+# 136 = 112 + 3 * 8 (Debian 13)
 
 arr = np.array([24, 12, 57], dtype="int8")   # numbers from -127 to 127
-print(sys.getsizeof(arr))   # 99 = 96 + 3 * 1
+print(sys.getsizeof(arr))
+# 99 = 96 + 3 * 1 (Debian 10)
+# 115 = 112 + 3 * 1 (Debian 13)
 
 lst[0] = "alpha"
 print(sys.getsizeof(""))       # 49
@@ -179,7 +183,7 @@ print("Testing numpy ...")
 t1 = timeit.Timer(lambda: x2 + y2)
 print(t1.timeit(1))   # single run
 
-# Results:
+# Results (Debian 10):
 # Testing list comprehension ...
 # 0.0699481050032773
 # Testing zip ...

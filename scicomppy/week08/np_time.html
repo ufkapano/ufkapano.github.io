@@ -12,13 +12,21 @@
 
 <h3>DATETIMES AND TIMEDELTAS</h3>
 
-<p>The 'datetime' object represents a single moment in time.
+<p>The <em>datetime</em> object represents a single moment in time 
+in standard Python.
+
+<p>NumPy uses the name <em>datetime64</em> because <em>datetime</em> 
+is already taken.
 
 <hr><pre>
-# NumPy uses the name 'datetime64' because 'datetime' is already taken.
+import datetime
 
 a = np.datetime64('2005-02-25')   # a simple ISO date
+# a = np.datetime64(datetime.date(2005, 2, 25)) # the same
+
 b = np.datetime64('2005-02-27')   # a simple ISO date
+# b = np.datetime64(datetime.date(2005, 2, 27)) # the same
+
 b - a   # np.timedelta64(2,'D')
 
 # Date units: (D)ay, (M)onth, (Y)ear, (W)eek.
@@ -27,6 +35,8 @@ b - a   # np.timedelta64(2,'D')
 np.datetime64('2005-02-25T03:30')   # date and time
 
 np.arange('2005-02-01', '2005-03-01', dtype='datetime64[D]')
+# np.arange(datetime.date(2005, 2, 1), datetime.date(2005, 3,1),
+#     dtype='datetime64[D]')   # the same
 array(['2005-02-01', '2005-02-02', '2005-02-03', '2005-02-04',
        '2005-02-05', '2005-02-06', '2005-02-07', '2005-02-08',
        '2005-02-09', '2005-02-10', '2005-02-11', '2005-02-12',

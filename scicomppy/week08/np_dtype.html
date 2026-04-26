@@ -24,12 +24,13 @@ of memory corresponding to an array item should be interpreted.
 # Using array-scalar types.
 
 dt_int = np.dtype(int)   # Python-compatible integer
+dt_int8 = np.dtype("int8")   # one byte integer
 
-# "b" (byte), "i1", 'int8';
+# "b" (byte), "i1", "int8";
 # "h", "i2", "int16";
 # "i", "i4", "int32"; "i8", "int64" ('int' 64-bit);
-# unsigned int: "B", "u1", 'uint8';
-# "H", "u2", 'uint16';
+# unsigned int: "B", "u1", "uint8";
+# "H", "u2", "uint16";
 # "u4", "uint32";
 # "u8", "uint64";
 
@@ -38,7 +39,7 @@ dt_float = np.dtype(float)   # Python-compatible floating-point number
 # "f2", 'float16';
 # "f", "f4", 'float32' ('float' in 32-bit);
 # "d", "f8", 'float64' ('double', 'float' in 64-bit);
-# 'float128';
+# 'float128' (np.longdouble);
 
 dt_bool = np.dtype(bool)
 
@@ -49,6 +50,8 @@ dt_object = np.dtype(object)   # Python object
 </pre><hr><pre>
 # Sized aliases to dtypes (useful for Numba).
 
+assert np.dtype("int64") is np.dtype(np.int64)
+
 np.int8, np.int16, np.int32, np.int64,
 np.uint8, np.uint16, np.uint32, np.uint64,
 np.float16, np.float32, np.float64,
@@ -56,7 +59,7 @@ np.complex64, np.complex128
 </pre><hr><pre>
 np.sqrt(np.array([-1, 0, 1]))   # default dtype=float
 # RuntimeWarning: invalid value encountered in sqrt
-# array([nan,  0.,  1.])
+# array([nan,  0.,  1.])   # np.nan is used
 
 np.sqrt(np.array([-1, 0, 1], dtype=complex))
 # array([0.+1.j, 0.+0.j, 1.+0.j])
@@ -78,15 +81,13 @@ dt_rgb = np.dtype({'names': ('r','g','b'), 'formats': ('u1','u1','u1')})
 </pre><hr><pre>
 # Converting data types.
 
-a = np.array([1.1, 0, 3.1])   # array([1.1, 0., 3.1])
-print(a.dtype)   # dtype('float64')
+a = np.array([1.1, 0, 3.1])   # array([1.1, 0., 3.1]), dtype('float64')
 
-b = a.astype(int)   # array([1, 0, 3]), copy
-print(b.dtype)   # dtype('int32')
+b = a.astype(int)   # array([1, 0, 3]), copy, dtype('int64')
 
 np.may_share_memory(a, b)   # False
 
-c = a.astype(bool)   # array([ True, False, True])
+c = a.astype(bool)   # array([ True, False, True]), dtype('bool')
 </pre><hr>
 
 <h3>EXERCISES</h3>

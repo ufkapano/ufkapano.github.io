@@ -17,6 +17,9 @@
 <p>Array indexing refers to any use of the square brackets ([]) 
 to index array values.
 
+<p>Array slicing is typically using a <strong>slice object</strong>, 
+constructed by <em>start:stop:step</em> notation inside of brackets.
+
 <p>Attention: Whereas slicings on lists and tuples create new objects, 
 a slicing operation on an array creates a view on the original array. 
 
@@ -28,7 +31,7 @@ a = np.arange(10)   # array([0, 1, 2, 3, 4, 5, 6, 7, 8, 9])
 
 # Indexing: a[0] first, a[1] second, a[-1] last
 # General syntax for slicing: a[start:stop], a[start:stop:step]
-# Note that stop is not included.
+# Note that 'stop' is not included.
 
 a[2:5], a[:3], a[4:], a[::2] (even), a[1::2] (odd), a[::3]
 
@@ -114,13 +117,14 @@ b = np.arange(10).reshape(2, 5)
 # array([[0, 1, 2, 3, 4],
 #        [5, 6, 7, 8, 9]])
 
-b % 2 == 0
+mask = (b % 2 == 0)
 # array([[ True, False,  True, False,  True],
 #        [False,  True, False,  True, False]])
 
-b[b % 2 == 0]   # array([0, 2, 4, 6, 8]) even numbers, shape (5,)
+b[mask]   # array([0, 2, 4, 6, 8]) even numbers, shape (5,)
 
-b[b % 2 == 0] += 100   # selected items are changed in b!
+b[mask] += 100   # selected items are changed in b!
+# b[mask] = b[mask] + 100   # the same
 # array([[100,   1, 102,   3, 104],
 #        [  5, 106,   7, 108,   9]])
 </pre><hr><pre>
@@ -151,10 +155,14 @@ c[ c &gt; 20 ]   # the result is a 1-D array
 # array([21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34])
 
 # Structural indexing tools.
-c.shape                   # (5, 7)
-c[:,np.newaxis,:].shape   # (5, 1, 7)
+c.shape                  # (5, 7)
+d = c[:,np.newaxis,:]    # d is a view
+d.shape                  # (5, 1, 7)
 # There are no new elements in the array,
 # just that the dimensionality is increased.
+
+# Note that we can also change c directly:
+# c.shape = (5,1,7)
 </pre><hr>
 
 </body>
