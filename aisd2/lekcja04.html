@@ -197,7 +197,9 @@ public:
     bool has_edge(Edge&lt;int&gt; edge) const override {
         return has_edge(edge.source, edge.target);
     }
-    float weight(int u, int v) const override;
+    float weight(int u, int w) const override {
+        return (has_edge(u, w) ? 1.0 : 0.0);
+    }
     float weight(Edge&lt;int&gt; edge) const override {
         return weight(edge.source, edge.target);
     }
@@ -280,7 +282,9 @@ public:
     bool has_edge(Edge&lt;T&gt; edge) const override {
         return has_edge(edge.source, edge.target);
     }
-    float weight(T u, T w) const override; // waga krawędzi lub 0.0
+    float weight(T u, T w) const override {
+        return (has_edge(u, w) ? 1.0 : 0.0);
+    }
     float weight(Edge&lt;T&gt; edge) const override {
         return weight(edge.source, edge.target);
     }

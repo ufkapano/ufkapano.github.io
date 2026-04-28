@@ -216,6 +216,27 @@ z jednego źródła dla grafu skierowanego z dodatnimi wagami krawędzi.
 Wygenerować przykładowy graf skierowany ważony z n=10.
 Wyznaczyć najkrótsze ścieżki z wybranego wierzchołka.
 
+<hr><pre>
+// dijkstra.hpp
+template &lt;typename T, typename G&gt; // node type, graph type
+class Dijkstra {
+    G&amp; graph;
+    // inne potrzebne elementy
+public:
+    std::unordered_map&lt;T, T&gt; parent;     // drzewo najkrótszych ścieżek
+    std::unordered_map&lt;T, float&gt; distance; // odległość od źródła
+    Dijkstra(G&amp; g) : graph(g) { ... }
+    ~Dijkstra() = default; // destruktor
+    void run(T u);
+};
+// Usage:
+// auto algorithm = Dijkstra&lt;int,Graph&gt;(G); // macierz sąsiedztwa
+// auto algorithm = Dijkstra&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
+// algorithm.run();
+// for (auto&amp; pair : algorithm.distance)
+//     std::cout &lt;&lt; pair.first &lt;&lt; " distance : " &lt;&lt; pair.second &lt;&lt; std::endl;
+</pre><hr>
+
 <h3>ZADANIE 8.2 (BELLMAN-FORD)</h3>
 
 <p>Zaimplementować algorytm Bellmana-Forda znajdowania najkrótszych ścieżek

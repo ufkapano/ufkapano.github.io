@@ -160,7 +160,7 @@ z wykorzystaniem metody łańcuchowej.
 <hr><pre>
 // Szablon dla prostego zbioru wykorzystującego metodę łańcuchową.
 
-template&lt;typename T&gt;
+template &lt;typename T&gt;
 class MySet : public BaseSet&lt;T&gt; {
     int BUCKET;    // liczba bukietów
     std::list&lt;T&gt; *table;
@@ -182,14 +182,14 @@ public:
     void display() const override; // wypisuje { item1, item2, ..., itemk }
 };
 </pre><hr><pre>
-template&lt;typename T&gt;
+template &lt;typename T&gt;
 MySet&lt;T&gt;::MySet(int b) {
     BUCKET = b;
     table = new std::list&lt;T&gt;[BUCKET]; // tablica z pustymi listami
     assert( table != nullptr );
 }
 </pre><hr><pre>
-template&lt;typename T&gt;
+template &lt;typename T&gt;
 void MySet&lt;T&gt;::display() const {
     for (int i = 0; i &lt; BUCKET; i++)
         for (const T&amp; k : table[i])

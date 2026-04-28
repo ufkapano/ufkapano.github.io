@@ -165,10 +165,9 @@ Wyznaczyć składowe spójne grafu.
 
 <hr><pre>
 // connected.hpp
-template&lt;typename T, typename G&gt; // node type, graph type
+template &lt;typename T, typename G&gt; // node type, graph type
 class ConnectedComponents {
     G&amp; graph;
-    std::unordered_map&lt;T, bool&gt; visited;
 public:
     std::unordered_map&lt;T, int&gt; component; // a table for component numbers
     int ncc; // the number of connected components
@@ -177,7 +176,7 @@ public:
         for (auto n_it = graph.node_begin();
             n_it != graph.node_end();
             ++n_it) {
-            visited[*n_it] = false;
+            component[*n_it] = -1; // składowa nieustalona
         }
     }
     ~ConnectedComponents() = default; // destruktor
@@ -188,8 +187,8 @@ public:
 // auto algorithm = ConnectedComponents&lt;int,Graph&gt;(G); // macierz sąsiedztwa
 // auto algorithm = ConnectedComponents&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
 // algorithm.run();
-// for (auto pair : algorithm.component)
-//     std::cout &lt;&lt; pair.first &lt;&lt; " component " &lt;&lt; pair.second &lt;&lt; std::endl;
+// for (auto&amp; pair : algorithm.component)
+//     std::cout &lt;&lt; pair.first &lt;&lt; " component : " &lt;&lt; pair.second &lt;&lt; std::endl;
 // std::cout &lt;&lt; "total components " &lt;&lt; algorithm.ncc &lt;&lt; std::endl;
 </pre><hr>
 
@@ -202,14 +201,14 @@ Wyznaczyć silnie spójne składowe grafu.
 
 <hr><pre>
 // connected.hpp
-template&lt;typename T, typename G&gt; // node type, graph type
+template &lt;typename T, typename G&gt; // node type, graph type
 class StronglyConnectedComponents { ... };
 // Usage:
 // auto algorithm = StronglyConnectedComponents&lt;int,Graph&gt;(G); // macierz sąsiedztwa
 // auto algorithm = StronglyConnectedComponents&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
 // algorithm.run();
-// for (auto pair : algorithm.component)
-//     std::cout &lt;&lt; pair.first &lt;&lt; " component " &lt;&lt; pair.second &lt;&lt; std::endl;
+// for (auto&amp; pair : algorithm.component)
+//     std::cout &lt;&lt; pair.first &lt;&lt; " strong component : " &lt;&lt; pair.second &lt;&lt; std::endl;
 // std::cout &lt;&lt; "total components " &lt;&lt; algorithm.nscc &lt;&lt; std::endl;
 </pre><hr>
 
