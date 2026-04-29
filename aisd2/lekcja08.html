@@ -110,7 +110,7 @@ Output: Shortest paths from s (Parent) and distances (Distance).
 Algorithm Dijkstra(G,s,weight):
     let Distance[] be an empty table for distances from s
     let Parent[] be an empty table for links
-    let S be an empty set for processed vertices   # do analizy teoretycznej
+    let S be an empty set for processed vertices
     let Q be an empty min priority queue
     # Step 1: initialization
     for each vertex u in V(G) do   # O(n) time
@@ -168,7 +168,7 @@ Algorithm BellmanFord(G,s,weight):
     set Distance[s] to 0
     # Step 2: edge relaxation
     for step from 1 to |V(G)|-1 do
-        for each edge (u,v) in E(G) do   # O(nm) time
+        for each edge (u,v) in E(G) do   # total O(nm) time
             set alt to Distance[u] + weight(u,v)
             if alt &lt; Distance[v] then
                 set Distance[v] to alt
@@ -232,7 +232,7 @@ public:
 // Usage:
 // auto algorithm = Dijkstra&lt;int,Graph&gt;(G); // macierz sąsiedztwa
 // auto algorithm = Dijkstra&lt;char,Graph&lt;char&gt;&gt;(G); // lista sąsiedztwa
-// algorithm.run();
+// algorithm.run(source);
 // for (auto&amp; pair : algorithm.distance)
 //     std::cout &lt;&lt; pair.first &lt;&lt; " distance : " &lt;&lt; pair.second &lt;&lt; std::endl;
 </pre><hr>
