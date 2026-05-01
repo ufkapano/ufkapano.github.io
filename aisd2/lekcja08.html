@@ -111,12 +111,12 @@ Algorithm Dijkstra(G,s,weight):
     let Distance[] be an empty table for distances from s
     let Parent[] be an empty table for links
     let S be an empty set for processed vertices
-    let Q be an empty min priority queue
+    let Q be an empty set for vertices   # possible min priority queue
     # Step 1: initialization
     for each vertex u in V(G) do   # O(n) time
         set Distance[u] to infinity
         set Parent[u] to None
-        Q.put(u)
+        insert u into Q
     set Distance[s] to 0
     # Step 2: edge relaxation
     while Q is not empty do
@@ -152,7 +152,7 @@ ale działa również dla grafów skierowanych z ujemnymi wagami krawędzi,
 przy czym nie mogą występować ujemne cykle.
 Algorytm wykonuje n-1 razy relaksację wszystkich krawędzi grafu,
 a na końcu sprawdza ewentualne występowanie ujemnych cykli.
-Algorytm działa w czasie O(nm) dla grafu w reprezentacji list sąsiedztwa.
+Algorytm działa w czasie O(n m) dla grafu w reprezentacji list sąsiedztwa.
 
 <hr><pre>
 Input: A weighted directed graph G with no negative cycles,
@@ -168,7 +168,7 @@ Algorithm BellmanFord(G,s,weight):
     set Distance[s] to 0
     # Step 2: edge relaxation
     for step from 1 to |V(G)|-1 do
-        for each edge (u,v) in E(G) do   # total O(nm) time
+        for each edge (u,v) in E(G) do   # total O(n m) time
             set alt to Distance[u] + weight(u,v)
             if alt &lt; Distance[v] then
                 set Distance[v] to alt

@@ -9,13 +9,97 @@
 <p><a href="index.html">AiSD (index)</a>
 <hr>
 
-<h1>AiSD (10) - ADT GRAPH (minimalne drzewa rozpinające)</h1>
+<h1>AiSD (10) - ADT GRAPH (domknięcie przechodnie)</h1>
 
 <p>OBOWIĄZKOWE DO PRZESŁANIA: jedno zadanie
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p><strong>Domknięcie przechodnie</strong> (ang. <em>transitive closure</em>)
+grafu skierowanego G = (V,E) jest to graf G^{*} = (V,E^{*}), w którym
+<br>E^{*} = {(u,v) : istnieje ścieżka z u do v w G},
+czyli E zawiera się w E^{*} [Cormen].
+
+<p>Jednym ze sposobów obliczania domknięcia przechodniego grafu
+w czasie O(n^3) jest przypisanie każdej krawędzi z E(G) wagi 1
+i wykonanie algorytmu Floyda-Warshalla.
+Jeżeli istnieje ścieżka z wierzchołka i do wierzchołka j, to dostaniemy
+D[i,j] &lt; n. Przy braku ścieżki D[i,j] będzie nieskończone.
+
+<h3>DOMKNIĘCIE PRZECHODNIE Z OPERACJAMI LOGICZNYMI</h3>
+
+<p>Oszczędniejszy sposób obliczania domknięcia przechodniego w czasie O(n^3)
+polega na zastąpieniu operacji arytmetycznych operacjami logicznymi.
+Definiujemy macierze logiczne T^{(k)}, gdzie T[i,j]^{(k)} wynosi 1 (<em>true</em>),
+jeśli w grafie G istnieje ścieżka z wierzchołka i do wierzchołka j,
+której wszystkie wewnętrzne wierzchołki należą do zbioru {1,2,...,k}.
+W przeciwnym razie macierz zawiera 0 (<em>false</em>).
+
+<p>Krawędź (i,j) należy do E^{*} wtedy i tylko wtedy, gdy T[i,j]^{(n)} = 1.
+<br>T[i,j]^{(0)} = 0 dla i &ne; j oraz (i,j) &notin; E(G),
+<br>T[i,j]^{(0)} = 1 dla i = j lub (i,j) &in; E(G),
+<br>T[i,j]^{(k)} = T[i,j]^{(k-1)} &or; (T[i,k]^{(k-1)} &and; T[k,j]^{(k-1)})
+dla k &gt; 0.
+
+<hr><pre>
+Input: A directed graph G.
+Output: A transitive closure matrix T.
+Algorithm TransitiveClosure(G):   # total O(n^3) time
+    let T^{(0)} be a new matrix n &times; n
+    for i from 1 to n do
+        for j from 1 to n do
+            if i equals j or (i,j) &in; E(G) then
+                set T[i,j]^{(0)} to 1
+            else
+                set T[i,j]^{(0)} to 0
+    for k from 1 to n do
+        let T^{(k)} be a new matrix n &times; n
+            for i from 1 to n do
+                for j from 1 to n do
+                    set T[i,j]^{(k)} to T[i,j]^{(k-1)} &or; (T[i,k]^{(k-1)} &and; T[k,j]^{(k-1)})
+    return T^{(n)}
+# Podobnie jak w algorytmie Floyda-Warshalla, można opuścić indeksy górne
+# w macierzach T^{(k)}, a algorytm będzie dalej działał poprawnie.
+# Wtedy złożoność pamięciowa zmniejsza się z O(n^3) do O(n^2).
+</pre><hr>
+
+<h3>DOMKNIĘCIE PRZECHODNIE Z PRZESZUKIWANIEM GRAFU</h3>
+
+<p>Domknięcie przechodnie grafu skierowanego można wyznaczyć w czasie O(n m)
+za pomocą przeszukiwania grafu z użyciem BFS lub DFS 
+(graf w reprezentacji list sąsiedztwa).
+
+<hr><pre>
+Input: A directed graph G.
+Output: A transitive closure matrix T.
+Algorithm TransitiveClosureBFS(G):   # total O(n m) time
+    let T be a new matrix n &times; n
+    for i from 1 to n do
+        for j from 1 to n do
+            set T[i,j] to 0
+        set T[i,i] to 1
+    for i from 1 to n do
+        let Color[] be an empty table for vertex colors
+        for j from 1 to n do
+            set Color[j] to WHITE
+        call BFSVisit(G,i)
+        # pre_action(j) is "set T[i,j] to 1"
+    return T
+</pre><hr>
+
+<h3>ZADANIE 10.1 (FLOYD-WARSHALL)</h3>
+
+<p>Zaimplementować algorytm znajdowania domknięcia przechodniego 
+dla grafu skierowanego na bazie algorytmu Floyda-Warshalla.
+Wygenerować przykładowy graf skierowany z n=10 i wyznaczyć domknięcie
+przechodnie grafu.
+
+<h3>ZADANIE 10.2 (BFS/DFS)</h3>
+
+<p>Zaimplementować algorytm znajdowania domknięcia przechodniego 
+dla grafu skierowanego z użyciem BFS lub DFS.
+Wygenerować przykładowy graf skierowany z n=10 i wyznaczyć domknięcie
+przechodnie grafu.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

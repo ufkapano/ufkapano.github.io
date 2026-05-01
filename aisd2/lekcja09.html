@@ -16,7 +16,136 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p>Problem najkrótszych ścieżek między wszystkimi parami wierzchołków
+można rozwiązać wykonując n razy algorytm dla problemu najkrótszych
+ścieżek z jednym źródłem.
+<br>W przypadku nieujemnych wag krawędzi można zastosować algorytm Dijkstry.
+Złożoność obliczeniowa będzie typowo O(n^3) dla macierzy sąsiedztwa
+i O(n m log n) dla listy sąsiedztwa.
+<br>W przypadku ujemnych wag musimy użyć algorytm Bellmana-Forda,
+co daje złożoność O(n^2 m) [O(n^4) dla grafów gęstych].
+
+<p>Istnieją specjalne algorytmy dostosowane do problemu najkrótszych 
+ścieżek między wszystkimi parami wierzchołków.
+Na ogół te algorytmy zakładają reprezentację grafu w postaci macierzy
+sąsiedztwa.
+<br>Na wejściu algorytmu jest dana macierz Weight[] wymiaru n &times; n 
+reprezentująca wagi krawędzi grafu skierowanego ważonego G.
+<br>Weight[i,j] = 0 dla i = j,
+<br>Weight[i,j] = w(i,j) dla (i,j) &in; E(G),
+<br>Weight[i,j] = +&infin; dla i &ne; j oraz (i,j) &notin; E(G).
+
+<p>Wynikiem działania algorytmów jest macierz D[] wymiaru n &times; n,
+gdzie D[i,j] jest wagą najkrótszej ścieżki z wierzchołka i do wierzchołka j.
+
+<p>Najkrótsze ścieżki będą reprezentowane przez macierz poprzedników
+Parent[] wymiaru n &times; n.
+Parent[i,j] jest poprzednikiem j na pewnej najkrótszej ścieżce z i do j.
+Parent[i,:] reprezentuje podgraf poprzedników dla wierzchołka i.
+
+<h3>ALGORYTM MNOŻENIA MACIERZY</h3>
+
+<p>Jest to algorytm programowania dynamicznego, w którym w pętli głównej 
+programu wykonywane są operacje podobne do mnożenia macierzy.
+Wykorzystuje się lemat, że wszystkie podścieżki
+każdej najkrótszej ścieżki są najkrótszymi ścieżkami.
+Wagi najkrótszych ścieżek oblicza się metodą wstępującą.
+
+<p>Oznaczenie: L[i,j]^{(m)} jest to najmniejsza waga ścieżki
+z wierzchołka i do wierzchołka j spośród tych, które zawierają
+co najwyżej m krawędzi.
+<br>L[i,j]^{(0)} = 0 dla i = j,
+<br>L[i,j]^{(0)} = +&infin; dla i &ne; j,
+<br>L[i,j]^{(m)} = min_k{ L[i,k]^{(m-1)} + Weight[k,j] } dla m &gt; 0.
+
+<hr><pre>
+Algorithm ExtendedShortestPaths(L,Weight):   # total O(n^3) time
+    let M be a new matrix n &times; n
+    for i from 1 to n do
+        for j from 1 to n do
+            set M[i,j] to infinity
+                for k from 1 to n do
+                    set M[i,j] to min{M[i,j], L[i,k] + Weight[k,j]}
+    return M
+</pre><hr><pre>
+Input: A weight matrix (Weight).
+Output: Distances (Distance).
+Algorithm SlowAllPairsShortestPaths(Weight):   # total O(n^4) time
+    set L^{(1)} to Weight
+    for m from 2 to n-1 do
+        let L^{(m)} be a new matrix n &times; n
+        set L^{(m)} to ExtendedShortestPaths(L^{(m-1)},Weight)
+    # Check for negative-weight cycles.
+    for i from 1 to n do
+        if L[i,i]^{(m)} &lt; 0 then
+            return error "negative cycle detected"
+    return L^{(n-1)}   # Distance
+# Modyfikując procedury SlowAllPairsShortestPaths i ExtendedShortestPaths
+# można jednocześnie z L obliczyć macierz poprzedników (Parent).
+</pre><hr><pre>
+Input: A weight matrix (Weight).
+Output: Distances (Distance).
+Algorithm FasterAllPairsShortestPaths(Weight):   # total O(n^3 log n) time
+    set L^{(1)} to Weight
+    set m to 1
+    while m &lt; n-1 do
+        let L^{(2m)} be a new matrix n &times; n
+        set L^{(2m)} to ExtendedShortestPaths(L^{(m)},L^{(m)})
+        set m to 2m
+    # Check for negative-weight cycles.
+    for i from 1 to n do
+        if L[i,i]^{(m)} &lt; 0 then
+            return error "negative cycle detected"
+    return L^{(m)}   # Distance
+</pre><hr>
+
+<h3>ALGORYTM FLOYDA-WARSHALLA</h3>
+
+<p>Algorytm Floyda-Warshalla również stosuje programowanie dynamiczne.
+Bierze się pod uwagę wewnętrzne wierzchołki najkrótszej ścieżki.
+<br>Niech D[i,j]^{(k)} będzie wagą najkrótszej ścieżki z wierzchołka i
+do wierzchołka j, której wszystkie wewnętrzne wierzchołki należą
+do zbioru {1,2,...,k}.
+<br>D[i,j]^{(0)} = Weight[i,j],
+<br>D[i,j]^{(k)} = min{D[i,j]^{(k-1)}, 
+D[i,k]^{(k-1)} + D[k,j]^{(k-1)}} dla k &gt; 0.
+<br>Poszukiwanym rozwiązaniem jest macierz D^{(n)}.
+
+<hr><pre>
+Input: A weight matrix (Weight).
+Output: Distances (Distance).
+Algorithm FloydWarshall(Weight):   # total O(n^3) time
+    set D^{(0)} to Weight
+    for k from 1 to n do
+        let D^{(k)} be a new matrix n &times; n
+        for i from 1 to n do
+            for j from 1 to n do
+                D[i,j]^{(k)} = min{D[i,j]^{(k-1)}, D[i,k]^{(k-1)} + D[k,j]^{(k-1)}}
+    # Check for negative-weight cycles.
+    for i from 1 to n do
+        if D[i,i]^{(n)} &lt; 0 then
+            return error "negative cycle detected"
+    return D^{(n)}   # Distance
+# Algorytm Floyda-Warshalla działa poprawnie, kiedy w macierzach D^{(k)}
+# opuścimy górne indeksy i będziemy używać jednej macierzy D.
+# Wtedy złożoność pamięciowa zmniejsza się z O(n^3) do O(n^2).
+#
+# Jednocześnie z obliczaniem macierzy D można obliczać macierz poprzedników (Parent).
+</pre><hr>
+
+<h3>ZADANIE 9.1 (MNOŻENIE MACIERZY)</h3>
+
+<p>Zaimplementować algorytm mnożenia macierzy do znajdowania najkrótszych 
+ścieżek między wszystkimi parami wierzchołków.
+Wygenerować przykładowy graf skierowany ważony z n=10. 
+Wyznaczyć najkrótsze ścieżki pomiędzy wierzchołkami.
+
+<h3>ZADANIE 9.2 (FLOYD-WARSHALL)</h3>
+
+<p>Zaimplementować algorytm Floyda-Warshala znajdowania najkrótszych 
+ścieżek między wszystkimi parami wierzchołków
+Wygenerować przykładowy graf skierowany ważony z n=10. 
+Wyznaczyć najkrótsze ścieżki pomiędzy wierzchołkami.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
