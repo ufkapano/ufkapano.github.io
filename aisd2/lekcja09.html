@@ -59,13 +59,23 @@ co najwyżej m krawędzi.
 <br>L[i,j]^{(m)} = min_k{ L[i,k]^{(m-1)} + Weight[k,j] } dla m &gt; 0.
 
 <hr><pre>
+# Mnożenie macierzy kwadratowych C = A * B.
+# "min" odpowiada operacji "+"
+# "+" odpowiada operacji "*"
+let C be a new matrix n × n
+for i from 1 to n do
+    for j from 1 to n do
+        set C[i,j] to 0
+        for k from 1 to n do
+            set C[i,j] to C[i,j] + A[i,k] * B[k,j]
+</pre><hr><pre>
 Algorithm ExtendedShortestPaths(L,Weight):   # total O(n^3) time
     let M be a new matrix n &times; n
     for i from 1 to n do
         for j from 1 to n do
             set M[i,j] to infinity
-                for k from 1 to n do
-                    set M[i,j] to min{M[i,j], L[i,k] + Weight[k,j]}
+            for k from 1 to n do
+                set M[i,j] to min{M[i,j], L[i,k] + Weight[k,j]}
     return M
 </pre><hr><pre>
 Input: A weight matrix (Weight).
