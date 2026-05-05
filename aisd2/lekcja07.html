@@ -64,7 +64,7 @@ sąsiedztwa to O(n+m).
 
 <hr><pre>
 Input: An undirected graph G.
-Output: Connected components of G.
+Output: Connected components of G (Component).
 Algorithm ConnectedComponents(G):
     let Color[] be an empty table for vertex colors
     let Component[] be a table for component numbers
@@ -96,7 +96,7 @@ wyznaczać dokładnie jedną silnie spójną składową.
 
 <hr><pre>
 Input: A directed graph G.
-Output: Strongly connected components of G.
+Output: Strongly connected components of G (Component).
 Algorithm StronglyConnectedComponents(G):
     # Step 1: finding the vertex order
     let L be an empty list for vertices
@@ -181,7 +181,6 @@ public:
     }
     ~ConnectedComponents() = default; // destruktor
     void run();
-    void visit(T u);
 };
 // Usage:
 // auto algorithm = ConnectedComponents&lt;int,Graph&gt;(G); // macierz sąsiedztwa
