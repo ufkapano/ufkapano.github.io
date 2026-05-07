@@ -99,5 +99,89 @@ w grafie ważonym.
 
 </ul>
 
+<h3>PRZEMYTNICY (Olimpiada Informatyczna 2003)</h3>
+
+<p>Bajtocja słynie z bogatych złóż złota, dlatego przez długie lata kwitła
+sprzedaż tego kruszcu do sąsiedniego królestwa, Bitlandii.
+Niestety, powiększająca się ostatnio dziura budżetowa zmusiła króla
+Bitlandii do wprowadzenia zaporowych ceł na metale i minerały.
+Handlarze przekraczający granicę muszą zapłacić 50% wartości przewożonego
+ładunku. Bajtockim kupcom grozi bankructwo.
+
+<p>Na szczęście bajtoccy alchemicy opracowali sposoby pozwalające zamieniać
+pewne metale w inne.
+Pomysł kupców polega na tym, aby z pomocą alchemików zamieniać złoto
+w pewien tani metal, a następnie, po przewiezieniu go przez granicę
+i zapłaceniu niewielkiego cła, znowu otrzymywać z niego złoto.
+Niestety alchemicy nie znaleźli sposobu na zamianę dowolnego metalu
+w dowolny inny.
+Może się więc zdarzyć, że proces otrzymywania danego metalu ze złota
+musi przebiegać wielostopniowo i że na każdym etapie uzyskiwany będzie 
+inny metal.
+Alchemicy każą sobie słono płacić za swoje usługi i dla każdego znanego 
+sobie procesu zamiany metalu A w metal B wyznaczyli cenę 
+za przemianę 1kg surowca.
+Handlarze zastanawiają się, w jakiej postaci należy przewozić złoto
+przez granicę oraz jaki ciąg procesów alchemicznych należy zastosować,
+aby zyski były możliwie największe.
+
+<p><strong>Zadanie.</strong>
+Pomóż uzdrowić bajtocką gospodarkę! Napisz program, który:
+
+<p>(1) Wczyta tabelę cen wszystkich metali, a także ceny przemian
+oferowanych przez alchemików.
+
+<p>(2) Wyznaczy taki ciąg metali m_0, m_1, ..., m_k, że:
+<br>(a) m_0 = m_k to złoto,
+<br>(b) dla każdego i = 1, 2, ..., k alchemicy potrafią otrzymać 
+metal m_i z metalu m_{i-1}, oraz
+<br>(c) koszt wykonania całego ciągu procesów alchemicznych dla 1kg złota
+powiększony o płacone na granicy cło (50% ceny 1kg najtańszego
+z metali m_i, dla i = 0, 1, ..., k) jest najmniejszy z możliwych.
+<br>Zakładamy, że podczas procesów alchemicznych waga metali nie zmienia się.
+
+<p>(3) Wypisze koszt wykonania wyznaczonego ciągu procesów alchemicznych
+powiększony o płacone na granicy cło.
+
+<p><strong>Wejście.</strong> W pierwszym wierszu standardowego wejścia
+znajduje się jedna dodatnia liczba całkowita n oznaczająca liczbę
+rodzajów metali, 1 &le; n &le; 5000.
+<br>W wierszu o numerze k+1, dla 1 &le; k &le; n, znajduje się nieujemna
+parzysta liczba całkowita p_k - cena 1kg metalu oznaczonego numerem k,
+0 &le; p_k &le; 10^9. Przyjmujemy, że złoto ma numer 1.
+<br>W wierszu o numerze n+2 znajduje się jedna nieujemna liczba całkowita m
+równa liczbie procesów przemiany znanych alchemikom, 0 &le; m &le; 100000.
+<br>W każdym z kolejnych m wierszy znajdują się po trzy liczby naturalne,
+pooddzielane pojedynczymi odstępami, opisujące kolejne przemiany.
+Trójka liczb a,b,c oznacza, że alchemicy potrafią z metalu o numerze a
+otrzymać metal o numerze b i za zamianę 1kg surowca każą płacić 
+c bajtalarów, 1 &le; a,b &le; n, 0 &le; c &le; 10000.
+Uporządkowana para liczb a i b może się pojawić w danych co najwyżej jeden raz.
+
+<p><strong>Wyjście.</strong> Twój program powinien pisać na standardowe wyjście.
+W pierszym wierszu powinna zostać wypisana jedna liczba całkowita - koszt
+wykonania wyznaczonego ciągu procesów alchemicznych powiększony
+o płacone na granicy cło.
+
+<p><strong>Przykład.</strong>
+
+<hr><pre>
+# Dla danych wejściowych:
+4
+200
+100
+40
+2
+6
+1 2 10
+1 3 5
+2 1 25
+3 2 10
+3 4 5
+4 1 50
+# poprawnym wynikiem jest:
+60
+</pre><hr>
+
 </body>
 </html>
