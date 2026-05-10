@@ -58,8 +58,8 @@ plt.show()
 
 <hr><pre>
 # Creating data using numpy functions.
-x = np.linspace(-5, 5, 101)
-y = np.linspace(-5, 5, 101)
+x = np.linspace(-4, 4, 101)
+y = np.linspace(-4, 4, 101)
 xx, yy = np.meshgrid(x, y)
 # xx.shape is (101, 101)
 # yy.shape is (101, 101)
@@ -69,6 +69,13 @@ xx, yy = np.meshgrid(x, y)
 #data = np.abs(xx) + np.abs(yy)
 #data = np.cos(xx) * np.cos(yy)
 data = np.exp(-(xx*0.5)**2 -(yy*0.5)**2)   # heatmap2.py
+
+plt.imshow(data, cmap='hot', interpolation='nearest',
+    origin='lower',   # default is 'upper', 
+    extent=(-4,4,-4,4)) # floats (left, right, bottom, top)
+
+plt.colorbar()
+plt.show()
 </pre><hr>
 
 <p><img src="img/heatmap2.png" alt="[ heatmap2.png ]">

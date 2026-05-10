@@ -18,25 +18,31 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'pip' is the package installer for Python. You can use it to install 
+<p><em>pip</em> is the package installer for Python. You can use it to install 
 packages from the Python Package Index (PyPI) and other indexes.
 
-<p>In Debian 10 Linux, there is 'pip' (Py2) and 'pip3' (Py3).
+<p>In Debian 10 Linux, there is <em>pip</em> (Py2) and <em>pip3</em> (Py3).
 
-<p>'pip' is already installed if you are using Python 2 &gt;= 2.7.9 
-or Python 3 &gt;= 3.4 downloaded from python.org or if you are working 
-in a virtual environment created by 'virtualenv' or 'venv'. 
+<p><em>pip</em> is already installed if you are using Python 2 &ge; 2.7.9 
+or Python 3 &ge; 3.4 downloaded from <em>python.org</em> or if you are working 
+in a virtual environment created by <em>virtualenv</em> or <em>venv</em>. 
 
 <hr><pre>
 # Testing if 'pip' is installed.
 
-$ pip --version   # Debian 10
+$ pip --version
+# Debian 10
 pip 18.1 from /usr/lib/python2.7/dist-packages/pip (python 2.7)
+# Debian 13
+pip 25.1.1 from /usr/lib/python3/dist-packages/pip (python 3.13)
 
-$ pip3 --version   # Debian 10
+$ pip3 --version
+# Debian 10
 pip 18.1 from /usr/lib/python3/dist-packages/pip (python 3.7)
+# Debian 13
+pip 25.1.1 from /usr/lib/python3/dist-packages/pip (python 3.13)
 
-$ python -m pip --version   # Py2, from pip documentation
+$ python -m pip --version   # Py2 in Debian 10, Py3 in Debian 13, from pip documentation
 $ python3 -m pip --version   # Py3, note the name 'pip', not 'pip3' here
 
 $ man pip   # help in Debian Linux
@@ -47,7 +53,7 @@ $ pip --help   # usage and commands
 
 <hr><pre>
 APT (for the entire computer)
-Debian packages: python-pip, python-wheel, python-pip-whl, 
+Debian packages: python-pip (Py2), python-wheel (Py2), python-pip-whl (Py2), 
 python3-pip, python3-wheel, and dependencies.
 </pre><hr>
 
@@ -66,14 +72,15 @@ $ python3 -m pip show somepackage   # info about a package
 $ python3 -m pip show --files somepackage   # show what files were installed
 
 $ python3 -m pip list              # the list of packages installed
-$ python3 -m pip list --outdated   # errors in Debian
+$ python3 -m pip list --outdated   # errors in Debian 10
 
 $ python3 -m pip uninstall somepackage
 
 $ python3 -m pip check   # checking a system
 # No broken requirements found.
 
-$ python3 -m pip search "query"   # errors in Debian
+$ python3 -m pip search "query"
+# RuntimeError: PyPI no longer supports 'pip search'
 </pre><hr><pre>
 # Upgrading pip - it is safe in virtual environments.
 
@@ -90,7 +97,8 @@ $ python3 -m pip install --upgrade pip setuptools wheel
 or your code can break completely. It’s important to be able to reconstruct 
 the set of packages and versions you’re using. Best practice is to:
 <br>(1) use a different environment per project you’re working on,
-<br>(2) record package names and versions using pip in 'requirements files'.
+<br>(2) record package names and versions using <em>pip</em> in 
+<strong>requirements files</strong>.
 
 <hr><pre>
 # This is done typically in virtual environments.

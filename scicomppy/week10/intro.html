@@ -19,6 +19,9 @@ scientific computing</em>, Nature 617, 212-213 (2023).
 
 <p>https://virtualenv.pypa.io/en/stable/user_guide.html
 
+<p>https://peps.python.org/pep-0668/
+<br>PEP 668 - Marking Python base environments as “externally managed”
+
 <h3>RATIONALE</h3>
 
 <p>Python applications will often use packages and modules 
@@ -39,27 +42,27 @@ virtual environments:
 
 <ul>
 
-<li>'venv' is available by default in Python 3.3 and later, 
-and installs 'pip' and 'setuptools' into created virtual environments 
-in Python 3.4 and later.
+<li><em>venv</em> is available by default in Python 3.3 and later, 
+and installs <em>pip</em> and <em>setuptools</em> into created virtual 
+environments in Python 3.4 and later.
 
-<li>'virtualenv' needs to be installed separately, but supports 
-Python 2.7+ and Python 3.3+, and 'pip', 'setuptools' and 'wheel' 
-are always installed into created virtual environments by default 
-(regardless of Python version).
+<li><em>virtualenv</em> needs to be installed separately, but supports 
+Python 2.7+ and Python 3.3+, and <em>pip</em>, <em>setuptools</em> 
+and <em>wheel</em> are always installed into created virtual environments 
+by default (regardless of Python version).
 
 </ul>
 
 <p>It is useful to have a separate directory for virtual environments,
-e.g. VIRTUAL in the home directory.
+e.g. <em>VIRTUAL</em> in the home directory.
 
 <p><strong>Warning.</strong> 
-Created python virtual environments are usually not self-contained. 
-A complete python packaging is usually made up of thousands of files, 
-so it’s not efficient to install the entire python again into a new folder. 
+Created Python virtual environments are usually not self-contained. 
+A complete Python packaging is usually made up of thousands of files, 
+so it’s not efficient to install the entire Python again into a new folder. 
 Instead virtual environments are mere shells, that contain little within 
-themselves, and borrow most from the system python.
-This does mean that if you upgrade your system python your virtual 
+themselves, and borrow most from the system Python.
+This does mean that if you upgrade your system Python your virtual 
 environments <em>might</em> break.
 
 <hr><pre>
@@ -94,7 +97,7 @@ deactivate
 </pre><hr>
 
 <p>In order to remove a virtual environment you should simply
-deactivate it and remove DIR directory (rm -r DIR).
+deactivate it and remove <em>DIR</em> directory (<em>rm -r DIR</em>).
 You might want to pip freeze a dependency list first.
 
 <h3>PYTHON SCRIPTS IN VIRTUAL ENVIRONMENTS</h3>

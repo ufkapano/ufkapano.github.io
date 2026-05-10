@@ -33,9 +33,9 @@ Debian packages: python-pandas, python3-pandas, and dependencies.
 
 <h3>INTRODUCTION</h3>
 
-<p>'pandas' is a fast, powerful, flexible and easy to use open source data 
+<p>Pandas is a fast, powerful, flexible and easy to use open source data 
 analysis and manipulation tool, built on top of the Python programming language.
-'pandas' aims to be the fundamental high-level building block for doing 
+Pandas aims to be the fundamental high-level building block for doing 
 practical, real world data analysis in Python.
 
 <p>Main features:
@@ -50,20 +50,22 @@ practical, real world data analysis in Python.
 <li>Time series-specific functionality.
 </ul>
 
-<p>The two primary data structures of pandas are Series (1-dimensional, a single column) 
-and DataFrame (2-dimensional).
+<p>The two primary data structures of pandas are Series (1-dimensional, 
+a single column) and DataFrame (2-dimensional).
 A DataFrame contains one or more Series and a name for each Series.
 
-<p>DataFrame objects can be created by passing a dict mapping string column names 
-to their respective Series. If the Series don't match in length, missing values 
-are filled with special NA/NaN values. 
+<p>DataFrame objects can be created by passing a dict mapping string column 
+names to their respective Series. If the Series don't match in length, 
+missing values are filled with special NA/NaN values. 
 
 <hr><pre>
 import numpy as np
 import pandas as pd
 import matplotlib.pyplot as plt   # for plots
 
-print(pd.__version__)   # 0.23.3 in Debian 10
+print(pd.__version__)
+# 0.23.3 in Debian 10
+# 2.2.3 in Debian 13
 </pre><hr><pre>
 # pd.DataFrame
 #         pd.Series
@@ -88,7 +90,7 @@ population = pd.Series([852469, 1015785, 485199])   # numbers (int)
 # Constructing DataFrame from a dictionary.
 df1 = pd.DataFrame({'City name': city_names, 'Population': population})
 print(df1)
-#        City name  Population     # column names are shown
+#        City name  Population     # column names (keys) are shown
 # 0  San Francisco      852469     # row indexes are default (0,1,...)
 # 1       San Jose     1015785
 # 2     Sacramento      485199

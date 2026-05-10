@@ -13,7 +13,7 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'venv' module provides support for creating lightweight 
+<p>The <em>venv</em> module provides support for creating lightweight 
 virtual environments with their own site directories.
 Each virtual environment has its own Python binary (which matches 
 the version of the binary that was used to create this environment) 
@@ -21,9 +21,10 @@ and can have its own independent set of installed Python packages
 in its site directories.
 
 <hr><pre>
-# Debian 10 apt package - python3-venv
-
+# Debian APT package: python3-venv
+# Usage:
 # python -m venv /path/to/new/virtual/environment
+
 $ python3 -m venv VE1   # creating the virtual environment in the VE1 directory
 
 $ ls VE1
@@ -35,17 +36,18 @@ include-system-site-packages = false
 version = 3.7.3
 </pre><hr><pre>
 # Windows 10
-
+# Usage:
 # python -m venv c:\path\to\new\virtual\environment
+
 c:\&gt; python -m venv c:\VIRTUAL\VE1
 </pre><hr>
 
-<p>This will create the 'VE1' directory if it doesn’t exist, 
+<p>This will create the <em>VE1</em> directory if it doesn’t exist, 
 and also create directories inside it containing a copy of the Python 
 interpreter, the standard library, and various supporting files.
-A common directory location for a virtual environment is '.venv'.
+A common directory location for a virtual environment is <em>.venv</em>.
 
-<p>Since Py3.13 venv creates a .gitignore file for Git by default.
+<p>Since Py3.13 venv creates a <em>.gitignore</em> file for Git by default.
 
 <p>Once you’ve created a virtual environment, you may activate it.
 

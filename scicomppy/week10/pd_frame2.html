@@ -14,6 +14,8 @@
 
 <p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.loc.html
 
+<p>https://pandas.pydata.org/docs/reference/api/pandas.DataFrame.apply.html
+
 <h3>INTRODUCTION</h3>
 
 <hr><pre>
@@ -144,14 +146,16 @@ df1 = pd.DataFrame([[1, 2], [3, 4]], columns=list('AB'))
 
 df2 = pd.DataFrame([[5, 6], [7, 8]], columns=list('AB'))
 
-df3 = df1.append(df2)
+#df3 = df1.append(df2)   # deprecated
+df3 = pd.concat([df1, df2])
 #    A  B
 # 0  1  2     index with duplicates
 # 1  3  4
 # 0  5  6
 # 1  7  8
 
-df4 = df1.append(df2, ignore_index=True)
+#df4 = df1.append(df2, ignore_index=True)   # deprecated
+df4 = pd.concat([df1, df2], ignore_index=True)
 #    A  B
 # 0  1  2
 # 1  3  4
@@ -187,6 +191,34 @@ for row in input_rows:
 
 #df = pd.DataFrame(rows_list) # no names for columns
 df = pd.DataFrame(rows_list, columns=cols_names) 
+</pre><hr>
+
+<h3>APPLY</h3>
+
+<hr><pre>
+df1 = pd.DataFrame([[4, 9]] * 3, columns=['A', 'B'])
+#    A  B
+# 0  4  9
+# 1  4  9
+# 2  4  9
+
+df1.apply(np.sqrt)
+#np.sqrt(df1) is faster
+#      A    B
+# 0  2.0  3.0
+# 1  2.0  3.0
+# 2  2.0  3.0
+
+df1.apply(np.sum, axis=0)
+# A    12
+# B    27
+# dtype: int64
+
+df1.apply(np.sum, axis=1)
+# 0    13
+# 1    13
+# 2    13
+# dtype: int64
 </pre><hr>
 
 </body>
