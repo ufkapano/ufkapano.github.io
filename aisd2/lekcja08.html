@@ -143,6 +143,19 @@ Algorithm Dijkstra(G,s,weight):
 # ponownie do Q. Wtedy przy usuwaniu wierzchołków z kolejki trzeba sprawdzać,
 # czy dany wierzchołek nie był już przetwarzany wcześniej.
 # Sumarycznie do Q może zostać wstawionych co najwyżej n+m elementów.
+</pre><hr><pre>
+# Algorytm iteracyjny wypisywania najkrótszej ścieżki.
+Algorithm PrintShortestPath(G,s,t):
+    set Path to an empty list
+    if Distance[t] equals infinity then
+        return Path
+    Path.append(t)
+    set current to t
+    while Parent[current] is not None do
+        set current to Parent[current]
+        Path.append(current)
+    reverse Path
+    return Path
 </pre><hr>
 
 <h3>ALGORYTM BELLMANA-FORDA</h3>

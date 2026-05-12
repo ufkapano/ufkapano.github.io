@@ -29,6 +29,27 @@ gdzie składowane są kody źródłowe programów,
 
 <ul>
 
+<li>Stworzyć funkcje do zapisu i odczytu grafu z pliku JSON
+w formacie zbliżonym do pythonowej biblioteki NetworkX.
+Funkcje powinny korzystać z interfejsu grafów podanego na zajęciach.
+Można skorzystać z wybranej biblioteki C++, np. boost.JSON.
+
+<hr><pre>
+Przykładowy graf prosty skierowany ważony:
+wierzchołki: 'A', 'B', 'C'
+krawędzie: Edge('A', 'B', 1.1), Edge('B', 'C', 2.2)
+postać pliku JSON:
+{
+    "directed": true,
+    "multigraph": false,
+    "nodes": [ {"id": "A"}, {"id": "B"}, {"id": "C"} ],
+    "edges": [
+        {"source": "A", "target": "B", "weight": 1.1},
+        {"source": "B", "target": "C", "weight": 2.2}
+    ]
+}
+</pre><hr>
+
 <li>Algorytm Boruvki - minimalne drzewo rozpinające dla grafu nieskierowanego 
 ważonego spójnego.
 

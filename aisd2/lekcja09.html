@@ -70,7 +70,7 @@ for i from 1 to n do
             set C[i,j] to C[i,j] + A[i,k] * B[k,j]
 </pre><hr><pre>
 Algorithm ExtendedShortestPaths(L,Weight):   # total O(n^3) time
-    let M be a new matrix n &times; n
+    let M[] be a new matrix n &times; n
     for i from 1 to n do
         for j from 1 to n do
             set M[i,j] to infinity
@@ -123,24 +123,56 @@ D[i,k]^{(k-1)} + D[k,j]^{(k-1)}} dla k &gt; 0.
 
 <hr><pre>
 Input: A weight matrix (Weight).
-Output: Distances (Distance).
+Output: Distances (D).
 Algorithm FloydWarshall(Weight):   # total O(n^3) time
     set D^{(0)} to Weight
     for k from 1 to n do
         let D^{(k)} be a new matrix n &times; n
         for i from 1 to n do
             for j from 1 to n do
-                D[i,j]^{(k)} = min{D[i,j]^{(k-1)}, D[i,k]^{(k-1)} + D[k,j]^{(k-1)}}
+                set D[i,j]^{(k)} to min{D[i,j]^{(k-1)}, D[i,k]^{(k-1)} + D[k,j]^{(k-1)}}
     # Check for negative-weight cycles.
     for i from 1 to n do
         if D[i,i]^{(n)} &lt; 0 then
             return error "negative cycle detected"
-    return D^{(n)}   # Distance
+    return D^{(n)}   # distance
 # Algorytm Floyda-Warshalla działa poprawnie, kiedy w macierzach D^{(k)}
 # opuścimy górne indeksy i będziemy używać jednej macierzy D.
 # Wtedy złożoność pamięciowa zmniejsza się z O(n^3) do O(n^2).
-#
 # Jednocześnie z obliczaniem macierzy D można obliczać macierz poprzedników (Parent).
+</pre><hr><pre>
+Input: A weighted directed graph G, a weight matrix (Weight).
+Output: Shortest paths (Parent) and distances (D).
+Algorithm FloydWarshall2(G,Weight):   # total O(n^3) time
+    set D to Weight
+    let Parent[] be a new matrix n &times; n filled with None
+    for each edge (i,j) in E(G) do
+        set Parent[i,j] to i
+    for k from 1 to n do
+        for i from 1 to n do
+            for j from 1 to n do
+                set alt to D[i,k] + D[k,j]
+                if alt &lt; D[i,j] then
+                    set D[i,j] to alt
+                    set Parent[i,j] to Parent[k,j]
+    # Check for negative-weight cycles.
+    for i from 1 to n do
+        if D[i,i] &lt; 0 then
+            return error "negative cycle detected"
+    return D and Parent
+</pre><hr><pre>
+# Algorytm iteracyjny wypisywania najkrótszej ścieżki.
+Algorithm PrintShortestPath(G,s,t):
+    set Path to an empty list
+    if D[s,t] is infinity then
+        return Path
+    Path.append(t)
+    set current to t
+    while Parent[s,current] is not None do
+        set current to Parent[s,current]
+        Path.append(current)
+    reverse Path
+    return Path
 </pre><hr>
 
 <h3>ZADANIE 9.1 (MNOŻENIE MACIERZY)</h3>
