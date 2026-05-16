@@ -15,7 +15,206 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W przygotowaniu.
+<p><strong>Drzewo rozpinające</strong> grafu spójnego G jest to drzewo T, 
+które zawiera wszystkie wierzchołki grafu G [V(T) = V(G)], zaś zbiór 
+krawędzi drzewa jest podzbiorem zbioru krawędzi grafu [E(T) &sub; E(V)].
+Jeżeli G jest grafem ważonym, to wagę drzewa w(T) definiujemy jako
+sumę wag krawędzi drzewa,
+<br>w(T) = sum{w(u,v) : (u,v) &in; E(T)).
+
+<p><strong>Minimalne drzewo rozpinające</strong> 
+(ang. <em>minimum spanning tree</em>, MST) 
+to drzewo rozpinające danego grafu o najmniejszej z możliwych wag, 
+tj. takie, że nie istnieje dla tego grafu inne drzewo rozpinające 
+o mniejszej sumie wag krawędzi.
+W ogólności może istnieć kilka drzew rozpinających o najmniejszej wadze,
+chyba że wszystkie wagi krawędzi grafu G są różne.
+
+<h3>ALGORYTM GENERYCZNY ZACHŁANNY ZNAJDOWANIA MST</h3>
+
+<hr><pre>
+Input: A weighted undirected graph G.
+Output: A minimum spanning tree T.
+Algorithm GenericMST(G,weight):
+    let T be an empty tree (forest)
+    while T is not a MST for G do
+        find a safe edge (u,v) in E(G)
+        add edge (u,v) to T
+    return T
+# Niezmienik pętli while:
+# Na początku każdej iteracji T jest podgrafem pewnego MST.
+#
+# Przekrojem (S,V-S) grafu nieskierowanego G = (V,E) nazywamy podział
+# V(G) na dwa zbiory S i V-S.
+# Krawędź (u,v) z E(G) krzyżuje się z przekrojem (S,V-S), jeśli jeden
+# z jej końców należy do S, a drugi do V-S.
+# Cormen pokazuje, że krawędziami bezpiecznymi są krawędzie lekkie
+# (o najmniejszej wadze) krzyżujące się z pewnym przekrojem grafu G.
+</pre><hr>
+
+<p>W algorytmie generycznym na początku mamy las składający się z n 
+izolowanych wierzchołków, każdy wierzchołek jest składową spójną.
+W każdej iteracji znajdowana jest kolejna krawędź z n-1 krawędzi MST.
+Kiedy las zawiera jedno drzewo, algorytm kończy działanie.
+Algorytmy Kruskala, Prima i Boruvki stosują określone reguły znajdowania
+krawędzi bezpiecznych.
+
+<h3>ALGORYTM KRUSKALA</h3>
+
+<p>W algorytmie Kruskala zawsze wybierana jest krawędź o najmniejszej wadze
+łącząca dwie różne składowe spójne.
+Algorytm korzysta ze struktury zbiorów rozłącznych (<em>union-find</em>).
+Czas działania algorytmu Kruskala zależy od sposobu implementacji
+struktury zbiorów rozłącznych.
+Wg Cormena najszybsza znana implementacja wykonuje łączenie według rangi
+i z kompresją ścieżek. 
+<br>Sortowanie krawędzi zajmuje czas O(m log m).
+Do sortowania można wykorzystać kolejkę priorytetową (kolejka minimum), 
+gdzie priorytetami są wagi krawędzi.
+<br>Dla grafu prostego spójnego mamy n-1 &le; m &lt; n^2.
+<br>Czas działania algorytmu Kruskala wynosi O(m log n) dla grafu
+w reprezentacji list sąsiedztwa.
+
+<hr><pre>
+Input: An weighted undirected graph G.
+Output: A minimum spanning tree T.
+Algorithm KruskalMST(G,weight):
+    let T be an empty tree (forest)
+    for each vertex u in V(G) do
+        uf.create(u)   # uf is a disjoint-set data structure
+    for each edge (u,v) in E(G) ordered by weight(u,v), increasing do
+        if uf.find(u) != uf.find(v) then   # different components
+           add edge (u,v) to T
+           uf.union(u,v)   # connect components
+    return T
+</pre><hr>
+
+<h3>ALGORYTM PRIMA</h3>
+
+<p>W algorytmie Prima T jest cały czas pojedynczym drzewem.
+Krawędź bezpieczna dodawana do T jest krawędzią o najmniejszej wadze,
+która łączy T z wierzchołkiem spoza T.
+Drzewo T jest reprezentowane przez tablicę poprzedników Parent[].
+
+<hr><pre>
+Input: An weighted undirected graph G, a root vertex r of G.
+Output: A minimum spanning tree T (Parent).
+Algorithm PrimMST(G,r,weight):
+    let Distance[] be an empty table for distances from T
+    let Parent[] be an empty table for links
+    let Q be an empty set for vertices   # possible min priority queue
+    for each vertex u in V(G) do   # O(n) time
+        set Distance[u] to infinity
+        set Parent[u] to None
+        insert u into Q
+    set Distance[r] to 0
+    while Q is not empty do
+        set u to the vertex in Q with minimum Distance[u]
+        # u jest końcem krawędzi lekkiej (u,Parent[u]) krzyżującej się
+        # z przekrojem (V-Q,Q), z wyjątkiem pierwszej iteracji
+        remove u from Q
+        # aktualizacja atrybutów dla wierzchołków z Q
+        for each edge (u,v) in E(G) do
+            if v &in; Q and weight(u,v) &lt; Distance[v] then
+                set Parent[v] to u
+                set Distance[v] to weight(u,v)
+    return Parent
+# Niezmienniki pętli while (spełnione przed każdą iteracją):
+# (1) W MST umieszczone są krawędzie z {(v,Parent[v]) : v z V-{r}-Q}.
+# (2) W MST umieszczone są wierzchołki z V(G)-Q.
+# (3) Dla każdego v z Q, jeśli Parent[v] != None, to Distance[v] &lt; infinity
+# i Distance[v] jest wagą krawędzi lekkiej (v,Parent[v]) łączącej v
+# z jednym z wierzchołków już umieszczonych w MST.
+#
+# Pierwszym przetwarzanym wierzchołkiem w pętli while będzie korzeń r.
+# Szybkość działania algorytmu Prima zależy od implementacji Q.
+# Dla implementaci grafu z listami sąsiedztwa i kolejką prorytetową
+# w postaci kopca binarnego dostajemy czas O(m log n).
+# Dla implementacji grafu z macierzą sąsiedztwa i wyszukiwaniem liniowym
+# wierzchołka u w Q dostaniemy czas O(n^2).
+</pre><hr>
+
+<h3>ALGORYTM BORUVKI</h3>
+
+<p>W algorytmie Boruvki wykonuje się O(log n) operacji redukcji.
+Algorytm korzysta ze struktury zbiorów rozłącznych.
+<br>Algorytm Boruvki działa poprawnie, jeżeli krawędzie mają różne wagi.
+Wtedy MST jest wyznaczone jednoznacznie, nie będzie cykli.
+Jeżeli wagi krawędzi nie są różne, wtedy trzeba dodać osobną regułę 
+porównywania krawędzi (tie-breaking rule). 
+Reguła może bazować na pewnym porządku w zbiorze wierzchołków lub krawędzi.
+
+<p>Czas działania algorytmu Boruvki wynosi O(m log n) dla grafu
+w reprezentacji list sąsiedztwa.
+<br>Pętla while będzie wykonana O(log n) razy, wewnątrz pętli mamy operacje
+zajmujące czas O(m).
+
+<hr><pre>
+Input: An weighted undirected graph G.
+Output: A minimum spanning tree T.
+Algorithm BoruvkaMST(G,weight):
+    let T be an empty tree (forest)
+    for each vertex u in V(G) do
+        uf.create(u)   # uf is a disjoint-set data structure
+    set forest to V(G)   # initial connected components (reprezentanci)
+    set new_len to |forest|   # będziemy redukować liczbę komponentów
+    set old_len to new_len + 1
+
+    while old_len &gt; new_len do
+        set old_len to new_len
+        let MinEdge be a table for 3-tuples (weight(u,v),u,v)
+        for each vertex u in forest do
+            set MinEdge[u] to (infinity,None,None)
+
+        # Finding the cheapest edges.
+        for each edge (s,t) in E(G) do   # O(m) time, s &lt; t is assumed
+            set s2 to uf.find(s)
+            set t2 to uf.find(t)
+            if s2 != t2 then   # different components
+                if (weight(s,t),s,t) &lt; MinEdge[s2] then
+                    set MinEdge[s2] to (weight(s,t),s,t)
+                if (weight(s,t),s,t) &lt; MinEdge[t2] then
+                    set MinEdge[t2] to (weight(s,t),s,t)
+
+        # Connecting components, total time is O(n).
+        for each u in forest:
+            set (ew,s,t) to MinEdge[u]
+            if ew is infinity:   # a disconnected graph
+                continue
+            set s2 to uf.find(s)
+            set t2 to uf.find(t)
+            if s2 != t2 then   # different components
+                uf.union(s,t)   # lub uf.union(s2,t2)
+                add (s,t) to T   # dodajemy oryginalną krawędź
+
+        # Remove duplicates, total time is O(n).
+        set forest to {uf.find(v) : v in forest}
+        set new_len to |forest|
+        if new_len is 1 then   # a connected graph
+            break
+# W implementacji grafu nieskierowanego krawędź nieskierowana (u,v)
+# jest przechowywana jako dwie krawędzie skierowane (u,v) oraz (v,u).
+# Pseudokod bazuje na założeniu, że iteracja po krawędziach będzie
+# dawać pary (u,v), gdzie u &lt; v, czyli wierzchołki możemy porównywać.
+# Dodatkowo porównywanie krawędzi będzie porównywaniem leksykograficznym
+# trójek (weight(u,v),u,v), a więc przy równych wagach krawędzi
+# będą porównywane wierzchołki.
+</pre><hr>
+
+<h3>ZADANIE 11.1 (KRUSKAL)</h3>
+
+<p>Zaimplementować algorytm Kruskala obliczający MST.
+Wygenerować przykładowy graf nieskierowany ważony z n=10 i obliczyć MST.
+
+<h3>ZADANIE 11.2 (PRIM)</h3>
+
+<p>Zaimplementować algorytm Prima obliczający MST.
+Wygenerować przykładowy graf nieskierowany ważony z n=10 i obliczyć MST.
+
+<h3>ZADANIE 11.3 (BORUVKA)</h3>
+
+<p>Zaimplementować algorytm Boruvki obliczającty MST.
+Wygenerować przykładowy graf nieskierowany ważony z n=10 i obliczyć MST.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>
