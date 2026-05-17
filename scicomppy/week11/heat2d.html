@@ -25,12 +25,13 @@ t = k*dt, k = 0..Nt (Nt+1 points), Nt*dt = T,
 u_t = [ u(i,j,k+1) - u(i,j,k) ] / dt   # forward difference O(dt)
 u_xx = [ u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k) ] / (dx*dx)   # central difference O(dx^2)
 u_yy = [ u(i,j-1,k) -2*u(i,j,k) + u(i,j+1,k) ] / (dy*dy)   # central difference O(dy^2)
+#u_xy = [ u(i+1,j+1,k) - u(i+1,j-1,k) - u(i-1,j+1,k) + u(i-1,j-1,k) ] / (4*dx*dy)
 
 r = D*dt / (dx*dx), formula is stable if r &le; 0.25 (?)
 
 u(i,j,k+1) - u(i,j,k) = r * [
-u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k)
-+ u(i,j-1,k) -2*u(i,j,k) + u(i,j+1,k) ]
+    u(i-1,j,k) -2*u(i,j,k) + u(i+1,j,k)
+    + u(i,j-1,k) -2*u(i,j,k) + u(i,j+1,k) ]
 </pre><hr><pre>
 Final formula (inside mesh)
 u(i,j,k+1) = r*u(i-1,j,k) + r*u(i+1,j,k) + r*u(i,j-1,k) + r*u(i,j+1,k) + (1-4*r)*u(i,j,k)

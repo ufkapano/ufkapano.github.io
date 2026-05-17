@@ -8,7 +8,7 @@
 
 <h1>SciPy - ODE</h1>
 
-<p>https://docs.scipy.org/doc/scipy/reference/tutorial/integrate.html
+<p>https://docs.scipy.org/doc/scipy/tutorial/integrate.html
 
 <p>https://en.wikipedia.org/wiki/Harmonic_oscillator
 
@@ -16,33 +16,35 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'scipy.integrate' sub-package provides several integration 
+<p>The <em>scipy.integrate</em> sub-package provides several integration 
 techniques including an ordinary differential equation integrator.
 
 <hr><pre>
 import math
 import numpy as np
-import scipy.integrate as integrate   # help(integrate)
+from scipy.integrate import solve_ivp
 import matplotlib.pyplot as plt
 
 # Ordinary differential equations.
-
-dy_vector/dt = f(t, y_vector)
-
-Example: dy/dt = 3(1+t)-y, y(1) = 4, t in [1, 2].
+# dy/dt = f(t, y), y is a vector
+# Example:
+# dy/dt = 3(1+t)-y, y(1) = 4, t in [1, 2].
 
 y_exact = 3*t + np.exp(1-t)
 
 t_a, t_b, y_a = 1.0, 2.0, 4.0
-N = 20   # the number of intervals
-t = np.linspace(t_a, t_b, N+1)   # dtype=float, N+1 points
 y0 = [y_a]   # initial condition
 t_span = [t_a, t_b]
+
+# user defined time points
+Nt = 20   # the number of intervals
+t = np.linspace(t_a, t_b, Nt+1)   # dtype=float, Nt+1 points
 
 def func(t, y):   # y - a vector with one item
     return [3.0 * (1.0 + t) - y[0]]
 
-sol1 = integrate.solve_ivp(func, t_span, y0, t_eval=t)
+sol1 = solve_ivp(func, t_span, y0, t_eval=t)
+# sol1 = solve_ivp(func, t_span, y0)   # default time points
 
 plt.plot(sol1.t, sol1.y[0], label="solver")
 plt.plot(t, y_exact, label="exact")
@@ -71,18 +73,20 @@ v' = -b v - w2 six(x).
 #
 #         |v'|   |-b v - w2 sin(x)|
 # dy/dt = |x'| = | v              |
-
+</pre><hr><pre>
 t_a, t_b, x_a, v_a = 0.0, 10*np.pi, 0.5*np.pi, 0.0
-N = 100   # the number of intervals
-t = np.linspace(t_a, t_b, N+1)   # dtype=float, N+1 points
-y0 = [v_a, x_a]
+y0 = [v_a, x_a]   # initial conditions
 t_span = [t_a, t_b]
 w2, b = 1.0, 0.2
+
+# user defined time points
+Nt = 100   # the number of intervals
+t = np.linspace(t_a, t_b, Nt+1)   # dtype=float, Nt+1 points
 
 def func(t, y):   # y - a vector with two items
     return [-b*y[0]-w2*np.sin(y[1]), y[0]]
 
-sol1 = integrate.solve_ivp(func, t_span, y0, t_eval=t)
+sol1 = solve_ivp(func, t_span, y0, t_eval=t)
 
 plt.plot(sol1.t, sol1.y[0], label="v(t)")
 plt.plot(sol1.t, sol1.y[1], label="x(t)")

@@ -14,8 +14,8 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The wave equation is an important second-order linear partial 
-differential equation for the description of waves,
+<p>The <strong>wave equation</strong> is an important second-order linear 
+partial differential equation for the description of waves,
 such as mechanical waves or light waves. 
 
 <p>The wave equation is the simplest example of a hyperbolic 
@@ -36,7 +36,7 @@ u_xx is double spatial derivative.
 Homogeneous Dirichlet conditions in 1D.
 u(x,0) = f(x), x in [0,L], (initial string shape)
 u_t(x,0) = 0, x in [0,L], (string starts from rest)
-u(0,t) = 0, u(L,t) = 0, t in [0,T]. (fixed ends, no displacement)
+u(0,t) = 0, u(L,t) = 0, t in [0,T] (fixed ends, no displacement).
 
 Exact solution u(x,t) = f_R(x-ct) + f_L(x+ct),
 For t=0: f_R(x) + f_L(x) = f(x), -cf_R' + cf_L' = 0.
@@ -169,18 +169,18 @@ for i in range(Nx+1):   # initial condition j=0
     u(i,0) = f(i*dx)   # t=0
 
 # It can be done in one loop
-for i in range(Nx+1):   # for j=1
+for i in range(Nx+1):   # for j=1 (u[:,1])
     ip1 = i+1 if i &lt; Nx else i-1
     im1 = i-1 if i &gt; 0  else i+1
     u(i,1) = u(i,0) + (r/2)*[u(im1,0) -2*u(i,0) + u(ip1,0)]
 
 # It can be done in one loop
-for i in range(Nx+1):   # for j &gt; 0
-    ip1 = i+1 if i &lt; Nx else i-1
-    im1 = i-1 if i &gt; 0  else i+1
-    u(i,j+1) = -u(i,j-1) +2*u(i,j) + r*[u(im1,j) -2*u(i,j) + u(ip1,j)]
+for j in range(1,Nt):   # from j=1 (u[:,2]) to j=Nt-1 (u[:,Nt])
+    for i in range(Nx+1):   # for j &gt; 0
+        ip1 = i+1 if i &lt; Nx else i-1
+        im1 = i-1 if i &gt; 0  else i+1
+        u(i,j+1) = -u(i,j-1) +2*u(i,j) + r*[u(im1,j) -2*u(i,j) + u(ip1,j)]
 </pre><hr>
-
 
 </body>
 </html>

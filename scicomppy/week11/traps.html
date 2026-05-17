@@ -12,6 +12,8 @@
 Brian P. Flannery, Numerical Recipes in C: The Art of Scientific Computing, 
 Second Edition, Cambridge, University Press, 1992.
 
+<p>https://en.wikipedia.org/wiki/Floating-point_arithmetic
+
 <h3>INTRODUCTION</h3>
 
 <p>Numerical computing is both the art and science.
@@ -20,23 +22,24 @@ Second Edition, Cambridge, University Press, 1992.
 in some approximation that can be packed into a fixed number of bits 
 (binary digits) or bytes (groups of 8 bits).
 
-<p>A number in integer representation is exact.
+<p>A number in <strong>integer representation</strong> is exact.
 Arithmetic between numbers in integer representation is also exact
 (inside the range).
 
-<p>In floating-point representation, a number is represented internally 
-by a sign bit 's' (interpreted as plus or minus), 
-an exact integer exponent 'e', 
-and an exact positive integer mantissa 'M'.
+<p>In <strong>floating-point representation</strong>, a number is represented 
+internally by a sign bit <em>s</em> (interpreted as plus or minus), 
+an exact (signed) integer exponent <em>e</em>, 
+and an exact positive integer mantissa <em>M</em> in a given base <em>b</em>
+[<em>M &times; b^e</em>].
 Arithmetic among numbers in floating-point representation is not exact.
 
 <p>The smallest (in magnitude) floating-point number which, when added 
 to the floating-point number 1.0, produces a floating-point result different 
-from 1.0 is termed the 'machine accuracy' epsilon_m.
+from 1.0 is termed the <strong>machine accuracy</strong> &epsilon;_m.
 Pretty much any arithmetic operation among floating numbers 
 should be thought of as introducing an additional fractional error 
-of at least epsilon_m. 
-This type of error is called 'roundoff error'.
+of at least &epsilon;_m. 
+This type of error is called <strong>roundoff error</strong>.
 
 <hr><pre>
 for i in range(20):
@@ -65,12 +68,12 @@ Results on Dell Lattitude with Debian 10:
 19 1.0
 </pre><hr>
 
-<p>Many numerical algorithms compute 'discrete' approximations to some 
-desired 'continuous' quantity. For example, a function may be evaluated 
+<p>Many numerical algorithms compute <em>discrete</em> approximations to some 
+desired <em>continuous</em> quantity. For example, a function may be evaluated 
 by summing a finite number of leading terms in its infinite series, 
 rather than all infinity terms.
 The discrepancy between the true answer and the answer obtained in a practical
-calculation is called the 'truncation error'.
+calculation is called the <strong>truncation error</strong>.
 
 <hr><pre>
 epx(x) = \sum_{n=0} x^n / n! = 1 + x + x^2 / 2 + x^3 / 6 + ...
@@ -81,8 +84,8 @@ cos(x) = \sum_{n=0} (-1)^n x^{2n} / (2n)! = 1 - x^2 / 2 + x^4 / 24 - ...
 </pre><hr>
 
 <p>Most of the time, truncation error and roundoff error do not strongly 
-interact with one another. Sometimes, however an 'unstable' method
-can magnify any roundoff error and the result is useless.
+interact with one another. Sometimes, however an <strong>unstable</strong> 
+method can magnify any roundoff error and the result is useless.
 
 <h3>QUADRATIC EQUATION</h3>
 
