@@ -57,7 +57,7 @@ t = j*dt, j = 0..Nt (Nt+1 points), Nt*dt = T,
 u_t = [ u(i,j+1) - u(i,j) ] / dt   # forward difference O(dt)
 u_xx = [ u(i-1,j) -2*u(i,j) + u(i+1,j) ] / (dx*dx)   # central difference O(dx^2)
 
-r = D*dt / (dx*dx), formula is stable if r &lt;= 0.5
+r = D*dt / (dx*dx), formula is stable if r &le; 0.5
 
 u(i,j+1) - u(i,j) = r * [ u(i-1,j) -2*u(i,j) + u(i+1,j) ]
 

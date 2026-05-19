@@ -30,6 +30,16 @@ o mniejszej sumie wag krawędzi.
 W ogólności może istnieć kilka drzew rozpinających o najmniejszej wadze,
 chyba że wszystkie wagi krawędzi grafu G są różne.
 
+<p><strong>Przekrojem</strong> (S,V-S) grafu nieskierowanego G = (V,E) 
+nazywamy podział V(G) na dwa zbiory S i V-S.
+<br>Krawędź (u,v) z E(G) <strong>krzyżuje się</strong> z przekrojem (S,V-S), 
+jeśli jeden z jej końców należy do S, a drugi do V-S.
+<br>Przekrój <strong>uwzględnia</strong> zbiór krawędzi A, jeżeli żadna
+z krawędzi A nie krzyżuje się z tym przekrojem.
+<br>Krawędź krzyżująca się z przekrojem jest <strong>krawędzią lekką</strong>,
+jeżeli jej waga jest najmniejsza spośród wszystkich wag krawędzi 
+krzyżujących się z przekrojem (może być kilka krawędzi lekkich).
+
 <h3>ALGORYTM GENERYCZNY ZACHŁANNY ZNAJDOWANIA MST</h3>
 
 <hr><pre>
@@ -44,10 +54,6 @@ Algorithm GenericMST(G,weight):
 # Niezmienik pętli while:
 # Na początku każdej iteracji T jest podgrafem pewnego MST.
 #
-# Przekrojem (S,V-S) grafu nieskierowanego G = (V,E) nazywamy podział
-# V(G) na dwa zbiory S i V-S.
-# Krawędź (u,v) z E(G) krzyżuje się z przekrojem (S,V-S), jeśli jeden
-# z jej końców należy do S, a drugi do V-S.
 # Cormen pokazuje, że krawędziami bezpiecznymi są krawędzie lekkie
 # (o najmniejszej wadze) krzyżujące się z pewnym przekrojem grafu G.
 </pre><hr>
@@ -178,8 +184,8 @@ Algorithm BoruvkaMST(G,weight):
 
         # Connecting components, total time is O(n).
         for each u in forest:
-            set (ew,s,t) to MinEdge[u]
-            if ew is infinity:   # a disconnected graph
+            set (edge_weight,s,t) to MinEdge[u]
+            if edge_weight is infinity:   # a disconnected graph
                 continue
             set s2 to uf.find(s)
             set t2 to uf.find(t)
@@ -188,7 +194,7 @@ Algorithm BoruvkaMST(G,weight):
                 add (s,t) to T   # dodajemy oryginalną krawędź
 
         # Remove duplicates, total time is O(n).
-        set forest to {uf.find(v) : v in forest}
+        set forest to {uf.find(v) : v in forest}   # zbiór reprezentantów
         set new_len to |forest|
         if new_len is 1 then   # a connected graph
             break
