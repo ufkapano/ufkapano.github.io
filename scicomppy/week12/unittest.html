@@ -12,7 +12,7 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'unittest' unit testing framework supports test automation, 
+<p>The <em>unittest</em> unit testing framework supports test automation, 
 sharing of setup and shutdown code for tests, aggregation of tests 
 into collections, and independence of the tests from the reporting framework.
 To achieve this, unittest supports some important concepts 
@@ -20,25 +20,25 @@ in an object-oriented way:
 
 <ul>
 
-<li>A 'test fixture' represents the preparation needed to perform 
+<li>A <strong>test fixture</strong> represents the preparation needed to perform 
 one or more tests, and any associated cleanup actions.
 
-<li>A 'test case' is the individual unit of testing.
+<li>A <strong>test case</strong> is the individual unit of testing.
 
-<li>A 'test suite' is a collection of test cases, test suites, or both. 
-It is used to aggregate tests that should be executed together.
+<li>A <strong>test suite</strong> is a collection of test cases, test suites, 
+or both. It is used to aggregate tests that should be executed together.
 
-<li>A 'test runner' is a component which orchestrates the execution of tests 
-and provides the outcome to the user.
+<li>A <strong>test runner</strong> is a component which orchestrates 
+the execution of tests and provides the outcome to the user.
 
 </ul>
 
-<p>Names for test files (spam.py is a tested module): 
-test_spam.py or spam_test.py.
+<p>Names for test files (<em>spam.py</em> is a tested module): 
+<em>test_spam.py</em> or <em>spam_test.py</em>.
 
 <h3>BASIC EXAMPLE</h3>
 
-<p>A test case (test suite?) is created by subclassing unittest.TestCase
+<p>A test case (test suite?) is created by subclassing <em>unittest.TestCase</em>
 [a class is a container for test cases].
 
 <hr><pre>

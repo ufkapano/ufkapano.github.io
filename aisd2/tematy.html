@@ -34,6 +34,13 @@ gdzie składowane są kody źródłowe programów,
 w formacie zbliżonym do pythonowej biblioteki NetworkX.
 Funkcje powinny korzystać z interfejsu grafów podanego na zajęciach.
 Można skorzystać z wybranej biblioteki C++, np. boost.JSON.
+<br>Plan minimum to obsługa grafów z wierzchołkami typu <em>int</em>.
+<br>Plan maksimum to dodatkowo obsługa grafów z wierzchołkami
+typu <em>std::string</em>, bo JSON nie rozróżnia typów
+<em>char</em> i <em>std::string</em>.
+Jeżeli okaże się, że wszystkie wierzchołki są stringami jednoznakowymi,
+to można próbować użyć typu <em>char</em>.
+<br>[https://en.wikipedia.org/wiki/JSON]
 
 <hr><pre>
 Przykładowy graf prosty skierowany ważony:
@@ -60,12 +67,13 @@ ważonego spójnego.
 <li>Algorytm Prima - minimalne drzewo rozpinające dla grafu nieskierowanego 
 ważonego spójnego.
 
-<li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim
-[https://en.wikipedia.org/wiki/Maze_generation_algorithm].
+<li>Generowanie labiryntu, np. Wilson, Aldous-Broder, Kruskal, Prim.
 Labirynt rozumiemy jako drzewo rozpinające dla pewnej sieci 
-kwadratowej n &times; m [https://en.wikipedia.org/wiki/Lattice_graph].
+kwadratowej n &times; m.
 Labirynt należy na końcu wyświetlić na ekranie w formie przyjaznej dla
 użytkownika lub zapisać do pliku, najlepiej graficznego.
+<br>[https://en.wikipedia.org/wiki/Maze_generation_algorithm]
+<br>[https://en.wikipedia.org/wiki/Lattice_graph]
 
 <li>Podaj efektywny algorytm działający w czasie O(n+m), 
 który znajduje liczbę wszystkich ścieżek w dagu [Cormen]. 
@@ -113,11 +121,11 @@ w grafie ważonym.
 
 <ul>
 
-<li>Wyznaczanie otoczki wypukłej, np. Graham, Jarvis, quickhull
-[https://en.wikipedia.org/wiki/Convex_hull].
+<li>Wyznaczanie otoczki wypukłej, np. Graham, Jarvis, quickhull'
+<br>[https://en.wikipedia.org/wiki/Convex_hull]
 
-<li>Implementacja drzewa czwórkowego
-[https://en.wikipedia.org/wiki/Quadtree].
+<li>Implementacja drzewa czwórkowego.
+<br>[https://en.wikipedia.org/wiki/Quadtree]
 
 </ul>
 

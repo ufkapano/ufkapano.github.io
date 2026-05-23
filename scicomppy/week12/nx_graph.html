@@ -14,6 +14,9 @@
 
 <h3>GRAPH</h3>
 
+<p>An <strong>undirected graph</strong> is a graph that has 
+<strong>undirected edges</strong> (unordered pairs of vertices).
+
 <hr><pre>
 G = nx.Graph()   # undirected graph
 G = nx.Graph(edge_list)   # a list of 2-tuples
@@ -156,31 +159,6 @@ G.remove_edge(node1, node2)
 G.remove_edges_from(iterable)
 
 G.clear()   # removing all nodes and edges
-</pre><hr>
-
-<h3>EXERCISES</h3>
-
-<p>Create an undirected graph G. Color nodes from G using a greedy algorithm.
-<br>https://networkx.org/documentation/stable/reference/algorithms/coloring.html
-
-<hr><pre>
-def trivial_node_coloring(graph):
-    """Trivial node coloring."""
-    counter = 0
-    for node in graph.nodes:
-        graph.nodes[node]['color'] = counter
-        counter += 1
-</pre><hr>
-
-<p>Create an undirected graph G. Color edges from G using a greedy algorithm.
-
-<hr><pre>
-def trivial_edge_coloring(graph):
-    """Trivial edge coloring."""
-    counter = 0
-    for edge in graph.edges:
-        graph.edges[edge]['color'] = counter
-        counter += 1
 </pre><hr>
 
 </body>

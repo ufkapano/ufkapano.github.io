@@ -60,11 +60,12 @@ deg_max = max(deg for (node, deg) in G.degree())   # 6
 deg_max_list = [node for (node, deg) in G.degree() if deg == deg_max]
 # ['G5', 'M13', 'Y16', 'Z4', 'N7']
 
-path = nx.shortest_path(G, "Y24", "C19")
+path = nx.shortest_path(G, "Y24", "C19")   # without weights
+#path = nx.shortest_path(G, "Y24", "C19", weight="weight")   # using weights
 # ['Y24', 'Y23', 'Y22', 'Y21', 'Y20', 'Y19', 'Y18', 'C9', 'C10',
 # 'C11', 'C12', 'C13', 'C14', 'C15', 'C16', 'C17', 'C18', 'C19']
 
-path_time = sum(G[path[n]][path[n+1]]['weight'] for n in range(len(path)-1)) # 40 min
+path_time = sum(G[path[n]][path[n+1]]['weight'] for n in range(len(path)-1))   # 40 min
 </pre><hr>
 
 </body>

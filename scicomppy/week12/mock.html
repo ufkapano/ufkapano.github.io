@@ -15,17 +15,17 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'unittest.mock' is a library for testing in Python (Py3.3+). 
+<p><em>unittest.mock</em> is a library for testing in Python (Py3.3+). 
 It allows you to replace parts of your system under test with mock objects 
 and make assertions about how they have been used.
 
-<p>'Mock' is a flexible mock object intended to replace the use of stubs 
+<p><em>Mock</em> is a flexible mock object intended to replace the use of stubs 
 and test doubles throughout your code.
 
-<p>'MagicMock' is a subclass of 'Mock' with all the magic methods 
+<p><em>MagicMock</em> is a subclass of <em>Mock</em> with all the magic methods 
 pre-created and ready to use.
 
-<p>Mock can create arbitrary attributes on the fly.
+<p><em>Mock</em> can create arbitrary attributes on the fly.
 
 <hr><pre>
 from unittest.mock import Mock
@@ -39,6 +39,18 @@ print(mock.do_something())
 # &lt;Mock id='140138960515368'&gt;
 # &lt;Mock name='mock.some_attribute' id='140138960515592'&gt;
 # &lt;Mock name='mock.do_something()' id='140138958324288'&gt;
+</pre><hr><pre>
+from unittest.mock import MagicMock
+
+class ProductionClass: pass
+
+thing = ProductionClass()
+thing.method = MagicMock(return_value=3)
+thing.method(3, 4, 5, key='value')   # returns 3
+
+thing.method.assert_called_with(10, key='x')
+thing.method(10, key='y')
+# AssertionError: expected call not found.
 </pre><hr>
 
 </body>

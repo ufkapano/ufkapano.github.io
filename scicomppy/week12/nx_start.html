@@ -15,14 +15,19 @@
 
 <p>https://networkx.org/documentation/stable/reference/drawing.html
 
+<p>https://networkx.org/documentation/stable/reference/algorithms/traversal.html
+<br>Traversal (DFS, BFS, Beam search).
+
 <h3>INSTALLING NETWORKX</h3>
 
 <hr><pre>
 PIP (in a virtual environment)
-pip install networkx
+pip install networkx[default]   # suggested by documentation
+pip install networkx   # no dependencies (limited functionality)
+pip install networkx[default,extra]   # with pygraphviz, pydot, lxml
 
 APT (for the entire computer)
-Debian packages: python-networkx, python3-networkx, and dependencies.
+Debian packages: python-networkx (Py2.7), python3-networkx, and dependencies.
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
@@ -30,10 +35,29 @@ Debian packages: python-networkx, python3-networkx, and dependencies.
 <p>NetworkX is a Python package for the creation, manipulation, 
 and study of the structure, dynamics, and functions of complex networks.
 
+<p>A <strong>graph</strong> is a pair G = (V,E), 
+where V is a set of vertices and E is a set of edges.
+<br>An <strong>undirected graph</strong> is a graph that has 
+<strong>undirected edges</strong> (unordered pairs of vertices).
+<br>A <strong>directed graph</strong> (or <strong>digraph</strong>)
+is a graph that has <strong>directed edges</strong> 
+(ordered pairs of vertices).
+
+<p>There are four classes in NetworkX for different graphs:
+<br>(1) <em>Graph</em> - simple undirected graphs (no self loops and parallel edges),
+<br>(2) <em>DiGraph</em> - simple directed graphs (no self loops and parallel edges),
+<br>(3) <em>MultiGraph</em> - undirected multigraphs,
+<br>(4) <em>MultiDiGraph</em> - directed multigraphs.
+
+<p><strong>Warning!</strong> There are no exceptions when self loops
+and parallel edges are inserted to <em>Graph</em> and <em>DiGraph</em> instances.
+
 <hr><pre>
 import networkx as nx
 
-print(nx.__version__)   # 2.2 in Debian 10
+print(nx.__version__)
+# 2.2 in Debian 10
+# 3.2.1 in Debian 13
 
 G = nx.Graph()   # an empty undirected graph
 
@@ -42,11 +66,11 @@ G = nx.Graph()   # an empty undirected graph
 # | /
 # 3---4
 
-vlist = [1, 2, 3, 4]
-elist = [(1, 2), (1, 3), (2, 3), (3, 4)]
-for v in vlist:
-    G.add_node(node)
-for (u, v) in elist:
+vertex_list = [1, 2, 3, 4]
+edge_list = [(1, 2), (1, 3), (2, 3), (3, 4)]
+for v in vertex_list:
+    G.add_node(v)
+for (u, v) in edge_list:
     G.add_edge(u, v)
 
 G.number_of_nodes()   # 4
@@ -111,14 +135,14 @@ plt.show()
 <hr><pre>
 # path graph  1--2--3--4
 G = nx.Graph()
-vlist = [(1, 0, 0), (2, 1, 1), (3, 2, 2), (4, 3, 3)]
-elist = [(1, 2, 1.5), (2, 3, 2.5), (3, 4, 3.5)]
-for (v, x, y) in vlist:
+vertex_list = [(1, 0, 0), (2, 1, 1), (3, 2, 2), (4, 3, 3)]
+edge_list = [(1, 2, 1.5), (2, 3, 2.5), (3, 4, 3.5)]
+for (v, x, y) in vertex_list:
     G.add_node(v, pos=(x,y))
-for (u, v, w) in elist:
+for (u, v, w) in edge_list:
     G.add_edge(u, v, weight=w)
     #G.add_edge(u, v, weight=w, color=('green' if w &lt; 3 else 'red'))
-#G.add_weighted_edges_from(elist)   # for weights
+#G.add_weighted_edges_from(edge_list)   # for weights
 
 pos = nx.get_node_attributes(G, 'pos')
 #{1: (0, 0), 2: (1, 1), 3: (2, 2), 4: (3, 3)}
@@ -151,9 +175,9 @@ K_3_5 = nx.complete_bipartite_graph(3, 5)
 W_5 = nx.wheel_graph(5)
 barbell = nx.barbell_graph(10, 10)
 lollipop = nx.lollipop_graph(10, 20)
-gnm = nx.gnm_random_graph(n=10, m=20) # n nodes, m edges
-regular = nx.random_regular_graph(d=5, n=10) # random d-regular graph on n nodes
-ergraph = nx.erdos_renyi_graph(n=10, p=0.5) # p - probability for edge creation
+gnm = nx.gnm_random_graph(n=10, m=20)   # n nodes, m edges
+regular = nx.random_regular_graph(d=5, n=10)   # random d-regular graph on n nodes
+ergraph = nx.erdos_renyi_graph(n=10, p=0.5)   # p - probability for edge creation
 
 petersen = nx.petersen_graph()
 tutte = nx.tutte_graph()

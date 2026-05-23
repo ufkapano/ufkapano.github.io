@@ -28,16 +28,18 @@ PIP (in a virtual environment)
 python -m pip install pytest
 
 APT
-Debian packages: python-pytest, python3-pytest
+Debian packages: python-pytest (Py2.7), python3-pytest
+[version 3.10.1 in Debian 10]
+[version 8.3.5 in Debian 13]
 </pre><hr>
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'pytest' (Py3.6+) framework makes it easy to write small tests, yet scales 
-to support complex functional testing for applications and libraries.
+<p>The <em>pytest</em> (Py3.6+) framework makes it easy to write small tests, 
+yet scales to support complex functional testing for applications and libraries.
 
-<p>Names for test files (spam.py is a tested module):
-test_spam.py or spam_test.py.
+<p>Names for test files (<em>spam.py</em> is a tested module):
+<em>test_spam.py</em> or <em>spam_test.py</em>.
 
 <hr><pre>
 # Content of the file test_sample.py
@@ -99,16 +101,16 @@ test_sample.py .                                                         [100%]
 $ python3 -m pytest --doctest-glob="*.rst"   # *.rst files with doctest tests
 </pre><hr>
 
-<p>The 'pytest' report shows:
+<p>The <em>pytest</em> report shows:
 <br>(1) the system state,
 <br>(2) the directory to search under for configuration and tests,
 <br>(3) the number of tests the runner discovered.
 
 <p>The output then indicates the status of each test using a syntax 
-similar to 'unittest':
+similar to <em>unittest</em>:
 <br>(1) a dot (.) means that the test passed,
-<br>(2) an 'F' means that the test has failed,
-<br>(3) an 'E' means that the test raised an unexpected exception.
+<br>(2) an <strong>F</strong> means that the test has failed,
+<br>(3) an <strong>E</strong> means that the test raised an unexpected exception.
 
 <h3>IMPORT PYTEST</h3>
 
@@ -152,7 +154,7 @@ the 'behavior' we want to test.
 <br>(3) <strong>Assert</strong> - checking the results.
 <br>(4) <strong>Cleanup</strong>.
 
-<p>'Fixtures' are for the 'Arrange' step.
+<p><strong>Fixtures</strong> are for the <strong>Arrange</strong> step.
 
 
 <hr><pre>
@@ -222,7 +224,7 @@ def test_values():
 
 <h3>MARKERS</h3>
 
-<p>Test functions can be marked by decorating them with 'pytest.mark'.
+<p>Test functions can be marked by decorating them with <em>pytest.mark</em>.
 It is possible to create custom markers (markers have to be registered).
 
 <hr><pre>
