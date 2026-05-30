@@ -29,7 +29,7 @@ in CSV format.
 <br>There are also two classes to read and write data in dictionary form:
 <em>csv.DictReader</em> and <em>csv.DictWriter</em>.
 
-<p>Each row read from the csv file is returned as a list of strings.
+<p>Each row read from the CSV file is returned as a list of strings.
 
 <hr><pre>
 import csv
@@ -60,7 +60,7 @@ with open(filename, 'r', newline='', encoding='utf-8') as infile:   # Py3
     # default delimiter=','
 
     #reader = csv.reader(infile)
-    #reader = csv.reader(infile, delimiter=':')   # /etc/passwd, /etc/group
+    #reader = csv.reader(infile, delimiter=':')   # /etc/passwd, /etc/group [see 'id' command]
     reader = csv.reader(infile, delimiter=' ')
 
     for row in reader:
@@ -78,6 +78,38 @@ with open(filename, 'r', newline='') as infile:
     reader = csv.DictReader(infile)
     for row in reader:
         print(row)   # row is a dict
+</pre><hr><pre>
+# Example file 'letters1.csv'.
+number,letter
+0,a
+1,b
+2,c
+3,d
+4,e
+5,f
+6,g
+7,h
+8,i
+9,j
+
+# Example code.
+with open('letters1.csv', 'r', newline='') as infile:
+    reader = csv.DictReader(infile)   # fieldnames=None, the first row is used
+    #reader = csv.DictReader(infile,fieldnames=["number","letter"])
+    for row in reader:
+        print(row)   # row is a dict
+
+# Results.
+{'number': '0', 'letter': 'a'}
+{'number': '1', 'letter': 'b'}
+{'number': '2', 'letter': 'c'}
+{'number': '3', 'letter': 'd'}
+{'number': '4', 'letter': 'e'}
+{'number': '5', 'letter': 'f'}
+{'number': '6', 'letter': 'g'}
+{'number': '7', 'letter': 'h'}
+{'number': '8', 'letter': 'i'}
+{'number': '9', 'letter': 'j'}
 </pre><hr><pre>
 # csv.writer(csvfile, dialect='excel', **fmtparams)
 # csvfile : any object with a write() method

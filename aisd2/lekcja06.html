@@ -110,7 +110,7 @@ Algorithm DFSVisit(G,u):
             set Parent[v] to u
             call DFSVisit(G,v)
         else if Color[v] is GREY then
-            return error   # back edge detected (not a dag)
+            return error "back edge detected (not a dag)"
     set Color[u] to BLACK
     call post_action(u)
 </pre><hr>
@@ -133,7 +133,7 @@ Algorithm TopologicalSortKahn(G):
             if v has no other incoming edges then
                 insert v into S
     if G has edges then   # len(L) &lt; |V(G)|
-        return error   # G has at least one cycle (not a dag)
+        return error "G has at least one cycle (not a dag)"
     else
         return L   # a topologically sorted order
 # Depending on the order that vertices u are removed from the set S,

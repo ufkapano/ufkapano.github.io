@@ -27,14 +27,14 @@ dwoma ustalonymi miastami.
 
 <p>W <strong>problemie najkrótszych ścieżek</strong> rozważa się
 graf skierowany ważony G = (V,E), gdzie każdej krawędzi skierowanej
-(u,v) &in; E(V) przypisana jest rzeczywista waga w(u,v).
+(u,v) &in; E(G) przypisana jest rzeczywista waga w(u,v).
 Czasem rozważa się wagi całkowite.
 
 <p><strong>Wagą</strong> w(P) ścieżki (skierowanej) P przechodzącej 
 przez wierzchołki (v_0, v_1, v_2, ..., v_k) 
 nazywamy sumę wag jej krawędzi (skierowanych),
 <br>w(P) = w(v_0,v_1) + w(v_1,v_2) + ... + w(v_{k-1},v_k)
-= \sum_{i=1}^k w(v_{i-1},v_i).
+= \sum_{i=1}^k w(v_{i-1},v_i) = sum{w(u,v) : (u,v) &in; E(P)}.
 <br><strong>Waga najkrótszej ścieżki</strong> od u do v jest to
 <br>&delta;(u,v) = min{w(P) : P to ścieżka skierowana od u do v}.
 <br>Jeżeli nie istnieje żadna ścieżka skierowana od u do v, to przyjmuje się, 
@@ -120,11 +120,13 @@ Algorithm Dijkstra(G,s,weight):
     set Distance[s] to 0
     # Step 2: edge relaxation
     while Q is not empty do
-        # niezmiennik pętli while: Q equals V(G)-S
+        # niezmiennik pętli while (spełniony przed każdą iteracją):
+        # Q equals V(G)-S
         set u to the vertex in Q with minimum Distance[u]
         remove u from Q
         insert u into S
         for each edge (u,v) in E(G) do
+            # if v is in S then continue   # może przyspieszyć obliczenia
             set alt to Distance[u] + weight(u,v)
             if alt &lt; Distance[v] then
                 set Distance[v] to alt   # to zmienia priorytet v w Q 
@@ -144,7 +146,7 @@ Algorithm Dijkstra(G,s,weight):
 # czy dany wierzchołek nie był już przetwarzany wcześniej.
 # Sumarycznie do Q może zostać wstawionych co najwyżej n+m elementów.
 </pre><hr><pre>
-# Algorytm iteracyjny wypisywania najkrótszej ścieżki.
+# Algorytm iteracyjny wypisywania najkrótszej ścieżki z s do t.
 Algorithm PrintShortestPath(G,s,t):
     set Path to an empty list
     if Distance[t] equals infinity then

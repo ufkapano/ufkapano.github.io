@@ -213,7 +213,7 @@ public:
 </pre><hr><pre>
 // Inna możliwość to alokowana tablica z wektorami/listami różnej długości.
 class Graph : public BaseGraph&lt;int&gt; { // wersja 5d
-    int n;
+    int n; // trzeba zapisać rozmiar alokowanej tablicy
     bool directed;
     std::vector&lt;int&gt; *adj_list;
 public:

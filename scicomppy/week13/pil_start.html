@@ -46,19 +46,24 @@ the large number and frequency of issues reported.
 <hr><pre>
 import PIL
 
-print(PIL.__version__)   # 5.4.1 in Debian 10
+print(PIL.__version__)
+# 5.4.1 in Debian 10
+# 11.1.0 in Debian 13
 </pre><hr>
 
 <h3>CONCEPTS</h3>
 
 <p>https://pillow.readthedocs.io/en/latest/handbook/concepts.html
 
-<p>https://en.wikipedia.org/wiki/Raster_graphics   # GIF, JPEG, PNG, TIFF, BMP
+<p>https://en.wikipedia.org/wiki/Raster_graphics
+<br>File extensions: GIF, JPEG, PNG, TIFF, BMP, ...
 
-<p>https://en.wikipedia.org/wiki/Vector_graphics   # SVG, WMF, EPS, PDF, CDR
+<p>https://en.wikipedia.org/wiki/Vector_graphics
+<br>File extensions; SVG, WMF, EPS, PDF, CDR, ...
 
-<p>PIL handles 'raster images' (rectangles of pixel data).
-The opposite to 'raster graphics' is 'vector graphics'.
+<p>PIL handles <strong>raster images</strong> (rectangles of pixel data).
+The opposite to <strong>raster graphics</strong> is 
+<strong>vector graphics</strong>.
 
 <hr><pre>
 BANDS
@@ -118,12 +123,13 @@ to a single output pixel, PIL provides different resampling filters
 
 <p>https://pillow.readthedocs.io/en/latest/handbook/image-file-formats.html
 
-<p>The open() function identifies files from their contents, not their names, 
-but the save() method looks at the name to determine which format to use, 
+<p>The <em>open()</em> function identifies files from their contents, 
+not their names, but the <em>save()</em> method looks at the name 
+to determine which format to use, 
 unless the format is given explicitly.
 
-<p>The 'format' attribute identifies the source of an image. 
-If the image was not read from a file, it is set to 'None'. 
+<p>The <em>format</em> attribute identifies the source of an image. 
+If the image was not read from a file, it is set to <em>None</em>. 
 
 <h3>EXAMPLES</h3>
 
@@ -138,6 +144,10 @@ image1.height   # 512
 image1.format   # 'PNG', the image is from the PNG file
 image1.info   # {'dpi': (72, 72)}
 image1.show()
+</pre><hr><pre>
+# In Linux shell:
+$ file fruits.png
+fruits.png: PNG image data, 512 x 512, 8-bit/color RGB, non-interlaced
 </pre><hr>
 
 <p><img src="img/fruits.png" alt="[ fruits.png ]">
@@ -151,6 +161,11 @@ image2.height   # 512
 image2.format   # 'BMP', the image is from the BMP file
 image2.info   # {'dpi': (0, 0), 'compression': 0}
 image2.show()
+</pre><hr><pre>
+# In Linux shell:
+$ file boy.bmp
+boy.bmp: PC bitmap, Windows 3.x format, 768 x 512 x 8, image size 393216, 
+256 important colors, cbSize 394294, bits offset 1078
 </pre><hr>
 
 <p><img src="img/boy.bmp" alt="[ boy.bmp ]">

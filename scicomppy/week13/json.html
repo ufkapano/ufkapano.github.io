@@ -27,7 +27,7 @@ and transmit data objects consisting of attribute-value pairs and arrays
 
 <p>Comments were purposefully excluded from JSON. 
 
-<p>JSON is not a framed protocol so unlike 'pickle' or 'marshal' 
+<p>JSON is not a framed protocol so unlike <em>pickle</em> or <em>marshal</em> 
 it does not make sense to serialize more than one JSON document 
 without some container protocol to delimit them.
 
@@ -95,7 +95,7 @@ import json
 # sort_keys : bool, default is False;
 #     if True then the output of dictionaries will be sorted by key
 
-with open(file_name, mode='w') as outfile:
+with open(filename, mode='w') as outfile:
     json.dump(obj, outfile)
     #json.dump(obj, outfile, sort_keys=True, indent=4, separators=(',', ': '))
 
@@ -110,7 +110,7 @@ word = json.dumps(obj, sort_keys=True, indent=4, separators=(',', ': '))
 # json.load(fp, encoding=None, cls=None, object_hook=None, parse_float=None,
 #     parse_int=None, parse_constant=None, object_pairs_hook=None, **kw)
 
-with open(file_name) as infile:
+with open(filename) as infile:
     obj = json.load(infile)
 
 # Decoding from JSON string.
@@ -125,7 +125,7 @@ obj = json.loads(word)
 
 <p>https://github.com/simplejson/simplejson
 
-<p>'simplejson' is a simple, fast, complete, correct and extensible JSON
+<p><em>simplejson</em> is a simple, fast, complete, correct and extensible JSON
 encoder and decoder for Python 3.3+ with legacy support for Python 2.5+. 
 It is pure Python code with no dependencies, but includes an optional 
 C extension for a serious speed boost.
@@ -192,7 +192,7 @@ series4 = pd.Series( {'row1':10, 'row2':20, 'row3':30} )
 # row3    30
 # dtype: int64
 
-series4.to_json(file_name)
+series4.to_json(filename)
 word = series4.to_json()   # '{"row1":10,"row2":20,"row3":30}'
 
 df3 = pd.DataFrame([[10, 'alpha'], [20, 'beta']], 
@@ -201,7 +201,7 @@ df3 = pd.DataFrame([[10, 'alpha'], [20, 'beta']],
 # row1    10  alpha
 # row2    20   beta
 
-df3.to_json(file_name)
+df3.to_json(filename)
 word = df.to_json()
 # '{"col1":{"row1":10,"row2":20},"col2":{"row1":"alpha","row2":"beta"}}'
 </pre><hr>
@@ -296,16 +296,16 @@ class Vector:
     def __ne__(self, other):   # v != w
         return not self == other
 
-def dump_vectors(file_name, vector_list):
+def dump_vectors(filename, vector_list):
     dict_list = []
-    for v in vector_list:
-        dict_list.append(vars(v))
-    with open(file_name, mode='w') as outfile:
+    for vec in vector_list:
+        dict_list.append(vars(vec))
+    with open(filename, mode='w') as outfile:
         #json.dump(dict_list, outfile, indent=2)
         json.dump(dict_list, outfile)
 
-def load_vectors(file_name):
-    with open(file_name, 'r') as infile:
+def load_vectors(filename):
+    with open(filename, 'r') as infile:
         dict_list = json.load(infile)
     vector_list = [Vector(**d) for d in dict_list]
     return vector_list

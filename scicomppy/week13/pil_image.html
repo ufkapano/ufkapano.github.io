@@ -18,7 +18,7 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'Image' module provides a class with the same name which is used 
+<p>The <em>Image</em> module provides a class with the same name which is used 
 to represent a PIL image. The module also provides a number of factory 
 functions, including functions to load images from files, 
 and to create new images.
@@ -50,7 +50,11 @@ image3.save("foto.jpg") # the filename extension is used to discover the file fo
 
 <h3>CREATE THUMBNAILS</h3>
 
+<p>https://pillow.readthedocs.io/en/stable/reference/Image.html#PIL.Image.Image.thumbnail
+
 <hr><pre>
+# PIL.Image.thumbnail(size, resample, reducing_gap)
+#
 # The thumbnail size will preserve the aspect of the image and
 # it will be no larger than the given size.
 # Note that this function modifies the Image object in place.
@@ -91,11 +95,20 @@ a = np.zeros((DIM,DIM), dtype="uint8")   # mode='L'
 for i in range(DIM // 2):
     for j in range(DIM // 4, (DIM // 4) * 3):
         a[i,j] = 255   # white square
+# +---+-------+---+
+# |   |       |   |
+# |   | white |   |
+# |   |       |   |
+# |   +-------+   |
+# |               |
+# |   black       |
+# |               |
+# +---------------+
 
 im = Image.fromarray(a, mode='L')
-print ( im.getpixel((0,0)) ) # 0, (x,y)
-print ( im.getpixel((DIM // 4, DIM // 2)) ) # 0
-print ( im.getpixel((DIM // 2, DIM // 4)) ) # 255
+print( im.getpixel((0,0)) ) # 0, (x,y)
+print( im.getpixel((DIM // 4, DIM // 2)) ) # 0, (x,y)
+print( im.getpixel((DIM // 2, DIM // 4)) ) # 255, (x,y)
 </pre><hr><pre>
 DIM = 128
 a = np.zeros((DIM,DIM,3), dtype="uint8")   # mode='RGB'
@@ -132,6 +145,13 @@ with Image.open("hopper.jpg") as im:
     # new_im.save("rotated.jpg")
 </pre><hr><pre>
 # Resizing images.
+# PIL.Image.resize(size, resample)
+# size : a tuple (width, height) defining the new image size.
+# resample (optional) : filter for quality. Common options are:
+#     Image.Resampling.NEAREST - Fast, lowest quality,
+#     Image.Resampling.BILINEAR - Moderate quality,
+#     Image.Resampling.BICUBIC - High quality (default),
+#     Image.Resampling.LANCZOS - Best quality for downscaling
 
 with Image.open("hopper.jpg") as im:
     im.resize((130,150)).show()
@@ -163,7 +183,7 @@ with Image.open("hopper.jpg") as im:
 <h3>PASTE</h3>
 
 <hr><pre>
-# Image.paste(im, box=None, mask=None)
+# PIL.Image.paste(im, box=None, mask=None)
 #
 # Pastes another image into this image.
 
