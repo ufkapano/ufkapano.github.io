@@ -13,15 +13,16 @@
 <h3>INTRODUCTION</h3>
 
 <p>Numba supports code generation for classes via the 
-numba.experimental.jitclass() decorator. 
+<em>numba.experimental.jitclass()</em> decorator. 
 A class can be marked for optimization using this decorator 
 along with a specification of the types of each field. 
-We call the resulting class object a 'jitclass'. 
-All methods of a jitclass are compiled into nopython functions.
+We call the resulting class object a <em>jitclass</em>. 
+All methods of a <em>jitclass</em> are compiled into <em>nopython</em> functions.
 
-<p>@classmethod and special methods are not supported.
+<p><em>@classmethod</em> and special methods are not supported.
 
-<p>Numpy arrays with 'dtype=object' are not supported in 'nopython mode'.
+<p>Numpy arrays with <em>dtype=object</em> are not supported 
+in <em>nopython mode</em>.
 
 <hr><pre>
 import numpy as np

@@ -12,8 +12,8 @@
 
 <h3>LAZY COMPILATION</h3>
 
-<p>The recommended way to use the @jit decorator is to let Numba decide 
-when and how to optimize.
+<p>The recommended way to use the <em>@jit</em> decorator is to let Numba 
+decide when and how to optimize.
 
 <hr><pre>
 from numba import jit
@@ -47,7 +47,8 @@ print(f(1.3,2))   # return 3 (float -&gt; int)
 
 <h3>COMPILATION OPTIONS</h3>
 
-<p>A number of keyword-only arguments can be passed to the @jit decorator.
+<p>A number of keyword-only arguments can be passed to the <em>@jit</em> 
+decorator.
 
 <hr><pre>
 nopython=True   # force 'nopython mode'
@@ -65,8 +66,8 @@ debug=True   # for debugging
 
 <p>Numba implements the ability to run loops in parallel.
 The loops body is scheduled in seperate threads, and they execute 
-in a nopython numba context. 
-'prange' automatically takes care of data privatization and reductions.
+in a <em>nopython</em> numba context. 
+<em>prange</em> automatically takes care of data privatization and reductions.
 
 <hr><pre>
 # numba3.py
@@ -93,13 +94,21 @@ parallel_sum(x)
 end = time.time()
 print("Elapsed (after compilation) = {}".format(end - start))
 
-# Results.
+# Results in Debian 10.
 # Without numba = 0.11021208763122559
 # Elapsed (with compilation) = 0.05432915687561035
 # Elapsed (after compilation) = 0.0010497570037841797
 # With parallelization (12 cores).
 # Elapsed (with compilation) = 0.1597743034362793
 # Elapsed (after compilation) = 0.0004372596740722656
+
+# Results in Debian 13.
+# Without numba = 0.12292027473449707
+# Elapsed (with compilation) = 0.19950246810913086
+# Elapsed (after compilation) = 0.0010936260223388672
+# With parallelization (12 cores).
+# Elapsed (with compilation) = 0.36205363273620605
+# Elapsed (after compilation) = 0.00024437904357910156
 </pre><hr>
 
 </body>

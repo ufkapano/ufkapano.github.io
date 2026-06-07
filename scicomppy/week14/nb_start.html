@@ -33,11 +33,12 @@ Debian packages: python3-numba, numba-doc, and dependences.
 <p>Numba is often used as a core package so its dependencies are kept 
 to an absolute minimum, however, extra packages can be installed 
 as follows to provide additional functionality:
-<br>(1) 'scipy' - enables support for compiling 'numpy.linalg' functions.
-<br>(2) 'colorama' - enables support for color highlighting in 
+<br>(1) <em>scipy</em> - enables support for compiling 
+<em>numpy.linalg</em> functions.
+<br>(2) <em>colorama</em> - enables support for color highlighting in 
 backtraces/error messages.
-<br>(3) 'pyyaml' - enables configuration of Numba via a YAML config file.
-<br>(4) 'icc_rt' - allows the use of the Intel SVML
+<br>(3) <em>pyyaml</em> - enables configuration of Numba via a YAML config file.
+<br>(4) <em>icc_rt</em> - allows the use of the Intel SVML
 (high performance short vector math library, x86_64 only).
 
 <p>Working in the virtual environment with the latest version
@@ -45,7 +46,7 @@ of Numba is recommended.
 
 <h3>INTRODUCTION</h3>
 
-<p>Numba is an open source JIT (just-in-time) compiler that translates 
+<p>Numba is an open source JIT (<em>just-in-time</em>) compiler that translates 
 a subset of Python and NumPy code into fast machine code.
 Numba translates Python functions to optimized machine code at runtime 
 using the industry-standard LLVM compiler library.
@@ -61,7 +62,8 @@ Python 3.7.3 (default, Mar 23 2024, 16:12:05)
 Type "help", "copyright", "credits" or "license" for more information.
 &gt;&gt;&gt; import numba
 &gt;&gt;&gt; numba.__version__
-'0.42.0'            # Debian 10
+'0.42.0'   # Debian 10
+'0.61.2'   # Debian 13
 &gt;&gt;&gt; quit()
 $ numba -s          # information about your system capabilities
 System info:
@@ -152,10 +154,15 @@ go_fast(x)
 end = time.time()
 print("Elapsed (after compilation) = {}".format(end - start))
 
-# Results.
+# Results in Debian 10.
 # Without numba = 0.0017561912536621094
 # Elapsed (with compilation) = 0.12379336357116699
 # Elapsed (after compilation) = 0.0009722709655761719
+
+# Results in Debian 13.
+# Without numba = 0.002129793167114258
+# Elapsed (with compilation) = 0.31978321075439453
+# Elapsed (after compilation) = 0.0012450218200683594
 </pre><hr><pre>
 # Second version - eager compilation.
 from numba import njit, float64
@@ -166,17 +173,18 @@ def go_fast(arr): ...
 
 <h3>OBJECT MODE AND NOPYTHON MODE</h3>
 
-<p>The Numba @jit decorator fundamentally operates in two compilation modes, 
-'nopython' mode and 'object' mode.
+<p>The Numba <em>@jit</em> decorator fundamentally operates in two compilation 
+modes, <em>nopython</em> mode and <em>object</em> mode.
 
-<p>The behaviour of the 'nopython' compilation mode is to essentially compile 
-the decorated function so that it will run entirely without the involvement 
-of the Python interpreter. This is the recommended and best-practice way 
-to use the Numba @jit decorator as it leads to the best performance.
+<p>The behaviour of the <em>nopython</em> compilation mode is to essentially 
+compile the decorated function so that it will run entirely without 
+the involvement of the Python interpreter. 
+This is the recommended and best-practice way to use the Numba <em>@jit</em> 
+decorator as it leads to the best performance.
 
-<p>Should the compilation in 'nopython' mode fail, Numba can compile 
-using 'object' mode. This is a fall back mode for the @jit decorator 
-if 'nopython=True' is not set.
+<p>Should the compilation in <em>nopython</em> mode fail, Numba can compile 
+using <em>object</em> mode. This is a fall back mode for the <em>@jit</em> 
+decorator if <em>nopython=True</em> is not set.
 In this mode Numba will identify loops that it can compile and compile 
 those into functions that run in machine code, and it will run 
 the rest of the code in the interpreter. 
@@ -186,10 +194,10 @@ For best performance avoid using this mode!
 orders of magnitude.
 
 <p><strong>Warning</strong>. Now (numba 0.55.2)
-the NumbaDeprecationWarning is raised 
-if this fall-back behaviour is present without 'forceobj=True'.
-@jit will by default compile in 'nopython' mode and 'object' mode 
-compilation will become opt-in only.
+the <em>NumbaDeprecationWarning</em> is raised 
+if this fall-back behaviour is present without <em>forceobj=True</em>.
+<em>@jit</em> will by default compile in <em>nopython</em> mode and 
+<em>object</em> mode compilation will become opt-in only.
 
 <h3>HOW DOES NUMBA WORK?</h3>
 
