@@ -12,8 +12,8 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'Label' widgets are used to display text or images. 
-The text displayed by a 'Label' widget can’t be edited by the user. 
+<p><em>Label</em> widgets are used to display text or images. 
+The text displayed by a <em>Label</em> widget can’t be edited by the user. 
 
 <hr><pre>
 # label1.py
@@ -41,6 +41,8 @@ Selected keyword arguments in Label()
 master=root     # the first argument
 text="Hello"
 textvariable=strvar   # get the string from a variable, updating when the variable changes
+image=logo
+compound=tk.CENTER   # or tk.BOTTOM, tk.LEFT, tk.RIGHT, tk.TOP
 fg="white"   # set the text color to white ('fg' or 'foreground')
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
@@ -87,22 +89,27 @@ The available font styles are 'normal', 'bold', 'roman', 'italic', 'underline',
 
 <h3>IMAGES</h3>
 
-<p>The 'PhotoImage' class is used to display images (either grayscale
+<p>The <em>PhotoImage</em> class is used to display images (either grayscale
 or true color images) in labels, buttons, canvases, and text widgets.
 
-<p>If the 'compound' option is set to tk.BOTTOM, tk.LEFT, tk.RIGHT,
-or tk.TOP, the image is drawn correspondingly to the bottom, left,
-right or top of the text.
-Without the 'compound' option the text is invisible.
+<p>If the <em>compound</em> option is set to <em>tk.BOTTOM</em>, 
+<em>tk.LEFT</em>, <em>tk.RIGHT</em>, or <em>tk.TOP</em>, the image is drawn 
+correspondingly to the bottom, left, right or top of the text.
+Without the <em>compound</em> option the text is invisible.
 
 <hr><pre>
 # label3.py
 import tkinter as tk
+from PIL import Image, ImageTk
 
 root = tk.Tk()
 
 #logo = tk.PhotoImage(file="img/python_logo.gif")
-logo = tk.PhotoImage(file="img/python_logo.png")
+#logo = tk.PhotoImage(file="img/python_logo.png")
+
+im = Image.open("img/python_logo.jpg")   # for JPG files
+logo = ImageTk.PhotoImage(im)   # a Tkinter-compatible photo image
+print("width {} height {}".format(logo.width(), logo.height()))
 
 #label = tk.Label(root, image=logo)
 

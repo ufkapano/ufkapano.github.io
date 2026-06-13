@@ -10,12 +10,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Applications should perform actions whenever certain events occur 
-(a key or mouse button is pressed, ...). 
+<p>Applications should perform <strong>actions</strong> whenever certain 
+<strong>events</strong> occur (a key or mouse button is pressed, ...). 
 User should write the code (an event handler) that will be executed 
 in response to an event.
 
-<p>The 'mainloop()' method maintains a list of events that have occurred
+<p>The <em>mainloop()</em> method maintains a list of events that have occurred
 and it runs an event handler any time a new event is added to the event list.
 
 <h3>USING BIND</h3>
@@ -94,10 +94,14 @@ root.mainloop()   # run the tkinter event loop
 
 <h3>USING COMMAND</h3>
 
-<p>Every Button widget has a 'command' attribute that you can assign 
-to a function. Whenever the button is pressed, the function is executed.
+<p>Every <em>Button</em> widget has a <em>command</em> attribute 
+that you can assign to a function. 
+Whenever the button is pressed, the function is executed.
 
 <hr><pre>
+# +---+---+---+
+# | - | 0 | + |
+# +---+---+---+
 # event2.py
 import tkinter as tk
 

@@ -10,12 +10,19 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'Radiobutton' widget is used to create a single-choice interface.
+<p>The <em>Radiobutton</em> widget is used to create 
+a <strong>single-choice</strong> interface.
 Pressing one widget in a group automatically deselects the one pressed last.
 Widgets in a group are associated with the same variable and
-a 'value' attribute is used when the button is selected.
+a <em>value</em> attribute is used when the button is selected.
 
 <hr><pre>
+# +--------------------+
+# | Choose a language: | Label
+# | (*) Python         | Radiobutton, value=1
+# | ( ) Perl           | Radiobutton, value=2
+# | ( ) Java           | Radiobutton, value=3
+# +--------------------+
 # radio1.py
 import tkinter as tk
 

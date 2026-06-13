@@ -10,23 +10,26 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Application layout in Tkinter is controlled with 'geometry managers' 
-(pack, place, grid). 
+<p>Application layout in Tkinter is controlled with 
+<strong>geometry managers</strong> 
+(<em>pack</em>, <em>place</em>, <em>grid</em>). 
 Different frames can use different geometry managers.
 
 <h3>PACK</h3>
 
-<p>'.pack()' uses a packing algorithm to place widgets in a Frame or window 
-in a specified order. 
+<p>The geometry manager <em>pack</em> uses a packing algorithm 
+to place widgets in a <em>Frame</em> or window in a specified order. 
 
-<p>The 'fill' keyword argument can be used to specify in which 'direction' 
-the frames should fill. 
+<p>The <em>fill</em> keyword argument can be used to specify in which 
+<strong>direction</strong> the frames should fill. 
 
-<p>The 'side' keyword argument can be used to specify
+<p>The <em>side</em> keyword argument can be used to specify
 on which side of the window the widget should be placed. 
 
-<p>The 'anchor' keyword argument can be used to specify
+<p>The <em>anchor</em> keyword argument can be used to specify
 the position of a widget within its allocated space.
+
+<p>The method <em>widget.pack_forget()</em> erases a drawn widget.
 
 <hr><pre>
 fill=tk.X   # horizontal direction
@@ -64,10 +67,10 @@ root = tk.Tk()   # empty root
 frame1 = tk.Frame(root, width=200, height=200, bg="red")
 frame1.pack(fill=tk.X)
 
-frame2 = tk.Frame(root, height=100, bg="yellow") # no width
+frame2 = tk.Frame(root, height=100, bg="yellow")   # no width
 frame2.pack(fill=tk.X)
 
-frame3 = tk.Frame(root, height=50, bg="blue") # no width
+frame3 = tk.Frame(root, height=50, bg="blue")   # no width
 frame3.pack(fill=tk.X)
 
 root.mainloop()   # run the tkinter event loop
@@ -80,10 +83,10 @@ root = tk.Tk()
 frame1 = tk.Frame(root, width=200, height=200, bg="red")
 frame1.pack(fill=tk.Y, side=tk.LEFT)
 
-frame2 = tk.Frame(root, width=100, bg="yellow") # no height
+frame2 = tk.Frame(root, width=100, bg="yellow")   # no height
 frame2.pack(fill=tk.Y, side=tk.LEFT)
 
-frame3 = tk.Frame(root, width=50, bg="blue") # no height
+frame3 = tk.Frame(root, width=50, bg="blue")   # no height
 frame3.pack(fill=tk.Y, side=tk.LEFT)
 
 root.mainloop()   # run the tkinter event loop
@@ -96,10 +99,10 @@ root = tk.Tk()
 frame1 = tk.Frame(root, width=200, height=200, bg="red")
 frame1.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
-frame2 = tk.Frame(root, width=100, bg="yellow") # no height
+frame2 = tk.Frame(root, width=100, bg="yellow")   # no height
 frame2.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
-frame3 = tk.Frame(root, width=50, bg="blue") # no height
+frame3 = tk.Frame(root, width=50, bg="blue")   # no height
 frame3.pack(fill=tk.BOTH, side=tk.LEFT, expand=True)
 
 root.mainloop()   # run the tkinter event loop

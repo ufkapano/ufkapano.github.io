@@ -12,11 +12,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'Frame' widgets are used for organizing the layout of other widgets 
+<p><em>Frame</em> widgets are used for organizing the layout of other widgets 
 in an application.
-Frames are best thought of as 'containers' for other widgets.
+Frames are best thought of as <strong>containers</strong> for other widgets.
 
 <hr><pre>
+# frame1.py
 import tkinter as tk   # Py3
 
 root = tk.Tk()
@@ -41,6 +42,7 @@ root.mainloop()   # run the tkinter event loop
 #    |        |
 # label_a   label_b
 </pre><hr><pre>
+# frame2.py
 import tkinter as tk   # Py3
 
 border_effects = {
@@ -68,9 +70,9 @@ master=root   # the first argument
 bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in pixels
 height=30   # in pixels
-borderwidth=5   # a border around a frame widget (default is 0, no border)
+borderwidth=5   # (or 'bd=5') a border around a frame widget (default is 0, no border)
 relief="flat" # border decoration ("flat", "sunken", "raised", "groove", "ridge")
-bd=5   # 'borderwidth' or 'bd'
+relief=tk.FLAT   # (tk.FLAT, tk.SUNKEN, tk.RAISED, tk.GROOVE, tk.RIDGE)
 </pre><hr>
 
 </body>

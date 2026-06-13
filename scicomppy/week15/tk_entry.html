@@ -10,10 +10,20 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'Entry' widgets are used to get a 'single line' of text from a user, 
-like a name or an email address.
+<p><em>Entry</em> widgets are used to get a <strong>single line</strong> 
+of text from a user, like a name or an email address.
 
 <hr><pre>
+# +-------+
+# | Name  | row=0, red backgroud
+# +-------+
+# | Entry | row=1
+# +-------+
+# | Print | row=2
+# +-------+
+# | Clear | row=3
+# +-------+
+# entry1.py
 import tkinter as tk   # Py3
 
 root = tk.Tk()

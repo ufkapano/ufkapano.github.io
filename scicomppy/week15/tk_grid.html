@@ -12,17 +12,22 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'.grid()' works by splitting a window or Frame into rows and columns. 
-You specify the location of a widget by calling .grid() and passing 
+<p>The geometry manager <em>grid</em> works by splitting a window 
+or <em>Frame</em> into rows and columns. 
+You specify the location of a widget by calling <em>grid</em> and passing 
 the row and column indices to the row and column keyword arguments, 
 respectively. Both row and column indices start at 0.
 
-<p>The 'sticky' option to grid describes how the widget should line up 
+<p>The <em>sticky</em> option to grid describes how the widget should line up 
 within the grid cell.
+
+<p>The method <em>widget.grid_forget()</em> erases a drawn widget.
 
 <hr><pre>
 columnspan=2   # the widged will span two columns
 rowspan=2   # the widged will span two rows
+
+padx=5, pady=5   # internal padding in pixels
 
 sticky=tk.N   # "n" or "N"
 sticky=tk.E   # "e" or "E"
@@ -38,7 +43,7 @@ sticky=tk.NS   # "ns" or (tk.N, tk.S)
 sticky=tk.NSEW   # "nsew" or (tk.N, tk.S, tk.E, tk.W)
 
 +----------------+--------------+
-| .grid()        | .pack()      |
+| grid           | pack         |
 +================+==============+
 | sticky=tk.NS   | fill=tk.Y    |
 +----------------+--------------+
@@ -48,7 +53,6 @@ sticky=tk.NSEW   # "nsew" or (tk.N, tk.S, tk.E, tk.W)
 +----------------+--------------+
 </pre><hr><pre>
 # grid1.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -67,7 +71,6 @@ for i in range(3):
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
 # grid2.py
-
 import tkinter as tk
 
 root = tk.Tk()
@@ -90,15 +93,21 @@ for i in range(3):
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
+# +-----+
+# |    A|
+# |     |
+# +-----+
+# |     |
+# |B    |
+# +-----+
 # grid3.py
-
 import tkinter as tk
 
 root = tk.Tk()
 
-root.columnconfigure(0, minsize=100)   # cell width
-root.rowconfigure(0, minsize=100)   # row 0
-root.rowconfigure(1, minsize=100)   # row 1
+root.columnconfigure(0, weight=1, minsize=100)   # cell width
+root.rowconfigure(0, weight=1, minsize=100)   # row 0
+root.rowconfigure(1, weight=1, minsize=100)   # row 1
 
 label1 = tk.Label(root, text="A", bg="red")
 label1.grid(row=0, column=0, sticky=tk.NE)
@@ -108,15 +117,17 @@ label2.grid(row=1, column=0, sticky=tk.SW)
 
 root.mainloop()   # run the tkinter event loop
 </pre><hr><pre>
+# +---+---+---+---+
+# | 1 | 2 | 3 | 4 |
+# +---+---+---+---+
 # grid4.py
-
 import tkinter as tk
 
 root = tk.Tk()
 
-root.rowconfigure(0, minsize=100)
+root.rowconfigure(0, weight=1, minsize=100)
 for i in range(4):
-    root.columnconfigure(i, minsize=100)
+    root.columnconfigure(i, weight=1, minsize=100)
 
 label1 = tk.Label(root, text="1", bg="black", fg="white")
 label2 = tk.Label(root, text="2", bg="black", fg="white")

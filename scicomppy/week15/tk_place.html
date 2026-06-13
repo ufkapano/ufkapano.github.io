@@ -12,12 +12,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>The geometry manager .place() can be used to control the precise location 
-that a widget should occupy in a window or Frame.
+<p>The geometry manager <em>place</em> can be used to control the precise 
+location that a widget should occupy in a window or <em>Frame</em>.
 
-<p>.place() is not used often, because it has two main drawbacks:
-<br>(1) layout can be difficult to manage with .place(),
-<br>(2) layouts created with .place() are not responsive.
+<p><em>place</em> is not used often, because it has two main drawbacks:
+<br>(1) layout can be difficult to manage with <em>place</em>,
+<br>(2) layouts created with <em>place</em> are not responsive.
 
 <hr><pre>
 import tkinter as tk
@@ -25,7 +25,7 @@ import tkinter as tk
 root = tk.Tk()
 
 frame = tk.Frame(root, width=300, height=300, bg="blue")
-frame.grid()   # .grid() is here
+frame.grid()   # 'grid' is here
 
 label1 = tk.Label(frame, text="I'm at (0, 0)", bg="red")
 label1.place(x=0, y=0)   # top left, in pixels

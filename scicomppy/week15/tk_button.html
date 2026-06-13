@@ -12,11 +12,12 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>'Button' widgets are used to display 'clickable buttons'. 
+<p><em>Button</em> widgets are used to display 
+<strong>clickable buttons</strong>. 
 They can be configured to call a function whenever they’re clicked.
 
-<p>Many keyword arguments from the 'Label' widget will work for
-the 'Button' widget.
+<p>Many keyword arguments from the <em>Label</em> widget will work for
+the <em>Button</em> widget.
 
 <hr><pre>
 # button1.py
@@ -52,12 +53,20 @@ bg="black"   # set the background color to black ('bg' or 'background')
 width=50   # in text units
 height=10   # in text units
 font="Times 10 bold"
+state=tk.NORMAL   # or tk.DISABLED
 command=callback   # an action to call when the widget's event occurs
 command=sys.exit   # it shuts down the calling program
 command=lambda: print("message in the command line")
 command=root.quit   # it ends the current mainloop event loop call
 command=top.destroy   # it kills the current top-level window
 </pre><hr><pre>
+# +----------------+
+# |Press any button| row=0
+# +-------+--------+
+# | Hello | Quit   | row=1
+# +-------+--------+
+# column=0 column=1
+#
 # button2.py
 import tkinter as tk
 

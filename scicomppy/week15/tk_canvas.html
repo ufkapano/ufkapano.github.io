@@ -8,11 +8,13 @@
 
 <h1>Tkinter - Canvas</h1>
 
+<p>https://tkinter-docs.readthedocs.io/en/latest/widgets/canvas.html
+
 <p>https://python-course.eu/tkinter/canvas-widgets-in-tkinter.php
 
 <h3>INTRODUCTION</h3>
 
-<p>The 'Canvas' widget supplies graphics facilities for Tkinter.
+<p>The <em>Canvas</em> widget supplies graphics facilities for Tkinter.
 
 <hr><pre>
 # canvas1.py
@@ -35,8 +37,11 @@ Selected keyword arguments in Canvas()
 master=root   # the first argument
 width=canvas_width
 height=canvas_height
+bg="white"   # or background="white"
+bd=5   # borderwidth
+relief="flat"
 </pre><hr><pre>
-Selected methods
+Selected methods [canvas1a.py]
 
 # item_id = canvas.create_line(xy, **options)
 # xy : x1, y1, x2, y2   # 4 positional arguments
@@ -61,10 +66,16 @@ Selected methods
 # item_id = canvas.create_text(xy, **options)
 canvas.create_text(x1, y1, text="Python", font="Times 20 bold")
 
+# item_id = canvas.create_window(xy, **options)
+canvas.create_window(x1, y1, window=widget)   # embed a widget [canvas4.py]
+
 canvas.coords(item_id, new_xy)   # change coordinates
-canvas.itemconfig(item_id, fill="blue")   # change color
+canvas.itemconfig(item_id, fill="blue")   # change color for the item [canvas1b.py]
 canvas.delete(item_id)   # remove item
 canvas.delete(tk.ALL)   # remove all items
+canvas.tkraise(item_id)   # raise item to front
+canvas.lower(item_id)   # lower item below others
+canvas.move(item_id, offset_x, offset_y)   # move item by offset
 </pre><hr><pre>
 def create_circle(canvas, x, y, r):
    item_id = canvas.create_oval(x-r, y-r, x+r, y+r)
@@ -99,6 +110,7 @@ root.mainloop()
 <h3>IMAGES</h3>
 
 <hr><pre>
+# canvas3.py
 import tkinter as tk
 from PIL import Image, ImageTk
 
@@ -108,13 +120,13 @@ canvas_width, canvas_height = 600, 300
 canvas = tk.Canvas(root, width=canvas_width, height=canvas_height)
 canvas.grid()
 
-logo = tk.PhotoImage(file="img/python_logo.png")
+#logo = tk.PhotoImage(file="img/python_logo.png")
 #logo = tk.PhotoImage(file="img/python_logo.gif")
-
 #logo = tk.PhotoImage(file="img/python_logo.jpg")   # _tkinter.TclError, we need PIL
 
-#im = Image.open("img/python_logo.jpg")
-#logo = ImageTk.PhotoImage(im)
+im = Image.open("img/python_logo.jpg")
+logo = ImageTk.PhotoImage(im)
+print("width {} height {}".format(logo.width(), logo.height()))
 
 canvas.create_image(20, 20, anchor=tk.NW, image=logo)
 
