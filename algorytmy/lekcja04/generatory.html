@@ -139,17 +139,17 @@ t2 = timeit.Timer(lambda: sum(i*i for i in range(N)))
 t3 = timeit.Timer(lambda: sum(sqr_list))
 t4 = timeit.Timer(lambda: sum(sqr_gen))
 
-print("sum list {}".format(t1.timeit(1)))   # sum list 0.5472016650019214
-print("sum gen {}".format(t2.timeit(1)))    # sum gen 0.5155281510014902
-print("sum list2 {}".format(t3.timeit(1)))  # sum list2 0.13735308399918722
-print("sum gen2 {}".format(t4.timeit(1)))   # sum gen2 0.5134274550000555
+print("sum list", t1.timeit(1))   # sum list 0.5472016650019214
+print("sum gen", t2.timeit(1))    # sum gen 0.5155281510014902
+print("sum list2", t3.timeit(1))  # sum list2 0.13735308399918722
+print("sum gen2", t4.timeit(1))   # sum gen2 0.5134274550000555
 </pre><hr><pre>
 # Przy generatorach jest problem, jeżeli chcemy wykonać podwójną
 # iterację po obiekcie generatora.
 x = (i*i for i in range(10))        # generator object
 for i in x:
     for j in x:
-        print("{} {}".format(i, j))
+        print(i, j)
 # WYNIK
 # 0 1
 # 0 4
@@ -167,7 +167,7 @@ x = (i*i for i in range(5))        # generator object
 y = (i*i for i in range(5))        # generator object
 for i in x:
     for j in y:
-        print("{} {}".format(i, j))
+        print(i, j)
 # WYNIK
 0 0
 0 1
@@ -179,7 +179,7 @@ for i in x:
 # Rozwiązaniem są dwa niezależne generatory, które powstają w pętli.
 for i in (i*i for i in range(5)):
     for j in (i*i for i in range(5)):
-        print("{} {}".format(i, j))
+        print(i, j)
 # WYNIK
 0 0
 0 1

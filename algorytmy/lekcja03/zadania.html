@@ -105,11 +105,11 @@ Przykładowy prostokąt składający się 2 &times; 4 pól ma postać:
 
 <p>Podany fragment programu pokaże problem z wyświetlaniem
 list obiektów stworzonych przez użytkownika,
-jeżeli nie została zdefiniowana metoda __repr__.
-Jeżeli zdefiniowano tylko metodę __repr__, to zostanie
-ona użyta również wtedy, gdy zwykle pracuje __str__.
-Sprawdzić działanie kodu, jeżeli wykomentujemy metodę __str__()
-lub metodę __repr__().
+jeżeli nie została zdefiniowana metoda <em>__repr__</em>.
+Jeżeli zdefiniowano tylko metodę <em>__repr__</em>, to zostanie
+ona użyta również wtedy, gdy zwykle pracuje <em>__str__</em>.
+Sprawdzić działanie kodu, jeżeli wykomentujemy metodę <em>__str__</em>
+lub metodę <em>__repr__</em>.
 
 <!--
 <p>Załóżmy, że mamy listę obiektów, które nie mają zdefiniowanej
@@ -133,8 +133,8 @@ class Time:
 
 time1 = Time(12)
 time2 = Time(3456)
-print("{} {}".format(time1, time2))   # Python wywołuje str()
-print("{}".format([time1, time2]))   # Python wywołuje repr()
+print(time1, time2)   # Python wywołuje str()
+print([time1, time2])   # Python wywołuje repr()
 </pre><hr>
 
 <h3>ZADANIE 3.8</h3>

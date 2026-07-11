@@ -79,10 +79,10 @@ Zbiory nie implementują metody <em>__cmp__()</em>.
 # Budowanie zbioru z sekwencji.
 X = set("alfa")
 Y = set(["b", "e", "t", "a"])
-print("{} {}".format(X, Y))
-print("iloczyn {}".format(X &amp; Y))
-print("suma {}".format(X | Y))
-print("różnica {}".format(X - Y))
+print(X, Y)
+print("iloczyn", X &amp; Y)
+print("suma", X | Y)
+print("różnica", X - Y)
 </pre><hr><pre>
 # Konstrukcja: frozenset([iterable])
 X = frozenset()       # zbiór pusty
@@ -99,6 +99,7 @@ set('abc') == frozenset('abc')   # wynik to True
 </pre><hr>
 
 <p>Zbiory można wykorzystać do odfiltrowania duplikatów z listy.
+Na liście muszą być elementy hashowalne.
 
 <hr><pre>
 &gt;&gt;&gt; L = [1, 2, 2, 2, 3, 3]

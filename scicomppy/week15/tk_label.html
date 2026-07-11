@@ -18,6 +18,7 @@ The text displayed by a <em>Label</em> widget can’t be edited by the user.
 <hr><pre>
 # label1.py
 import tkinter as tk   # Py3
+from tkinter import ttk   # themed widgets
 
 root = tk.Tk()   # root widget
 
@@ -25,6 +26,7 @@ root = tk.Tk()   # root widget
 
 label = tk.Label(root, text="A label with a very long text")
 #label = tk.Label(root, text="Hello", bg="red")
+#label = ttk.Label(root, text="Hello")   # themed widgets
 
 label.grid()   # using a geometry manager
 

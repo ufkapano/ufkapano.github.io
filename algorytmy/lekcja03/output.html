@@ -42,12 +42,12 @@ print("pi = %8.2f" % (3.14159,))         # bardziej precyzyjnie
 print("a %10.1f b %3d" % (1.23456, 2))   # dwie lub więcej pozycji
 </pre><hr><pre>
 # Wyprowadzanie danych do pliku:
-afile = open("data.txt", "w")
-afile.write("%s %s\n" % (item1, item2))   # jeden sposób
-afile.write("{} {}\n".format(item1, item2))   # drugi sposób
-print &gt;&gt; afile, item1, item2        # niezbyt ładne, Py2
-print(file=afile, item1, item2)           # Py3
-afile.close()
+anyfile = open("data.txt", "w")
+anyfile.write("%s %s\n" % (item1, item2))   # jeden sposób
+anyfile.write("{} {}\n".format(item1, item2))   # drugi sposób
+print &gt;&gt; anyfile, item1, item2        # niezbyt ładne, Py2
+print(file=anyfile, item1, item2)           # Py3
+anyfile.close()
 </pre><hr><pre>
 # Korzystanie z modułu sys.
 # Obiekt sys.stdout jest typu file, mode "w".

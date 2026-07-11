@@ -73,9 +73,9 @@ else:               # opcjonalne (jeden raz), jeśli nic nie pasuje
 if n &lt; 0:
     print("liczba ujemna!")
 elif n % 2 == 0:    # sprawdzamy inną możliwość
-    print("{} {}".format(n, "liczba parzysta"))
+    print(n, "liczba parzysta")
 else:               # to jest sekcja opcjonalna
-    print("{} {}".format(n, "liczba nieparzysta"))
+    print(n, "liczba nieparzysta")
 </pre><hr><pre>
 # Porównanie C i Pythona.
 # W C else należy do ostatniego (najbliższego) if, ale generalnie
@@ -89,10 +89,10 @@ else:   # powiązane z 'if x'
 </pre><hr><pre>
 # Zastosowanie słownika (nie korzystać na siłę).
 # W zależności od wyboru użytkownika podstawiamy inne wartości.
-adict = {"a":1, "b":2, "c":3}           # lista możliwości
+D = {"a":1, "b":2, "c":3}           # lista możliwości
 choice = "b"
-result = adict[choice]                  # zamiast if-elif
-resutl = adict.get(choice, "Error")     # z zabezpieczeniem
+result = D[choice]                  # zamiast if-elif
+resutl = D.get(choice, "Error")     # z zabezpieczeniem
 </pre><hr>
 
 <h3>WYRAŻENIE TRÓJARGUMENTOWE</h3>

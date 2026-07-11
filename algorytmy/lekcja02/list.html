@@ -13,7 +13,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Listy to uporządkowane kolekcje dowolnych obiektów. 
-Są heterogeniczne i mogą być dowolnie zagnieżdżane. 
+Są <strong>heterogeniczne</strong> i mogą być dowolnie zagnieżdżane. 
 Dostęp do obiektów możliwy jest za pomocą offsetu (położenia na liście). 
 
 <p>Listy mogą się rozrastać i kurczyć w miejscu, czyli są 
@@ -64,15 +64,15 @@ list3 = [3, "xyz", [10, 20]]  # listy są heterogeniczne
 # Elementy listy można uaktualniać.
 list2[1] = "xyz"              # pojedynczy element
 list2[2:4] = ["2", "3"]       # podmiana wycinka
-print ( list2 )
+print(list2)
 
-alist = list(range(10))
-alist[4:4] = [1, 1, 1]        # wstawianie PRZED elementem o indeksie 4
-alist[2:4] = []               # usuwanie elementów o indeksach 2, 3
+L = list(range(10))
+L[4:4] = [1, 1, 1]        # wstawianie PRZED elementem o indeksie 4
+L[2:4] = []               # usuwanie elementów o indeksach 2, 3
 # Bardziej przejrzyste jest korzystanie z del.
-# del alist[2:4]
+# del L[2:4]
 # Można też usunąć całą listę.
-# del alist
+# del L
 </pre><hr>
 
 <h3>CZYSZCZENIE LIST</h3>
@@ -135,24 +135,24 @@ w języku Java.
 # Sortowanie stabilne IN PLACE.
 # Funkcja cmp(x, y) ma zwracać jedną wartość z (-1, 0, 1).
 
-alist = ["auto", "Ala", "bocian", "Barbara"]
-alist.sort()        # sortowanie listy napisów (duże litery najpierw)
-print(alist)   # ['Ala', 'Barbara', 'auto', 'bocian']
+L = ["auto", "Ala", "bocian", "Barbara"]
+L.sort()        # sortowanie listy napisów (duże litery najpierw)
+print(L)   # ['Ala', 'Barbara', 'auto', 'bocian']
 
 # Potrzebujemy case-insensitive sort.
 # Stary sposób - określamy funkcję porównującą dwa obiekty.
 # Bazujemy na wbudowanej funkcji porównującej cmp().
-alist.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
-print(alist)   # ['Ala', 'auto', 'Barbara', 'bocian']
+L.sort(cmp=lambda x,y: cmp(x.lower(), y.lower()))
+print(L)   # ['Ala', 'auto', 'Barbara', 'bocian']
 
 # Nowy sposób (Py2.4+) - podajemy klucz, czyli jakby sposób 
 # patrzenia na obiekt. Nazwa "str" występuje jako nazwa klasy.
 # Sortowanie jest stabilne.
-alist.sort(key=str.lower)
+L.sort(key=str.lower)
 
 # Sortowanie pod względem długości napisów.
-alist.sort(key=len)
-print(alist)   # ['Ala', 'auto', 'bocian', 'Barbara']
+L.sort(key=len)
+print(L)   # ['Ala', 'auto', 'bocian', 'Barbara']
 </pre><hr>
 
 <p>Prosty sposób sortowania to wykorzystanie wbudowanej funkcji
@@ -173,12 +173,12 @@ sorted((7,2,5,3))   # [2, 3, 5, 7] sortowanie krotki
 
 # Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
 def mysorted(iterable):
-    alist = list(iterable)
-    alist.sort()
-    return alist
+    L = list(iterable)
+    L.sort()
+    return L
 </pre><hr>
 
-<p>Przy sortowaniu krotek przydaje się konstrukcja z modułu operator.
+<p>Przy sortowaniu krotek przydaje się konstrukcja z modułu 'operator'.
 
 <hr><pre>
 # https://docs.python.org/2/library/operator.html
@@ -186,12 +186,12 @@ def mysorted(iterable):
 import operator   # Py2.4+
 
 # Sortowanie IN PLACE krotek wg wartości pola o indeksie 1.
-alist = [('apple', 3), ('banana', 2), ('pear', 5), ('orange', 1)]
-alist.sort(key=operator.itemgetter(1))
+L = [('apple', 3), ('banana', 2), ('pear', 5), ('orange', 1)]
+L.sort(key=operator.itemgetter(1))
 # [('orange', 1), ('banana', 2), ('apple', 3), ('pear', 5)]
 
 # Można też utworzyć nowa listę.
-blist = sorted(alist, key=operator.itemgetter(1))
+M = sorted(L, key=operator.itemgetter(1))
 </pre><hr>
 
 <h3>METODY LIST</h3>
@@ -204,7 +204,7 @@ Metoda jest funkcją, która należy do obiektu i nosi pełną nazwę
 Obiekt innego typu może posiadać metodę o tej samej nazwie, 
 np. <em>obiekt2.metoda()</em>, ale nie prowadzi to do dwuznaczności.
 Mamy również konstrukcje typu <em>obiekt.atrybut</em> i również różne obiekty
-mogą mieć atrybut o tej samej nazwie, ale niekonieznie tym samym typie.
+mogą mieć atrybut o tej samej nazwie, ale niekoniecznie tym samym typie.
 
 <hr><pre>
 dir(list)           # spis metod i atrybutów dla list

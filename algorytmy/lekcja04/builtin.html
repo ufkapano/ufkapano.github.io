@@ -128,20 +128,20 @@ def add2(x, y):   # tu widać zależność od startowej wartości
 # reduce(f, [x1, x2]) zwraca f(x1, x2).
 # reduce(f, [x1, x2], x0) zwraca f(f(x0, x1), x2).
 
-alist = range(11)
+L = range(11)
 
-result1 = sum(alist)
-result1 = reduce(add, alist, 0)
-result1 = reduce(add, alist)
+result1 = sum(L)
+result1 = reduce(add, L, 0)
+result1 = reduce(add, L)
 
 # Równoważny kod z pętlą (bez wartości początkowej).
-if len(alist) == 0:
+if len(L) == 0:
     raise TypeError()
-elif len(alist) == 1:
-    result2 = alist[0]
+elif len(L) == 1:
+    result2 = L[0]
 else:
-    result2 = add(alist[0], alist[1])
-    for item in alist[2:]:
+    result2 = add(L[0], L[1])
+    for item in L[2:]:
         result2 = add(result2, item)
 
 assert result1 == result2   # porównanie wyników

@@ -30,7 +30,7 @@ jak np. lista czy słownik.
 def print_word(word, n=1):
     """Wypisanie n linii ze słowem word."""
     for i in range(n):
-        print("{} {}".format(i, word))
+        print(i, word)
 
 print_word("bla")
 print_word("bla", 3)
@@ -39,14 +39,14 @@ print_word(n=4, word="bum")   # zastosowanie słów kluczowych
 def tester1(x, L=[]):
     """Lista L rośnie po każdym wywołaniu funkcji."""
     L.append(x)
-    print("tester1 {}".format(L))
+    print("tester1", L)
 
 def tester2(x, L=None):
     """Lista L domyślnie zawsze pusta."""
     if L is None:
         L = []
     L.append(x)
-    print("tester2 {}".format(L))
+    print("tester2", L)
 
 tester1(1)   # [1]
 tester1(2)   # [1, 2]
@@ -87,7 +87,7 @@ print(union("abc", "cde", "efg"))   # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 def university(**keywords):   # 'keywords' to słownik do utworzenia
     """Wypisanie władz uniwersytetu."""
     for key in sorted(keywords):
-        print("{} : {}".format(key, keywords[key]))
+        print(key, ":", keywords[key])
 
 university(rektor="Nowak", kanclerz="Pedracka", prorektor1="Mania")
 # kanclerz : Pedracka

@@ -42,11 +42,11 @@ Takie pliki zwracają ciąg bajtów bez żadnego dekodowania.
 Nie określa się kodowania dla operacji w trybie binarnym.
 
 <hr><pre>
-afile = open(file_name, mode='r' [, buffering])   # Py2
-afile = open(file_name, mode='r', buffering=-1, encoding=None, errors=None,
+anyfile = open(filename, mode='r' [, buffering])   # Py2
+anyfile = open(filename, mode='r', buffering=-1, encoding=None, errors=None,
     newline=None, closefd=True, opener=None)   # Py3
-afile = open(file_name, 'r', encoding='utf-8')   # Py3, typowe wywołanie
-# file_name (string): nazwa pliku;
+anyfile = open(filename, 'r', encoding='utf-8')   # Py3, typowe wywołanie
+# filename (string): nazwa pliku;
 # mode (string):
 # "r" (czytanie),
 # "w" (pisanie; kasowanie poprzedniej zawartości; utworzy plik, gdy nie istniał),
@@ -60,8 +60,8 @@ afile = open(file_name, 'r', encoding='utf-8')   # Py3, typowe wywołanie
 # "U" (dodatek do poprzednich, uniwersalny translator nowych wierszy, deprecated).
 # encoding : zwykle "utf-8" lub domyślne, używa się w text mode (Py3);
 help(open)
-dir(afile)     # spis metod
-afile.close()   # otwarty plik należy zamknąć
+dir(anyfile)     # spis metod
+anyfile.close()   # otwarty plik należy zamknąć
 </pre><hr>
 
 <p>Odczytywanie danych z otwartego pliku tekstowego (mode "r").
@@ -124,19 +124,19 @@ outfile.flush()
 <p>Różne operacje na pliku (mode "r+").
 
 <hr><pre>
-afile.write("0123456789abcdefgh")
+anyfile.write("0123456789abcdefgh")
 
-# afile.seek(offset[, whence])
+# anyfile.seek(offset[, whence])
 # Funkcja ustawia nową pozycję w pliku i zwraca pozycję po zmianie.
 # offset - ku końcowi (dodatni) lub początkowi (ujemny, tylko Py2)
 # whence=0 (domyślnie), offset &gt; 0, bo od początku pliku
 # whence=1, offset dodatni lub ujemny, bo liczymy od bieżącego położenia w pliku
 # whence=2, offset &lt; 0, bo od końca pliku
 
-afile.seek(5)                 # idź do 6-tego bajtu
-N = afile.tell()              # zwraca aktualną pozycję w pliku (integer)
-S = afile.read(1)             # czytaj 1 bajt w Py2 (czytaj 1 code point w Py3)
-afile.seek(-3,2)              # idź do 3-go bajtu od końca (tylko Py2)
+anyfile.seek(5)                 # idź do 6-tego bajtu
+N = anyfile.tell()              # zwraca aktualną pozycję w pliku (integer)
+S = anyfile.read(1)             # czytaj 1 bajt w Py2 (czytaj 1 code point w Py3)
+anyfile.seek(-3,2)              # idź do 3-go bajtu od końca (tylko Py2)
 </pre><hr>
 
 <h3>PRZYKŁAD</h3>
@@ -144,9 +144,9 @@ afile.seek(-3,2)              # idź do 3-go bajtu od końca (tylko Py2)
 <p>Mamy napisać funkcję wykonującą kopiowanie pliku (Py2).
 
 <hr><pre>
-def copy_file(infile_name, outfile_name):
-    infile = open(infile_name, "r")
-    outfile = open(outfile_name, "w")
+def copy_file(infilename, outfilename):
+    infile = open(infilename, "r")
+    outfile = open(outfilename, "w")
     while True:
         text = infile.read(50)      # ograniczenie
         if text == "":
@@ -161,22 +161,22 @@ Dla plików tekstowych można uprościć kod
 przez zastosowanie iteracji po pliku.
 
 <hr><pre>
-def copy_file(infile_name, outfile_name):
+def copy_file(infilename, outfilename):
     """Kopiowanie plików."""
-    infile = open(infile_name, "r")
-    outfile = open(outfile_name, "w")
+    infile = open(infilename, "r")
+    outfile = open(outfilename, "w")
     for line in infile:
         outfile.write(line)
     infile.close()
     outfile.close()
 </pre><hr><pre>
-def print_file(file_name):
+def print_file(filename):
     """Wypisywanie zawartości pliku na stdout."""
-    afile = open(file_name, "r")
-    for line in afile:
+    anyfile = open(filename, "r")
+    for line in anyfile:
         #print line,   # line zawiera '\n' (Py2)
         print(line, end="")   # line zawiera '\n' (Py3)
-    afile.close()
+    anyfile.close()
 </pre><hr>
 
 <h3>UŻYCIE MENEDŻERA KONTEKSTU (ZALECANE)</h3>

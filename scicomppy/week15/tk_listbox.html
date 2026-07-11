@@ -12,8 +12,8 @@
 
 <h3>INTRODUCTION</h3>
 
-<p>Listboxes are used to select from a group of textual items.
-Depending on how the listbox is configured, the user can select
+<p><em>Listboxes</em> are used to select from a group of textual items.
+Depending on how the <em>Listbox</em> is configured, the user can select
 one or many items from that list.
 
 <hr><pre>
@@ -34,6 +34,9 @@ button = tk.Button(root, text="Choices", command=lambda:
     print([listbox.get(i) for i in listbox.curselection()]))
 button.grid()
 
+listbox.bind('&lt;&lt;ListboxSelect&gt;&gt;', lambda event:
+    print([listbox.get(i) for i in listbox.curselection()]))
+
 root.mainloop()
 </pre><hr><pre>
 Selected keyword arguments in Listbox()
@@ -49,7 +52,7 @@ yscrollcommand   # used to connect the listbox to a scrollbar's "set" method
 </pre><hr><pre>
 Methods in Listbox()
 
-listbox.insert(pos, item)   # pos can be number or tk.END (first available) or tk.ACTIVE
+listbox.insert(pos, item)   # 'pos' can be number or tk.END (first available) or tk.ACTIVE
 listbox.get(pos)
 listbox.delete(pos)
 listbox.delete(0, tk.END)   # delete range
