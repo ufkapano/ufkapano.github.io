@@ -17,17 +17,17 @@ pary dwóch współrzędnych <em>(x, y)</em>.
 W Pythonie naturalnym sposobem reprezentacji będzie para liczb
 typu <em>float</em>. Chcemy taką parę traktować jako jeden 
 złożony obiekt. Przykładowym rozwiązaniem jest lista lub krotka,
-ale zwykle lepsze jest zdefiniowanie nowego typu, inaczej <em>klasy</em>.
+ale zwykle lepsze jest zdefiniowanie nowego typu, inaczej <strong>klasy</strong>.
 Składnia (dwukropek i wcięcia) jest taka jak dla innych wyrażeń złożonych
 w Pythonie. Nazewnictwo klas powinno być typu <em>StudlyCups</em>.
 
 <p>Instrukcja wykonywalna <em>class</em> tworzy obiekt klasy 
 i przypisuje go do nazwy. Zakres instrukcji <em>class</em>
-staje się przestrzenią nazw atrybutów obiektu klasy.
+staje się <strong>przestrzenią nazw</strong> atrybutów obiektu klasy.
 Atrybuty klasy udostępniają stan obiektu i jego zachowanie.
 
 <p>Wywołanie obiektu klasy tworzy za każdym razem nowy
-obiekt instancji klasy.
+obiekt <strong>instancji klasy</strong>.
 Każdy obiekt instancji dziedziczy atrybuty klasy oraz otrzymuje
 własną przestrzeń nazw.
 Przypisania do atrybutów <em>self</em> w metodach tworzą
@@ -58,14 +58,14 @@ x = 7.8
 
 # Zmienne x i point.x to dwie różne wartości.
 # Instancja point jest osobną przestrzenią nazw.
-print("{} {}".format(x, point.x))   # 7.8 3.4
+print(x, point.x)   # 7.8 3.4
 print(point)   # heksadecymalne info
 
 # Obiekt może być parametrem funkcji w zwykły sposób.
 # Nazwa 'point' wewnątrz funkcji jest lokalna i nie koliduje
 # z globalną zmienną point.
 
-def print_point(point):
+def print_point(point):   # zmienna 'point' jest lokalna
     """Wypisz punkt."""
     print("({}, {})".format(point.x, point.y))
 
@@ -143,10 +143,10 @@ print_point(center)   # (50.0, 100.0)
 # Możemy zmieniać stan obiektu przez podstawienia jego atrybutów.
 # Zapiszemy to wewnątrz funkcji, która pozwala na powiększanie prostokąta.
 
-def grow_rect(rect, dw, dh):   # funkcja zmienia oryginał
+def grow_rect(rect, delta_w, delta_h):   # funkcja zmienia oryginał
     """Powiększ prostokąt."""
-    rect.width = rect.width + dw
-    rect.height = rect.height + dh
+    rect.width = rect.width + delta_w
+    rect.height = rect.height + delta_h
 </pre><hr>
 
 <h3>KOPIOWANIE OBIEKTÓW</h3>
@@ -181,12 +181,12 @@ zwracała nowy obiekt klasy <em>Rectangle</em>, który jest w tym samym
 położeniu, ale ma nowe wymiary.
 
 <hr><pre>
-def grow_rect2(rect, dw, dh):   # zwraca nowy obiekt
+def grow_rect2(rect, delta_w, delta_h):   # zwraca nowy obiekt
     """Zwróć powiększony prostokąt."""
     import copy
     rect2 = copy.deepcopy(rect)   # głęboka kopia
-    rect2.width = rect2.width + dw
-    rect2.height = rect2.height + dh
+    rect2.width = rect2.width + delta_w
+    rect2.height = rect2.height + delta_h
     return rect2
 </pre><hr>
 

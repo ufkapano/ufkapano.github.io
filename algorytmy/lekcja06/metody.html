@@ -44,8 +44,8 @@ def set_rect(rect, x, y, w, h):
 
 def find_center(rect):
     """Zwróć środek prostokąta."""
-    x = rect.corner.x + rect.width/2.0
-    y = rect.corner.y + rect.height/2.0
+    x = rect.corner.x + rect.width / 2.0
+    y = rect.corner.y + rect.height / 2.0
     center = Point()
     set_point(center, x, y)
     return center
@@ -110,8 +110,8 @@ pt1.same_point(pt2)
 # ją z klasą (na tym etapie nazwa 'self' jest istotna).
 def show_point(self):   # tworzymy funkcję
     """Wypisz punkt."""
-    print("x = {}".format(self.x))
-    print("y = {}".format(self.y))
+    print("x =", self.x)
+    print("y =", self.y)
 
 Point.show = show_point   # funkcja staje się metodą klasy
 pt1.show()                # wywołanie metody

@@ -305,11 +305,11 @@ class Point:
     def __del__(self):
         """Destruktor punktu."""
         Point.counter -= 1
-        print("del: counter={}".format(Point.counter))
+        print("del: counter = {}".format(Point.counter))
 
-print("counter = {}".format(Point.counter))   # na starcie counter=0
-pt1 = Point(3.4, 5.6)                   # counter=1
-pt2 = Point(4.5, 2.1)                   # counter=2
+print("counter = {}".format(Point.counter))   # na starcie counter = 0
+pt1 = Point(3.4, 5.6)                   # counter = 1
+pt2 = Point(4.5, 2.1)                   # counter = 2
 print("metoda __str__ {} {}".format(pt1, pt2))
 print("metoda __add__ {}".format(pt1 + pt2))   # counter wzrasta do 3 i od razu wraca do 2
 
@@ -317,8 +317,8 @@ print("metoda __add__ {}".format(pt1 + pt2))   # counter wzrasta do 3 i od razu 
 print(pt1.__class__)
 print(pt1.__dict__.keys())   # przestrzeń nazw instancji
 
-del pt1                 # counter=1
-del pt2                 # counter=0
+del pt1                 # counter = 1
+del pt2                 # counter = 0
 dir(Point)              # przestrzeń nazw klasy
 Point.__dict__.keys()   # przestrzeń nazw klasy
 </pre><hr>
