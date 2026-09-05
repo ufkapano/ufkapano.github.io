@@ -52,7 +52,7 @@ Algorithm TransitiveClosure(G):   # total O(n^3) time
                 set T[i,j]^{(0)} to 1
             else
                 set T[i,j]^{(0)} to 0
-    for k from 1 to n do
+    for k from 1 to n do   # zewnętrzna pętla jest po wierzchołku wewnętrznym
         let T^{(k)} be a new matrix n &times; n
             for i from 1 to n do
                 for j from 1 to n do

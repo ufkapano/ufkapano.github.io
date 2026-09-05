@@ -86,12 +86,13 @@ Input: An weighted undirected graph G.
 Output: A minimum spanning tree T.
 Algorithm KruskalMST(G,weight):
     let T be an empty tree (forest)
+    let UF be a disjoint-set data structure
     for each vertex u in V(G) do
-        uf.create(u)   # uf is a disjoint-set data structure
+        UF.create(u)
     for each edge (u,v) in E(G) ordered by weight(u,v), increasing do
-        if uf.find(u) != uf.find(v) then   # different components
+        if UF.find(u) != UF.find(v) then   # different components
            add edge (u,v) to T
-           uf.union(u,v)   # connect components
+           UF.union(u,v)   # connect components
     return T
 </pre><hr>
 
@@ -160,8 +161,9 @@ Input: An weighted undirected graph G.
 Output: A minimum spanning tree T.
 Algorithm BoruvkaMST(G,weight):
     let T be an empty tree (forest)
+    let UF be a disjoint-set data structure
     for each vertex u in V(G) do
-        uf.create(u)   # uf is a disjoint-set data structure
+        UF.create(u)
     set forest to V(G)   # initial connected components (reprezentanci)
     set new_len to |forest|   # będziemy redukować liczbę komponentów
     set old_len to new_len + 1
@@ -174,8 +176,8 @@ Algorithm BoruvkaMST(G,weight):
 
         # Finding the cheapest edges.
         for each edge (s,t) in E(G) do   # O(m) time, s &lt; t is assumed
-            set s2 to uf.find(s)
-            set t2 to uf.find(t)
+            set s2 to UF.find(s)
+            set t2 to UF.find(t)
             if s2 != t2 then   # different components
                 if (weight(s,t),s,t) &lt; MinEdge[s2] then
                     set MinEdge[s2] to (weight(s,t),s,t)
@@ -187,14 +189,14 @@ Algorithm BoruvkaMST(G,weight):
             set (edge_weight,s,t) to MinEdge[u]
             if edge_weight is infinity:   # a disconnected graph
                 continue
-            set s2 to uf.find(s)
-            set t2 to uf.find(t)
+            set s2 to UF.find(s)
+            set t2 to UF.find(t)
             if s2 != t2 then   # different components
-                uf.union(s,t)   # lub uf.union(s2,t2)
+                UF.union(s,t)   # lub UF.union(s2,t2)
                 add (s,t) to T   # dodajemy oryginalną krawędź
 
         # Remove duplicates, total time is O(n).
-        set forest to {uf.find(v) : v in forest}   # zbiór reprezentantów
+        set forest to {UF.find(u) : u in forest}   # zbiór reprezentantów
         set new_len to |forest|
         if new_len is 1 then   # a connected graph
             break

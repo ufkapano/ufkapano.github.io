@@ -51,6 +51,8 @@ nie dodano ich do grafu;
 <hr><pre>
 | Przykład grafu skierowanego i jego listy sąsiedztwa.
 | Złożoność pamięciowa to zwykle O((n+m) log n) bitów.
+| n * pointer = O(n log n)   pamięć tablicy wskaźników
+| m * (int + pointer) = O(m log n)   pamięć list powiązanych
 | 1 --o 2   +---+
 | o   / |   |   |   +---+   +---+    puste
 | |  /  |   | 0 +--o| 1 +--o| 3 +--| łącze
@@ -71,6 +73,8 @@ nie dodano ich do grafu;
 </pre><hr><pre>
 | Przykład grafu nieskierowanego i jego listy sąsiedztwa.
 | Złożoność pamięciowa to zwykle O((n+m) log n) bitów.
+| n * pointer = O(n log n)   pamięć tablicy wskaźników
+| 2 * m * (int + pointer) = O(m log n)   pamięć list powiązanych
 | 1---2   +---+
 | | / |   |   |   +---+   +---+   +---+    puste
 | 0---3   | 0 +--o| 1 +--o| 2 +--o| 3 +--| łącze
@@ -269,7 +273,7 @@ public:
     int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
     void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
     void del_node(T u) override;
-    bool has_node(T u) const override;
+    bool has_node(T u) const override { adj_list.contains(u); } // C++20
     void add_edge(T u, T w, float weight=1.0) override; // wstawienie krawędzi (u,w)
     void add_edge(Edge&lt;T&gt; edge) override {
         add_edge(edge.source, edge.target, edge.weight);
@@ -301,7 +305,7 @@ Na liście sąsiedztwa powinny być przechowywane pary
 (wierzchołek końcowy krawędzi, waga krawędzi).
 
 <p>Inne rozwiązanie to przechowywanie na liście sąsiedztwa wskaźników
-do krawędzi (klasa <em>Edge</em>).
+do krawędzi lub całych krawędzi (klasa <em>Edge</em>).
 Uzupełnić plik <em>graph.hpp</em>, stworzyć funkcję <em>main()</em> 
 i testy sprawdzające działanie interfejsu grafów.
 
@@ -331,7 +335,7 @@ public:
     int outdegree(T u) override { return adj_list[u].size(); } // liczba krawędzi wychodzących z u
     void add_node(T u) override { adj_list[u]; } // dodaj izolowany wierzchołek
     void del_node(T u) override;
-    bool has_node(T u) const override;
+    bool has_node(T u) const override { adj_list.contains(u); } // C++20
     void add_edge(T u, T w, float weight=1.0) override; // wstawienie krawędzi (u,w) z wagą
     void add_edge(Edge&lt;T&gt; edge) override {
         add_edge(edge.source, edge.target, edge.weight);

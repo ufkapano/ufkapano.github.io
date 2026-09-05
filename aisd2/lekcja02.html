@@ -49,12 +49,17 @@ Alternatywą są drzewa binarne samobalansujące się.
 // Jest to otoczka do zarządzania wewnętrznym kopcem.
 // Domyślnie w stałym czasie mamy dostęp do elementu największego.
 // Wstawianie i usuwanie elementów z kolejki zajmuje czas O(log n).
-// Można dostarczyć funkcję porównującą, która będzie użyta do ustalenia
+// Można dostarczyć klasę porównującą, która będzie użyta do ustalenia
 // priorytetów elementów, domyślnie jest to std::less.
 // Przykład użycia kolejki priorytetowej.
 
 //std::priority_queue&lt;int&gt; pq;   // domyślnie std::vector
 //std::priority_queue&lt;int, std::deque&lt;int&gt; &gt; pq;
+
+// Domyślna kolejka maksimum.
+//std::priority_queue&lt;int, std::vector&lt;int&gt;, std::less&lt;int&gt; &gt; pq;
+
+// Kolejka minimum.
 //std::priority_queue&lt;int, std::vector&lt;int&gt;, std::greater&lt;int&gt; &gt; pq;
 </pre><hr><pre>
 // Własna funkcja porównująca.
