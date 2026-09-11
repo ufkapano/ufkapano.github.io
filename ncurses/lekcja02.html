@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Lekcja 2</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
@@ -9,18 +9,182 @@
 <p><a href="index.html">Programowanie z ncurses (index)</a>
 <hr>
 
-<h1>Programowanie z ncurses (2) - procedury wyjściowe</h1>
+<h1>Programowanie z ncurses (2) - procedury wyjĹciowe</h1>
+
+<h3>PROCEDURY WYJĹCIOWE</h3>
+
+<p>Standardowe procedury wyjĹcia C nie dziaĹajÄ z oknami
+<em>ncurses</em>, poniewaĹź <em>ncurses</em> przechwytuje wyjĹcie na terminal.
+Procedury wyjĹcia moĹźna podzieliÄ na trzy kategorie:
+<ul>
+<li>klasa funkcji addch() - drukowanie pojedyĹczych znakĂłw z atrybutami,
+<li>klasa funkcji printw() - drukowanie formatowanego wyjĹcia
+podobnie do printf(),
+<li>klasa funkcji addstr() - drukowanie stringĂłw.
+</ul>
+
+<p>Funkcje moĹźna stosowaÄ wymiennie i jest kwestiÄ gustu, ktĂłre
+zastosujemy.
+
+<p><em>ncurses</em> majÄ znaki wpisane w formacie <em>chtype</em>
+(unsigned long int), a wysokie bity sÄ uĹźywane do przenoszenia
+dodatkowych informacji (atrybuty wideo).
+Normalne znaki w C sÄ typu <em>char</em>.
+W <em>ncurses</em> moĹźna korzystaÄ ze znakĂłw grafiki konturowej,
+ktĂłrych oznaczenia rozpoczynajÄ siÄ od ACS_.
+MoĹźna rĂłwnieĹź rysowaÄ linie poziome i pionowe.
+
+<p>Atrybuty moĹźemy ustawiÄ dla pojedyĹczego znaku wewnÄtrz funkcji
+addch(), np. addch(ch | A_BLINK).
+MoĹźna ĹÄczyÄ kilka atrybutĂłw za pomocÄ symbolu |.
+MoĹźemy rĂłwnieĹź zmieniÄ domyĹlne ustawienia atrybutĂłw
+dla okna funkcjami typu attrset(), attron(), attroff().
+Funkcje attron() i attroff() wĹÄczajÄ i wyĹÄczajÄ podane
+atrybuty. Natomiast attrset() nadpisuje poprzednie ustawienie
+atrybutĂłw przez nowo podane.
+
+<p>Funkcje, ktĂłrych nazwy zawierajÄ <em>chstr</em>,
+dziaĹajÄ na ĹaĹcuchach pseudoznakĂłw.
+
+<p>Funkcje, ktĂłrych nazwy zawierajÄ <em>str</em>,
+dziaĹajÄ na standardowych ĹaĹcuchach zakoĹczonych zerem.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+int move(int y, int x);  // odnosi sie do stdscr
+int wmove(WINDOW *win, int y, int x); 
+
+int addch(chtype ch);   // deklaracja, podstawowa funkcja
+int waddch(WINDOW *win, chtype ch); // deklaracja
+int mvaddch(int y, int x, chtype ch);  // deklaracja
+int mvwaddch(WINDOW *win, int y, int x, chtype ch); // deklaracja
+addch(ch | A_BOLD | A_UNDERLINE);   // zastosowanie - atrybuty
+addch(ACS_HLINE);               // zastosowanie - semigrafika
+
+// te cztery "rozpychajÄ" znaki istniejÄce na ekranie
+int insch(chtype ch);
+int winsch(WINDOW *win, chtype ch);
+int mvinsch(int y, int x, chtype ch);
+int mvwinsch(WINDOW *win, int y, int x, chtype ch);
+
+int echochar(chtype ch);   // deklaracja, addchar+refresh
+int wechochar(WINDOW *win, chtype ch); // deklaracja, waddchar+wrefresh
+
+// WyjĹcie ĹaĹcuchowe - ĹaĹcuchy pseudoznakĂłw
+int addchstr(const chtype *chstr); 
+int addchnstr(const chtype *chstr, int n); 
+int waddchstr(WINDOW *win, const chtype *chstr); 
+int waddchnstr(WINDOW *win, const chtype *chstr, int n); 
+// jeszcze cztery z mv na poczatku
+int mvaddchstr(int y, int x, const chtype *chstr); 
+int mvaddchnstr(int y, int x, const chtype *chstr, int n); 
+int mvwaddchstr(WINDOW *win, int y, int x, const chtype *chstr); 
+int mvwaddchnstr(WINDOW *win, int y, int x, const chtype *chstr, int n); 
+
+// WyjĹcie ĹaĹcuchowe - ĹaĹcuchy zwykĹe
+int addstr(const char *str);
+int addnstr(const char *str, int n);
+int waddstr(WINDOW *win, const char *str);
+int waddnstr(WINDOW *win, const char *str, int n);
+// jeszcze cztery z mv na poczatku
+int mvaddstr(int y, int x, const char *str);
+int mvaddnstr(int y, int x, const char *str, int n);
+int mvwaddstr(WINDOW *win, int y, int x, const char *str);
+int mvwaddnstr(WINDOW *win, int y, int x, const char *str, int n);
+
+// WyjĹcie ĹaĹcuchowe - chyba dziaĹa jak printf()
+int printw(char *str, ...);
+int wprintw(WINDOW *win, char *str, ...);
+int mvprintw(int y, int x, char *str, ...);
+int mvwprintw(WINDOW *win, int y, int x, char *str, ...);
+
+// ramka wokĂłĹ okna
+int box(WINDOW *win, chtype verch, chtype horch); // deklaracja
+box(stdscr, ACS_VLINE, ACS_HLINE); // zastosowanie do stdscr
+box(stdscr, 0, 0);            // zastosowanie do stdscr
+
+// left-side, right-side, top-side, bottom-side, top-left,...
+int border(chtype ls, chtype rs, chtype ts, chtype bs, 
+chtype tl, chtype tr, chtype bl, chtype br);
+
+int wborder(WINDOW *win, chtype ls, chtype rs, chtype ts, chtype bs, 
+chtype tl, chtype tr, chtype bl, chtype br);
+
+// linie
+int hline(chtype ch, int n);
+int vline(chtype ch, int n);
+int whline(WINDOW *win, chtype ch, int n);
+int wvline(WINDOW *win, chtype ch, int n);
+// jeszcze cztery z mv na poczatku
+int mvhline(int y, int x, chtype ch, int n);
+int mvvline(int y, int x, chtype ch, int n);
+int mvwhline(WINDOW *win, int y, int x, chtype ch, int n);
+int mvwvline(WINDOW *win, int y, int x, chtype ch, int n);
+
+// Funkcje czyszczÄce
+int erase(void); // wypisuje puste znaki na caĹym ekranie
+int werase(WINDOW *win);
+int clear(void);
+int wclear(WINDOW *win);
+int clrtobot(void);  // czyszczenie od kursora do doĹu
+int clrtobot(WINDOW *win);
+int clrtoeol(void);  // czyszczenie od kursora do koĹca linii
+int clrtoeol(WINDOW *win);
+
+// CzÄĹciowa lista atrybutĂłw znakĂłw
+A_NORMAL     // tryb normalny
+A_STANDOUT   // uĹźyj najlepszego trybu podĹwietlania terminala
+A_UNDERLINE  // podkreĹlenie
+A_REVERSE   // w negatywie
+A_BLINK    // tekst migoczÄcy
+A_DIM       // poĹowa intensywnoĹci
+A_BOLD     // dodatkowa intensywnoĹÄ
+A_INVIS    // znak niewidoczny
+A_CHARTEXT   // tworzy maskÄ bitowÄ odpowiadajÄcÄ znakowi
+// Wybrane znaki grafiki konturowej
+ACS_ULCORNER   // gĂłrny lewy rĂłg
+ACS_LLCORNER   // dolny lewy rĂłg
+ACS_URCORNER   // gĂłrny prawy rĂłg
+ACS_LRCORNER   // dolny prawy rĂłg
+ACS_HLINE       // linia pozioma
+ACS_VLINE      // linia pionowa
+ACS_TTEE    // T w dol
+ACS_BTEE    // T w gore
+ACS_LTEE    // T w prawo
+ACS_RTEE    // T w lewo
+ACS_PLUS    // duzy +
+
+// Sprawdzenie bieĹźÄcych ustawieĹ tĹa
+chtype getbkgd(WINDOW *win);
+// Ustawianie wĹaĹciwoĹci tĹa
+int bkgd(const chtype ch);
+int wbkgd(WINDOW *win, const chtype ch);
+bkgd('.');  // zastosowanie
+
+int attron(int at);
+int wattron(WINDOW *win, int at);
+attron(A_BOLD); /* zastosowanie */
+attron(A_REVERSE | A_BLINK);
+
+int attroff(int at);
+int wattroff(WINDOW *win, int at);
+
+int attrset(int at);     /* wg Introduction */
+int wattrset(WINDOW *win, int at);
+attrset(A_NORMAL); /* przywrĂłcenie normalnego stanu */
+</pre><hr>
 
 <h3>ZADANIE 2.1</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>znaki</em>.
-Utworzyć w nim pliki <em>Makefile</em> i <em>znaki.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>znaki</em>.
+UtworzyÄ w nim pliki <em>Makefile</em> i <em>znaki.c</em> postaci:
 
 <hr><pre>
 /*
 *  znaki.c
 *
-*  Prezentacja wyjścia znakowego.
+*  Prezentacja wyjĹcia znakowego.
 */
 
 #include &lt;unistd.h&gt;  /* sleep() */
@@ -83,19 +247,19 @@ return 0;
 }
 </pre><hr>
 
-<p>Skompilować i uruchomić program.
-Dodać nowe elementy wyświetlane przez program wg własnego uznania.
+<p>SkompilowaÄ i uruchomiÄ program.
+DodaÄ nowe elementy wyĹwietlane przez program wg wĹasnego uznania.
 
 <h3>ZADANIE 2.2</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>napisy</em>.
-Utworzyć w nim pliki <em>Makefile</em> i <em>napisy.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>napisy</em>.
+UtworzyÄ w nim pliki <em>Makefile</em> i <em>napisy.c</em> postaci:
 
 <hr><pre>
 /*
 *  napisy.c
 *
-*  Prezentacja wyjścia łańcuchowego.
+*  Prezentacja wyjĹcia ĹaĹcuchowego.
 */
 
 #include &lt;unistd.h&gt;   /* sleep() */
@@ -144,172 +308,8 @@ return 0;
 }
 </pre><hr>
 
-<p>Skompilować i uruchomić program.
-Dodać nowe elementy wyświetlane przez program wg własnego uznania.
-
-<h3>FUNKCJE</h3>
-
-<hr><pre>
-int move(int y, int x);  // odnosi sie do stdscr
-int wmove(WINDOW *win, int y, int x); 
-
-int addch(chtype ch);   // deklaracja, podstawowa funkcja
-int waddch(WINDOW *win, chtype ch); // deklaracja
-int mvaddch(int y, int x, chtype ch);  // deklaracja
-int mvwaddch(WINDOW *win, int y, int x, chtype ch); // deklaracja
-addch(ch | A_BOLD | A_UNDERLINE);   // zastosowanie - atrybuty
-addch(ACS_HLINE);               // zastosowanie - semigrafika
-
-// te cztery "rozpychają" znaki istniejące na ekranie
-int insch(chtype ch);
-int winsch(WINDOW *win, chtype ch);
-int mvinsch(int y, int x, chtype ch);
-int mvwinsch(WINDOW *win, int y, int x, chtype ch);
-
-int echochar(chtype ch);   // deklaracja, addchar+refresh
-int wechochar(WINDOW *win, chtype ch); // deklaracja, waddchar+wrefresh
-
-// Wyjście łańcuchowe - łańcuchy pseudoznaków
-int addchstr(const chtype *chstr); 
-int addchnstr(const chtype *chstr, int n); 
-int waddchstr(WINDOW *win, const chtype *chstr); 
-int waddchnstr(WINDOW *win, const chtype *chstr, int n); 
-// jeszcze cztery z mv na poczatku
-int mvaddchstr(int y, int x, const chtype *chstr); 
-int mvaddchnstr(int y, int x, const chtype *chstr, int n); 
-int mvwaddchstr(WINDOW *win, int y, int x, const chtype *chstr); 
-int mvwaddchnstr(WINDOW *win, int y, int x, const chtype *chstr, int n); 
-
-// Wyjście łańcuchowe - łańcuchy zwykłe
-int addstr(const char *str);
-int addnstr(const char *str, int n);
-int waddstr(WINDOW *win, const char *str);
-int waddnstr(WINDOW *win, const char *str, int n);
-// jeszcze cztery z mv na poczatku
-int mvaddstr(int y, int x, const char *str);
-int mvaddnstr(int y, int x, const char *str, int n);
-int mvwaddstr(WINDOW *win, int y, int x, const char *str);
-int mvwaddnstr(WINDOW *win, int y, int x, const char *str, int n);
-
-// Wyjście łańcuchowe - chyba działa jak printf()
-int printw(char *str, ...);
-int wprintw(WINDOW *win, char *str, ...);
-int mvprintw(int y, int x, char *str, ...);
-int mvwprintw(WINDOW *win, int y, int x, char *str, ...);
-
-// ramka wokół okna
-int box(WINDOW *win, chtype verch, chtype horch); // deklaracja
-box(stdscr, ACS_VLINE, ACS_HLINE); // zastosowanie do stdscr
-box(stdscr, 0, 0);            // zastosowanie do stdscr
-
-// left-side, right-side, top-side, bottom-side, top-left,...
-int border(chtype ls, chtype rs, chtype ts, chtype bs, 
-chtype tl, chtype tr, chtype bl, chtype br);
-
-int wborder(WINDOW *win, chtype ls, chtype rs, chtype ts, chtype bs, 
-chtype tl, chtype tr, chtype bl, chtype br);
-
-// linie
-int hline(chtype ch, int n);
-int vline(chtype ch, int n);
-int whline(WINDOW *win, chtype ch, int n);
-int wvline(WINDOW *win, chtype ch, int n);
-// jeszcze cztery z mv na poczatku
-int mvhline(int y, int x, chtype ch, int n);
-int mvvline(int y, int x, chtype ch, int n);
-int mvwhline(WINDOW *win, int y, int x, chtype ch, int n);
-int mvwvline(WINDOW *win, int y, int x, chtype ch, int n);
-
-// Funkcje czyszczące
-int erase(void); // wypisuje puste znaki na całym ekranie
-int werase(WINDOW *win);
-int clear(void);
-int wclear(WINDOW *win);
-int clrtobot(void);  // czyszczenie od kursora do dołu
-int clrtobot(WINDOW *win);
-int clrtoeol(void);  // czyszczenie od kursora do końca linii
-int clrtoeol(WINDOW *win);
-
-// Częściowa lista atrybutów znaków
-A_NORMAL     // tryb normalny
-A_STANDOUT   // użyj najlepszego trybu podświetlania terminala
-A_UNDERLINE  // podkreślenie
-A_REVERSE   // w negatywie
-A_BLINK    // tekst migoczący
-A_DIM       // połowa intensywności
-A_BOLD     // dodatkowa intensywność
-A_INVIS    // znak niewidoczny
-A_CHARTEXT   // tworzy maskę bitową odpowiadającą znakowi
-// Wybrane znaki grafiki konturowej
-ACS_ULCORNER   // górny lewy róg
-ACS_LLCORNER   // dolny lewy róg
-ACS_URCORNER   // górny prawy róg
-ACS_LRCORNER   // dolny prawy róg
-ACS_HLINE       // linia pozioma
-ACS_VLINE      // linia pionowa
-ACS_TTEE    // T w dol
-ACS_BTEE    // T w gore
-ACS_LTEE    // T w prawo
-ACS_RTEE    // T w lewo
-ACS_PLUS    // duzy +
-
-// Sprawdzenie bieżących ustawień tła
-chtype getbkgd(WINDOW *win);
-// Ustawianie właściwości tła
-int bkgd(const chtype ch);
-int wbkgd(WINDOW *win, const chtype ch);
-bkgd('.');  // zastosowanie
-
-int attron(int at);
-int wattron(WINDOW *win, int at);
-attron(A_BOLD); /* zastosowanie */
-attron(A_REVERSE | A_BLINK);
-
-int attroff(int at);
-int wattroff(WINDOW *win, int at);
-
-int attrset(int at);     /* wg Introduction */
-int wattrset(WINDOW *win, int at);
-attrset(A_NORMAL); /* przywrócenie normalnego stanu */
-</pre><hr>
-
-<h3>PROCEDURY WYJŚCIOWE</h3>
-
-<p>Standardowe procedury wyjścia C nie działają z oknami
-<em>ncurses</em>, ponieważ <em>ncurses</em> przechwytuje wyjście na terminal.
-Procedury wyjścia można podzielić na trzy kategorie:
-<ul>
-<li>klasa funkcji addch() - drukowanie pojedyńczych znaków z atrybutami,
-<li>klasa funkcji printw() - drukowanie formatowanego wyjścia
-podobnie do printf(),
-<li>klasa funkcji addstr() - drukowanie stringów.
-</ul>
-
-<p>Funkcje można stosować wymiennie i jest kwestią gustu, które
-zastosujemy.
-
-<p><em>ncurses</em> mają znaki wpisane w formacie <em>chtype</em>
-(unsigned long int), a wysokie bity są używane do przenoszenia
-dodatkowych informacji (atrybuty wideo).
-Normalne znaki w C są typu <em>char</em>.
-W <em>ncurses</em> można korzystać ze znaków grafiki konturowej,
-których oznaczenia rozpoczynają się od ACS_.
-Można również rysować linie poziome i pionowe.
-
-<p>Atrybuty możemy ustawić dla pojedyńczego znaku wewnątrz funkcji
-addch(), np. addch(ch | A_BLINK).
-Można łączyć kilka atrybutów za pomocą symbolu |.
-Możemy również zmienić domyślne ustawienia atrybutów
-dla okna funkcjami typu attrset(), attron(), attroff().
-Funkcje attron() i attroff() włączają i wyłączają podane
-atrybuty. Natomiast attrset() nadpisuje poprzednie ustawienie
-atrybutów przez nowo podane.
-
-<p>Funkcje, których nazwy zawierają <em>chstr</em>,
-działają na łańcuchach pseudoznaków.
-
-<p>Funkcje, których nazwy zawierają <em>str</em>,
-działają na standardowych łańcuchach zakończonych zerem.
+<p>SkompilowaÄ i uruchomiÄ program.
+DodaÄ nowe elementy wyĹwietlane przez program wg wĹasnego uznania.
 
 <hr>
 <p><a href="index.html">Programowanie z ncurses (index)</a>

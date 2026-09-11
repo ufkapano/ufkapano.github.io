@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Lekcja 1</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
@@ -11,10 +11,142 @@
 
 <h1>Programowanie z ncurses (1) - wprowadzenie</h1>
 
+<h3>CHARAKTERYSTYKA BIBLIOTEKI NCURSES</h3>
+
+<p><em>ncurses</em> to darmowa implementacja klasycznej uniksowej
+biblioteki obsĹugi ekranu <em>curses</em>.
+UdostÄpnia ona prosty wysokopoziomowy interfejs do kontroli
+i zarzÄdzania ekranem. Zawiera rĂłwnieĹź bardzo uĹźyteczne procedury
+sĹuĹźÄce do obsĹugi klawiatury i wejĹcia myszy, tworzenia
+i zarzÄdzania wieloma oknami, obsĹugi menu, formularzy i panelĂłw.
+
+<p><em>ncurses</em> uogĂłlnia interfejs pomiÄdzy programem aplikacji
+i ekranem lub terminalem, na ktĂłrym aplikacja jest uruchamiana.
+<em>ncurses</em> uĹźywa terminfo, czyli formatu bazodanowego
+do opisu wĹaĹciwoĹci tysiÄcy rĂłĹźnych terminali.
+
+<p>API curses wydaje siÄ byÄ archaizmem w czasach, gdy dominuje
+X, Motif i Tcl/Tk. Jednak UNIX wciÄĹź wspiera linie poleceĹ,
+a w X mamy <em>xterm</em>.
+GĹĂłwne zalety API curses to prostota i wsteczna przenoĹnoĹÄ
+na terminale o staĹej szerokoĹci znakĂłw.
+
+<p>Wybrane programy napisane w ncurses: 
+nvi (edytor),
+lynx (web browser),
+Midnight Commander (menedĹźer plikĂłw), 
+mutt (mail client),
+pinfo (czytnik info),
+tin (newsreader),
+dselect (zarzÄdzanie pakietami deb), aptitude, 
+w3m (przeglÄdarka WWW),
+calcurse (kalendarz).
+
+<p>Debian Sarge ma <em>ncurses</em> w wersji 5.4-4.
+Pliki nagĹĂłwkowe znajdujÄ siÄ w katalogu /usr/include/.
+Dokumentacja jest w katalogu /usr/share/doc/libncurses5-dev.
+
+<h3>KOMPILACJA Z ncurses</h3>
+
+<p>Aby skompilowaÄ program z <em>ncurses</em>, musimy wĹÄczyÄ
+do kodu ĹşrĂłdĹowego nagĹĂłwek curses.h.
+W Debianie ncurses.h to link symboliczny do curses.h.
+Przy scalaniu trzeba doĹÄczyÄ opcjÄ -lcurses.
+<em>ncurses</em> automatycznie wĹÄcza stdio.h.
+
+<h3>TERMINOLOGIA I PODSTAWOWE KONCEPCJE</h3>
+
+<p><em>Ekran (screen)</em> to konsola 
+lub fizyczny ekran terminala w trybie znakowym.
+Wg Introduction: jest to podzbiĂłr okien o wielkoĹci
+ekranu terminala.
+
+<p><em>Okno (window)</em> to niezaleĹźny prostokÄtny obszar 
+wyĹwietlany na ekranie.
+Nie musi mieÄ rozmiaru takiego jak ekran.
+
+<p>Mamy dwa wskaĹşniki do struktur danych WINDOW:
+<em>stdscr</em> (standard screen, ekran do modyfikowania) 
+i <em>curscr</em> (current screen, bieĹźÄcy ekran).
+Oba majÄ rozmiar caĹego ekranu.
+
+<p><em>OdĹwieĹźenie</em> odnosi siÄ do wywoĹania funkcji refresh()
+[lub wrefresh()] lub procesu logicznego. 
+Jest to proces dostosowania ekranu fizycznego tak, aby odzwierciedlaĹ
+zawartoĹÄ struktury WINDOW.
+Programista nanosi zmiany na <em>stdscr</em> 
+(nigdy bezpoĹrednio na <em>curscr</em>), 
+a funkcja refresh() [lub wrefresh()] uaktualnia <em>curscr</em>.
+W praktyce dla polepszenia wydajnoĹci odĹwieĹźane sÄ tylko te czÄĹci 
+okna, ktĂłre zostaĹy zmienione.
+
+<p><em>Kursor</em> odnosi siÄ do miejsca, w ktĂłrym zostanie wyĹwietlony 
+nastÄpny znak. Pewne funkcje przesuwajÄ poĹoĹźenie kursora
+po wykonaniu swojej pracy, np. po wyĹwietleniu znaku czy napisu.
+
+<p>Lewy gĂłrny rĂłg okna ma wspĂłĹrzÄdne (0,0), a prawy dolny
+(LINE-1,COLUMNS-1), czyli mamy wspĂłĹrzÄdne (y,x).
+
+<p><em>ncurses</em> utrzymuje dwie zmienne globalne LINES
+i COLUMNS, ktĂłre zawierajÄ liczbÄ wierszy i kolumn dla rozmiaru
+bieĹźÄcego okna. Jednak do okreĹlenia rozmiaru okna, z ktĂłrym
+w danym momencie pracujemy, lepiej uĹźyÄ funkcji getmaxyx().
+<em>ncurses</em> definiuje wiele staĹych, np.
+
+<hr><pre>
+#define  TRUE   1
+#define  FALSE  0
+#define ERR     (-1)
+#define OK      (0)
+</pre><hr>
+
+<h3>KONWENCJA NAZW FUNKCJI</h3>
+
+<p>Wiele funkcji <em>ncurses</em> domyĹlnie uĹźywa okna <em>stdscr</em>.
+Nazwy funkcji, ktĂłre mogÄ dziaĹaÄ na dowolnym oknie,
+sÄ poprzedzone znakiem <em>w</em>, a pierwszy argument funkcji
+ma typ <em>WINDOW *</em>.
+
+<p>Inna konwencja to ĹÄczenie przesuniÄcia z innÄ akcjÄ w jednÄ
+funkcjÄ, np. move(y,x) i addch(ch) moĹźemy wykonaÄ ĹÄcznie
+funkcjÄ mvaddch(y,x,ch).
+Podobnie wmove(win,y,x) i waddch(win,ch) moĹźemy wykonaÄ ĹÄcznie
+funkcjÄ mvwaddch(win,y,x,ch) [najpierw win, potem (y,x)].
+
+<p>Funkcje zwracajÄce wartoĹÄ caĹkowitÄ, zwykle zwracajÄ <em>OK</em>
+w przypadku powodzenia i <em>ERR</em> w przypadku bĹÄdu.
+Funkcje zwracajÄce wskaĹşnik zwykle zwracajÄ <em>NULL</em>
+w przypadku niepowodzenia.
+
+<h3>INICJALIZACJA I KOĹCZENIE DZIAĹANIA</h3>
+
+<p>Inicjalizacja: initscr() lub newterm() 
+[jeĹźeli bÄdziemy korzystaÄ z wiÄcej niĹź jednego terminala].
+
+<p>JeĹźeli uĹźyliĹmy tylko initscr(), to na koĹcu potrzeba tylko
+uruchomiÄ endwin().
+
+<p>JeĹźeli byĹo newterm(), to trzeba dla kaĹźdego terminala wywoĹaÄ
+endwin() i delscreen() [zwolnienie pamiÄci].
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+initscr();
+endwin();
+refresh();  /* jedna z rodziny */
+getmaxyx();
+printw();  /* jedna z rodziny */
+
+newterm();
+set_term();
+delscreen();
+</pre><hr>
+
 <h3>ZADANIE 1.1</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>hello</em>.
-Utworzyć w nim plik <em>hello.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>hello</em>.
+UtworzyÄ w nim plik <em>hello.c</em> postaci:
 
 <hr><pre>
 /*
@@ -30,8 +162,8 @@ int main(void)
 int xmax, ymax;
 
 if (initscr() == NULL) {
-	fprintf(stderr,"Error: initscr()\n");
-	exit(1);
+    fprintf(stderr,"Error: initscr()\n");
+    exit(1);
 }
 getmaxyx(stdscr,ymax,xmax);
 printw("Hello!\n");
@@ -44,15 +176,15 @@ return 0;
 }
 </pre><hr>
 
-<p>Skompilować program poleceniem: 
+<p>SkompilowaÄ program poleceniem: 
 <tt>gcc -Wall -ansi -lncurses -o hello hello.c</tt>
 
-<p>Stworzyć plik <em>Makefile</em> wspomagający kompilację.
+<p>StworzyÄ plik <em>Makefile</em> wspomagajÄcy kompilacjÄ.
 
 <h3>ZADANIE 1.2</h3>
 
-<p>W katalogu <em>hello</em> stworzyć plik <em>hello2.c</em>
-korzystającego z innej metody tworzenia okien.
+<p>W katalogu <em>hello</em> stworzyÄ plik <em>hello2.c</em>
+korzystajÄcego z innej metody tworzenia okien.
 
 <hr><pre>
 /*
@@ -69,16 +201,16 @@ SCREEN *ekran;
 
 ekran= newterm(NULL, stdout, stdin);
 if (ekran == NULL) {
-	fprintf(stderr,"Error: newterm()\n");
-	exit(1);
+    fprintf(stderr,"Error: newterm()\n");
+    exit(1);
 }
 /* Ustawienie "ekran" jako biezacego terminalu */
 if (set_term(ekran) == NULL) {
 /* Jezeli sie nie uda, to i tak trzeba zwolnic pamiec */
-	endwin();
-	delscreen(ekran);  /* zwolnienie pamieci  */
-	fprintf(stderr,"Error: set_term()\n");
-	exit(1);
+    endwin();
+    delscreen(ekran);  /* zwolnienie pamieci  */
+    fprintf(stderr,"Error: set_term()\n");
+    exit(1);
 }
 printw("Hello! To okno curses stworzono przez newterm()\n");
 refresh();
@@ -94,137 +226,9 @@ return 0;
 }
 </pre><hr>
 
-<h3>FUNKCJE</h3>
+<h3>ZADANIE 1.3</h3>
 
-<hr><pre>
-initscr();
-endwin();
-refresh();  /* jedna z rodziny */
-getmaxyx();
-printw();  /* jedna z rodziny */
-
-newterm();
-set_term();
-delscreen();
-</pre><hr>
-
-<h3>CHARAKTERYSTYKA BIBLIOTEKI NCURSES</h3>
-
-<p><em>ncurses</em> to darmowa implementacja klasycznej uniksowej
-biblioteki obsługi ekranu <em>curses</em>.
-Udostępnia ona prosty wysokopoziomowy interfejs do kontroli
-i zarządzania ekranem. Zawiera również bardzo użyteczne procedury
-służące do obsługi klawiatury i wejścia myszy, tworzenia
-i zarządzania wieloma oknami, obsługi menu, formularzy i panelów.
-
-<p><em>ncurses</em> uogólnia interfejs pomiędzy programem aplikacji
-i ekranem lub terminalem, na którym aplikacja jest uruchamiana.
-<em>ncurses</em> używa terminfo, czyli formatu bazodanowego
-do opisu właściwości tysięcy różnych terminali.
-
-<p>API curses wydaje się być archaizmem w czasach, gdy dominuje
-X, Motif i Tcl/Tk. Jednak UNIX wciąż wspiera linie poleceń,
-a w X mamy <em>xterm</em>.
-Główne zalety API curses to prostota i wsteczna przenośność
-na terminale o stałej szerokości znaków.
-
-<p>Wybrane programy napisane w ncurses: 
-nvi (edytor),
-lynx (web browser),
-Midnight Commander (menedżer plików), 
-mutt (mail client),
-pinfo (czytnik info),
-tin (newsreader),
-dselect (zarządzanie pakietami deb), aptitude, 
-w3m (przeglądarka WWW),
-calcurse (kalendarz).
-
-<p>Debian Sarge ma <em>ncurses</em> w wersji 5.4-4.
-Pliki nagłówkowe znajdują się w katalogu /usr/include/.
-Dokumentacja jest w katalogu /usr/share/doc/libncurses5-dev.
-
-<h3>KOMPILACJA Z ncurses</h3>
-
-<p>Aby skompilować program z <em>ncurses</em>, musimy włączyć
-do kodu źródłowego nagłówek curses.h.
-W Debianie ncurses.h to link symboliczny do curses.h.
-Przy scalaniu trzeba dołączyć opcję -lcurses.
-<em>ncurses</em> automatycznie włącza stdio.h.
-
-<h3>TERMINOLOGIA I PODSTAWOWE KONCEPCJE</h3>
-
-<p><em>Ekran (screen)</em> to konsola 
-lub fizyczny ekran terminala w trybie znakowym.
-Wg Introduction: jest to podzbiór okien o wielkości
-ekranu terminala.
-
-<p><em>Okno (window)</em> to niezależny prostokątny obszar 
-wyświetlany na ekranie.
-Nie musi mieć rozmiaru takiego jak ekran.
-
-<p>Mamy dwa wskaźniki do struktur danych WINDOW:
-<em>stdscr</em> (standard screen, ekran do modyfikowania) 
-i <em>curscr</em> (current screen, bieżący ekran).
-Oba mają rozmiar całego ekranu.
-
-<p><em>Odświeżenie</em> odnosi się do wywołania funkcji refresh()
-[lub wrefresh()] lub procesu logicznego. 
-Jest to proces dostosowania ekranu fizycznego tak, aby odzwierciedlał
-zawartość struktury WINDOW.
-Programista nanosi zmiany na <em>stdscr</em> 
-(nigdy bezpośrednio na <em>curscr</em>), 
-a funkcja refresh() [lub wrefresh()] uaktualnia <em>curscr</em>.
-W praktyce dla polepszenia wydajności odświeżane są tylko te części 
-okna, które zostały zmienione.
-
-<p><em>Kursor</em> odnosi się do miejsca, w którym zostanie wyświetlony 
-następny znak. Pewne funkcje przesuwają położenie kursora
-po wykonaniu swojej pracy, np. po wyświetleniu znaku czy napisu.
-
-<p>Lewy górny róg okna ma współrzędne (0,0), a prawy dolny
-(LINE-1,COLUMNS-1), czyli mamy współrzędne (y,x).
-
-<p><em>ncurses</em> utrzymuje dwie zmienne globalne LINES
-i COLUMNS, które zawierają liczbę wierszy i kolumn dla rozmiaru
-bieżącego okna. Jednak do określenia rozmiaru okna, z którym
-w danym momencie pracujemy, lepiej użyć funkcji getmaxyx().
-<em>ncurses</em> definiuje wiele stałych, np.
-
-<hr><pre>
-#define  TRUE   1
-#define  FALSE  0
-#define ERR     (-1)
-#define OK      (0)
-</pre><hr>
-
-<h3>KONWENCJA NAZW FUNKCJI</h3>
-
-<p>Wiele funkcji <em>ncurses</em> domyślnie używa okna <em>stdscr</em>.
-Nazwy funkcji, które mogą działać na dowolnym oknie,
-są poprzedzone znakiem <em>w</em>, a pierwszy argument funkcji
-ma typ <em>WINDOW *</em>.
-
-<p>Inna konwencja to łączenie przesunięcia z inną akcją w jedną
-funkcję, np. move(y,x) i addch(ch) możemy wykonać łącznie
-funkcją mvaddch(y,x,ch).
-Podobnie wmove(win,y,x) i waddch(win,ch) możemy wykonać łącznie
-funkcją mvwaddch(win,y,x,ch) [najpierw win, potem (y,x)].
-
-<p>Funkcje zwracające wartość całkowitą, zwykle zwracają <em>OK</em>
-w przypadku powodzenia i <em>ERR</em> w przypadku błędu.
-Funkcje zwracające wskaźnik zwykle zwracają <em>NULL</em>
-w przypadku niepowodzenia.
-
-<h3>INICJALIZACJA I KOŃCZENIE DZIAŁANIA</h3>
-
-<p>Inicjalizacja: initscr() lub newterm() 
-[jeżeli będziemy korzystać z więcej niż jednego terminala].
-
-<p>Jeżeli użyliśmy tylko initscr(), to na końcu potrzeba tylko
-uruchomić endwin().
-
-<p>Jeżeli było newterm(), to trzeba dla każdego terminala wywołać
-endwin() i delscreen() [zwolnienie pamięci].
+<p>X
 
 <hr>
 <p><a href="index.html">Programowanie z ncurses (index)</a>

@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Lekcja 9</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
@@ -9,12 +9,12 @@
 <p><a href="index.html">Programowanie z ncurses (index)</a>
 <hr>
 
-<h1>Programowanie z ncurses (9) - różności</h1>
+<h1>Programowanie z ncurses (9) - rĂłĹźnoĹci</h1>
 
 <h3>ZADANIE 9.1</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>menu2dim</em>.
-Utworzyć w nim pliki <em>Makefile</em> i <em>menu2dim.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>menu2dim</em>.
+UtworzyÄ w nim pliki <em>Makefile</em> i <em>menu2dim.c</em> postaci:
 
 <hr><pre>
 /*
@@ -52,7 +52,7 @@ int c;
 /* Inicjalizacja etykiet. */
 for (i= 0; i &lt; YLICZBA; ++i)
 for (j= 0; j &lt; XLICZBA; ++j)
-	etykiety[i][j]= '.';
+    etykiety[i][j]= '.';
 initscr();
 clear();
 noecho();
@@ -67,23 +67,23 @@ win= newwin(YSIZE, XSIZE, starty, startx);
 keypad(win, TRUE);
 print_menu(win, yrewers, xrewers);
 while (ypozycja == 0 || xpozycja == 0) {
-	c= wgetch(win);    /* troche magiczne obliczenia */
-	if (c == KEY_UP) { 
-		yrewers= (yrewers + YLICZBA -2) % YLICZBA + 1;
-	} else if (c == KEY_DOWN) {
-		yrewers= yrewers % YLICZBA + 1;
-	} else if (c == KEY_LEFT) {
-		xrewers= (xrewers + XLICZBA -2) % XLICZBA + 1;
-	} else if (c == KEY_RIGHT) {
-		xrewers= xrewers % XLICZBA + 1;
-	} else if (c == '\n') {
-		ypozycja= yrewers;
-		xpozycja= xrewers;
-	} else {
-		etykiety[yrewers-1][xrewers-1]= c;
-	}
-	print_menu(win, yrewers, xrewers);
-}	
+    c= wgetch(win);    /* troche magiczne obliczenia */
+    if (c == KEY_UP) { 
+        yrewers= (yrewers + YLICZBA -2) % YLICZBA + 1;
+    } else if (c == KEY_DOWN) {
+        yrewers= yrewers % YLICZBA + 1;
+    } else if (c == KEY_LEFT) {
+        xrewers= (xrewers + XLICZBA -2) % XLICZBA + 1;
+    } else if (c == KEY_RIGHT) {
+        xrewers= xrewers % XLICZBA + 1;
+    } else if (c == '\n') {
+        ypozycja= yrewers;
+        xpozycja= xrewers;
+    } else {
+        etykiety[yrewers-1][xrewers-1]= c;
+    }
+    print_menu(win, yrewers, xrewers);
+}    
 mvprintw(ymax-2, 0, "Wybrano pozycje (y,x) = (%d,%d) \n", ypozycja, xpozycja);
 refresh();
 delwin(win);
@@ -99,22 +99,22 @@ int x, y, i, j;
 box(win, 0, 0);       /* ramka na okno */
 for (i= 0; i &lt; YLICZBA; ++i)
 for (j= 0; j &lt; XLICZBA; ++j) {
-	y= 1+i;
-	x= 1+2*j;
-	if ((yrewers == i+1) &amp;&amp; (xrewers == j+1)) {
-	/* wyswietl te pozycje w rewersie */
-		wattron(win, A_REVERSE); 
-		mvwprintw(win, y, x, "%c", etykiety[i][j]);
-		wattroff(win, A_REVERSE);
-	} else {
-		mvwprintw(win, y, x, "%c", etykiety[i][j]);
-	}
+    y= 1+i;
+    x= 1+2*j;
+    if ((yrewers == i+1) &amp;&amp; (xrewers == j+1)) {
+    /* wyswietl te pozycje w rewersie */
+        wattron(win, A_REVERSE); 
+        mvwprintw(win, y, x, "%c", etykiety[i][j]);
+        wattroff(win, A_REVERSE);
+    } else {
+        mvwprintw(win, y, x, "%c", etykiety[i][j]);
+    }
 }
 wrefresh(win);
 }
 </pre><hr>
 
-<p>Skompilować i uruchomić program.
+<p>SkompilowaÄ i uruchomiÄ program.
 
 
 <hr>

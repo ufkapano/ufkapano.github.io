@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Lekcja 5</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
@@ -9,12 +9,55 @@
 <p><a href="index.html">Programowanie z ncurses (index)</a>
 <hr>
 
-<h1>Programowanie z ncurses (5) - używanie kolorów</h1>
+<h1>Programowanie z ncurses (5) - uĹźywanie kolorĂłw</h1>
+
+<h3>UĹťYWANIE KOLORU</h3>
+
+<p>Funkcja has_colors() sprawdza, czy terminal obsĹuguje kolor.
+Funkcja start_color() uruchamia podsystem kolorĂłw w <em>ncurses</em>.
+
+<p>Maksymalna liczba kolorĂłw obsĹugiwana przez terminal przechowywana 
+jest w zmiennej <em>COLORS</em>, a maksymalna liczba par kolorĂłw
+w zmiennej <em>COLOR_PAIRS</em>.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+bool has_colors(void);  /* wartoĹÄ TRUE lub FALSE */
+start_color();
+/* Numery par zgodne z numerami kolorow, jak w Introduction. */
+init_pair(1, COLOR_RED, COLOR_BLACK);
+init_pair(2, COLOR_GREEN, COLOR_BLACK);
+init_pair(3, COLOR_YELLOW, COLOR_BLACK);
+init_pair(4, COLOR_BLUE, COLOR_BLACK);
+init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
+init_pair(6, COLOR_CYAN, COLOR_BLACK);
+init_pair(7, COLOR_WHITE, COLOR_BLACK);
+
+attron(COLOR_PAIR(1)); /* zastosowanie - ustawienie koloru */
+attrset(COLOR_PAIR(3));      /* zastosowanie - ustawienie koloru */
+
+chgat(n,at,kolor,NULL);
+    /* Zmiana atrybutu "at" od bieĹźÄcego poĹoĹźenia dla n znakĂłw. */
+    /* "kolor" oznacza indeks koloru, 0 to brak koloru. */
+    /* Na koĹcu zawsze musi byÄ NULL. */
+chgat(-1,A_BLINK,0,NULL); 
+    /* zmiana atrybutu od bieĹźÄcego poĹoĹźenia kursora do koĹca linii */
+
+init_color(COLOR_RED,700,0,0);
+    /* Wzmocnienie koloru czerwonego domyĹlnego. */
+    /* Parametry 2, 3 i 4 to RGB min = 0, max = 1000. */
+    /* Standardowo czerwony ma 1000(r), 0(g), 0(b). */
+can_change_color();       /* sprawdzenie moĹźliwoĹci terminala */
+
+Dodatkowe informacje:
+man curs_color(3x)
+</pre><hr>
 
 <h3>ZADANIE 5.1</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>kolor</em>.
-Utworzyć w nim pliki <em>Makefile</em> i <em>kolor.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>kolor</em>.
+UtworzyÄ w nim pliki <em>Makefile</em> i <em>kolor.c</em> postaci:
 
 <hr><pre>
 /*
@@ -33,18 +76,18 @@ initscr();
 getmaxyx(stdscr, ymax, xmax);
 
 if (has_colors() == FALSE) {
-	printw("Terminal does not support color\n");
-	refresh();
-	sleep(2);
-	endwin(); /* konczymy curses */
-	exit(1);
+    printw("Terminal does not support color\n");
+    refresh();
+    sleep(2);
+    endwin(); /* konczymy curses */
+    exit(1);
 }
 if (start_color() == ERR) {
-	printw("Error: start_color()\n");
-	refresh();
-	sleep(2);
-	endwin(); /* konczymy curses */
-	exit(1);
+    printw("Error: start_color()\n");
+    refresh();
+    sleep(2);
+    endwin(); /* konczymy curses */
+    exit(1);
 }
 /* Standardowe ustawienia par kolorow. */
 /* Wpisalem liczby zgodne z numerami kolorow, jak w Introduction. */
@@ -95,50 +138,7 @@ return 0;
 }
 </pre><hr>
 
-<p>Skompilować i uruchomić program.
-
-<h3>FUNKCJE</h3>
-
-<hr><pre>
-bool has_colors(void);  /* wartość TRUE lub FALSE */
-start_color();
-/* Numery par zgodne z numerami kolorow, jak w Introduction. */
-init_pair(1, COLOR_RED, COLOR_BLACK);
-init_pair(2, COLOR_GREEN, COLOR_BLACK);
-init_pair(3, COLOR_YELLOW, COLOR_BLACK);
-init_pair(4, COLOR_BLUE, COLOR_BLACK);
-init_pair(5, COLOR_MAGENTA, COLOR_BLACK);
-init_pair(6, COLOR_CYAN, COLOR_BLACK);
-init_pair(7, COLOR_WHITE, COLOR_BLACK);
-
-attron(COLOR_PAIR(1)); /* zastosowanie - ustawienie koloru */
-attrset(COLOR_PAIR(3));      /* zastosowanie - ustawienie koloru */
-
-chgat(n,at,kolor,NULL);
-	/* Zmiana atrybutu "at" od bieżącego położenia dla n znaków. */
-	/* "kolor" oznacza indeks koloru, 0 to brak koloru. */
-	/* Na końcu zawsze musi być NULL. */
-chgat(-1,A_BLINK,0,NULL); 
-	/* zmiana atrybutu od bieżącego położenia kursora do końca linii */
-
-init_color(COLOR_RED,700,0,0);
-	/* Wzmocnienie koloru czerwonego domyślnego. */
-	/* Parametry 2, 3 i 4 to RGB min = 0, max = 1000. */
-	/* Standardowo czerwony ma 1000(r), 0(g), 0(b). */
-can_change_color();       /* sprawdzenie możliwości terminala */
-
-Dodatkowe informacje:
-man curs_color(3x)
-</pre><hr>
-
-<h3>UŻYWANIE KOLORU</h3>
-
-<p>Funkcja has_colors() sprawdza, czy terminal obsługuje kolor.
-Funkcja start_color() uruchamia podsystem kolorów w <em>ncurses</em>.
-
-<p>Maksymalna liczba kolorów obsługiwana przez terminal przechowywana 
-jest w zmiennej <em>COLORS</em>, a maksymalna liczba par kolorów
-w zmiennej <em>COLOR_PAIRS</em>.
+<p>SkompilowaÄ i uruchomiÄ program.
 
 <hr>
 <p><a href="index.html">Programowanie z ncurses (index)</a>

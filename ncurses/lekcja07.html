@@ -1,7 +1,7 @@
 <html>
 <head>
 <title>Lekcja 7</title>
-<meta http-equiv="content-type" content="text/html; charset=iso-8859-2">
+<meta HTTP-EQUIV="content-type" CONTENT="text/html; charset=utf-8">
 </head>
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
@@ -9,12 +9,28 @@
 <p><a href="index.html">Programowanie z ncurses (index)</a>
 <hr>
 
-<h1>Programowanie z ncurses (7) - używanie menu</h1>
+<h1>Programowanie z ncurses (7) - uĹźywanie menu</h1>
+
+<h3>UĹťYWANIE BIBLIOTEKI MENU</h3>
+
+<p>Aby uĹźyÄ biblioteki menu, naleĹźy do kodu doĹÄczyÄ nagĹĂłwki
+
+<pre>
+#include &lt;curses.h&gt;
+#include &lt;menu.h&gt;
+</pre>
+
+<p>Przy scalaniu trzeba doĹÄczyÄ opcje <em>-lcurses -lmenu</em>.
+
+<h3>FUNKCJE</h3>
+
+<hr><pre>
+</pre><hr>
 
 <h3>ZADANIE 7.1</h3>
 
-<p>W katalogu domowym utworzyć podkatalog <em>menu</em>.
-Utworzyć w nim pliki <em>Makefile</em> i <em>menu.c</em> postaci:
+<p>W katalogu domowym utworzyÄ podkatalog <em>menu</em>.
+UtworzyÄ w nim pliki <em>Makefile</em> i <em>menu.c</em> postaci:
 
 <hr><pre>
 /*
@@ -32,11 +48,11 @@ Utworzyć w nim pliki <em>Makefile</em> i <em>menu.c</em> postaci:
 void print_menu(WINDOW *menu_win, int rewers);
 
 char *etykiety[]= {                /* etykiety do menu */
-	"Koniec pracy z bazą danych",
-	"Pomoc i dodatkowe informacje",
-	"Aktualizacja bazy danych",
-	"Zapytania do bazy danych",
-	"Pisemne raporty (LaTeX, HTML)"
+    "Koniec pracy z bazÄ danych",
+    "Pomoc i dodatkowe informacje",
+    "Aktualizacja bazy danych",
+    "Zapytania do bazy danych",
+    "Pisemne raporty (LaTeX, HTML)"
 };
 /* Obliczenie liczby pozycji w menu */
 int liczba= sizeof(etykiety) / sizeof(char *);
@@ -58,26 +74,26 @@ cbreak();
 getmaxyx(stdscr, ymax, xmax);
 startx= (xmax - XSIZE) / 2;
 starty= (ymax - YSIZE) / 2;
-		
+        
 menu_win= newwin(YSIZE, XSIZE, starty, startx);
 keypad(menu_win, TRUE);
 mvprintw(0, 0, "Uzyj kursora do poruszania. Nacisnij ENTER aby wybrac pozycje.");
 refresh();
 print_menu(menu_win, rewers);
 while (pozycja == -1) {
-	c= wgetch(menu_win);
-	if (c == KEY_UP) { 
-		rewers= (rewers + liczba -1) % liczba;
-	} else if (c == KEY_DOWN) {
-		rewers= (rewers + 1) % liczba;
-	} else if (c == '\n') {
-		pozycja= rewers;
-	} else {
-		mvprintw(ymax-1, 0, "Nacisnieto znak = %3d drukowany jako '%c'", c, c);
-		refresh();
-	}
-	print_menu(menu_win, rewers);
-}	
+    c= wgetch(menu_win);
+    if (c == KEY_UP) { 
+        rewers= (rewers + liczba -1) % liczba;
+    } else if (c == KEY_DOWN) {
+        rewers= (rewers + 1) % liczba;
+    } else if (c == '\n') {
+        pozycja= rewers;
+    } else {
+        mvprintw(ymax-1, 0, "Nacisnieto znak = %3d drukowany jako '%c'", c, c);
+        refresh();
+    }
+    print_menu(menu_win, rewers);
+}    
 mvprintw(ymax-2, 0, "Wybrano pozycje %d z etykieta %s\n", pozycja+1, etykiety[pozycja]);
 clrtoeol();
 refresh();
@@ -89,42 +105,26 @@ return 0;
 
 void print_menu(WINDOW *menu_win, int rewers)
 {
-int x, y, i;	
+int x, y, i;    
 
 x= 2;
 y= 2;
 box(menu_win, 0, 0);       /* ramka na okno */
 for (i= 0; i &lt; liczba; ++i) {
-	if (rewers == i) {  /* wyswietl te pozycje w rewersie */
-		wattron(menu_win, A_REVERSE); 
-		mvwprintw(menu_win, y, x, "%s", etykiety[i]);
-		wattroff(menu_win, A_REVERSE);
-	} else {
-		mvwprintw(menu_win, y, x, "%s", etykiety[i]);
-	}
-	++y;
+    if (rewers == i) {  /* wyswietl te pozycje w rewersie */
+        wattron(menu_win, A_REVERSE); 
+        mvwprintw(menu_win, y, x, "%s", etykiety[i]);
+        wattroff(menu_win, A_REVERSE);
+    } else {
+        mvwprintw(menu_win, y, x, "%s", etykiety[i]);
+    }
+    ++y;
 }
 wrefresh(menu_win);
 }
 </pre><hr>
 
-<p>Skompilować i uruchomić program.
-
-<h3>FUNKCJE</h3>
-
-<hr><pre>
-</pre><hr>
-
-<h3>UŻYWANIE BIBLIOTEKI MENU</h3>
-
-<p>Aby użyć biblioteki menu, należy do kodu dołączyć nagłówki
-
-<pre>
-#include &lt;curses.h&gt;
-#include &lt;menu.h&gt;
-</pre>
-
-<p>Przy scalaniu trzeba dołączyć opcje <em>-lcurses -lmenu</em>.
+<p>SkompilowaÄ i uruchomiÄ program.
 
 
 <hr>
