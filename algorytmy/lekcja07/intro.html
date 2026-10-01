@@ -120,11 +120,25 @@ L = []
 try:
     print(L[1])
 except IndexError:            # przechwycenie wyjątku
-    print("mam wyjątek")   # nasz program obsługi
+    print("mam wyjątek")   # nasz program obsługi wyjątku
 else:
     print("nie było wyjątku")
 print("kontynuuję")
-</pre><hr><pre>
+</pre><hr>
+
+<p>Jeżeli podczas wykonywania bloku <em>try</em> nie wystąpił
+wyjątek, to następnie będzie wykonany blok <em>else</em>,
+a potem instrukcje poza instrukcją <em>try/except</em>.
+<br>Jeżeli podczas wykonywania bloku <em>try</em> wystąpił
+wyjątek <em>IndexError</em>, to następnie będzie wykonany blok 
+<em>except IndexError</em>,
+a potem instrukcje poza instrukcją <em>try/except</em>.
+<br>Jeżeli podczas wykonywania bloku <em>try</em> wystąpił
+wyjątek <strong>inny niż</strong> <em>IndexError</em>, 
+to wyjątek będzie przekazany wyżej 
+(szczegóły zależą od położenia instrukcji <em>try/except</em>).
+
+<hr><pre>
 L = []
 # L = [1, 2, 3]
 try:
@@ -135,11 +149,12 @@ print("kontynuuję")
 </pre><hr>
 
 <p>Jeżeli podczas wykonywania bloku <em>try</em> nie wystąpił
-wyjątek, to będzie wykonany blok <em>finally</em>,
-a następnie instrukcje pod instrukcją <em>try</em>.
-Jeżeli podczas wykonywania bloku <em>try</em> wystąpił
-wyjątek, to będzie wykonany blok <em>finally</em>,
-ale potem wyjątek będzie przekazany wyżej.
+wyjątek, to następnie będzie wykonany blok <em>finally</em>,
+a potem instrukcje poza instrukcją <em>try/finally</em>.
+<br>Jeżeli podczas wykonywania bloku <em>try</em> wystąpił
+wyjątek, to następnie będzie wykonany blok <em>finally</em>,
+ale potem wyjątek będzie przekazany wyżej (szczegóły zależą od położenia
+instrukcji <em>try/finally</em>).
 
 <p>Po otwarciu pliku do czytania również mogą się pojawić różne
 błędy, które przerwą program. Można zastosować konstrukcję
