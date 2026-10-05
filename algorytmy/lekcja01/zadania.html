@@ -77,7 +77,7 @@ co może spowodować jego złe rozumienie.
 <p>Zwyczajowo każde polecenie umieszczamy w osobnym wierszu.
 
 <p>W sesji interaktywnej nie ma potrzeby stosowania wyrażenia
-<em>print</em> [funkcji <em>print()</em> w Pythonie 3], 
+<em>print</em> [funkcji <em>print()</em> w Py3], 
 ponieważ wyniki wyrażeń są automatycznie wyświetlane przez interpreter.
 
 <p>Należy zwracać uwagę na zmianę znaku zachęty w instrukcjach 
@@ -123,7 +123,7 @@ $
 # Dzięki temu można w pliku stosować polskie znaki w napisach.
 # Po znaku '#' mamy komentarz do końca wiersza.
 
-print("Hello, world!")   # działa dla Pythona 2 i Pythona 3
+print("Hello!")   # działa dla Py2 i Py3
 </pre><hr><pre>
 # Ustawienie kodowania UTF-8.
 # -*- coding: utf-8 -*-   # styl edytora Emacs
@@ -134,9 +134,9 @@ print("Hello, world!")   # działa dla Pythona 2 i Pythona 3
 </pre><hr><pre>
 # Ustawienie ścieżki do Pythona w środowisku wirtualnym i nie tylko.
 #!/usr/bin/python       # NIE UWZGLĘDNIA ŚRODOWISKA!
-#!/usr/bin/env python
-#!/usr/bin/env python2
-#!/usr/bin/env python3
+#!/usr/bin/env python   # użycie domyślnej wersji Pythona
+#!/usr/bin/env python2   # wymuszenie Pythona 2
+#!/usr/bin/env python3   # wymuszenie Pythona 3
 </pre><hr>
 
 <p>Pierwsze dwa znaki skryptu (#!) nazywane są często
@@ -153,7 +153,8 @@ Hello, world!
 </pre><hr>
 
 <p>Sprawdzić pracę różnych edytorów tekstu z podświetlaniem składni:
-mcedit (związany z Midnight Commander), nano, gedit (GNOME), kate (KDE).
+mcedit (związany z Midnight Commander), nano, 
+Mousepad (Xfce), gedit (GNOME), kate (KDE).
 
 <p>Sprawdzić możliwości dużych IDE: PyCharm, Visual Studio Code, Eclipse.
 

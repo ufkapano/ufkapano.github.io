@@ -8,9 +8,6 @@
 
 <h1>Historia Pythona</h1>
 
-<p>https://www.python.org/
-<br>Python Website
-
 <p>https://en.wikipedia.org/wiki/Python_(programming_language)
 
 <p>https://github.com/python
@@ -31,7 +28,7 @@ Nazwa języka pochodzi od serialu BBC
 
 <li>Twórcą Pythona jest holender Guido van Rossum (ur. 1960).
 Społeczność Pythona nazwała go BDFL 
-(Benevolent Dictator For Life, dobrotliwy dożywotni dyktator),
+(<em>Benevolent Dictator For Life</em>, dobrotliwy dożywotni dyktator),
 tytuł pochodzi ze skeczu Monty Python.
 GvR zrezygnował z tytułu BDFL w roku 2018 (chciał odpocząć).
 GvR przeniósł się z Holandii do USA w 1995, do 2003 mieszkał blisko
@@ -39,7 +36,7 @@ Waszyngtonu. Od 2005 do 2013 pracował dla Google, potem dla Dropbox.
 W roku 2019 przeszedł na emeryturę, ale powrócił z niej w roku 2020
 i dołączył do Microsoftu.
 
-<li>Python (jego interpreter) zaczął powstawać od 1989 jako następca
+<li>Interpreter Pythona zaczął powstawać od 1989 jako następca
 języka ABC, stworzonego w CWI (Centrum Matematyki i Informatyki)
 w Amsterdamie. 
 Ostatnia wersja Pythona, która powstała w CWI to 1.2 (1995).
@@ -53,8 +50,8 @@ wzorowaną na Apache Software Foundation.
 
 <li>Kod napisany w Pythonie 2 może być prawie mechanicznie
 przetłumaczony na Pythona 3. 
-Istnieje narzędzie 2to3 stworzone do tego celu.
-Inne narzędzie to 3to2, które wykonuje konwersję w drugą stronę.
+Istnieje narzędzie <em>2to3</em> stworzone do tego celu.
+Inne narzędzie to <em>3to2</em>, które wykonuje konwersję w drugą stronę.
 
 <li>Kod źródłowy CPythona jest przechowywany w publicznym repozytorium GitHub.
 
@@ -83,7 +80,7 @@ Inne narzędzie to 3to2, które wykonuje konwersję w drugą stronę.
 
 <ul>
 <li>Rozwój języka jest prowadzony przy wykorzystaniu PEP
-(Python Enhancement Proposal).
+(<em>Python Enhancement Proposals</em>).
 Są to propozycje zmian lub rozszerzeń w języku w postaci
 krótkiego artykułu, który jest następnie poddany dyskusji
 wśród programistów Pythona. PEP zawiera opis proponowanego 
@@ -121,8 +118,9 @@ LL(1) (left-to-right, leftmost derivation)
 [PEP 617 - New PEG parser for CPython].
 Jest możliwość powrotu do starego parsera.
 <br>In type annotations you can now use built-in collection types such 
-as 'list' and 'dict' as generic types instead of importing the corresponding 
-capitalized types (e.g. 'List' or 'Dict') from 'typing'.
+as <em>list</em> and <em>dict</em> as generic types instead of importing 
+the corresponding capitalized types (e.g. <em>List</em> or <em>Dict</em>) 
+from <em>typing</em>.
 
 <li><strong>Python 3.10</strong> (wydany 2021-10-04) PEP 619
 <br>Usunięcie starego parsera LL(1).
@@ -130,23 +128,33 @@ capitalized types (e.g. 'List' or 'Dict') from 'typing'.
 <li><strong>Python 3.11</strong> (wydany 2022-10-24) PEP 664
 <br>Python 3.11 is up to 10-60% faster than Python 3.10.
 <br>PEP 657 - Include Fine-Grained Error Locations in Tracebacks.
-<br>New typing features (changes in 'typing').
+<br>New typing features (changes in <em>typing</em>).
 
 <li><strong>Python 3.12</strong> (wydany 2023-10-02) PEP 693
-<br>Improved error messages. 'unittest' cleanup. 'distutils' removed.
+<br>Improved error messages. <em>unittest</em> cleanup. 
+<em>distutils</em> removed.
 More flexible f-string parsing (PEP 701).
-sum() now uses Neumaier summation.
+<em>sum()</em> now uses Neumaier summation.
 
 <li><strong>Python 3.13</strong> (wydany 2024-10-07) PEP 719
 <br>Incremental garbage collection. An experimental JIT compiler.
-Remove the 2to3 tool and lib2to3 module.
+Remove the <em>2to3</em> tool and <em>lib2to3</em> module.
 
 <li><strong>Python 3.14</strong> (wydany 2025-10-07) PEP 745
 <br>New template strings (t-strings, PEP 750).
 Deferred evaluation of annotations (PEP 649, PEP 749).
-Zstandard in the standard library, the 'compression' package (PEP 784).
+Zstandard in the standard library, the <em>compression</em> package (PEP 784).
 Improved error messages. Free-threaded mode (PEP 703).
 Syntax highlighting in PyREPL.
+
+<li><strong>Python 3.15</strong> (wydany 2026-10-X) PEP 790
+<br>New builtins: lazy imports (PEP 810), frozendict (PEP 814), 
+sentinel (PEP 661).
+UTF-8 as the default encoding.
+Unpacking in comprehensions (PEP 798).
+More color in command-line output.
+
+<li><strong>Python 3.16</strong> (wydany 2027-10-X) PEP 826
 
 </ul>
 

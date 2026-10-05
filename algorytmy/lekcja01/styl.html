@@ -24,15 +24,15 @@ gdzie składowane są kody źródłowe programów [zalecane],
 <br>(2) email z linkiem do archiwum ZIP w chmurze UJ,
 <br>(3) email z archiwum ZIP w załączniku.
 
-<p>Proszę nie przesyłać w załącznikach pojedynczych plików 
-z rozszerzeniem <em>.py</em>,
-ponieważ program pocztowy UJ nie pozwala ich otworzyć ani zapisać na dysku.
+<p><strong>Proszę nie przesyłać w załącznikach pojedynczych plików 
+z rozszerzeniem <em>.py</em>, ponieważ program pocztowy UJ nie pozwala 
+ich otworzyć ani zapisać na dysku</strong>.
 
 <h3>ZALECENIA DLA PRZESYŁANYCH ZADAŃ I PROJEKTU PROGRAMISTYCZNEGO</h3>
 
 <ul>
 
-<li>Oficjalne zalecenia dotyczące stylu programowania (coding style)
+<li>Oficjalne zalecenia dotyczące stylu programowania (<em>coding style</em>)
 w języku Python opisane są w PEP 8.
 
 <li>Projekt programistyczny składa się z programu napisanego 
@@ -95,23 +95,23 @@ Warto też użyć instrukcji <em>assert</em> do sprawdzania pewnych warunków
 w różnych miejscach kodu.
 
 <li>Kolejne działające wersje programu warto umieszczać w osobnych 
-katalogach (wersja1, wersja2, itd.) lub tylko w osobnych plikach
-(program1.py, program2.py, itd.).
+katalogach (<em>wersja1</em>, <em>wersja2</em>, itd.) lub tylko w osobnych 
+plikach (<em>program1.py</em>, <em>program2.py</em>, itd.).
 Zaawansowany i preferowany sposób pracy to korzystanie z wybranego systemu
 kontroli wersji, np. <em>git</em>.
 Pomocne jest zdalne archiwum git, które można założyć w jednym
 z bezpłatnych serwisów (GitHub, Bitbucket, GitLab).
 
 <li>Dokumentację programu piszemy w formatach otwartych 
-(HTML, LaTeX, PDF, Markdown), objętość kilka-kilkanaście stron. 
+(HTML, Markdown, LaTeX, PDF), objętość kilka-kilkanaście stron. 
 Warto również w samym programie umieścić pomoc dla użytkownika.
 Standardowe rozdziały dokumentacji to:
-(1) wprowadzenie z opisem teoretycznym algorytmu,
-(2) opis interfejsu, 
-(3) uwagi na temat implementacji, często
+<br>(1) wprowadzenie z opisem teoretycznym algorytmu,
+<br>(2) opis interfejsu, 
+<br>(3) uwagi na temat implementacji, często
 cytowany jest cały kod programu lub wybrane fragmenty,
-(4) podsumowanie, wyniki testów, itp., 
-(5) literatura wykorzystana przy tworzeniu projektu,
+<br>(4) podsumowanie, wyniki testów, itp., 
+<br>(5) literatura wykorzystana przy tworzeniu projektu,
 linki do stron w Internecie.
 
 </ul>
@@ -158,7 +158,8 @@ Podobnie lepiej unikać korzystania z nazw obiektów wbudowanych.
 
 <ul>
 
-<li>Przy korzystaniu ze zdalnego archiwum należy w każdym liście wstawiać
+<li>Przy korzystaniu ze zdalnego archiwum należy 
+<strong>w każdym liście</strong> wstawiać
 link do repozytorium i informację o tym, który zestaw został ukończony.
 
 <li>Przy przesyłaniu poprawionych rozwiązań zestawów odpowiadać
@@ -171,7 +172,13 @@ Warto pracować w edytorze, który nie wprowadza tabulacji do kodu.
 a także większych bloków kodu wewnątrz funkcji.
 
 <li>Wstawiać spacje dokoła operatorów i po przecinkach,
-ale nie bezpośrednio po nawiasach, np. a = f(1, 2) + 3.
+ale nie bezpośrednio po nawiasach otwierających i przed nawiasami
+zamykającymi.
+
+<hr><pre>
+a = f(1, 2) + 3 ; b = [1, 2, 3]
+ ^ ^    ^  ^ ^ ^ ^ ^ ^   ^  ^ zalecane położenie spacji
+</pre><hr>
 
 </ul>
 

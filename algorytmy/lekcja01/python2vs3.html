@@ -42,8 +42,8 @@ from __future__ import print_function
 Integer division. 
 UWAGI
 Dla liczb całkowitych lepiej używać a // b.
-Jeżeli chcemy mieć wynik float, to lepiej zawsze pisać 3/2.0
-lub float(x)/2 (a nie 3/2 lub x/2).
+Jeżeli chcemy mieć wynik float, to lepiej zawsze pisać 3 / 2.0
+lub float(x) / 2 (a nie 3 / 2 lub x / 2).
 Taki zapis nie zmyli usera z Py2.
 
 If you need to support both Py2 and Py3 use:
@@ -139,16 +139,16 @@ next(my_generator)
 </pre><hr><pre>
 For-loop variables and the global namespace leak.
 i = 1
-[i for i in range(5)]
+[i*i for i in range(5)]
 print(i)   # 4 w Py2, 1 w Py3
 UWAGI
 Bezpieczniej używać lepszych nazw zmiennych, np.
-item = 1
-[i for i in range(5)]
+item = 1   # globalnie dłuższa zmienna
+[i*i for i in range(5)]   # krótka zmienna w listach składanych
 </pre><hr><pre>
 Comparing unorderable types.
 Py2 pozwala porównywać różne typy, np.
-[1,2] > "a"  zwraca False.
+[1,2] &gt; "a"  zwraca False.
 W Py3 wyzwalany jest TypeError, co jest dobrym ostrzeżeniem.
 UWAGI
 Takiego porównania nie powinno się stosować w Py2, więc nie jest to problem.
