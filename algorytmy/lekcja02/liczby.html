@@ -132,14 +132,17 @@ pow(2, 10, 5)                 $ (2 ** 10) % 5 = 1024 % 5 = 4
 # Składnia:
 # int(x[, base]), float(x), complex(real[, imag])
 
-int("32"), int(2.345), int(-3.456)
+int("32")   # 32
+int(2.345)   # 2, odrzucenie części ułamkowej
+int(-3.456)   # -3, odrzucenie części ułamkowej
 int("111", 2)   # 7; wykorzystanie bazy
 int("20", 16), 0x20   # 32; wykorzystanie bazy
 float("3.14159"), float(234)
-float(1.0 + 2.j)                # TypeError, nie ma jednoznacznej konwersji
+float(1.0 + 2.j)   # TypeError, nie ma jednoznacznej konwersji z complex do float
+float(2 + 0j)   # TypeError
 str(1234)
-long(43)
-complex(5), complex(2, 3)                # (5+0J), (2+3J)
+long(43)   # Py2
+complex(5), complex(2.3)   # (5+0J), (2.3+0J)
 </pre><hr><pre>
 # Dzielenie liczb.
 
@@ -147,19 +150,20 @@ complex(5), complex(2, 3)                # (5+0J), (2+3J)
 </pre><hr><pre>
 # Zaokrąglanie liczb.
 
-round(3.14159, 2)             # 3.14
-round(123.456,-1)             # 120.0, ujemna precyzja
-round(1.2), round(1.5), round(1.8)      # 1.0, 2.0, 2.0
+round(3.14159, 2)   # 3.14
+round(123.456,-1)   # 120.0, ujemna precyzja
+round(1.2), round(1.5), round(1.8)   # 1.0, 2.0, 2.0
 round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
 int(1.2+0.5), int(1.5+0.5), int(1.8+0.5)   # 1.0, 2.0, 2.0
 int(-1.2+0.5), int(-1.5+0.5), int(-1.8+0.5)   # 0, -1.0, -1.0
 </pre><hr><pre>
 # Wartość bezwzględna.
 
-abs(-5), abs(-4.32), abs(1+1j) # 5, 4.32, 1.41421356237
+abs(-5), abs(-4.32)   # 5, 4.32
+abs(1+1j)   # 1.41421356237 = sqrt(2), moduł liczby zespolonej
 </pre><hr><pre>
 # Liczby całkowite można zapisywać w układzie ósemkowym i szesnastkowym.
-23, 027, 0x17, 0X17     # zapis liczby 23
+23, int("027", 8), 0x17, 0X17   # zapis liczby 23
 hex(23)   # return string '0x17'
 
 # Pozostałość po ułamkach w liczbach całkowitych.
@@ -193,14 +197,16 @@ chr(99)   # return "c"
 
 <p>http://python-history.blogspot.com/2010/08/why-pythons-integer-division-floors.html
 
-<p>Dzielenie liczb w Pythonie przeszło zmianę przy przejściu
-z Pythona 2 na Python 3. Aby opisać to zagadnienie, trzeba
-przedstawić trzy pojęcia:
+<p>Dzielenie liczb w Pythonie przeszło zmianę przy przejściu z Py2 na Py3. 
+Aby opisać to zagadnienie, trzeba przedstawić trzy pojęcia:
 
 <ul>
-<li>classic division, dzielenie klasyczne [metoda __div__ w Pythonie 2]
-<li>true division, dzielenie prawdziwe [metoda __truediv__ w Pythonie 3]
-<li>floor division, dzielenie bez reszty [metoda __floordiv__ w Pythonie 2 i 3]
+<li><em>classic division</em>, dzielenie klasyczne 
+[metoda <em>__div__</em> w Py2]
+<li><em>true division</em>, dzielenie prawdziwe 
+[metoda <em>__truediv__</em> w Py3, zwraca wynik <em>float</em>]
+<li><em>floor division</em>, dzielenie bez reszty 
+[metoda <em>__floordiv__</em> w Py2 i Py3]
 </ul>
 
 <p>Wydaje się, że głównym powodem wprowadzenia zmiany w działaniu
@@ -209,7 +215,7 @@ zaczynających naukę programowania, gdzie Python jest
 ich pierwszym językiem programowania.
 Python jest językiem o typach dynamicznych i operator dzielenia
 może działać na dowolnych argumentach przy odpowiednim
-przeciążenu (overload).
+przeciążenu (<em>overload</em>).
 Dzielenie klasyczne powoduje sytuacje, które są trudne 
 do zaakceptowania przez początkujących.
 
@@ -218,7 +224,7 @@ do zaakceptowania przez początkujących.
 True
 &gt;&gt;&gt; 2 == 2.0
 True
-&gt;&gt;&gt; 1 / 2 == 1.0 / 2.0   # dzielenie klasyczne
+&gt;&gt;&gt; 1 / 2 == 1.0 / 2.0   # dzielenie klasyczne, 0 vs 0.5
 False
 </pre><hr>
 
@@ -242,13 +248,13 @@ http://www.informit.com/articles/article.aspx?p=1439189
 (<em>python -Qopcja</em>).
 
 <pre>
-+-----------------------------------------+
++-------+---------------------------------+
 | Opcja | Opis                            |
-+-----------------------------------------+
++-------+---------------------------------+
 | old   |Zawsze dzielenie klasyczne       |
-+-----------------------------------------+
++-------+---------------------------------+
 | new   |Zawsze dzielenie prawdziwe       |
-+-----------------------------------------+
++-------+---------------------------------+
 | warn  |Ostrzega przy int/int (long/long)|
 +-------+---------------------------------+
 |warnall|Ostrzega zawsze przy "/"         |

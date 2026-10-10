@@ -24,11 +24,11 @@ liczby zespolone.
 Są stringi (łańcuchy napisowe) do przechowywania tekstu.
 Python jest wyposażony w kilka typów kolekcji:
 listy, krotki (tuples), słowniki, zbiory.
-Listy, krotki i napisy są <em>sekwencjami</em> i mają wiele
+Listy, krotki i napisy są <strong>sekwencjami</strong> i mają wiele
 wspólnych metod.
 
-<p>Typy danych możemy jeszcze podzielić na mutowalne (zmienne)
-i niemutowalne (niezmienne).
+<p>Typy danych możemy jeszcze podzielić na <strong>mutowalne</strong> (zmienne)
+i <strong>niemutowalne</strong> (niezmienne).
 Niezmienne są przede wszystkim liczby, stringi i krotki.
 
 <p>Warto korzystać z wbudowanych typów danych z wielu powodów:
@@ -53,6 +53,7 @@ Niezmienne są przede wszystkim liczby, stringi i krotki.
 | Listy (list)    | Sekwencja          | Tak                  |
 | Krotki (tuple)  | Sekwencja          | Nie                  |
 | Słowniki (dict) | Odwzorowanie       | Tak                  |
+| frozendict      | Odwzorowanie       | Nie (Py3.15)         |
 | Pliki           | Rozszerzenie       | Nie dotyczy          |
 | set             | Zbiór              | Tak                  |
 | frozenset       | Zbiór              | Nie                  |
@@ -65,11 +66,11 @@ Generalnie nie powinno się sprawdzać jawnie typu, ponieważ
 niszczymy wtedy elastyczność kodu. 
 W Pythonie koduje się pod kątem interfejsów obiektów 
 (obsługowanych operacji), a nie typów.
-Mamy tu związek z koncepcją polimorfizmu
+Mamy tu związek z koncepcją <strong>polimorfizmu</strong>
 [polimorfizm = znaczenie operacji uzależnione jest
-od typu obiektów, na których się te operację wykonuje.
+od typu obiektów, na których się te operację wykonuje].
 Jest to przydatna właściwość Pythona.
-Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.].
+Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.
 
 <hr><pre>
 # Składnia:
@@ -83,6 +84,9 @@ if isinstance(x, (int, long)):   # Py2 (Py3 nie ma typu long)
 
 if isinstance(S, (set, frozenset)):
     print("to jest zbiór")
+
+if isinstance(D, (dict, frozendict)):   # Py3.15
+    print("to jest słownik")
 </pre><hr><pre>
 # Dawny, odradzany sposób sprawdzania typów.
 # Funkcja type() zwraca obiekt typu - są różnice między Py2 i Py3.
@@ -112,7 +116,7 @@ dir(types)
 
 <p>Obok podziału obiektów na zmienne i niezmienne, istnieje podział
 na obiekty hashowalne (ang. <em>hashable objects</em>) i niehashowalne.
-Hashowanie to zasadniczo obliczanie pewnej liczby na bazie obiektu,
+Hashowanie to zasadniczo obliczanie pewnej liczby całkowitej na bazie obiektu,
 przy czym ta liczba nie zmienia się przez cały czas życia obiektu.
 Wykorzystuje się je w tablicach hashowalnych, a w Pythonie przy
 słownikach i zbiorach (klucze w słowniku i elementy zbioru
@@ -172,30 +176,34 @@ keyword.iskeyword("max")   # False
 <p>Słowa kluczowe Pythona: 
 False (3.9), None (3.9), True (3.9), 
 and, as (2.6+), assert, async (3.9), await (3.9), break (3.9), 
-case (3.10, soft keyword),
+case (3.10, <em>soft keyword</em>),
 class, continue, def, del, elif, else, except, exec (2.x),
 finally, for, from, global, if, import, in, is, 
-lambda, match (3.10, soft keyword), nonlocal (3.x), 
+lambda, lazy (3.15, <em>soft keyword</em>),
+match (3.10, <em>soft keyword</em>), nonlocal (3.x), 
 not, or, pass, print (2.x), raise,
 return, try, type (3.12), while, with (2.6+), yield (2.3+).
 
 <p>Inne słowa, których lepiej nie używać: 
-NotImplemented, Ellipsis.
+<em>NotImplemented</em>, <em>Ellipsis</em>.
 
-<p>NotImplemented jest to specjalna wartość zwracana przez metody
-specjalne binarne (__eq__, __lt__, __add__, __rsub__, itd.)
-lub metody specjalne działające in-place (__iadd__, __imul__, itd.).
+<p><em>NotImplemented</em> jest to specjalna wartość zwracana przez metody
+specjalne binarne (<em>__eq__</em>, <em>__lt__</em>, <em>__add__</em>, 
+<em>__rsub__</em>, itd.) lub metody specjalne działające in-place 
+(<em>__iadd__</em>, <em>__imul__</em>, itd.).
 Wartość ta wskazuje, że dana operacja nie jest zaimplementowana
 dla danego drugiego typu. Typowo interpreter przechodzi wtedy
 do tego obiektu drugiego typu, aby sprawdzić wykonalność operacji.
-Niewłaściwe użycie NotImplemented prowadzi mylących komunikatów o błędach.
+Niewłaściwe użycie <em>NotImplemented</em> prowadzi mylących komunikatów o błędach.
 
-<p>Z dokumentacji na temat Ellipsis: 
-Special value used in conjunction with extended slicing syntax. 
-It is used to indicate the presence of the ... syntax in a slice.
+<p>Z dokumentacji na temat <em>Ellipsis</em>: 
+<em>Special value used in conjunction with extended slicing syntax. 
+It is used to indicate the presence of the ... syntax in a slice.</em>
 Używane z modułami doctest, numpy.
-The ellipsis is used to slice higher-dimensional data structures (numpy).
-Ellipsis jest używane jako singleton tam, gdzie None jest niejednoznaczne.
+<em>The ellipsis is used to slice higher-dimensional data structures 
+(numpy)</em>.
+<em>Ellipsis</em> jest używane jako singleton tam, gdzie <em>None</em> 
+jest niejednoznaczne.
 
 
 <hr><pre>

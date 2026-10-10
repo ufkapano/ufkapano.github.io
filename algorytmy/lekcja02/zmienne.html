@@ -26,7 +26,8 @@
 posiadają typ - tak więc Python jest językiem z typami dynamicznymi.
 Wszystkie wartości przekazywane są przez referencję.
 
-<p>Każda zmienna posiada (1) nazwę i zawiera (2) referencję do określonego obiektu.
+<p>Każda zmienna posiada (1) <strong>nazwę</strong> i zawiera 
+(2) <strong>referencję</strong> do określonego obiektu.
 Zmienna jest uniwersalna, sama nie ma określonego typu,
 może przechowywać referencję do obiektu każdego typu.
 Wszystkie zmienne muszą mieć jawnie przypisane wartości, zanim
@@ -58,24 +59,25 @@ NameError: name 'X' is not defined
 <p>W Pythonie obiekty posiadają dwa standardowe pola:
 
 <ul>
-<li>Desygnator typu; stąd obiekty znają swój niezmienny typ.
-<li>Licznik referencji; wykorzystywany do zwalniania pamięci
-zajmowanej przez obiekt, jeżeli liczba referencji do obiektu
+<li><strong>Desygnator typu</strong>. Stąd obiekty znają swój niezmienny typ.
+<li><strong>Licznik referencji</strong>. Jest wykorzystywany do zwalniania 
+pamięci zajmowanej przez obiekt, jeżeli liczba referencji do obiektu
 spadnie do zera.
 </ul>
 
-<p>Każdy obiekt ma jeszcze niezmienną tożsamość (ang. <em>identity</em>),
-co można utożsamiać z adresem w pamięci. 
-Funkcja wbudowana <em>id()</em> zwraca liczbę całkowitą reprezentującą adres w pamięci.
+<p>Każdy obiekt ma jeszcze niezmienną <strong>tożsamość</strong> 
+(ang. <em>identity</em>), co można utożsamiać z adresem w pamięci. 
+Funkcja wbudowana <em>id()</em> zwraca liczbę całkowitą reprezentującą 
+adres w pamięci.
 
 <h3>POWSTAWANIE ZMIENNYCH</h3>
 
-Zmienne powstają podczas operacji wiązania nazw
+Zmienne powstają podczas operacji <strong>wiązania nazw</strong>
 (ang. <em>name binding operations</em>).
 
 <hr><pre>
 name1 = expression   # assignements
-name2 = name1     # the same value with two 'labels'
+name2 = name1   # the same value with two 'labels'
 
 def function_name(parameter_name):   # function definitions
     pass

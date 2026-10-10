@@ -8,10 +8,21 @@
 
 <h1>Korzystanie z modułów</h1>
 
+<p>https://docs.python.org/3/reference/simple_stmts.html#the-import-statement
+<br>The import statement.
+
 <p>https://docs.python.org/3/library/importlib.html
-<br>importlib - The implementation of 'import'.
+<br>importlib - The implementation of <em>import</em>.
 
 <p>PEP 302 - New Import Hooks.
+
+<p>PEP 328 - Imports: Multi-Line and Absolute/Relative
+
+<p>PEP 810 - Explicit lazy imports.
+<br>Introducing the new <em>lazy</em> soft keyword (Py3.15).
+
+<p>https://docs.python.org/3/reference/simple_stmts.html#lazy-imports
+<br>Lazy imports (Py3.15).
 
 <h3>WPROWADZENIE</h3>
 
@@ -62,10 +73,20 @@ od góry pliku do dołu.
 Zwykle instrukcje wewnątrz modułu służą do jego inicjalizacji.
 Importowany moduł może z kolei importować inne moduły.
 
+<p>Python 3.15 wprowadza <strong>leniwe importy</strong> i nowe miękkie 
+słowo kluczowe <em>lazy</em>. 
+Jeżeli oznaczymy import modułu jako leniwy (<em>lazy</em>),
+wtedy import będzie odroczony do chwili pierwszego użycia nazwy
+z danego modułu. Dzięki temu uruchomienie głównego modułu będzie szybsze.
+Kod będzie bardziej czytelny, bo można umieścić wszystkie importy
+na początku modułu, a nie ukrywać je wewnątrz funkcji.
+Leniwy import jest możliwy jedynie na poziomie modułu.
+
 <hr><pre>
-# Zastosowanie instrukcji import.
+# Zastosowanie instrukcji 'import'.
 import module1                # zaleca się pojedyńcze zapisy
 import module2, module3       # import kilku modułów
+lazy import haevy_module      # leniwy import modułu (Py3.15)
 
 print(module1.name1)          # kwalifikacja zmiennej z modułu
 other_name = module1          # przypisanie obiektu modułu
@@ -79,6 +100,8 @@ module1.__dict__.keys()       # przestrzeń nazw
 </pre><hr><pre>
 # Zastosowanie instrukcji 'from'.
 from module1 import name1, name2   # ładowanie wybranych nazw
+lazy from module1 import name1     # leniwy import nazwy (Py3.15)
+
 # Równoważne instrukcje są następujące:
 # import module1
 # name1 = module1.name1
@@ -86,6 +109,7 @@ from module1 import name1, name2   # ładowanie wybranych nazw
 # del module1
 
 from module2 import *   # ładowanie wszystkich nazw
+#lazy from module2 import *        # SyntaxError, zabronione star imports (Py3.15)
 
 print(name1, name2())   # nie ma kwalifikacji
 </pre><hr><pre>
@@ -146,8 +170,8 @@ przez niego obiektów.
 <hr><pre>
 import sys
 
-print(sys.modules.keys())   # nazwy importowanych modułów
-print(sys.path)             # ścieżka wyszukiwania
+sys.modules.keys()   # nazwy importowanych modułów
+sys.path             # ścieżka wyszukiwania
 </pre><hr>
 
 <h3>ŚCIEŻKA WYSZUKIWANIA MODUŁÓW</h3>

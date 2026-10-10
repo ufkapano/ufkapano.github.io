@@ -116,7 +116,9 @@ dodajemy stronami, dostajemy
 <br>t[n] = t[0] + s[0]*(1 + b + b^2 + ... + b^{n-1}) = t[0] + s[0]*(1-b^n)/(1-b).
 
 <p>Trzeci sposób to usunięcie niehomogeniczności przez dodanie drugiego równania,
-<br>t[n+1] -b*t[n] = t[n] -b*t[n-1].
+<br>t[n] - b*t[n-1] = c, t[n+1] - b*t[n] = c,
+<br>t[n+1] -b*t[n] = t[n] -b*t[n-1],
+<br>t[n+1] -(b+1)*t[n] + b*t[n-1] = 0 (homogeniczna rekurencja liniowa).
 
 <p>Czwarty sposób to zdefiniowanie przesuniętego ciągu 
 t[n] = s[n] + e, s[0] = a -e [liczbę e trzeba wyznaczyć].
@@ -125,13 +127,13 @@ t[n] = s[n] + e, s[0] = a -e [liczbę e trzeba wyznaczyć].
 <br>t[n] = b^n*a -b^n*e + e = b^n*a + e*(1-b^n) = b^n*a + c*(1-b^n)/(1-b).
 
 <p>Piąty sposób to zastosowanie funkcji tworzącej 
-G(x) = \sum_{n=0}^{+\infty} t[n] x^n.
-<br>G(x) = t[0] + \sum_{n=1}^{+\infty} (b*t[n-1] + c) x^n,
+G(x) = \sum_{n=0}^{+&infin;} t[n] x^n.
+<br>G(x) = t[0] + \sum_{n=1}^{+&infin;} (b*t[n-1] + c) x^n,
 <br>G(x) = a + b*x*G(x) + c*x/(1-x),
 <br>G(x)*(1-b*x) = a + c*x/(1-x),
 <br>G(x) = (a -a*x + c*x)/((1-x)*(1-b*x)) = A/(1-x) + B/(1-b*x),
 <br>G(x) = c/((1-b)*(1-x)) + (a -c/(1-b))/(1-b*x),
-<br>G(x) = c/(1-b) \sum x^n + (a -c/(1-b)) \sum b^n*x^n,
+<br>G(x) = c/(1-b) \sum_n x^n + (a -c/(1-b)) \sum_n b^n*x^n,
 <br>t[n] = c/(1-b) + (a -c/(1-b))*b^n.
 
 <hr>

@@ -221,9 +221,9 @@ class ClassWithSlots(object):
 
 <h3>FUNKCJA SUPER</h3>
 
-<p>PEP 367 -- New Super [Py2.6]
+<p>PEP 367 - New Super (Py2.6)
 
-<p>PEP 3135 -- New Super [Py3]
+<p>PEP 3135 - New Super (Py3)
 
 <p>https://rhettinger.wordpress.com/2011/05/26/super-considered-super/
 
@@ -275,6 +275,38 @@ class Time:
         #return type(self)(self.s + other.s)   # działa dla klas w nowym stylu
         return self.__class__(self.s + other.s)   # uniwersalne
         # self.__class__.__name__ to string "Time", np. dla __repr__
+</pre><hr>
+
+<h3>SENTINEL (WARTOWNIK)</h3>
+
+<p>PEP 661 - Sentinel Values (Py3.15)
+
+<p>https://docs.python.org/3/builtins/functions.html#sentinel
+
+<p>Wartownicy są stosowani w wielu różnych sytuacjach.
+<br>(1) Domyślne wartości argumentów funkcji.
+<br>(2) Wartości zwracane przez funkcje, kiedy nie znaleziono
+poszukiwanej wartości.
+<br>(3) Brakujące dane, np. NULL w relacyjnych bazach danych.
+<br>Dawniej w roli wartowników wykorzystywano <em>None</em> lub inne
+specjalne rozwiązania. Klasa <em>sentinel</em> to jednolite rozwiązanie
+do wykorzystania w bibliotece standardowej i poza nią.
+
+<p>Obiekty wartowników należy porównywać operatorem <em>is</em>.
+<br>Płytkie i głębokie kopie wartowników zwracają tego samego wartownika.
+<br>W kontekście logicznym wartownik jest obliczany jako <em>True</em>
+(<em>None</em> jest obliczane jako <em>False</em>).
+<br>Wartownicy mogą być wykorzystywani w <em>type hints</em>.
+
+<hr><pre>
+# class sentinel(name, /, *, repr=None)
+# 'name' musi być typu str.
+
+MISSING = sentinel("MISSING")
+
+def read_value(default=MISSING): pass
+
+def foo(value: int | MISSING = MISSING) -&gt; int: pass
 </pre><hr>
 
 </body>

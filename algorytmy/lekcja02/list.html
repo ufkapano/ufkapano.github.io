@@ -12,14 +12,14 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Listy to uporządkowane kolekcje dowolnych obiektów. 
+<p>Listy to <strong>uporządkowane kolekcje</strong> dowolnych obiektów. 
 Są <strong>heterogeniczne</strong> i mogą być dowolnie zagnieżdżane. 
 Dostęp do obiektów możliwy jest za pomocą offsetu (położenia na liście). 
 
 <p>Listy mogą się rozrastać i kurczyć w miejscu, czyli są 
 zmiennymi (<em>mutable</em>) sekwencjami. 
 Z technicznego punktu widzenia, 
-listy Pythona zawierają zero lub więcej odwołań do innych obiektów.
+listy Pythona zawierają zero lub więcej referencji do innych obiektów.
 Listy obsługują zagnieżdżanie obiektów na dowolną głębokość.
 
 <p>Jeżeli potrzebujemy częstego wyszukiwania elementów na liście,
@@ -51,7 +51,7 @@ to lepiej zastosować słowniki lub zbiory.
 | del L[i:j]           | usuwanie wycinka            |
 | del L[:]             | czyszczenie listy           |
 | L.clear()            | czyszczenie listy (Py3.3+)  |
-| del L                | usuwanie listy (zmiennej L) |
+| del L                | usuwanie zmiennej           |
 +----------------------+-----------------------------+
 </pre>
 
@@ -172,18 +172,18 @@ sorted("dacb")   # ['a', 'b', 'c', 'd'] sortowanie znaków
 sorted((7,2,5,3))   # [2, 3, 5, 7] sortowanie krotki
 
 # Działanie funkcji sorted() możemy zasymulować za pomocą funkcji.
-def mysorted(iterable):
-    L = list(iterable)
+def mysorted(iterable, key=None):
+    L = list(iterable, key=key)
     L.sort()
     return L
 </pre><hr>
 
-<p>Przy sortowaniu krotek przydaje się konstrukcja z modułu 'operator'.
+<p>Przy sortowaniu krotek przydaje się konstrukcja z modułu <em>operator</em>.
 
 <hr><pre>
 # https://docs.python.org/2/library/operator.html
 
-import operator   # Py2.4+
+import operator   # Py2.4+, Py3
 
 # Sortowanie IN PLACE krotek wg wartości pola o indeksie 1.
 L = [('apple', 3), ('banana', 2), ('pear', 5), ('orange', 1)]

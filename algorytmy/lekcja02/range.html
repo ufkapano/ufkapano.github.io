@@ -26,7 +26,7 @@ W Pythonie mamy dedykowane narzędzia do obsługi takich ciągów.
 | range(stop)              | start=0, step=1             |
 | xrange(i, j, k)          | generator (Py2)             |
 +--------------------------+-----------------------------+
-| R = range(i, j, k)       | generator (Py3)             |
+| R = range(i, j, k)       | range object (Py3)          |
 | len(R)                   | długość zakresu             |
 | L = list(R)              | budowa listy                |
 | list(range(0))           | pusta lista                 |
@@ -36,7 +36,6 @@ W Pythonie mamy dedykowane narzędzia do obsługi takich ciągów.
 | for item in R: pass      | iteracja                    |
 | item in R                | zawieranie w zakresie       |
 | item not in R            | zawieranie w zakresie       |
-| R.index(item)            | szukanie pozycji elementu   |
 | R[i]                     | użycie indeksu              |
 | R[i:j]                   | wycinek (nowy 'range')      |
 | R[i:j:k]                 | wycinek (nowy 'range')      |
@@ -76,6 +75,13 @@ list(range(1, 9, 2))      # [1, 3, 5, 7], krok co 2
 list(range(5, 2, -1))     # [5, 4, 3]
 
 range(0, 3, 2) == range(0, 4, 2)   # True, choć 'stop' się różnią
+
+r = range(2, 8)
+list(r)   # [2, 3, 4, 5, 6, 7]
+r.index(4)   # 2, szukanie pozycji elementu
+r.count(5)   # 1, liczba wystąpień elementu
+r.count(1)   # 0
+list(reversed(r))   # [7, 6, 5, 4, 3, 2], odwracanie sekwencji liczb
 </pre><hr><pre>
 import sys
 
@@ -91,10 +97,10 @@ sys.getsizeof(r3)   # 48
 </pre><hr><pre>
 # Ciekawostka.
 
-sys.getsizeof((0, 1))   # 64
+sys.getsizeof((0, 1))   # 64 (Py3.7), 56 (Py3.13)
 sys.getsizeof(range(2))   # 48
 
-sys.getsizeof((0, 1, 2))   # 72
+sys.getsizeof((0, 1, 2))   # 72 (Py3.7), 64 (Py3.13)
 sys.getsizeof(range(3))   # 48
 
 # Wniosek: warto stosować range zamiast nawet krótkich krotek.

@@ -8,15 +8,16 @@
 
 <h1>Słowniki</h1>
 
-<p>https://docs.python.org/3/library/stdtypes.html#mapping-types-dict
+<p>https://docs.python.org/3/builtins/stdtypes.html#mapping-types-dict-frozendict
+
+<p>https://docs.python.org/3/builtins/stdtypes.html#frozendict
 
 <h3>WPROWADZENIE</h3>
 
-<p>Słownik (<em>dictionary</em>) to nieuporządkowany zbiór par (klucz: wartość),
-przy czym klucze muszą być różne.
+<p>Słownik (<em>dictionary</em>) to <strong>nieuporządkowany zbiór par</strong> 
+(klucz: wartość), przy czym klucze muszą być różne.
 Słowniki nie są sekwencjami, ale odwzorowaniami (<em>mapping</em>).
-Wartości (obiekty) są przechowywane po kluczu,
-a nie po ich pozycji względnej.
+Wartości są przechowywane po kluczu, a nie po ich pozycji względnej.
 
 <p>Klucz musi być niezmienny (<em>immutable</em>), zwykle są to liczby lub stringi.
 Kluczami mogą być krotki (<em>tuple</em>), jeśli zawierają tylko liczby, 
@@ -25,34 +26,43 @@ stringi i krotki.
 <p>Próba pobrania nieistniejącego klucza jest błędem, rzucany jest wyjątek
 <em>KeyError</em>.
 
-<p>Słowniki są zmienne, mogą być modyfikowane w miejscu,
+<p>Słowniki (<em>dict</em>) są zmienne, mogą być modyfikowane w miejscu,
 mogą rosnąć lub kurczyć się na życzenie.
 Słowniki obsługują zagnieżdżanie obiektów na dowolną głębokość.
 
 <p>Od Pythona 3.7 mamy gwarancję, że klucze w słowniku będą uporządkowane
 w kolejności ich wstawiania do słownika.
 
+<p>W Pythonie 3.15 pojawiły się niezmienne słowniki typu <em>frozendict</em>.
+Nie są one podklasą <em>dict</em>, tylko dziedziczą bezpośrednio
+z <em>object</em>.
+
 <pre>
-+----------------------+---------------------------+
-| Operacja             | Znaczenie                 |
-+----------------------+---------------------------+
-| D = {} ; D = dict()  | pusty słownik             |
-| D = {1: "a", 5: "e"} | słownik (dwa klucze)      |
-| len(D)               | liczność (liczba par)     |
-| D[key] = value       | dodanie pozycji           |
-| D[key]               | dostęp do wartości        |
-| D = dict(iterable)   | tworzenie z listy par     |
-| D2 = dict(D1)        | kopiowanie słownika       |
-| D2 = D1.copy()       | stary sposób kopiowania   |
-| D2 = {**D1}          | kopiowanie (Py3)          |
-| key in D             | zawieranie klucza (bool)  |
-| key not in D         |                           |
-| D.has_key(key)       | dawny sposób (Py2)        |
-| for key in D: pass   | iteracja po kluczach      |
-| del D[key]           | usuwanie klucza           |
-| D.clear()            | czyszczenie słownika      |
-| del D                | usuwanie słownika         |
-+----------------------+---------------------------+
++--------------------------+---------------------------+
+| Operacja                 | Znaczenie                 |
++--------------------------+---------------------------+
+| D = {} ; D = dict()      | pusty słownik             |
+| D = frozendict()         | pusty niezmienny słownik  |
+| D = {"x": 1, "y": 2}     | słownik (dwa klucze)      |
+| D = dict(x=1, y=2}       | słownik (dwa klucze)      |
+| len(D)                   | liczność (liczba par)     |
+| D[key] = value           | dodanie pozycji           |
+| D[key]                   | dostęp do wartości        |
+| D = dict(iterable)       | tworzenie z listy par     |
+| D2 = dict(D1)            | kopiowanie słownika       |
+| D2 = D1.copy()           | stary sposób kopiowania   |
+| D2 = {**D1}              | kopiowanie (Py3)          |
+| D = frozendict(x=1, y=2) | słownik niezmienny Py3.15 |
+| D = frozendict(mapping)  | słownik niezmienny Py3.15 |
+| D = frozendict(iterable) | słownik niezmienny Py3.15 |
+| key in D                 | zawieranie klucza (bool)  |
+| key not in D             |                           |
+| D.has_key(key)           | dawny sposób (Py2)        |
+| for key in D: pass       | iteracja po kluczach      |
+| del D[key]               | usuwanie klucza           |
+| D.clear()                | czyszczenie słownika      |
+| del D                    | usuwanie zmiennej         |
++--------------------------+---------------------------+
 </pre>
 
 <hr><pre>
@@ -65,9 +75,9 @@ D['three'] = 'trzy'
 D = {k1:v1, k2:v2, k3:v3}
 # D = {k1:v1, k2:v2, k3:v3,}   # przecinek na końcu jest dozwolony
 
-D.keys()            # [k1, k2, k3] lista kluczy w Py2
-D.values()          # [v1, v2, v3] lista wartości w Py2
-D.items()           # [(k1, v1), (k2, v2), (k3, v3)] lista par w Py2
+D.keys()            # [k1, k2, k3], lista kluczy w Py2
+D.values()          # [v1, v2, v3], lista wartości w Py2
+D.items()           # [(k1, v1), (k2, v2), (k3, v3)], lista par w Py2
 
 D.keys()            # zwraca widok kluczy (Py3)
 D.values()          # zwraca widok wartości (Py3)
@@ -80,15 +90,22 @@ D.has_key('one')    # obecnie zalecane: 'one' in D
 D_alias = D                   # tylko kopiowanie adresu
 D_copy1 = D.copy()            # metoda słowników do kopiowania
 D_copy2 = dict(D)             # najprostszy sposób
-id(D), id(D_alias), id(D_cp), id(D_cp2)
+id(D), id(D_alias), id(D_copy1), id(D_copy2)
 
 # Usuwanie elementu ze słownika.
 del D['two']
-
+</pre><hr><pre>
 # Konwersja listy krotek do dict.
 D = dict([("a", 1), ("b", 2), ("c", 3), ("d", 4)])
+# {"a": 1, "b": 2, "c": 3, "d": 4}
 
-# Ciekawa pętla po parach - items().
+# Iteracja po słowniku to iteracja po kluczach.
+list(D)   # ["a", "b", "c", "d"]
+[key for key in D]   # jw
+for key in D:
+    print(key)
+
+# Ciekawa pętla po parach z rozpakowaniem krotek - metoda items().
 for (char, number) in D.items():
     print("key: {} value: {}".format(char, number))
 </pre><hr>
@@ -124,9 +141,11 @@ for key in sorted(chars):
 <hr><pre>
 # Przykładowe inicjalizacje słownika.
 D = {k1:v1, k2:v2}                 # klasyczna
+D = dict({k1:v1, k2:v2})           # przez kopiowanie
 D = dict([(k1, v1), (k2, v2)])     # z listy par (krotek)
 D = dict(zip([k1, k2], [v1, v2]))  # z dwóch list
 D = dict(name1=v1, name2=v2)       # powstaje {'name1':v1, 'name2':v2}
+D = dict({'name1': v1}, name2=v2)  # jw, łączenie metod
 
 if D != {}:   # porównywanie z pustym słownikiem
     print("słownik nie jest pusty")
@@ -136,8 +155,7 @@ if D:         # pusty słownik oznacza False
 D.clear()           # wyczyszczenie słownika
 E = D.copy()        # kopia słownika
 E = dict(D)         # jw, ale wygodniej
-D.has_key(key)      # zwraca True/False
-key in D            # jw, zalecane
+key in D            # test istnienia klucza w słowniku
 
 D.get(key)          # zwraca D[key] lub None
 D.get(key, value)   # zwraca D[key] lub value
@@ -148,23 +166,23 @@ D.setdefault(key, value)
 D.pop(key)          # zwraca D[key] i usuwa ze słownika
 D.pop(key, value)   # zwraca D[key] lub value, gdy key nie ma w słowniku
 D.popitem()         # zwraca 2-tuple (key, value) [chyba losowo] 
-                    # lub Error, gdy słownik jest pusty
-D = dict.fromkeys(S[, value])    # S to sekwencja, value to domyślnie None
+                    # lub KeyError, gdy słownik jest pusty
+# dict.fromkeys(iterable, value=None, /)
 D = dict.fromkeys(range(4), 0)   # {0: 0, 1: 0, 2: 0, 3: 0}
 D = dict.fromkeys("abc", 1)   # {'a': 1, 'c': 1, 'b': 1}
 
 D.update(E)   # E to dict, czyli for k in E: D[k] = E[k]
 D.update(**E)   # E to dict, jw
 D.update(F)   # F=[("x",10),("y",20)], czyli for (k,v) in F: D[k] = v
-D.update(name1=value1, name2=value2)
-# inaczej D.update({'name1': value1, 'name2': value2})
+D.update(name1=v1, name2=v2)
+# równoważne D.update({'name1': v1, 'name2': v2})
 </pre><hr>
 
 <p>Problem sklejania dwóch słowników.
 
 <hr><pre>
 # http://stackoverflow.com/questions/38987/how-can-i-merge-two-python-dictionaries-in-a-single-expression?rq=1
-# Dane są slowniki A i B. Utworzyć C jako sumę słowników.
+# Dane są słowniki A i B. Utworzyć C jako sumę słowników.
 C = A.copy()
 C.update(B)
 
@@ -224,7 +242,7 @@ Można po nich iterować, można sprawdzać należenie do obiektu
 (<em>membership test</em>).
 
 <hr><pre>
-&gt;&gt;&gt; D = { "first" : 1, "second" : 2 }
+&gt;&gt;&gt; D = {"first": 1, "second": 2}
 &gt;&gt;&gt; ks = D.keys()
 &gt;&gt;&gt; ks
 dict_keys(['second', 'first'])
@@ -246,8 +264,8 @@ z listą par <em>(key, value)</em>.
 <hr><pre>
 keys = [k1, k2, k3]
 values = [v1, v2, v3]
-D = dict(zip(keys, values))                  # Py2 i Py3
 D = {k: v for (k, v) in zip(keys, values)}   # Py3 i Py2.7
+D = dict(zip(keys, values))                  # Py2 i Py3
 
 D = {x: x**2 for x in range(9)}        # Py3 i Py2.7
 D = dict((x, x**2) for x in range(9))    # generator
@@ -269,7 +287,7 @@ merged_dict = {}
 merged_dict.update(D1)
 merged_dict.update(D2)
 </pre><hr><pre>
-# PEP 584 -- Add Union Operators To dict
+# PEP 584 - Add Union Operators To dict.
 # Dodanie operatorów '|' i '|=', tak jak dla list.
 
 D3 = D1 | D2   # unia słowników tworzy nowy słownik (Py3.9.7)
@@ -278,6 +296,22 @@ D3 = D1 | D2   # unia słowników tworzy nowy słownik (Py3.9.7)
 
 D1 |= D2   # działa jak D1.update(D2), in-place (augmented assignment)
 # Przypomnienie: dla list mamy L1 += L2, co działa jak L1.extend(L2), in-place.
+</pre><hr><pre>
+# PEP 814 - Add frozendict built-in type.
+
+D1 = frozendict(x=1, y=2)   # frozendict({'x': 1, 'y': 2}), representation
+D1['z'] = 3   # TypeError: 'frozendict' object does not support item assignment
+D2 = frozendict(y=2, x=1)
+assert D1 == D2
+assert frozendict(x=1, y=2) == dict(x=1, y=2)
+# A frozendict can be hashed if all keys and values can be hashed.
+assert hash(D1) == hash(D2)
+# frozendict |= other does not modify the frozendict in-place but creates
+# a new frozen dictionary.
+
+# frozendict.fromkeys(iterable, value=None, /)
+D = frozendict.fromkeys(range(3), value="a")
+# frozendict({0: "a", 1: "a", 2: "a"})
 </pre><hr>
 
 </body>

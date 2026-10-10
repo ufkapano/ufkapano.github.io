@@ -20,12 +20,17 @@
 Sprawdzić, czy można utworzyć zmienne o takich nazwach.
 
 <p>Sprawdzić listę obiektów wbudowanych.
-W czasie normalnej pracy nie ma potrzeby importowania
-modułu <em>__builtin__</em>, ponieważ obiekty wbudowane są dostępne.
+W czasie normalnej pracy nie ma potrzeby importowania modułu 
+<em>builtins</em> (<em>__builtin__</em> w Py2), 
+ponieważ obiekty wbudowane są dostępne.
 
 <hr><pre>
-&gt;&gt;&gt; import __builtin__
+&gt;&gt;&gt; import __builtin__   # Py2
 &gt;&gt;&gt; dir(__builtin__)
+
+&gt;&gt;&gt; import builtins   # Py3
+&gt;&gt;&gt; dir(builtins)
+&gt;&gt;&gt; help(builtins)
 </pre><hr>
 
 <h3>ZADANIE 2.2 (BOOL)</h3>
@@ -76,7 +81,7 @@ len(str(2 ** 10000))            # konwersja liczby do napisu
 S = "ab"   'cd'               # niejawna konkatenacja do "abcd"
 "ab'cd", 'ab"cd'              # zastosowanie
 S = "a\tb\nc\"d"              # znaki specjalne
-print("{} {}".format(len(S), S))   # 7
+print(len(S), S)   # 7
 
 S = """jeden
 dwa
@@ -98,9 +103,9 @@ L[0] + "=" + L[1] + "=" + L[2]
 # Sprawdzić niezmienność napisów.
 </pre><hr>
 
-<p>Zbadać metody dla napisów, lista metod dir(str).
-Zwrócić uwagę na metody: find(), replace(),
-strip(), lower(), upper(), zfill().
+<p>Zbadać metody dla napisów, lista metod <em>dir(str)</em>.
+Zwrócić uwagę na metody: <em>find()</em>, <em>replace()</em>,
+<em>strip()</em>, <em>lower()</em>, <em>upper()</em>, <em>zfill()</em>.
 
 <h3>ZADANIE 2.5 (LIST)</h3>
 
@@ -130,11 +135,11 @@ L[1] = 5     # zmienia się też M!
 # Listy składane.
 </pre><hr>
 
-<p>Spróbować wyświetlić element poza końcem listy (IndexError).
+<p>Spróbować wyświetlić element poza końcem listy (<em>IndexError</em>).
 Spróbować przypisać element pod indeksem poza końcem listy.
 
-<p>Zbadać różnicę między podstawianiem L2 = L1, a kopiowaniem
-list L2 = list(L1). Wykorzystać funkcję id().
+<p>Zbadać różnicę między podstawianiem <em>L2 = L1</em>, a kopiowaniem
+list <em>L2 = list(L1)</em>. Wykorzystać funkcję <em>id()</em>.
 
 <p>Zbadać metody dla list, lista metod dir(list).
 
@@ -142,21 +147,21 @@ list L2 = list(L1). Wykorzystać funkcję id().
 
 <p>W trybie interaktywnym zbadać operacje na krotkach.
 
-<p>Zbadać metody dla krotek, lista metod dir(tuple).
+<p>Zbadać metody dla krotek, lista metod <em>dir(tuple)</em>.
 
 <h3>ZADANIE 2.7 (DICT)</h3>
 
 <p>W trybie interaktywnym zbadać operacje na słownikach,
-lista metod dir(dict).
+lista metod <em>dir(dict)</em>.
 
-<p>Sprawdzić możliwość pobrania nieistniejącego klucza (KeyError).
+<p>Sprawdzić możliwość pobrania nieistniejącego klucza (<em>KeyError</em>).
 
 <h3>ZADANIE 2.8 (ZBIORY)</h3>
 
 <p>W trybie interaktywnym zbadać operacje na zbiorach.
 
-<p>Zbadać metody dla zbiorów, listy metod dir(set)
-oraz dir(frozenset).
+<p>Zbadać metody dla zbiorów, listy metod <em>dir(set)</em>
+oraz <em>dir(frozenset)</em>.
 
 <p>Wykorzystać zbiór do usunięcia duplikatów z listy.
 
