@@ -136,8 +136,8 @@ void sort( RandomIt first, RandomIt last, Compare comp );
 // Funkcja zwraca true jeżeli a jest mniejsze od b.
 
 // Complexity
-// O(N*log(N)), where N = std::distance(first, last) comparisons on average. (until C++11)
-// O(N*log(N)), where N = std::distance(first, last) comparisons. (since C++11)
+// O(N*log(N)), where N = std::distance(first, last) comparisons on average (until C++11).
+// O(N*log(N)), where N = std::distance(first, last) comparisons (since C++11).
 
 // Dla std::stable_sort() analogicznie.
 // The order of equivalent elements is guaranteed to be preserved.
@@ -155,6 +155,9 @@ std::array&lt;int, 10&gt; v = { 9,4,7,3,6,8,2,1,5,0 };
 int v[] = { 9,4,7,3,6,8,2,1,5,0 }; // zwykła tablica
 
 std::sort(v.begin(), v.end()); // vector, array
+std::sort(v.begin(), v.end(), std::less&lt;int&gt;()); // domyślne sortowanie niemalejące
+std::sort(v.begin(), v.end(), std::greater&lt;int&gt;()); // sortowanie nierosnące
+
 std::sort(std::begin(v), std::end(v)); // zwykła tablica, vector, array
 std::sort(v.data(), v.data() + v.size());   // array
 std::sort(v, v + (sizeof(v) / sizeof(*v))); // zwykła tablica
@@ -166,7 +169,7 @@ void anysort(T *ptr, int left, int right);
 // Elements are compared using
 bool operator&lt;(const T &amp; lhs, const T &amp; rhs);
 </pre><hr><pre>
-// Szablon przykładowej funkcji sortującej.
+// Szablon przykładowej funkcji sortującej w zakresie [first, last).
 template&lt;typename Iterator&gt;
 void anysort(Iterator first, Iterator last);
 
@@ -195,11 +198,11 @@ to nie jest ciąg spacji!
 
 <hr><pre>
 $ ls                # zawartość katalogu z projektem
-atrapa.cpp  atrapa.h  main.cpp  Makefile
+atrapa.cpp  atrapa.hpp  main.cpp  Makefile
 
 # Zależności między plikami:
-# atrapa.cpp zawiera #include "atrapa.h"
-# main.cpp zawiera #include "atrapa.h"
+# atrapa.cpp zawiera #include "atrapa.hpp"
+# main.cpp zawiera #include "atrapa.hpp"
 
 $ make              # kompilacja
 g++ -Wall -std=c++11 -c main.cpp -o main.o
@@ -215,12 +218,13 @@ CXX = g++
 # LIBS = -ll -lm
 LIBS =
 # Flagi dla kompilatora C++.
-# Standardy: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
+# Standardy C++: -std=c++11 -std=c++14 -std=c++17 -std=c++20 -std=c++23 -std=c++26
+# Minimalny wymagany standard to C++11.
 CXXFLAGS = -Wall -std=c++11
 # Pliki obiektowe - powstają z plików *.cpp.
 OBJECTS = main.o atrapa.o
 # Pliki nagłówkowe - są włączane do plików *.cpp.
-HFILES = atrapa.h
+HFILES = atrapa.hpp
 # Końcowy plik wykonywalny.
 TARGET = main.out
 

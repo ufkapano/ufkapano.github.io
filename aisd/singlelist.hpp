@@ -1,7 +1,7 @@
-// singlelist.h
+// singlelist.hpp
 
-#ifndef SINGLELIST_H
-#define SINGLELIST_H
+#ifndef SINGLELIST_HPP
+#define SINGLELIST_HPP
 
 #include <iostream>     // deklaracje strumieni cout, cin, cerr
 #include <cassert>    // assert()

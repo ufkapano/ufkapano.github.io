@@ -41,9 +41,10 @@ to jest <strong>długość</strong> listy [size()],
 <li>dołączanie elementu na początek listy [push_front(item)],
 <li>dołączanie elementu na koniec listy [push_back(item)],
 <li>dostęp do głowy (<em>head</em>), 
-czyli pierwszego (lewego skrajnego) elementu [front()],
+czyli dostęp do pierwszego (lewego skrajnego) elementu [front()],
+<br>[UWAGA Dostęp oznacza możliwość odczytu lub wstawienia nowej wartości.]
 <li>dostęp do ogona (<em>tail</em>), 
-czyli ostatniego (prawego skrajnego) elementu [back()],
+czyli dostęp do ostatniego (prawego skrajnego) elementu [back()],
 <li>usunięcie elementu pierwszego [pop_front()],
 <li>usunięcie elementu ostatniego [pop_back()],
 <li>czyszczenie listy, czyli usunięcie wszystkich elementów [clear()],
@@ -112,9 +113,9 @@ It2 copy_backward( It1 first, It1 last, It2 d_last );
 tablicy o stałym rozmiarze (tablica statyczna), 
 ustalanym w czasie tworzenia listy.
 Będzie to klasa <em>ArrayList</em> umieszczona w pliku 
-<a href="arraylist.h">arraylist.h</a>.
-Uzupełnić plik <em>arraylist.h</em>, stworzyć funkcję <em>main()</em> i testy
-sprawdzające działanie interfejsu list.
+<a href="arraylist.hpp">arraylist.hpp</a>.
+Uzupełnić plik <em>arraylist.hpp</em>, stworzyć funkcję <em>main()</em> 
+i testy sprawdzające działanie interfejsu list.
 
 <h3>ZADANIE 3.2 (TABLICA DYNAMICZNA)</h3>
 
@@ -122,7 +123,7 @@ sprawdzające działanie interfejsu list.
 
 <p>Przygotować implementację realizującą ADT LIST na bazie
 tablicy o zmieniającym się rozmiarze (tablica dynamiczna).
-Będzie to klasa <em>ArrayList</em> umieszczona w pliku <em>arraylist.h</em>.
+Będzie to klasa <em>ArrayList</em> umieszczona w pliku <em>arraylist.hpp</em>.
 Początkowy rozmiar tablicy (min_size) może wynosić 1, 2 lub 4.
 Po zapełnieniu tablicy rozmiar może się powiększać o stały czynnik,
 np. może się podwajać. Powiększanie tablicy o stałą liczbę miejsc
@@ -159,6 +160,64 @@ Dobrą strategią jest zmniejszanie rozmiaru do 2^k / 2,
 jeżeli liczba elementów zmaleje do 2^k / 4 lub 2^k / 3, a nie do 2^k / 2.
 Unikamy wtedy częstego powiększania i zmniejszania rozmiaru tablicy,
 kiedy liczba elementów oscyluje koło 2^k / 2.
+
+<h3>ZADANIE 3.3 (DZIEDZICZENIE)</h3>
+
+<p>Wykorzystać plik <em>baselist.hpp</em> opisujący interfejs list
+i przygotować klasę potomną <em>ArrayList</em> z implementacją tablicową list.
+
+<hr><pre>
+// baselist.hpp
+
+#ifndef BASELIST_HPP
+#define BASELIST_HPP
+
+template &lt;typename T&gt;
+class BaseList {
+public:
+    BaseList() = default;
+    ~BaseList() = default;
+    BaseList(const BaseList&amp; other) = default;
+    BaseList& operator=(const BaseList&amp; other) = default;
+    virtual bool empty() const = 0;
+    virtual bool full() const = 0;
+    virtual int size() const = 0;
+    virtual int max_size() const = 0;
+    virtual void push_front(const T&amp; item) = 0;
+    virtual void push_front(T&amp;&amp; item) = 0;
+    virtual void push_back(const T&amp; item) = 0;
+    virtual void push_back(T&amp;&amp; item) = 0;
+    virtual T&amp; front() = 0;
+    virtual T&amp; back() = 0;
+    virtual void pop_front() = 0;
+    virtual void pop_back() = 0;
+    virtual void clear() = 0;
+    virtual void display() = 0;
+    virtual void reverse() = 0;
+    virtual void sort() = 0;
+    // Operacje z indeksami.
+    virtual T&amp; operator[](int pos) = 0;
+    virtual const T&amp; operator[](int pos) const = 0;
+    virtual void erase(int pos) = 0;
+    virtual int index(const T&amp; item) = 0;
+    virtual void insert(int pos, const T&amp; item) = 0;
+    virtual void insert(int pos, T&amp;&amp; item) = 0;
+};
+
+#endif
+</pre><hr><pre>
+// arraylist.hpp
+
+#ifndef ARRAYLIST_HPP
+#define ARRAYLIST_HPP
+
+#include "baselist.hpp"
+
+template &lt;typename T&gt;
+class ArrayList : public BaseList&lt;T&gt; { ... };
+
+#endif
+</pre>
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

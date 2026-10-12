@@ -1,7 +1,7 @@
-// doublelist.h
+// doublelist.hpp
 
-#ifndef DOUBLELIST_H
-#define DOUBLELIST_H
+#ifndef DOUBLELIST_HPP
+#define DOUBLELIST_HPP
 
 #include <iostream>     // deklaracje strumieni cout, cin, cerr
 #include <cassert>    // assert()
