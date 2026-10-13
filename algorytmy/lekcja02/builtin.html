@@ -47,16 +47,16 @@ Niezmienne są przede wszystkim liczby, stringi i krotki.
 +-----------------+--------------------+----------------------+
 | Liczby          | Liczbowa           | Nie                  |
 | range           | Sekwencja liczbowa | Nie (Py2 != Py3)     |
-| Łańcuchy (str)  | Sekwencja tekstowa | Nie (Py2 != Py3)     |
+| Stringi (str)   | Sekwencja tekstowa | Nie (Py2 != Py3)     |
 | bytes           | Sekwencja bajtów   | Nie                  |
 | bytearray       | Sekwencja bajtów   | Tak                  |
 | Listy (list)    | Sekwencja          | Tak                  |
 | Krotki (tuple)  | Sekwencja          | Nie                  |
 | Słowniki (dict) | Odwzorowanie       | Tak                  |
 | frozendict      | Odwzorowanie       | Nie (Py3.15)         |
-| Pliki           | Rozszerzenie       | Nie dotyczy          |
 | set             | Zbiór              | Tak                  |
 | frozenset       | Zbiór              | Nie                  |
+| Pliki           | Rozszerzenie       | Nie dotyczy          |
 +-----------------+--------------------+----------------------+
 </pre>
 
@@ -79,12 +79,14 @@ Przykładowo operator + działa inaczej na liczbach, a inaczej na stringach.
 if isinstance(x, float):
     print("to jest liczba zmiennoprzecinkowa")
 
-if isinstance(x, (int, long)):   # Py2 (Py3 nie ma typu long)
+#if isinstance(x, (int, long)):   # Py2
+if isinstance(x, int):
     print("to jest liczba całkowita")
 
 if isinstance(S, (set, frozenset)):
     print("to jest zbiór")
 
+#if isinstance(D, dict):
 if isinstance(D, (dict, frozendict)):   # Py3.15
     print("to jest słownik")
 </pre><hr><pre>

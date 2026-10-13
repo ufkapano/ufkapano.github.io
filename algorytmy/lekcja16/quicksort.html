@@ -73,5 +73,29 @@ if (right - left) &lt;= m:
     insertsort(L, left, right)
 </pre><hr>
 
+<p>Następna wersja quicksort().
+
+<hr><pre>
+# https://pl.wikibooks.org/wiki/Kody_%C5%BAr%C3%B3d%C5%82owe/Sortowanie_szybkie#Python
+
+def quicksort(L, left, right):
+    i = left
+    j = right
+    pivot = L[(left + right) // 2]   # element srodkowy
+    while i &lt;= j:   # w koncu i przeskoczy j
+        while L[i] &lt; pivot:
+            i += 1   # dojdzie najwyzej do pivot z lewej
+        while pivot &lt; L[j]:
+            j -= 1    # dojdzie najwyzej do pivot z prawej
+        if i &lt;= j:   # w koncu i przeskoczy j
+            swap(L, i, j)
+            i += 1
+            j -= 1
+    if left &lt; j:
+        quicksort(L, left, j)
+    if i &lt; right:
+        quicksort(L, i, right)
+</pre><hr>
+
 </body>
 </html>

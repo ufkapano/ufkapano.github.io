@@ -154,24 +154,24 @@ round(3.14159, 2)   # 3.14
 round(123.456,-1)   # 120.0, ujemna precyzja
 round(1.2), round(1.5), round(1.8)   # 1.0, 2.0, 2.0
 round(-1.2), round(-1.5), round(-1.8)   # -1.0, -2.0, -2.0
-int(1.2+0.5), int(1.5+0.5), int(1.8+0.5)   # 1.0, 2.0, 2.0
-int(-1.2+0.5), int(-1.5+0.5), int(-1.8+0.5)   # 0, -1.0, -1.0
+int(1.2 + 0.5), int(1.5 + 0.5), int(1.8 + 0.5)   # 1.0, 2.0, 2.0
+int(-1.2 + 0.5), int(-1.5 + 0.5), int(-1.8 + 0.5)   # 0, -1.0, -1.0
 </pre><hr><pre>
 # Wartość bezwzględna.
 
 abs(-5), abs(-4.32)   # 5, 4.32
 abs(1+1j)   # 1.41421356237 = sqrt(2), moduł liczby zespolonej
 </pre><hr><pre>
-# Liczby całkowite można zapisywać w układzie ósemkowym i szesnastkowym.
-23, int("027", 8), 0x17, 0X17   # zapis liczby 23
-hex(23)   # return string '0x17'
+# Liczby całkowite można zapisywać w różnych układach.
+23, int("113",4), int("27",8), 0x17, 0X17   # zapis liczby 23
+hex(23)   # return string '0x17' (szesnastkowo)
 
 # Pozostałość po ułamkach w liczbach całkowitych.
 (4).numerator        # licznik 4
 (4).denominator      # mianownik 1
 </pre><hr><pre>
-# Funkcja ord() [string --&gt; kod ASCII].
-# Funkcja chr() [kod ASCII --&gt; string].
+# Funkcja ord() [string -&gt; kod ASCII].
+# Funkcja chr() [kod ASCII -&gt; string].
 
 ord("b")   # return 98
 chr(99)   # return "c"
@@ -180,7 +180,7 @@ chr(99)   # return "c"
 # Zamiana na krotkę liczb int, odpowiadającą ułamkowi.
 
 (0.5).as_integer_ratio()      # (1, 2)
-(0.6).as_integer_ratio()      # (5404319552844595L, 9007199254740992L)
+(0.6).as_integer_ratio()      # (5404319552844595, 9007199254740992)
 # Powinno być (3, 5), ale są błędy reprezentacji.
 
 (-.25).as_integer_ratio()     # (-1, 4)

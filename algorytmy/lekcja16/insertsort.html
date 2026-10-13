@@ -23,8 +23,10 @@ z której pobieramy kolejne elementy.
 def insertsort(L, left, right):
     for i in range(left+1, right+1):
         for j in range(i, left, -1):   # od prawej do lewej (bez left)
-            if L[j-1] &gt; L[j]:
+            if L[j] &lt; L[j-1]:
                 swap(L, j-1, j)   # zamiana sąsiadów
+            #else:   # na lewo są elementy mniejsze od L[j], dodatek adaptacyjny
+            #    break
 </pre><hr><pre>
 # Wersja nieadaptacyjna z pętlami for i while.
 
@@ -32,8 +34,10 @@ def insertsort(L, left, right):
     for i in range(left+1, right+1):
         j = i
         while j &gt; left:
-            if L[j-1] &gt; L[j]:
+            if L[j] &lt; L[j-1]:
                 swap(L, j-1, j)
+            #else:   # na lewo są elementy mniejsze od L[j], dodatek adaptacyjny
+            #    break
             j = j-1
 </pre><hr>
 
@@ -61,7 +65,7 @@ ustawić go na początku tablicy (wartownik).
 # Ta wersja jest adaptacyjna.
 
 def insertsort(L, left, right):
-    for i in range(right, left, -1):   # ustawiam wartownika
+    for i in range(right, left, -1):   # ustawiam wartownika na lewej stronie
         if L[i-1] &gt; L[i]: 
             swap(L, i-1, i)
     for i in range(left+2, right+1):

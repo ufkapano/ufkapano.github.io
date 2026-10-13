@@ -6,14 +6,14 @@
 
 <body bgcolor="white" text="black" link="blue" vlink="navy" alink="red">
 
-<h1>Łańcuchy znaków</h1>
+<h1>Stringi</h1>
 
 <p>https://docs.python.org/3/library/stdtypes.html#text-sequence-type-str
 
 <h3>WPROWADZENIE</h3>
 
-<p>Łańcuch (string) to uporządkowany ciąg znaków używany do przechowywania
-informacji tekstowej. 
+<p>Łańcuch znaków (string) to uporządkowany ciąg znaków używany 
+do przechowywania informacji tekstowej. 
 W Pythonie 2 znaki odpowiadają bajtom, więc <em>bytes()</em> to alias 
 do <em>str()</em> (Py2.7).
 W Pythonie 3 string (typ <em>str</em>) zawiera znaki Unikodu 
@@ -21,8 +21,8 @@ W Pythonie 3 string (typ <em>str</em>) zawiera znaki Unikodu
 zamienia się na ciąg bajtów korzystając z ustalonego kodowania.
 Jeden znak Unikodu może odpowiadać kilku bajtom.
 
-<p>Łańcuchy zaliczane są do niezmiennych sekwencji, czyli nie można 
-ich zmieniać w obszarze przechowywania ich w pamięci. 
+<p>Łańcuchy zaliczane są do <strong>niezmiennych sekwencji</strong>, 
+czyli nie można ich zmieniać w obszarze przechowywania ich w pamięci. 
 Dostęp do znaków możliwy jest za pomocą offsetu (przesunięcia). 
 Dozwolone są ujemne offsety (odliczanie od końca). 
 
@@ -55,16 +55,16 @@ wewnątrz potrójnych znaków, ponieważ zachowywane są końce linii.
 | S2 = S1[:]           | kopiowanie                  |
 | S2 = str(S1)         | kopiowanie                  |
 | for char in S: pass  | iteracja                    |
-| S1 in S2             | zawieranie (bool)           |
-| S1 not in S2         |                             |
-| S1.count(S2)         | liczba wystąpień            | (non-overlapping matches!)
+| S1 in S2             | zawieranie (bool)           | dopasowanie wzorca
+| S1 not in S2         | brak zawierania (bool)      | dopasowanie wzorca
+| S1.count(S2)         | liczba wystąpień            | non-overlapping matches!
 | S1.index(S2)         | pierwsze wystąpienie        |
 | max(S), min(S)       | największy|najmniejszy znak |
 | "%s dom" % "stary"   | formatowanie łańcucha       |
 | "%s %s" % ("a", "b") |                             |
 | S.join(iterable)     | sklejanie z napisem         |
-| S.format(...)        | Py2.6+, Py3.x               |
-| del S                | usuwanie napisu             |
+| S.format(...)        | Py2.6+, Py3                 |
+| del S                | usuwanie zmiennej           |
 +----------------------+-----------------------------+
 </pre><hr>
 
@@ -93,12 +93,12 @@ char = chr(p)   # znak Euro jako string (str)
 ascii(char)       # '\u20ac' (str), znak zapisany przez cyfry szesnastkowe
 utf = char.encode('utf-8')   # b'\xe2\x82\xac' (bytes), znak zakodowany
 </pre><hr><pre>
-# Zwykłe stringi. W Pythonie 3 zawierają znaki Unikodu.
+# Zwykłe stringi w Py3 zawierają znaki Unikodu.
 "pierwszy", 'drugi', "trzeci'x", 'czwarty"y'
-"raz"  'dwa'                  # napisy obok siebie będą sklejone
+"raz"  'dwa'   # napisy obok siebie będą sklejone do 'razdwa'
 
-# Raw strings - napisy ze znakami specjalnymi.
-r"raw string\n\t\a"
+# Raw strings to napisy stosowane przy obecności znaków specjalnych.
+r"raw string\n\t\a"   # równoważne 'raw string\\n\\t\\a'
 
 # Unicode strings (Py2). Nazwa typu to unicode().
 unicode('abc')
@@ -153,16 +153,10 @@ Y = 2
 
 <hr><pre>
 # Napisy można porównywać (&lt;, &gt;, ==), nawet trójkami.
-napis1 = "abc"
-napis2 = "bcd"
-napis1 &lt; napis2
+word1 = "abc"
+word2 = "bcd"
+word1 &lt; word2
 "a" &gt; "Z"
-
-# owoc = "banan"
-# Nie wolno podstawić tak jak w C, napisy są niezmienne.
-# owoc[0] = "s"       ERROR!
-# Trzeba utworzyć nowy string np. poleceniem
-# nowy_owoc = "s" + owoc[1:]
 
 a = "abc"
 b = "abc"
@@ -175,11 +169,12 @@ id(a), id(b), id(c), id(d)
 # krótkie napisy trzyma w pamięci do późniejszego wykorzystania.
 </pre><hr><pre>
 # Napisy są niezmienne (immutable).
-&gt;&gt;&gt; a = "abc"
-&gt;&gt;&gt; a[1] = "s"
+&gt;&gt;&gt; word = "abc"
+&gt;&gt;&gt; word[0] = "s"
 Traceback (most recent call last):
   File "&lt;stdin&gt;", line 1, in &lt;module&gt;
 TypeError: 'str' object does not support item assignment
+&gt;&gt;&gt; new_word = "s" + word[1:]
 &gt;&gt;&gt;
 </pre><hr>
 
@@ -227,7 +222,7 @@ zwracają nowy łańcuch.
 <hr><pre>
 dir(str)            # lista metod stringów
 print(ord("a"))     # 97, kod ASCII znaku
-print(ord(u"ą))     # 261, ord() działa też dla unikodu w Py2
+print(ord(u"ą"))     # 261, ord() działa też dla unikodu w Py2
 print(chr(98))      # "b", znak dla danego kodu ASCII
 
 word = "".join(["a","b","c","d","e","f"])   # sklejanie listy znaków lub stringów
@@ -269,7 +264,7 @@ line.splitlines()             # ['a\tb c', 'd']
 
 "111".zfill(8)                # "00000111"
 
-# Badanie typów znaków w stringu.
+# Badanie typów znaków w stringu, zwraca bool.
 S.isalnum()
 S.isalpha()
 S.isdigit()
@@ -278,20 +273,20 @@ S.isupper()
 S.isspace()
 </pre><hr>
 
-<p>Jeżeli w Pythonie 2 chcemy sprawdzić, czy obiekt X jest łańcuchem, 
+<p>Jeżeli w Py2 chcemy sprawdzić, czy obiekt X jest łańcuchem, 
 korzystamy z wywołania <em>isinstance(X, basestring)</em>, 
 gdzie <em>basestring</em> to klasa bazowa dla
 <em>str</em> i <em>unicode</em> (Py2.3+).
-<br>W Pythonie 3 korzystamy z wywołania <em>isinstance(X, str)</em>,
+<br>W Py3 korzystamy z wywołania <em>isinstance(X, str)</em>,
 klasa <em>basestring</em> została usunięta z języka (PEP 3137).
 
 <p>Łańcuchy znaków obsługują zaawansowane operacje formatowania
 ze znakiem procenta (%) lub metodą <em>format</em>
 [więcej informacji przy opisie standardowego wyjścia].
 
-<h3>MEMORYVIEW</h3>
+<h3>MEMORYVIEW W PYTHONIE 2.7</h3>
 
-<p>W Pythonie 2.7 pojawia się <em>memoryview(object)</em>,
+<p>W Py2.7 pojawia się <em>memoryview(object)</em>,
 przy czym obiekt musi wspierać protokół buforowania (<em>buffer protocole</em>).
 Protokół buforowania dostarcza sposobu na dostęp do wewnętrznych 
 danych obiektu.
@@ -354,13 +349,13 @@ które mają odmienne własności.
 W Py3 znika <em>basestring</em> (PEP 3137).
 
 <p><em>bytes(object)</em> zwraca niezmienną (<em>immutable</em>) tablicę bajtów.
-[W Py2.7 jest to alias do <em>str()</em>.]
+W Py2.7 jest to alias do <em>str()</em>.
 
 <p><em>bytearray(object)</em> zwraca zmienną (<em>mutable</em>) tablicę bajtów.
-[Istnieje w Py2.7.]
+Typ <em>bytearray</em> istnieje w Py2.7.
 
 <p><em>str(object)</em> zwraca niezmienny string mogący zawierać znaki Unikodu.
-[W Py2 odpowiada mu unicode().]
+W Py2 odpowiada mu <em>unicode(object)</em>.
 
 <p><em>memoryview(object)</em> tworzy widok obiektu. 
 Obiekt musi wspierać protokół buforowania (<em>buffer protocol</em>), 

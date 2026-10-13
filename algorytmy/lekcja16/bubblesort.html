@@ -15,9 +15,9 @@ ciągu. Algorytm jest stabilny.
 
 <hr><pre>
 def bubblesort(L, left, right):
-    for i in range(left, right):
+    for i in range(left, right):   # n-1 razy
         for j in range(left, right):
-            if L[j] &gt; L[j+1]:
+            if L[j+1] &lt; L[j]:
                 swap(L, j+1, j)
 </pre><hr>
 
@@ -35,13 +35,23 @@ przejściu pętli nie nastąpiło przestawienie.
 </ul>
 
 <hr><pre>
+def bubblesort(L, left, right):
+    for i in range(left, right):
+        swapped = False   # wykrywanie przestawienia
+        for j in range(left, right-i):  # po prawej są posortowane
+            if L[j+1] &lt; L[j]:
+                swap(L, j+1, j)
+                swapped = True
+        if not swapped:
+            break
+</pre><hr><pre>
 # Wersja ulepszona wg Sysły.
 def bubblesort(L, left, right):
     limit = right
     while True:
         k = left-1   # lewy wskaźnik przestawianej pary
         for i in range(left, limit):
-            if L[i] &gt; L[i+1]:
+            if L[i+1] &lt; L[i]:
                 swap(L, i, i+1)
                 k = i
         if k &gt; left:
