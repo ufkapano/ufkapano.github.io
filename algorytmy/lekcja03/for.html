@@ -14,7 +14,7 @@
 
 <p>Pętla <em>for</em> jest uniwersalnym iteratorem po sekwencjach
 lub innych obiektach iterowalnych.
-Jeżeli chcemy wykonać pętlę po ciągu liczb całkowitych, 
+Jeżeli chcemy wykonać pętlę po ciągu kolejnych liczb całkowitych, 
 to pomocna jest funkcja <em>range()</em> (Py3) lub wersja
 z generatorem <em>xrange()</em> (Py2).
 Można stosować <em>break</em> (natychmiastowe wyjście z pętli)
@@ -32,6 +32,7 @@ for item in sequence:   # wiersz nagłówkowy
     instrukcje      # tu zwykle używamy item
     if test1:
         break       # wyjście z pętli, opcjonalne
+    instrukcje
     if test2:
         continue    # przejście na górę pętli, opcjonalne
     instrukcje
@@ -49,6 +50,12 @@ for i in range(6):            # liczby od 0 do 5 włącznie
     print(i)
 # Indeks pętli żyje poza nią.
 print(i)                   # wynik to 5
+</pre><hr><pre>
+# Odliczanie do zera.
+n = 8
+#for i in range(n-1,-1,-1):
+for i in reversed(range(n)):   # wygodniejsze
+    print(i)
 </pre><hr><pre>
 # Pętla po liście składającej się z elementów różnych typów.
 for item in [4, "s", [2, 3], 3.14159]:
@@ -123,7 +130,6 @@ for (i, item) in enumerate(fruits):
 
 list(enumerate(fruits, start=1))   # [(1, 'apple'), (2, 'pear'), (3, 'plum')]
 [c*i for (i, c) in enumerate("abcd")]   # ["", "b", "cc", "ddd"]
-[2**i for i in range(5)]                # [1, 2, 4, 8, 16]
 </pre><hr>
 
 <h3>ZAGNIEŻDŻONE PĘTLE FOR</h3>

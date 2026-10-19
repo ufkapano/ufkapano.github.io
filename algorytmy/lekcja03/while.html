@@ -22,6 +22,7 @@ while test1:        # wiersz nagłówkowy, test pętli
     instrukcje      # ciało pętli
     if test2:
         break       # wyjście z pętli, opcjonalne
+    instrukcje
     if test3:
         continue    # przejście do test1, opcjonalne
     instrukcje
@@ -43,7 +44,7 @@ while n &gt; 0:
 line = "zdanie"
 i = 0
 while i &lt; len(line):
-    print("{} {}".format(i, line[i]))
+    print(i, line[i])
     i = i + 1
 </pre><hr><pre>
 while True:                   # pętla nieskończona
@@ -64,8 +65,8 @@ while True:
     print(reply.upper())
 </pre><hr><pre>
 while True:
-    #reply = raw_input("Wpisz tekst:")   # Py2
-    reply = input("Wpisz tekst:")   # Py3
+    #reply = raw_input("Wpisz liczbę lub 'stop':")   # Py2
+    reply = input("Wpisz liczbę lub 'stop':")   # Py3
     if reply == "stop":
         break
     elif not reply.isdigit():

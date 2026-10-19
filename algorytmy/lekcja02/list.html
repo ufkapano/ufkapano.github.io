@@ -250,9 +250,10 @@ Należy zachować umiar przy tworzeniu zagnieżdżonych list składanych,
 często bardziej czytelne są zwykłe pętle wielokrotne.
 
 <p>Składnia list składanych przenosi się w dużej mierze
-na generatory, czyli "leniwe" funkcje zwracające pojedyńczą wartość
-na żądanie. 
-Generatory można również tworzyć za pomocą wyrażenia <em>yield</em>.
+na generatory (<em>generator expressions</em>), czyli "leniwe" funkcje 
+zwracające pojedyńczą wartość na żądanie (<em>next(gen)</em>). 
+Generatory można również tworzyć za pomocą wyrażenia <em>yield</em>
+i funkcji generatorów (<em>generator functions</em>).
 Więcej wyjaśnień zostanie podanych przy funkcjach.
 
 <hr><pre>
@@ -272,8 +273,8 @@ Więcej wyjaśnień zostanie podanych przy funkcjach.
 [c for s in ("aa","b","ccc") for c in s]   # ['a', 'a', 'b', 'c', 'c', 'c']
 
 sum([x * x for x in range(100)])        # pełna lista
-sum(x * x for x in range(100))         # generator
-sum(len(x) for x in ["a", "bb", "ccc"]) # generator
+sum(x * x for x in range(100))          # generator object, iterator
+sum(len(x) for x in ("a", "bb", "ccc")) # generator object, iterator
 max(ord(x) for x in "qwerty")           # największy numer
 max("qwerty", key=ord)                  # znak o największym numerze
 </pre><hr>

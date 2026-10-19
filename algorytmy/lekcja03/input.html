@@ -14,37 +14,39 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>W Pythonie 2 funkcja <em>input()</em> próbuje interpretować wprowadzone dane
-i z tego powodu jest powolna i raczej niebezpieczna. 
+<p>W Pythonie 2 funkcja <em>input()</em> próbuje interpretować wprowadzone 
+dane i z tego powodu jest powolna i raczej niebezpieczna. 
 Lepiej wczytać dane jako string za pomocą 
 funkcji <em>raw_input()</em>, a następnie rzutować na potrzebny typ.
-W razie potrzeby możemy się zabezpieczyć przez try/except.
+W razie potrzeby możemy się zabezpieczyć przez <em>try/except</em>.
 
 <p>W Pythonie 3 istnieje tylko funkcja <em>input()</em>, która działa tak
 jak <em>raw_input()</em> w Pythonie 2 i zwraca zawsze string.
 
 <hr><pre>
-# Składnia.
-# raw_input([prompt]) - zwraca string (Py2)
-
-# input([prompt]) - zwraca wartość (Py2)
+# Składnia w Py2.
+# raw_input([prompt]) - zwraca string
+# input([prompt]) - zwraca wartości różnych typów
 # równoważne eval(raw_input(prompt))
-
-# input([prompt]) - zwraca string (Py3)
 
 word = raw_input(prompt)
 variable = input(prompt)
-</pre><hr><pre>
+
 # Przy input() wynik może być typu int, float lub inny (Py2).
 # Jeżeli chcemy mieć na pewno int, to można zrobić tak:
 # n = int(raw_input("Podaj int: "))
-# Jeżeli wejście nie będzie pasowało do int, to będzie wyjątek.
+# Jeżeli wejście nie będzie pasowało do int, to będzie rzucony wyjątek.
 
 line = raw_input("Podaj napis: ")   # Py2
 
 n = input("Podaj liczbe: ")   # Py2
-print(type(n))
+print(type(n))   # może być int, float lub coś innego
 print("Podana liczba:", n)
+</pre><hr><pre>
+# Składnia w Py3.
+# input([prompt]) - zwraca string (Py3)
+
+word = input(prompt)
 </pre><hr><pre>
 # Korzystanie z modułu sys.
 # Obiekt sys.stdin jest typu file, mode "r".
@@ -52,8 +54,7 @@ print("Podana liczba:", n)
 import sys
 line = sys.stdin.readline()
 </pre><hr><pre>
-# Można skorzystać z try/except i używać tej samej nazwy input()
-# w Pythonie 2 i Pythonie 3.
+# Można skorzystać z try/except i używać tej samej nazwy input() w Py2 i Py3.
 try:
     input = raw_input
 except NameError:   # jesteśmy w Py3

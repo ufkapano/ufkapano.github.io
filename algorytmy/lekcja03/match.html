@@ -39,6 +39,20 @@ def http_error(status, flag=False):
             return "I'm a teapot"
         case _:   # opcjonalny przypadek domyślny, zawsze pasuje
             return "Something's wrong with the internet"
+</pre><hr><pre>
+# Instrukcja 'match' zastąpiona instrukcją 'if-else'.
+
+def http_error(status, flag=False):
+    if status == 400:
+        return "Bad request"
+    elif status == 401 or status == 403 or status == 404:
+        return "Not allowed"
+    elif status == 404:
+        return "Not found"
+    elif status == 418 and flag:   # użycie strażnika
+        return "I'm a teapot"
+    else:
+        return "Something's wrong with the internet"
 </pre><hr>
 
 <p>W bardziej złożonych przypadkach w blokach <em>case</em> może występować

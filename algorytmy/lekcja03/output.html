@@ -43,10 +43,10 @@ print("a %10.1f b %3d" % (1.23456, 2))   # dwie lub więcej pozycji
 </pre><hr><pre>
 # Wyprowadzanie danych do pliku:
 anyfile = open("data.txt", "w")
-anyfile.write("%s %s\n" % (item1, item2))   # jeden sposób
+anyfile.write("%s %s\n" % (item1, item2))   # pierwszy sposób
 anyfile.write("{} {}\n".format(item1, item2))   # drugi sposób
-print &gt;&gt; anyfile, item1, item2        # niezbyt ładne, Py2
-print(file=anyfile, item1, item2)           # Py3
+print &gt;&gt; anyfile, item1, item2   # niezbyt ładne, Py2
+print(file=anyfile, item1, item2)   # Py3, użycie argumentu 'file'
 anyfile.close()
 </pre><hr><pre>
 # Korzystanie z modułu sys.
@@ -56,17 +56,20 @@ import sys
 print(X)
 sys.stdout.write(str(X) + "\n")  # jw, równoważne
 sys.stdout.write("%s\n" % X)     # jw, ale będzie problem dla X tuple
-print("{} {}".format("alpha", "beta"))   # zalecane
-sys.stdout.write("%s %s\n" % ("alpha", "beta"))  # jw
-sys.stdout.write("{} {}\n".format("alpha", "beta"))   # jw
+
+a = "alpha" ; b = 123
+print("{} {}".format(a, b))
+sys.stdout.write("%s %s\n" % (a, b))  # jw
+sys.stdout.write("{} {}\n".format(a, b))   # jw, metoda 'format'
+sys.stdout.write(f"{a} {b}\n")   # jw, f-string
 </pre><hr><pre>
-# Można na chwilę zmienić stdout:
+# Można tymczasowo zmienić ustawienia sys.stdout:
 import sys
 tmp = sys.stdout
 sys.stdout = open("log.txt", "a")
-print("napis")          # komunikat idzie do pliku
+print("napis")   # komunikat skierowany do pliku
 sys.stdout.close()
-sys.stdout = tmp
+sys.stdout = tmp   # przywracamy domyślne ustawienie
 </pre><hr><pre>
 # Korzystanie ze słownika przy formatowaniu stringu.
 phones = {"Adam": 1234, "Bogdan": 3456, "Czarek": 5678}

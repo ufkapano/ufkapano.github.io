@@ -19,15 +19,15 @@ oraz dodatkowych modułów, które pomagają w zarządzaniu plikami.
 <p>Obiekty plików są w Pythonie głównym interfejsem do plików
 zewnętrznych znajdujących się na komputerze.
 
-<p>Tworzymy obiekt pliku (<em>file object</em>) za pomocą funkcji
-<em>open()</em>.
+<p>Tworzymy <strong>obiekt pliku</strong> (<em>file object</em>) 
+za pomocą funkcji <em>open()</em>.
 Po użyciu pliku powinno się go zamknąć za pomocą wbudowanej metody
 <em>close()</em>, aby zwolnić zasoby systemowe powiązane z otwartym plikiem.
 Otwarte pliki są automatycznie zamykane na zakończenie przetwarzania skryptu.
 Po zamknięciu pliku nie można go już przetwarzać.
 
-<p>W Pythonie rozróżnia się pomiędzy plikami tekstowymi,
-a plikami binarnymi.
+<p>W Pythonie rozróżnia się pomiędzy <strong>plikami tekstowymi</strong>,
+a <strong>plikami binarnymi</strong>.
 Zawartość pliku tekstowego może być podzielona na wiersze. 
 Każdy wiersz, ewentualnie oprócz ostatniego, 
 kończy się znakiem końca wiersza (zwykle "\n", <em>newline</em>).
@@ -71,16 +71,16 @@ S = infile.read()      # przeczytanie całego pliku
 S = infile.read(5)      # przeczytanie 5 znaków/bajtów w Py2
 S = infile.read(5)      # przeczytanie 5 code points w Py3
 # Przy pustym pliku S będzie równe "".
-# Pusta linia to napis równy "\n".
+# Pusty wiersz to napis równy "\n".
 
 S = infile.readline()
-# Czyta jedną linię razem ze znakiem '\n'.
+# Czyta jeden wiersz razem ze znakiem '\n'.
 
 L = infile.readlines()
-# Czyta wszystkie linie i przechowuje je jako listę stringów z '\n' na końcu.
+# Czyta wszystkie wiersze i przechowuje je jako listę stringów z '\n' na końcu.
 
 L = infile.readlines(50)
-# Czyta 50 bajtów w Py2 (code points w Py3) lub więcej, aby była pełna linia!
+# Czyta 50 bajtów w Py2 (code points w Py3) lub więcej, aby był pełny wiersz!
 # To jest przydatne przy czytaniu dużych plików, aby nie wczytywać
 # całości do pamięci.
 # Taką listę stringów można zapisać do pliku przez outfile.writelines(L).
