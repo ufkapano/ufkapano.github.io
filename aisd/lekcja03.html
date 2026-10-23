@@ -133,6 +133,7 @@ aż do osiągnięcia początkowego rozmiaru minimalnego.
 
 <p>Zbadajmy liczbę kopiowań elementów podczas powiększania tablicy 
 o czynnik 2. Zakładamy, że elementy są kolejno wstawiane do tablicy.
+Początkowo tablica może pomieścić jeden element.
 <br>resize(2), kopiowany 1 element
 <br>resize(4), kopiowane 2 elementy
 <br>resize(8), kopiowane 4 elementy
@@ -181,8 +182,8 @@ public:
     BaseList& operator=(const BaseList&amp; other) = default;
     virtual bool empty() const = 0;
     virtual bool full() const = 0;
-    virtual int size() const = 0;
-    virtual int max_size() const = 0;
+    virtual std::size_t size() const = 0;
+    virtual std::size_t max_size() const = 0;
     virtual void push_front(const T&amp; item) = 0;
     virtual void push_front(T&amp;&amp; item) = 0;
     virtual void push_back(const T&amp; item) = 0;
@@ -192,16 +193,16 @@ public:
     virtual void pop_front() = 0;
     virtual void pop_back() = 0;
     virtual void clear() = 0;
-    virtual void display() = 0;
+    virtual void display() const = 0;
     virtual void reverse() = 0;
     virtual void sort() = 0;
     // Operacje z indeksami.
-    virtual T&amp; operator[](int pos) = 0;
-    virtual const T&amp; operator[](int pos) const = 0;
-    virtual void erase(int pos) = 0;
+    virtual T&amp; operator[](std::size_t pos) = 0;
+    virtual const T&amp; operator[](std::size_t pos) const = 0;
+    virtual void erase(std::size_t pos) = 0;
     virtual int index(const T&amp; item) = 0;
-    virtual void insert(int pos, const T&amp; item) = 0;
-    virtual void insert(int pos, T&amp;&amp; item) = 0;
+    virtual void insert(std::size_t pos, const T&amp; item) = 0;
+    virtual void insert(std::size_t pos, T&amp;&amp; item) = 0;
 };
 
 #endif

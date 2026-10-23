@@ -21,8 +21,9 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Listy powiązane podwójnie mają elementy powiązane dwoma łączami: 
-do elementu następnego (<em>next</em>) i do elementu poprzedniego (<em>prev</em>). 
+<p><strong>Listy powiązane podwójnie</strong> mają elementy powiązane 
+dwoma łączami: do elementu następnego (<em>next</em>) i do elementu 
+poprzedniego (<em>prev</em>). 
 W łatwy sposób możemy poruszać się po liście do przodu i wstecz. 
 Ponadto przy usuwaniu węzła musimy znać tylko łącze do niego samego, 
 podczas gdy przy listach połączonych pojedynczo potrzebne było też łącze 
@@ -64,18 +65,19 @@ public:
     DoubleList& operator=(const DoubleList& other); // copy assignment operator, return *this
     DoubleList& operator=(DoubleList&amp;&amp; other); // move assignment operator, return *this NIEOBOWIAZKOWE
     bool empty() const { return head == nullptr; }
+    bool full() const { return false; }
     std::size_t size() const; // O(n) bo trzeba policzyć
     void push_front(const T& item); // O(1)
     void push_front(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
     void push_back(T&amp;&amp; item); // O(1) NIEOBOWIAZKOWE
-    T& front() const { assert(!empty()); return head->value; } // zwraca początek, nie usuwa
-    T& back() const { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
+    T& front() { assert(!empty()); return head->value; } // zwraca początek, nie usuwa
+    T& back() { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa początek O(1)
     void pop_back(); // usuwa koniec O(1)
     void clear(); // czyszczenie listy z elementów O(n)
-    void display(); // O(n)
-    void display_reversed(); // O(n)
+    void display() const; // O(n)
+    void display_reversed() const; // O(n)
 };
 </pre><hr>
 
@@ -115,8 +117,9 @@ public:
     DoubleList(); // trzeba alokować wartownika
     ~DoubleList(); // tu trzeba wyczyścić węzły i wartownika
     bool empty() const { return nil->next == nil; }
-    T& front() const { assert(!empty()); return nil->next->value; } // zwraca początek, nie usuwa
-    T& back() const { assert(!empty()); return nil->prev->value; } // zwraca koniec, nie usuwa
+    bool full() const { return false; }
+    T& front() { assert(!empty()); return nil->next->value; } // zwraca początek, nie usuwa
+    T& back() { assert(!empty()); return nil->prev->value; } // zwraca koniec, nie usuwa
 };
 </pre><hr><pre>
 template &lt;typename T&gt;
@@ -152,6 +155,12 @@ void DoubleList&lt;T&gt;::pop_front() {
 <em>length</em> typu <em>std::size_t</em>, 
 który przechowuje aktualną długość listy powiązanej. 
 Dzięki temu metoda <em>size()</em> może działać w czasie O(1), a nie O(n). 
+
+<h3>ZADANIE 5.4</h3>
+
+<p>Wykorzystać plik <em>baselist.hpp</em> opisujący interfejs list
+i przygotować klasę potomną <em>DoubleList</em> 
+implementującą listy powiązane podwójnie.
 
 <hr>
 <p><a href="index.html">AiSD (index)</a>

@@ -44,7 +44,7 @@ public:
     void pop_front(); // usuwa poczatek, error dla pustej listy
     void pop_back(); // usuwa koniec, error dla pustej listy
     void clear(); // czyszczenie listy z elementow
-    void display(); // lepiej zdefiniowac operator<<
+    void display() const; // lepiej zdefiniowac operator<<
     void reverse(); // odwracanie kolejnosci NIEOBOWIAZKOWE
     void sort(); // sortowanie listy NIEOBOWIAZKOWE
     void merge(ArrayList& other); //  merges two sorted lists into one NIEOBOWIAZKOWE

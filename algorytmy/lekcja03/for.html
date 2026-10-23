@@ -20,15 +20,20 @@ z generatorem <em>xrange()</em> (Py2).
 Można stosować <em>break</em> (natychmiastowe wyjście z pętli)
 i <em>continue</em> (kontynuacja pętli) jak w języku C.
 
-<p>Niebezpiecznie jest modyfikować sekwencję (np. listę)
+<p>Niebezpiecznie jest modyfikować sekwencję (np. listę lub słownik)
 po której biegnie pętla <em>for</em>. 
 Należy raczej zrobić kopię listy do iteracji.
 Bezpieczną operacją jest wydłużenie listy przez <em>L.append(item)</em>
 lub <em>L.extend(sequence)</em>.
 
 <hr><pre>
+# Najprostsza postać pętli 'for'.
+# Zmienna 'item' zostanie utworzona tylko dla niepustego iterable.
+for item in iterable:   # wiersz nagłówkowy
+    instrukcje      # ciało pętli
+
 # Składnia.
-for item in sequence:   # wiersz nagłówkowy
+for item in iterable:   # wiersz nagłówkowy
     instrukcje      # tu zwykle używamy item
     if test1:
         break       # wyjście z pętli, opcjonalne
@@ -37,7 +42,7 @@ for item in sequence:   # wiersz nagłówkowy
         continue    # przejście na górę pętli, opcjonalne
     instrukcje
 else:               # opcjonalne
-    instrukcje      # jeżeli nie było 'break', działa nawet przy pustej sekwencji
+    instrukcje      # jeżeli nie było 'break', działa nawet przy pustym iterable
 </pre><hr><pre>
 word = "praca"
 for char in word:             # pętla po stringu
@@ -46,10 +51,10 @@ for char in word:             # pętla po stringu
 print("")                    # na koniec przechodzimy do nowej linii
 </pre><hr><pre>
 # Pętla po liczbach z funkcji range().
-for i in range(6):            # liczby od 0 do 5 włącznie
+for i in range(6):   # liczby od 0 do 5 włącznie
     print(i)
-# Indeks pętli żyje poza nią.
-print(i)                   # wynik to 5
+# Indeks pętli żyje poza nią, o ile pętla wykonała się choć raz.
+print(i)   # wynik to 5
 </pre><hr><pre>
 # Odliczanie do zera.
 n = 8

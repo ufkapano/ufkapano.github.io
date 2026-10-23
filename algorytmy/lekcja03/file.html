@@ -19,12 +19,13 @@ oraz dodatkowych modułów, które pomagają w zarządzaniu plikami.
 <p>Obiekty plików są w Pythonie głównym interfejsem do plików
 zewnętrznych znajdujących się na komputerze.
 
-<p>Tworzymy <strong>obiekt pliku</strong> (<em>file object</em>) 
+<p><strong>Obiekt pliku</strong> (<em>file object</em>) tworzymy
 za pomocą funkcji <em>open()</em>.
-Po użyciu pliku powinno się go zamknąć za pomocą wbudowanej metody
+Po użyciu pliku powinno się go niezwłocznie zamknąć za pomocą wbudowanej metody
 <em>close()</em>, aby zwolnić zasoby systemowe powiązane z otwartym plikiem.
 Otwarte pliki są automatycznie zamykane na zakończenie przetwarzania skryptu.
-Po zamknięciu pliku nie można go już przetwarzać.
+Po zamknięciu pliku nie można go już dalej przetwarzać
+(aż do ponownego otwarcia).
 
 <p>W Pythonie rozróżnia się pomiędzy <strong>plikami tekstowymi</strong>,
 a <strong>plikami binarnymi</strong>.

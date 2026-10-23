@@ -36,17 +36,18 @@ public:
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
 
     bool empty() const { return head == nullptr; }
+    bool full() const { return false; }
     std::size_t size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1), L.push_front(item)
     void push_front(T&& item); // O(1), L.push_front(std::move(item)) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1), L.push_back(item)
     void push_back(T&& item); // O(1), L.push_back(std::move(item)) NIEOBOWIAZKOWE
-    T& front() const { assert(!empty()); return head->value; } // zwraca poczatek, nie usuwa
-    T& back() const { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
+    T& front() { assert(!empty()); return head->value; } // zwraca poczatek, nie usuwa
+    T& back() { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementow O(n)
-    void display(); // O(n)
+    void display() const; // O(n)
     void reverse(); // O(n) NIEOBOWIAZKOWE
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
@@ -92,7 +93,7 @@ void SingleList<T>::push_back(const T& item) {
 }
 
 template <typename T>
-void SingleList<T>::display() {
+void SingleList<T>::display() const {
     SingleNode<T> *node = head;
     while (node != nullptr){
         std::cout << node->value << " ";

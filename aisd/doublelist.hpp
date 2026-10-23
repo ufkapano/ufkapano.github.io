@@ -39,18 +39,19 @@ public:
     // usage:   list2 = std::move(list1); NIEOBOWIAZKOWE
 
     bool empty() const { return head == nullptr; }
+    bool full() const { return false; }
     std::size_t size() const; // O(n) bo trzeba policzyc
     void push_front(const T& item); // O(1)
     void push_front(T&& item); // O(1) NIEOBOWIAZKOWE
     void push_back(const T& item); // O(1)
     void push_back(T&& item); // O(1) NIEOBOWIAZKOWE
-    T& front() const { assert(!empty()); return head->value; } // zwraca poczatek, nie usuwa
-    T& back() const { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
+    T& front() { assert(!empty()); return head->value; } // zwraca poczatek, nie usuwa
+    T& back() { assert(!empty()); return tail->value; } // zwraca koniec, nie usuwa
     void pop_front(); // usuwa poczatek O(1)
     void pop_back(); // usuwa koniec O(1)
     void clear(); // czyszczenie listy z elementow O(n)
-    void display(); // O(n)
-    void display_reversed(); // O(n)
+    void display() const; // O(n)
+    void display_reversed() const; // O(n)
 
     // Operacje z indeksami. NIEOBOWIAZKOWE
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]

@@ -58,10 +58,11 @@ sys.stdout.write(str(X) + "\n")  # jw, równoważne
 sys.stdout.write("%s\n" % X)     # jw, ale będzie problem dla X tuple
 
 a = "alpha" ; b = 123
-print("{} {}".format(a, b))
+print("{} {}".format(a, b))   # to samo w Py2 i Py3
+print(a, b)   # Py3; w Py2 wypisze krotkę
 sys.stdout.write("%s %s\n" % (a, b))  # jw
 sys.stdout.write("{} {}\n".format(a, b))   # jw, metoda 'format'
-sys.stdout.write(f"{a} {b}\n")   # jw, f-string
+sys.stdout.write(f"{a} {b}\n")   # jw, f-string, Py3.6+
 </pre><hr><pre>
 # Można tymczasowo zmienić ustawienia sys.stdout:
 import sys
