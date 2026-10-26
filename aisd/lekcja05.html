@@ -50,7 +50,7 @@ struct DoubleNode {
     DoubleNode() : value(T()), next(nullptr), prev(nullptr) {}
     DoubleNode(const T& item, DoubleNode *nptr=nullptr, DoubleNode *pptr=nullptr)
         : value(item), next(nptr), prev(pptr) {} // konstruktor
-    ~DoubleNode() {} // destruktor
+    ~DoubleNode() = default; // destruktor
 };
 </pre><hr><pre>
 // Szablon dla listy powiązanej podwójnie.
@@ -158,8 +158,8 @@ Dzięki temu metoda <em>size()</em> może działać w czasie O(1), a nie O(n).
 
 <h3>ZADANIE 5.4</h3>
 
-<p>Wykorzystać plik <em>baselist.hpp</em> opisujący interfejs list
-i przygotować klasę potomną <em>DoubleList</em> 
+<p>Wykorzystać plik <a href="baselist.hpp">baselist.hpp</a> opisujący 
+interfejs list i przygotować klasę potomną <em>DoubleList</em> 
 implementującą listy powiązane podwójnie.
 
 <hr>

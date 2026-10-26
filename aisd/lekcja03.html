@@ -164,49 +164,11 @@ kiedy liczba elementów oscyluje koło 2^k / 2.
 
 <h3>ZADANIE 3.3 (DZIEDZICZENIE)</h3>
 
-<p>Wykorzystać plik <em>baselist.hpp</em> opisujący interfejs list
-i przygotować klasę potomną <em>ArrayList</em> z implementacją tablicową list.
+<p>Wykorzystać plik <a href="baselist.hpp">baselist.hpp</a> opisujący 
+interfejs list i przygotować klasę potomną <em>ArrayList</em> 
+z implementacją tablicową list.
 
 <hr><pre>
-// baselist.hpp
-
-#ifndef BASELIST_HPP
-#define BASELIST_HPP
-
-template &lt;typename T&gt;
-class BaseList {
-public:
-    BaseList() = default;
-    ~BaseList() = default;
-    BaseList(const BaseList&amp; other) = default;
-    BaseList& operator=(const BaseList&amp; other) = default;
-    virtual bool empty() const = 0;
-    virtual bool full() const = 0;
-    virtual std::size_t size() const = 0;
-    virtual std::size_t max_size() const = 0;
-    virtual void push_front(const T&amp; item) = 0;
-    virtual void push_front(T&amp;&amp; item) = 0;
-    virtual void push_back(const T&amp; item) = 0;
-    virtual void push_back(T&amp;&amp; item) = 0;
-    virtual T&amp; front() = 0;
-    virtual T&amp; back() = 0;
-    virtual void pop_front() = 0;
-    virtual void pop_back() = 0;
-    virtual void clear() = 0;
-    virtual void display() const = 0;
-    virtual void reverse() = 0;
-    virtual void sort() = 0;
-    // Operacje z indeksami.
-    virtual T&amp; operator[](std::size_t pos) = 0;
-    virtual const T&amp; operator[](std::size_t pos) const = 0;
-    virtual void erase(std::size_t pos) = 0;
-    virtual int index(const T&amp; item) = 0;
-    virtual void insert(std::size_t pos, const T&amp; item) = 0;
-    virtual void insert(std::size_t pos, T&amp;&amp; item) = 0;
-};
-
-#endif
-</pre><hr><pre>
 // arraylist.hpp
 
 #ifndef ARRAYLIST_HPP

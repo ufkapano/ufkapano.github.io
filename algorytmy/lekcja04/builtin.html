@@ -107,6 +107,8 @@ def check(x):
 list(filter(check, range(30)))
 [x for x in range(30) if check(x)]   # lista składana
 </pre><hr><pre>
+from functools import reduce   # Py3
+
 def add(x, y):
     return x + y
 

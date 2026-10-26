@@ -10,30 +10,32 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Można definiować funkcje ze zmienną liczbą argumentów.
-Istnieją trzy sposoby, które mogą być ze sobą łączone:
+<p>W Pythonie można definiować funkcje 
+ze <strong>zmienną liczbą argumentów</strong>.
+Istnieją trzy sposoby aby to osiągnąć, które mogą być ze sobą łączone:
 
 <ul>
-<li>domyślne wartości argumentów,
+<li>domyślne wartości argumentów (<em>argument=expression</em>),
 <li>dowolna lista argumentów (<em>*identifier</em>),
 <li>argumenty w postaci słów kluczowych (<em>**identifier</em>).
 </ul>
 
 <h3>DOMYŚLNE WARTOŚCI ARGUMENTÓW</h3>
 
-<p>Definicja funkcji jest instrukcją. Argument domyślny jest generowany
+<p><strong>Definicja funkcji jest instrukcją, a nie wyrażeniem</strong>. 
+Argument domyślny jest generowany
 w chwili wywołania instrukcji <em>def</em>, a nie wywołania funkcji.
 Dlatego trzeba uważać, jeżeli argument domyślny jest zmienny,
 jak np. lista czy słownik.
 
 <hr><pre>
 def print_word(word, n=1):
-    """Wypisanie n linii ze słowem word."""
+    """Wypisanie n wierszy ze słowem word."""
     for i in range(n):
         print(i, word)
 
 print_word("bla")
-print_word("bla", 3)
+print_word("bla", 3)   # argumenty pozycyjne
 print_word(n=4, word="bum")   # zastosowanie słów kluczowych
 </pre><hr><pre>
 def tester1(x, L=[]):
@@ -60,6 +62,7 @@ tester2(3)   # [3]
 
 <hr><pre>
 # Użycie składni *identifier.
+# W wywołaniu funkcji pozwalamy na nadmiarowe argumenty pozycyjne..
 
 def print_multiple_items(separator, *arguments):   # 'arguments' to krotka do utworzenia
     """Sklejenie napisów podanym separatorem."""
@@ -68,7 +71,7 @@ def print_multiple_items(separator, *arguments):   # 'arguments' to krotka do ut
 print_multiple_items("_", "ab", "cde", "f")       # ab_cde_f
 </pre><hr><pre>
 def union(*arguments):   # 'arguments' to krotka do utworzenia
-    """Wypisanie listy wspólnych znaków występujących w napisach."""
+    """Wypisanie listy wspólnych znaków występujących w napisach (bez powtórzeń)."""
     result = []
     for word in arguments:
         for char in word:
@@ -83,6 +86,7 @@ print(union("abc", "cde", "efg"))   # ['a', 'b', 'c', 'd', 'e', 'f', 'g']
 
 <hr><pre>
 # Użycie składni **identifier.
+# Argumenty wywołania fukcji mają nazwy nie występujące w definicji funkcji.
 
 def university(**keywords):   # 'keywords' to słownik do utworzenia
     """Wypisanie władz uniwersytetu."""

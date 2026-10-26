@@ -13,7 +13,7 @@ struct SingleNode {
     SingleNode *next;
     SingleNode() : value(T()), next(nullptr) {} // konstruktor domyslny
     SingleNode(const T& item, SingleNode *ptr=nullptr) : value(item), next(ptr) {}
-    ~SingleNode() {} // destruktor
+    ~SingleNode() = default; // destruktor
 };
 
 template <typename T>
@@ -48,6 +48,7 @@ public:
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementow O(n)
     void display() const; // O(n)
+    void display_reversed(); // O(n) NIEOBOWIAZKOWE
     void reverse(); // O(n) NIEOBOWIAZKOWE
 
     // Operacje z indeksami. NIEOBOWIAZKOWE

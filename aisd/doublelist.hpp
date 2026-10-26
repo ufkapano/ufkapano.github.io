@@ -15,7 +15,7 @@ struct DoubleNode {
     DoubleNode() : value(T()), next(nullptr), prev(nullptr) {}
     DoubleNode(const T& item, DoubleNode *nptr=nullptr, DoubleNode *pptr=nullptr)
         : value(item), next(nptr), prev(pptr) {} // konstruktor
-    ~DoubleNode() {} // destruktor
+    ~DoubleNode() = default; // destruktor
 };
 
 

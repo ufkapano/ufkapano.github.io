@@ -23,7 +23,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Wyrażenia <em>yield</em> (<em>yield expressions</em>) 
-pojawiły się w Pythonie 2.5 do definiowania funkcji generatora 
+pojawiły się w Pythonie 2.5 do definiowania <strong>funkcji generatora</strong> 
 (<em>generator function</em>) zamiast zwykłej funkcji. 
 Wyrażenia <em>yield</em> mogą się pojawić jedynie w ciele definicji funkcji.
 
@@ -46,10 +46,10 @@ są wytwarzane w locie (<em>on the fly</em>).
 
 <hr><pre>
 # Przykładowa lista składana.
-x = [i*i for i in range(100)]   # lista w całości
+x = [i*i for i in range(100)]   # lista w całości w pamięci
 
 # Wyrażenie generatora (generator expression) to wyrażenie, które zwraca iterator.
-y = (i*i for i in range(100))          # generator object
+y = (i*i for i in range(100))   # generator object
 
 # help(y)   # Help on generator object ...
 # type(y)   # &lt;class 'generator'&gt;
@@ -87,6 +87,7 @@ print(next(x))   # 0
 print(next(x))   # 1
 print(next(x))   # 2
 print(next(x))   # StopIteration
+print(next(x))   # StopIteration
 # W następnych wywołaniach też otrzymamy wyjątek StopIteration.
 </pre><hr><pre>
 # Generator może być skończony lub nieskończony.
@@ -115,6 +116,7 @@ for i in fib:
     print(i)
     if i &gt; 100:
         break
+# fib jest dostępne poza pętlą for.
 print(next(fib))     # 233
 print(next(fib))     # 377
 </pre><hr><pre>
@@ -222,11 +224,14 @@ tylko pośrednim etapem obliczeń.
 
 <p>W Py3.3 pojawiło się wyrażenie (<em>generator delegation</em>)
 postaci <em>yield from sequence</em>.
-Zwykle odpowiada to w Py2 wyrażeniu:
+Zwykle odpowiada to w Py2 wyrażeniu z pętlą <em>for</em>.
 
 <hr><pre>
+# Py2 i Py3
 for item in sequence:
     yield item
+# Py3.3+
+yield from sequence
 </pre><hr>
 
 </body>

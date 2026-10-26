@@ -8,6 +8,13 @@
 
 <h1>Adnotacje (Python3)</h1>
 
+<p>https://typing.python.org/en/latest/
+<br>Static Typing with Python.
+<br>Plik <em>py.typed</em> ma dostarczać informacji o typach w pakiecie
+(<em>inline type annotations</em>).
+Można używać <em>stub files</em> (<em>.pyi</em>).
+Opis kiedy biblioteka jest <em>type complete</em>.
+
 <p>PEP 3107 - Function Annotations.
 
 <p>PEP 482 - Literature Overview for Type Hints.
@@ -15,6 +22,8 @@
 <p>PEP 484 - Type Hints.
 
 <p>PEP 526 - Syntax for Variable Annotations.
+
+<p>PEP 561 - Distributing and Packaging Type.
 
 <p>PEP 563 - Postponed Evaluation of Annotations.
 <br>Propozycja <em>from __future__ import annotations</em> (Py3.7+).
@@ -58,16 +67,16 @@ funkcji, klas i modułów.
 <em>: expression</em>, następującą po nazwie parametru.
 Podobnie może być dla parametrów postaci <em>*identifier</em> 
 lub <em>**identifier</em>.
-Funkcje mogą mieć również adnotację <em>return</em> postaci 
+<br>Funkcje mogą mieć również adnotację <em>return</em> postaci 
 <em>-&gt; expression</em>, która następuje po liście parametrów.
 Jest to składnia do dołączania do funkcji dodatkowych informacji
 (<em>metadata</em>) dotyczących parametrów i wartości zwracanych.
-Jest to mechanizm całkowicie opcjonalny.
+<br><strong>Adnotacje to mechanizm całkowicie opcjonalny.</strong>
 W Pythonie 2 można było tylko w docstringu coś dopowiedzieć.
 
 <p>Wartości adnotacji są dostępne jako wartości słownika
 <em>__annotations__</em>, gdzie kluczami są nazwy argumentów funkcji 
-(<em>string</em>).
+zapisane jako string.
 
 <hr><pre>
 # Syntax.

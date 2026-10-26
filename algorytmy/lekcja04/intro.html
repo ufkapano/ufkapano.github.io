@@ -20,12 +20,12 @@ w taki sposób, aby mogły one być wykonane w programie
 więcej niż jeden raz.
 Funkcje służą do maksymalizowania możliwości ponownego
 wykorzystania kodu i minimalizowania powtarzalności kodu.
-Ciało funkcji jest bezpieczną przestrzenią nazw 
+Ciało funkcji jest bezpieczną <strong>przestrzenią nazw</strong> 
 (ang. <em>namespace</em>).
 Korzystanie z funkcji pomaga w usuwaniu błędów w programie.
 
 <pre>
-Instrukcje i wyrażenia związane z funkcjami
+Instrukcje i wyrażenia związane z funkcjami.
 +-------------+-------------------------------+
 | Instrukcja  | Przykłady                     |
 +-------------+-------------------------------+
@@ -90,7 +90,7 @@ lub kiedy w kodzie funkcji nie pojawia się <em>return</em>.
 
 <p>Argumenty funkcji są do niej wprowadzane przez wartość, tj.
 przekazywana jest referencja do obiektu.
-Argumenty funkcji mogą mieć określoną wartość domyślną.
+Argumenty funkcji mogą mieć określoną <strong>wartość domyślną</strong>.
 Wartość domyślna jest obliczana tylko raz, dlatego
 trzeba być ostrożnym z domyślnymi argumentami, które są
 zmienne, jak listy i słowniki.
@@ -106,7 +106,7 @@ dostępnych w innych językach programowania.
 <h3>POLIMORFIZM</h3>
 
 <p>W Pythonie nie ma deklaracji typu argumentów, dlatego
-cechą funkcji jest <em>polimorfizm</em>:
+cechą funkcji jest <strong>polimorfizm</strong>:
 zachowanie funkcji zależy od tego, co do niej przekażemy.
 
 <hr><pre>
@@ -128,11 +128,12 @@ len(set([1, 3, 5, 7]))             # 4, liczność zbioru
 
 <h3>ZMIENNE LOKALNE</h3>
 
-<p>Podstawienia do zmiennych wewnątrz funkcji tworzą zmienne lokalne.
+<p>Podstawienia do zmiennych wewnątrz funkcji tworzą 
+<strong>zmienne lokalne</strong>.
 Odniesienie do zmiennej najpierw oznacza odniesienie do zmiennej
 lokalnej; jeżeli nie istnieje, to szukana jest zmienna globalna;
 jeżeli też nie istnieje, to szukane są zmienne wbudowane.
-Można od razu zadeklarować zmienną globalną przez instrukcję
+Można od razu zadeklarować zmienną globalną przez instrukcję (deklarację)
 <em>global</em>.
 
 <p>Wszystkie zmienne lokalne pojawiają się w momencie

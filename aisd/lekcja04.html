@@ -69,7 +69,7 @@ struct SingleNode {
     SingleNode *next;
     SingleNode() : value(T()), next(nullptr) {} // konstruktor domyślny
     SingleNode(const T& item, SingleNode *ptr=nullptr) : value(item), next(ptr) {} // konstruktor
-    ~SingleNode() {} // destruktor
+    ~SingleNode() = default; // destruktor
 };
 </pre><hr><pre>
 // Szablon dla listy powiązanej pojedynczo.
@@ -96,6 +96,7 @@ public:
     void pop_back(); // usuwa koniec O(n)
     void clear(); // czyszczenie listy z elementów O(n)
     void display() const; // O(n)
+    void display_reversed(); // O(n) NIEOBOWIAZKOWE (reverse, display, reverse)
     void reverse(); // O(n) NIEOBOWIAZKOWE
 };
 </pre><hr>
@@ -125,8 +126,8 @@ Zaimplementować listę powiązaną pojedynczo z wykorzystaniem indeksów tablic
 
 <h3>ZADANIE 4.4</h3>
 
-<p>Wykorzystać plik <em>baselist.hpp</em> opisujący interfejs list
-i przygotować klasę potomną <em>SingleList</em> 
+<p>Wykorzystać plik <a href="baselist.hpp">baselist.hpp</a> opisujący 
+interfejs list i przygotować klasę potomną <em>SingleList</em> 
 implementującą listy powiązane pojedynczo.
 
 <hr>
