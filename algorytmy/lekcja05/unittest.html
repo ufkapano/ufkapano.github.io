@@ -13,7 +13,7 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Moduł <em>unittest</em> wspiera automatyzację testów, grupowanie testów 
-w kolekcje, niezależność testów od narzędzi raportuących wyniki testów 
+w kolekcje, niezależność testów od narzędzi raportujących wyniki testów 
 (<em>reporting frameworks</em>).
 Moduł dostarcza klasy, które ułatwiają te zadania.
 Ważne pojęcia:
@@ -184,16 +184,11 @@ if __name__ == '__main__':
     unittest.TextTestRunner(verbosity=2).run(suite)
 </pre><hr>
 
-<p>Przykład tworzenia testów dla funkcji konwertujących liczby
-zapisane w systemie rzymskim można znaleźć w książce
-Marka Pilgrima <em>Dive Into Python</em>, 
-dostępną za darmo pod adresem
-<em>http://www.diveintopython.net/</em>.
-
 <h3>POMIJANIE TESTÓW</h3>
 
 <p>Moduł <em>unittest</em> dostarcza kilka dekoratorów używanych 
-do pomijania testów (skip, skipIf, skipUnless, expectedFailure) 
+do pomijania testów (<em>skip</em>, <em>skipIf</em>, <em>skipUnless</em>, 
+<em>expectedFailure</em>) 
 oraz jedną metodę (<em>TestCase.skipTest</em>).
 Można pominąć pojedynczy test lub klasę z testami.
 Dla pominiętych testów nie działają <em>setUp()</em> i <em>tearDown()</em>.
@@ -237,14 +232,15 @@ class MySkippedTestCase(unittest.TestCase):
 <h3>COMMAND-LINE INTERFACE</h3>
 
 <p>Moduł <em>unittest</em> może być użyty w wierszu poleceń
-do uruchomienia testów z modułów, klas, czy metod testujących [Py3.2+].
+do uruchomienia testów z modułów, klas, czy metod testujących (Py3.2+).
 
 <hr><pre>
 $ python3 -m unittest test_module1 test_module2
 $ python3 -m unittest test_module.TestClass
 $ python3 -m unittest test_module.TestClass.test_method
 </pre><hr><pre>
-# Testowanie w trybie "Test Discovery" [Py3.2+].
+# Testowanie w trybie "Test Discovery" (Py3.2+).
+# Plik z testami musi mieć nazwę typu 'test*.py'.
 
 $ python3 -m unittest discover
 </pre><hr>

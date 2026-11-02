@@ -33,20 +33,25 @@ import math
 # math.trunc(x) - int bliżej zera (Py2.6+).
 # Python 2: ceil() and floor() return float
 # Python 3: ceil() and floor() return int
+# math.isclose(a, b, *, rel_tol=1e-09, abs_tol=0.0) - return bool (Py3.5+)
 
 # Potęgi i logarytmy.
-# math.exp(x) - inaczej e ** x
+# math.cbrt(x) - x^(1/3) (Py3.11+)
+# math.exp(x) - inaczej e^x
+# math.exp2(x) - 2^x (Py3.11+)
+# math.expm1(x) - e^x -1, lepsze dla |x| &lt; 1 (Py2.7+)
 # math.log(x) - logarytm naturalny ln(x).
 # math.log(x, base) - inaczej math.log(x)/math.log(base) (Py2.3+)
-# math.log1p(x) - oznacza math.log(1 + x),
-# lepsze dla małych x (Py2.6+)
-# math.log10(x) - dokładniajsze niż math.log(x, 10).
-# math.pow(x, y) - oznacza x ** y
+# math.log1p(x) - oznacza math.log(1 + x), lepsze dla małych x (Py2.6+)
+# math.log2(x) - lepsze niż log(x, 2) (Py3.3+)
+# math.log10(x) - lepsze niż math.log(x, 10).
+# math.pow(x, y) - oznacza x^y
 # math.sqrt(x) - pierwiastek kwadratowy.
 
 # Funkcje trygonometryczne.
 # math.sin(x), math.cos(x), math.tan(x),
 # math.asin(x), math.acos(x), math.atan(x),
+# math.atan2(y,x) - atan(y/x),
 # math.sinh(x), math.cosh(x), math.tanh(x),
 # math.asinh(x), math.acosh(x), math.atanh(x), (Py2.6)
 
@@ -64,7 +69,7 @@ print(math.hypot(3, 4))    # 5.0 float
 # math.fsum(iterable) - suma float bez (dużej) utraty precyzji.
 # Nieskończoności: float("inf"), float("-inf"), math.inf [Py3.5+]
 # A floating-point "not a number" (NaN) value:
-# float("nan"), math.nan [Py3.5+]
+# float("nan"), math.nan (Py3.5+)
 # math.isinf(x) - Check if the float x is positive or negative infinity.
 # math.isnan(x) - Check if the float x is a NaN (not a number).
 
@@ -79,7 +84,6 @@ math.fsum([.1, .1, .1, .1, .1, .1, .1, .1, .1, .1])
 # Nowe funkcje z Pythona 2.7.
 # math.erf(x) - the error function.
 # math.erfc(x) - the complementary error function.
-# math.expm1(x) - dokładniejsze niż math.exp(x)-1.
 # math.gamma(x) - the Gamma function.
 # math.lgamma(x) - the natural log of the Gamma function.
 </pre><hr>
@@ -231,21 +235,16 @@ import cmath
 # help(cmath)
 </pre><hr>
 
-<h3>MODUŁ scipy</h3>
-
-<hr><pre>
-import scipy
-
-# SciPy - A scientific computing package for Python
-# help(scipy)
-</pre><hr>
-
 <h3>MODUŁ numpy</h3>
+
+<p>https://numpy.org/
 
 <hr><pre>
 import numpy
 #import numpy as np     # typowy import w aplikacjach
 
+# NumPy - The fundamental package for scientific computing with Python.
+# UWAGA Pakiet NumPy nie należy do biblioteki standardowej.
 # 1. An array object of arbitrary homogeneous items.
 # 2. Fast mathematical operations over arrays.
 # 3. Linear Algebra, Fourier Transforms, Random Number Generation.
@@ -257,6 +256,18 @@ import numpy
 # arr @ arr   # matrix multiplication
 </pre><hr>
 
+<h3>MODUŁ scipy</h3>
+
+<p>https://www.scipy.org/
+
+<hr><pre>
+import scipy
+
+# SciPy - A scientific computing package for Python.
+# help(scipy)
+# UWAGA Pakiet SciPy nie należy do biblioteki standardowej.
+</pre><hr>
+
 <h3>MODUŁ secrets</h3>
 
 <p>Moduł <em>random</em> nie jest przeznaczony do zastosowań związanych
@@ -266,8 +277,8 @@ PyPI zawiera ponadto moduł <em>cryptography</em>, który wspiera
 Pythona 2.6+, 3.4+ (instalacja przez <em>pip</em>).
 
 <hr><pre>
-# Python 3.6+
 import secrets
+
 foo = ['a', 'b', 'c', 'd', 'e']
 print(secrets.choice(foo))
 # To print a random index:

@@ -27,11 +27,12 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Python pozwala umieszczać pożyteczne definicje obiektów
-oraz instrukcje w osobnym pliku zwanym modułem. 
-Możemy importować definicje z danego mudułu do innych
+oraz instrukcje w osobnym pliku zwanym <strong>modułem</strong>. 
+Możemy importować definicje z danego modułu do innych
 modułów lub do modułu głównego, czy trybu interaktywnego.
-Jeżeli nazwa modułu to <em>abc</em>, to nazwa pliku modułu ma 
-postać <em>abc.py</em>. Wewnątrz modułu jego nazwa dostępna
+Jeżeli <strong>nazwa modułu</strong> to <em>abc</em>, 
+to <strong>nazwa pliku modułu</strong> ma postać <em>abc.py</em>. 
+Wewnątrz modułu jego nazwa dostępna
 jest jako wartość zmiennej globalnej <em>__name__</em>.
 
 <p>Import modułu tworzy <strong>przestrzeń nazw</strong>, 
@@ -93,14 +94,14 @@ other_name = module1          # przypisanie obiektu modułu
 print(other_name.name1)
 module1.name1 = new_value     # zwykle dozwolone, ale ostrożnie!
 print(module1.name2())        # kwalifikacja funkcji z modułu
-print(module1.__doc__)        # dostęp do łańcucha dokumentacyjnego
-help(module1)                 # NAME, FILE, FUNCTIONS, DATA
+print(module1.__doc__)        # dostęp do łańcucha dokumentacyjnego modułu
+help(module1)                 # sekcje NAME, FILE, FUNCTIONS, DATA
 dir(module1)                  # przestrzeń nazw
 module1.__dict__.keys()       # przestrzeń nazw
 </pre><hr><pre>
 # Zastosowanie instrukcji 'from'.
 from module1 import name1, name2   # ładowanie wybranych nazw
-lazy from module1 import name1     # leniwy import nazwy (Py3.15)
+lazy from module3 import name3     # leniwy import nazwy (Py3.15)
 
 # Równoważne instrukcje są następujące:
 # import module1
@@ -109,7 +110,7 @@ lazy from module1 import name1     # leniwy import nazwy (Py3.15)
 # del module1
 
 from module2 import *   # ładowanie wszystkich nazw
-#lazy from module2 import *        # SyntaxError, zabronione star imports (Py3.15)
+#lazy from module3 import *        # SyntaxError, zabronione star imports (Py3.15)
 
 print(name1, name2())   # nie ma kwalifikacji
 </pre><hr><pre>
@@ -118,12 +119,14 @@ import module1 as module2   # import modułu pod inną nazwą
 # import module1
 # module2 = module1
 # del module1
+
+# Przykłady.
 import numpy as np
 import Tkinter as tk   # Py2
 import tkinter as tk   # Py3
 import pygame as pg
 </pre><hr><pre>
-from module3 import name1 as name2   # zmiana nazw atrybutów
+from module4 import name1 as name2   # zmiana nazw atrybutów
 </pre><hr><pre>
 # Ponowne ładowanie modułu.
 
@@ -145,7 +148,7 @@ Generalnie zalecane jest stosowanie instrukcji <em>import</em>.
 <p>Dostęp do przestrzeni nazw modułu odbywa się za pomocą
 atrybutu <em>__dict__</em> lub <em>dir(module)</em>.
 Inaczej mówiąc, funkcja wbudowana <em>dir()</em> pozwala
-dowiedzieć się jakie nazwy są zdefiniowane przez moduł.
+dowiedzieć się, jakie nazwy są zdefiniowane przez moduł.
 
 <p>Python automatycznie zawiera wielki zbiór modułów narzędzi
 znany pod nazwą <strong>biblioteki standardowej</strong>.
@@ -226,7 +229,7 @@ string = importlib.import_module(module_name)
 <em>main.py</em>, który importuje moduł <em>spam</em>
 z pliku <em>spam.py</em>.
 Przy pierwszym uruchomieniu naszego programu kod z pliku <em>spam.py</em>
-jest kompilowany do bytecode i zapisywany do pliku <em>spam.pyc</em>,
+jest kompilowany do <em>bytecode</em> i zapisywany do pliku <em>spam.pyc</em>,
 którego zawartość jest niezależna od platformy.
 Przy następnym uruchomieniu naszego programu kod modułu <em>spam</em>
 jest wczytywany bezpośrednio z pliku <em>spam.pyc</em>,

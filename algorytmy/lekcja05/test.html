@@ -8,8 +8,6 @@
 
 <h1>Moduły programistyczne</h1>
 
-<p>https://docs.python.org/3/library/doctest.html
-
 <h3>WPROWADZENIE</h3>
 
 <p>Podstawowym sposobem umieszczania kodu samosprawdzającego
@@ -22,6 +20,8 @@ Moduły <em>nose</em> i <em>pytest</em> to dodatkowe narzędzia
 do pisania testów z lekką składnią.
 
 <h3>MODUŁ doctest</h3>
+
+<p>https://docs.python.org/3/library/doctest.html
 
 <hr><pre>
 def average(values):
@@ -44,7 +44,7 @@ doctest.testfile("example.txt")
 
 <h3>MODUŁ pytest</h3>
 
-<p>Moduł 'pytest' należy do biblioteki standardowej od Pythona 3.6.
+<p>Moduł <em>pytest</em> należy do biblioteki standardowej od Pythona 3.6.
 
 <hr><pre>
 # Przykładowy plik z testami test_sample.py ('test' w nazwie pliku).
@@ -61,15 +61,16 @@ def test_answer():   # 'test' w nazwie funkcji
 
 <h3>MODUŁ timeit</h3>
 
-<p>Moduł służy do testowania czasu wykonania małych kawałków kodu.
-Do testowania większych bloków kodu: profile, pstats.
+<p>Moduł <em>timeit</em> służy do testowania czasu wykonania małych kawałków kodu.
+Do testowania większych bloków kodu istnieją inne narzędzia: 
+<em>profile</em>, <em>pstats</em>.
 
-<p>Głównym elementem modułu jest klasa Timer(stmt="pass", setup="pass").
-<br>Metoda repeat(self, repeat=3, number=1000000) - 
-wywołanie timeit() kilka razy (zwraca listę wyników).
-<br>Metoda timeit(self, number=1000000) - 
-najpierw następuje pojedyncze wykonanie poleceń z setup, 
-a potem number wykonań stmt.
+<p>Głównym elementem modułu jest klasa <em>Timer(stmt="pass", setup="pass")</em>.
+<br>Metoda <em>repeat(self, repeat=3, number=1000000)</em> - 
+wywołanie <em>timeit()</em> kilka razy (zwraca listę wyników).
+<br>Metoda <em>timeit(self, number=1000000)</em> - 
+najpierw następuje pojedyncze wykonanie poleceń z <em>setup</em>, 
+a potem <em>number</em> wykonań instrukcji z <em>stmt</em>.
 
 
 <hr><pre>
@@ -126,23 +127,32 @@ print(t1.timeit(1))        # pojedyncze wykonanie
 
 <h3>MODUŁ enum</h3>
 
-<p>Typ Enum został dodany do Pythona 3.4
-(PEP 0435 -- Adding an Enum type to the Python standard library).
+<p>https://docs.python.org/3/library/enum.html
+
+<p>https://docs.python.org/3/howto/enum.html
+
+<p>PEP 0435 - Adding an Enum type to the Python standard library.
+<br>Typ Enum został dodany do Pythona 3.4
 
 <hr><pre>
 from enum import Enum
 # from enum import IntEnum   # można porównywać z int
 
 class Color(Enum):
-    red = 1
-    green = 2
-    blue = 3
+    RED = 1   # zalecane jest użycie dużych liter do stałych
+    GREEN = 2
+    BLUE = 3
 
-for c in Color:
+for c in Color:   # iteracja po enum
     print(c)
-# Color.red
-# Color.green
-# Color.blue
+    #print(c.name, c.value)
+# Color.RED
+# Color.GREEN
+# Color.BLUE
+
+# Dostęp do koloru czerwonego:
+Color(1)   # &lt;Color.red: 1&gt;
+Color["RED"]   # jw
 </pre><hr>
 
 </body>

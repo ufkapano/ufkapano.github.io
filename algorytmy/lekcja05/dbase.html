@@ -93,7 +93,7 @@ import dbm   # Py3
 
 # dbm - Generic interface to all dbm clones.
 
-d = anydbm.open(file, 'w')
+d = dbm.open(file, 'w')
 d[key] = data
 # store data at key (may override data at existing key)
 

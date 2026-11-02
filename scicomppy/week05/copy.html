@@ -34,10 +34,10 @@ or the set of components copied.
 <hr><pre>
 import copy
 
-# There are two methods available.
-x = "any object"
-y = copy.copy(x)       # a shallow copy of x
-z = copy.deepcopy(x)   # a deep copy of x
+# copy.copy(obj) - return a shallow copy of obj,
+# copy.deepcopy(obj[, memo]) - return a deep copy of obj,
+# copy.replace(obj, /, **changes) - creates a new object of the same type
+#     as obj, replacing fields with values from 'changes' (Py3.13).
 </pre><hr><pre>
 M = [1, 2, 3]
 L = [10, "a", M]

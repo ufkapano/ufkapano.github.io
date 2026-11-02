@@ -33,7 +33,7 @@ print(rekurencja.fibonacci(5))
 <p>Stworzyć plik <em>fracs.py</em> i zapisać w nim funkcje
 do działań na ułamkach.
 Ułamek będzie reprezentowany przez listę dwóch liczb całkowitych
-[licznik, mianownik].
+<em>[licznik, mianownik]</em>.
 Napisać kod testujący moduł <em>fracs</em>.
 Nie należy korzystać z klasy <em>Fraction</em> z modułu <em>fractions</em>.
 Można wykorzystać funkcję <em>fractions.gcd()</em>
@@ -104,6 +104,7 @@ if __name__ == '__main__':
 do działań na wielomianach.
 Wielomian będzie reprezentowany przez listę swoich współczynników,
 np. [a0, a1, a2] dla a0 + a1*x + a2*x*x.
+Zakładamy, że na liście jest co najmniej współczynnik a0.
 Napisać kod testujący moduł <em>polys</em>.
 
 <hr><pre>
@@ -203,10 +204,11 @@ def mul_sparse(sparse1, sparse2): pass        # sparse1 * sparse2
 
 def is_diagonal(sparse): pass                 # bool, czy diagonalna
 
-def is_empty(sparse): pass                    # bool, czy zerowa
+def is_zero(sparse): pass                    # bool, czy zerowa
 
 s1 = {}                                       # macierz zerowa
-s2 = {(2, 2): 3, (5, 5): 9}                   # macierz diagonalna
+s2 = {(1, 2): 0}                              # macierz zerowa (niejednoznaczność)
+s3 = {(2, 2): 3, (5, 5): 9}                   # macierz diagonalna
 </pre><hr>
 
 </body>
