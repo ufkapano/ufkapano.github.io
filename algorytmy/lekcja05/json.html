@@ -53,7 +53,7 @@ with open(file_name, mode='w') as outfile:
 # Tak możemy sprawdzić stringową reprezentację obiektu w formacie JSON.
 
 word = json.dumps(obj)
-word = json.dumps('żółw')   # "\u017c\u00f3\u0142w", użyto utf-8
+word = json.dumps('żółw')   # "\u017c\u00f3\u0142w", Unicode string
 
 # Compact encoding. Nie wstawia spacji.
 # Opcja separators=(item_separator, key_separator).

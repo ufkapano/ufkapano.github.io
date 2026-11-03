@@ -12,7 +12,9 @@
 
 <p>Moduł umożliwia sprawdzenie listy obiektów wbudowanych 
 
-<h3>MODUŁ __future__ (Py2)</h3>
+<h3>MODUŁ __future__ (Py2, Py3)</h3>
+
+<p>https://docs.python.org/3/reference/simple_stmts.html#future
 
 <p>Udostępnianie właściwości języka niezgodnych z wcześniejszym
 zachowaniem jest możliwe poprzez import z modułu <em>__future__</em>.
@@ -32,6 +34,7 @@ from __future__ import braces
 # To jest dowcip: nigdy nie będzie wprowadzone oznaczanie bloku
 # instrukcji przez nawiasy jak w C/C++.
 # The Python developers have a well-developed sense of humour!
+from __future__ import annotations   # Py3.7
 </pre><hr><pre>
 # W sesji interaktywnej można sprawdzić zawartość modułu.
 &gt;&gt;&gt; import __future__
@@ -70,18 +73,21 @@ f = open("myfile.jpg", "rb")
 f = io.BytesIO(b"some initial binary data: \x00\x01")   # in-memory binary stream
 
 # Raw I/O jest zwykle używane jako niskopoziomowy element budujący
-# dla pozostałych dwóch strunieni.
+# dla pozostałych dwóch strumieni.
 </pre><hr>
 
 <h3>MODUŁ copy</h3>
 
+<p>https://docs.python.org/3/library/copy.html
+<br>copy - Shallow and deep copy operations.
+
 <hr><pre>
 import copy
 
-# Są tylko dwie metody.
-x = "dowolny obiekt"
-y = copy.copy(x)              # płytka kopia x
-z = copy.deepcopy(x)          # głęboka kopia x
+# copy.copy(obj) -zwraca płytką kopię obj,
+# copy.deepcopy(obj[, memo]) - zwraca głęboką kopię obj,
+# copy.replace(obj, /, **changes) - tworzy nowy obiekt tego samego typu co obj,
+#    zamieniając pola wartościami ze słownika 'changes' (Py3.13)
 
 # Głęboka kopia niesie ze soba dwa problemy.
 # 1. Obiekty rekurencyjne mogą powodować zapętlenie.
@@ -105,44 +111,60 @@ class MyClass(object):
     def __deepcopy__(self, memo): ...
 </pre><hr>
 
-<h3>MODUŁ collections (Py2.4+)</h3>
+<h3>MODUŁ collections (Py2.4+, Py3)</h3>
 
-<p>Moduł dostarcza specjalistyczne kontenerowe typy danych.
+<p>https://docs.python.org/3/library/collections.html
+
+<p>https://docs.python.org/3/library/collections.abc.html
+
+<p>Moduł dostarcza specjalistyczne kontenerowe typy danych, które są 
+alternatywą dla ogólnych wbudowanych kontenerów,
+<em>dict</em>, <em>list</em>, <em>set</em>, <em>tuple</em>, .
 
 <ul>
-<li>namedtuple() - (Py2.6+) factory function for creating tuple subclasses 
-with named fields.
-<li>deque - (Py2.4+) list-like container with fast appends and pops 
+<li><em>namedtuple</em> - (Py2.6) factory function for creating tuple 
+subclasses with named fields.
+<li><em>deque</em> - (Py2.4) list-like container with fast appends and pops 
 on either end (kolejka dwukierunkowa).
-<li>Counter - (Py2.7) dict subclass for counting hashable objects
+<li><em>ChainMap</em> - (Py3.4) dict-like class for creating a single view 
+of multiple mappings.
+<li><em>Counter</em> - (Py2.7) dict subclass for counting hashable objects
 [domyślnie brakujące klucze mają wartość 0, nie pojawia się <em>KeyError</em>].
-<li>OrderedDict - (Py2.7) dict subclass that remembers the order 
+<li><em>OrderedDict</em> - (Py2.7) dict subclass that remembers the order 
 entries were added [PEP 372].
-<li>defaultdict - (Py2.5+) dict subclass that calls a factory function 
+<li><em>defaultdict</em> - (Py2.5) dict subclass that calls a factory function 
 to supply missing values.
+<li><em>UserDict</em> - wrapper around dictionary objects for easier dict subclassing.
+<li><em>UserList</em> - wrapper around list objects for easier list subclassing.
+<li><em>UserString</em> - wrapper around string objects for easier string subclassing.
 </ul>
 
-<p>W Pythonie 2.6 dodano abstrakcyjne klasy bazowe (ABCs, PEP 3119)
-[w nawiasach pokazane dziedziczenie]:
+<p>W Pythonie 2.6 dodano abstrakcyjne klasy bazowe dla kontenerów
+(ABCs, PEP 3119). Od Pythona 3.3 klasy bazowe są w podmodule
+<em>collections.abc</em>.
 
-<ul>
-<li>Container, 
-<li>Hashable, 
-<li>Iterable, 
-<li>Iterator (Iterable), 
-<li>Sized, 
-<li>Callable,
-<li>Sequence (Sized, Iterable, Container), 
-<li>MutableSequence (Sequence), 
-<li>Set (Sized, Iterable, Container), 
-<li>MutableSet (Set), 
-<li>Mapping (Sized, Iterable, Container), 
-<li>MutableMapping (Mapping),
-<li>MappingView (Sized), 
-<li>ItemsView (MappingView, Set), 
-<li>KeysView (MappingView, Set), 
-<li>ValuesView (MappingView).
-</ul>
+<p><strong>Kolekcja abstrakcyjnych klas bazowych</strong>:
+<em>Container</em>, 
+<em>Hashable</em>, 
+<em>Iterable</em>, 
+<em>Iterator (Iterable)</em>, 
+<em>Reversible (Iterable)</em>, 
+<em>Generator (Iterable)</em>, 
+<em>Sized</em>, 
+<em>Callable</em>,
+<em>Collection (Sized, Iterable, Container)</em>, 
+<em>Sequence (Reversible, Collection)</em>, 
+<em>MutableSequence (Sequence)</em>, 
+<em>ByteString (Sequence)</em>, 
+<em>Set (Collection)</em>, 
+<em>MutableSet (Set)</em>, 
+<em>Mapping (Collection)</em>, 
+<em>MutableMapping (Mapping)</em>,
+<em>MappingView (Sized)</em>, 
+<em>ItemsView (MappingView, Set)</em>, 
+<em>KeysView (MappingView, Set)</em>, 
+<em>ValuesView (MappingView, Collection)</em>,
+<em>Buffer</em>.
 
 <p>Dzięki ABCs możemy pytać, czy klasy lub instancje posiadają
 pewną funkcjonalność.
@@ -151,7 +173,7 @@ pewną funkcjonalność.
 import collections
 
 size = None
-if isinstance(my_variable, collections.Sized):   # istnieje __len__
+if isinstance(my_variable, collections.abc.Sized):   # istnieje __len__
     size = len(my_variable)
 </pre><hr>
 
@@ -159,8 +181,8 @@ if isinstance(my_variable, collections.Sized):   # istnieje __len__
 
 <p>Moduły <em>getopt</em>, <em>optparse</em>, <em>argparse</em> [PEP 389] 
 służą do parsowania argumentów podanych w wierszu poleceń.
-Moduł getopt przypomina <em>getopt()</em> z biblioteki języka C, przez co
-przydaje się do pisania prototypów, które będą przepisywane do C.
+Moduł <em>getopt</em> przypomina <em>getopt()</em> z biblioteki języka C, 
+przez co przydaje się do pisania prototypów, które będą przepisywane do C.
 Do nowych skryptów Pythona zaleca się używanie najnowszego modułu 
 <em>argparse</em>.
 

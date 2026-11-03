@@ -16,19 +16,26 @@
 
 <h3>MODUŁ pickle</h3>
 
+<p>W Pythonie 2 moduł <em>pickle</em> serializował obiekty do stringów
+(typ <em>str</em>) i używał plików tekstowych.
+
 <p>W Pythonie 3, przy korzystaniu z modułu <em>pickle</em>,
 trzeba otwierać i zamykać pliki w trybie binarnym
 (do zapisu "wb", do odczytu "rb").
+Obiekty są serializowne do postaci <em>bytes</em>.
+Moduł <em>pickle</em> używa relatywnie zwartej reprezentacji binarnej,
+ale można jeszcze zmniejszyć rozmiar plików z danymi przez kompresję
+(pakiet <em>compression</em> od Py3.14).
 
 <hr><pre>
 import pickle
 
 adict = {"a": "jeden", "b": "dwa"}
 
-# Serializacja słownika do stringu.
+# Serializacja słownika do obiektu typu 'bytes'.
 word = pickle.dumps(adict)
 
-# Odtworzenie słownika ze stringu.
+# Odtworzenie słownika z obiektu typu 'bytes'.
 bdict = pickle.loads(word)
 </pre><hr><pre>
 import pickle
@@ -36,12 +43,12 @@ import pickle
 adict = {"a": "jeden", "b": "dwa"}
 
 # Zapisanie słownika w pliku.
-afile = open("data.pickle", "w")
+afile = open("data.pickle", "wb")   # Py3
 pickle.dump(adict, afile)
 afile.close()
 
 # Odtworzenie słownika z pliku.
-bfile = open("data.pickle", "r")
+bfile = open("data.pickle", "rb")   # Py3
 bdict = pickle.load(bfile)
 bfile.close()
 </pre><hr><pre>
@@ -51,12 +58,12 @@ alist = [1, "a", 2, "b"]
 adict = {"a": "jeden", "b": "dwa"}
 
 # Zapisanie kilku elementów w pliku (w krotce).
-afile = open("data.pickle", "w")
+afile = open("data.pickle", "wb")   # Py3
 pickle.dump((alist, adict), afile)
 afile.close()
 
 # Odtworzenie elementów z pliku.
-bfile = open("data.pickle", "r")
+bfile = open("data.pickle", "rb")   # Py3
 (blist, bdict) = pickle.load(bfile)
 bfile.close()
 </pre><hr><pre>
@@ -66,13 +73,13 @@ adict = {"a": "jeden", "b": "dwa"}
 alist = [1, "a", 2, "b"]
 
 # Zapisanie danych w pliku.
-afile = open("data.pickle", "w")
+afile = open("data.pickle", "wb")   # Py3
 pickle.dump(adict, afile)
 pickle.dump(alist, afile)
 afile.close()
 
 # Odtworzenie danych z pliku (kolejność!).
-bfile = open("data.pickle", "r")
+bfile = open("data.pickle", "rb")   # Py3
 bdict = pickle.load(bfile)
 blist = pickle.load(bfile)
 bfile.close()
