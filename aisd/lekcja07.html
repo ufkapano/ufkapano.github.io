@@ -72,7 +72,7 @@ public:
     T& top() { return lst.back(); } // zwraca koniec, nie usuwa
     void pop() { lst.pop_back(); } // usuwa koniec
     void clear() { lst.clear(); }
-    void display();
+    void display() const;
 };
 </pre><hr>
 
@@ -133,16 +133,16 @@ int rpn(const std::vector&lt;std::string&gt;&amp; input);
 
 <p>Przygotować implementację realizującą ADT STACK na bazie tablicy.
 Wykorzystać klasę <em>ArrayList</em> lub <em>std::array</em>.
-Operacje push() i pop() działające w stałym czasie można uzyskać
-przy użyciu push_back() i pop_back().
+Operacje <em>push()</em> i <em>pop()</em> działające w stałym czasie 
+można uzyskać przy użyciu <em>push_back()</em> i <em>pop_back()</em>.
 
 <h3>ZADANIE 7.3 (std::forward_list)</h3>
 
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej pojedynczo.
 Wykorzystać klasę <em>SingleList</em> lub <em>std::forward_list</em>.
-Operacje push() i pop() działające w stałym czasie można uzyskać
-przy użyciu push_front() i pop_front().
+Operacje <em>push()</em> i <em>pop()</em> działające w stałym czasie 
+można uzyskać przy użyciu <em>push_front()</em> i <em>pop_front()</em>.
 
 <p>Warto zauważyć, że wykorzystując kod klasy <em>SingleList</em>
 możemy go uprościć i wewnętrznie korzystać tylko 
@@ -154,10 +154,10 @@ powinien działać z optymalną złożonością O(n).
 <p>Przygotować implementację realizującą ADT STACK na bazie listy
 powiązanej podwójnie.
 Wykorzystać klasę <em>DoubleList</em> lub <em>std::list</em>.
-Możliwe są dwa warianty realizacji push() i pop(),
+Możliwe są dwa warianty realizacji <em>push()</em> i <em>pop()</em>,
 działające w stałym czasie: 
-(a) push_back() i pop_back(), 
-(b) push_front() i pop_front(). 
+(a) <em>push_back()</em> i <em>pop_back()</em>, 
+(b) <em>push_front()</em> i <em>pop_front()</em>. 
 
 <h3>ZADANIE 7.5 (DOPASOWANIE OGRANICZNIKÓW)</h3>
 

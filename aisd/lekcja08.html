@@ -76,7 +76,7 @@ public:
     T& back(); // zwraca koniec, nie usuwa
     void pop(); // usuwa początek kolejki, pop_front()
     void clear(); // czyszczenie listy z elementów
-    void display();
+    void display() const;
 };
 </pre><hr>
 
@@ -90,7 +90,7 @@ liczba elementów w kolejce, po to aby rozróżnić sytuacje pustej
 i pełnej kolejki.
 
 <hr><pre>
-// myqueue.h
+// myqueue.hpp
 template &lt;typename T&gt;
 class MyQueue {
     T* tab;
@@ -119,7 +119,7 @@ public:
     T& back() { return tab[(tail + msize -1) % msize]; } // zwraca koniec
     void pop(); // usuwa początek
     void clear(); // czyszczenie listy z elementów
-    void display();
+    void display() const;
 };
 </pre><hr>
 
@@ -127,18 +127,19 @@ public:
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie listy
 powiązanej pojedynczo.
-Wykorzystać klasę <em>SingleList</em> [push_back(), pop_front()] lub 
-<em>std::forward_list</em> [tu jest trudniej, bo nie ma back() i push_back();
-trzeba korzystać z before_begin() oraz insert_after()].
+Wykorzystać klasę <em>SingleList</em> 
+[<em>push_back()</em>, <em>pop_front()</em>] lub <em>std::forward_list</em> 
+[tu jest trudniej, bo nie ma <em>back()</em> i <em>push_back()</em>;
+trzeba korzystać z <em>before_begin()</em> oraz <em>insert_after()</em>].
 
 <h3>ZADANIE 8.3 (std::list)</h3>
 
 <p>Przygotować implementację realizującą ADT QUEUE na bazie listy
 powiązanej podwójnie.
 Wykorzystać klasę <em>DoubleList</em> lub <em>std::list</em>.
-Możliwe są dwa warianty realizacji push() i pop():
-(a) push_back() i pop_front(),
-(b) push_front() i pop_back().
+Możliwe są dwa warianty realizacji <em>push()</em> i <em>pop()</em>:
+(a) <em>push_back()</em> i <em>pop_front()</em>,
+(b) <em>push_front()</em> i <em>pop_back()</em>.
 
 <h3>ZADANIE 8.4 (std::stack)</h3>
 

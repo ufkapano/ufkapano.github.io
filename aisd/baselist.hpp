@@ -29,7 +29,7 @@ public:
     virtual T& operator[](std::size_t pos) = 0; // podstawienie L[pos]=item, odczyt L[pos]
     virtual const T& operator[](std::size_t pos) const = 0; // dostep do obiektu const
     virtual void erase(std::size_t pos) = 0;
-    virtual int index(const T& item) = 0; // jaki index na liscie (-1 gdy nie ma)
+    virtual int index(const T& item) const = 0; // jaki index na liscie (-1 gdy nie ma)
     virtual void insert(std::size_t pos, const T& item) = 0; // inserts item before pos,
     virtual void insert(std::size_t pos, T&& item) = 0; // inserts item before pos,
 };

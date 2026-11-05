@@ -56,7 +56,7 @@ public:
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](std::size_t pos) const; // dostep do obiektu const
     void erase(std::size_t pos); // usuniecie elementu na pozycji pos
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma)
+    int index(const T& item) const; // jaki index na liscie (-1 gdy nie ma)
     void insert(std::size_t pos, const T& item); // inserts item before pos
     void insert(std::size_t pos, T&& item); // inserts item before pos
     // Jezeli pos=0, to wstawiamy na poczatek.

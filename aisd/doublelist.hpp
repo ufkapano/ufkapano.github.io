@@ -24,7 +24,7 @@ class DoubleList {
     DoubleNode<T> *head, *tail;
 public:
     DoubleList() : head(nullptr), tail(nullptr) {}
-    ~DoubleList(); // tu trzeba wyczyscic wezly
+    ~DoubleList() { clear(); } // tu trzeba wyczyscic wezly
 
     DoubleList(const DoubleList& other); // copy constructor
     // usage:   DoubleList<int> list2(list1);
@@ -57,7 +57,7 @@ public:
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](std::size_t pos) const; // dostep do obiektu const
     void erase(std::size_t pos);
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
+    int index(const T& item) const; // jaki index na liscie (-1 gdy nie ma) O(n)
     void insert(std::size_t pos, const T& item); // inserts item before pos,
     void insert(std::size_t pos, T&& item); // inserts item before pos,
     // Jezeli pos=0, to wstawiamy na poczatek.

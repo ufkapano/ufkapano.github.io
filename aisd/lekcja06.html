@@ -27,14 +27,14 @@ Typowe operacje dla ADT DEQUE są następujące:
 <li>testowanie, czy lista jest pusta [empty()],
 <li>odczyt liczby elementów na liście [size()],
 <li>odczyt największej możliwej liczby elementów [max_size()],
-<li>dołączanie nowego elementu na początek listy [push_front(item)],
-<li>dołączanie nowego elementu na koniec listy [push_back(item)],
+<li>dołączanie nowego elementu na początek listy w czasie O(1) [push_front(item)],
+<li>dołączanie nowego elementu na koniec listy w czasie O(1) [push_back(item)],
 <li>dostęp do głowy (<em>head</em>), czyli pierwszego (lewego skrajnego) 
-elementu [front()],
+elementu w czasie O(1) [front()],
 <li>dostęp do ogona (<em>tail</em>), czyli ostatniego (prawego skrajnego) 
-elementu [back()],
-<li>usunięcie elementu pierwszego [pop_front()],
-<li>usunięcie elementu ostatniego [pop_back()],
+elementu w czasie O(1) [back()],
+<li>usunięcie elementu pierwszego w czasie O(1) [pop_front()],
+<li>usunięcie elementu ostatniego w czasie O(1) [pop_back()],
 <li>czyszczenie listy [clear()],
 <li>dostęp do elementu o danym indeksie i,
 <li>dołączanie nowego elementu przed element na pozycji i [insert()],
@@ -71,42 +71,10 @@ Q.back() = 66;
 // Zawartość kontenera: 55 3 1 2 4 66
 Q.clear();
 assert( Q.empty() );
-</pre><hr><pre>
-// Interfejs kolejki dwustronnej
-template &lt;typename T&gt;
-class MyDeque {
-    // zależne od implementacji
-public:
-    MyDeque(); // default constructor
-    ~MyDeque();
-    MyDeque(const MyDeque& other); // copy constructor
-    MyDeque(MyDeque&amp;&amp; other); // move constructor
-    MyDeque& operator=(const MyDeque& other); // copy assignment operator, return *this
-    MyDeque& operator=(MyDeque&amp;&amp; other); // move assignment operator, return *this
-    bool empty() const; // checks if the container has no elements
-    std::size_t size() const; // liczba elementów w kolejce
-    void push_front(const T& item); // dodanie na początek O(1)
-    void push_front(T&amp;&amp; item); // dodanie na początek O(1)
-    void push_back(const T& item); // dodanie na koniec O(1)
-    void push_back(T&amp;&amp; item); // dodanie na koniec O(1)
-    T& front(); // zwraca początek, nie usuwa
-    T& back(); // zwraca koniec, nie usuwa
-    void pop_front(); // usuwa początek kolejki O(1)
-    void pop_back(); // usuwa koniec kolejki O(1)
-    void clear(); // czyszczenie listy z elementów
-    void display();
-    void display_reversed();
-    // Operacje z indeksami.
-    T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
-    const T& operator[](std::size_t pos) const; // dostęp do obiektu const
-    void erase(std::size_t pos);
-    int index(const T& item); // jaki index na liście (-1 gdy nie ma)
-    void insert(std::size_t pos, const T& item); // inserts item before pos
-    void insert(std::size_t pos, T&amp;&amp; item); // inserts item before pos
-    // Jeżeli pos=0, to wstawiamy na początek.
-    // Jeżeli pos=size(), to wstawiamy na koniec.
-};
 </pre><hr>
+
+<p>Interfejs kolejki dwustronnej jest podany w pliku
+<a href="basedeque.hpp">basedeque.hpp</a>.
 
 <h3>ZADANIE 6.1 (TABLICA CYKLICZNA)</h3>
 
@@ -136,7 +104,7 @@ push_front(44), kolejka pełna ((tail + 1) % msize == head)
 |11|22|  |44|33| tail = 2
 +--+--+--+--+--+
 </pre><hr><pre>
-// mydeque.h
+// mydeque.hpp
 template &lt;typename T&gt;
 class MyDeque {
     T* tab;
@@ -168,14 +136,14 @@ public:
     void pop_front(); // usuwa początek kolejki O(1)
     void pop_back(); // usuwa koniec kolejki O(1)
     void clear(); // czyszczenie listy z elementów
-    void display();
-    void display_reversed();
+    void display() const;
+    void display_reversed() const;
     // Operacje z indeksami. NIEOBOWIĄZKOWE
     // Pozycja 'pos' w deque to pozycja (head + pos) % msize w tablicy.
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](std::size_t pos) const; // dostęp do obiektu const
     void erase(std::size_t pos);
-    int index(const T& item); // jaki index na liście (-1 gdy nie ma)
+    int index(const T& item) const; // jaki index na liście (-1 gdy nie ma)
     void insert(std::size_t pos, const T& item); // inserts item before pos
     void insert(std::size_t pos, T&amp;&amp; item); // inserts item before pos
 };
@@ -195,7 +163,7 @@ void MyDeque&lt;T&gt;::push_back(const T& item) {
 }
 </pre><hr><pre>
 template &lt;typename T&gt;
-void MyDeque&lt;T&gt;::display() {
+void MyDeque&lt;T&gt;::display() const {
     for (std::size_t i = head; i != tail; i=(i+1) % msize) {
         std::cout &lt;&lt; tab[i] &lt;&lt; " ";
     }

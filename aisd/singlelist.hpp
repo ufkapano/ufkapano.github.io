@@ -21,7 +21,7 @@ class SingleList {
     SingleNode<T> *head, *tail;
 public:
     SingleList() : head(nullptr), tail(nullptr) {}
-    ~SingleList(); // tu trzeba wyczyscic wezly
+    ~SingleList() { clear(); } // tu trzeba wyczyscic wezly
 
     SingleList(const SingleList& other); // copy constructor
     // usage:   SingleList<int> list2(list1);
@@ -55,24 +55,12 @@ public:
     T& operator[](std::size_t pos); // podstawienie L[pos]=item, odczyt L[pos]
     const T& operator[](std::size_t pos) const; // dostep do obiektu const
     void erase(std::size_t pos);
-    int index(const T& item); // jaki index na liscie (-1 gdy nie ma) O(n)
+    int index(const T& item) const; // jaki index na liscie (-1 gdy nie ma) O(n)
     void insert(std::size_t pos, const T& item); // inserts item before pos,
     void insert(std::size_t pos, T&& item); // inserts item before pos,
     // Jezeli pos=0, to wstawiamy na poczatek.
     // Jezeli pos=size(), to wstawiamy na koniec.
 };
-
-template <typename T>
-SingleList<T>::~SingleList() {
-    // I sposob.
-    for (SingleNode<T> *node; !empty(); ) {
-        node = head->next; // zapamietujemy
-        delete head;
-        head = node; // kopiowanie wskaznika
-    }
-    // II sposob.
-    // while (!empty()) { pop_front(); }
-}
 
 template <typename T>
 void SingleList<T>::push_front(const T& item) {
