@@ -8,20 +8,20 @@
 
 <h1>Gra w karty</h1>
 
-<h3>WPROWADZENIE</h3>
-
-<p>Referencja:  Allen B. Downey, Jeffrey Elkner and Chris Meyers,
+<p>Allen B. Downey, Jeffrey Elkner and Chris Meyers,
 <em>How to Think Like a Computer Scientist</em>
-[różne wersje dostępne w sieci].
+[różne wersje dostępne w Internecie].
+
+<h3>WPROWADZENIE</h3>
 
 <p>Gra <em>Old Maid</em> (odmiana gry Czarny Piotruś) jest przykładem 
 zastosowania dziedziczenia.
 Celem gry jest pozbycie się wszystkich kart z ręki.
-Karty odkładamy w parach, a parę tworzą dwie czarne (Trefl, Pik)
-lub dwie czerwone (Karo, Kier) karty o tym samym numerze.
-Gracze w koło ciągną od siebie karty i odkładają pary aż zostanie
-jeden gracz z jedną kartą bez pary (na początku gry usuwa się
-z talii królową trefl).
+Karty odkładamy w parach, a parę tworzą dwie czarne (trefl, pik)
+lub dwie czerwone (karo, kier) karty o tym samym numerze.
+Gracze w koło ciągną od siebie karty i odkładają pary, aż zostanie
+jeden gracz z jedną kartą bez pary 
+(na początku gry usuwa się z talii królową trefl).
 W poniższym programie komputer symuluje grę wszystkich graczy.
 
 <hr><pre>
@@ -228,6 +228,10 @@ class OldMaidGame(CardGame):   # tworzymy naszą grę
 game = OldMaidGame()
 game.play(["Adam", "Bogdan", "Cezary"])
 </pre><hr>
+
+<h3>ZADANIE</h3>
+
+<p>Uaktualnić kod gry do Pythona 3.
 
 </body>
 </html>

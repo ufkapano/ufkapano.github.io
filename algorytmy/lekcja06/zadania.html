@@ -165,8 +165,8 @@ class TestPoint(unittest.TestCase): pass
 
 <p>W pliku <em>rectangles.py</em> zdefiniować klasę <em>Rectangle</em>
 wraz z potrzebnymi metodami.
-Prostokąt jest określony przez podanie dwóch wierzchołków,
-lewego dolnego i prawego górnego.
+Prostokąt jest określony przez podanie dwóch wierzchołków klasy <em>Point</em>,
+lewego dolnego (<em>pt1</em>) i prawego górnego (<em>pt2</em>).
 Boki prostokąta są równoległe do osi układu współrzędnych.
 Napisać kod testujący moduł <em>rectangles</em>.
 
@@ -189,9 +189,9 @@ class Rectangle:
     def __ne__(self, other):        # obsługa rect1 != rect2
         return not self == other
 
-    def center(self): pass          # zwraca środek prostokąta
+    def center(self): pass          # zwraca środek prostokąta (Point)
 
-    def area(self): pass            # pole powierzchni
+    def area(self): pass            # pole powierzchni (liczba)
 
     def move(self, x, y): pass      # przesunięcie o (x, y)
 
@@ -206,7 +206,8 @@ class TestRectangle(unittest.TestCase): pass
 
 <p>W pliku <em>triangles.py</em> zdefiniować klasę <em>Triangle</em>
 wraz z potrzebnymi metodami.
-Trójkąt jest określony przez podanie trzech wierzchołków.
+Trójkąt jest określony przez podanie trzech wierzchołków klasy <em>Point</em>
+w atrybutach <em>pt1</em>, <em>pt2</em>, <em>pt3</em>.
 Napisać kod testujący moduł <em>triangles</em>.
 
 <hr><pre>
@@ -226,14 +227,14 @@ class Triangle:
 
     def __eq__(self, other): pass   # obsługa tr1 == tr2
         # Trójkąty powinny być równe, jeżeli mają ten sam zbiór wierzchołków,
-        # niezależnie od kolejności pt1, pt2, pt3.
+        # niezależnie od kolejności punktów w atrybutach pt1, pt2, pt3.
 
     def __ne__(self, other):        # obsługa tr1 != tr2
         return not self == other
 
-    def center(self): pass          # zwraca środek (masy) trójkąta
+    def center(self): pass          # zwraca środek masy trójkąta (Point)
 
-    def area(self): pass            # pole powierzchni
+    def area(self): pass            # pole powierzchni (liczba)
 
     def move(self, x, y): pass      # przesunięcie o (x, y)
 
@@ -248,7 +249,8 @@ class TestTriangle(unittest.TestCase): pass
 
 <p>W pliku <em>fracs.py</em> zdefiniować klasę <em>Frac</em>
 wraz z potrzebnymi metodami.
-Ułamek jest reprezentowany przez parę liczb całkowitych.
+Ułamek jest reprezentowany przez parę liczb całkowitych,
+licznik ułamka to atrybut <em>x</em>, mianownik ułamka to atrybut <em>y</em>.
 Napisać kod testujący moduł <em>fracs</em>.
 
 <hr><pre>
@@ -276,9 +278,9 @@ class Frac:
 
     def __le__(self, other): pass
 
-    #def __gt__(self, other): pass
+    #def __gt__(self, other): pass   # nadmiarowe
 
-    #def __ge__(self, other): pass
+    #def __ge__(self, other): pass   # nadmiarowe
 
     def __add__(self, other): pass  # frac1 + frac2
 

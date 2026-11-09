@@ -14,7 +14,7 @@
 
 <p>W Pythonie nie ma przeciążania funkcji, bo nazwa funkcji jest
 referencją do obiektu. W C++ mogą być funkcje o tej samej nazwie,
-które różnią się typami argumentów (ale nie zwracanych wartości).
+które różnią się typami argumentów, ale nie zwracanych wartości.
 W Pythonie przeciążanie operatorów robi się za pomocą 
 <strong>metod specjalnych</strong>.
 
@@ -69,8 +69,6 @@ __hash__   wywoływane przez hash(x), zwraca int;
     them into a tuple and hashing the tuple.
     Jeżeli klasa nie definiuje __eq__, to nie powinna definiować __hash__.
     Dla obiektów mutowalnych nie należy definiować __hash__.
-
-__bytes__   wywoływane przez bytes(x), zwraca obiekt bytes;
 
 __round__   wywoływane przez round(x, ndigits=None), zaokrąglanie;
     metoda stosowana do typów skalarnych, liczb (np. wiek człowieka).
@@ -151,7 +149,7 @@ __pos__  znak plus, +x
 __neg__  znak minus, -x
 __abs__  wartość bezwzględna, abs(x)
 __invert__  zwykle odwrotność lub negacja, ~x
-__complex__  implementacja complex(x)
+__bytes__   implementacja bytes(x)
 __int__  implementacja int(x)
 __long__  implementacja long(x) (Py2)
 __float__  implementacja float(x)
@@ -185,14 +183,14 @@ assert (x == y) == not (x != y)   # jedno można obliczyć z drugiego
 # x &gt; y jest równe y &lt; x (interpreter może przestawić).
 </pre><hr><pre>
 # Emulowanie typów kontenerowych.
-__len__             # len(x)
+__len__             # implementacja len(x)
 Długość kontenera, testy prawdziwości, jeśli nie ma __bool__.
 Metoda wymaga, aby zwracana wartość była typu int.
 
-__iter__            # iter(x)
+__iter__            # implementacja iter(x)
 This method is called when an iterator is required for a container.
 
-__reversed__        # reversed(x)
+__reversed__        # implementacja reversed(x)
 It should return a new iterator that iterates over all the objects 
 in the container in reverse order.
 Jeżeli __reversed__ nie zdefiniowano, wtedy reversed() korzysta z __len__ i __getitem__.
@@ -305,13 +303,13 @@ class Point:
     def __del__(self):
         """Destruktor punktu."""
         Point.counter -= 1
-        print("del: counter = {}".format(Point.counter))
+        print("del: counter =", Point.counter)
 
 print("counter = {}".format(Point.counter))   # na starcie counter = 0
-pt1 = Point(3.4, 5.6)                   # counter = 1
-pt2 = Point(4.5, 2.1)                   # counter = 2
-print("metoda __str__ {} {}".format(pt1, pt2))
-print("metoda __add__ {}".format(pt1 + pt2))   # counter wzrasta do 3 i od razu wraca do 2
+pt1 = Point(3.4, 5.6)   # counter = 1
+pt2 = Point(4.5, 2.1)   # counter = 2
+print("metoda __str__", pt1, pt2)
+print("metoda __add__", pt1 + pt2)   # counter wzrasta do 3 i od razu wraca do 2
 
 # Każda instancja ma referencję do swojej klasy.
 print(pt1.__class__)

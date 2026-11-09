@@ -21,7 +21,7 @@ i nie wystąpi pętla nieskończona.
 def print_stars(n):
     """Rekurencyjne wypisywanie n linii z gwiazdką."""
     if n &gt; 0:
-        print("*")
+        print("*" * n)
         print_stars(n-1)
 
 print_stars(5)                # wywołanie funkcji
@@ -39,7 +39,7 @@ import math
 print(math.factorial(10))   # Python 2.6+
 print(factorial(10))
 </pre><hr><pre>
-# f(0) = 0, f(1) = 1, f(n) = f(n-1) + f(n-2).
+# F(0) = 0, F(1) = 1, F(n) = F(n-1) + F(n-2).
 
 def fibonacci(n):
     """Ciąg Fibonacciego (definicja rekurencyjna)."""

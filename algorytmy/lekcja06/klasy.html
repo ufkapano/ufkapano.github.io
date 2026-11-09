@@ -18,7 +18,7 @@ W Pythonie naturalnym sposobem reprezentacji będzie para liczb
 typu <em>float</em>. Chcemy taką parę traktować jako jeden 
 złożony obiekt. Przykładowym rozwiązaniem jest lista lub krotka,
 ale zwykle lepsze jest zdefiniowanie nowego typu, inaczej <strong>klasy</strong>.
-Składnia (dwukropek i wcięcia) jest taka jak dla innych wyrażeń złożonych
+Składnia (dwukropek i wcięcia) jest taka jak dla innych instrukcji złożonych
 w Pythonie. Nazewnictwo klas powinno być typu <em>StudlyCups</em>.
 
 <p>Instrukcja wykonywalna <em>class</em> tworzy obiekt klasy 
@@ -31,8 +31,7 @@ obiekt <strong>instancji klasy</strong>.
 Każdy obiekt instancji dziedziczy atrybuty klasy oraz otrzymuje
 własną przestrzeń nazw.
 Przypisania do atrybutów <em>self</em> w metodach tworzą
-atrybuty instancji (a nie klasy).
-
+atrybuty instancji, a nie klasy.
 
 <hr><pre>
 # Składnia.
@@ -70,7 +69,7 @@ def print_point(point):   # zmienna 'point' jest lokalna
     print("({}, {})".format(point.x, point.y))
 
 # Wywołujemy funkcję dla punktu. Do funkcji przekazujemy wartość
-# zmiennej 'point', czyli referencję do obiektu.
+# zmiennej 'point', czyli referencję do oryginalnego obiektu.
 
 print_point(point)   # (3.4, 5.6)
 </pre><hr>
@@ -91,7 +90,7 @@ point2.y = 4
 
 point1 == point2   # False, to nie są te same obiekty, inne id
 point3 = point1    # kopiujemy referencję
-point1 == point3   # True,  to jest porównywanie referencji
+point1 == point3   # True, to jest porównywanie referencji
 
 # Taki typ równości nazywa się 'shallow equality' (płytka, powierzchowna równość).
 # Aby porównać zawartość obiektów (deep equality, głęboka równość),
