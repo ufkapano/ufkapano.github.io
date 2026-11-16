@@ -28,7 +28,7 @@ Z drugiej strony, pojawienie się wyjątku nie zawsze oznacza błąd w programie
 <p>Błędy składniowe, inaczej błędy parsowania, wywołane są 
 przez nieprawidłową składnię instrukcji.
 W efekcie otrzymujemy komunikat z numerem linii z błędem i jej treścią.
-Mała strzałka pokazuje token <em>przed którym wykryto błąd</em>.
+Małe strzałki pokazują token <em>przed którym wykryto błąd</em>.
 
 <hr><pre>
 >>> if True print("word")
@@ -90,11 +90,11 @@ funkcji aktywnych w momencie, kiedy nastąpił wyjątek.
 print(23/0)
 
 # Odwołanie się do nieistniejącego elementu listy - IndexError.
-alist = []                        # pusta lista
+alist = []   # pusta lista
 print(alist[5])
 
 # Odwołanie się do nieistniejącego klucza w słowniku - KeyError.
-adict = {}                        # pusty słownik
+adict = {}   # pusty słownik
 print(adict["key"])
 
 # Otwarcie do czytania nieistniejącego pliku - IOError.
@@ -162,7 +162,7 @@ błędy, które przerwą program. Można zastosować konstrukcję
 Obecnie zaleca się korzystanie z menedżera kontekstu (instrukcja <em>with</em>).
 
 <hr><pre>
-afile = open("tekstowy.txt")  # najpierw otwieramy plik tekstowy
+afile = open("tekstowy.txt")  # najpierw otwieramy plik tekstowy do czytania
 try:                          # pracujemy na pliku
     text = afile.read()   # czytamy cały tekst
 finally:                      # na pewno zamkniemy plik
@@ -179,7 +179,7 @@ filename = input("Podaj nazwę pliku: ")   # Py3
 try:                          # pierwszy blok
     afile = open(filename, "r")
 except Exception:             # drugi blok (w razie wyjątku)
-    print("Nie ma pliku o nazwie {}".format(filename))
+    print("Nie ma pliku o nazwie", filename)
 else:                         # trzeci blok opcjonalny (nie było wyjątku)
     print("Plik został otwarty")
 </pre><hr>
@@ -187,7 +187,8 @@ else:                         # trzeci blok opcjonalny (nie było wyjątku)
 <p>Można zamknąć taką funkcjonalność wewnątrz funkcji.
 
 <hr><pre>
-# Funkcja zwraca True, jeżeli plik istnieje, lub False, w przeciwnym razie.
+# Funkcja zwraca True, jeżeli plik istnieje i mamy odpowiednie prawa dostępu,
+# lub False, w przeciwnym razie.
 def if_exist(filename):
     try:
         afile = open(filename)

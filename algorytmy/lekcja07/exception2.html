@@ -10,6 +10,8 @@
 
 <p>https://docs.python.org/3/library/exceptions.html
 
+<p>https://docs.python.org/3/library/exceptions.html#ExceptionGroup
+
 <p>https://docs.python.org/3/reference/simple_stmts.html#the-assert-statement
 
 <h3>WPROWADZENIE</h3>
@@ -27,7 +29,7 @@ wyjątek i wszystkie inne klasy potomne.
 <hr><pre>
 # Nowe podejście - wyjątek to klasa wywiedziona z klasy Exception.
 # Do nazwy dajemy suffix "Error", o ile wyjątek to błąd.
-# Dla ostrzeżeń w nazwie dodajemy "Warning".
+# Dla ostrzeżeń do nazwy dodajemy suffix "Warning".
 
 class MyError(Exception):
     """Warto stworzyć wiersz dokumentujący."""
@@ -41,10 +43,10 @@ print(exception.args)   # ('a', 'b')
 print(exception)   # ('a', 'b')
 </pre><hr><pre>
 try:
-    raise MyError("message")   # instancja
+    raise MyError("message")   # instancja wyjątku
 #except MyError:
-except MyError as exception:
-    print("przechwycenie MyError")
+except MyError as exception:   # 'exception' to instancja wyjątku
+    print("przechwycenie wyjątku MyError")
     print(exception.args)
 </pre><hr>
 
@@ -68,17 +70,17 @@ class MyError(Exception):
         return repr(self.value)
 
 try:
-    raise MyError(2*2)    # instancja wyjątku
+    raise MyError(2*2)   # instancja wyjątku
 except MyError as exception:   # Py2.6+, Py3
 # except MyError, exception:   # Py2.5-
 # Python 3 interpretuje przecinek jako oznaczający krotkę.
 # Obiekt exception jest to zgłoszona instancja klasy MyError.
-    print("mam wyjątek, value {}".format(exception.value))
-    print("mam wyjątek, value {}".format(exception))   # jw, bo jest __str__
+    print("mam wyjątek", exception.value)
+    print("mam wyjątek", exception)   # jw, bo jest __str__
 
 import sys
 
-print("Zgłoszono wyjątek {}".format(sys.exc_info()))
+print("Zgłoszono wyjątek", sys.exc_info())
 </pre><hr>
 
 <p>Ostatnio zgłoszony i przechwycony wyjątek jest dostępny ogólnie, 
@@ -167,6 +169,37 @@ AssertionError: x have to be zero
 &gt;&gt;&gt;
 </pre><hr>
 
+<h3>GRUPY WYJĄTKÓW</h3>
+
+<p>PEP 654 - Exception Groups and except*
+
+<p>https://docs.python.org/3/builtins/exceptions.html#ExceptionGroup
+
+<p>W Pythonie 3.11 pojawiły się <strong>grupy wyjątków</strong> 
+(<em>exception groups</em>), które są używane wtedy, kiedy trzeba 
+jednocześnie rzucić wiele niepowiązanych ze sobą wyjątków.
+Do stworzenia grupy wyjątków wykorzystuje się dziedziczenie
+z klasy <em>ExceptionGroup</em>.
+
+<hr><pre>
+&gt;&gt;&gt; try:
+...     raise ExceptionGroup("eg",
+...         [ValueError(1), TypeError(2), OSError(3), OSError(4)])
+... except* TypeError as e:
+...     print(f'caught {type(e)} with nested {e.exceptions}')
+... except* OSError as e:
+...     print(f'caught {type(e)} with nested {e.exceptions}')
+... 
+# caught &lt;class 'ExceptionGroup'&gt; with nested (TypeError(2),)
+# caught &lt;class 'ExceptionGroup'&gt; with nested (OSError(3), OSError(4))
+#   + Exception Group Traceback (most recent call last):
+#   |   File "&lt;stdin&gt;", line 2, in &lt;module&gt;
+#   | ExceptionGroup: eg
+#   +-+---------------- 1 ----------------
+#     | ValueError: 1
+#     +------------------------------------
+</pre><hr>
+
 <h3>HIERARCHIA KLAS DLA WYJĄTKÓW WBUDOWANYCH</h3>
 
 <p>Kiedy <em>except</em> z instrukcji <em>try</em> wymienia klasę nadrzędną,
@@ -180,12 +213,6 @@ nieodpowiedniego wyjątku przez kod użytkownika.
 Można dziedziczyć z wyjątków wbudowanych, ale należy unikać
 dziedziczenia wielobazowego ze względu na specyficzne zarządzanie
 pamięcią w wyjątkach i możliwe konflikty.
-
-<p>W Pythonie 3.11 pojawiły się <strong>grupy wyjątków</strong> 
-(<em>exception groups</em>), które są używane wtedy, kiedy trzeba 
-jednocześnie rzucić wiele niepowiązanych ze sobą wyjątków.
-Do stworzenia grupy wyjątków wykorzystuje się dziedziczenie
-z klasy <em>ExceptionGroup</em>.
 
 <hr><pre>
 &gt;&gt;&gt; import exceptions   # Py2.6+
