@@ -63,6 +63,7 @@ def mytracer(func):
     @wraps(func)
     def wrapper(*arguments, **keywords):
         print("mytracer working ...")   # dodatkowy komunikat
+        all_values = (*arguments, *keywords.values())   # przydatne
         return func(*arguments, **keywords)   # func zaszyte w wrapper
     #wrapper.__name__ = func.__name__   # w przybliżeniu
     #wrapper.__doc__ = func.__doc__   # w przybliżeniu
@@ -72,7 +73,7 @@ def mytracer(func):
 def spam(a, b, c):
 #def spam(a: "arg1", b: "arg2", c: "arg3") -&gt; "summation":   # adnotacje
     """To jest funkcja spam."""
-    print("{} {} {}".format(a, b, c))
+    print(a, b, c)
     return a + b + c
 
 print(spam(1, 2, 3))
@@ -96,6 +97,7 @@ class Tracer:
 
     def __call__(self, *arguments, **keywords):
         self.calls += 1
+        all_values = (*arguments, *keywords.values())   # przydatne
         print("call {} to {}".format(self.calls, self.func.__name__))
         return self.func(*arguments, **keywords)
 
@@ -105,7 +107,7 @@ class Tracer:
 @Tracer
 def spam(a, b, c):
     """To jest funkcja spam."""
-    print("{} {} {}".format(a, b, c))
+    print(a, b, c)
     return a + b + c
 
 print(spam(1, 2, 3))         # call 1 to spam
@@ -156,7 +158,7 @@ class Tracer:
 @Tracer()
 def spam(a, b, c):
     """To jest funkcja spam."""
-    print("{} {} {}".format(a, b, c))
+    print(a, b, c)
     return a + b + c
 
 print(spam(1, 2, 3))         # call 1 to spam

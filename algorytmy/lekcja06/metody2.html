@@ -38,11 +38,17 @@ Nie istnieją wartości domyślne dla metod przeciążania operatorów
 
 <hr><pre>
 # Wybrane metody specjalne.
-__new__  pierwsza metoda wywoływana przy inicjalizacji obiektu,
-    rzadko definiowana jawnie, przekazuje argumenty do __init__;
-    [__new__(cls, arg1, arg2, ...): ...]
+__new__  pierwsza metoda wywoływana przy 'tworzeniu' obiektu,
+    rzadko definiowana jawnie, zwraca nową instancję danej klasy;
+    dalej __init__ 'inicjalizuje' tą nową instancję, ustawia atrybuty;
 
-__init__  konstruktor
+# Syntax.
+# class ClassName:
+#     def __new__(cls, *args, **kwargs):
+#         instrukcje
+#         return super().__new__(cls)
+
+__init__  konstruktor, inicjalizuje atrybuty instancji, zwraca None
 
 __del__  destruktor (finalizer), działa gdy licznik referencji zejdzie do zera
     i zaczyna pracować garbage collection;
@@ -72,6 +78,30 @@ __hash__   wywoływane przez hash(x), zwraca int;
 
 __round__   wywoływane przez round(x, ndigits=None), zaokrąglanie;
     metoda stosowana do typów skalarnych, liczb (np. wiek człowieka).
+</pre><hr><pre>
+# https://www.geeksforgeeks.org/python/__new__-in-python/
+# When to use __new__:
+# (1) Implementing Singleton Pattern.
+# (2) Returning Cached Objects.
+# (3) Immutable Object Creation.
+# (4) Subclassing Immutable Types.
+
+class A:   # Py3
+
+    def __new__(cls):
+        print("creating instance ...")
+        return super().__new__(cls)   # zwraca instancję klasy A
+        # UWAGA Jeżeli __new__ nie zwróci nowej instancji klasy A,
+        # wtedy nie będzie uruchominy konstruktor __init__.
+
+    def __init__(self):   # konstruktor działa, kiedy instancja już istnieje
+        print("initializing instance ...")
+        # UWAGA __init__ musi zawsze zwrócić None.
+
+a = A()
+# Komunikaty:
+# creating instance ...
+# cnitializing instance ...
 </pre><hr><pre>
 # Operatory dwuargumentowe.
 __add__  dodawanie, x + y

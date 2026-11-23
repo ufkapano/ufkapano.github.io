@@ -77,13 +77,13 @@ class Meta(type):   # dziedziczenie z 'type' w klasach w nowym stylu
         # zanim zostanie utworzona nowa klasa.
         return type.__new__(mcls, name, bases, clsdict)
 
-#class C(object):   # klasy w nowym stylu
-#    __metaclass__ = Meta   # składnia Py2.6+
+#class C(object):   # klasy w nowym stylu, składnia Py2.6+
+#    __metaclass__ = Meta
 # Teraz zamiast type(name, bases, clsdict)
 # do budowy klasy będzie użyte Meta.
 
-class C(metaclass=Meta):
-    pass   # składnia Py3 (PEP 3115)
+class C(metaclass=Meta):   # składnia Py3 (PEP 3115)
+    pass
 
 print(dir(C))   # znajdziemy klucz 'foo'
 </pre><hr>
@@ -109,8 +109,8 @@ print(dir(C))   # znajdziemy klucz 'foo'
 <br>Rational (numerator, denominator, conversion to float), 
 <br>Integral (conversion to int).
 
-<p>Abstrakcyjne klasy bazowe (ABC) dostarczają standardowego sposobu
-sprawdzania, czy obiekt spełnia daną specyfikację.
+<p><strong>Abstrakcyjne klasy bazowe (ABC)</strong> dostarczają standardowego 
+sposobu sprawdzania, czy obiekt spełnia daną specyfikację.
 Próba utworzenia podklasy bez nadpisania przygotowanych metod z klasy bazowej
 nie uda się.
 
@@ -125,13 +125,13 @@ które można użyć do testowania interfejsów.
 <hr><pre>
 from abc import ABCMeta
 
-class MyABC(object):   # tworzenie abstrakcyjnej klasy bazowej
-    __metaclass__ = ABCMeta   # Py2.7
+class MyABC(object):   # tworzenie abstrakcyjnej klasy bazowej w Py2.7
+    __metaclass__ = ABCMeta
     instrukcje
 </pre><hr><pre>
 from abc import ABCMeta
 
-class MyABC(metaclass=ABCMeta):   # Py3.4+
+class MyABC(metaclass=ABCMeta):   # tworzenie abstrakcyjnej klasy bazowej w Py3.4+
     instrukcje
 </pre><hr><pre>
 # Klasa pomocnicza 'ABC' ma 'ABCMeta' jako metaklasę.

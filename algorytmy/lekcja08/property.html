@@ -13,8 +13,9 @@
 <h3>WPROWADZENIE</h3>
 
 <p>Typowe zastosowanie dekoratora <em>@property</em> to utworzenie
-zarządzalnego atrybutu. Użytkownik używa składni takiej samej jak dla
-zwykłego atrybutu (odczyt, podstawienie), a jednocześnie w niewidoczny
+<strong>zarządzalnego atrybutu</strong>. 
+Użytkownik używa składni takiej samej jak dla zwykłego atrybutu 
+(odczyt, podstawienie, usunięcie), a jednocześnie w niewidoczny
 sposób mogą być wykonywane inne operacje.
 
 <hr><pre>
@@ -26,10 +27,10 @@ class C(object):
 
 c = C()
 # dir(c)   # widać 'x'
-c.x = 20
+c.x = 20   # podstawienie
 print(c.__doc__)   # Klasa C.
-print(c.x)   # 20
-del c.x
+print(c.x)   # 20, odczyt
+del c.x   # usunięcie
 print(c.x)   # AttributeError: 'C' object has no attribute 'x'
 </pre><hr><pre>
 class C(object):
@@ -46,7 +47,7 @@ class C(object):
     def setx(self, value):   # setting an attribute value
         # instrukcje ...
         if value &lt; self.threshold:
-            raise ValueError("x can't be lesser than {}".format(self.threshold))
+            raise ValueError("x can't be lesser than", self.threshold)
         else:
             self._x = value
 
@@ -89,7 +90,7 @@ class C(object):
     def x(self, value):   # setting an attribute value
         # instrukcje ...
         if value &lt; self.threshold:
-            raise ValueError("x can't be lesser than {}".format(self.threshold))
+            raise ValueError("x can't be lesser than", self.threshold)
         else:
             self._x = value
 
@@ -152,7 +153,7 @@ class A(object):
 
 class B(A):
     pass
-# Klasa B nie będzie rejestrowana, chyba że jawnie użyjemy znowu @model.
+# Klasa B nie będzie rejestrowana, chyba że jawnie użyjemy znowu dekoratora @model.
 # Lepsze rozwiązanie wykorzystuje metaklasy.
 </pre><hr><pre>
 models = {}
@@ -171,7 +172,7 @@ class Model(metaclass=ModelMetaclass):   # Py3
 class A(Model):
     pass
 
-class B(A):   # teraz klasa B będzie zarejestrowana w models
+class B(A):   # teraz klasa B będzie zarejestrowana w słowniku 'models'
     pass
 
 print(list(models))   # ['A', 'Model', 'B']

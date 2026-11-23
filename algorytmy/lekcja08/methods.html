@@ -12,7 +12,7 @@
 
 <h3>WPROWADZENIE</h3>
 
-<p>Metody statyczne są opcją dodaną w Pythonie 2.2.
+<p><strong>Metody statyczne</strong> są opcją dodaną w Pythonie 2.2.
 Pozwalają one zapisywać w kodzie klasy funkcje nieoczekujące podania 
 obiektów instancji w pierwszym argumencie.
 Takie metody mogą działać jak proste funkcje bez instancji,
@@ -35,7 +35,7 @@ class Methods:
 
     def imeth(self, x):   # zwykła metoda instancji
         # Pierwszy argument to zwyczajowo self (bieżąca instancja).
-        print("{} {}".format(self, x))
+        print(self, x)
 
     def smeth(x):         # metoda statyczna
         # Pierwszy argument to nie jest self.
@@ -44,7 +44,7 @@ class Methods:
     def cmeth(cls, x):    # metoda klasy
         # Pierwszy argument tradycyjnie nazywamy cls, a nie self.
         # cls to obiekt klasy (tutaj to klasa Methods).
-        print("{} {}".format(cls, x))
+        print(cls, x)
 
     smeth = staticmethod(smeth)   # przekształcanie
     cmeth = classmethod(cmeth)    # przekształcanie
@@ -80,7 +80,7 @@ class Methods:
 class Frac:
 
     @staticmethod
-    def gcd(m, n):   # algorytm Euklidesa
+    def gcd(m, n):   # algorytm Euklidesa osadzony w klasie Frac
         if m % n == 0:
             return n
         else:

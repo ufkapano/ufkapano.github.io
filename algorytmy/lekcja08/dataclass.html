@@ -14,6 +14,9 @@
 
 <p>PEP 526 – Syntax for Variable Annotations [wprowadzony w Py3.6]
 
+<p>https://python-course.eu/oop/creating-immutable-classes-in-python.php
+<br>4. Creating Immutable Classes In Python
+
 <h3>WPROWADZENIE</h3>
 
 <p>Moduł <em>dataclasses</em> dostarcza dekorator i funkcje do automatycznego 
@@ -53,15 +56,15 @@ Więcej informacji można znaleźć w dokumentacji Pythona.
 from dataclasses import dataclass
 
 @dataclass   # typowe użycie
-# @dataclass()   # tak też można dla domyślnych ustawień (order=False)
-# @dataclass(order=True)   # to wygeneruje rich comparisons,
-#     będą porównywane krotki zbudowane z kolejnych pól
+#@dataclass()   # tak też można dla domyślnych ustawień (order=False)
+#@dataclass(order=True)   # to wygeneruje rich comparisons,
+#    będą porównywane krotki zbudowane z kolejnych pól
 class InventoryItem:
     """Class for keeping track of an item in inventory."""
     # Kolejność zmiennych będzie zachowana w wygenerowanym konstruktorze.
     name: str           # obowiązkowe type annotations
     unit_price: float
-    quantity_on_hand: int = 0   # default value
+    quantity_on_hand: int = 0   # default value (class attribute)
 
     def total_cost(self) -&gt; float:
         return self.unit_price * self.quantity_on_hand
@@ -88,7 +91,7 @@ item = Immutable(10, 20)
 print(item)   # Immutable(a=10, b=20)
 print(item.a, item.b)   # 10 20
 #item.a = 11   # dataclasses.FrozenInstanceError: cannot assign to field 'a'
-
+</pre><hr><pre>
 # Przed Py3.7 używano niezmiennych 'namedtuple' w takiej sytuacji.
 # Jednak metoda __eq__ dla 'namedtuple' porównuje tylko wartości pól,
 # a nie typy/klasy obiektów, co może być źródłem błędów w kodzie.
@@ -100,13 +103,14 @@ Immutable3 = namedtuple("Immutable3", ["a", "c"])
 
 item2 = Immutable2(11, 22)
 print(item2)   # Immutable2(a=11, b=22)
-print(item2.a, item2.b)   # 11 22
-print(item2[0], item2[1])   # 11 22
+print(item2.a, item2.b)   # 11 22, mamy atrybuty
+print(item2[0], item2[1])   # 11 22, działa też indeksowanie
 #item2.a = 13   # AttributeError: can't set attribute
 
 item3 = Immutable3(11, 22)
 print(item3)   # Immutable3(a=11, c=22)
-assert item2 == item3
+print(item3.a, item3.c)   # 11 22, mamy atrybuty
+assert item2 == item3   # porównywanie indeksów, a nie atrybutów
 assert item2[0] == item3[0] and item2[1] == item3[1]   # jw
 </pre><hr><pre>
 from dataclasses import dataclass, field
@@ -114,17 +118,19 @@ from dataclasses import dataclass, field
 @dataclass
 class Deck:
     # Podajemy wartość domyślną.
-    #first: str = "word"   # jest atrybut klasy
-    first: str = field(default="word")   # jest atrybut klasy
+    #first: str = "word"   # atrybut klasy
+    first: str = field(default="word")   # atrybut klasy
     #first: str = field(default_factory=lambda: "word")   # nie ma atrybutu klasy
     # Podajemy 'zero-argument callable' do tworzenia wartości domyślnej.
-    second: list[int] = field(default_factory=list)
+    second: list[int] = field(default_factory=list)   # nie ma atrybutu klasy
     # Tworzymy wartość domyślną oraz chcemy ukryć pole w repr().
-    third: float = field(default=0.0, repr=False)
+    #third: float = field(default=0.0, repr=False)   # atrybut klasy
+    third: float = field(default_factory=lambda: 0.0, repr=False)   # nie ma atrybutu klasy
 
-deck = Deck()
-print(deck)   # Deck(first='word', second=[])
-print(Deck.first)   # wyświetlanie atrybutu klasy (nie ma przy default_factory)
+deck = Deck("abc")
+print(deck)   # Deck(first='abc', second=[]), nie pojawia się 'third'
+print(deck.first)   # "abc", atrybut instancji
+print(Deck.first)   # "word", atrybut klasy (nie ma przy default_factory)
 </pre><hr>
 
 <h3>PRZYKŁAD</h3>
@@ -135,7 +141,8 @@ print(Deck.first)   # wyświetlanie atrybutu klasy (nie ma przy default_factory)
 Number, Complex, Real, Rational, Integral.
 
 <hr><pre>
-# Implementacja klasy Point z użyciem dekoratora @dataclass.
+# Implementacja niezmiennej klasy Point z użyciem dekoratora @dataclass.
+# Jest porównywanie zgodności klas.
 
 from dataclasses import dataclass
 from numbers import Real
@@ -145,8 +152,71 @@ class Point:
     x: Real
     y: Real
 
-    def __add__(self, other):
-        return Point(self.x + other.x, self.y + other.y)
+    # automatycznie utworzone __init__, __eq__, __ne__, __repr__, __hash__
+
+    # ... dalsze metody ...
+</pre><hr><pre>
+# Implementacja niezmiennej klasy Point z przedefiniowaniem __setattr__ i __delattr__.
+# Porównywanie definiujemy ręcznie.
+
+class Point:
+
+    def __init__(self, x, y):   # konstruktor
+        self.x = x
+        self.y = y
+
+    def __setattr__(self, name, value):
+        if name not in ("x", "y") or hasattr(self, name):
+            raise AttributeError("'Point' object is immutable")
+        super().__setattr__(name, value)
+
+    def __delattr__(self, name):   # zabronione del point.x, del point.y
+        raise AttributeError("'Point' object is immutable")
+
+    # ... dalsze metody ...
+</pre><hr><pre>
+# Implementacja niezmiennej klasy Point z dekoratorem @property.
+# Nie można zmieniać atrybutów x i y, ale można dodawać inne atrybuty.
+# Porównywanie definiujemy ręcznie.
+
+class Point:
+
+    def __init__(self, x, y):  # konstruktor
+        self._x = x
+        self._y = y
+
+    @property
+    def x(self):
+        return self._x
+
+    @property
+    def y(self):
+        return self._y
+
+    # ... dalsze metody ...
+</pre><hr><pre>
+# Implementacja niezmiennej klasy Point przez dziedziczenie z tuple.
+# Porównywanie nie sprawdza klas, porównywane są elementy pod indeksami,
+# (self[0], self[1]) vs (other[0], other[1]), jak dla namedtuple.
+
+class Point(tuple):
+
+    def __new__(cls, x, y):
+        return tuple.__new__(cls, (x, y))
+
+    @property
+    def x(self):
+        return self[0]   # działają indeksy
+
+    @property
+    def y(self):
+        return self[1]   # działają indeksy
+
+    def __setattr__(self, *ignored):
+        raise AttributeError("'Point' object is immutable")
+
+    def __delattr__(self, *ignored):
+        raise AttributeError("'Point' object is immutable")
 
     # ... dalsze metody ...
 </pre><hr>

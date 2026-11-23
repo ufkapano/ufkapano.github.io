@@ -50,10 +50,13 @@ class Time:
 
     # Py2.7 i Py3, rich comparisons.
     def __eq__(self, other):
+        if not isinstance(other, type(self)):
+            return NotImplemented   # zwykle dla typów liczbowych
         return self.s == other.s
 
     def __ne__(self, other):
-        return self.s != other.s
+        #return self.s != other.s
+        return not self == other   # typowa implementacja
 
     def __lt__(self, other):
         return self.s &lt; other.s
@@ -159,6 +162,24 @@ class Point:
 import unittest
 
 class TestPoint(unittest.TestCase): pass
+</pre><hr><pre>
+# Zarządzanie atrybutami.
+pt = Point(11, 22)
+
+print(pt.__dict__)   # {'x': 11, 'y': 22}
+
+assert hasattr(pt, "x")
+assert not hasattr(pt, "z")
+
+assert getattr(pt, "x") == 11
+assert pt.x == 11   # jw
+# getattr(pt, "z") rzuca AttributeError
+
+setattr(pt, "foobar", 33)   # odpowiada pt.foobar = 33
+assert pt.foobar == 33
+
+delattr(pt, "foobar")   # odpowiada del pt.foobar
+assert not hasattr(pt, "foobar")
 </pre><hr>
 
 <h3>ZADANIE 6.3 (KLASA RECTANGLE)</h3>
