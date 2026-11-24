@@ -51,6 +51,8 @@ class Card:
 
     def __cmp__(self, other):
         """Porównaj karty."""
+        if not isinstance(other, type(self)):
+            raise TypeError("not a 'Card' instance")
         # Sprawdzamy kolory kart.
         if self.suit &gt; other.suit:
             return 1
@@ -63,6 +65,8 @@ class Card:
             return -1
         return 0      # remis
         # Krótka wersja (Py2).
+        #if not isinstance(other, type(self)):
+        #    raise TypeError("not a 'Card' instance")
         #return cmp((self.suit, self.rank), (other.suit, other.rank))
 </pre><hr><pre>
 class Deck:
@@ -78,17 +82,14 @@ class Deck:
     def __str__(self):
         """Zwróć postać napisową talii kart."""
         s = ""
-        for i in range(len(self.cards)):
-            s = s + " " * i + str(self.cards[i]) + "\n"
+        for (i, card) in enumerate(self.cards):
+            s = s + " " * i + str(card) + "\n"
         return s
 
     def shuffle(self):
         """Tasuj talię."""
         import random
-        n_cards = len(self.cards)
-        for i in range(n_cards):
-            j = random.randrange(i, n_cards)
-            self.cards[i], self.cards[j] = self.cards[j], self.cards[i]
+        random.shuffle(self.cards)
 
     def remove_card(self, card):
         """Unicestwianie karty."""

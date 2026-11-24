@@ -42,37 +42,49 @@ class Time:
 
     def __add__(self, other):
         """Dodawanie odcinków czasu."""
+        if not isinstance(other, type(self)):
+            #return NotImplemented   # zwykle dla typów liczbowych
+            raise TypeError("not a 'Time' instance")
         return Time(self.s + other.s)
 
     #def __cmp__(self, other): # Py2, porównywanie, -1|0|+1
     #    """Porównywanie odcinków czasu."""
+    #    if not isinstance(other, type(self)):
+    #        raise TypeError("not a 'Time' instance")
     #    return cmp(self.s, other.s)
 
     # Py2.7 i Py3, rich comparisons.
     def __eq__(self, other):
         if not isinstance(other, type(self)):
-            return NotImplemented   # zwykle dla typów liczbowych
+            return False
         return self.s == other.s
 
     def __ne__(self, other):
-        #return self.s != other.s
         return not self == other   # typowa implementacja
 
     def __lt__(self, other):
+        if not isinstance(other, type(self)):
+            raise TypeError("not a 'Time' instance")
         return self.s &lt; other.s
 
     def __le__(self, other):
+        if not isinstance(other, type(self)):
+            raise TypeError("not a 'Time' instance")
         return self.s &lt;= other.s
 
     # nadmiarowe
     #def __gt__(self, other):
+    #    if not isinstance(other, type(self)):
+    #        raise TypeError("not a 'Time' instance")
     #    return self.s &gt; other.s
 
     # nadmiarowe
     #def __ge__(self, other):
+    #    if not isinstance(other, type(self)):
+    #        raise TypeError("not a 'Time' instance")
     #    return self.s &gt;= other.s
 
-    def __int__(self):                  # int(time1)
+    def __int__(self):   # implementacja int(time1)
         """Konwersja odcinka czasu do int."""
         return self.s
 

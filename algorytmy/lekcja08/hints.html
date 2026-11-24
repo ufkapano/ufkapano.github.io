@@ -108,7 +108,7 @@ def __hash__(self):
 
 <p>Główna idea dotycząca hashu jest taka, że jeżeli dwa obiekty
 mają różny hash, to nie są równe, ale jeżeli mają taki sam hash,
-to <em>mogą</em> być równe (to jest nazywane "hash collision").
+to <em>mogą</em> być równe (to jest nazywane <em>hash collision</em>).
 Jedyne wymaganie ze strony Pythona jest aby wartości hash
 nie zmieniały się po tym, jak zostaną zwrócone przez metodę <em>__hash__</em>.
 
@@ -117,10 +117,10 @@ Stąd w SymPy mogą być różne kolejności zwracanych wyrażeń,
 co rodzi problemy przy pisaniu testów (np. <em>doctest</em>).
 
 <p>http://stackoverflow.com/questions/17192418/hash-function-in-python
-<br>hash() is randomised by default each time you start a new instance 
+<br><em>hash()</em> is randomised by default each time you start a new instance 
 of recent versions (Py3.3+) to prevent dictionary insertion DOS attacks.
 If you want something that does hash to the same thing every time, 
-use one of the hashes in hashlib (import hashlib).
+use one of the hashes in <em>hashlib</em> (<em>import hashlib</em>).
 
 <h3>METHOD RESOLUTION</h3>
 
